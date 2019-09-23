@@ -1,0 +1,31 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+*/target
+*/target
+
+### Mac ###
+.DS_Store
+
+### Spring Dev Credentials ###
+config/*.yml
+
+### Docker Test Credentials ###
+.env
+
