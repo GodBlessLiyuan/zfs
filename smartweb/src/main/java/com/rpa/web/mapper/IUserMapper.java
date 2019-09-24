@@ -14,5 +14,9 @@ import java.util.List;
 @Mapper
 public interface IUserMapper {
 
-    List<User> list(User user);
+    /**
+     * 分页查询
+     * @return
+     */
+    List<User> list();
 }
