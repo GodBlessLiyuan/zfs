@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.web.mapper.DeviceMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.DevicePO">
+    <id column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="utdid" jdbcType="VARCHAR" property="utdid" />
+    <result column="androidid" jdbcType="VARCHAR" property="androidid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    device_id, utdid, androidid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_device
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_device
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.web.pojo.DevicePO">
+    insert into t_device (device_id, utdid, androidid
+      )
+    values (#{deviceId,jdbcType=BIGINT}, #{utdid,jdbcType=VARCHAR}, #{androidid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.DevicePO">
+    insert into t_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="utdid != null">
+        utdid,
+      </if>
+      <if test="androidid != null">
+        androidid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="utdid != null">
+        #{utdid,jdbcType=VARCHAR},
+      </if>
+      <if test="androidid != null">
+        #{androidid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.DevicePO">
+    update t_device
+    <set>
+      <if test="utdid != null">
+        utdid = #{utdid,jdbcType=VARCHAR},
+      </if>
+      <if test="androidid != null">
+        androidid = #{androidid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.DevicePO">
+    update t_device
+    set utdid = #{utdid,jdbcType=VARCHAR},
+      androidid = #{androidid,jdbcType=VARCHAR}
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+</mapper>

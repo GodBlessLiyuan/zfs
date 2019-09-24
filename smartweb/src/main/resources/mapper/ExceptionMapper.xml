@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.web.mapper.ExceptionMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.ExceptionPO">
+    <id column="exceptionid" jdbcType="INTEGER" property="exceptionid" />
+    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.rpa.web.pojo.ExceptionPO">
+    <result column="error" jdbcType="LONGVARCHAR" property="error" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    exceptionid, device_id
+  </sql>
+  <sql id="Blob_Column_List">
+    error
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_exception
+    where exceptionid = #{exceptionid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_exception
+    where exceptionid = #{exceptionid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.web.pojo.ExceptionPO">
+    insert into t_exception (exceptionid, device_id, error
+      )
+    values (#{exceptionid,jdbcType=INTEGER}, #{deviceId,jdbcType=BIGINT}, #{error,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.ExceptionPO">
+    insert into t_exception
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="exceptionid != null">
+        exceptionid,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="error != null">
+        error,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="exceptionid != null">
+        #{exceptionid,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="error != null">
+        #{error,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.ExceptionPO">
+    update t_exception
+    <set>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="error != null">
+        error = #{error,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where exceptionid = #{exceptionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.rpa.web.pojo.ExceptionPO">
+    update t_exception
+    set device_id = #{deviceId,jdbcType=BIGINT},
+      error = #{error,jdbcType=LONGVARCHAR}
+    where exceptionid = #{exceptionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.ExceptionPO">
+    update t_exception
+    set device_id = #{deviceId,jdbcType=BIGINT}
+    where exceptionid = #{exceptionid,jdbcType=INTEGER}
+  </update>
+</mapper>

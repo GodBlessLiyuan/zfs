@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.web.mapper.OrderFeedbackMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.OrderFeedbackPO">
+    <id column="wxpayid" jdbcType="BIGINT" property="wxpayid" />
+    <result column="appid" jdbcType="CHAR" property="appid" />
+    <result column="mch_id" jdbcType="CHAR" property="mchId" />
+    <result column="nonce_str" jdbcType="CHAR" property="nonceStr" />
+    <result column="sigin" jdbcType="CHAR" property="sigin" />
+    <result column="result_code" jdbcType="CHAR" property="resultCode" />
+    <result column="err_code" jdbcType="CHAR" property="errCode" />
+    <result column="err_code_des" jdbcType="CHAR" property="errCodeDes" />
+    <result column="openid" jdbcType="CHAR" property="openid" />
+    <result column="is_subscribe" jdbcType="CHAR" property="isSubscribe" />
+    <result column="trade_type" jdbcType="CHAR" property="tradeType" />
+    <result column="bank_type" jdbcType="CHAR" property="bankType" />
+    <result column="total_fee" jdbcType="INTEGER" property="totalFee" />
+    <result column="fee_type" jdbcType="CHAR" property="feeType" />
+    <result column="cash_fee" jdbcType="INTEGER" property="cashFee" />
+    <result column="cash_fee_type" jdbcType="CHAR" property="cashFeeType" />
+    <result column="coupon_fee" jdbcType="INTEGER" property="couponFee" />
+    <result column="coupon_count" jdbcType="INTEGER" property="couponCount" />
+    <result column="transaction_id" jdbcType="CHAR" property="transactionId" />
+    <result column="out_trade_no" jdbcType="CHAR" property="outTradeNo" />
+    <result column="attach" jdbcType="CHAR" property="attach" />
+    <result column="time_end" jdbcType="CHAR" property="timeEnd" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    wxpayid, appid, mch_id, nonce_str, sigin, result_code, err_code, err_code_des, openid, 
+    is_subscribe, trade_type, bank_type, total_fee, fee_type, cash_fee, cash_fee_type, 
+    coupon_fee, coupon_count, transaction_id, out_trade_no, attach, time_end
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_feedback
+    where wxpayid = #{wxpayid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_order_feedback
+    where wxpayid = #{wxpayid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.web.pojo.OrderFeedbackPO">
+    insert into t_order_feedback (wxpayid, appid, mch_id, 
+      nonce_str, sigin, result_code, 
+      err_code, err_code_des, openid, 
+      is_subscribe, trade_type, bank_type, 
+      total_fee, fee_type, cash_fee, 
+      cash_fee_type, coupon_fee, coupon_count, 
+      transaction_id, out_trade_no, attach, 
+      time_end)
+    values (#{wxpayid,jdbcType=BIGINT}, #{appid,jdbcType=CHAR}, #{mchId,jdbcType=CHAR}, 
+      #{nonceStr,jdbcType=CHAR}, #{sigin,jdbcType=CHAR}, #{resultCode,jdbcType=CHAR}, 
+      #{errCode,jdbcType=CHAR}, #{errCodeDes,jdbcType=CHAR}, #{openid,jdbcType=CHAR}, 
+      #{isSubscribe,jdbcType=CHAR}, #{tradeType,jdbcType=CHAR}, #{bankType,jdbcType=CHAR}, 
+      #{totalFee,jdbcType=INTEGER}, #{feeType,jdbcType=CHAR}, #{cashFee,jdbcType=INTEGER}, 
+      #{cashFeeType,jdbcType=CHAR}, #{couponFee,jdbcType=INTEGER}, #{couponCount,jdbcType=INTEGER}, 
+      #{transactionId,jdbcType=CHAR}, #{outTradeNo,jdbcType=CHAR}, #{attach,jdbcType=CHAR}, 
+      #{timeEnd,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.OrderFeedbackPO">
+    insert into t_order_feedback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wxpayid != null">
+        wxpayid,
+      </if>
+      <if test="appid != null">
+        appid,
+      </if>
+      <if test="mchId != null">
+        mch_id,
+      </if>
+      <if test="nonceStr != null">
+        nonce_str,
+      </if>
+      <if test="sigin != null">
+        sigin,
+      </if>
+      <if test="resultCode != null">
+        result_code,
+      </if>
+      <if test="errCode != null">
+        err_code,
+      </if>
+      <if test="errCodeDes != null">
+        err_code_des,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="isSubscribe != null">
+        is_subscribe,
+      </if>
+      <if test="tradeType != null">
+        trade_type,
+      </if>
+      <if test="bankType != null">
+        bank_type,
+      </if>
+      <if test="totalFee != null">
+        total_fee,
+      </if>
+      <if test="feeType != null">
+        fee_type,
+      </if>
+      <if test="cashFee != null">
+        cash_fee,
+      </if>
+      <if test="cashFeeType != null">
+        cash_fee_type,
+      </if>
+      <if test="couponFee != null">
+        coupon_fee,
+      </if>
+      <if test="couponCount != null">
+        coupon_count,
+      </if>
+      <if test="transactionId != null">
+        transaction_id,
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no,
+      </if>
+      <if test="attach != null">
+        attach,
+      </if>
+      <if test="timeEnd != null">
+        time_end,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wxpayid != null">
+        #{wxpayid,jdbcType=BIGINT},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=CHAR},
+      </if>
+      <if test="mchId != null">
+        #{mchId,jdbcType=CHAR},
+      </if>
+      <if test="nonceStr != null">
+        #{nonceStr,jdbcType=CHAR},
+      </if>
+      <if test="sigin != null">
+        #{sigin,jdbcType=CHAR},
+      </if>
+      <if test="resultCode != null">
+        #{resultCode,jdbcType=CHAR},
+      </if>
+      <if test="errCode != null">
+        #{errCode,jdbcType=CHAR},
+      </if>
+      <if test="errCodeDes != null">
+        #{errCodeDes,jdbcType=CHAR},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=CHAR},
+      </if>
+      <if test="isSubscribe != null">
+        #{isSubscribe,jdbcType=CHAR},
+      </if>
+      <if test="tradeType != null">
+        #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="bankType != null">
+        #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="totalFee != null">
+        #{totalFee,jdbcType=INTEGER},
+      </if>
+      <if test="feeType != null">
+        #{feeType,jdbcType=CHAR},
+      </if>
+      <if test="cashFee != null">
+        #{cashFee,jdbcType=INTEGER},
+      </if>
+      <if test="cashFeeType != null">
+        #{cashFeeType,jdbcType=CHAR},
+      </if>
+      <if test="couponFee != null">
+        #{couponFee,jdbcType=INTEGER},
+      </if>
+      <if test="couponCount != null">
+        #{couponCount,jdbcType=INTEGER},
+      </if>
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=CHAR},
+      </if>
+      <if test="outTradeNo != null">
+        #{outTradeNo,jdbcType=CHAR},
+      </if>
+      <if test="attach != null">
+        #{attach,jdbcType=CHAR},
+      </if>
+      <if test="timeEnd != null">
+        #{timeEnd,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.OrderFeedbackPO">
+    update t_order_feedback
+    <set>
+      <if test="appid != null">
+        appid = #{appid,jdbcType=CHAR},
+      </if>
+      <if test="mchId != null">
+        mch_id = #{mchId,jdbcType=CHAR},
+      </if>
+      <if test="nonceStr != null">
+        nonce_str = #{nonceStr,jdbcType=CHAR},
+      </if>
+      <if test="sigin != null">
+        sigin = #{sigin,jdbcType=CHAR},
+      </if>
+      <if test="resultCode != null">
+        result_code = #{resultCode,jdbcType=CHAR},
+      </if>
+      <if test="errCode != null">
+        err_code = #{errCode,jdbcType=CHAR},
+      </if>
+      <if test="errCodeDes != null">
+        err_code_des = #{errCodeDes,jdbcType=CHAR},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=CHAR},
+      </if>
+      <if test="isSubscribe != null">
+        is_subscribe = #{isSubscribe,jdbcType=CHAR},
+      </if>
+      <if test="tradeType != null">
+        trade_type = #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="bankType != null">
+        bank_type = #{bankType,jdbcType=CHAR},
+      </if>
+      <if test="totalFee != null">
+        total_fee = #{totalFee,jdbcType=INTEGER},
+      </if>
+      <if test="feeType != null">
+        fee_type = #{feeType,jdbcType=CHAR},
+      </if>
+      <if test="cashFee != null">
+        cash_fee = #{cashFee,jdbcType=INTEGER},
+      </if>
+      <if test="cashFeeType != null">
+        cash_fee_type = #{cashFeeType,jdbcType=CHAR},
+      </if>
+      <if test="couponFee != null">
+        coupon_fee = #{couponFee,jdbcType=INTEGER},
+      </if>
+      <if test="couponCount != null">
+        coupon_count = #{couponCount,jdbcType=INTEGER},
+      </if>
+      <if test="transactionId != null">
+        transaction_id = #{transactionId,jdbcType=CHAR},
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no = #{outTradeNo,jdbcType=CHAR},
+      </if>
+      <if test="attach != null">
+        attach = #{attach,jdbcType=CHAR},
+      </if>
+      <if test="timeEnd != null">
+        time_end = #{timeEnd,jdbcType=CHAR},
+      </if>
+    </set>
+    where wxpayid = #{wxpayid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.OrderFeedbackPO">
+    update t_order_feedback
+    set appid = #{appid,jdbcType=CHAR},
+      mch_id = #{mchId,jdbcType=CHAR},
+      nonce_str = #{nonceStr,jdbcType=CHAR},
+      sigin = #{sigin,jdbcType=CHAR},
+      result_code = #{resultCode,jdbcType=CHAR},
+      err_code = #{errCode,jdbcType=CHAR},
+      err_code_des = #{errCodeDes,jdbcType=CHAR},
+      openid = #{openid,jdbcType=CHAR},
+      is_subscribe = #{isSubscribe,jdbcType=CHAR},
+      trade_type = #{tradeType,jdbcType=CHAR},
+      bank_type = #{bankType,jdbcType=CHAR},
+      total_fee = #{totalFee,jdbcType=INTEGER},
+      fee_type = #{feeType,jdbcType=CHAR},
+      cash_fee = #{cashFee,jdbcType=INTEGER},
+      cash_fee_type = #{cashFeeType,jdbcType=CHAR},
+      coupon_fee = #{couponFee,jdbcType=INTEGER},
+      coupon_count = #{couponCount,jdbcType=INTEGER},
+      transaction_id = #{transactionId,jdbcType=CHAR},
+      out_trade_no = #{outTradeNo,jdbcType=CHAR},
+      attach = #{attach,jdbcType=CHAR},
+      time_end = #{timeEnd,jdbcType=CHAR}
+    where wxpayid = #{wxpayid,jdbcType=BIGINT}
+  </update>
+</mapper>

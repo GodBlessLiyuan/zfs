@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.web.mapper.AdminUserMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.AdminUserPO">
+    <id column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="role" jdbcType="TINYINT" property="role" />
+    <result column="is_lock" jdbcType="TINYINT" property="isLock" />
+    <result column="create_time" jdbcType="TIME" property="createTime" />
+    <result column="last_time" jdbcType="TIME" property="lastTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    a_id, username, `password`, email, `role`, is_lock, create_time, last_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_admin_user
+    where a_id = #{aId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_admin_user
+    where a_id = #{aId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.web.pojo.AdminUserPO">
+    insert into t_admin_user (a_id, username, `password`, 
+      email, `role`, is_lock, 
+      create_time, last_time)
+    values (#{aId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{role,jdbcType=TINYINT}, #{isLock,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIME}, #{lastTime,jdbcType=TIME})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.AdminUserPO">
+    insert into t_admin_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="role != null">
+        `role`,
+      </if>
+      <if test="isLock != null">
+        is_lock,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=TINYINT},
+      </if>
+      <if test="isLock != null">
+        #{isLock,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIME},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.AdminUserPO">
+    update t_admin_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        `role` = #{role,jdbcType=TINYINT},
+      </if>
+      <if test="isLock != null">
+        is_lock = #{isLock,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIME},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIME},
+      </if>
+    </set>
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.AdminUserPO">
+    update t_admin_user
+    set username = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      `role` = #{role,jdbcType=TINYINT},
+      is_lock = #{isLock,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIME},
+      last_time = #{lastTime,jdbcType=TIME}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+</mapper>
