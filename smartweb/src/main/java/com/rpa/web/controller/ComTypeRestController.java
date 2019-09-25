@@ -30,9 +30,9 @@ public class ComTypeRestController {
     public DTPageInfo<ComTypePO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                        @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                        @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                       @RequestParam(value = "operator") String username) {
+                                       @RequestParam(value = "username") String username) {
         Map<String, Object> map = new HashMap<>(1);
-        map.put("a_id", username);
+        map.put("username", username);
 
         Page<ComTypePO> page = PageHelper.startPage(pageNum, pageSize);
         List<ComTypePO> data = service.query(map);

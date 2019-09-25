@@ -25,6 +25,8 @@ public class ComTypePO implements Serializable {
 
     private Date updateTime;
 
+    private String username; // add by xiahui: 界面显示字段-操作员
+
     private static final long serialVersionUID = 1L;
 
     public Integer getComTypeId() {
@@ -81,6 +83,14 @@ public class ComTypePO implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

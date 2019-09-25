@@ -76,7 +76,7 @@
             <div class="col-md-4 ">
                 <div class="input-group">
                     <span class="input-group-addon">操作人:</span>
-                    <input id="operator" type="text" class="form-control">
+                    <input id="username" type="text" class="form-control">
                     <button type="button" class="btn btn-primary m-r-5 m-b-5"
                             id="reset">重置
                     </button>
@@ -152,21 +152,36 @@
 
     function queryClick() {
 
-        if ( $.fn.dataTable.isDataTable( '#comtypetab' ) ) {
+        if ($.fn.dataTable.isDataTable('#comtypetab')) {
             $('#comtypetab').DataTable().destroy();
         }
 
         $('#comtypetab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/comtype/query?operator=" + $('#operator').val(),
+            "ajax": "/comtype/query?username=" + $('#username').val(),
+            "fnDrawCallback"    : function(){
+                this.api().column(0).nodes().each(function(cell, i) {
+                    cell.innerHTML =  i + 1;
+                });
+            },
             "columns": [
-                {"data": "name"},
+                {"data": null,"targets":0},
                 {"data": "name"},
                 {"data": "days"},
                 {"data": "createTime"},
                 {"data": "extra"},
-                {"data": "aId"}
+                {"data": "username"}
+            ],
+            "columnDefs":[
+                {
+                    "targets": [3],
+                    "render":function (data, type, full) {
+                        if (data == null || data.trim() == "") { return ""; }
+                        else { var date = new Date(data); return date.getFullYear() + "/" + date.getMonth() + "/" +
+                            date.getDate() + " " + date.getHours() + ":" + date.getMinutes() +":" + date.getSeconds(); }
+                    }
+                }
             ]
         });
     }
