@@ -24,6 +24,15 @@ public class AdconfigPO implements Serializable {
 
     private Date updateTime;
 
+    private String contacts;
+
+    private Byte total;
+
+    /**
+     * 1关闭 2开启 3 删除
+     */
+    private Byte status;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getAdId() {
@@ -90,6 +99,30 @@ public class AdconfigPO implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
+    }
+
+    public Byte getTotal() {
+        return total;
+    }
+
+    public void setTotal(Byte total) {
+        this.total = total;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -109,7 +142,10 @@ public class AdconfigPO implements Serializable {
             && (this.getPriority() == null ? other.getPriority() == null : this.getPriority().equals(other.getPriority()))
             && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getContacts() == null ? other.getContacts() == null : this.getContacts().equals(other.getContacts()))
+            && (this.getTotal() == null ? other.getTotal() == null : this.getTotal().equals(other.getTotal()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
     @Override
@@ -124,6 +160,9 @@ public class AdconfigPO implements Serializable {
         result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getContacts() == null) ? 0 : getContacts().hashCode());
+        result = prime * result + ((getTotal() == null) ? 0 : getTotal().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
 
@@ -141,6 +180,9 @@ public class AdconfigPO implements Serializable {
         sb.append(", phone=").append(phone);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", contacts=").append(contacts);
+        sb.append(", total=").append(total);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

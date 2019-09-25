@@ -10,9 +10,13 @@
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="contacts" jdbcType="CHAR" property="contacts" />
+    <result column="total" jdbcType="TINYINT" property="total" />
+    <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    ad_id, a_id, ad_number, `name`, priority, phone, create_time, update_time
+    ad_id, a_id, ad_number, `name`, priority, phone, create_time, update_time, contacts, 
+    total, `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,10 +31,12 @@
   <insert id="insert" parameterType="com.rpa.web.pojo.AdconfigPO">
     insert into t_adconfig (ad_id, a_id, ad_number, 
       `name`, priority, phone, 
-      create_time, update_time)
+      create_time, update_time, contacts, 
+      total, `status`)
     values (#{adId,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, #{adNumber,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{priority,jdbcType=TINYINT}, #{phone,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{contacts,jdbcType=CHAR}, 
+      #{total,jdbcType=TINYINT}, #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.AdconfigPO">
     insert into t_adconfig
@@ -59,6 +65,15 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="contacts != null">
+        contacts,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="adId != null">
@@ -84,6 +99,15 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contacts != null">
+        #{contacts,jdbcType=CHAR},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -111,6 +135,15 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="contacts != null">
+        contacts = #{contacts,jdbcType=CHAR},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
     </set>
     where ad_id = #{adId,jdbcType=INTEGER}
   </update>
@@ -122,7 +155,10 @@
       priority = #{priority,jdbcType=TINYINT},
       phone = #{phone,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      contacts = #{contacts,jdbcType=CHAR},
+      total = #{total,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=TINYINT}
     where ad_id = #{adId,jdbcType=INTEGER}
   </update>
 </mapper>

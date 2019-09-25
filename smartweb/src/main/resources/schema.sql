@@ -14,6 +14,10 @@ DROP TABLE IF EXISTS t_com_type;
 DROP TABLE IF EXISTS t_user_vip;
 DROP TABLE IF EXISTS t_viptype;
 DROP TABLE IF EXISTS t_admin_user;
+DROP TABLE IF EXISTS t_app;
+DROP TABLE IF EXISTS t_batch_info;
+DROP TABLE IF EXISTS t_ch_batch;
+DROP TABLE IF EXISTS t_channel;
 DROP TABLE IF EXISTS t_device_imei;
 DROP TABLE IF EXISTS t_exception;
 DROP TABLE IF EXISTS t_user_notice;
@@ -23,6 +27,7 @@ DROP TABLE IF EXISTS t_device;
 DROP TABLE IF EXISTS t_key_text;
 DROP TABLE IF EXISTS t_key_value;
 DROP TABLE IF EXISTS t_order_feedback;
+DROP TABLE IF EXISTS t_promoter;
 DROP TABLE IF EXISTS t_soft_channel;
 DROP TABLE IF EXISTS t_whilte_user;
 DROP TABLE IF EXISTS t_user;
@@ -35,72 +40,132 @@ DROP TABLE IF EXISTS t_user_history;
 
 CREATE TABLE t_activity
 (
-    activity_id int NOT NULL AUTO_INCREMENT,
-    activityname varchar(128),
-    positon int,
-    state int,
-    a_id int NOT NULL,
-    position int,
-    create_time datetime,
-    update_time datetime,
-    PRIMARY KEY (activity_id),
-    UNIQUE (activity_id),
-    UNIQUE (a_id)
+	activity_id int NOT NULL AUTO_INCREMENT,
+	activityname varchar(128),
+	positon int,
+	state int,
+	a_id int NOT NULL,
+	position int,
+	create_time datetime,
+	update_time datetime,
+	PRIMARY KEY (activity_id),
+	UNIQUE (activity_id)
 );
 
 
 CREATE TABLE t_adconfig
 (
-    ad_id int NOT NULL AUTO_INCREMENT,
-    a_id int NOT NULL,
-    ad_number varchar(32),
-    name varchar(32),
-    priority tinyint,
-    phone varchar(64),
-    create_time datetime,
-    update_time datetime,
-    PRIMARY KEY (ad_id),
-    UNIQUE (ad_id),
-    UNIQUE (a_id)
+	ad_id int NOT NULL AUTO_INCREMENT,
+	a_id int NOT NULL,
+	ad_number varchar(32),
+	name varchar(32),
+	priority tinyint,
+	phone varchar(64),
+	create_time datetime,
+	update_time datetime,
+	contacts char(20),
+	total tinyint,
+	-- 1关闭 2开启 3 删除
+	status tinyint COMMENT '1关闭 2开启 3 删除',
+	PRIMARY KEY (ad_id),
+	UNIQUE (ad_id)
 );
 
 
 CREATE TABLE t_admin_log
 (
-    v_id int NOT NULL AUTO_INCREMENT,
-    a_id int NOT NULL,
-    action varchar(64),
-    action_time time,
-    PRIMARY KEY (v_id),
-    UNIQUE (v_id),
-    UNIQUE (a_id)
+	v_id int NOT NULL AUTO_INCREMENT,
+	a_id int NOT NULL,
+	action varchar(64),
+	action_time time,
+	PRIMARY KEY (v_id),
+	UNIQUE (v_id)
 );
 
 
 CREATE TABLE t_admin_user
 (
-    a_id int NOT NULL AUTO_INCREMENT,
-    username varchar(32),
-    password varchar(32),
-    email varchar(32),
-    role tinyint,
-    is_lock tinyint,
-    create_time time,
-    last_time time,
-    PRIMARY KEY (a_id),
-    UNIQUE (a_id),
-    UNIQUE (username)
+	a_id int NOT NULL AUTO_INCREMENT,
+	username varchar(32),
+	password varchar(32),
+	email varchar(32),
+	role tinyint,
+	is_lock tinyint,
+	create_time time,
+	last_time time,
+	PRIMARY KEY (a_id),
+	UNIQUE (username)
 );
 
 
 CREATE TABLE t_ad_channel
 (
-    ad_id int NOT NULL,
-    soft_channel_id int NOT NULL,
-    create_time datetime,
-    update_time datetime,
-    UNIQUE (ad_id),
-    UNIQUE (soft_channel_id)
+	ad_id int NOT NULL,
+	soft_channel_id int NOT NULL,
+	create_time datetime,
+	update_time datetime,
+	-- 1 当前版本  2 历史版本 
+	type tinyint COMMENT '1 当前版本  2 历史版本 ',
+	app_id int NOT NULL,
+	UNIQUE (ad_id),
+	UNIQUE (soft_channel_id),
+	UNIQUE (app_id)
+);
+
+
+CREATE TABLE t_app
+(
+	app_id int NOT NULL AUTO_INCREMENT,
+	versionname char(64),
+	versioncode int,
+	create_time datetime,
+	update_time datetime,
+	url varchar(256),
+	a_id int,
+	-- 1 关闭  2 开始 0 删除
+	status int COMMENT '1 关闭  2 开始 0 删除',
+	PRIMARY KEY (app_id),
+	UNIQUE (app_id)
+);
+
+
+CREATE TABLE t_batch_info
+(
+    id int NOT NULL AUTO_INCREMENT,
+    vipkey char(16),
+    batch_id int NOT NULL,
+    status tinyint,
+    PRIMARY KEY (id),
+    UNIQUE (id),
+    UNIQUE (vipkey),
+    UNIQUE (batch_id)
+);
+
+
+CREATE TABLE t_channel
+(
+    chan_id int NOT NULL AUTO_INCREMENT,
+    chan_nickname char(20),
+    chan_name varchar(64),
+    pro_id int NOT NULL,
+    a_id int NOT NULL,
+    PRIMARY KEY (chan_id),
+    UNIQUE (chan_id),
+    UNIQUE (pro_id)
+);
+
+
+CREATE TABLE t_ch_batch
+(
+    batch_id int NOT NULL AUTO_INCREMENT,
+    num int,
+    a_id int NOT NULL,
+    com_type_id int NOT NULL,
+    chan_id int NOT NULL,
+    PRIMARY KEY (batch_id),
+    UNIQUE (batch_id),
+    UNIQUE (com_type_id),
+    UNIQUE (chan_id)
 );
 
 
@@ -115,8 +180,7 @@ CREATE TABLE t_com_type
     create_time datetime,
     update_time datetime,
     PRIMARY KEY (com_type_id),
-    UNIQUE (com_type_id),
-    UNIQUE (a_id)
+    UNIQUE (com_type_id)
 );
 
 
@@ -244,6 +308,18 @@ CREATE TABLE t_order_feedback
 );
 
 
+CREATE TABLE t_promoter
+(
+    pro_id int NOT NULL AUTO_INCREMENT,
+    pro_name varchar(64),
+    phone char(12),
+    extra varchar(128),
+    a_id int NOT NULL,
+    PRIMARY KEY (pro_id),
+    UNIQUE (pro_id)
+);
+
+
 CREATE TABLE t_soft_channel
 (
     soft_channel_id int NOT NULL,
@@ -359,7 +435,6 @@ CREATE TABLE t_vipcommodity
     UNIQUE (cmdy_id),
     UNIQUE (viptype_id),
     UNIQUE (com_type_id),
-    UNIQUE (a_id),
     UNIQUE (soft_channel_id)
 );
 
@@ -371,8 +446,7 @@ CREATE TABLE t_viptype
     vipname varchar(32) COMMENT '不同vip和年费vip',
     a_id int NOT NULL,
     PRIMARY KEY (viptype_id),
-    UNIQUE (viptype_id),
-    UNIQUE (a_id)
+    UNIQUE (viptype_id)
 );
 
 
@@ -445,8 +519,32 @@ ALTER TABLE t_vipcommodity
 
 
 ALTER TABLE t_viptype
-    ADD FOREIGN KEY (a_id)
-        REFERENCES t_admin_user (a_id)
+	ADD FOREIGN KEY (a_id)
+	REFERENCES t_admin_user (a_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_ad_channel
+	ADD FOREIGN KEY (app_id)
+	REFERENCES t_app (app_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_ch_batch
+    ADD FOREIGN KEY (chan_id)
+        REFERENCES t_channel (chan_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_batch_info
+    ADD FOREIGN KEY (batch_id)
+        REFERENCES t_ch_batch (batch_id)
         ON UPDATE RESTRICT
         ON DELETE RESTRICT
 ;
@@ -495,6 +593,14 @@ ALTER TABLE t_user_device
 ALTER TABLE t_user_notice
     ADD FOREIGN KEY (notice_id)
         REFERENCES t_notice (notice_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_channel
+    ADD FOREIGN KEY (pro_id)
+        REFERENCES t_promoter (pro_id)
         ON UPDATE RESTRICT
         ON DELETE RESTRICT
 ;

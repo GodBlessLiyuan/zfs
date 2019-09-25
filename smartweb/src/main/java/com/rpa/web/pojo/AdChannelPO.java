@@ -16,6 +16,13 @@ public class AdChannelPO implements Serializable {
 
     private Date updateTime;
 
+    /**
+     * 1 当前版本  2 历史版本 
+     */
+    private Byte type;
+
+    private Integer appId;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getAdId() {
@@ -50,6 +57,22 @@ public class AdChannelPO implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    public Integer getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Integer appId) {
+        this.appId = appId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -65,7 +88,9 @@ public class AdChannelPO implements Serializable {
         return (this.getAdId() == null ? other.getAdId() == null : this.getAdId().equals(other.getAdId()))
             && (this.getSoftChannelId() == null ? other.getSoftChannelId() == null : this.getSoftChannelId().equals(other.getSoftChannelId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+            && (this.getAppId() == null ? other.getAppId() == null : this.getAppId().equals(other.getAppId()));
     }
 
     @Override
@@ -76,6 +101,8 @@ public class AdChannelPO implements Serializable {
         result = prime * result + ((getSoftChannelId() == null) ? 0 : getSoftChannelId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + ((getAppId() == null) ? 0 : getAppId().hashCode());
         return result;
     }
 
@@ -89,6 +116,8 @@ public class AdChannelPO implements Serializable {
         sb.append(", softChannelId=").append(softChannelId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", type=").append(type);
+        sb.append(", appId=").append(appId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
