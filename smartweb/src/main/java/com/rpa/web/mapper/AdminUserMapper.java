@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AdminUserMapper extends BaseDAO<AdminUserPO, Integer> {
+    AdminUserPO getUserByUserName(String username);
 }

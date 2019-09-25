@@ -2,8 +2,8 @@ package com.rpa.web.controller;
 
 import com.rpa.web.exception.PasswordErrorException;
 import com.rpa.web.exception.UserNotExistsException;
+import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.pojo.ResultInfo;
-import com.rpa.web.pojo.UserPO;
 import com.rpa.web.service.LoginService;
 import com.rpa.web.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ public class LoginController {
             password = Md5Util.encodeByMd5(password);
 
             // 调用业务进行登录
-            UserPO loginUser = loginService.login(username, password);
+            AdminUserPO loginUser = loginService.login(username, password);
 
             // 登录成功，返回成功信息
             if (loginUser != null) {

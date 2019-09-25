@@ -14,11 +14,11 @@
   <sql id="Base_Column_List">
     a_id, username, `password`, email, `role`, is_lock, create_time, last_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap" resultType="com.rpa.web.pojo.AdminUserPO">
     select 
     <include refid="Base_Column_List" />
     from t_admin_user
-    where a_id = #{aId,jdbcType=INTEGER}
+    where username=#{username}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_admin_user
