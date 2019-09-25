@@ -2,6 +2,7 @@ package com.rpa.web.controller;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.pojo.ComTypePO;
 import com.rpa.web.service.IComTypeService;
 import com.rpa.web.utils.DTPageInfo;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +28,22 @@ public class ComTypeRestController {
 
     @Resource
     private IComTypeService service;
+
+    @RequestMapping("/comtype/insert")
+    public void insert(@RequestParam(value = "name") String name, @RequestParam(value = "days") int days,
+                       @RequestParam(value = "extra") String extra, HttpSession session) {
+
+        AdminUserPO loginUser = (AdminUserPO)session.getAttribute("loginUser");
+
+        ComTypePO po = new ComTypePO();
+        po.setName(name);
+        po.setDays(days);
+        po.setExtra(extra);
+        po.setaId(loginUser.getaId());
+        po.setCreateTime(new Date());
+
+        service.insert(po);
+    }
 
     @RequestMapping("/comtype/query")
     public DTPageInfo<ComTypePO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,

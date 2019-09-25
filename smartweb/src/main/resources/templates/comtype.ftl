@@ -85,9 +85,40 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                    id="add">新增产品
-                            </button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">新增产品</button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">新增产品</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <span for="recipient-name" class="col-form-label">产品类型:</span>
+                                                    <input type="text" class="form-control" id="comtype-name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">产品天数:</span>
+                                                    <input type="text" class="form-control" id="comtype-days">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">备注信息:</span>
+                                                    <input type="text" class="form-control" id="comtype-extra">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
+                                                    data-dismiss="modal"
+                                            >确认上架</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <hr>
                             <div class="form-group">
                                 <div class="col-md-4 ">
@@ -104,6 +135,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <hr>
                             <div class="table-responsive">
                                 <table id="comtypetab" class="display" style="width:100%">
@@ -158,22 +190,18 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
-    // $(document).ready(function() {
-    //     $('#comtypetab').DataTable( {
-    //         "processing": true,
-    //         "serverSide": true,
-    //         "ajax": "/comtype/query?operator=2",
-    //         "columns": [
-    //             { "data": "name" },
-    //             { "data": "name" },
-    //             { "data": "days" },
-    //             { "data": "createTime" },
-    //             { "data": "extra" },
-    //             { "data": "aId" }
-    //         ]
-    //     } );
-    // } );
 
+    /**
+     * 确认上架点击事件
+     */
+    function insertClick() {
+        $.get("/comtype/insert?name=" + $('#comtype-name').val() + "&days=" + parseInt($('#comtype-days').val()) + "&extra=" + $
+        ('#comtype-extra').val());
+    }
+
+    /**
+     * 查询点击事件
+     */
     function queryClick() {
 
         if ($.fn.dataTable.isDataTable('#comtypetab')) {
