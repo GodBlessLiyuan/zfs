@@ -1,6 +1,6 @@
 package com.rpa.web.mapper;
 
-import com.rpa.web.pojo.User;
+import com.rpa.web.pojo.UserPO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,5 +18,5 @@ public interface IUserMapper {
      * 分页查询
      * @return
      */
-    List<User> list();
+    List<UserPO> list();
 }

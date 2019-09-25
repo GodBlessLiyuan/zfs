@@ -1,7 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.rpa.web.mapper.IUserMapper;
-import com.rpa.web.pojo.User;
+import com.rpa.web.pojo.UserPO;
 import com.rpa.web.service.IUserService;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class UserServiceImpl implements IUserService {
     private IUserMapper userMapper;
 
     @Override
-    public List<User> list() {
+    public List<UserPO> list() {
         return userMapper.list();
     }
 }
