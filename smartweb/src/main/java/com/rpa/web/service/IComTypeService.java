@@ -3,6 +3,7 @@ package com.rpa.web.service;
 import com.rpa.web.pojo.ComTypePO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: xiahui
@@ -20,7 +21,8 @@ public interface IComTypeService {
     /**
      * 查询
      * @return
+     * @param map
      */
-    List<ComTypePO> query();
+    List<ComTypePO> query(Map<String, Object> map);
 
 }

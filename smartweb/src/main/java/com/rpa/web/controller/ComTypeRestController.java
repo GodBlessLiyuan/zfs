@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: xiahui
@@ -27,9 +29,13 @@ public class ComTypeRestController {
     @RequestMapping("/comtype/query")
     public DTPageInfo<ComTypePO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                        @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                       @RequestParam(value = "length", defaultValue = "10") int pageSize) {
+                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                       @RequestParam(value = "operator") String username) {
+        Map<String, Object> map = new HashMap<>(1);
+        map.put("a_id", username);
+
         Page<ComTypePO> page = PageHelper.startPage(pageNum, pageSize);
-        List<ComTypePO> data = service.query();
+        List<ComTypePO> data = service.query(map);
 
         return new DTPageInfo<>(draw, page.getTotal(), data);
     }

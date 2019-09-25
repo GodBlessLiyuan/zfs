@@ -4,6 +4,7 @@ import com.rpa.web.pojo.ComTypePO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ComTypeMapper继承基类
@@ -11,5 +12,5 @@ import java.util.List;
 @Mapper
 public interface ComTypeMapper extends BaseDAO<ComTypePO, Integer> {
 
-    List<ComTypePO> query();
+    List<ComTypePO> query(Map<String, Object> map);
 }
