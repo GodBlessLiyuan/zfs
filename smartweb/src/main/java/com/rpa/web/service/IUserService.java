@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.pojo.User;
+import com.rpa.web.pojo.UserPO;
 
 import java.util.List;
 
@@ -14,7 +14,8 @@ public interface IUserService {
 
     /**
      * 分页查询
+     *
      * @return
      */
-    List<User> list();
+    List<UserPO> list();
 }

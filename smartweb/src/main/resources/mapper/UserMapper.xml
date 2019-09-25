@@ -103,4 +103,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
+
+  <select id="list" resultType="com.rpa.web.pojo.UserPO">
+    select * from t_user
+  </select>
 </mapper>
