@@ -28,6 +28,7 @@ public class UserRestController {
             "start", defaultValue = "1") int pageNum,
                                  @RequestParam(value = "length", defaultValue = "10") int pageSize) {
         Page<UserPO> page = PageHelper.startPage(pageNum, pageSize);
+
         List<UserPO> data = service.list();
 
         return new DTPageInfo<>(draw, page.getTotal(), data);
