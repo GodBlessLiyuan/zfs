@@ -12,5 +12,4 @@ import java.util.Map;
 @Mapper
 public interface ComTypeMapper extends BaseDAO<ComTypePO, Integer> {
 
-    List<ComTypePO> query(Map<String, Object> map);
 }

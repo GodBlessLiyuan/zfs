@@ -2,6 +2,9 @@ package com.rpa.web.mapper;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+
+import com.rpa.web.pojo.ComTypePO;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -17,6 +20,8 @@ public interface BaseDAO<Model, PK extends Serializable> {
     int insertSelective(Model record);
 
     Model selectByPrimaryKey(PK id);
+
+    List<Model> query(Map<String, Object> map);
 
     int updateByPrimaryKeySelective(Model record);
 

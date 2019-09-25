@@ -68,38 +68,62 @@
         Content body start
     ***********************************-->
     <div class="content-body">
-        <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                id="add">新增产品
-        </button>
-        <hr>
-        <div class="form-group">
-            <div class="col-md-4 ">
-                <div class="input-group">
-                    <span class="input-group-addon">操作人:</span>
-                    <input id="username" type="text" class="form-control">
-                    <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                            id="reset">重置
-                    </button>
-                    <button type="button" class="btn btn-primary m-r-5 m-b-5" onclick="javascript:queryClick();"
-                            id="query">查询
-                    </button>
-                </div>
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                </ol>
             </div>
         </div>
-        <hr>
-        <div class="table-responsive">
-            <table id="comtypetab" class="display" style="width:100%">
-                <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>产品类型</th>
-                    <th>产品天数</th>
-                    <th>配置时间</th>
-                    <th>备注</th>
-                    <th>操作人</th>
-                </tr>
-                </thead>
-            </table>
+        <!-- row -->
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <button type="button" class="btn btn-primary m-r-5 m-b-5"
+                                    id="add">新增产品
+                            </button>
+                            <hr>
+                            <div class="form-group">
+                                <div class="col-md-4 ">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">操作人:</span>
+                                        <input id="username" type="text" class="form-control">
+                                        <button type="button" class="btn btn-primary m-r-5 m-b-5"
+                                                id="reset">重置
+                                        </button>
+                                        <button type="button" class="btn btn-primary m-r-5 m-b-5"
+                                                onclick="javascript:queryClick();"
+                                                id="query">查询
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="table-responsive">
+                                <table id="comtypetab" class="display" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>产品类型</th>
+                                        <th>产品天数</th>
+                                        <th>配置时间</th>
+                                        <th>备注</th>
+                                        <th>操作人</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!--**********************************
@@ -160,26 +184,30 @@
             "processing": true,
             "serverSide": true,
             "ajax": "/comtype/query?username=" + $('#username').val(),
-            "fnDrawCallback"    : function(){
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML =  i + 1;
+            "fnDrawCallback": function () {
+                this.api().column(0).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
                 });
             },
             "columns": [
-                {"data": null,"targets":0},
+                {"data": null, "targets": 0},
                 {"data": "name"},
                 {"data": "days"},
                 {"data": "createTime"},
                 {"data": "extra"},
                 {"data": "username"}
             ],
-            "columnDefs":[
+            "columnDefs": [
                 {
                     "targets": [3],
-                    "render":function (data, type, full) {
-                        if (data == null || data.trim() == "") { return ""; }
-                        else { var date = new Date(data); return date.getFullYear() + "/" + date.getMonth() + "/" +
-                            date.getDate() + " " + date.getHours() + ":" + date.getMinutes() +":" + date.getSeconds(); }
+                    "render": function (data, type, full) {
+                        if (data == null || data.trim() == "") {
+                            return "";
+                        } else {
+                            var date = new Date(data);
+                            return date.getFullYear() + "/" + date.getMonth() + "/" +
+                                date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                        }
                     }
                 }
             ]
