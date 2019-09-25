@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: xiahui
@@ -26,7 +27,7 @@ public class ComTypeServiceImpl implements IComTypeService {
     }
 
     @Override
-    public List<ComTypePO> query() {
-        return mapper.query();
+    public List<ComTypePO> query(Map<String, Object> map) {
+        return mapper.query(map);
     }
 }

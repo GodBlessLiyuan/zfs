@@ -68,57 +68,39 @@
         Content body start
     ***********************************-->
     <div class="content-body">
-        <form class="form-horizontal form-bordered" data-parsley-validate="true" name="bgPicture-form"
-              id="bgPicture-form">
-            <div class="modal-body">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="ibox ">
-                                <div class="ibox-content">
-                                    <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                            id="add">新增产品
-                                    </button>
-                                    <hr>
-                                    <form class="form-horizontal form-bordered" id="queryForm">
-                                        <div class="form-group">
-                                            <div class="col-md-4 ">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">操作人:</span>
-                                                    <input id="operator" type="text" class="form-control">
-                                                    <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                                            id="reset">重置
-                                                    </button>
-                                                    <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                                            id="query">查询
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    <hr>
-                                    <div class="table-responsive">
-                                        <table id="example" class="display" style="width:100%">
-                                            <thead>
-                                            <tr>
-                                                <th>序号</th>
-                                                <th>产品类型</th>
-                                                <th>产品天数</th>
-                                                <th>配置时间</th>
-                                                <th>备注</th>
-                                                <th>操作人</th>
-                                            </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <button type="button" class="btn btn-primary m-r-5 m-b-5"
+                id="add">新增产品
+        </button>
+        <hr>
+        <div class="form-group">
+            <div class="col-md-4 ">
+                <div class="input-group">
+                    <span class="input-group-addon">操作人:</span>
+                    <input id="operator" type="text" class="form-control">
+                    <button type="button" class="btn btn-primary m-r-5 m-b-5"
+                            id="reset">重置
+                    </button>
+                    <button type="button" class="btn btn-primary m-r-5 m-b-5" onclick="javascript:queryClick();"
+                            id="query">查询
+                    </button>
                 </div>
             </div>
-        </form>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table id="comtypetab" class="display" style="width:100%">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>产品类型</th>
+                    <th>产品天数</th>
+                    <th>配置时间</th>
+                    <th>备注</th>
+                    <th>操作人</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
     </div>
     <!--**********************************
         Content body end
@@ -150,23 +132,44 @@
 <script src="./js/dashboard/dashboard-1.js"></script>
 
 <script src="./plugins/jquery/jquery.min.js"></script>
-<script  src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#example').DataTable( {
+    // $(document).ready(function() {
+    //     $('#comtypetab').DataTable( {
+    //         "processing": true,
+    //         "serverSide": true,
+    //         "ajax": "/comtype/query?operator=2",
+    //         "columns": [
+    //             { "data": "name" },
+    //             { "data": "name" },
+    //             { "data": "days" },
+    //             { "data": "createTime" },
+    //             { "data": "extra" },
+    //             { "data": "aId" }
+    //         ]
+    //     } );
+    // } );
+
+    function queryClick() {
+
+        if ( $.fn.dataTable.isDataTable( '#comtypetab' ) ) {
+            $('#comtypetab').DataTable().destroy();
+        }
+
+        $('#comtypetab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/comtype/query",
+            "ajax": "/comtype/query?operator=" + $('#operator').val(),
             "columns": [
-                { "data": "name" },
-                { "data": "name" },
-                { "data": "days" },
-                { "data": "createTime" },
-                { "data": "extra" },
-                { "data": "aId" }
+                {"data": "name"},
+                {"data": "name"},
+                {"data": "days"},
+                {"data": "createTime"},
+                {"data": "extra"},
+                {"data": "aId"}
             ]
-        } );
-    } );
+        });
+    }
 </script>
 
 </body>
