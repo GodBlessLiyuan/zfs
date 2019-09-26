@@ -133,7 +133,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>操作人</label>
-                                            <input id="username" type="text" class="form-control" >
+                                            <input id="username" type="text" class="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>产品类型</label>
@@ -249,8 +249,8 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/vipcommodity/query?username=" + $('#username').val() + "&comname="  + $('#comname').val()+
-                "&channelname="  + $('#channelname').val(),
+            "ajax": "/vipcommodity/query?username=" + $('#username').val() + "&comname=" + $('#comname').val() +
+                "&channelname=" + $('#channelname').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -266,10 +266,33 @@
                 {"data": "price"},
                 {"data": "showDiscount"},
                 {"data": "discount"},
-                {"data": "status"},
-                {"data": "positon"},
+                {
+                    "data": "status",
+                    "render": function (data, type, full) {
+                        if (data == 1) {
+                            return "<button class='badge badge-dark' type='button'>未上架</button>";
+                        } else {
+                            return "<button class='badge badge-primary' type='button'>已上架</button>";
+                        }
+                    }
+                },
+                {
+                    "data": "istop",
+                    "render": function (data, type, full) {
+                        if (data == 1) {
+                            return "<button class='badge badge-dark' type='button'>未置顶</button>";
+                        } else {
+                            return "<button class='badge badge-primary' type='button'>已置顶</button>";
+                        }
+                    }
+                },
                 {"data": "createTime"},
-                {"data": null},
+                {
+                    "data": null,
+                    "render": function (data, type, full) {
+                        return "<a href='xxx'>修改</a>";
+                    }
+                },
                 {"data": "username"}
             ],
             "columnDefs": [
@@ -285,7 +308,22 @@
                         }
                     }
                 }
-            ]
+            ],
+            "oLanguage": {
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "对不起，没有匹配的数据",
+                "sInfo": "第 _START_ - _END_ 条 / 共 _TOTAL_ 条数据",
+                "sInfoEmpty": "没有匹配的数据",
+                "sInfoFiltered": "(数据表中共 _MAX_ 条记录)",
+                "sProcessing": "正在加载中...",
+                "sSearch": "全文搜索：",
+                "oPaginate": {
+                    "sFirst": "第一页",
+                    "sPrevious": " 上一页 ",
+                    "sNext": " 下一页 ",
+                    "sLast": " 最后一页 "
+                }
+            }
         });
     }
 </script>
