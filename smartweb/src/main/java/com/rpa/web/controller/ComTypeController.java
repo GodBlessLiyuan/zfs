@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,16 +32,10 @@ public class ComTypeController {
     public void insert(@RequestParam(value = "name") String name, @RequestParam(value = "days") int days,
                        @RequestParam(value = "extra") String extra, HttpSession session) {
 
-        AdminUserPO loginUser = (AdminUserPO)session.getAttribute("loginUser");
+        // 从Session里获取管理员Id
+        AdminUserPO loginUser = (AdminUserPO) session.getAttribute("loginUser");
 
-        ComTypePO po = new ComTypePO();
-        po.setName(name);
-        po.setDays(days);
-        po.setExtra(extra);
-        po.setaId(loginUser.getaId());
-        po.setCreateTime(new Date());
-
-        service.insert(po);
+        service.insert(name, days, extra, loginUser.getaId());
     }
 
     @RequestMapping("/comtype/query")

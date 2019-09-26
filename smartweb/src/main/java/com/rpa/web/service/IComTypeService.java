@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @author: xiahui
  * @date: Created in 2019/9/25 10:45
- * @description: 会员中心-产品列表-服务接口
+ * @description: 产品列表接口
  * @version: 1.0
  */
 public interface IComTypeService {
@@ -16,7 +16,14 @@ public interface IComTypeService {
     /**
      * 新增
      */
-    void insert(ComTypePO po);
+    /**
+     * 新增
+     * @param name 产品类型
+     * @param days 产品天数
+     * @param extra 备注信息
+     * @param aId 管理员Id
+     */
+    void insert(String name, int days, String extra, int aId);
 
     /**
      * 查询

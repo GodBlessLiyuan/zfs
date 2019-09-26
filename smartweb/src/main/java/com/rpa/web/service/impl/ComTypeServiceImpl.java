@@ -6,6 +6,7 @@ import com.rpa.web.service.IComTypeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,14 @@ public class ComTypeServiceImpl implements IComTypeService {
     private ComTypeMapper mapper;
 
     @Override
-    public void insert(ComTypePO po) {
+    public void insert(String name, int days, String extra, int aId) {
+        ComTypePO po = new ComTypePO();
+        po.setName(name);
+        po.setDays(days);
+        po.setExtra(extra);
+        po.setaId(aId);
+        po.setCreateTime(new Date());
+
         mapper.insert(po);
     }
 
