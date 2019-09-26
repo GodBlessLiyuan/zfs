@@ -21,11 +21,11 @@ DROP TABLE IF EXISTS t_channel;
 DROP TABLE IF EXISTS t_device_imei;
 DROP TABLE IF EXISTS t_exception;
 DROP TABLE IF EXISTS t_user_notice;
-DROP TABLE IF EXISTS t_notice;
 DROP TABLE IF EXISTS t_user_device;
 DROP TABLE IF EXISTS t_device;
 DROP TABLE IF EXISTS t_key_text;
 DROP TABLE IF EXISTS t_key_value;
+DROP TABLE IF EXISTS t_notice;
 DROP TABLE IF EXISTS t_order_feedback;
 DROP TABLE IF EXISTS t_promoter;
 DROP TABLE IF EXISTS t_soft_channel;
@@ -200,11 +200,12 @@ CREATE TABLE t_device_imei
 
 CREATE TABLE t_exception
 (
-    exceptionid int NOT NULL AUTO_INCREMENT,
-    device_id bigint NOT NULL,
-    error text,
-    PRIMARY KEY (exceptionid),
-    UNIQUE (exceptionid)
+	exceptionid int NOT NULL AUTO_INCREMENT,
+	-- 允许为null
+	device_id bigint NOT NULL COMMENT '允许为null',
+	error text,
+	PRIMARY KEY (exceptionid),
+	UNIQUE (exceptionid)
 );
 
 
@@ -375,13 +376,19 @@ CREATE TABLE t_user_history
 
 CREATE TABLE t_user_notice
 (
-    user_device_id int NOT NULL,
-    notice_id int NOT NULL,
-    user_id bigint,
-    device_id bigint,
-    time time,
-    UNIQUE (user_device_id),
-    UNIQUE (notice_id)
+	u_notice_id bigint NOT NULL AUTO_INCREMENT,
+	-- 允许为null
+	user_device_id int COMMENT '允许为null',
+	notice_id int,
+	-- 允许为null
+	user_id bigint COMMENT '允许为null',
+	-- 允许为null
+	device_id bigint COMMENT '允许为null',
+	time time,
+	-- 当活动存在多个执行状态时，默认为1
+	status tinyint COMMENT '当活动存在多个执行状态时，默认为1',
+	PRIMARY KEY (u_notice_id),
+	UNIQUE (u_notice_id)
 );
 
 
@@ -409,11 +416,16 @@ CREATE TABLE t_vipcommodity
     discount float,
     positon int,
     create_time time,
-    a_id int NOT NULL,
+
     soft_channel_id int NOT NULL,
     name char(20),
     update_time datetime,
     days int,
+	a_id int NOT NULL,
+	description char(128),
+	show_discount char(32),
+	-- 1 不上架 2 上架
+	status tinyint COMMENT '1 不上架 2 上架',
     PRIMARY KEY (cmdy_id),
     UNIQUE (cmdy_id)
 );

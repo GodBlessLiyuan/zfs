@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.web.mapper.VipCommodityMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.VipCommodityPO">
+<mapper namespace="com.rpa.web.mapper.VipcommodityMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.VipcommodityPO">
     <id column="cmdy_id" jdbcType="INTEGER" property="cmdyId" />
     <result column="viptype_id" jdbcType="INTEGER" property="viptypeId" />
     <result column="com_type_id" jdbcType="INTEGER" property="comTypeId" />
@@ -10,14 +10,18 @@
     <result column="discount" jdbcType="REAL" property="discount" />
     <result column="positon" jdbcType="INTEGER" property="positon" />
     <result column="create_time" jdbcType="TIME" property="createTime" />
-    <result column="a_id" jdbcType="INTEGER" property="aId" />
     <result column="soft_channel_id" jdbcType="INTEGER" property="softChannelId" />
     <result column="name" jdbcType="CHAR" property="name" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="days" jdbcType="INTEGER" property="days" />
+    <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="description" jdbcType="CHAR" property="description" />
+    <result column="show_discount" jdbcType="CHAR" property="showDiscount" />
+    <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
     cmdy_id, viptype_id, com_type_id, com_name, price, discount, positon, create_time, 
-    a_id, soft_channel_id, `name`, update_time
+    soft_channel_id, `name`, update_time, `days`, a_id, description, show_discount, `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -29,19 +33,21 @@
     delete from t_vipcommodity
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.web.pojo.VipCommodityPO">
+  <insert id="insert" parameterType="com.rpa.web.pojo.VipcommodityPO">
     insert into t_vipcommodity (cmdy_id, viptype_id, com_type_id, 
       com_name, price, discount, 
-      positon, create_time, a_id, 
-      soft_channel_id, `name`, update_time
-      )
+      positon, create_time, soft_channel_id, 
+      `name`, update_time, `days`, 
+      a_id, description, show_discount, 
+      `status`)
     values (#{cmdyId,jdbcType=INTEGER}, #{viptypeId,jdbcType=INTEGER}, #{comTypeId,jdbcType=INTEGER}, 
       #{comName,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{discount,jdbcType=REAL}, 
-      #{positon,jdbcType=INTEGER}, #{createTime,jdbcType=TIME}, #{aId,jdbcType=INTEGER}, 
-      #{softChannelId,jdbcType=INTEGER}, #{name,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{positon,jdbcType=INTEGER}, #{createTime,jdbcType=TIME}, #{softChannelId,jdbcType=INTEGER}, 
+      #{name,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{days,jdbcType=INTEGER}, 
+      #{aId,jdbcType=INTEGER}, #{description,jdbcType=CHAR}, #{showDiscount,jdbcType=CHAR}, 
+      #{status,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.web.pojo.VipCommodityPO">
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.VipcommodityPO">
     insert into t_vipcommodity
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="cmdyId != null">
@@ -68,9 +74,6 @@
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="aId != null">
-        a_id,
-      </if>
       <if test="softChannelId != null">
         soft_channel_id,
       </if>
@@ -79,6 +82,21 @@
       </if>
       <if test="updateTime != null">
         update_time,
+      </if>
+      <if test="days != null">
+        `days`,
+      </if>
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="showDiscount != null">
+        show_discount,
+      </if>
+      <if test="status != null">
+        `status`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -106,9 +124,6 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIME},
       </if>
-      <if test="aId != null">
-        #{aId,jdbcType=INTEGER},
-      </if>
       <if test="softChannelId != null">
         #{softChannelId,jdbcType=INTEGER},
       </if>
@@ -118,9 +133,24 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="days != null">
+        #{days,jdbcType=INTEGER},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=CHAR},
+      </if>
+      <if test="showDiscount != null">
+        #{showDiscount,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.VipCommodityPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.VipcommodityPO">
     update t_vipcommodity
     <set>
       <if test="viptypeId != null">
@@ -144,9 +174,6 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIME},
       </if>
-      <if test="aId != null">
-        a_id = #{aId,jdbcType=INTEGER},
-      </if>
       <if test="softChannelId != null">
         soft_channel_id = #{softChannelId,jdbcType=INTEGER},
       </if>
@@ -156,10 +183,25 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="days != null">
+        `days` = #{days,jdbcType=INTEGER},
+      </if>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=CHAR},
+      </if>
+      <if test="showDiscount != null">
+        show_discount = #{showDiscount,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
     </set>
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.VipCommodityPO">
+  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.VipcommodityPO">
     update t_vipcommodity
     set viptype_id = #{viptypeId,jdbcType=INTEGER},
       com_type_id = #{comTypeId,jdbcType=INTEGER},
@@ -168,10 +210,14 @@
       discount = #{discount,jdbcType=REAL},
       positon = #{positon,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIME},
-      a_id = #{aId,jdbcType=INTEGER},
       soft_channel_id = #{softChannelId,jdbcType=INTEGER},
       `name` = #{name,jdbcType=CHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `days` = #{days,jdbcType=INTEGER},
+      a_id = #{aId,jdbcType=INTEGER},
+      description = #{description,jdbcType=CHAR},
+      show_discount = #{showDiscount,jdbcType=CHAR},
+      `status` = #{status,jdbcType=TINYINT}
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}
   </update>
 </mapper>
