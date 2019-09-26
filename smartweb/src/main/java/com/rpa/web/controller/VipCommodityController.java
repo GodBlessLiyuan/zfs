@@ -1,8 +1,6 @@
 package com.rpa.web.controller;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.rpa.web.pojo.VipCommodityPO;
+import com.rpa.web.dto.VipCommodityDTO;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,23 +24,19 @@ public class VipCommodityController {
     private IVipCommodityService service;
 
     @RequestMapping("/vipcommodity/query")
-    public DTPageInfo<VipCommodityPO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                            @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                            @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                            @RequestParam(value = "username") String username,
-                                            @RequestParam(value = "comname") String comname,
-                                            @RequestParam(value = "channelname") String channelname) {
-        Map<String, Object> map = new HashMap<>(3);
-        // 操作员
-        map.put("username", username);
-        // 商品类型
-        map.put("comname", comname);
-        // 渠道名
-        map.put("channelname", channelname);
+    public DTPageInfo<VipCommodityDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                             @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                             @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                             @RequestParam(value = "username") String username,
+                                             @RequestParam(value = "comname") String comname,
+                                             @RequestParam(value = "channelname") String channelname) {
 
-        Page<VipCommodityPO > page = PageHelper.startPage(pageNum, pageSize);
-        List<VipCommodityPO > data = service.query(map);
+        Map<String, Object> reqData = new HashMap<>(3);
+        reqData.put("username", username);
+        reqData.put("comname", comname);
+        reqData.put("channelname", channelname);
 
-        return new DTPageInfo<>(draw, page.getTotal(), data);
+        DTPageInfo<VipCommodityDTO> data = service.query(draw, pageNum, pageSize, reqData);
+        return data;
     }
 }

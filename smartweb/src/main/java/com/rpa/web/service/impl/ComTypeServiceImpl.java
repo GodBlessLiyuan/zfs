@@ -1,12 +1,17 @@
 package com.rpa.web.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.rpa.web.dto.ComTypeDTO;
 import com.rpa.web.mapper.ComTypeMapper;
 import com.rpa.web.pojo.ComTypePO;
 import com.rpa.web.service.IComTypeService;
+import com.rpa.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +40,11 @@ public class ComTypeServiceImpl implements IComTypeService {
     }
 
     @Override
-    public List<ComTypePO> query(Map<String, Object> map) {
-        return mapper.query(map);
+    public DTPageInfo<ComTypeDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+
+        Page<ComTypePO> page = PageHelper.startPage(pageNum, pageSize);
+        List<ComTypePO> data = mapper.query(reqData);
+
+        return new DTPageInfo<>(draw, page.getTotal(), ComTypeDTO.convert(data));
     }
 }

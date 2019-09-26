@@ -1,8 +1,9 @@
 package com.rpa.web.service;
 
+import com.rpa.web.dto.VipCommodityDTO;
 import com.rpa.web.pojo.VipCommodityPO;
+import com.rpa.web.utils.DTPageInfo;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,8 +27,11 @@ public interface IVipCommodityService {
     /**
      * 查询
      *
-     * @param map
+     * @param draw     draw
+     * @param pageNum  页面下标
+     * @param pageSize 页面大小
+     * @param reqData  请求数据
      * @return
      */
-    List<VipCommodityPO> query(Map<String, Object> map);
+    DTPageInfo<VipCommodityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 }

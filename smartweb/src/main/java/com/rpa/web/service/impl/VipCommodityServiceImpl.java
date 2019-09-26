@@ -1,9 +1,13 @@
 package com.rpa.web.service.impl;
 
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.rpa.web.dto.VipCommodityDTO;
 import com.rpa.web.mapper.VipCommodityMapper;
 import com.rpa.web.pojo.VipCommodityPO;
 import com.rpa.web.service.IVipCommodityService;
+import com.rpa.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,7 +37,11 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     }
 
     @Override
-    public List<VipCommodityPO> query(Map<String, Object> map) {
-        return mapper.query(map);
+    public DTPageInfo<VipCommodityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+
+        Page<VipCommodityPO> page = PageHelper.startPage(pageNum, pageSize);
+        List<VipCommodityPO> data = mapper.query(reqData);
+
+        return new DTPageInfo<>(draw, page.getTotal(), VipCommodityDTO.convert(data));
     }
 }

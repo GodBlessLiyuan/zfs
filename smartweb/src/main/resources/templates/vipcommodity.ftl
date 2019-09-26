@@ -259,7 +259,7 @@
             "columns": [
                 {"data": null, "targets": 0},
                 {"data": "name"},
-                {"data": "comName"},
+                {"data": "comTypeName"},
                 {"data": "days"},
                 {"data": "comName"},
                 {"data": "description"},

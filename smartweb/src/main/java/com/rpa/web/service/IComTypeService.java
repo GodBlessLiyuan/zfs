@@ -1,8 +1,8 @@
 package com.rpa.web.service;
 
-import com.rpa.web.pojo.ComTypePO;
+import com.rpa.web.dto.ComTypeDTO;
+import com.rpa.web.utils.DTPageInfo;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,18 +18,22 @@ public interface IComTypeService {
      */
     /**
      * 新增
-     * @param name 产品类型
-     * @param days 产品天数
+     *
+     * @param name  产品类型
+     * @param days  产品天数
      * @param extra 备注信息
-     * @param aId 管理员Id
+     * @param aId   管理员Id
      */
     void insert(String name, int days, String extra, int aId);
 
     /**
      * 查询
+     *
+     * @param draw     draw
+     * @param pageNum  页面下标
+     * @param pageSize 页面大小
+     * @param reqData  请求数据
      * @return
-     * @param map
      */
-    List<ComTypePO> query(Map<String, Object> map);
-
+    DTPageInfo<ComTypeDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 }
