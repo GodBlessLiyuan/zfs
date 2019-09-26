@@ -1,4 +1,4 @@
-package com.rpa.web.pojo;
+package com.rpa.web.dto;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_adconfig
  * @author 
  */
-public class AdconfigPO implements Serializable {
+public class AdconfigDTO implements Serializable {
     private Integer adId;
 
     private Integer aId;
@@ -135,7 +135,7 @@ public class AdconfigPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        AdconfigPO other = (AdconfigPO) that;
+        AdconfigDTO other = (AdconfigDTO) that;
         return (this.getAdId() == null ? other.getAdId() == null : this.getAdId().equals(other.getAdId()))
             && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getAdNumber() == null ? other.getAdNumber() == null : this.getAdNumber().equals(other.getAdNumber()))

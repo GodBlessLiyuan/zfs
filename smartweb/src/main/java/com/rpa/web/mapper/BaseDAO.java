@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import com.rpa.web.pojo.ComTypePO;
-import org.apache.ibatis.annotations.Param;
-
 /**
  * DAO公共基类，由MybatisGenerator自动生成请勿修改
  * @param <Model> The Model Class 这里是泛型不是Model类
