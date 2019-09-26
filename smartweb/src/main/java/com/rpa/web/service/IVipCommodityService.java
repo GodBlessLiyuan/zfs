@@ -1,8 +1,9 @@
 package com.rpa.web.service;
 
+import com.rpa.web.dto.VipCommodityDTO;
 import com.rpa.web.pojo.VipCommodityPO;
+import com.rpa.web.utils.DTPageInfo;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,11 +15,6 @@ import java.util.Map;
 public interface IVipCommodityService {
 
     /**
-     * 新增
-     */
-    void insert(VipCommodityPO po);
-
-    /**
      * 更新
      */
     void update(VipCommodityPO po);
@@ -26,8 +22,26 @@ public interface IVipCommodityService {
     /**
      * 查询
      *
-     * @param map
+     * @param draw     draw
+     * @param pageNum  页面下标
+     * @param pageSize 页面大小
+     * @param reqData  请求数据
      * @return
      */
-    List<VipCommodityPO> query(Map<String, Object> map);
+    DTPageInfo<VipCommodityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+
+    /**
+     * 新增
+     *
+     * @param channelName  销售渠道
+     * @param comTypeName  产品类型
+     * @param comName      商品名称
+     * @param description  商品描述
+     * @param price        原价
+     * @param showDiscount 折扣
+     * @param discount     售价
+     * @param aId          管理员Id
+     */
+    void insert(String channelName, String comTypeName, String comName, String description, int price,
+                String showDiscount, float discount, int aId);
 }
