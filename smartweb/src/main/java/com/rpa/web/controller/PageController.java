@@ -29,4 +29,13 @@ public class PageController {
     public String comtype() {
         return "comtype";
     }
+
+    /**
+     * 商品列表
+     * @return
+     */
+    @RequestMapping("/vipcommodity")
+    public String commodity() {
+        return "vipcommodity";
+    }
 }
