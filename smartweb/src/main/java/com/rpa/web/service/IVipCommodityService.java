@@ -15,11 +15,6 @@ import java.util.Map;
 public interface IVipCommodityService {
 
     /**
-     * 新增
-     */
-    void insert(VipCommodityPO po);
-
-    /**
      * 更新
      */
     void update(VipCommodityPO po);
@@ -34,4 +29,19 @@ public interface IVipCommodityService {
      * @return
      */
     DTPageInfo<VipCommodityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+
+    /**
+     * 新增
+     *
+     * @param channelName  销售渠道
+     * @param comTypeName  产品类型
+     * @param comName      商品名称
+     * @param description  商品描述
+     * @param price        原价
+     * @param showDiscount 折扣
+     * @param discount     售价
+     * @param aId          管理员Id
+     */
+    void insert(String channelName, String comTypeName, String comName, String description, int price,
+                String showDiscount, float discount, int aId);
 }
