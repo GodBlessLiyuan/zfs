@@ -414,7 +414,8 @@ CREATE TABLE t_vipcommodity
     com_name varchar(64),
     price int,
     discount float,
-    positon int,
+    -- 1 会员中心 
+    position tinyint COMMENT '1 会员中心 ',
     create_time time,
 
     soft_channel_id int NOT NULL,
@@ -426,8 +427,11 @@ CREATE TABLE t_vipcommodity
 	show_discount char(32),
 	-- 1 不上架 2 上架
 	status tinyint COMMENT '1 不上架 2 上架',
-    PRIMARY KEY (cmdy_id),
-    UNIQUE (cmdy_id)
+	com_type_name char(128),
+	-- 1 未置顶  2 置顶
+	istop tinyint COMMENT '1 未置顶  2 置顶',
+	PRIMARY KEY (cmdy_id),
+	UNIQUE (cmdy_id)
 );
 
 

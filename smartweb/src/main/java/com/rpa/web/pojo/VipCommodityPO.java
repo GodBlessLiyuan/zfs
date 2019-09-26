@@ -20,7 +20,10 @@ public class VipCommodityPO implements Serializable {
 
     private Float discount;
 
-    private Integer positon;
+    /**
+     * 1 会员中心 
+     */
+    private Byte position;
 
     private Date createTime;
 
@@ -45,6 +48,13 @@ public class VipCommodityPO implements Serializable {
      * 1 不上架 2 上架
      */
     private Byte status;
+
+    private String comTypeName;
+
+    /**
+     * 1 未置顶  2 置顶
+     */
+    private Byte istop;
 
     private static final long serialVersionUID = 1L;
 
@@ -96,12 +106,12 @@ public class VipCommodityPO implements Serializable {
         this.discount = discount;
     }
 
-    public Integer getPositon() {
-        return positon;
+    public Byte getPosition() {
+        return position;
     }
 
-    public void setPositon(Integer positon) {
-        this.positon = positon;
+    public void setPosition(Byte position) {
+        this.position = position;
     }
 
     public Date getCreateTime() {
@@ -184,6 +194,22 @@ public class VipCommodityPO implements Serializable {
         this.username = username;
     }
 
+    public String getComTypeName() {
+        return comTypeName;
+    }
+
+    public void setComTypeName(String comTypeName) {
+        this.comTypeName = comTypeName;
+    }
+
+    public Byte getIstop() {
+        return istop;
+    }
+
+    public void setIstop(Byte istop) {
+        this.istop = istop;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -202,7 +228,7 @@ public class VipCommodityPO implements Serializable {
             && (this.getComName() == null ? other.getComName() == null : this.getComName().equals(other.getComName()))
             && (this.getPrice() == null ? other.getPrice() == null : this.getPrice().equals(other.getPrice()))
             && (this.getDiscount() == null ? other.getDiscount() == null : this.getDiscount().equals(other.getDiscount()))
-            && (this.getPositon() == null ? other.getPositon() == null : this.getPositon().equals(other.getPositon()))
+            && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getSoftChannelId() == null ? other.getSoftChannelId() == null : this.getSoftChannelId().equals(other.getSoftChannelId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
@@ -211,7 +237,9 @@ public class VipCommodityPO implements Serializable {
             && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getShowDiscount() == null ? other.getShowDiscount() == null : this.getShowDiscount().equals(other.getShowDiscount()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getComTypeName() == null ? other.getComTypeName() == null : this.getComTypeName().equals(other.getComTypeName()))
+            && (this.getIstop() == null ? other.getIstop() == null : this.getIstop().equals(other.getIstop()));
     }
 
     @Override
@@ -224,7 +252,7 @@ public class VipCommodityPO implements Serializable {
         result = prime * result + ((getComName() == null) ? 0 : getComName().hashCode());
         result = prime * result + ((getPrice() == null) ? 0 : getPrice().hashCode());
         result = prime * result + ((getDiscount() == null) ? 0 : getDiscount().hashCode());
-        result = prime * result + ((getPositon() == null) ? 0 : getPositon().hashCode());
+        result = prime * result + ((getPosition() == null) ? 0 : getPosition().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getSoftChannelId() == null) ? 0 : getSoftChannelId().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
@@ -234,6 +262,8 @@ public class VipCommodityPO implements Serializable {
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getShowDiscount() == null) ? 0 : getShowDiscount().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getComTypeName() == null) ? 0 : getComTypeName().hashCode());
+        result = prime * result + ((getIstop() == null) ? 0 : getIstop().hashCode());
         return result;
     }
 
@@ -249,7 +279,7 @@ public class VipCommodityPO implements Serializable {
         sb.append(", comName=").append(comName);
         sb.append(", price=").append(price);
         sb.append(", discount=").append(discount);
-        sb.append(", positon=").append(positon);
+        sb.append(", position=").append(position);
         sb.append(", createTime=").append(createTime);
         sb.append(", softChannelId=").append(softChannelId);
         sb.append(", name=").append(name);
@@ -259,6 +289,8 @@ public class VipCommodityPO implements Serializable {
         sb.append(", description=").append(description);
         sb.append(", showDiscount=").append(showDiscount);
         sb.append(", status=").append(status);
+        sb.append(", comTypeName=").append(comTypeName);
+        sb.append(", istop=").append(istop);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
