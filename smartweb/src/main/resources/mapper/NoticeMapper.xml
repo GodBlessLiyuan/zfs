@@ -3,19 +3,19 @@
 <mapper namespace="com.rpa.web.mapper.NoticeMapper">
   <resultMap id="BaseResultMap" type="com.rpa.web.pojo.NoticePO">
     <id column="notice_id" jdbcType="INTEGER" property="noticeId" />
-    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="text" jdbcType="VARCHAR" property="text" />
     <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="show_time" jdbcType="TIME" property="showTime" />
-    <result column="start_day" jdbcType="TIME" property="startDay" />
+    <result column="show_time" jdbcType="TIMESTAMP" property="showTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.rpa.web.pojo.NoticePO">
     <result column="url" jdbcType="LONGVARCHAR" property="url" />
   </resultMap>
   <sql id="Base_Column_List">
-    notice_id, device_id, title, `text`, `type`, show_time, start_day, `status`
+    notice_id, title, `text`, `type`, show_time, start_time, `status`, end_time
   </sql>
   <sql id="Blob_Column_List">
     url
@@ -33,13 +33,13 @@
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.rpa.web.pojo.NoticePO">
-    insert into t_notice (notice_id, device_id, title, 
-      `text`, `type`, show_time, 
-      start_day, `status`, url
+    insert into t_notice (notice_id, title, `text`, 
+      `type`, show_time, start_time, 
+      `status`, end_time, url
       )
-    values (#{noticeId,jdbcType=INTEGER}, #{deviceId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
-      #{text,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{showTime,jdbcType=TIME}, 
-      #{startDay,jdbcType=TIME}, #{status,jdbcType=INTEGER}, #{url,jdbcType=LONGVARCHAR}
+    values (#{noticeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT}, #{showTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, #{url,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.NoticePO">
@@ -47,9 +47,6 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="noticeId != null">
         notice_id,
-      </if>
-      <if test="deviceId != null">
-        device_id,
       </if>
       <if test="title != null">
         title,
@@ -63,11 +60,14 @@
       <if test="showTime != null">
         show_time,
       </if>
-      <if test="startDay != null">
-        start_day,
+      <if test="startTime != null">
+        start_time,
       </if>
       <if test="status != null">
         `status`,
+      </if>
+      <if test="endTime != null">
+        end_time,
       </if>
       <if test="url != null">
         url,
@@ -76,9 +76,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="noticeId != null">
         #{noticeId,jdbcType=INTEGER},
-      </if>
-      <if test="deviceId != null">
-        #{deviceId,jdbcType=BIGINT},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -90,13 +87,16 @@
         #{type,jdbcType=TINYINT},
       </if>
       <if test="showTime != null">
-        #{showTime,jdbcType=TIME},
+        #{showTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="startDay != null">
-        #{startDay,jdbcType=TIME},
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="url != null">
         #{url,jdbcType=LONGVARCHAR},
@@ -106,9 +106,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.NoticePO">
     update t_notice
     <set>
-      <if test="deviceId != null">
-        device_id = #{deviceId,jdbcType=BIGINT},
-      </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
@@ -119,13 +116,16 @@
         `type` = #{type,jdbcType=TINYINT},
       </if>
       <if test="showTime != null">
-        show_time = #{showTime,jdbcType=TIME},
+        show_time = #{showTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="startDay != null">
-        start_day = #{startDay,jdbcType=TIME},
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="url != null">
         url = #{url,jdbcType=LONGVARCHAR},
@@ -135,25 +135,25 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.rpa.web.pojo.NoticePO">
     update t_notice
-    set device_id = #{deviceId,jdbcType=BIGINT},
-      title = #{title,jdbcType=VARCHAR},
+    set title = #{title,jdbcType=VARCHAR},
       `text` = #{text,jdbcType=VARCHAR},
       `type` = #{type,jdbcType=TINYINT},
-      show_time = #{showTime,jdbcType=TIME},
-      start_day = #{startDay,jdbcType=TIME},
+      show_time = #{showTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
       `status` = #{status,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
       url = #{url,jdbcType=LONGVARCHAR}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.NoticePO">
     update t_notice
-    set device_id = #{deviceId,jdbcType=BIGINT},
-      title = #{title,jdbcType=VARCHAR},
+    set title = #{title,jdbcType=VARCHAR},
       `text` = #{text,jdbcType=VARCHAR},
       `type` = #{type,jdbcType=TINYINT},
-      show_time = #{showTime,jdbcType=TIME},
-      start_day = #{startDay,jdbcType=TIME},
-      `status` = #{status,jdbcType=INTEGER}
+      show_time = #{showTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=TIMESTAMP}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
 </mapper>

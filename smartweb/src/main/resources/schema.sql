@@ -42,7 +42,8 @@ CREATE TABLE t_activity
 (
 	activity_id int NOT NULL AUTO_INCREMENT,
 	activityname varchar(128),
-	positon int,
+	-- 1 会员中心 
+	position tinyint COMMENT '1 会员中心 ',
 	state int,
 	a_id int NOT NULL,
 	position int,
@@ -229,18 +230,19 @@ CREATE TABLE t_key_value
 
 CREATE TABLE t_notice
 (
-    notice_id int NOT NULL AUTO_INCREMENT,
-    title varchar(128),
-    text varchar(256),
-    -- 1文本 2 图片 3 文本加图片
-    type tinyint COMMENT '1文本 2 图片 3 文本加图片',
-    show_time time,
-    start_day time,
-    url text,
-    -- 1 关闭  2 开始 3 删除
-    status int COMMENT '1 关闭  2 开始 3 删除',
-    PRIMARY KEY (notice_id),
-    UNIQUE (notice_id)
+	notice_id int NOT NULL AUTO_INCREMENT,
+	title varchar(128),
+	text varchar(256),
+	-- 1文本 2 图片 3 文本加图片
+	type tinyint COMMENT '1文本 2 图片 3 文本加图片',
+	show_time datetime,
+	start_time datetime,
+	url text,
+	-- 1 关闭  2 开始 3 删除
+	status int COMMENT '1 关闭  2 开始 3 删除',
+	end_time datetime,
+	PRIMARY KEY (notice_id),
+	UNIQUE (notice_id)
 );
 
 

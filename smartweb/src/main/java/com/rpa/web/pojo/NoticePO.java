@@ -10,8 +10,6 @@ import java.util.Date;
 public class NoticePO implements Serializable {
     private Integer noticeId;
 
-    private Long deviceId;
-
     private String title;
 
     private String text;
@@ -23,12 +21,14 @@ public class NoticePO implements Serializable {
 
     private Date showTime;
 
-    private Date startDay;
+    private Date startTime;
 
     /**
-     * 1 关闭  2 开始 0 删除
+     * 1 关闭  2 开始 3 删除
      */
     private Integer status;
+
+    private Date endTime;
 
     private String url;
 
@@ -40,14 +40,6 @@ public class NoticePO implements Serializable {
 
     public void setNoticeId(Integer noticeId) {
         this.noticeId = noticeId;
-    }
-
-    public Long getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(Long deviceId) {
-        this.deviceId = deviceId;
     }
 
     public String getTitle() {
@@ -82,12 +74,12 @@ public class NoticePO implements Serializable {
         this.showTime = showTime;
     }
 
-    public Date getStartDay() {
-        return startDay;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setStartDay(Date startDay) {
-        this.startDay = startDay;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
     public Integer getStatus() {
@@ -96,6 +88,14 @@ public class NoticePO implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public String getUrl() {
@@ -119,13 +119,13 @@ public class NoticePO implements Serializable {
         }
         NoticePO other = (NoticePO) that;
         return (this.getNoticeId() == null ? other.getNoticeId() == null : this.getNoticeId().equals(other.getNoticeId()))
-            && (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()))
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
             && (this.getText() == null ? other.getText() == null : this.getText().equals(other.getText()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getShowTime() == null ? other.getShowTime() == null : this.getShowTime().equals(other.getShowTime()))
-            && (this.getStartDay() == null ? other.getStartDay() == null : this.getStartDay().equals(other.getStartDay()))
+            && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()));
     }
 
@@ -134,13 +134,13 @@ public class NoticePO implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getNoticeId() == null) ? 0 : getNoticeId().hashCode());
-        result = prime * result + ((getDeviceId() == null) ? 0 : getDeviceId().hashCode());
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
         result = prime * result + ((getText() == null) ? 0 : getText().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getShowTime() == null) ? 0 : getShowTime().hashCode());
-        result = prime * result + ((getStartDay() == null) ? 0 : getStartDay().hashCode());
+        result = prime * result + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         return result;
     }
@@ -152,13 +152,13 @@ public class NoticePO implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", noticeId=").append(noticeId);
-        sb.append(", deviceId=").append(deviceId);
         sb.append(", title=").append(title);
         sb.append(", text=").append(text);
         sb.append(", type=").append(type);
         sb.append(", showTime=").append(showTime);
-        sb.append(", startDay=").append(startDay);
+        sb.append(", startTime=").append(startTime);
         sb.append(", status=").append(status);
+        sb.append(", endTime=").append(endTime);
         sb.append(", url=").append(url);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
