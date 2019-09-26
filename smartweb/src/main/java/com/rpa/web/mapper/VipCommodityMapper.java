@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * VipcommodityMapper继承基类
  */
 @Mapper
-interface VipcommodityMapper extends BaseDAO<VipCommodityPO, Integer> {
+public interface VipCommodityMapper extends BaseDAO<VipCommodityPO, Integer> {
 }

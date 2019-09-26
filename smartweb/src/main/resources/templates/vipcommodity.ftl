@@ -85,13 +85,17 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">新增产品</button>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#exampleModal" data-whatever="@getbootstrap">新增商品
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">新增产品</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                            <h5 class="modal-title" id="exampleModalLabel">新增商品</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -113,31 +117,50 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" onclick="insertClick()"
                                                     data-dismiss="modal"
-                                            >确认上架</button>
+                                            >确认上架
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <button type="button" class="btn btn-primary" id="export"
+                                    onclick="javascript:exportClick();">导出
+                            </button>
 
                             <hr>
-
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>操作人</label>
-                                            <input id="username" type="text" class="form-control">
+                                            <input id="username" type="text" class="form-control" >
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>产品类型</label>
+                                            <select id="comname" class="form-control">
+                                                <option selected="selected">全部</option>
+                                                <option>Option 1</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>销售渠道</label>
+                                            <select id="channelname" class="form-control">
+                                                <option selected="selected">全部</option>
+                                                <option>Option 1</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                            id="reset">重置
-                                    </button>
-                                    <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                            onclick="javascript:queryClick();"
-                                            id="query">查询
-                                    </button>
                                 </form>
                             </div>
+
+                            <button type="button" class="btn btn-primary " id="reset">重置</button>
+                            <button type="button" class="btn btn-primary " id="query"
+                                    onclick="javascript:queryClick();">查询
+                            </button>
 
                             <hr>
                             <div class="table-responsive">
@@ -145,10 +168,18 @@
                                     <thead>
                                     <tr>
                                         <th>序号</th>
+                                        <th>销售渠道</th>
                                         <th>产品类型</th>
-                                        <th>产品天数</th>
-                                        <th>配置时间</th>
-                                        <th>备注</th>
+                                        <th>会员天数</th>
+                                        <th>商品名称</th>
+                                        <th>商品描述</th>
+                                        <th>原价</th>
+                                        <th>折扣</th>
+                                        <th>售价</th>
+                                        <th>是否上架</th>
+                                        <th>是否置顶</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
                                         <th>操作人</th>
                                     </tr>
                                     </thead>
@@ -198,8 +229,12 @@
      * 确认上架点击事件
      */
     function insertClick() {
-        $.get("/comtype/insert?name=" + $('#comtype-name').val() + "&days=" + parseInt($('#comtype-days').val()) + "&extra=" + $
+        $.get("/vipcommodity/insert?name=" + $('#comtype-name').val() + "&days=" + parseInt($('#comtype-days').val()) + "&extra=" + $
         ('#comtype-extra').val());
+    }
+
+    function exportClick() {
+
     }
 
     /**
@@ -214,7 +249,8 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/comtype/query?username=" + $('#username').val(),
+            "ajax": "/vipcommodity/query?username=" + $('#username').val() + "&comname="  + $('#comname').val()+
+                "&channelname="  + $('#channelname').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -230,7 +266,7 @@
             ],
             "columnDefs": [
                 {
-                    "targets": [3],
+                    "targets": [11],
                     "render": function (data, type, full) {
                         if (data == null || data.trim() == "") {
                             return "";
@@ -241,22 +277,7 @@
                         }
                     }
                 }
-            ],
-            "oLanguage": {
-            "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "对不起，没有匹配的数据",
-                "sInfo": "第 _START_ - _END_ 条 / 共 _TOTAL_ 条数据",
-                "sInfoEmpty": "没有匹配的数据",
-                "sInfoFiltered": "(数据表中共 _MAX_ 条记录)",
-                "sProcessing": "正在加载中...",
-                "sSearch": "全文搜索：",
-                "oPaginate": {
-                "sFirst": "第一页",
-                    "sPrevious": " 上一页 ",
-                    "sNext": " 下一页 ",
-                    "sLast": " 最后一页 "
-            }
-        }
+            ]
         });
     }
 </script>
