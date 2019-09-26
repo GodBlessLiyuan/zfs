@@ -68,55 +68,73 @@
         Content body start
     ***********************************-->
     <div class="content-body">
-        <form class="form-horizontal form-bordered" data-parsley-validate="true" name="bgPicture-form"
-              id="bgPicture-form">
-            <div class="modal-body">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="ibox ">
-                                <div class="ibox-content">
-                                    <form class="form-horizontal form-bordered" id="queryForm">
-                                        <div class="form-group">
-                                            <div class="col-md-4 ">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">手机号:</span>
-                                                    <input id="phone" type="text" class="form-control">
-                                                    <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                                            id="reset">重置
-                                                    </button>
-                                                    <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                                            id="query">查询
-                                                    </button>
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                <form class="form-horizontal form-bordered" data-parsley-validate="true" name="bgPicture-form"
+                      id="bgPicture-form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="ibox ">
+                                        <div class="ibox-content">
+                                            <form class="form-horizontal form-bordered" id="queryForm">
+                                                <div class="form-group">
+                                                    <div class="col-md-4 ">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">手机号:</span>
+                                                            <input id="phone" type="text" class="form-control">
+                                                            <button type="button" class="btn btn-primary m-r-5 m-b-5"
+                                                                    id="reset">重置
+                                                            </button>
+                                                            <button type="button" class="btn btn-primary m-r-5 m-b-5"
+                                                                    id="query">查询
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                            </form>
+
+                                            <hr>
+                                            <div class="table-responsive">
+                                                <table id="example" class="display" style="width:100%">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>序号</th>
+                                                        <th>手机号</th>
+                                                        <th>注册时间</th>
+                                                        <th>应用渠道</th>
+                                                        <th>应用版本</th>
+                                                        <th>系统版本</th>
+                                                        <th>手机厂商</th>
+                                                        <th>手机型号</th>
+                                                    </tr>
+                                                    </thead>
+                                                </table>
                                             </div>
                                         </div>
-                                    </form>
-
-                                    <hr>
-                                    <div class="table-responsive">
-                                        <table id="example" class="display" style="width:100%">
-                                            <thead>
-                                            <tr>
-                                                <th>序号</th>
-                                                <th>手机号</th>
-                                                <th>注册时间</th>
-                                                <th>应用渠道</th>
-                                                <th>应用版本</th>
-                                                <th>系统版本</th>
-                                                <th>手机厂商</th>
-                                                <th>手机型号</th>
-                                            </tr>
-                                            </thead>
-                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
+                        </div></div></div>
             </div>
-        </form>
+        </div>
     </div>
     <!--**********************************
         Content body end

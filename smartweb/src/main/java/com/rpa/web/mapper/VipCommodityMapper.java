@@ -2,10 +2,11 @@ package com.rpa.web.mapper;
 
 import com.rpa.web.pojo.VipCommodityPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
- * VipCommodityMapper继承基类
+ * VipcommodityMapper继承基类
  */
 @Mapper
-public interface VipCommodityMapper extends BaseDAO<VipCommodityPO, Integer> {
+interface VipcommodityMapper extends BaseDAO<VipCommodityPO, Integer> {
 }

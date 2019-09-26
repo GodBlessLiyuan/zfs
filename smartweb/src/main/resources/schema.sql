@@ -21,11 +21,11 @@ DROP TABLE IF EXISTS t_channel;
 DROP TABLE IF EXISTS t_device_imei;
 DROP TABLE IF EXISTS t_exception;
 DROP TABLE IF EXISTS t_user_notice;
-DROP TABLE IF EXISTS t_notice;
 DROP TABLE IF EXISTS t_user_device;
 DROP TABLE IF EXISTS t_device;
 DROP TABLE IF EXISTS t_key_text;
 DROP TABLE IF EXISTS t_key_value;
+DROP TABLE IF EXISTS t_notice;
 DROP TABLE IF EXISTS t_order_feedback;
 DROP TABLE IF EXISTS t_promoter;
 DROP TABLE IF EXISTS t_soft_channel;
@@ -108,8 +108,7 @@ CREATE TABLE t_ad_channel
 	type tinyint COMMENT '1 当前版本  2 历史版本 ',
 	app_id int NOT NULL,
 	UNIQUE (ad_id),
-	UNIQUE (soft_channel_id),
-	UNIQUE (app_id)
+	UNIQUE (soft_channel_id)
 );
 
 
@@ -122,8 +121,8 @@ CREATE TABLE t_app
 	update_time datetime,
 	url varchar(256),
 	a_id int,
-	-- 1 关闭  2 开始 0 删除
-	status int COMMENT '1 关闭  2 开始 0 删除',
+	-- 1 关闭  2 开始 3 删除
+	status int COMMENT '1 关闭  2 开始 3 删除',
 	PRIMARY KEY (app_id),
 	UNIQUE (app_id)
 );
@@ -137,8 +136,7 @@ CREATE TABLE t_batch_info
     status tinyint,
     PRIMARY KEY (id),
     UNIQUE (id),
-    UNIQUE (vipkey),
-    UNIQUE (batch_id)
+    UNIQUE (vipkey)
 );
 
 
@@ -150,8 +148,7 @@ CREATE TABLE t_channel
     pro_id int NOT NULL,
     a_id int NOT NULL,
     PRIMARY KEY (chan_id),
-    UNIQUE (chan_id),
-    UNIQUE (pro_id)
+    UNIQUE (chan_id)
 );
 
 
@@ -163,9 +160,7 @@ CREATE TABLE t_ch_batch
     com_type_id int NOT NULL,
     chan_id int NOT NULL,
     PRIMARY KEY (batch_id),
-    UNIQUE (batch_id),
-    UNIQUE (com_type_id),
-    UNIQUE (chan_id)
+    UNIQUE (batch_id)
 );
 
 
@@ -205,12 +200,12 @@ CREATE TABLE t_device_imei
 
 CREATE TABLE t_exception
 (
-    exceptionid int NOT NULL AUTO_INCREMENT,
-    device_id bigint NOT NULL,
-    error text,
-    PRIMARY KEY (exceptionid),
-    UNIQUE (exceptionid),
-    UNIQUE (device_id)
+	exceptionid int NOT NULL AUTO_INCREMENT,
+	-- 允许为null
+	device_id bigint NOT NULL COMMENT '允许为null',
+	error text,
+	PRIMARY KEY (exceptionid),
+	UNIQUE (exceptionid)
 );
 
 
@@ -235,7 +230,6 @@ CREATE TABLE t_key_value
 CREATE TABLE t_notice
 (
     notice_id int NOT NULL AUTO_INCREMENT,
-    device_id bigint NOT NULL,
     title varchar(128),
     text varchar(256),
     -- 1文本 2 图片 3 文本加图片
@@ -243,11 +237,10 @@ CREATE TABLE t_notice
     show_time time,
     start_day time,
     url text,
-    -- 1 关闭  2 开始 0 删除
-    status int COMMENT '1 关闭  2 开始 0 删除',
+    -- 1 关闭  2 开始 3 删除
+    status int COMMENT '1 关闭  2 开始 3 删除',
     PRIMARY KEY (notice_id),
-    UNIQUE (notice_id),
-    UNIQUE (device_id)
+    UNIQUE (notice_id)
 );
 
 
@@ -268,9 +261,7 @@ CREATE TABLE t_order
     type int COMMENT '1 微信 2支付宝
 ',
     PRIMARY KEY (order_id, order_number),
-    UNIQUE (order_id),
-    UNIQUE (user_device_id),
-    UNIQUE (cmdy_id)
+    UNIQUE (order_id)
 );
 
 
@@ -295,9 +286,7 @@ CREATE TABLE t_order_feedback
     --
     --
     --
-    coupon_fee int COMMENT '
-
-',
+    coupon_fee int COMMENT '',
     coupon_count int,
     transaction_id char(32),
     out_trade_no char(32),
@@ -351,16 +340,14 @@ CREATE TABLE t_user_activity
     activity_id int NOT NULL,
     user_id bigint NOT NULL,
     time time,
-    -- 当活动存在多个执行状态时，默认为0
-    status tinyint COMMENT '当活动存在多个执行状态时，默认为0',
+    -- 当活动存在多个执行状态时，默认为1
+    status tinyint COMMENT '当活动存在多个执行状态时，默认为1',
     create_time datetime,
     update_time datetime,
     user_device_id int,
     device_id bigint,
     PRIMARY KEY (u_a_id),
-    UNIQUE (u_a_id),
-    UNIQUE (activity_id),
-    UNIQUE (user_id)
+    UNIQUE (u_a_id)
 );
 
 
@@ -372,9 +359,7 @@ CREATE TABLE t_user_device
     status int,
     create_time datetime,
     PRIMARY KEY (user_device_id),
-    UNIQUE (user_device_id),
-    UNIQUE (user_id),
-    UNIQUE (device_id)
+    UNIQUE (user_device_id)
 );
 
 
@@ -391,13 +376,19 @@ CREATE TABLE t_user_history
 
 CREATE TABLE t_user_notice
 (
-    user_device_id int NOT NULL,
-    notice_id int NOT NULL,
-    user_id bigint,
-    device_id bigint,
-    time time,
-    UNIQUE (user_device_id),
-    UNIQUE (notice_id)
+	u_notice_id bigint NOT NULL AUTO_INCREMENT,
+	-- 允许为null
+	user_device_id int COMMENT '允许为null',
+	notice_id int,
+	-- 允许为null
+	user_id bigint COMMENT '允许为null',
+	-- 允许为null
+	device_id bigint COMMENT '允许为null',
+	time time,
+	-- 当活动存在多个执行状态时，默认为1
+	status tinyint COMMENT '当活动存在多个执行状态时，默认为1',
+	PRIMARY KEY (u_notice_id),
+	UNIQUE (u_notice_id)
 );
 
 
@@ -411,8 +402,7 @@ CREATE TABLE t_user_vip
     status tinyint COMMENT '1 正常 2 过期',
     create_time datetime,
     update_time datetime,
-    UNIQUE (user_id),
-    UNIQUE (viptype_id)
+    UNIQUE (user_id)
 );
 
 
@@ -426,16 +416,18 @@ CREATE TABLE t_vipcommodity
     discount float,
     positon int,
     create_time time,
-    a_id int NOT NULL,
+
     soft_channel_id int NOT NULL,
     name char(20),
     update_time datetime,
     days int,
+	a_id int NOT NULL,
+	description char(128),
+	show_discount char(32),
+	-- 1 不上架 2 上架
+	status tinyint COMMENT '1 不上架 2 上架',
     PRIMARY KEY (cmdy_id),
-    UNIQUE (cmdy_id),
-    UNIQUE (viptype_id),
-    UNIQUE (com_type_id),
-    UNIQUE (soft_channel_id)
+    UNIQUE (cmdy_id)
 );
 
 
