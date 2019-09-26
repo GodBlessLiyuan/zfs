@@ -259,9 +259,17 @@
             "columns": [
                 {"data": null, "targets": 0},
                 {"data": "name"},
+                {"data": "comName"},
                 {"data": "days"},
+                {"data": "comName"},
+                {"data": "description"},
+                {"data": "price"},
+                {"data": "showDiscount"},
+                {"data": "discount"},
+                {"data": "status"},
+                {"data": "positon"},
                 {"data": "createTime"},
-                {"data": "extra"},
+                {"data": null},
                 {"data": "username"}
             ],
             "columnDefs": [

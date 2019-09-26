@@ -4,8 +4,9 @@ package com.rpa.web.service.impl;
 import com.rpa.web.mapper.VipCommodityMapper;
 import com.rpa.web.pojo.VipCommodityPO;
 import com.rpa.web.service.IVipCommodityService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +16,10 @@ import java.util.Map;
  * @description: TODO
  * @version: 1.0
  */
+@Service
 public class VipCommodityServiceImpl implements IVipCommodityService {
 
-    @Autowired
+    @Resource
     private VipCommodityMapper mapper;
 
     @Override

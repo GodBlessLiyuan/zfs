@@ -25,7 +25,8 @@ public class ComTypePO implements Serializable {
 
     private Date updateTime;
 
-    private String username; // add by xiahui: 界面显示字段-操作员
+    // add by xiahui: 界面显示字段-操作员
+    private String username;
 
     private static final long serialVersionUID = 1L;
 
