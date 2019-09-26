@@ -38,6 +38,9 @@ public class VipCommodityPO implements Serializable {
 
     private String showDiscount;
 
+    // add by xiahui: 界面显示字段-操作员
+    private String username;
+
     /**
      * 1 不上架 2 上架
      */
@@ -171,6 +174,14 @@ public class VipCommodityPO implements Serializable {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

@@ -34,9 +34,12 @@ public class VipCommodityController {
                                             @RequestParam(value = "comname") String comname,
                                             @RequestParam(value = "channelname") String channelname) {
         Map<String, Object> map = new HashMap<>(3);
-        map.put("username", username);  // 操作员
-        map.put("comname", comname);    // 商品类型
-        map.put("channelname", channelname);    // 渠道名
+        // 操作员
+        map.put("username", username);
+        // 商品类型
+        map.put("comname", comname);
+        // 渠道名
+        map.put("channelname", channelname);
 
         Page<VipCommodityPO > page = PageHelper.startPage(pageNum, pageSize);
         List<VipCommodityPO > data = service.query(map);
