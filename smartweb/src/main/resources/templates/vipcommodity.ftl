@@ -154,6 +154,10 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
+                                                    <button type="hidden" id="uCmdyId" name="uCmdyId"
+                                                            style="display:none;"/>
+                                                </div>
+                                                <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">销售渠道:</span>
                                                     <label id="uChannelName">xxx</label>
                                                 </div>
@@ -286,7 +290,6 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
-
     $(document).ready(function () {
         // 下拉框请求后端并赋值
         $.ajax({
@@ -322,6 +325,22 @@
     }
 
     function updateClick() {
+        let cmdyId = $('#uCmdyId').val();
+        let comName = $('#uComName').val();
+        let description = $('#uDescription').val();
+        let price = $('#uPrice').val();
+        let showDiscount = $('#uShowDiscount').val();
+        let discount = $('#uDiscount').val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/vipcommodity/update?cmdyId=' + cmdyId + "&comName=" + comName + "&description=" + description +
+                "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" + discount,
+            dataType: 'json',
+            success: function (data) {
+                queryClick();
+            }
+        })
 
     }
 
@@ -365,9 +384,11 @@
                     "data": "status",
                     "render": function (data, type, full) {
                         if (data == 1) {
-                            return "<button class='badge badge-dark' type='button'>未上架</button>";
+                            return "<button class='badge badge-dark' type='button' " +
+                                "onclick='javascript:statusClick(" + full.cmdyId + "," + data + ")'>未上架</button>";
                         } else {
-                            return "<button class='badge badge-primary' type='button'>已上架</button>";
+                            return "<button class='badge badge-primary' type='button' " +
+                                "onclick='javascript:statusClick(" + full.cmdyId + "," + data + ")'>已上架</button>";
                         }
                     }
                 },
@@ -375,9 +396,11 @@
                     "data": "istop",
                     "render": function (data, type, full) {
                         if (data == 1) {
-                            return "<button class='badge badge-dark' type='button'>未置顶</button>";
+                            return "<button class='badge badge-dark' type='button' " +
+                                "onclick='javascript:isTopClick(" + full.cmdyId + "," + data + ")'>未置顶</button>";
                         } else {
-                            return "<button class='badge badge-primary' type='button'>已置顶</button>";
+                            return "<button class='badge badge-primary' type='button' " +
+                                "onclick='javascript:isTopClick(" + full.cmdyId + "," + data + ")'>已置顶</button>";
                         }
                     }
                 },
@@ -433,6 +456,7 @@
             url: '/vipcommodity/queryById?cmdyId=' + cmdyId,
             dataType: 'JSON',
             success: function (data) {
+                $('#uCmdyId').val(data.cmdyId);
                 $('#uChannelName').text(data.name);
                 $('#uComTypeName').text(data.comTypeName);
                 $('#uComName').val(data.comName);
@@ -440,6 +464,38 @@
                 $('#uPrice').val(data.price);
                 $('#uShowDiscount').val(data.showDiscount);
                 $('#uDiscount').val(data.discount);
+            }
+        })
+    }
+
+    /**
+     * 是否上架点击事件
+     * @param status 状态
+     */
+    function statusClick(cmdyId, status) {
+        status = status === 1 ? 2 : 1;
+        $.ajax({
+            type: 'GET',
+            url: '/vipcommodity/updateStatus?cmdyId=' + cmdyId + '&status=' + status,
+            dataType: 'JSON',
+            success: function (data) {
+                queryClick();
+            }
+        })
+    }
+
+    /**
+     * 是否置顶点击事件
+     * @param status 状态
+     */
+    function isTopClick(cmdyId, isTop) {
+        isTop = isTop === 1 ? 2 : 1;
+        $.ajax({
+            type: 'GET',
+            url: '/vipcommodity/updateIsTop?cmdyId=' + cmdyId + '&isTop=' + isTop,
+            dataType: 'JSON',
+            success: function (data) {
+                queryClick();
             }
         })
     }

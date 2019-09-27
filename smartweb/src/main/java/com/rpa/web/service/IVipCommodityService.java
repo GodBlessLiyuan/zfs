@@ -15,11 +15,6 @@ import java.util.Map;
 public interface IVipCommodityService {
 
     /**
-     * 更新
-     */
-    void update(VipCommodityPO po);
-
-    /**
      * 查询
      *
      * @param draw     draw
@@ -51,4 +46,31 @@ public interface IVipCommodityService {
      * @return
      */
     VipCommodityDTO queryById(int cmdyId);
+
+    /**
+     * 更新
+     * @param cmdyId 主键
+     * @param comName 商品名称
+     * @param description 商品描述
+     * @param price 原价
+     * @param showDiscount 折扣
+     * @param discount 售价
+     */
+    int update(int cmdyId, String comName, String description, int price, String showDiscount, float discount);
+
+    /**
+     * 更新是否上架
+     * @param cmdyId
+     * @param status
+     * @return
+     */
+    int updateStatus(int cmdyId, byte status);
+
+    /**
+     * 更新是否置顶
+     * @param cmdyId
+     * @param isTop
+     * @return
+     */
+    int updateIsTop(int cmdyId, byte isTop);
 }
