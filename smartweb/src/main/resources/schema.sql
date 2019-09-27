@@ -153,6 +153,7 @@ CREATE TABLE t_channel
     a_id int NOT NULL,
     create_time datetime,
     update_time datetime,
+    extra char(120),
     PRIMARY KEY (chan_id),
     UNIQUE (chan_id)
 );
