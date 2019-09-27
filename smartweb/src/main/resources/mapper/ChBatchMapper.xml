@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rpa.web.mapper.ChBatchMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.ChBatch">
+  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.ChBatchPO">
     <id column="batch_id" jdbcType="INTEGER" property="batchId" />
     <result column="num" jdbcType="INTEGER" property="num" />
     <result column="a_id" jdbcType="INTEGER" property="aId" />
     <result column="com_type_id" jdbcType="INTEGER" property="comTypeId" />
     <result column="chan_id" jdbcType="INTEGER" property="chanId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="com_type_name" jdbcType="CHAR" property="comTypeName" />
   </resultMap>
   <sql id="Base_Column_List">
-    batch_id, num, a_id, com_type_id, chan_id
+    batch_id, num, a_id, com_type_id, chan_id, create_time, update_time, `status`, com_type_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -21,13 +25,17 @@
     delete from t_ch_batch
     where batch_id = #{batchId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.web.pojo.ChBatch">
+  <insert id="insert" parameterType="com.rpa.web.pojo.ChBatchPO">
     insert into t_ch_batch (batch_id, num, a_id, 
-      com_type_id, chan_id)
+      com_type_id, chan_id, create_time, 
+      update_time, `status`, com_type_name
+      )
     values (#{batchId,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, 
-      #{comTypeId,jdbcType=INTEGER}, #{chanId,jdbcType=INTEGER})
+      #{comTypeId,jdbcType=INTEGER}, #{chanId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{comTypeName,jdbcType=CHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.web.pojo.ChBatch">
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.ChBatchPO">
     insert into t_ch_batch
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="batchId != null">
@@ -44,6 +52,18 @@
       </if>
       <if test="chanId != null">
         chan_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="comTypeName != null">
+        com_type_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -62,9 +82,21 @@
       <if test="chanId != null">
         #{chanId,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="comTypeName != null">
+        #{comTypeName,jdbcType=CHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.ChBatch">
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.ChBatchPO">
     update t_ch_batch
     <set>
       <if test="num != null">
@@ -79,15 +111,31 @@
       <if test="chanId != null">
         chan_id = #{chanId,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="comTypeName != null">
+        com_type_name = #{comTypeName,jdbcType=CHAR},
+      </if>
     </set>
     where batch_id = #{batchId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.ChBatch">
+  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.ChBatchPO">
     update t_ch_batch
     set num = #{num,jdbcType=INTEGER},
       a_id = #{aId,jdbcType=INTEGER},
       com_type_id = #{comTypeId,jdbcType=INTEGER},
-      chan_id = #{chanId,jdbcType=INTEGER}
+      chan_id = #{chanId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},
+      com_type_name = #{comTypeName,jdbcType=CHAR}
     where batch_id = #{batchId,jdbcType=INTEGER}
   </update>
 </mapper>

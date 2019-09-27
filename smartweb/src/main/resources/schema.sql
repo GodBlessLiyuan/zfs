@@ -148,6 +148,8 @@ CREATE TABLE t_channel
     chan_name varchar(64),
     pro_id int NOT NULL,
     a_id int NOT NULL,
+    create_time datetime,
+    update_time datetime,
     PRIMARY KEY (chan_id),
     UNIQUE (chan_id)
 );
@@ -160,6 +162,12 @@ CREATE TABLE t_ch_batch
     a_id int NOT NULL,
     com_type_id int NOT NULL,
     chan_id int NOT NULL,
+    create_time datetime,
+    update_time datetime,
+    -- 1 正常 2 冻结  3失效
+    status tinyint COMMENT '1 正常 2 冻结  3失效',
+    -- 日卡，周卡，月卡，年卡
+    com_type_name char(128) COMMENT '日卡，周卡，月卡，年卡',
     PRIMARY KEY (batch_id),
     UNIQUE (batch_id)
 );
@@ -306,6 +314,8 @@ CREATE TABLE t_promoter
     phone char(12),
     extra varchar(128),
     a_id int NOT NULL,
+    create_time datetime,
+    update_time datetime,
     PRIMARY KEY (pro_id),
     UNIQUE (pro_id)
 );
@@ -418,7 +428,7 @@ CREATE TABLE t_vipcommodity
     discount float,
     -- 1 会员中心 
     position tinyint COMMENT '1 会员中心 ',
-    create_time time,
+    create_time datetime,
 
     soft_channel_id int NOT NULL,
     name char(20),

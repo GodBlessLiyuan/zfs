@@ -1,12 +1,13 @@
 package com.rpa.web.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * t_ch_batch
  * @author 
  */
-public class ChBatch implements Serializable {
+public class ChBatchPO implements Serializable {
     private Integer batchId;
 
     private Integer num;
@@ -16,6 +17,20 @@ public class ChBatch implements Serializable {
     private Integer comTypeId;
 
     private Integer chanId;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    /**
+     * 1 正常 2 冻结  3失效
+     */
+    private Byte status;
+
+    /**
+     * 日卡，周卡，月卡，年卡
+     */
+    private String comTypeName;
 
     private static final long serialVersionUID = 1L;
 
@@ -59,6 +74,38 @@ public class ChBatch implements Serializable {
         this.chanId = chanId;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public String getComTypeName() {
+        return comTypeName;
+    }
+
+    public void setComTypeName(String comTypeName) {
+        this.comTypeName = comTypeName;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -70,12 +117,16 @@ public class ChBatch implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ChBatch other = (ChBatch) that;
+        ChBatchPO other = (ChBatchPO) that;
         return (this.getBatchId() == null ? other.getBatchId() == null : this.getBatchId().equals(other.getBatchId()))
             && (this.getNum() == null ? other.getNum() == null : this.getNum().equals(other.getNum()))
             && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getComTypeId() == null ? other.getComTypeId() == null : this.getComTypeId().equals(other.getComTypeId()))
-            && (this.getChanId() == null ? other.getChanId() == null : this.getChanId().equals(other.getChanId()));
+            && (this.getChanId() == null ? other.getChanId() == null : this.getChanId().equals(other.getChanId()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getComTypeName() == null ? other.getComTypeName() == null : this.getComTypeName().equals(other.getComTypeName()));
     }
 
     @Override
@@ -87,6 +138,10 @@ public class ChBatch implements Serializable {
         result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
         result = prime * result + ((getComTypeId() == null) ? 0 : getComTypeId().hashCode());
         result = prime * result + ((getChanId() == null) ? 0 : getChanId().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getComTypeName() == null) ? 0 : getComTypeName().hashCode());
         return result;
     }
 
@@ -101,6 +156,10 @@ public class ChBatch implements Serializable {
         sb.append(", aId=").append(aId);
         sb.append(", comTypeId=").append(comTypeId);
         sb.append(", chanId=").append(chanId);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", status=").append(status);
+        sb.append(", comTypeName=").append(comTypeName);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

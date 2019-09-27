@@ -1,6 +1,7 @@
 package com.rpa.web.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * t_channel
@@ -16,6 +17,10 @@ public class ChannelPO implements Serializable {
     private Integer proId;
 
     private Integer aId;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -59,6 +64,22 @@ public class ChannelPO implements Serializable {
         this.aId = aId;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -75,7 +96,9 @@ public class ChannelPO implements Serializable {
             && (this.getChanNickname() == null ? other.getChanNickname() == null : this.getChanNickname().equals(other.getChanNickname()))
             && (this.getChanName() == null ? other.getChanName() == null : this.getChanName().equals(other.getChanName()))
             && (this.getProId() == null ? other.getProId() == null : this.getProId().equals(other.getProId()))
-            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()));
+            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -87,6 +110,8 @@ public class ChannelPO implements Serializable {
         result = prime * result + ((getChanName() == null) ? 0 : getChanName().hashCode());
         result = prime * result + ((getProId() == null) ? 0 : getProId().hashCode());
         result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }
 
@@ -101,6 +126,8 @@ public class ChannelPO implements Serializable {
         sb.append(", chanName=").append(chanName);
         sb.append(", proId=").append(proId);
         sb.append(", aId=").append(aId);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
