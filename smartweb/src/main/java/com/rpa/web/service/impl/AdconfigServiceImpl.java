@@ -83,7 +83,6 @@ public class AdconfigServiceImpl implements AdconfigService {
         // 把adconfigDTO 转换为 adconfigPO
         AdconfigPO adconfigPO = new AdconfigPO();
         adconfigPO.setaId(adconfigDTO.getaId());
-        adconfigPO.setAdId(adconfigDTO.getAdId());
         adconfigPO.setAdNumber(adconfigDTO.getAdNumber());
         adconfigPO.setName(adconfigDTO.getName());
         adconfigPO.setPriority(adconfigDTO.getPriority());
@@ -118,7 +117,6 @@ public class AdconfigServiceImpl implements AdconfigService {
         adconfigPO.setStatus(adconfigDTO.getStatus());
         adconfigPO.setUpdateTime(new Date());
 
-        //更新广告数据
         int count = adconfigMapper.updateByPrimaryKeySelective(adconfigPO);
         return count;
     }

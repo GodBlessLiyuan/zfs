@@ -19,6 +19,21 @@
     from t_promoter
     where pro_id = #{proId,jdbcType=INTEGER}
   </select>
+
+  <select id="query" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_adconfig
+    <where>
+      <if test="proName!=null and proName!=''">
+        pro_name = #{proName}
+      </if>
+      <if test="phone!=null and phone!=''">
+        and phone = #{phone}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_promoter
     where pro_id = #{proId,jdbcType=INTEGER}
@@ -83,20 +98,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.PromoterPO">
     update t_promoter
     <set>
-      <if test="proName != null">
+      <if test="proName != null and proName != ''">
         pro_name = #{proName,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
+      <if test="phone != null and phone != ''">
         phone = #{phone,jdbcType=CHAR},
       </if>
-      <if test="extra != null">
+      <if test="extra != null and extra != ''">
         extra = #{extra,jdbcType=VARCHAR},
       </if>
       <if test="aId != null">
         a_id = #{aId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},

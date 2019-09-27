@@ -44,7 +44,7 @@ public class NoticeServiceImpl implements NoticeService {
         Page<NoticeDTO> page = PageHelper.startPage(pageNum, pageSize);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
-        Map<String, Object> map = new HashMap<>(3);
+        Map<String, Object> map = new HashMap<>(5);
         map.put("startTime", startTime);
         map.put("endTime", endTime);
         map.put("status", status);
@@ -85,7 +85,6 @@ public class NoticeServiceImpl implements NoticeService {
 
         // 把 noticeDTO 转换为 noticePO
         NoticePO noticePO = new NoticePO();
-        noticePO.setNoticeId(noticeDTO.getNoticeId());
         noticePO.setTitle(noticeDTO.getTitle());
         noticePO.setText(noticeDTO.getText());
         noticePO.setType(noticeDTO.getType());
@@ -99,6 +98,11 @@ public class NoticeServiceImpl implements NoticeService {
         return count;
     }
 
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
     @Override
     public int delete(int id) {
         int count = noticeMapper.deleteByPrimaryKey(id);

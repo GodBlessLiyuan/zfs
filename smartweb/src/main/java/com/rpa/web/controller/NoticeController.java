@@ -60,6 +60,11 @@ public class NoticeController {
         return this.noticeService.insert(noticeDTO);
     }
 
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
     @PostMapping("delete")
     public int delete(int id) {
         return this.noticeService.delete(id);
