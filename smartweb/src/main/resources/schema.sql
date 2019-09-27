@@ -134,7 +134,10 @@ CREATE TABLE t_batch_info
     id int NOT NULL AUTO_INCREMENT,
     vipkey char(16),
     batch_id int NOT NULL,
-    status tinyint,
+    status tinyint COMMENT '1 激活  2 未激活',
+    days int,
+    -- 默认为null
+    update_time datetime COMMENT '默认为null',
     PRIMARY KEY (id),
     UNIQUE (id),
     UNIQUE (vipkey)

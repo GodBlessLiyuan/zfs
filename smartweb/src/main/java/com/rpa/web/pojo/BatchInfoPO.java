@@ -1,6 +1,7 @@
 package com.rpa.web.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * t_batch_info
@@ -13,7 +14,17 @@ public class BatchInfoPO implements Serializable {
 
     private Integer batchId;
 
+    /**
+     * 1 激活  2 未激活
+     */
     private Byte status;
+
+    private Integer days;
+
+    /**
+     * 默认为null
+     */
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -49,6 +60,22 @@ public class BatchInfoPO implements Serializable {
         this.status = status;
     }
 
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -64,7 +91,9 @@ public class BatchInfoPO implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getVipkey() == null ? other.getVipkey() == null : this.getVipkey().equals(other.getVipkey()))
             && (this.getBatchId() == null ? other.getBatchId() == null : this.getBatchId().equals(other.getBatchId()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -75,6 +104,8 @@ public class BatchInfoPO implements Serializable {
         result = prime * result + ((getVipkey() == null) ? 0 : getVipkey().hashCode());
         result = prime * result + ((getBatchId() == null) ? 0 : getBatchId().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getDays() == null) ? 0 : getDays().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }
 
@@ -88,6 +119,8 @@ public class BatchInfoPO implements Serializable {
         sb.append(", vipkey=").append(vipkey);
         sb.append(", batchId=").append(batchId);
         sb.append(", status=").append(status);
+        sb.append(", days=").append(days);
+        sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

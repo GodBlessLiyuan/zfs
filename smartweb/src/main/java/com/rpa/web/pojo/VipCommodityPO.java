@@ -27,6 +27,8 @@ public class VipCommodityPO implements Serializable {
 
     private Date createTime;
 
+    private String username;
+
     private Integer softChannelId;
 
     private String name;
@@ -181,6 +183,14 @@ public class VipCommodityPO implements Serializable {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getComTypeName() {
