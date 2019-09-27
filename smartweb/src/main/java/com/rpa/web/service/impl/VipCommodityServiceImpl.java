@@ -57,6 +57,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         vipCommodityPO.setSoftChannelId(channelId);
         vipCommodityPO.setComTypeId(comTypeId);
         vipCommodityPO.setComTypeName(comTypePO.getName());
+        vipCommodityPO.setDays(comTypePO.getDays());
         vipCommodityPO.setComName(comName);
         vipCommodityPO.setDescription(description);
         vipCommodityPO.setPrice(price);
@@ -71,5 +72,10 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         vipCommodityPO.setSoftChannelId(1);
 
         vipCommodityMapper.insert(vipCommodityPO);
+    }
+
+    @Override
+    public VipCommodityDTO queryById(int cmdyId) {
+        return VipCommodityDTO.convert(vipCommodityMapper.selectByPrimaryKey(cmdyId));
     }
 }

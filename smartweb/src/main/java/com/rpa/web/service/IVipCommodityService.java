@@ -44,4 +44,11 @@ public interface IVipCommodityService {
      */
     void insert(int channelId, int comTypeId, String comName, String description,
                 int price, String showDiscount, float discount, int aId);
+
+    /**
+     * 根据主键查询数据
+     * @param cmdyId 主键
+     * @return
+     */
+    VipCommodityDTO queryById(int cmdyId);
 }

@@ -58,4 +58,10 @@ public class VipCommodityController {
         DTPageInfo<VipCommodityDTO> data = service.query(draw, pageNum, pageSize, reqData);
         return data;
     }
+
+    @RequestMapping("/vipcommodity/queryById")
+    public VipCommodityDTO queryById(@RequestParam(value = "cmdyId") int cmdyId) {
+        VipCommodityDTO dto = service.queryById(cmdyId);
+        return dto;
+    }
 }
