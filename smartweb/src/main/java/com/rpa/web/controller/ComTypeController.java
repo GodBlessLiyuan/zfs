@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,5 +48,11 @@ public class ComTypeController {
         DTPageInfo<ComTypeDTO> dtodtPageInfo = service.query(draw, pageNum, pageSize, reqData);
 
         return dtodtPageInfo;
+    }
+
+    @RequestMapping("/comtype/queryAll")
+    public List<ComTypeDTO> queryAll() {
+        List<ComTypeDTO> datas = service.queryAll();
+        return datas;
     }
 }

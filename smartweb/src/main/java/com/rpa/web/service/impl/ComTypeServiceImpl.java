@@ -47,4 +47,10 @@ public class ComTypeServiceImpl implements IComTypeService {
 
         return new DTPageInfo<>(draw, page.getTotal(), ComTypeDTO.convert(data));
     }
+
+    @Override
+    public List<ComTypeDTO> queryAll() {
+        List<ComTypePO> pos = mapper.queryAll();
+        return ComTypeDTO.convert(pos);
+    }
 }

@@ -33,8 +33,8 @@ public interface IVipCommodityService {
     /**
      * 新增
      *
-     * @param channelName  销售渠道
-     * @param comTypeName  产品类型
+     * @param channelId    销售渠道Id
+     * @param comTypeId    产品类型Id
      * @param comName      商品名称
      * @param description  商品描述
      * @param price        原价
@@ -42,6 +42,6 @@ public interface IVipCommodityService {
      * @param discount     售价
      * @param aId          管理员Id
      */
-    void insert(String channelName, String comTypeName, String comName, String description, int price,
-                String showDiscount, float discount, int aId);
+    void insert(int channelId, int comTypeId, String comName, String description,
+                int price, String showDiscount, float discount, int aId);
 }

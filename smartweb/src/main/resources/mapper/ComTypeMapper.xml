@@ -11,7 +11,7 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    com_type_id, `name`, `days`, extra, a_id, create_time, update_time
+    com_type_id as comTypeId, `name`, `days`, extra, a_id as aId, create_time as createTime, update_time as updateTime
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -124,5 +124,11 @@
         <where>
             <if test="username!=null and username!=''">AND u.username like '%' #{username} '%'</if>
         </where>
+    </select>
+
+    <select id="queryAll" resultType="com.rpa.web.pojo.ComTypePO">
+        select
+        <include refid="Base_Column_List"/>
+        from t_com_type order by com_type_id asc
     </select>
 </mapper>

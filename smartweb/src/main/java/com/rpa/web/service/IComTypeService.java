@@ -3,6 +3,7 @@ package com.rpa.web.service;
 import com.rpa.web.dto.ComTypeDTO;
 import com.rpa.web.utils.DTPageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,4 +37,10 @@ public interface IComTypeService {
      * @return
      */
     DTPageInfo<ComTypeDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+
+    /**
+     * 查询所有数据
+     * @return
+     */
+    List<ComTypeDTO> queryAll();
 }
