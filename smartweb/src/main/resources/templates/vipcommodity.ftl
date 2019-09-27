@@ -154,6 +154,9 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
+                                                    <button type="hidden" id = "uCmdyId" name = "uCmdyId" style="display:none;"/>
+                                                </div>
+                                                <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">销售渠道:</span>
                                                     <label id="uChannelName">xxx</label>
                                                 </div>
@@ -286,7 +289,6 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
-
     $(document).ready(function () {
         // 下拉框请求后端并赋值
         $.ajax({
@@ -322,6 +324,22 @@
     }
 
     function updateClick() {
+        let cmdyId = $('#uCmdyId').val();
+        let comName = $('#uComName').val();
+        let description = $('#uDescription').val();
+        let price = $('#uPrice').val();
+        let showDiscount = $('#uShowDiscount').val();
+        let discount = $('#uDiscount').val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/vipcommodity/update?cmdyId=' + cmdyId + "&comName=" + comName + "&description=" + description +
+                "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" + discount,
+            dataType: 'json',
+            success: function (data) {
+                queryClick();
+            }
+        })
 
     }
 
@@ -433,6 +451,7 @@
             url: '/vipcommodity/queryById?cmdyId=' + cmdyId,
             dataType: 'JSON',
             success: function (data) {
+                $('#uCmdyId').val(data.cmdyId);
                 $('#uChannelName').text(data.name);
                 $('#uComTypeName').text(data.comTypeName);
                 $('#uComName').val(data.comName);

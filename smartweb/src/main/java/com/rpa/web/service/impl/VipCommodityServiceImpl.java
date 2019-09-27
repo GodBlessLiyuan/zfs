@@ -33,11 +33,6 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     private ComTypeMapper comTypeMapper;
 
     @Override
-    public void update(VipCommodityPO po) {
-        vipCommodityMapper.updateByPrimaryKey(po);
-    }
-
-    @Override
     public DTPageInfo<VipCommodityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
 
         Page<VipCommodityPO> page = PageHelper.startPage(pageNum, pageSize);
@@ -77,5 +72,19 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     @Override
     public VipCommodityDTO queryById(int cmdyId) {
         return VipCommodityDTO.convert(vipCommodityMapper.selectByPrimaryKey(cmdyId));
+    }
+
+    @Override
+    public int update(int cmdyId, String comName, String description, int price, String showDiscount, float discount) {
+        VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(cmdyId);
+
+        vipCommodityPO.setComName(comName);
+        vipCommodityPO.setDescription(description);
+        vipCommodityPO.setPrice(price);
+        vipCommodityPO.setShowDiscount(showDiscount);
+        vipCommodityPO.setDiscount(discount);
+        vipCommodityPO.setUpdateTime(new Date());
+
+        return vipCommodityMapper.updateByPrimaryKey(vipCommodityPO);
     }
 }
