@@ -4,7 +4,9 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.rpa.web.dto.VipCommodityDTO;
+import com.rpa.web.mapper.ComTypeMapper;
 import com.rpa.web.mapper.VipCommodityMapper;
+import com.rpa.web.pojo.ComTypePO;
 import com.rpa.web.pojo.VipCommodityPO;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
@@ -25,43 +27,49 @@ import java.util.Map;
 public class VipCommodityServiceImpl implements IVipCommodityService {
 
     @Resource
-    private VipCommodityMapper mapper;
+    private VipCommodityMapper vipCommodityMapper;
+
+    @Resource
+    private ComTypeMapper comTypeMapper;
 
     @Override
     public void update(VipCommodityPO po) {
-        mapper.updateByPrimaryKey(po);
+        vipCommodityMapper.updateByPrimaryKey(po);
     }
 
     @Override
     public DTPageInfo<VipCommodityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
 
         Page<VipCommodityPO> page = PageHelper.startPage(pageNum, pageSize);
-        List<VipCommodityPO> data = mapper.query(reqData);
+        List<VipCommodityPO> data = vipCommodityMapper.query(reqData);
 
         return new DTPageInfo<>(draw, page.getTotal(), VipCommodityDTO.convert(data));
     }
 
     @Override
-    public void insert(String channelName, String comTypeName, String comName, String description, int price, String showDiscount, float discount, int aId) {
-        VipCommodityPO po = new VipCommodityPO();
+    public void insert(int channelId, int comTypeId, String comName, String description, int price, String showDiscount, float discount, int aId) {
 
-        po.setaId(aId);
-        po.setName(channelName);
-        po.setComTypeName(comTypeName);
-        po.setComName(comName);
-        po.setDescription(description);
-        po.setPrice(price);
-        po.setShowDiscount(showDiscount);
-        po.setDiscount(discount);
-        po.setCreateTime(new Date());
-        po.setStatus((byte) 1);
-        po.setIstop((byte) 1);
+        // 查询产品信息数据
+        ComTypePO comTypePO = comTypeMapper.selectByPrimaryKey(comTypeId);
+        VipCommodityPO vipCommodityPO = new VipCommodityPO();
 
-        po.setaId(1);
-        po.setViptypeId(1);
-        po.setComTypeId(1);
-        po.setSoftChannelId(1);
+        vipCommodityPO.setaId(aId);
+        vipCommodityPO.setSoftChannelId(channelId);
+        vipCommodityPO.setComTypeId(comTypeId);
+        vipCommodityPO.setComTypeName(comTypePO.getName());
+        vipCommodityPO.setComName(comName);
+        vipCommodityPO.setDescription(description);
+        vipCommodityPO.setPrice(price);
+        vipCommodityPO.setShowDiscount(showDiscount);
+        vipCommodityPO.setDiscount(discount);
+        vipCommodityPO.setCreateTime(new Date());
+        vipCommodityPO.setStatus((byte) 1);
+        vipCommodityPO.setIstop((byte) 1);
 
-        mapper.insert(po);
+        vipCommodityPO.setaId(1);
+        vipCommodityPO.setViptypeId(1);
+        vipCommodityPO.setSoftChannelId(1);
+
+        vipCommodityMapper.insert(vipCommodityPO);
     }
 }

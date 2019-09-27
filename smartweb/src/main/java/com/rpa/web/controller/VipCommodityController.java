@@ -26,8 +26,8 @@ public class VipCommodityController {
     private IVipCommodityService service;
 
     @RequestMapping("/vipcommodity/insert")
-    public void insert(@RequestParam(value = "channelName") String channelName,
-                       @RequestParam(value = "comTypeName") String comTypeName,
+    public void insert(@RequestParam(value = "channelId") int channelId,
+                       @RequestParam(value = "comTypeId") int comTypeId,
                        @RequestParam(value = "comName") String comName,
                        @RequestParam(value = "description") String description,
                        @RequestParam(value = "price") int price,
@@ -37,7 +37,8 @@ public class VipCommodityController {
         // 从Session里获取管理员Id
         AdminUserPO loginUser = (AdminUserPO) session.getAttribute("loginUser");
 
-        service.insert(channelName, comTypeName, comName, description, price, showDiscount, discount, 1);
+        service.insert(channelId, comTypeId, comName, description, price, showDiscount,
+                discount, 1);
 
     }
 

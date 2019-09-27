@@ -1,5 +1,7 @@
 package com.rpa.web.mapper;
 
+import com.rpa.web.pojo.ComTypePO;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -23,4 +25,6 @@ public interface BaseDAO<Model, PK extends Serializable> {
     int updateByPrimaryKeySelective(Model record);
 
     int updateByPrimaryKey(Model record);
+
+    List<Model> queryAll();
 }

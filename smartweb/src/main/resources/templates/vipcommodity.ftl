@@ -103,19 +103,11 @@
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">销售渠道:</span>
                                                     <select id="insertChannelName" class="form-control">
-                                                        <option selected="selected">全部</option>
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
-                                                        <option>Option 3</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">产品类型:</span>
                                                     <select id="insertComTypeName" class="form-control">
-                                                        <option selected="selected">全部</option>
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
-                                                        <option>Option 3</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -164,19 +156,12 @@
                                         <div class="form-group col-md-4">
                                             <label>产品类型</label>
                                             <select id="comTypeName" class="form-control">
-                                                <option selected="selected">全部</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
+                                                <option value='0' selected='selected'>全选</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>销售渠道</label>
                                             <select id="channelName" class="form-control">
-                                                <option selected="selected">全部</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
                                             </select>
                                         </div>
                                     </div>
@@ -251,23 +236,43 @@
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
 
+    $(document).ready(function () {
+        // 下拉框请求后端并赋值
+        $.ajax({
+            type: 'GET',
+            url: '/comtype/queryAll',
+            dataType: 'JSON',
+            success: function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    $('#insertComTypeName').append("<option value='" + data[i].comTypeId + "'>" + data[i].name +
+                        "</option>");
+                    $('#comTypeName').append("<option value='" + data[i].comTypeId + "'>" + data[i].name +
+                        "</option>");
+                }
+            }
+        })
+    });
+
     /**
      * 确认上架点击事件
      */
     function insertClick() {
-        let channelName = $('#insertChannelName').val();
-        let comTypeName = $('#insertComTypeName').val();
+        let channelId = $('#insertChannelName').val();
+        let comTypeId = $('#insertComTypeName').val();
         let comName = $('#comName').val();
         let description = $('#description').val();
         let price = $('#price').val();
         let showDiscount = $('#showDiscount').val();
         let discount = $('#discount').val();
 
-        $.get("/vipcommodity/insert?channelName=" + channelName + "&comTypeName=" + comTypeName + "&comName=" +
-            comName + "&description=" + description + "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" +
+        $.get("/vipcommodity/insert?channelId=" + channelId + "&comTypeId=" + comTypeId + "&comName=" + comName +
+            "&description=" + description + "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" +
             discount);
     }
 
+    /**
+     * 导出点击事件
+     */
     function exportClick() {
 
     }
