@@ -86,9 +86,9 @@
                         <div class="card-body">
 
                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#exampleModal" data-whatever="@getbootstrap">新增商品
+                                    data-target="#insertModal" data-whatever="@getbootstrap">新增商品
                             </button>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -136,6 +136,57 @@
                                             <button type="button" class="btn btn-primary" onclick="insertClick()"
                                                     data-dismiss="modal"
                                             >确认上架
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">修改商品</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <span for="recipient-name" class="col-form-label">销售渠道:</span>
+                                                    <label id="uChannelName">xxx</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">产品类型:</span>
+                                                    <label id="uComTypeName">XXX</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">商品名称:</span>
+                                                    <input type="text" class="form-control" id="uComName">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">商品描述:</span>
+                                                    <input type="text" class="form-control" id="uDescription">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">原价:</span>
+                                                    <input type="text" class="form-control" id="uPrice">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">折扣:</span>
+                                                    <input type="text" class="form-control" id="uShowDiscount">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">售价:</span>
+                                                    <input type="text" class="form-control" id="uDiscount">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" onclick="updateClick()"
+                                                    data-dismiss="modal"
+                                            >确认修改
                                             </button>
                                         </div>
                                     </div>
@@ -270,6 +321,10 @@
             discount);
     }
 
+    function updateClick() {
+
+    }
+
     /**
      * 导出点击事件
      */
@@ -328,9 +383,10 @@
                 },
                 {"data": "createTime"},
                 {
-                    "data": null,
+                    "data": "cmdyId",
                     "render": function (data, type, full) {
-                        return "<a href='xxx'>修改</a>";
+                        return "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
+                            "class='text-primary' onclick='javascript:updateModal(" + data + ")'>修改</a>";
                     }
                 },
                 {"data": "username"}
@@ -365,6 +421,27 @@
                 }
             }
         });
+    }
+
+    /**
+     * 更新弹框界面设值
+     * @param data cmdyId
+     */
+    function updateModal(cmdyId) {
+        $.ajax({
+            type: 'GET',
+            url: '/vipcommodity/queryById?cmdyId=' + cmdyId,
+            dataType: 'JSON',
+            success: function (data) {
+                $('#uChannelName').text(data.name);
+                $('#uComTypeName').text(data.comTypeName);
+                $('#uComName').val(data.comName);
+                $('#uDescription').val(data.description);
+                $('#uPrice').val(data.price);
+                $('#uShowDiscount').val(data.showDiscount);
+                $('#uDiscount').val(data.discount);
+            }
+        })
     }
 </script>
 
