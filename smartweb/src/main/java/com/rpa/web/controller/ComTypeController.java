@@ -1,9 +1,7 @@
 package com.rpa.web.controller;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.rpa.web.dto.ComTypeDTO;
 import com.rpa.web.pojo.AdminUserPO;
-import com.rpa.web.pojo.ComTypePO;
 import com.rpa.web.service.IComTypeService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,16 +36,16 @@ public class ComTypeController {
     }
 
     @RequestMapping("/comtype/query")
-    public DTPageInfo<ComTypePO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                       @RequestParam(value = "username") String username) {
-        Map<String, Object> map = new HashMap<>(1);
-        map.put("username", username);
+    public DTPageInfo<ComTypeDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                        @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                        @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                        @RequestParam(value = "username") String username) {
 
-        Page<ComTypePO> page = PageHelper.startPage(pageNum, pageSize);
-        List<ComTypePO> data = service.query(map);
+        Map<String, Object> reqData = new HashMap<>(1);
+        reqData.put("username", username);
 
-        return new DTPageInfo<>(draw, page.getTotal(), data);
+        DTPageInfo<ComTypeDTO> dtodtPageInfo = service.query(draw, pageNum, pageSize, reqData);
+
+        return dtodtPageInfo;
     }
 }

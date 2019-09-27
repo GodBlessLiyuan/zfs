@@ -101,16 +101,42 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <span for="recipient-name" class="col-form-label">产品类型:</span>
-                                                    <input type="text" class="form-control" id="comtype-name">
+                                                    <span for="recipient-name" class="col-form-label">销售渠道:</span>
+                                                    <select id="insertChannelName" class="form-control">
+                                                        <option selected="selected">全部</option>
+                                                        <option>Option 1</option>
+                                                        <option>Option 2</option>
+                                                        <option>Option 3</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">产品天数:</span>
-                                                    <input type="text" class="form-control" id="comtype-days">
+                                                    <span for="message-text" class="col-form-label">产品类型:</span>
+                                                    <select id="insertComTypeName" class="form-control">
+                                                        <option selected="selected">全部</option>
+                                                        <option>Option 1</option>
+                                                        <option>Option 2</option>
+                                                        <option>Option 3</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">备注信息:</span>
-                                                    <input type="text" class="form-control" id="comtype-extra">
+                                                    <span for="message-text" class="col-form-label">商品名称:</span>
+                                                    <input type="text" class="form-control" id="comName">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">商品描述:</span>
+                                                    <input type="text" class="form-control" id="description">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">原价:</span>
+                                                    <input type="text" class="form-control" id="price">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">折扣:</span>
+                                                    <input type="text" class="form-control" id="showDiscount">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">售价:</span>
+                                                    <input type="text" class="form-control" id="discount">
                                                 </div>
                                             </form>
                                         </div>
@@ -137,7 +163,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>产品类型</label>
-                                            <select id="comname" class="form-control">
+                                            <select id="comTypeName" class="form-control">
                                                 <option selected="selected">全部</option>
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
@@ -146,7 +172,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>销售渠道</label>
-                                            <select id="channelname" class="form-control">
+                                            <select id="channelName" class="form-control">
                                                 <option selected="selected">全部</option>
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
@@ -229,8 +255,17 @@
      * 确认上架点击事件
      */
     function insertClick() {
-        $.get("/vipcommodity/insert?name=" + $('#comtype-name').val() + "&days=" + parseInt($('#comtype-days').val()) + "&extra=" + $
-        ('#comtype-extra').val());
+        let channelName = $('#insertChannelName').val();
+        let comTypeName = $('#insertComTypeName').val();
+        let comName = $('#comName').val();
+        let description = $('#description').val();
+        let price = $('#price').val();
+        let showDiscount = $('#showDiscount').val();
+        let discount = $('#discount').val();
+
+        $.get("/vipcommodity/insert?channelName=" + channelName + "&comTypeName=" + comTypeName + "&comName=" +
+            comName + "&description=" + description + "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" +
+            discount);
     }
 
     function exportClick() {
@@ -259,7 +294,7 @@
             "columns": [
                 {"data": null, "targets": 0},
                 {"data": "name"},
-                {"data": "comName"},
+                {"data": "comTypeName"},
                 {"data": "days"},
                 {"data": "comName"},
                 {"data": "description"},
