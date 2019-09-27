@@ -154,7 +154,8 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <button type="hidden" id = "uCmdyId" name = "uCmdyId" style="display:none;"/>
+                                                    <button type="hidden" id="uCmdyId" name="uCmdyId"
+                                                            style="display:none;"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">销售渠道:</span>
@@ -383,9 +384,11 @@
                     "data": "status",
                     "render": function (data, type, full) {
                         if (data == 1) {
-                            return "<button class='badge badge-dark' type='button'>未上架</button>";
+                            return "<button class='badge badge-dark' type='button' " +
+                                "onclick='javascript:statusClick(" + full.cmdyId + "," + data + ")'>未上架</button>";
                         } else {
-                            return "<button class='badge badge-primary' type='button'>已上架</button>";
+                            return "<button class='badge badge-primary' type='button' " +
+                                "onclick='javascript:statusClick(" + full.cmdyId + "," + data + ")'>已上架</button>";
                         }
                     }
                 },
@@ -393,9 +396,11 @@
                     "data": "istop",
                     "render": function (data, type, full) {
                         if (data == 1) {
-                            return "<button class='badge badge-dark' type='button'>未置顶</button>";
+                            return "<button class='badge badge-dark' type='button' " +
+                                "onclick='javascript:isTopClick(" + full.cmdyId + "," + data + ")'>未置顶</button>";
                         } else {
-                            return "<button class='badge badge-primary' type='button'>已置顶</button>";
+                            return "<button class='badge badge-primary' type='button' " +
+                                "onclick='javascript:isTopClick(" + full.cmdyId + "," + data + ")'>已置顶</button>";
                         }
                     }
                 },
@@ -459,6 +464,38 @@
                 $('#uPrice').val(data.price);
                 $('#uShowDiscount').val(data.showDiscount);
                 $('#uDiscount').val(data.discount);
+            }
+        })
+    }
+
+    /**
+     * 是否上架点击事件
+     * @param status 状态
+     */
+    function statusClick(cmdyId, status) {
+        status = status === 1 ? 2 : 1;
+        $.ajax({
+            type: 'GET',
+            url: '/vipcommodity/updateStatus?cmdyId=' + cmdyId + '&status=' + status,
+            dataType: 'JSON',
+            success: function (data) {
+                queryClick();
+            }
+        })
+    }
+
+    /**
+     * 是否置顶点击事件
+     * @param status 状态
+     */
+    function isTopClick(cmdyId, isTop) {
+        isTop = isTop === 1 ? 2 : 1;
+        $.ajax({
+            type: 'GET',
+            url: '/vipcommodity/updateIsTop?cmdyId=' + cmdyId + '&isTop=' + isTop,
+            dataType: 'JSON',
+            success: function (data) {
+                queryClick();
             }
         })
     }

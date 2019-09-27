@@ -67,12 +67,24 @@ public class VipCommodityController {
 
     @RequestMapping("/vipcommodity/update")
     public int update(@RequestParam(value = "cmdyId") int cmdyId,
-                       @RequestParam(value = "comName") String comName,
-                       @RequestParam(value = "description") String description,
-                       @RequestParam(value = "price") int price,
-                       @RequestParam(value = "showDiscount") String showDiscount,
-                       @RequestParam(value = "discount") float discount) {
+                      @RequestParam(value = "comName") String comName,
+                      @RequestParam(value = "description") String description,
+                      @RequestParam(value = "price") int price,
+                      @RequestParam(value = "showDiscount") String showDiscount,
+                      @RequestParam(value = "discount") float discount) {
 
         return service.update(cmdyId, comName, description, price, showDiscount, discount);
+    }
+
+    @RequestMapping("/vipcommodity/updateStatus")
+    public int updateStatus(@RequestParam(value = "cmdyId") int cmdyId,
+                            @RequestParam(value = "status") byte status) {
+        return service.updateStatus(cmdyId, status);
+    }
+
+    @RequestMapping("/vipcommodity/updateIsTop")
+    public int updateIsTop(@RequestParam(value = "cmdyId") int cmdyId,
+                           @RequestParam(value = "isTop") byte isTop) {
+        return service.updateIsTop(cmdyId, isTop);
     }
 }

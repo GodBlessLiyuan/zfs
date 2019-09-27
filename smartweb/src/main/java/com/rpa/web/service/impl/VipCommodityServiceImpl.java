@@ -87,4 +87,22 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
 
         return vipCommodityMapper.updateByPrimaryKey(vipCommodityPO);
     }
+
+    @Override
+    public int updateStatus(int cmdyId, byte status) {
+        VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(cmdyId);
+
+        vipCommodityPO.setStatus(status);
+
+        return vipCommodityMapper.updateByPrimaryKey(vipCommodityPO);
+    }
+
+    @Override
+    public int updateIsTop(int cmdyId, byte isTop) {
+        VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(cmdyId);
+
+        vipCommodityPO.setIstop(isTop);
+
+        return vipCommodityMapper.updateByPrimaryKey(vipCommodityPO);
+    }
 }

@@ -57,4 +57,20 @@ public interface IVipCommodityService {
      * @param discount 售价
      */
     int update(int cmdyId, String comName, String description, int price, String showDiscount, float discount);
+
+    /**
+     * 更新是否上架
+     * @param cmdyId
+     * @param status
+     * @return
+     */
+    int updateStatus(int cmdyId, byte status);
+
+    /**
+     * 更新是否置顶
+     * @param cmdyId
+     * @param isTop
+     * @return
+     */
+    int updateIsTop(int cmdyId, byte isTop);
 }
