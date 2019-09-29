@@ -38,4 +38,13 @@ public class PageController {
     public String commodity() {
         return "vipcommodity";
     }
+
+    /**
+     * 渠道信息
+     * @return
+     */
+    @RequestMapping("/softchannel")
+    public String softChannel() {
+        return "softchannel";
+    }
 }

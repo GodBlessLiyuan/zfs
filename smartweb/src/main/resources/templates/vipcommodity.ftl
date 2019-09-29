@@ -356,9 +356,7 @@
      */
     function queryClick() {
 
-        var current = 0;
         if ($.fn.dataTable.isDataTable('#datatab')) {
-            current = $('#datatab').DataTable().page.info().page;
             $('#datatab').DataTable().destroy();
         }
 
