@@ -338,7 +338,7 @@
                 "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" + discount,
             dataType: 'json',
             success: function (data) {
-                queryClick();
+                $('#datatab').DataTable().draw(false);
             }
         })
 
@@ -479,7 +479,7 @@
             url: '/vipcommodity/updateStatus?cmdyId=' + cmdyId + '&status=' + status,
             dataType: 'JSON',
             success: function (data) {
-                queryClick();
+                $('#datatab').DataTable().draw(false);
             }
         })
     }
@@ -495,7 +495,7 @@
             url: '/vipcommodity/updateIsTop?cmdyId=' + cmdyId + '&isTop=' + isTop,
             dataType: 'JSON',
             success: function (data) {
-                queryClick();
+                $('#datatab').DataTable().draw(false);
             }
         })
     }
