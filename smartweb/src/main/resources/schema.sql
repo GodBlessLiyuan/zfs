@@ -326,6 +326,7 @@ CREATE TABLE t_other_app
 	a_id int,
 	create_time datetime,
 	update_time datetime,
+	extra char(128),
 	PRIMARY KEY (o_id),
 	UNIQUE (o_id)
 );

@@ -27,6 +27,8 @@ public class OtherAppPO implements Serializable {
 
     private Date updateTime;
 
+    private String extra;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getoId() {
@@ -93,6 +95,14 @@ public class OtherAppPO implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -112,7 +122,8 @@ public class OtherAppPO implements Serializable {
             && (this.getDownloadType() == null ? other.getDownloadType() == null : this.getDownloadType().equals(other.getDownloadType()))
             && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()));
     }
 
     @Override
@@ -127,6 +138,7 @@ public class OtherAppPO implements Serializable {
         result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
         return result;
     }
 
@@ -144,6 +156,7 @@ public class OtherAppPO implements Serializable {
         sb.append(", aId=").append(aId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", extra=").append(extra);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
