@@ -47,4 +47,13 @@ public class PageController {
     public String softChannel() {
         return "softchannel";
     }
+
+    /**
+     * 未注册用户信息
+     * @return
+     */
+    @RequestMapping("/unregistered")
+    public String unregistered() {
+        return "unregistered";
+    }
 }

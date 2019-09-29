@@ -43,4 +43,10 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
 
         return softChannelMapper.insert(po);
     }
+
+    @Override
+    public List<SoftChannelDTO> queryAll() {
+        List<SoftChannelPO> pos = softChannelMapper.queryAll();
+        return SoftChannelDTO.convert(pos);
+    }
 }
