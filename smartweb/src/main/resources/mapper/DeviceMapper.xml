@@ -12,10 +12,11 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="versioncode" jdbcType="INTEGER" property="versioncode" />
     <result column="manufacturer" jdbcType="CHAR" property="manufacturer" />
+    <result column="androidmodel" jdbcType="CHAR" property="androidmodel" />
   </resultMap>
   <sql id="Base_Column_List">
     device_id, utdid, androidid, buildversion, soft_channel_id, chan_name, create_time, 
-    update_time, versioncode, manufacturer
+    update_time, versioncode, manufacturer, androidmodel
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -31,11 +32,11 @@
     insert into t_device (device_id, utdid, androidid, 
       buildversion, soft_channel_id, chan_name, 
       create_time, update_time, versioncode, 
-      manufacturer)
+      manufacturer, androidmodel)
     values (#{deviceId,jdbcType=BIGINT}, #{utdid,jdbcType=VARCHAR}, #{androidid,jdbcType=VARCHAR}, 
       #{buildversion,jdbcType=TINYINT}, #{softChannelId,jdbcType=INTEGER}, #{chanName,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{versioncode,jdbcType=INTEGER}, 
-      #{manufacturer,jdbcType=CHAR})
+      #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.DevicePO">
     insert into t_device
@@ -70,6 +71,9 @@
       <if test="manufacturer != null">
         manufacturer,
       </if>
+      <if test="androidmodel != null">
+        androidmodel,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="deviceId != null">
@@ -101,6 +105,9 @@
       </if>
       <if test="manufacturer != null">
         #{manufacturer,jdbcType=CHAR},
+      </if>
+      <if test="androidmodel != null">
+        #{androidmodel,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -134,6 +141,9 @@
       <if test="manufacturer != null">
         manufacturer = #{manufacturer,jdbcType=CHAR},
       </if>
+      <if test="androidmodel != null">
+        androidmodel = #{androidmodel,jdbcType=CHAR},
+      </if>
     </set>
     where device_id = #{deviceId,jdbcType=BIGINT}
   </update>
@@ -147,7 +157,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       versioncode = #{versioncode,jdbcType=INTEGER},
-      manufacturer = #{manufacturer,jdbcType=CHAR}
+      manufacturer = #{manufacturer,jdbcType=CHAR},
+      androidmodel = #{androidmodel,jdbcType=CHAR}
     where device_id = #{deviceId,jdbcType=BIGINT}
   </update>
 </mapper>

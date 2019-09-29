@@ -34,6 +34,8 @@ public class DevicePO implements Serializable {
 
     private String manufacturer;
 
+    private String androidmodel;
+
     private static final long serialVersionUID = 1L;
 
     public Long getDeviceId() {
@@ -116,6 +118,14 @@ public class DevicePO implements Serializable {
         this.manufacturer = manufacturer;
     }
 
+    public String getAndroidmodel() {
+        return androidmodel;
+    }
+
+    public void setAndroidmodel(String androidmodel) {
+        this.androidmodel = androidmodel;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -137,7 +147,8 @@ public class DevicePO implements Serializable {
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getVersioncode() == null ? other.getVersioncode() == null : this.getVersioncode().equals(other.getVersioncode()))
-            && (this.getManufacturer() == null ? other.getManufacturer() == null : this.getManufacturer().equals(other.getManufacturer()));
+            && (this.getManufacturer() == null ? other.getManufacturer() == null : this.getManufacturer().equals(other.getManufacturer()))
+            && (this.getAndroidmodel() == null ? other.getAndroidmodel() == null : this.getAndroidmodel().equals(other.getAndroidmodel()));
     }
 
     @Override
@@ -154,6 +165,7 @@ public class DevicePO implements Serializable {
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getVersioncode() == null) ? 0 : getVersioncode().hashCode());
         result = prime * result + ((getManufacturer() == null) ? 0 : getManufacturer().hashCode());
+        result = prime * result + ((getAndroidmodel() == null) ? 0 : getAndroidmodel().hashCode());
         return result;
     }
 
@@ -173,6 +185,7 @@ public class DevicePO implements Serializable {
         sb.append(", updateTime=").append(updateTime);
         sb.append(", versioncode=").append(versioncode);
         sb.append(", manufacturer=").append(manufacturer);
+        sb.append(", androidmodel=").append(androidmodel);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

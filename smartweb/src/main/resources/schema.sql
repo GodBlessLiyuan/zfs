@@ -204,6 +204,7 @@ CREATE TABLE t_device
 	update_time datetime,
 	versioncode int,
 	manufacturer char(128),
+	androidmodel char(64),
 	PRIMARY KEY (device_id),
 	UNIQUE (device_id)
 );
