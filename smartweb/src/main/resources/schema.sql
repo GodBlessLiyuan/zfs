@@ -107,9 +107,7 @@ CREATE TABLE t_ad_channel
 	update_time datetime,
 	-- 1 当前版本  2 历史版本 
 	type tinyint COMMENT '1 当前版本  2 历史版本 ',
-	app_id int NOT NULL,
-	UNIQUE (ad_id),
-	UNIQUE (soft_channel_id)
+	app_id int NOT NULL
 );
 
 
@@ -194,11 +192,20 @@ CREATE TABLE t_com_type
 
 CREATE TABLE t_device
 (
-    device_id bigint NOT NULL AUTO_INCREMENT,
-    utdid varchar(32),
-    androidid varchar(32),
-    PRIMARY KEY (device_id),
-    UNIQUE (device_id)
+	-- 允许为null
+	device_id bigint NOT NULL AUTO_INCREMENT COMMENT '允许为null',
+	utdid varchar(32),
+	androidid varchar(32),
+	-- android系统的版本号
+	buildversion tinyint COMMENT 'android系统的版本号',
+	soft_channel_id int,
+	chan_name varchar(64),
+	create_time datetime,
+	update_time datetime,
+	versioncode int,
+	manufacturer char(128),
+	PRIMARY KEY (device_id),
+	UNIQUE (device_id)
 );
 
 
@@ -327,7 +334,7 @@ CREATE TABLE t_promoter
 
 CREATE TABLE t_soft_channel
 (
-    soft_channel_id int NOT NULL,
+    soft_channel_id int NOT NULL AUTO_INCREMENT,
     name char(20),
     extra char(120),
     create_time datetime,
