@@ -20,6 +20,12 @@ public class UserPO implements Serializable {
 
     private Date updateTime;
 
+    private String chanName;
+    private Integer versionCode;
+    private Byte buildVersion;
+    private String manufacturer;
+    private String androidModel;
+
     private static final long serialVersionUID = 1L;
 
     public Long getUserId() {
@@ -68,6 +74,46 @@ public class UserPO implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getChanName() {
+        return chanName;
+    }
+
+    public void setChanName(String chanName) {
+        this.chanName = chanName;
+    }
+
+    public Integer getVersionCode() {
+        return versionCode;
+    }
+
+    public void setVersionCode(Integer versionCode) {
+        this.versionCode = versionCode;
+    }
+
+    public Byte getBuildVersion() {
+        return buildVersion;
+    }
+
+    public void setBuildVersion(Byte buildVersion) {
+        this.buildVersion = buildVersion;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getAndroidModel() {
+        return androidModel;
+    }
+
+    public void setAndroidModel(String androidModel) {
+        this.androidModel = androidModel;
     }
 
     @Override

@@ -1,17 +1,22 @@
 package com.rpa.web.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.rpa.web.dto.UserDTO;
 import com.rpa.web.mapper.UserMapper;
 import com.rpa.web.pojo.UserPO;
 import com.rpa.web.service.IUserService;
+import com.rpa.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: xiahui
  * @date: Created in 2019/9/24 10:03
- * @description: TODO
+ * @description: 用户信息
  * @version: 1.0
  */
 @Service
@@ -20,8 +25,11 @@ public class UserServiceImpl implements IUserService {
     @Resource
     private UserMapper userMapper;
 
+
     @Override
-    public List<UserPO> list() {
-        return userMapper.list();
+    public DTPageInfo<UserDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+        Page<UserPO> page = PageHelper.startPage(pageNum, pageSize);
+        List<UserPO> pos = userMapper.query(reqData);
+        return new DTPageInfo<>(draw, page.getTotal(), UserDTO.convert(pos));
     }
 }

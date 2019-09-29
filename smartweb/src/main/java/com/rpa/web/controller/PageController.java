@@ -16,9 +16,9 @@ public class PageController {
      * 用户信息
      * @return
      */
-    @RequestMapping("/userlist")
+    @RequestMapping("/userinfo")
     public String userList() {
-        return "userlist";
+        return "userinfo";
     }
 
     /**
