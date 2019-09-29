@@ -27,6 +27,7 @@ DROP TABLE IF EXISTS t_key_text;
 DROP TABLE IF EXISTS t_key_value;
 DROP TABLE IF EXISTS t_notice;
 DROP TABLE IF EXISTS t_order_feedback;
+DROP TABLE IF EXISTS t_other_app;
 DROP TABLE IF EXISTS t_promoter;
 DROP TABLE IF EXISTS t_soft_channel;
 DROP TABLE IF EXISTS t_whilte_user;
@@ -48,7 +49,8 @@ CREATE TABLE t_activity
 	a_id int NOT NULL,
 	position int,
 	create_time datetime,
-	update_time datetime,
+	-- 默认为null
+	update_time datetime COMMENT '默认为null',
 	PRIMARY KEY (activity_id),
 	UNIQUE (activity_id)
 );
@@ -137,8 +139,7 @@ CREATE TABLE t_batch_info
     -- 默认为null
     update_time datetime COMMENT '默认为null',
     PRIMARY KEY (id),
-    UNIQUE (id),
-    UNIQUE (vipkey)
+    UNIQUE (id)
 );
 
 
@@ -305,9 +306,6 @@ CREATE TABLE t_order_feedback
     fee_type char(16),
     cash_fee int,
     cash_fee_type char(16),
-    --
-    --
-    --
     coupon_fee int COMMENT '',
     coupon_count int,
     transaction_id char(32),
@@ -316,6 +314,20 @@ CREATE TABLE t_order_feedback
     time_end char(16),
     PRIMARY KEY (wxpayid),
     UNIQUE (wxpayid)
+);
+CREATE TABLE t_other_app
+(
+	o_id int NOT NULL AUTO_INCREMENT,
+	o_name char(64),
+	icon_url char(128),
+	app_url char(128),
+	-- 1 直接下载  2应用市场
+	download_type tinyint COMMENT '1 直接下载  2应用市场',
+	a_id int,
+	create_time datetime,
+	update_time datetime,
+	PRIMARY KEY (o_id),
+	UNIQUE (o_id)
 );
 
 
