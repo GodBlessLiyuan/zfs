@@ -1,8 +1,9 @@
 package com.rpa.web.service;
 
-import com.rpa.web.pojo.UserPO;
+import com.rpa.web.dto.UserDTO;
+import com.rpa.web.utils.DTPageInfo;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author: xiahui
@@ -14,8 +15,11 @@ public interface IUserService {
 
     /**
      * 分页查询
-     *
+     * @param draw
+     * @param pageNum
+     * @param pageSize
+     * @param reqData
      * @return
      */
-    List<UserPO> list();
+    DTPageInfo<UserDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 }
