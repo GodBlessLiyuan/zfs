@@ -3,6 +3,7 @@ package com.rpa.web.service;
 import com.rpa.web.dto.SoftChannelDTO;
 import com.rpa.web.utils.DTPageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,4 +31,10 @@ public interface ISoftChannelService {
      * @return
      */
     int insert(String channelName, String extra);
+
+    /**
+     * 查询全部数据
+     * @return
+     */
+    List<SoftChannelDTO> queryAll();
 }

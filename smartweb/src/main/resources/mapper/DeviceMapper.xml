@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rpa.web.mapper.DeviceMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.DevicePO">
-    <id column="device_id" jdbcType="BIGINT" property="deviceId" />
-    <result column="utdid" jdbcType="VARCHAR" property="utdid" />
-    <result column="androidid" jdbcType="VARCHAR" property="androidid" />
-    <result column="buildversion" jdbcType="TINYINT" property="buildversion" />
-    <result column="soft_channel_id" jdbcType="INTEGER" property="softChannelId" />
-    <result column="chan_name" jdbcType="VARCHAR" property="chanName" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="versioncode" jdbcType="INTEGER" property="versioncode" />
-    <result column="manufacturer" jdbcType="CHAR" property="manufacturer" />
-    <result column="androidmodel" jdbcType="CHAR" property="androidmodel" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    device_id, utdid, androidid, buildversion, soft_channel_id, chan_name, create_time, 
-    update_time, versioncode, manufacturer, androidmodel
+    <resultMap id="BaseResultMap" type="com.rpa.web.pojo.DevicePO">
+        <id column="device_id" jdbcType="BIGINT" property="deviceId"/>
+        <result column="utdid" jdbcType="VARCHAR" property="utdid"/>
+        <result column="androidid" jdbcType="VARCHAR" property="androidid"/>
+        <result column="buildversion" jdbcType="TINYINT" property="buildversion"/>
+        <result column="soft_channel_id" jdbcType="INTEGER" property="softChannelId"/>
+        <result column="chan_name" jdbcType="VARCHAR" property="chanName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="versioncode" jdbcType="INTEGER" property="versioncode"/>
+        <result column="manufacturer" jdbcType="CHAR" property="manufacturer"/>
+        <result column="androidmodel" jdbcType="CHAR" property="androidmodel"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    device_id as deviceId, utdid, androidid, buildversion, soft_channel_id as softChannelId, chan_name as chanName,
+    create_time as createTime,
+    update_time as updateTime, versioncode, manufacturer, androidmodel
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_device
-    where device_id = #{deviceId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_device
+        where device_id = #{deviceId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_device
     where device_id = #{deviceId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.web.pojo.DevicePO">
+    <insert id="insert" parameterType="com.rpa.web.pojo.DevicePO">
     insert into t_device (device_id, utdid, androidid, 
       buildversion, soft_channel_id, chan_name, 
       create_time, update_time, versioncode, 
@@ -38,116 +39,116 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{versioncode,jdbcType=INTEGER}, 
       #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.web.pojo.DevicePO">
-    insert into t_device
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="deviceId != null">
-        device_id,
-      </if>
-      <if test="utdid != null">
-        utdid,
-      </if>
-      <if test="androidid != null">
-        androidid,
-      </if>
-      <if test="buildversion != null">
-        buildversion,
-      </if>
-      <if test="softChannelId != null">
-        soft_channel_id,
-      </if>
-      <if test="chanName != null">
-        chan_name,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="versioncode != null">
-        versioncode,
-      </if>
-      <if test="manufacturer != null">
-        manufacturer,
-      </if>
-      <if test="androidmodel != null">
-        androidmodel,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="deviceId != null">
-        #{deviceId,jdbcType=BIGINT},
-      </if>
-      <if test="utdid != null">
-        #{utdid,jdbcType=VARCHAR},
-      </if>
-      <if test="androidid != null">
-        #{androidid,jdbcType=VARCHAR},
-      </if>
-      <if test="buildversion != null">
-        #{buildversion,jdbcType=TINYINT},
-      </if>
-      <if test="softChannelId != null">
-        #{softChannelId,jdbcType=INTEGER},
-      </if>
-      <if test="chanName != null">
-        #{chanName,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="versioncode != null">
-        #{versioncode,jdbcType=INTEGER},
-      </if>
-      <if test="manufacturer != null">
-        #{manufacturer,jdbcType=CHAR},
-      </if>
-      <if test="androidmodel != null">
-        #{androidmodel,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.DevicePO">
-    update t_device
-    <set>
-      <if test="utdid != null">
-        utdid = #{utdid,jdbcType=VARCHAR},
-      </if>
-      <if test="androidid != null">
-        androidid = #{androidid,jdbcType=VARCHAR},
-      </if>
-      <if test="buildversion != null">
-        buildversion = #{buildversion,jdbcType=TINYINT},
-      </if>
-      <if test="softChannelId != null">
-        soft_channel_id = #{softChannelId,jdbcType=INTEGER},
-      </if>
-      <if test="chanName != null">
-        chan_name = #{chanName,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="versioncode != null">
-        versioncode = #{versioncode,jdbcType=INTEGER},
-      </if>
-      <if test="manufacturer != null">
-        manufacturer = #{manufacturer,jdbcType=CHAR},
-      </if>
-      <if test="androidmodel != null">
-        androidmodel = #{androidmodel,jdbcType=CHAR},
-      </if>
-    </set>
-    where device_id = #{deviceId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.DevicePO">
+    <insert id="insertSelective" parameterType="com.rpa.web.pojo.DevicePO">
+        insert into t_device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="utdid != null">
+                utdid,
+            </if>
+            <if test="androidid != null">
+                androidid,
+            </if>
+            <if test="buildversion != null">
+                buildversion,
+            </if>
+            <if test="softChannelId != null">
+                soft_channel_id,
+            </if>
+            <if test="chanName != null">
+                chan_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="versioncode != null">
+                versioncode,
+            </if>
+            <if test="manufacturer != null">
+                manufacturer,
+            </if>
+            <if test="androidmodel != null">
+                androidmodel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=BIGINT},
+            </if>
+            <if test="utdid != null">
+                #{utdid,jdbcType=VARCHAR},
+            </if>
+            <if test="androidid != null">
+                #{androidid,jdbcType=VARCHAR},
+            </if>
+            <if test="buildversion != null">
+                #{buildversion,jdbcType=TINYINT},
+            </if>
+            <if test="softChannelId != null">
+                #{softChannelId,jdbcType=INTEGER},
+            </if>
+            <if test="chanName != null">
+                #{chanName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="versioncode != null">
+                #{versioncode,jdbcType=INTEGER},
+            </if>
+            <if test="manufacturer != null">
+                #{manufacturer,jdbcType=CHAR},
+            </if>
+            <if test="androidmodel != null">
+                #{androidmodel,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.DevicePO">
+        update t_device
+        <set>
+            <if test="utdid != null">
+                utdid = #{utdid,jdbcType=VARCHAR},
+            </if>
+            <if test="androidid != null">
+                androidid = #{androidid,jdbcType=VARCHAR},
+            </if>
+            <if test="buildversion != null">
+                buildversion = #{buildversion,jdbcType=TINYINT},
+            </if>
+            <if test="softChannelId != null">
+                soft_channel_id = #{softChannelId,jdbcType=INTEGER},
+            </if>
+            <if test="chanName != null">
+                chan_name = #{chanName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="versioncode != null">
+                versioncode = #{versioncode,jdbcType=INTEGER},
+            </if>
+            <if test="manufacturer != null">
+                manufacturer = #{manufacturer,jdbcType=CHAR},
+            </if>
+            <if test="androidmodel != null">
+                androidmodel = #{androidmodel,jdbcType=CHAR},
+            </if>
+        </set>
+        where device_id = #{deviceId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.DevicePO">
     update t_device
     set utdid = #{utdid,jdbcType=VARCHAR},
       androidid = #{androidid,jdbcType=VARCHAR},
@@ -161,4 +162,14 @@
       androidmodel = #{androidmodel,jdbcType=CHAR}
     where device_id = #{deviceId,jdbcType=BIGINT}
   </update>
+
+    <select id="query" resultType="com.rpa.web.pojo.DevicePO">
+        select
+        d.device_id as deviceId, d.utdid, d.androidid, d.buildversion, d.soft_channel_id as softChannelId, d.chan_name
+        as chanName, d.create_time as createTime, d.update_time as updateTime, d.versioncode, d.manufacturer,
+        d.androidmodel
+        from t_device d
+        left join t_user_device u on d.device_id = u.device_id where u.user_id is null
+        <if test="channelId!=null and channelId!=''">AND soft_channel_id = #{channelId}</if>
+    </select>
 </mapper>

@@ -16,9 +16,9 @@ public class PageController {
      * 用户信息
      * @return
      */
-    @RequestMapping("/userlist")
+    @RequestMapping("/userinfo")
     public String userList() {
-        return "userlist";
+        return "userinfo";
     }
 
     /**
@@ -46,5 +46,14 @@ public class PageController {
     @RequestMapping("/softchannel")
     public String softChannel() {
         return "softchannel";
+    }
+
+    /**
+     * 未注册用户信息
+     * @return
+     */
+    @RequestMapping("/unregistered")
+    public String unregistered() {
+        return "unregistered";
     }
 }
