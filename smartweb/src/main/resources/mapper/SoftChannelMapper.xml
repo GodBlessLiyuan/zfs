@@ -99,4 +99,10 @@
             <if test="name!=null and name!=''">AND `name` like '%' #{name} '%'</if>
         </where>
     </select>
+
+    <select id="queryAll" resultType="com.rpa.web.pojo.SoftChannelPO">
+        select
+        <include refid="Base_Column_List"/>
+        from t_soft_channel order by soft_channel_id asc
+    </select>
 </mapper>

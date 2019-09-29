@@ -1,5 +1,6 @@
 package com.rpa.web.controller;
 
+import com.rpa.web.dto.ComTypeDTO;
 import com.rpa.web.dto.SoftChannelDTO;
 import com.rpa.web.service.ISoftChannelService;
 import com.rpa.web.utils.DTPageInfo;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,5 +41,11 @@ public class SoftChannelController {
 
         DTPageInfo<SoftChannelDTO> data = service.query(draw, pageNum, pageSize, reqData);
         return data;
+    }
+
+    @RequestMapping("/softchannel/queryAll")
+    public List<SoftChannelDTO> queryAll() {
+        List<SoftChannelDTO> datas = service.queryAll();
+        return datas;
     }
 }
