@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS t_device_imei;
 DROP TABLE IF EXISTS t_exception;
 DROP TABLE IF EXISTS t_user_notice;
 DROP TABLE IF EXISTS t_user_device;
+DROP TABLE IF EXISTS t_whilte_device;
 DROP TABLE IF EXISTS t_device;
 DROP TABLE IF EXISTS t_key_text;
 DROP TABLE IF EXISTS t_key_value;
@@ -33,6 +34,7 @@ DROP TABLE IF EXISTS t_soft_channel;
 DROP TABLE IF EXISTS t_whilte_user;
 DROP TABLE IF EXISTS t_user;
 DROP TABLE IF EXISTS t_user_history;
+DROP TABLE IF EXISTS t_wxsupport;
 
 
 
@@ -213,10 +215,10 @@ CREATE TABLE t_device
 
 CREATE TABLE t_device_imei
 (
-    device_id bigint NOT NULL,
-    imei char(32) NOT NULL,
-    PRIMARY KEY (imei),
-    UNIQUE (device_id)
+	-- 允许为null
+	device_id bigint NOT NULL COMMENT '允许为null',
+	imei char(32) NOT NULL,
+	PRIMARY KEY (imei)
 );
 
 
@@ -483,12 +485,37 @@ CREATE TABLE t_viptype
 );
 
 
+CREATE TABLE t_whilte_device
+(
+	-- 允许为null
+	device_id bigint NOT NULL COMMENT '允许为null',
+	extra char(120),
+	status tinyint,
+	a_id int,
+	UNIQUE (device_id)
+);
+
+
 CREATE TABLE t_whilte_user
 (
-    user_id bigint NOT NULL,
-    username varchar(32),
-    phone char(11),
-    UNIQUE (user_id)
+	-- 允许为null
+	user_id bigint NOT NULL COMMENT '允许为null',
+	username varchar(32),
+	phone char(11),
+	UNIQUE (user_id)
+);
+
+
+CREATE TABLE t_wxsupport
+(
+	w_id int NOT NULL AUTO_INCREMENT,
+	package_name char(64),
+	create_time datetime,
+	update_time datetime,
+	a_id int,
+	extra char(120),
+	PRIMARY KEY (w_id),
+	UNIQUE (w_id)
 );
 
 
