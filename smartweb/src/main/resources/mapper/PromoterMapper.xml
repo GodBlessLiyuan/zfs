@@ -9,9 +9,10 @@
     <result column="a_id" jdbcType="INTEGER" property="aId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
   </resultMap>
   <sql id="Base_Column_List">
-    pro_id, pro_name, phone, extra, a_id, create_time, update_time
+    pro_id, pro_name, phone, extra, a_id, create_time, update_time, dr
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -19,21 +20,6 @@
     from t_promoter
     where pro_id = #{proId,jdbcType=INTEGER}
   </select>
-
-  <select id="query" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_adconfig
-    <where>
-      <if test="proName!=null and proName!=''">
-        pro_name = #{proName}
-      </if>
-      <if test="phone!=null and phone!=''">
-        and phone = #{phone}
-      </if>
-    </where>
-  </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_promoter
     where pro_id = #{proId,jdbcType=INTEGER}
@@ -41,10 +27,10 @@
   <insert id="insert" parameterType="com.rpa.web.pojo.PromoterPO">
     insert into t_promoter (pro_id, pro_name, phone, 
       extra, a_id, create_time, 
-      update_time)
+      update_time, dr)
     values (#{proId,jdbcType=INTEGER}, #{proName,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}, 
       #{extra,jdbcType=VARCHAR}, #{aId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{updateTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.PromoterPO">
     insert into t_promoter
@@ -70,6 +56,9 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="dr != null">
+        dr,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="proId != null">
@@ -93,25 +82,34 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.PromoterPO">
     update t_promoter
     <set>
-      <if test="proName != null and proName != ''">
+      <if test="proName != null">
         pro_name = #{proName,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null and phone != ''">
+      <if test="phone != null">
         phone = #{phone,jdbcType=CHAR},
       </if>
-      <if test="extra != null and extra != ''">
+      <if test="extra != null">
         extra = #{extra,jdbcType=VARCHAR},
       </if>
       <if test="aId != null">
         a_id = #{aId,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
       </if>
     </set>
     where pro_id = #{proId,jdbcType=INTEGER}
@@ -123,7 +121,8 @@
       extra = #{extra,jdbcType=VARCHAR},
       a_id = #{aId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=TINYINT}
     where pro_id = #{proId,jdbcType=INTEGER}
   </update>
 </mapper>

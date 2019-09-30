@@ -13,10 +13,11 @@
     <result column="contacts" jdbcType="CHAR" property="contacts" />
     <result column="total" jdbcType="TINYINT" property="total" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
   </resultMap>
   <sql id="Base_Column_List">
     ad_id, a_id, ad_number, `name`, priority, phone, create_time, update_time, contacts, 
-    total, `status`
+    total, `status`, dr
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,24 +25,6 @@
     from t_adconfig
     where ad_id = #{adId,jdbcType=INTEGER}
   </select>
-
-  <select id="query" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_adconfig
-    <where>
-      <if test="name!=null and name!=''">
-       name = #{name}
-      </if>
-      <if test="adNumber!=null and adNumber!=''">
-        and ad_number = #{adNumber}
-      </if>
-      <if test="status!=null and status!=''">
-        and status = #{status}
-      </if>
-    </where>
-  </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_adconfig
     where ad_id = #{adId,jdbcType=INTEGER}
@@ -50,11 +33,11 @@
     insert into t_adconfig (ad_id, a_id, ad_number, 
       `name`, priority, phone, 
       create_time, update_time, contacts, 
-      total, `status`)
+      total, `status`, dr)
     values (#{adId,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, #{adNumber,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{priority,jdbcType=TINYINT}, #{phone,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{contacts,jdbcType=CHAR}, 
-      #{total,jdbcType=TINYINT}, #{status,jdbcType=TINYINT})
+      #{total,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{dr,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.AdconfigPO">
     insert into t_adconfig
@@ -92,6 +75,9 @@
       <if test="status != null">
         `status`,
       </if>
+      <if test="dr != null">
+        dr,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="adId != null">
@@ -127,37 +113,46 @@
       <if test="status != null">
         #{status,jdbcType=TINYINT},
       </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.AdconfigPO">
     update t_adconfig
     <set>
-      <if test="aId != null and aId !=''">
+      <if test="aId != null">
         a_id = #{aId,jdbcType=INTEGER},
       </if>
-      <if test="adNumber != null and adNumber !=''">
+      <if test="adNumber != null">
         ad_number = #{adNumber,jdbcType=VARCHAR},
       </if>
-      <if test="name != null and name !=''">
+      <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="priority != null and priority !=''">
+      <if test="priority != null">
         priority = #{priority,jdbcType=TINYINT},
       </if>
-      <if test="phone != null and phone !=''">
+      <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="contacts != null and contacts !=''">
+      <if test="contacts != null">
         contacts = #{contacts,jdbcType=CHAR},
       </if>
-      <if test="total != null and total !=''">
+      <if test="total != null">
         total = #{total,jdbcType=TINYINT},
       </if>
-      <if test="status != null and status !=''">
+      <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
       </if>
     </set>
     where ad_id = #{adId,jdbcType=INTEGER}
@@ -169,10 +164,12 @@
       `name` = #{name,jdbcType=VARCHAR},
       priority = #{priority,jdbcType=TINYINT},
       phone = #{phone,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       contacts = #{contacts,jdbcType=CHAR},
       total = #{total,jdbcType=TINYINT},
-      `status` = #{status,jdbcType=TINYINT}
+      `status` = #{status,jdbcType=TINYINT},
+      dr = #{dr,jdbcType=TINYINT}
     where ad_id = #{adId,jdbcType=INTEGER}
   </update>
 </mapper>

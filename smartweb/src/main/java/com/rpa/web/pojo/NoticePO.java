@@ -24,7 +24,7 @@ public class NoticePO implements Serializable {
     private Date startTime;
 
     /**
-     * 1 关闭  2 开始 3 删除
+     * 1 未发布 2 发布
      */
     private Integer status;
 

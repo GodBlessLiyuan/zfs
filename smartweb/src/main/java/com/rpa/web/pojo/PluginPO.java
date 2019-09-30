@@ -10,10 +10,8 @@ import java.util.Date;
 public class PluginPO implements Serializable {
     private Integer pluginId;
 
-    private Integer softChannelId;
-
     /**
-     * 1 未发布 2 发布 3 删除
+     * 1 未发布 2 发布
      */
     private Byte status;
 
@@ -29,13 +27,14 @@ public class PluginPO implements Serializable {
 
     private Date publishTime;
 
-    private Integer version;
-
     private Integer size;
 
     private String md5;
 
-    private Integer appId;
+    /**
+     * 1 未删除  2删除
+     */
+    private Byte dr;
 
     private static final long serialVersionUID = 1L;
 
@@ -45,14 +44,6 @@ public class PluginPO implements Serializable {
 
     public void setPluginId(Integer pluginId) {
         this.pluginId = pluginId;
-    }
-
-    public Integer getSoftChannelId() {
-        return softChannelId;
-    }
-
-    public void setSoftChannelId(Integer softChannelId) {
-        this.softChannelId = softChannelId;
     }
 
     public Byte getStatus() {
@@ -111,14 +102,6 @@ public class PluginPO implements Serializable {
         this.publishTime = publishTime;
     }
 
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     public Integer getSize() {
         return size;
     }
@@ -135,12 +118,12 @@ public class PluginPO implements Serializable {
         this.md5 = md5;
     }
 
-    public Integer getAppId() {
-        return appId;
+    public Byte getDr() {
+        return dr;
     }
 
-    public void setAppId(Integer appId) {
-        this.appId = appId;
+    public void setDr(Byte dr) {
+        this.dr = dr;
     }
 
     @Override
@@ -156,7 +139,6 @@ public class PluginPO implements Serializable {
         }
         PluginPO other = (PluginPO) that;
         return (this.getPluginId() == null ? other.getPluginId() == null : this.getPluginId().equals(other.getPluginId()))
-            && (this.getSoftChannelId() == null ? other.getSoftChannelId() == null : this.getSoftChannelId().equals(other.getSoftChannelId()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getContext() == null ? other.getContext() == null : this.getContext().equals(other.getContext()))
             && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
@@ -164,10 +146,9 @@ public class PluginPO implements Serializable {
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getPublishTime() == null ? other.getPublishTime() == null : this.getPublishTime().equals(other.getPublishTime()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
             && (this.getSize() == null ? other.getSize() == null : this.getSize().equals(other.getSize()))
             && (this.getMd5() == null ? other.getMd5() == null : this.getMd5().equals(other.getMd5()))
-            && (this.getAppId() == null ? other.getAppId() == null : this.getAppId().equals(other.getAppId()));
+            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()));
     }
 
     @Override
@@ -175,7 +156,6 @@ public class PluginPO implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getPluginId() == null) ? 0 : getPluginId().hashCode());
-        result = prime * result + ((getSoftChannelId() == null) ? 0 : getSoftChannelId().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getContext() == null) ? 0 : getContext().hashCode());
         result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
@@ -183,10 +163,9 @@ public class PluginPO implements Serializable {
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getPublishTime() == null) ? 0 : getPublishTime().hashCode());
-        result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         result = prime * result + ((getSize() == null) ? 0 : getSize().hashCode());
         result = prime * result + ((getMd5() == null) ? 0 : getMd5().hashCode());
-        result = prime * result + ((getAppId() == null) ? 0 : getAppId().hashCode());
+        result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
         return result;
     }
 
@@ -197,7 +176,6 @@ public class PluginPO implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", pluginId=").append(pluginId);
-        sb.append(", softChannelId=").append(softChannelId);
         sb.append(", status=").append(status);
         sb.append(", context=").append(context);
         sb.append(", extra=").append(extra);
@@ -205,10 +183,9 @@ public class PluginPO implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", publishTime=").append(publishTime);
-        sb.append(", version=").append(version);
         sb.append(", size=").append(size);
         sb.append(", md5=").append(md5);
-        sb.append(", appId=").append(appId);
+        sb.append(", dr=").append(dr);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
