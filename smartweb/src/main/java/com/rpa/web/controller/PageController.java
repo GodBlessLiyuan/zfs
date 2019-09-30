@@ -81,4 +81,14 @@ public class PageController {
     public String wxsupport() {
         return "wxsupport";
     }
+
+    /**
+     * 测试白名单
+     *
+     * @return
+     */
+    @RequestMapping("/whiltedevice")
+    public String whiltedevice() {
+        return "whiltedevice";
+    }
 }
