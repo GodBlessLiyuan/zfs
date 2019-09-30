@@ -334,6 +334,29 @@ CREATE TABLE t_other_app
 );
 
 
+CREATE TABLE t_plugin
+(
+	plugin_id int NOT NULL AUTO_INCREMENT,
+	soft_channel_id int NOT NULL,
+	-- 1 未发布 2 发布 3 删除
+	status tinyint COMMENT '1 未发布 2 发布 3 删除',
+	context char(255),
+	extra char(255),
+	a_id int,
+	create_time datetime,
+	update_time datetime,
+	publish_time datetime,
+	version int,
+	size int,
+	md5 char(32),
+	app_id int NOT NULL,
+	PRIMARY KEY (plugin_id),
+	UNIQUE (plugin_id),
+	UNIQUE (soft_channel_id),
+	UNIQUE (app_id)
+);
+
+
 CREATE TABLE t_promoter
 (
     pro_id int NOT NULL AUTO_INCREMENT,
