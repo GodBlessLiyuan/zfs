@@ -392,24 +392,28 @@ CREATE TABLE t_user_activity
 
 CREATE TABLE t_user_device
 (
-    user_device_id int NOT NULL AUTO_INCREMENT,
-    user_id bigint NOT NULL,
-    device_id bigint NOT NULL,
-    status int,
-    create_time datetime,
-    PRIMARY KEY (user_device_id),
-    UNIQUE (user_device_id)
+	user_device_id int NOT NULL AUTO_INCREMENT,
+	-- 允许为null
+	user_id bigint NOT NULL COMMENT '允许为null',
+	-- 允许为null
+	device_id bigint NOT NULL COMMENT '允许为null',
+	status int,
+	create_time datetime,
+	PRIMARY KEY (user_device_id),
+	UNIQUE (user_device_id)
 );
 
 
 CREATE TABLE t_user_history
 (
-    user_device_id int NOT NULL,
-    user_id bigint,
-    device_id bigint,
-    updatetime time,
-    PRIMARY KEY (user_device_id),
-    UNIQUE (user_device_id)
+	user_device_id int NOT NULL,
+	-- 允许为null
+	user_id bigint COMMENT '允许为null',
+	-- 允许为null
+	device_id bigint COMMENT '允许为null',
+	updatetime time,
+	PRIMARY KEY (user_device_id),
+	UNIQUE (user_device_id)
 );
 
 
@@ -433,15 +437,16 @@ CREATE TABLE t_user_notice
 
 CREATE TABLE t_user_vip
 (
-    user_id bigint NOT NULL,
-    viptype_id int NOT NULL,
-    start_time datetime,
-    end_time datetime,
-    -- 1 正常 2 过期
-    status tinyint COMMENT '1 正常 2 过期',
-    create_time datetime,
-    update_time datetime,
-    UNIQUE (user_id)
+	-- 允许为null
+	user_id bigint NOT NULL COMMENT '允许为null',
+	viptype_id int NOT NULL,
+	start_time datetime,
+	end_time datetime,
+	-- 1 正常 2 过期
+	status tinyint COMMENT '1 正常 2 过期',
+	create_time datetime,
+	update_time datetime,
+	UNIQUE (user_id)
 );
 
 
@@ -492,6 +497,8 @@ CREATE TABLE t_whilte_device
 	extra char(120),
 	status tinyint,
 	a_id int,
+	create_time datetime,
+	update_time datetime,
 	UNIQUE (device_id)
 );
 
@@ -634,19 +641,19 @@ ALTER TABLE t_exception
 ;
 
 
-ALTER TABLE t_notice
-    ADD FOREIGN KEY (device_id)
-        REFERENCES t_device (device_id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT
+ALTER TABLE t_user_device
+	ADD FOREIGN KEY (device_id)
+	REFERENCES t_device (device_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 
-ALTER TABLE t_user_device
-    ADD FOREIGN KEY (device_id)
-        REFERENCES t_device (device_id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT
+ALTER TABLE t_whilte_device
+	ADD FOREIGN KEY (device_id)
+	REFERENCES t_device (device_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 

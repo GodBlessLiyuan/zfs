@@ -1,11 +1,11 @@
 package com.rpa.web.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * t_whilte_device
- *
- * @author
+ * @author 
  */
 public class WhilteDevicePO implements Serializable {
     /**
@@ -19,7 +19,9 @@ public class WhilteDevicePO implements Serializable {
 
     private Integer aId;
 
-    private String imei;
+    private Date createTime;
+
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -55,12 +57,20 @@ public class WhilteDevicePO implements Serializable {
         this.aId = aId;
     }
 
-    public String getImei() {
-        return imei;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setImei(String imei) {
-        this.imei = imei;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -76,9 +86,11 @@ public class WhilteDevicePO implements Serializable {
         }
         WhilteDevicePO other = (WhilteDevicePO) that;
         return (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()))
-                && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
-                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-                && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()));
+            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -89,6 +101,8 @@ public class WhilteDevicePO implements Serializable {
         result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }
 
@@ -102,6 +116,8 @@ public class WhilteDevicePO implements Serializable {
         sb.append(", extra=").append(extra);
         sb.append(", status=").append(status);
         sb.append(", aId=").append(aId);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
