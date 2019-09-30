@@ -1,47 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rpa.web.mapper.WhilteDeviceMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.WhilteDevicePO">
-    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
-    <result column="extra" jdbcType="CHAR" property="extra" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-    <result column="a_id" jdbcType="INTEGER" property="aId" />
-  </resultMap>
-  <insert id="insert" parameterType="com.rpa.web.pojo.WhilteDevicePO">
+    <resultMap id="BaseResultMap" type="com.rpa.web.pojo.WhilteDevicePO">
+        <result column="device_id" jdbcType="BIGINT" property="deviceId"/>
+        <result column="extra" jdbcType="CHAR" property="extra"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="a_id" jdbcType="INTEGER" property="aId"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.rpa.web.pojo.WhilteDevicePO">
     insert into t_whilte_device (device_id, extra, `status`, 
       a_id)
     values (#{deviceId,jdbcType=BIGINT}, #{extra,jdbcType=CHAR}, #{status,jdbcType=TINYINT}, 
       #{aId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.web.pojo.WhilteDevicePO">
-    insert into t_whilte_device
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="deviceId != null">
-        device_id,
-      </if>
-      <if test="extra != null">
-        extra,
-      </if>
-      <if test="status != null">
-        `status`,
-      </if>
-      <if test="aId != null">
-        a_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="deviceId != null">
-        #{deviceId,jdbcType=BIGINT},
-      </if>
-      <if test="extra != null">
-        #{extra,jdbcType=CHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
-      <if test="aId != null">
-        #{aId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+    <insert id="insertSelective" parameterType="com.rpa.web.pojo.WhilteDevicePO">
+        insert into t_whilte_device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="extra != null">
+                extra,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="aId != null">
+                a_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=BIGINT},
+            </if>
+            <if test="extra != null">
+                #{extra,jdbcType=CHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="aId != null">
+                #{aId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="query" resultType="com.rpa.web.pojo.WhilteDevicePO">
+        select w.device_id as deviceId, w.extra, w.status, w.a_id as aId, d.imei
+        from t_whilte_device w
+        left join t_device_imei d on w.device_id = d.device_id
+        <where>
+            <if test="imei != null and imei != ''">
+                and d.imei like '%' #{imei} '%'
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByDeviceId" parameterType="java.lang.Integer">
+        delete from t_whilte_device
+        where device_id = #{deviceId,jdbcType=INTEGER}
+    </delete>
 </mapper>

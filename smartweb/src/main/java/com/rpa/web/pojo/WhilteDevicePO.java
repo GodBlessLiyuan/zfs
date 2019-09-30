@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 /**
  * t_whilte_device
- * @author 
+ *
+ * @author
  */
 public class WhilteDevicePO implements Serializable {
     /**
@@ -17,6 +18,8 @@ public class WhilteDevicePO implements Serializable {
     private Byte status;
 
     private Integer aId;
+
+    private String imei;
 
     private static final long serialVersionUID = 1L;
 
@@ -52,6 +55,14 @@ public class WhilteDevicePO implements Serializable {
         this.aId = aId;
     }
 
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -65,9 +76,9 @@ public class WhilteDevicePO implements Serializable {
         }
         WhilteDevicePO other = (WhilteDevicePO) that;
         return (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()))
-            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()));
+                && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
+                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+                && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()));
     }
 
     @Override
