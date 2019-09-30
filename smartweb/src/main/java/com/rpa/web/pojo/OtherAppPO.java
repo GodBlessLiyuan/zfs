@@ -29,6 +29,8 @@ public class OtherAppPO implements Serializable {
 
     private String extra;
 
+    private String username;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getoId() {
@@ -101,6 +103,14 @@ public class OtherAppPO implements Serializable {
 
     public void setExtra(String extra) {
         this.extra = extra;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

@@ -14,6 +14,7 @@ public class PageController {
 
     /**
      * 用户信息
+     *
      * @return
      */
     @RequestMapping("/userinfo")
@@ -23,6 +24,7 @@ public class PageController {
 
     /**
      * 产品列表
+     *
      * @return
      */
     @RequestMapping("/comtype")
@@ -32,6 +34,7 @@ public class PageController {
 
     /**
      * 商品列表
+     *
      * @return
      */
     @RequestMapping("/vipcommodity")
@@ -41,6 +44,7 @@ public class PageController {
 
     /**
      * 渠道信息
+     *
      * @return
      */
     @RequestMapping("/softchannel")
@@ -50,10 +54,21 @@ public class PageController {
 
     /**
      * 未注册用户信息
+     *
      * @return
      */
     @RequestMapping("/unregistered")
     public String unregistered() {
         return "unregistered";
+    }
+
+    /**
+     * 其他产品
+     *
+     * @return
+     */
+    @RequestMapping("/otherapp")
+    public String otherapp() {
+        return "otherapp";
     }
 }
