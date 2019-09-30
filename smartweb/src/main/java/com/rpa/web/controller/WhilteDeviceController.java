@@ -35,7 +35,7 @@ public class WhilteDeviceController {
     }
 
     @RequestMapping("/whiltedevice/insert")
-    public int insert(@RequestParam(value = "packageName") String imei,
+    public int insert(@RequestParam(value = "imei") String imei,
                       @RequestParam(value = "extra") String extra) {
         return service.insert(imei, extra);
     }

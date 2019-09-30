@@ -46,6 +46,14 @@ public class WhilteDeviceDTO implements Serializable {
         this.imei = imei;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     /**
      * po 转 dtos
      *
@@ -58,6 +66,7 @@ public class WhilteDeviceDTO implements Serializable {
         dto.setDeviceId(po.getDeviceId());
         dto.setExtra(po.getExtra());
         dto.setImei(po.getImei());
+        dto.setCreateTime(po.getCreateTime());
 
         return dto;
     }
