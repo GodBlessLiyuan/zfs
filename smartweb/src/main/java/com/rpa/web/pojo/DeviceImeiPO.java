@@ -9,6 +9,9 @@ import java.io.Serializable;
 public class DeviceImeiPO implements Serializable {
     private String imei;
 
+    /**
+     * 允许为null
+     */
     private Long deviceId;
 
     private static final long serialVersionUID = 1L;
