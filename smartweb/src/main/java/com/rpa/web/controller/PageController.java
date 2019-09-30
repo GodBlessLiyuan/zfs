@@ -71,4 +71,14 @@ public class PageController {
     public String otherapp() {
         return "otherapp";
     }
+
+    /**
+     * 微信白名单
+     *
+     * @return
+     */
+    @RequestMapping("/wxsupport")
+    public String wxsupport() {
+        return "wxsupport";
+    }
 }
