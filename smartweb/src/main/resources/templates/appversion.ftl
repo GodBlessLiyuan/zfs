@@ -256,6 +256,7 @@
             }
         })
     });
+
     /**
      * 确认上架点击事件
      */
@@ -326,13 +327,16 @@
                     "data": "appId",
                     "render": function (data, type, full) {
                         let status = full.status === 1 ? "发布" : "取消发布";
-                        return "<a data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:deleteModal(" + data + ")'>删除</a>    <a " +
-                            "data-toggle='modal' data-target='#publishModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:publishModal(" + data + ")'>" + status + "</a>" +
-                            "    <a " +
-                            "data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:operateModal(" + data + ")'>修改</a>";
+
+                        let dA = full.status === 1 ? "<a data-toggle='modal' data-target='#deleteModal' " +
+                            "data-whatever='@getbootstrap' class='text-primary' onclick='javascript:deleteModal(" +
+                            data + ")'>删除</a>   " : "";
+                        let pA = "<a data-toggle='modal' data-target='#publishModal' data-whatever='@getbootstrap' " +
+                            "class='text-primary' onclick='javascript:publishModal(" + data + ")'>" + status + "</a>    ";
+                        let uA = "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
+                            "class='text-primary' onclick='javascript:updateModal(" + data + ")'>修改</a>";
+                        return  dA + pA + uA;
+
                     }
                 }
             ],

@@ -3,9 +3,7 @@ package com.rpa.web.dto;
 import com.rpa.web.pojo.AppPO;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author: xiahui
@@ -28,6 +26,53 @@ public class AppDTO implements Serializable {
     private String chanName;
     private Integer status;
     private String extra;
+
+    /**
+     * po 转 dto
+     *
+     * @param po
+     * @return
+     */
+    public static AppDTO convert(AppPO po) {
+        AppDTO dto = new AppDTO();
+
+        dto.setAppId(po.getAppId());
+        dto.setChanId(String.valueOf(po.getChanId()));
+        dto.setChanName(po.getChanName());
+        dto.setContext(po.getContext());
+        dto.setExtra(po.getExtra());
+        dto.setPublishTime(po.getPublishTime());
+        dto.setSize(po.getSize());
+        dto.setStatus(po.getStatus());
+        dto.setUpdateType(po.getUpdateType());
+        dto.setUsername(po.getUsername());
+        dto.setVersionName(po.getVersionname());
+
+        return dto;
+    }
+
+    /**
+     * pos 转 dtos
+     *
+     * @param pos
+     * @return
+     */
+    public static List<AppDTO> convert(List<AppPO> pos) {
+        // 合并相同的appId
+        Map<Integer, AppDTO> dtos = new HashMap<>();
+        for (AppPO po : pos) {
+            int appId = po.getAppId();
+            if (dtos.containsKey(appId)) {
+                AppDTO dto = dtos.get(appId);
+                dto.setChanId(dto.getChanId() + "," + po.getChanId());
+                dto.setChanName(dto.getChanName() + "," + po.getChanName());
+            } else {
+                dtos.put(appId, AppDTO.convert(po));
+            }
+        }
+
+        return new ArrayList<>(dtos.values());
+    }
 
     public Integer getAppId() {
         return appId;
@@ -85,11 +130,11 @@ public class AppDTO implements Serializable {
         this.context = context;
     }
 
-    public int getChanId() {
+    public String getChanId() {
         return chanId;
     }
 
-    public void setChanId(int chanId) {
+    public void setChanId(String chanId) {
         this.chanId = chanId;
     }
 
@@ -115,45 +160,5 @@ public class AppDTO implements Serializable {
 
     public void setExtra(String extra) {
         this.extra = extra;
-    }
-
-    /**
-     * po 转 dto
-     *
-     * @param po
-     * @return
-     */
-    public static AppDTO convert(AppPO po) {
-        AppDTO dto = new AppDTO();
-
-        dto.setAppId(po.getAppId());
-        dto.setChanId(po.getChanId());
-        dto.setChanName(po.getChanName());
-        dto.setContext(po.getContext());
-        dto.setExtra(po.getExtra());
-        dto.setPublishTime(po.getPublishTime());
-        dto.setSize(po.getSize());
-        dto.setStatus(po.getStatus());
-        dto.setUpdateType(po.getUpdateType());
-        dto.setUsername(po.getUsername());
-        dto.setVersionName(po.getVersionname());
-
-        return dto;
-    }
-
-    /**
-     * pos 转 dtos
-     *
-     * @param pos
-     * @return
-     */
-    public static List<AppDTO> convert(List<AppPO> pos) {
-        List<AppDTO> dtos = new ArrayList<>();
-
-        for (AppPO po : pos) {
-            dtos.add(AppDTO.convert(po));
-        }
-
-        return dtos;
     }
 }
