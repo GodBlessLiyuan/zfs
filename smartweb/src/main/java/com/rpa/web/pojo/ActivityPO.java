@@ -4,25 +4,29 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * t_channel
+ * t_activity
  * @author 
  */
-public class ChannelPO implements Serializable {
-    private Integer chanId;
+public class ActivityPO implements Serializable {
+    private Integer activityId;
 
-    private String chanNickname;
+    private String activityname;
 
-    private String chanName;
+    /**
+     * 1 会员中心 
+     */
+    private Byte position;
 
-    private Integer proId;
+    private Integer state;
 
     private Integer aId;
 
     private Date createTime;
 
+    /**
+     * 默认为null
+     */
     private Date updateTime;
-
-    private String extra;
 
     /**
      * 1 未删除  2删除
@@ -31,36 +35,36 @@ public class ChannelPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getChanId() {
-        return chanId;
+    public Integer getActivityId() {
+        return activityId;
     }
 
-    public void setChanId(Integer chanId) {
-        this.chanId = chanId;
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 
-    public String getChanNickname() {
-        return chanNickname;
+    public String getActivityname() {
+        return activityname;
     }
 
-    public void setChanNickname(String chanNickname) {
-        this.chanNickname = chanNickname;
+    public void setActivityname(String activityname) {
+        this.activityname = activityname;
     }
 
-    public String getChanName() {
-        return chanName;
+    public Byte getPosition() {
+        return position;
     }
 
-    public void setChanName(String chanName) {
-        this.chanName = chanName;
+    public void setPosition(Byte position) {
+        this.position = position;
     }
 
-    public Integer getProId() {
-        return proId;
+    public Integer getState() {
+        return state;
     }
 
-    public void setProId(Integer proId) {
-        this.proId = proId;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public Integer getaId() {
@@ -87,14 +91,6 @@ public class ChannelPO implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public String getExtra() {
-        return extra;
-    }
-
-    public void setExtra(String extra) {
-        this.extra = extra;
-    }
-
     public Byte getDr() {
         return dr;
     }
@@ -114,15 +110,14 @@ public class ChannelPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ChannelPO other = (ChannelPO) that;
-        return (this.getChanId() == null ? other.getChanId() == null : this.getChanId().equals(other.getChanId()))
-            && (this.getChanNickname() == null ? other.getChanNickname() == null : this.getChanNickname().equals(other.getChanNickname()))
-            && (this.getChanName() == null ? other.getChanName() == null : this.getChanName().equals(other.getChanName()))
-            && (this.getProId() == null ? other.getProId() == null : this.getProId().equals(other.getProId()))
+        ActivityPO other = (ActivityPO) that;
+        return (this.getActivityId() == null ? other.getActivityId() == null : this.getActivityId().equals(other.getActivityId()))
+            && (this.getActivityname() == null ? other.getActivityname() == null : this.getActivityname().equals(other.getActivityname()))
+            && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()))
+            && (this.getState() == null ? other.getState() == null : this.getState().equals(other.getState()))
             && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
             && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()));
     }
 
@@ -130,14 +125,13 @@ public class ChannelPO implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getChanId() == null) ? 0 : getChanId().hashCode());
-        result = prime * result + ((getChanNickname() == null) ? 0 : getChanNickname().hashCode());
-        result = prime * result + ((getChanName() == null) ? 0 : getChanName().hashCode());
-        result = prime * result + ((getProId() == null) ? 0 : getProId().hashCode());
+        result = prime * result + ((getActivityId() == null) ? 0 : getActivityId().hashCode());
+        result = prime * result + ((getActivityname() == null) ? 0 : getActivityname().hashCode());
+        result = prime * result + ((getPosition() == null) ? 0 : getPosition().hashCode());
+        result = prime * result + ((getState() == null) ? 0 : getState().hashCode());
         result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
         result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
         return result;
     }
@@ -148,14 +142,13 @@ public class ChannelPO implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", chanId=").append(chanId);
-        sb.append(", chanNickname=").append(chanNickname);
-        sb.append(", chanName=").append(chanName);
-        sb.append(", proId=").append(proId);
+        sb.append(", activityId=").append(activityId);
+        sb.append(", activityname=").append(activityname);
+        sb.append(", position=").append(position);
+        sb.append(", state=").append(state);
         sb.append(", aId=").append(aId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", extra=").append(extra);
         sb.append(", dr=").append(dr);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

@@ -10,9 +10,11 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="extra" jdbcType="CHAR" property="extra" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
   </resultMap>
   <sql id="Base_Column_List">
-    chan_id, chan_nickname, chan_name, pro_id, a_id, create_time, update_time, extra
+    chan_id, chan_nickname, chan_name, pro_id, a_id, create_time, update_time, extra, 
+    dr
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,10 +29,12 @@
   <insert id="insert" parameterType="com.rpa.web.pojo.ChannelPO">
     insert into t_channel (chan_id, chan_nickname, chan_name, 
       pro_id, a_id, create_time, 
-      update_time, extra)
+      update_time, extra, dr
+      )
     values (#{chanId,jdbcType=INTEGER}, #{chanNickname,jdbcType=CHAR}, #{chanName,jdbcType=VARCHAR}, 
       #{proId,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{extra,jdbcType=CHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{extra,jdbcType=CHAR}, #{dr,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.ChannelPO">
     insert into t_channel
@@ -59,6 +63,9 @@
       <if test="extra != null">
         extra,
       </if>
+      <if test="dr != null">
+        dr,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="chanId != null">
@@ -84,6 +91,9 @@
       </if>
       <if test="extra != null">
         #{extra,jdbcType=CHAR},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -111,6 +121,9 @@
       <if test="extra != null">
         extra = #{extra,jdbcType=CHAR},
       </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
     </set>
     where chan_id = #{chanId,jdbcType=INTEGER}
   </update>
@@ -122,7 +135,8 @@
       a_id = #{aId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      extra = #{extra,jdbcType=CHAR}
+      extra = #{extra,jdbcType=CHAR},
+      dr = #{dr,jdbcType=TINYINT}
     where chan_id = #{chanId,jdbcType=INTEGER}
   </update>
 </mapper>

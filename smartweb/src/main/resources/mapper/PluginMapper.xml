@@ -3,7 +3,6 @@
 <mapper namespace="com.rpa.web.mapper.PluginMapper">
   <resultMap id="BaseResultMap" type="com.rpa.web.pojo.PluginPO">
     <id column="plugin_id" jdbcType="INTEGER" property="pluginId" />
-    <result column="soft_channel_id" jdbcType="INTEGER" property="softChannelId" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="context" jdbcType="CHAR" property="context" />
     <result column="extra" jdbcType="CHAR" property="extra" />
@@ -11,14 +10,13 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
-    <result column="version" jdbcType="INTEGER" property="version" />
     <result column="size" jdbcType="INTEGER" property="size" />
     <result column="md5" jdbcType="CHAR" property="md5" />
-    <result column="app_id" jdbcType="INTEGER" property="appId" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
   </resultMap>
   <sql id="Base_Column_List">
-    plugin_id, soft_channel_id, `status`, context, extra, a_id, create_time, update_time, 
-    publish_time, version, `size`, md5, app_id
+    plugin_id, `status`, context, extra, a_id, create_time, update_time, publish_time, 
+    `size`, md5, dr
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -31,23 +29,20 @@
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.rpa.web.pojo.PluginPO">
-    insert into t_plugin (plugin_id, soft_channel_id, `status`, 
-      context, extra, a_id, create_time, 
-      update_time, publish_time, version, 
-      `size`, md5, app_id)
-    values (#{pluginId,jdbcType=INTEGER}, #{softChannelId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
-      #{context,jdbcType=CHAR}, #{extra,jdbcType=CHAR}, #{aId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, 
-      #{size,jdbcType=INTEGER}, #{md5,jdbcType=CHAR}, #{appId,jdbcType=INTEGER})
+    insert into t_plugin (plugin_id, `status`, context, 
+      extra, a_id, create_time, 
+      update_time, publish_time, `size`, 
+      md5, dr)
+    values (#{pluginId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{context,jdbcType=CHAR}, 
+      #{extra,jdbcType=CHAR}, #{aId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, #{size,jdbcType=INTEGER}, 
+      #{md5,jdbcType=CHAR}, #{dr,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.PluginPO">
     insert into t_plugin
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="pluginId != null">
         plugin_id,
-      </if>
-      <if test="softChannelId != null">
-        soft_channel_id,
       </if>
       <if test="status != null">
         `status`,
@@ -70,25 +65,19 @@
       <if test="publishTime != null">
         publish_time,
       </if>
-      <if test="version != null">
-        version,
-      </if>
       <if test="size != null">
         `size`,
       </if>
       <if test="md5 != null">
         md5,
       </if>
-      <if test="appId != null">
-        app_id,
+      <if test="dr != null">
+        dr,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="pluginId != null">
         #{pluginId,jdbcType=INTEGER},
-      </if>
-      <if test="softChannelId != null">
-        #{softChannelId,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
@@ -111,26 +100,20 @@
       <if test="publishTime != null">
         #{publishTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="version != null">
-        #{version,jdbcType=INTEGER},
-      </if>
       <if test="size != null">
         #{size,jdbcType=INTEGER},
       </if>
       <if test="md5 != null">
         #{md5,jdbcType=CHAR},
       </if>
-      <if test="appId != null">
-        #{appId,jdbcType=INTEGER},
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.PluginPO">
     update t_plugin
     <set>
-      <if test="softChannelId != null">
-        soft_channel_id = #{softChannelId,jdbcType=INTEGER},
-      </if>
       <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
       </if>
@@ -152,35 +135,30 @@
       <if test="publishTime != null">
         publish_time = #{publishTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="version != null">
-        version = #{version,jdbcType=INTEGER},
-      </if>
       <if test="size != null">
         `size` = #{size,jdbcType=INTEGER},
       </if>
       <if test="md5 != null">
         md5 = #{md5,jdbcType=CHAR},
       </if>
-      <if test="appId != null">
-        app_id = #{appId,jdbcType=INTEGER},
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
       </if>
     </set>
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.PluginPO">
     update t_plugin
-    set soft_channel_id = #{softChannelId,jdbcType=INTEGER},
-      `status` = #{status,jdbcType=TINYINT},
+    set `status` = #{status,jdbcType=TINYINT},
       context = #{context,jdbcType=CHAR},
       extra = #{extra,jdbcType=CHAR},
       a_id = #{aId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       publish_time = #{publishTime,jdbcType=TIMESTAMP},
-      version = #{version,jdbcType=INTEGER},
       `size` = #{size,jdbcType=INTEGER},
       md5 = #{md5,jdbcType=CHAR},
-      app_id = #{appId,jdbcType=INTEGER}
+      dr = #{dr,jdbcType=TINYINT}
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
 </mapper>

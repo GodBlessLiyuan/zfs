@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS t_com_type;
 DROP TABLE IF EXISTS t_user_vip;
 DROP TABLE IF EXISTS t_viptype;
 DROP TABLE IF EXISTS t_admin_user;
+DROP TABLE IF EXISTS t_app_plu_ch;
 DROP TABLE IF EXISTS t_app;
 DROP TABLE IF EXISTS t_batch_info;
 DROP TABLE IF EXISTS t_ch_batch;
@@ -29,6 +30,7 @@ DROP TABLE IF EXISTS t_key_value;
 DROP TABLE IF EXISTS t_notice;
 DROP TABLE IF EXISTS t_order_feedback;
 DROP TABLE IF EXISTS t_other_app;
+DROP TABLE IF EXISTS t_plugin;
 DROP TABLE IF EXISTS t_promoter;
 DROP TABLE IF EXISTS t_soft_channel;
 DROP TABLE IF EXISTS t_whilte_user;
@@ -49,10 +51,11 @@ CREATE TABLE t_activity
 	position tinyint COMMENT '1 会员中心 ',
 	state int,
 	a_id int NOT NULL,
-	position int,
 	create_time datetime,
 	-- 默认为null
 	update_time datetime COMMENT '默认为null',
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
 	PRIMARY KEY (activity_id),
 	UNIQUE (activity_id)
 );
@@ -72,6 +75,8 @@ CREATE TABLE t_adconfig
 	total tinyint,
 	-- 1关闭 2开启 3 删除
 	status tinyint COMMENT '1关闭 2开启 3 删除',
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
 	PRIMARY KEY (ad_id),
 	UNIQUE (ad_id)
 );
@@ -98,6 +103,8 @@ CREATE TABLE t_admin_user
 	is_lock tinyint,
 	create_time time,
 	last_time time,
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
 	PRIMARY KEY (a_id),
 	UNIQUE (username)
 );
@@ -111,7 +118,9 @@ CREATE TABLE t_ad_channel
 	update_time datetime,
 	-- 1 当前版本  2 历史版本 
 	type tinyint COMMENT '1 当前版本  2 历史版本 ',
-	app_id int NOT NULL
+	app_id int NOT NULL,
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除'
 );
 
 
@@ -124,10 +133,32 @@ CREATE TABLE t_app
 	update_time datetime,
 	url varchar(256),
 	a_id int,
-	-- 1 关闭  2 开始 3 删除
-	status int COMMENT '1 关闭  2 开始 3 删除',
+	-- 1 未发布 2 发布
+	status int COMMENT '1 未发布 2 发布',
+	update_type tinyint,
+	size int,
+	extra char(255),
+	context char(255),
+	publish_time datetime,
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
 	PRIMARY KEY (app_id),
 	UNIQUE (app_id)
+);
+
+
+CREATE TABLE t_app_plu_ch
+(
+	apc_id int NOT NULL AUTO_INCREMENT,
+	app_id int NOT NULL,
+	soft_channel_id int NOT NULL,
+	plugin_id int NOT NULL,
+	-- 1 未发布 2 发布
+	status tinyint COMMENT '1 未发布 2 发布',
+	create_time datetime,
+	update_time datetime,
+	PRIMARY KEY (apc_id),
+	UNIQUE (apc_id)
 );
 
 
@@ -147,16 +178,18 @@ CREATE TABLE t_batch_info
 
 CREATE TABLE t_channel
 (
-    chan_id int NOT NULL AUTO_INCREMENT,
-    chan_nickname char(20),
-    chan_name varchar(64),
-    pro_id int NOT NULL,
-    a_id int NOT NULL,
-    create_time datetime,
-    update_time datetime,
-    extra char(120),
-    PRIMARY KEY (chan_id),
-    UNIQUE (chan_id)
+	chan_id int NOT NULL AUTO_INCREMENT,
+	chan_nickname char(20),
+	chan_name varchar(64),
+	pro_id int NOT NULL,
+	a_id int NOT NULL,
+	create_time datetime,
+	update_time datetime,
+	extra char(255),
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
+	PRIMARY KEY (chan_id),
+	UNIQUE (chan_id)
 );
 
 
@@ -173,6 +206,8 @@ CREATE TABLE t_ch_batch
     status tinyint COMMENT '1 正常 2 冻结  3失效',
     -- 日卡，周卡，月卡，年卡
     com_type_name char(128) COMMENT '日卡，周卡，月卡，年卡',
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
     PRIMARY KEY (batch_id),
     UNIQUE (batch_id)
 );
@@ -180,16 +215,16 @@ CREATE TABLE t_ch_batch
 
 CREATE TABLE t_com_type
 (
-    com_type_id int NOT NULL AUTO_INCREMENT,
-    -- 日卡，周卡，月卡，年卡
-    name char(128) COMMENT '日卡，周卡，月卡，年卡',
-    days int,
-    extra char(120),
-    a_id int NOT NULL,
-    create_time datetime,
-    update_time datetime,
-    PRIMARY KEY (com_type_id),
-    UNIQUE (com_type_id)
+	com_type_id int NOT NULL AUTO_INCREMENT,
+	-- 日卡，周卡，月卡，年卡
+	name char(128) COMMENT '日卡，周卡，月卡，年卡',
+	days int,
+	extra char(255),
+	a_id int NOT NULL,
+	create_time datetime,
+	update_time datetime,
+	PRIMARY KEY (com_type_id),
+	UNIQUE (com_type_id)
 );
 
 
@@ -261,8 +296,8 @@ CREATE TABLE t_notice
 	show_time datetime,
 	start_time datetime,
 	url text,
-	-- 1 关闭  2 开始 3 删除
-	status int COMMENT '1 关闭  2 开始 3 删除',
+	-- 1 未发布 2 发布
+	status int COMMENT '1 未发布 2 发布',
 	end_time datetime,
 	PRIMARY KEY (notice_id),
 	UNIQUE (notice_id)
@@ -337,49 +372,48 @@ CREATE TABLE t_other_app
 CREATE TABLE t_plugin
 (
 	plugin_id int NOT NULL AUTO_INCREMENT,
-	soft_channel_id int NOT NULL,
-	-- 1 未发布 2 发布 3 删除
-	status tinyint COMMENT '1 未发布 2 发布 3 删除',
+	-- 1 未发布 2 发布
+	status tinyint COMMENT '1 未发布 2 发布',
 	context char(255),
 	extra char(255),
 	a_id int,
 	create_time datetime,
 	update_time datetime,
 	publish_time datetime,
-	version int,
 	size int,
 	md5 char(32),
-	app_id int NOT NULL,
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
 	PRIMARY KEY (plugin_id),
-	UNIQUE (plugin_id),
-	UNIQUE (soft_channel_id),
-	UNIQUE (app_id)
+	UNIQUE (plugin_id)
 );
 
 
 CREATE TABLE t_promoter
 (
-    pro_id int NOT NULL AUTO_INCREMENT,
-    pro_name varchar(64),
-    phone char(12),
-    extra varchar(128),
-    a_id int NOT NULL,
-    create_time datetime,
-    update_time datetime,
-    PRIMARY KEY (pro_id),
-    UNIQUE (pro_id)
+	pro_id int NOT NULL AUTO_INCREMENT,
+	pro_name varchar(64),
+	phone char(12),
+	extra varchar(128),
+	a_id int NOT NULL,
+	create_time datetime,
+	update_time datetime,
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
+	PRIMARY KEY (pro_id),
+	UNIQUE (pro_id)
 );
 
 
 CREATE TABLE t_soft_channel
 (
-    soft_channel_id int NOT NULL AUTO_INCREMENT,
-    name char(20),
-    extra char(120),
-    create_time datetime,
-    update_time datetime,
-    PRIMARY KEY (soft_channel_id),
-    UNIQUE (soft_channel_id)
+	soft_channel_id int NOT NULL AUTO_INCREMENT,
+	name char(20),
+	extra char(255),
+	create_time datetime,
+	update_time datetime,
+	PRIMARY KEY (soft_channel_id),
+	UNIQUE (soft_channel_id)
 );
 
 
@@ -517,7 +551,7 @@ CREATE TABLE t_whilte_device
 (
 	-- 允许为null
 	device_id bigint NOT NULL COMMENT '允许为null',
-	extra char(120),
+	extra char(255),
 	status tinyint,
 	a_id int,
 	create_time datetime,
@@ -543,7 +577,7 @@ CREATE TABLE t_wxsupport
 	create_time datetime,
 	update_time datetime,
 	a_id int,
-	extra char(120),
+	extra char(255),
 	PRIMARY KEY (w_id),
 	UNIQUE (w_id)
 );
@@ -624,6 +658,14 @@ ALTER TABLE t_ad_channel
 ;
 
 
+ALTER TABLE t_app_plu_ch
+	ADD FOREIGN KEY (app_id)
+	REFERENCES t_app (app_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE t_ch_batch
     ADD FOREIGN KEY (chan_id)
         REFERENCES t_channel (chan_id)
@@ -688,6 +730,14 @@ ALTER TABLE t_user_notice
 ;
 
 
+ALTER TABLE t_app_plu_ch
+	ADD FOREIGN KEY (plugin_id)
+	REFERENCES t_plugin (plugin_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE t_channel
     ADD FOREIGN KEY (pro_id)
         REFERENCES t_promoter (pro_id)
@@ -697,10 +747,18 @@ ALTER TABLE t_channel
 
 
 ALTER TABLE t_ad_channel
-    ADD FOREIGN KEY (soft_channel_id)
-        REFERENCES t_soft_channel (soft_channel_id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT
+	ADD FOREIGN KEY (soft_channel_id)
+	REFERENCES t_soft_channel (soft_channel_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_app_plu_ch
+	ADD FOREIGN KEY (soft_channel_id)
+	REFERENCES t_soft_channel (soft_channel_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 

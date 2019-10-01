@@ -24,6 +24,11 @@ public class AdminUserPO implements Serializable {
 
     private Date lastTime;
 
+    /**
+     * 1 未删除  2删除
+     */
+    private Byte dr;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getaId() {
@@ -90,6 +95,14 @@ public class AdminUserPO implements Serializable {
         this.lastTime = lastTime;
     }
 
+    public Byte getDr() {
+        return dr;
+    }
+
+    public void setDr(Byte dr) {
+        this.dr = dr;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -109,7 +122,8 @@ public class AdminUserPO implements Serializable {
             && (this.getRole() == null ? other.getRole() == null : this.getRole().equals(other.getRole()))
             && (this.getIsLock() == null ? other.getIsLock() == null : this.getIsLock().equals(other.getIsLock()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getLastTime() == null ? other.getLastTime() == null : this.getLastTime().equals(other.getLastTime()));
+            && (this.getLastTime() == null ? other.getLastTime() == null : this.getLastTime().equals(other.getLastTime()))
+            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()));
     }
 
     @Override
@@ -124,6 +138,7 @@ public class AdminUserPO implements Serializable {
         result = prime * result + ((getIsLock() == null) ? 0 : getIsLock().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getLastTime() == null) ? 0 : getLastTime().hashCode());
+        result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
         return result;
     }
 
@@ -141,6 +156,7 @@ public class AdminUserPO implements Serializable {
         sb.append(", isLock=").append(isLock);
         sb.append(", createTime=").append(createTime);
         sb.append(", lastTime=").append(lastTime);
+        sb.append(", dr=").append(dr);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

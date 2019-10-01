@@ -23,9 +23,24 @@ public class AppPO implements Serializable {
     private Integer aId;
 
     /**
-     * 1 关闭  2 开始 0 删除
+     * 1 未发布 2 发布
      */
     private Integer status;
+
+    private Byte updateType;
+
+    private Integer size;
+
+    private String extra;
+
+    private String context;
+
+    private Date publishTime;
+
+    /**
+     * 1 未删除  2删除
+     */
+    private Byte dr;
 
     private static final long serialVersionUID = 1L;
 
@@ -93,6 +108,54 @@ public class AppPO implements Serializable {
         this.status = status;
     }
 
+    public Byte getUpdateType() {
+        return updateType;
+    }
+
+    public void setUpdateType(Byte updateType) {
+        this.updateType = updateType;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
+
+    public Date getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(Date publishTime) {
+        this.publishTime = publishTime;
+    }
+
+    public Byte getDr() {
+        return dr;
+    }
+
+    public void setDr(Byte dr) {
+        this.dr = dr;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -112,7 +175,13 @@ public class AppPO implements Serializable {
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
             && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getUpdateType() == null ? other.getUpdateType() == null : this.getUpdateType().equals(other.getUpdateType()))
+            && (this.getSize() == null ? other.getSize() == null : this.getSize().equals(other.getSize()))
+            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
+            && (this.getContext() == null ? other.getContext() == null : this.getContext().equals(other.getContext()))
+            && (this.getPublishTime() == null ? other.getPublishTime() == null : this.getPublishTime().equals(other.getPublishTime()))
+            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()));
     }
 
     @Override
@@ -127,6 +196,12 @@ public class AppPO implements Serializable {
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getUpdateType() == null) ? 0 : getUpdateType().hashCode());
+        result = prime * result + ((getSize() == null) ? 0 : getSize().hashCode());
+        result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
+        result = prime * result + ((getContext() == null) ? 0 : getContext().hashCode());
+        result = prime * result + ((getPublishTime() == null) ? 0 : getPublishTime().hashCode());
+        result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
         return result;
     }
 
@@ -144,6 +219,12 @@ public class AppPO implements Serializable {
         sb.append(", url=").append(url);
         sb.append(", aId=").append(aId);
         sb.append(", status=").append(status);
+        sb.append(", updateType=").append(updateType);
+        sb.append(", size=").append(size);
+        sb.append(", extra=").append(extra);
+        sb.append(", context=").append(context);
+        sb.append(", publishTime=").append(publishTime);
+        sb.append(", dr=").append(dr);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

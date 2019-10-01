@@ -8,14 +8,15 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="app_id" jdbcType="INTEGER" property="appId" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
   </resultMap>
   <insert id="insert" parameterType="com.rpa.web.pojo.AdChannelPO">
     insert into t_ad_channel (ad_id, soft_channel_id, create_time, 
-      update_time, `type`, app_id
-      )
+      update_time, `type`, app_id, 
+      dr)
     values (#{adId,jdbcType=INTEGER}, #{softChannelId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{type,jdbcType=TINYINT}, #{appId,jdbcType=INTEGER}
-      )
+      #{updateTime,jdbcType=TIMESTAMP}, #{type,jdbcType=TINYINT}, #{appId,jdbcType=INTEGER}, 
+      #{dr,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.AdChannelPO">
     insert into t_ad_channel
@@ -38,6 +39,9 @@
       <if test="appId != null">
         app_id,
       </if>
+      <if test="dr != null">
+        dr,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="adId != null">
@@ -57,6 +61,9 @@
       </if>
       <if test="appId != null">
         #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>

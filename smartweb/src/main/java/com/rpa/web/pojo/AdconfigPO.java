@@ -33,8 +33,12 @@ public class AdconfigPO implements Serializable {
      */
     private Byte status;
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * 1 未删除  2删除
+     */
+    private Byte dr;
 
+    private static final long serialVersionUID = 1L;
 
     public Integer getAdId() {
         return adId;
@@ -124,6 +128,14 @@ public class AdconfigPO implements Serializable {
         this.status = status;
     }
 
+    public Byte getDr() {
+        return dr;
+    }
+
+    public void setDr(Byte dr) {
+        this.dr = dr;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -146,7 +158,8 @@ public class AdconfigPO implements Serializable {
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getContacts() == null ? other.getContacts() == null : this.getContacts().equals(other.getContacts()))
             && (this.getTotal() == null ? other.getTotal() == null : this.getTotal().equals(other.getTotal()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()));
     }
 
     @Override
@@ -164,6 +177,7 @@ public class AdconfigPO implements Serializable {
         result = prime * result + ((getContacts() == null) ? 0 : getContacts().hashCode());
         result = prime * result + ((getTotal() == null) ? 0 : getTotal().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
         return result;
     }
 
@@ -184,6 +198,7 @@ public class AdconfigPO implements Serializable {
         sb.append(", contacts=").append(contacts);
         sb.append(", total=").append(total);
         sb.append(", status=").append(status);
+        sb.append(", dr=").append(dr);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

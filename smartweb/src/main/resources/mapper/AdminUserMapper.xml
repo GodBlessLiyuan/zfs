@@ -10,15 +10,16 @@
     <result column="is_lock" jdbcType="TINYINT" property="isLock" />
     <result column="create_time" jdbcType="TIME" property="createTime" />
     <result column="last_time" jdbcType="TIME" property="lastTime" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
   </resultMap>
   <sql id="Base_Column_List">
-    a_id, username, `password`, email, `role`, is_lock, create_time, last_time
+    a_id, username, `password`, email, `role`, is_lock, create_time, last_time, dr
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap" resultType="com.rpa.web.pojo.AdminUserPO">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_admin_user
-    where username=#{username}
+    where a_id = #{aId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_admin_user
@@ -27,10 +28,10 @@
   <insert id="insert" parameterType="com.rpa.web.pojo.AdminUserPO">
     insert into t_admin_user (a_id, username, `password`, 
       email, `role`, is_lock, 
-      create_time, last_time)
+      create_time, last_time, dr)
     values (#{aId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{role,jdbcType=TINYINT}, #{isLock,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIME}, #{lastTime,jdbcType=TIME})
+      #{createTime,jdbcType=TIME}, #{lastTime,jdbcType=TIME}, #{dr,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.AdminUserPO">
     insert into t_admin_user
@@ -59,6 +60,9 @@
       <if test="lastTime != null">
         last_time,
       </if>
+      <if test="dr != null">
+        dr,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="aId != null">
@@ -84,6 +88,9 @@
       </if>
       <if test="lastTime != null">
         #{lastTime,jdbcType=TIME},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -111,6 +118,9 @@
       <if test="lastTime != null">
         last_time = #{lastTime,jdbcType=TIME},
       </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
     </set>
     where a_id = #{aId,jdbcType=INTEGER}
   </update>
@@ -122,7 +132,8 @@
       `role` = #{role,jdbcType=TINYINT},
       is_lock = #{isLock,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIME},
-      last_time = #{lastTime,jdbcType=TIME}
+      last_time = #{lastTime,jdbcType=TIME},
+      dr = #{dr,jdbcType=TINYINT}
     where a_id = #{aId,jdbcType=INTEGER}
   </update>
 </mapper>

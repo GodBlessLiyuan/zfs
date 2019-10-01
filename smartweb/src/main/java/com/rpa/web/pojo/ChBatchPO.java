@@ -32,6 +32,11 @@ public class ChBatchPO implements Serializable {
      */
     private String comTypeName;
 
+    /**
+     * 1 未删除  2删除
+     */
+    private Byte dr;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getBatchId() {
@@ -106,6 +111,14 @@ public class ChBatchPO implements Serializable {
         this.comTypeName = comTypeName;
     }
 
+    public Byte getDr() {
+        return dr;
+    }
+
+    public void setDr(Byte dr) {
+        this.dr = dr;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -126,7 +139,8 @@ public class ChBatchPO implements Serializable {
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getComTypeName() == null ? other.getComTypeName() == null : this.getComTypeName().equals(other.getComTypeName()));
+            && (this.getComTypeName() == null ? other.getComTypeName() == null : this.getComTypeName().equals(other.getComTypeName()))
+            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()));
     }
 
     @Override
@@ -142,6 +156,7 @@ public class ChBatchPO implements Serializable {
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getComTypeName() == null) ? 0 : getComTypeName().hashCode());
+        result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
         return result;
     }
 
@@ -160,6 +175,7 @@ public class ChBatchPO implements Serializable {
         sb.append(", updateTime=").append(updateTime);
         sb.append(", status=").append(status);
         sb.append(", comTypeName=").append(comTypeName);
+        sb.append(", dr=").append(dr);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
