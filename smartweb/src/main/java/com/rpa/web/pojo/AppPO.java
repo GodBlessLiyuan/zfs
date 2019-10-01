@@ -22,6 +22,10 @@ public class AppPO implements Serializable {
 
     private Integer aId;
 
+    private String username;
+    private int chanId;
+    private String chanName;
+
     /**
      * 1 未发布 2 发布
      */
@@ -154,6 +158,30 @@ public class AppPO implements Serializable {
 
     public void setDr(Byte dr) {
         this.dr = dr;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getChanId() {
+        return chanId;
+    }
+
+    public void setChanId(int chanId) {
+        this.chanId = chanId;
+    }
+
+    public String getChanName() {
+        return chanName;
+    }
+
+    public void setChanName(String chanName) {
+        this.chanName = chanName;
     }
 
     @Override

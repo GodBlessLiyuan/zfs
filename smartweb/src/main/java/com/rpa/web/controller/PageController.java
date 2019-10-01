@@ -91,4 +91,14 @@ public class PageController {
     public String whiltedevice() {
         return "whiltedevice";
     }
+
+    /**
+     * 版本更新
+     *
+     * @return
+     */
+    @RequestMapping("/appversion")
+    public String app() {
+        return "appversion";
+    }
 }
