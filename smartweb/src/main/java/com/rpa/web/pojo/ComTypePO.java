@@ -5,7 +5,8 @@ import java.util.Date;
 
 /**
  * t_com_type
- * @author 
+ *
+ * @author
  */
 public class ComTypePO implements Serializable {
     private Integer comTypeId;
@@ -24,6 +25,8 @@ public class ComTypePO implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+
+    private String username;
 
     private static final long serialVersionUID = 1L;
 
@@ -83,6 +86,14 @@ public class ComTypePO implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -96,12 +107,12 @@ public class ComTypePO implements Serializable {
         }
         ComTypePO other = (ComTypePO) that;
         return (this.getComTypeId() == null ? other.getComTypeId() == null : this.getComTypeId().equals(other.getComTypeId()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
-            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
-            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+                && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+                && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
+                && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
+                && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
