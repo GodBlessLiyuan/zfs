@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS t_user_vip;
 DROP TABLE IF EXISTS t_viptype;
 DROP TABLE IF EXISTS t_admin_user;
 DROP TABLE IF EXISTS t_app_plu_ch;
+DROP TABLE IF EXISTS t_app_ch;
 DROP TABLE IF EXISTS t_app;
 DROP TABLE IF EXISTS t_batch_info;
 DROP TABLE IF EXISTS t_ch_batch;
@@ -147,9 +148,22 @@ CREATE TABLE t_app
 );
 
 
+CREATE TABLE t_app_ch
+(
+	ac_id int NOT NULL AUTO_INCREMENT,
+	-- 1 未发布  2 发布
+	status tinyint COMMENT '1 未发布  2 发布',
+	app_id int NOT NULL,
+	soft_channel_id int NOT NULL,
+	PRIMARY KEY (ac_id),
+	UNIQUE (ac_id)
+);
+
+
 CREATE TABLE t_app_plu_ch
 (
 	apc_id int NOT NULL AUTO_INCREMENT,
+	ac_id int NOT NULL,
 	app_id int NOT NULL,
 	soft_channel_id int NOT NULL,
 	plugin_id int NOT NULL,
@@ -164,15 +178,16 @@ CREATE TABLE t_app_plu_ch
 
 CREATE TABLE t_batch_info
 (
-    id int NOT NULL AUTO_INCREMENT,
-    vipkey char(16),
-    batch_id int NOT NULL,
-    status tinyint COMMENT '1 激活  2 未激活',
-    days int,
-    -- 默认为null
-    update_time datetime COMMENT '默认为null',
-    PRIMARY KEY (id),
-    UNIQUE (id)
+	id int NOT NULL AUTO_INCREMENT,
+	vipkey char(16),
+	batch_id int NOT NULL,
+	-- 1 激活  2 未激活
+	status tinyint COMMENT '1 激活  2 未激活',
+	days int,
+	-- 默认为null
+	update_time datetime COMMENT '默认为null',
+	PRIMARY KEY (id),
+	UNIQUE (id)
 );
 
 
@@ -658,9 +673,25 @@ ALTER TABLE t_ad_channel
 ;
 
 
+ALTER TABLE t_app_ch
+	ADD FOREIGN KEY (app_id)
+	REFERENCES t_app (app_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE t_app_plu_ch
 	ADD FOREIGN KEY (app_id)
 	REFERENCES t_app (app_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_app_plu_ch
+	ADD FOREIGN KEY (ac_id)
+	REFERENCES t_app_ch (ac_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -747,6 +778,14 @@ ALTER TABLE t_channel
 
 
 ALTER TABLE t_ad_channel
+	ADD FOREIGN KEY (soft_channel_id)
+	REFERENCES t_soft_channel (soft_channel_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_app_ch
 	ADD FOREIGN KEY (soft_channel_id)
 	REFERENCES t_soft_channel (soft_channel_id)
 	ON UPDATE RESTRICT
