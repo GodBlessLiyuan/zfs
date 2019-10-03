@@ -111,4 +111,14 @@ public class PageController {
     public String userGifts() {
         return "newusergifts";
     }
+
+    /**
+     * 新用户赠送记录
+     *
+     * @return
+     */
+    @RequestMapping("/newuserrecord")
+    public String newUserRecord() {
+        return "newuserrecord";
+    }
 }
