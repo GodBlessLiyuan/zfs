@@ -18,7 +18,6 @@
 
 
     <link href="./plugins/datatables/jquery.dataTables.min.css">
-    <link href="./plugins/jquery-multi-select/multi-select.css" rel="stylesheet" type="text/css" >
 
 </head>
 
@@ -87,16 +86,20 @@
                         <div class="card-body">
 
                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#insertModal" data-whatever="@getbootstrap">发布新版本
+                                    data-target="#insertModal" data-whatever="@getbootstrap">新建
                             </button>
 
                             <hr>
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>操作人</label>
+                                            <input id="username" type="text" class="form-control">
+                                        </div>
                                         <div class="form-group col-md-4">
-                                            <label>发布人</label>
-                                            <select id="aId" class="form-control">
+                                            <label>产品类型</label>
+                                            <select id="comType" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
                                             </select>
                                         </div>
@@ -115,16 +118,12 @@
                                     <thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>发布时间</th>
-                                        <th>发布人</th>
-                                        <th>版本号</th>
-                                        <th>文件大小</th>
-                                        <th>更新方式</th>
-                                        <th>更新内容</th>
-                                        <th>更新渠道</th>
+                                        <th>产品类型</th>
+                                        <th>产品天数</th>
                                         <th>状态</th>
-                                        <th>备注</th>
+                                        <th>创建时间</th>
                                         <th>操作</th>
+                                        <th>操作人</th>
                                     </tr>
                                     </thead>
                                 </table>
@@ -135,7 +134,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">新增版本</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">新增商品</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
@@ -143,37 +142,16 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">应用:</span>
-                                                    <button id="iUrl" type="button" class="btn btn-primary"
-                                                            onclick="javascript:uploadFile()"
-                                                            data-dismiss="modal">上传文件
-                                                    </button>
-                                                </div>
-                                                <div class="form-group">
-                                                    <span for="recipient-name" class="col-form-label">更新方式:</span>
-                                                    <select id="iUpdateType" class="form-control">
-                                                        <option value='1' selected='selected'>普通更新</option>
-                                                        <option value='2'>强制更新</option>
+                                                    <span for="message-text" class="col-form-label">产品类型:</span>
+                                                    <select id="iComType" class="form-control">
                                                     </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <span for="recipient-name" class="col-form-label">更新渠道:</span>
-                                                    <select id="iSoftChannel" multiple="multiple">
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">更新内容:</span>
-                                                    <input type="text" class="form-control" id="iContext">
-                                                </div>
-                                                <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">备注:</span>
-                                                    <input type="text" class="form-control" id="iExtra">
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" onclick="insertClick()"
-                                                    data-dismiss="modal">确认发布
+                                                    data-dismiss="modal"
+                                            >确认上架
                                             </button>
                                         </div>
                                     </div>
@@ -183,14 +161,14 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="form-group">
-                                            <button type="hidden" id="dOid" style="display:none;"/>
+                                            <button type="hidden" id="dNugId" style="display:none;"/>
                                         </div>
                                         <div class="modal-header">
                                             <h5 class="modal-title">提示</h5>
                                             <button type="button" class="close" data-dismiss="modal"><span>×</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">是否删除此信息</div>
+                                        <div class="modal-body">是否删除此商品</div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
                                             </button>
@@ -200,13 +178,14 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
     <!--**********************************
         Content body end
@@ -239,21 +218,20 @@
 
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
-<script src="./plugins/jquery-multi-select/jquery.multi-select.js"></script>
 <script>
-
     $(document).ready(function () {
         // 下拉框请求后端并赋值
         $.ajax({
             type: 'GET',
-            url: '/softchannel/queryAll',
+            url: '/comtype/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
-                    $('#iSoftChannel').multiSelect('addOption', { value: data[i].softChannelId, text: data[i].name,
-                        index: i });
+                    $('#iComType').append("<option value='" + data[i].comTypeId + "'>" + data[i].name +
+                        "</option>");
+                    $('#comType').append("<option value='" + data[i].comTypeId + "'>" + data[i].name +
+                        "</option>");
                 }
-                $('#iSoftChannel').multiSelect("refresh");
             }
         })
     });
@@ -262,35 +240,9 @@
      * 确认上架点击事件
      */
     function insertClick() {
-        let url = $('#iUrl').val();
-        let updateType = $('#iUpdateType').val();
-        let softChannel = $('#iSoftChannel').val();
-        let context = $('#iContext').val();
-        let extra = $('#iExtra').val();
+        let comTypeId = $('#iComType').val();
 
-        $.get("/appversion/insert?updateType=" + updateType + "&softChannel=" + softChannel + "&context=" + context + "&extra=" +
-            extra + "&url=" + url);
-    }
-
-    function deleteClick() {
-        let appId = $('#dAppId').val();
-
-        $.ajax({
-            type: 'GET',
-            url: '/appversion/delete?appId=' + appId,
-            dataType: 'json',
-            success: function (data) {
-                $('#datatab').DataTable().draw(false);
-            }
-        })
-
-    }
-
-    /**
-     * 导出点击事件
-     */
-    function exportClick() {
-
+        $.get("/newusergifts/insert?comTypeId=" + comTypeId);
     }
 
     /**
@@ -305,7 +257,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/appversion/query?aId=" + $('#aId').val(),
+            "ajax": "/newusergifts/query?username=" + $('#username').val() + "&comTypeId=" + $('#comType').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -313,35 +265,33 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "publishTime"},
-                {"data": "username"},
-                {"data": "versionName"},
-                {"data": "size"},
-                {"data": "updateType"},
-                {"data": "context"},
-                {"data": "chanName"},
-                {"data": "status"},
-                {"data": "extra"},
+                {"data": "comTypeName"},
+                {"data": "days"},
                 {
-                    "data": "appId",
+                    "data": "status",
                     "render": function (data, type, full) {
-                        let status = full.status === 1 ? "发布" : "取消发布";
-
-                        let dA = full.status === 1 ? "<a data-toggle='modal' data-target='#deleteModal' " +
-                            "data-whatever='@getbootstrap' class='text-primary' onclick='javascript:deleteModal(" +
-                            data + ")'>删除</a>   " : "";
-                        let pA = "<a data-toggle='modal' data-target='#publishModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:publishModal(" + data + ")'>" + status + "</a>    ";
-                        let uA = "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:updateModal(" + data + ")'>修改</a>";
-                        return dA + pA + uA;
-
+                        if (data == 1) {
+                            return "<button class='badge badge-dark' type='button' " +
+                                "onclick='javascript:statusClick(" + full.nugId + "," + data + ")'>未开启</button>";
+                        } else {
+                            return "<button class='badge badge-primary' type='button' " +
+                                "onclick='javascript:statusClick(" + full.nugId + "," + data + ")'>已开启</button>";
+                        }
                     }
-                }
+                },
+                {"data": "createTime"},
+                {
+                    "data": "nugId",
+                    "render": function (data, type, full) {
+                        return "<a data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
+                            "class='text-primary' onclick='javascript:deleteModal(" + data + ")'>删除</a>";
+                    }
+                },
+                {"data": "username"}
             ],
             "columnDefs": [
                 {
-                    "targets": [1],
+                    "targets": [4],
                     "render": function (data, type, full) {
                         if (data == null || data.trim() == "") {
                             return "";
@@ -350,18 +300,6 @@
                             return date.getFullYear() + "/" + date.getMonth() + "/" +
                                 date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
                         }
-                    }
-                },
-                {
-                    "targets": [5],
-                    "render": function (data, type, full) {
-                        return data == 1 ? "普通更新" : "强制更新";
-                    }
-                },
-                {
-                    "targets": [8],
-                    "render": function (data, type, full) {
-                        return data == 1 ? "未发布" : "已发布";
                     }
                 }
             ],
@@ -384,24 +322,42 @@
     }
 
     /**
+     * 是否上架点击事件
+     * @param status 状态
+     */
+    function statusClick(nugId, status) {
+        status = status === 1 ? 2 : 1;
+        $.ajax({
+            type: 'GET',
+            url: '/newusergifts/updateStatus?nugId=' + nugId + '&status=' + status,
+            dataType: 'JSON',
+            success: function (data) {
+                $('#datatab').DataTable().draw(false);
+            }
+        })
+    }
+
+    function deleteClick() {
+        let nugId = $('#dNugId').val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/newusergifts/delete?nugId=' + nugId,
+            dataType: 'json',
+            success: function (data) {
+                $('#datatab').DataTable().draw(false);
+            }
+        })
+
+    }
+
+
+    /**
      * 删除弹框界面设值
      * @param data cmdyId
      */
-    function deleteModal(oId) {
-        $('#dOid').val(oId);
-    }
-
-    /**
-     * 发布 & 取消发布界面设置
-     * @param appId
-     * @param status
-     */
-    function publishModal(appId, status) {
-
-    }
-
-    function uploadFile() {
-
+    function deleteModal(nugId) {
+        $('#dNugId').val(nugId);
     }
 </script>
 
