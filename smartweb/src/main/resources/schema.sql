@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS t_activity;
 DROP TABLE IF EXISTS t_ad_channel;
 DROP TABLE IF EXISTS t_adconfig;
 DROP TABLE IF EXISTS t_admin_log;
+DROP TABLE IF EXISTS t_new_user_record;
+DROP TABLE IF EXISTS t_user_gifts;
 DROP TABLE IF EXISTS t_order;
 DROP TABLE IF EXISTS t_vipcommodity;
 DROP TABLE IF EXISTS t_com_type;
@@ -46,7 +48,7 @@ DROP TABLE IF EXISTS t_wxsupport;
 
 CREATE TABLE t_activity
 (
-	activity_id int NOT NULL AUTO_INCREMENT,
+	activity_id int NOT NULL,
 	activityname varchar(128),
 	-- 1 会员中心 
 	position tinyint COMMENT '1 会员中心 ',
@@ -301,6 +303,21 @@ CREATE TABLE t_key_value
 );
 
 
+CREATE TABLE t_new_user_record
+(
+	nur_id int NOT NULL AUTO_INCREMENT,
+	-- 允许为null
+	user_id bigint COMMENT '允许为null',
+	user_device_id int,
+	-- 允许为null
+	device_id bigint COMMENT '允许为null',
+	nug_id int NOT NULL,
+	create_time datetime,
+	PRIMARY KEY (nur_id),
+	UNIQUE (nur_id)
+);
+
+
 CREATE TABLE t_notice
 (
 	notice_id int NOT NULL AUTO_INCREMENT,
@@ -473,6 +490,22 @@ CREATE TABLE t_user_device
 	create_time datetime,
 	PRIMARY KEY (user_device_id),
 	UNIQUE (user_device_id)
+);
+
+
+CREATE TABLE t_user_gifts
+(
+	nug_id int NOT NULL AUTO_INCREMENT,
+	com_type_id int NOT NULL,
+	com_type_name char(128),
+	days int,
+	-- 1 未开启 2 开启  3 删除
+	status tinyint COMMENT '1 未开启 2 开启  3 删除',
+	a_id int,
+	create_time datetime,
+	update_time datetime,
+	PRIMARY KEY (nug_id),
+	UNIQUE (nug_id)
 );
 
 
@@ -713,6 +746,14 @@ ALTER TABLE t_batch_info
 ;
 
 
+ALTER TABLE t_user_gifts
+	ADD FOREIGN KEY (com_type_id)
+	REFERENCES t_com_type (com_type_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE t_vipcommodity
     ADD FOREIGN KEY (com_type_id)
         REFERENCES t_com_type (com_type_id)
@@ -854,6 +895,14 @@ ALTER TABLE t_user_notice
         REFERENCES t_user_device (user_device_id)
         ON UPDATE RESTRICT
         ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_new_user_record
+	ADD FOREIGN KEY (nug_id)
+	REFERENCES t_user_gifts (nug_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 
