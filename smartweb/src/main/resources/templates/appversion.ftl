@@ -18,6 +18,7 @@
 
 
     <link href="./plugins/datatables/jquery.dataTables.min.css">
+    <link href="./plugins/jquery-multi-select/multi-select.css" rel="stylesheet" type="text/css" >
 
 </head>
 
@@ -143,7 +144,7 @@
                                             <form>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">应用:</span>
-                                                    <button id="iIconUrl" type="button" class="btn btn-primary"
+                                                    <button id="upload" type="button" class="btn btn-primary"
                                                             onclick="javascript:uploadFile()"
                                                             data-dismiss="modal">上传文件
                                                     </button>
@@ -157,7 +158,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">更新渠道:</span>
-                                                    <select id="insertChannelName" class="form-control">
+                                                    <select id="iSoftChannel" multiple="multiple">
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -238,21 +239,21 @@
 
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="./plugins/jquery-multi-select/jquery.multi-select.js"></script>
 <script>
 
     $(document).ready(function () {
         // 下拉框请求后端并赋值
         $.ajax({
             type: 'GET',
-            url: '/comtype/queryAll',
+            url: '/softchannel/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
-                    $('#insertComTypeName').append("<option value='" + data[i].comTypeId + "'>" + data[i].name +
-                        "</option>");
-                    $('#comTypeName').append("<option value='" + data[i].comTypeId + "'>" + data[i].name +
-                        "</option>");
+                    $('#iSoftChannel').multiSelect('addOption', { value: data[i].softChannelId, text: data[i].name,
+                        index: i });
                 }
+                $('#iSoftChannel').multiSelect("refresh");
             }
         })
     });
@@ -335,7 +336,7 @@
                             "class='text-primary' onclick='javascript:publishModal(" + data + ")'>" + status + "</a>    ";
                         let uA = "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
                             "class='text-primary' onclick='javascript:updateModal(" + data + ")'>修改</a>";
-                        return  dA + pA + uA;
+                        return dA + pA + uA;
 
                     }
                 }

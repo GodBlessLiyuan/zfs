@@ -3,11 +3,11 @@ package com.rpa.web.controller;
 import com.rpa.web.dto.AppDTO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 @RestController
 public class AppController {
 
-    @Resource
+    @Autowired
     private IAppService service;
 
     @RequestMapping("/appversion/query")
@@ -33,5 +33,9 @@ public class AppController {
         reqData.put("aId", aId);
 
         return service.query(draw, pageNum, pageSize, reqData);
+    }
+
+    public int insert(@RequestParam(value = "channelId") int channelId,) {
+
     }
 }
