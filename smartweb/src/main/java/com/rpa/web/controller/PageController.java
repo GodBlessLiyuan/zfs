@@ -18,7 +18,7 @@ public class PageController {
      * @return
      */
     @RequestMapping("/userinfo")
-    public String userList() {
+    public String userInfo() {
         return "userinfo";
     }
 
@@ -28,7 +28,7 @@ public class PageController {
      * @return
      */
     @RequestMapping("/comtype")
-    public String comtype() {
+    public String comType() {
         return "comtype";
     }
 
@@ -68,7 +68,7 @@ public class PageController {
      * @return
      */
     @RequestMapping("/otherapp")
-    public String otherapp() {
+    public String otherApp() {
         return "otherapp";
     }
 
@@ -78,7 +78,7 @@ public class PageController {
      * @return
      */
     @RequestMapping("/wxsupport")
-    public String wxsupport() {
+    public String wxSupport() {
         return "wxsupport";
     }
 
@@ -88,7 +88,7 @@ public class PageController {
      * @return
      */
     @RequestMapping("/whiltedevice")
-    public String whiltedevice() {
+    public String whilteDevice() {
         return "whiltedevice";
     }
 
@@ -100,5 +100,15 @@ public class PageController {
     @RequestMapping("/appversion")
     public String app() {
         return "appversion";
+    }
+
+    /**
+     * 新用户送会员
+     *
+     * @return
+     */
+    @RequestMapping("/newusergifts")
+    public String userGifts() {
+        return "newusergifts";
     }
 }

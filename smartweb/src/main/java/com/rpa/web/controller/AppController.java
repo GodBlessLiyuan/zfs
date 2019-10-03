@@ -35,7 +35,12 @@ public class AppController {
         return service.query(draw, pageNum, pageSize, reqData);
     }
 
-    public int insert(@RequestParam(value = "channelId") int channelId,) {
-
+    @RequestMapping("/appversion/insert")
+    public int insert(@RequestParam(value = "url") String url,
+                      @RequestParam(value = "updateType") int updateType,
+                      @RequestParam(value = "softChannel") int softChannel,
+                      @RequestParam(value = "context") String context,
+                      @RequestParam(value = "extra") String extra) {
+        return 0;
     }
 }
