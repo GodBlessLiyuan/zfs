@@ -338,19 +338,20 @@ CREATE TABLE t_notice
 
 CREATE TABLE t_order
 (
-    order_id int NOT NULL AUTO_INCREMENT,
-    order_number varchar(32) NOT NULL,
-    user_device_id int NOT NULL,
-    cmdy_id int NOT NULL,
-    user_id int,
-    device_id bigint,
-    createtime time,
-    starttime time,
-    endtime time,
-    pay_time time,
-    -- 1 微信 2支付宝
-    --
-    type int COMMENT '1 微信 2支付宝
+	order_id int NOT NULL AUTO_INCREMENT,
+	order_number varchar(32) NOT NULL,
+	user_device_id int NOT NULL,
+	cmdy_id int NOT NULL,
+	user_id int,
+	-- 允许为null
+	device_id bigint COMMENT '允许为null',
+	createtime datetime,
+	starttime datetime,
+	endtime datetime,
+	pay_time datetime,
+	-- 1 微信 2支付宝
+	-- 
+	type int COMMENT '1 微信 2支付宝
 ',
     PRIMARY KEY (order_id, order_number),
     UNIQUE (order_id)
