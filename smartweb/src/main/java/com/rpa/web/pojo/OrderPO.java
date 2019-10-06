@@ -33,6 +33,14 @@ public class OrderPO extends OrderPOKey implements Serializable {
      */
     private Integer type;
 
+    private String name;
+    private String phone;
+    private String comName;
+    private Integer days;
+    private Integer price;
+    private String showDiscount;
+    private Float discount;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getUserDeviceId() {
@@ -105,6 +113,62 @@ public class OrderPO extends OrderPOKey implements Serializable {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getComName() {
+        return comName;
+    }
+
+    public void setComName(String comName) {
+        this.comName = comName;
+    }
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public String getShowDiscount() {
+        return showDiscount;
+    }
+
+    public void setShowDiscount(String showDiscount) {
+        this.showDiscount = showDiscount;
+    }
+
+    public Float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Float discount) {
+        this.discount = discount;
     }
 
     @Override
