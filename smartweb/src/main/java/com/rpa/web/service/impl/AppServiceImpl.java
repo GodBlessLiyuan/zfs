@@ -78,11 +78,20 @@ public class AppServiceImpl implements IAppService {
     @Override
     public int updateStatus(int appId, int status) {
         AppPO appPO = appMapper.selectByPrimaryKey(appId);
+        appPO.setPublishTime(status == 2 ? new Date() : null);
         appPO.setStatus(status);
         int frist = appMapper.updateByPrimaryKey(appPO);
 
         int secend = appChMapper.updateStatus(appId, status);
 
-        return 0;
+        return frist + secend;
+    }
+
+    @Transactional(rollbackFor = {})
+    @Override
+    public int delete(int appId) {
+        int frist = appMapper.deleteByPrimaryKey(appId);
+        int secend = appChMapper.deleteByAppId(appId);
+        return frist + secend;
     }
 }

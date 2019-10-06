@@ -13,6 +13,7 @@ public interface AppChMapper extends BaseDAO<AppChPO, Integer> {
 
     /**
      * 批量插入
+     *
      * @param records 记录集
      * @return
      */
@@ -20,9 +21,18 @@ public interface AppChMapper extends BaseDAO<AppChPO, Integer> {
 
     /**
      * 根据appId 更新 status
+     *
      * @param appId
      * @param status
      * @return
      */
     int updateStatus(int appId, int status);
+
+    /**
+     * 根据appId 删除数据
+     *
+     * @param appId
+     * @return
+     */
+    int deleteByAppId(int appId);
 }

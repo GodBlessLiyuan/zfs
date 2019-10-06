@@ -41,4 +41,11 @@ public interface IAppService {
      * @return
      */
     int updateStatus(int appId, int status);
+
+    /**
+     * 删除
+     * @param appId
+     * @return
+     */
+    int delete(int appId);
 }

@@ -50,4 +50,9 @@ public class AppController {
                             @RequestParam(value = "status") int status) {
         return service.updateStatus(appId, status);
     }
+
+    @RequestMapping("/appversion/delete")
+    public int delete(@RequestParam(value = "appId") int appId) {
+        return service.delete(appId);
+    }
 }
