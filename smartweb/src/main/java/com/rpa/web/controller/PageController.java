@@ -121,4 +121,15 @@ public class PageController {
     public String newUserRecord() {
         return "newuserrecord";
     }
+
+    /**
+     * 订单信息
+     *
+     * @return
+     */
+    @RequestMapping("/order")
+    public String order() {
+        return "order_index";
+    }
+
 }
