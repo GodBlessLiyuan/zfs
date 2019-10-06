@@ -22,4 +22,15 @@ public interface IAppService {
      * @return
      */
     DTPageInfo<AppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+
+    /**
+     * 插入
+     * @param url apk文件路径
+     * @param updateType 更新方式
+     * @param softChannel 更新渠道
+     * @param context 更新内容
+     * @param extra 备注
+     * @return
+     */
+    int insert(String url, byte updateType, int[] softChannel, String context, String extra);
 }

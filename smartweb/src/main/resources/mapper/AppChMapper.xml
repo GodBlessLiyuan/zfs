@@ -79,4 +79,12 @@
       soft_channel_id = #{softChannelId,jdbcType=INTEGER}
     where ac_id = #{acId,jdbcType=INTEGER}
   </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_app_ch (ac_id, `status`, app_id, soft_channel_id) values
+    <foreach collection="list" item="appChPO" index="index" separator=",">
+      (#{appChPO.acId,jdbcType=INTEGER}, #{appChPO.status,jdbcType=TINYINT}, #{appChPO.appId,jdbcType=INTEGER},
+      #{appChPO.softChannelId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
 </mapper>

@@ -31,7 +31,7 @@
     delete from t_app
     where app_id = #{appId,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.rpa.web.pojo.AppPO">
+    <insert id="insert" parameterType="com.rpa.web.pojo.AppPO" useGeneratedKeys="true"  keyProperty="appId" >
     insert into t_app (app_id, versionname, versioncode, 
       create_time, update_time, url, 
       a_id, `status`, update_type, 
@@ -201,12 +201,12 @@
         select a.app_id as appId, a.publish_time as publishTime, au.username, a.versionname as versionName, a.size,
         a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra
         from t_app a
-        left join t_app_plu_ch tpc on a.app_id = tpc.app_id
-        left join t_soft_channel s on tpc.soft_channel_id = s.soft_channel_id
+        left join t_app_ch ac on a.app_id = ac.app_id
+        left join t_soft_channel s on ac.soft_channel_id = s.soft_channel_id
         left join t_admin_user au on a.a_id = au.a_id
         <where>
-            <if test="aId != null and aId != 0">
-                and a.app_id = #{aId}
+            <if test="updateType != null and updateType != 0">
+                and a.update_type = #{updateType}
             </if>
         </where>
     </select>
