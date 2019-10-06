@@ -27,6 +27,8 @@ public class UserGiftsPO implements Serializable {
 
     private Date updateTime;
 
+    private String username;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getNugId() {
@@ -91,6 +93,14 @@ public class UserGiftsPO implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

@@ -26,6 +26,10 @@ public class NewUserRecordPO implements Serializable {
 
     private Date createTime;
 
+    private String phone;
+    private String comTypeName;
+    private Integer days;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getNurId() {
@@ -74,6 +78,30 @@ public class NewUserRecordPO implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getComTypeName() {
+        return comTypeName;
+    }
+
+    public void setComTypeName(String comTypeName) {
+        this.comTypeName = comTypeName;
+    }
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
     }
 
     @Override
