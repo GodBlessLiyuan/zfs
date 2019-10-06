@@ -44,4 +44,10 @@ public class AppController {
 
         return service.insert(url, updateType, softChannel, context, extra);
     }
+
+    @RequestMapping("/appversion/updateStatus")
+    public int updateStatus(@RequestParam(value = "appId") int appId,
+                            @RequestParam(value = "status") int status) {
+        return service.updateStatus(appId, status);
+    }
 }

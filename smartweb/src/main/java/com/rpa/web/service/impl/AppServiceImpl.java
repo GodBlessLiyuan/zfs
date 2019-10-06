@@ -14,10 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: xiahui
@@ -75,5 +72,17 @@ public class AppServiceImpl implements IAppService {
         int secend = appChMapper.batchInsert(appChPOs);
 
         return frist + secend;
+    }
+
+    @Transactional(rollbackFor = {})
+    @Override
+    public int updateStatus(int appId, int status) {
+        AppPO appPO = appMapper.selectByPrimaryKey(appId);
+        appPO.setStatus(status);
+        int frist = appMapper.updateByPrimaryKey(appPO);
+
+        int secend = appChMapper.updateStatus(appId, status);
+
+        return 0;
     }
 }
