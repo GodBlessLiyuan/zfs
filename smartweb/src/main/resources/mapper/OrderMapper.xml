@@ -8,14 +8,14 @@
     <result column="cmdy_id" jdbcType="INTEGER" property="cmdyId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="device_id" jdbcType="BIGINT" property="deviceId" />
-    <result column="createtime" jdbcType="TIME" property="createtime" />
-    <result column="starttime" jdbcType="TIME" property="starttime" />
-    <result column="endtime" jdbcType="TIME" property="endtime" />
-    <result column="pay_time" jdbcType="TIME" property="payTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
     <result column="type" jdbcType="INTEGER" property="type" />
   </resultMap>
   <sql id="Base_Column_List">
-    order_id, order_number, user_device_id, cmdy_id, user_id, device_id, createtime, 
+    order_id, order_number, user_device_id, cmdy_id, user_id, device_id, create_time, 
     starttime, endtime, pay_time, `type`
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.rpa.web.pojo.OrderPOKey" resultMap="BaseResultMap">
@@ -33,12 +33,12 @@
   <insert id="insert" parameterType="com.rpa.web.pojo.OrderPO">
     insert into t_order (order_id, order_number, user_device_id, 
       cmdy_id, user_id, device_id, 
-      createtime, starttime, endtime, 
+      create_time, starttime, endtime, 
       pay_time, `type`)
     values (#{orderId,jdbcType=INTEGER}, #{orderNumber,jdbcType=VARCHAR}, #{userDeviceId,jdbcType=INTEGER}, 
       #{cmdyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{deviceId,jdbcType=BIGINT}, 
-      #{createtime,jdbcType=TIME}, #{starttime,jdbcType=TIME}, #{endtime,jdbcType=TIME}, 
-      #{payTime,jdbcType=TIME}, #{type,jdbcType=INTEGER})
+      #{createTime,jdbcType=TIMESTAMP}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.OrderPO">
     insert into t_order
@@ -61,8 +61,8 @@
       <if test="deviceId != null">
         device_id,
       </if>
-      <if test="createtime != null">
-        createtime,
+      <if test="createTime != null">
+        create_time,
       </if>
       <if test="starttime != null">
         starttime,
@@ -96,17 +96,17 @@
       <if test="deviceId != null">
         #{deviceId,jdbcType=BIGINT},
       </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=TIME},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="starttime != null">
-        #{starttime,jdbcType=TIME},
+        #{starttime,jdbcType=TIMESTAMP},
       </if>
       <if test="endtime != null">
-        #{endtime,jdbcType=TIME},
+        #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="payTime != null">
-        #{payTime,jdbcType=TIME},
+        #{payTime,jdbcType=TIMESTAMP},
       </if>
       <if test="type != null">
         #{type,jdbcType=INTEGER},
@@ -128,17 +128,17 @@
       <if test="deviceId != null">
         device_id = #{deviceId,jdbcType=BIGINT},
       </if>
-      <if test="createtime != null">
-        createtime = #{createtime,jdbcType=TIME},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="starttime != null">
-        starttime = #{starttime,jdbcType=TIME},
+        starttime = #{starttime,jdbcType=TIMESTAMP},
       </if>
       <if test="endtime != null">
-        endtime = #{endtime,jdbcType=TIME},
+        endtime = #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="payTime != null">
-        pay_time = #{payTime,jdbcType=TIME},
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
       </if>
       <if test="type != null">
         `type` = #{type,jdbcType=INTEGER},
@@ -153,10 +153,10 @@
       cmdy_id = #{cmdyId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       device_id = #{deviceId,jdbcType=BIGINT},
-      createtime = #{createtime,jdbcType=TIME},
-      starttime = #{starttime,jdbcType=TIME},
-      endtime = #{endtime,jdbcType=TIME},
-      pay_time = #{payTime,jdbcType=TIME},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
       `type` = #{type,jdbcType=INTEGER}
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=VARCHAR}

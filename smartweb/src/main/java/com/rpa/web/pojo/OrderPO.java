@@ -14,9 +14,12 @@ public class OrderPO extends OrderPOKey implements Serializable {
 
     private Integer userId;
 
+    /**
+     * 允许为null
+     */
     private Long deviceId;
 
-    private Date createtime;
+    private Date createTime;
 
     private Date starttime;
 
@@ -64,12 +67,12 @@ public class OrderPO extends OrderPOKey implements Serializable {
         this.deviceId = deviceId;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Date getStarttime() {
@@ -122,7 +125,7 @@ public class OrderPO extends OrderPOKey implements Serializable {
             && (this.getCmdyId() == null ? other.getCmdyId() == null : this.getCmdyId().equals(other.getCmdyId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()))
-            && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getStarttime() == null ? other.getStarttime() == null : this.getStarttime().equals(other.getStarttime()))
             && (this.getEndtime() == null ? other.getEndtime() == null : this.getEndtime().equals(other.getEndtime()))
             && (this.getPayTime() == null ? other.getPayTime() == null : this.getPayTime().equals(other.getPayTime()))
@@ -139,7 +142,7 @@ public class OrderPO extends OrderPOKey implements Serializable {
         result = prime * result + ((getCmdyId() == null) ? 0 : getCmdyId().hashCode());
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getDeviceId() == null) ? 0 : getDeviceId().hashCode());
-        result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getStarttime() == null) ? 0 : getStarttime().hashCode());
         result = prime * result + ((getEndtime() == null) ? 0 : getEndtime().hashCode());
         result = prime * result + ((getPayTime() == null) ? 0 : getPayTime().hashCode());
@@ -157,7 +160,7 @@ public class OrderPO extends OrderPOKey implements Serializable {
         sb.append(", cmdyId=").append(cmdyId);
         sb.append(", userId=").append(userId);
         sb.append(", deviceId=").append(deviceId);
-        sb.append(", createtime=").append(createtime);
+        sb.append(", createTime=").append(createTime);
         sb.append(", starttime=").append(starttime);
         sb.append(", endtime=").append(endtime);
         sb.append(", payTime=").append(payTime);

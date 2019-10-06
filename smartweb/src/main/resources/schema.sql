@@ -345,7 +345,7 @@ CREATE TABLE t_order
 	user_id int,
 	-- 允许为null
 	device_id bigint COMMENT '允许为null',
-	createtime datetime,
+	create_time datetime,
 	starttime datetime,
 	endtime datetime,
 	pay_time datetime,
