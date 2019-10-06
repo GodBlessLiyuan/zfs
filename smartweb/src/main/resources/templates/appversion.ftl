@@ -185,7 +185,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="form-group">
-                                            <button type="hidden" id="dOid" style="display:none;"/>
+                                            <button type="hidden" id="dAppId" style="display:none;"/>
                                         </div>
                                         <div class="modal-header">
                                             <h5 class="modal-title">提示</h5>
@@ -198,6 +198,50 @@
                                             </button>
                                             <button type="button" class="btn btn-primary" data-dismiss="modal"
                                                     onclick="javascript:deleteClick()">确认删除
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="publishModal" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="form-group">
+                                            <button type="hidden" id="pAppId" style="display:none;"/>
+                                        </div>
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">提示</h5>
+                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">是否发布新版本？</div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
+                                            </button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                    onclick="javascript:publishClick()">确认发布
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="unPublishModal" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="form-group">IP
+                                            <button type="hidden" id="upAppId" style="display:none;"/>
+                                        </div>
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">提示</h5>
+                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">是否取消发布此版本？</div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
+                                            </button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                    onclick="javascript:unPublishClick()">确认取消
                                             </button>
                                         </div>
                                     </div>
@@ -287,7 +331,32 @@
                 $('#datatab').DataTable().draw(false);
             }
         })
+    }
 
+    function publishClick() {
+        let appId = $('#pAppId').val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/updateStatus?appId=' + appId + "&status=2",
+            dataType: 'json',
+            success: function (data) {
+                $('#datatab').DataTable().draw(false);
+            }
+        })
+    }
+
+    function unPublishClick() {
+        let appId = $('#upAppId').val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/updateStatus?appId=' + appId + "&status=1",
+            dataType: 'json',
+            success: function (data) {
+                $('#datatab').DataTable().draw(false);
+            }
+        })
     }
 
     /**
@@ -322,13 +391,21 @@
                 {
                     "data": "appId",
                     "render": function (data, type, full) {
-                        let status = full.status === 1 ? "发布" : "取消发布";
+
+                        let title = "发布";
+                        let modal = "data-target='#publishModal'";
+
+                        if (full.status === 2) {
+                            title = "取消发布";
+                            modal = "data-target='#unPublishModal'";
+                        }
 
                         let dA = full.status === 1 ? "<a data-toggle='modal' data-target='#deleteModal' " +
                             "data-whatever='@getbootstrap' class='text-primary' onclick='javascript:deleteModal(" +
                             data + ")'>删除</a>   " : "";
-                        let pA = "<a data-toggle='modal' data-target='#publishModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:publishModal(" + data + ")'>" + status + "</a>    ";
+                        let pA = "<a data-toggle='modal' " + modal + " data-whatever='@getbootstrap' " +
+                            "class='text-primary' onclick='javascript:publishModal(" + data + "," + full.status + ")" +
+                            "'>" + title + "</a>  ";
                         let uA = "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
                             "class='text-primary' onclick='javascript:updateModal(" + data + ")'>修改</a>";
                         return dA + pA + uA;
@@ -352,13 +429,13 @@
                 {
                     "targets": [5],
                     "render": function (data, type, full) {
-                        return data == 1 ? "普通更新" : "强制更新";
+                        return data === 1 ? "普通更新" : "强制更新";
                     }
                 },
                 {
                     "targets": [8],
                     "render": function (data, type, full) {
-                        return data == 1 ? "未发布" : "已发布";
+                        return data === 1 ? "未发布" : "已发布";
                     }
                 }
             ],
@@ -384,8 +461,8 @@
      * 删除弹框界面设值
      * @param data cmdyId
      */
-    function deleteModal(oId) {
-        $('#dOid').val(oId);
+    function deleteModal(appId) {
+        $('#dAppId').val(appId);
     }
 
     /**
@@ -394,7 +471,7 @@
      * @param status
      */
     function publishModal(appId, status) {
-
+        status === 1 ? $('#pAppId').val(appId) : $('#upAppId').val(appId);
     }
 
     function uploadFile() {

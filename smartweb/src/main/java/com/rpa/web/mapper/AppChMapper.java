@@ -17,4 +17,12 @@ public interface AppChMapper extends BaseDAO<AppChPO, Integer> {
      * @return
      */
     int batchInsert(List<AppChPO> records);
+
+    /**
+     * 根据appId 更新 status
+     * @param appId
+     * @param status
+     * @return
+     */
+    int updateStatus(int appId, int status);
 }

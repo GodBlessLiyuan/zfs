@@ -87,4 +87,7 @@
       #{appChPO.softChannelId,jdbcType=INTEGER})
     </foreach>
   </insert>
+  <update id="updateStatus" parameterType="java.lang.Integer">
+    update t_app_ch set `status` = #{status,jdbcType=TINYINT} where app_id = #{appId}
+  </update>
 </mapper>

@@ -33,4 +33,12 @@ public interface IAppService {
      * @return
      */
     int insert(String url, byte updateType, int[] softChannel, String context, String extra);
+
+    /**
+     * 更新状态（发布&取消发布）
+     * @param appId
+     * @param status
+     * @return
+     */
+    int updateStatus(int appId, int status);
 }
