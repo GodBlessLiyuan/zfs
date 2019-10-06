@@ -18,7 +18,7 @@
 
 
     <link href="./plugins/datatables/jquery.dataTables.min.css">
-    <link href="./plugins/jquery-multi-select/multi-select.css" rel="stylesheet" type="text/css" >
+    <link href="./plugins/jquery-multi-select/multi-select.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -95,9 +95,11 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label>发布人</label>
-                                            <select id="aId" class="form-control">
+                                            <label>更新方式</label>
+                                            <select id="updateType" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
+                                                <option value='1'>普通更新</option>
+                                                <option value='2'>强制更新</option>
                                             </select>
                                         </div>
                                     </div>
@@ -250,8 +252,10 @@
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
-                    $('#iSoftChannel').multiSelect('addOption', { value: data[i].softChannelId, text: data[i].name,
-                        index: i });
+                    $('#iSoftChannel').multiSelect('addOption', {
+                        value: data[i].softChannelId, text: data[i].name,
+                        index: i
+                    });
                 }
                 $('#iSoftChannel').multiSelect("refresh");
             }
@@ -287,13 +291,6 @@
     }
 
     /**
-     * 导出点击事件
-     */
-    function exportClick() {
-
-    }
-
-    /**
      * 查询点击事件
      */
     function queryClick() {
@@ -305,7 +302,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/appversion/query?aId=" + $('#aId').val(),
+            "ajax": "/appversion/query?updateType=" + $('#updateType').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

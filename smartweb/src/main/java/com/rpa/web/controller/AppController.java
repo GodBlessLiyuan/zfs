@@ -27,20 +27,21 @@ public class AppController {
     public DTPageInfo<AppDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                     @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                     @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                    @RequestParam(value = "aId") int aId) {
+                                    @RequestParam(value = "updateType") byte updateType) {
 
         Map<String, Object> reqData = new HashMap<>(1);
-        reqData.put("aId", aId);
+        reqData.put("updateType", updateType);
 
         return service.query(draw, pageNum, pageSize, reqData);
     }
 
     @RequestMapping("/appversion/insert")
     public int insert(@RequestParam(value = "url") String url,
-                      @RequestParam(value = "updateType") int updateType,
-                      @RequestParam(value = "softChannel") int softChannel,
+                      @RequestParam(value = "updateType") byte updateType,
+                      @RequestParam(value = "softChannel") int[] softChannel,
                       @RequestParam(value = "context") String context,
                       @RequestParam(value = "extra") String extra) {
-        return 0;
+
+        return service.insert(url, updateType, softChannel, context, extra);
     }
 }
