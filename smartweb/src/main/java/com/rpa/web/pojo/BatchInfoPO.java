@@ -26,6 +26,11 @@ public class BatchInfoPO implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 允许为null
+     */
+    private Long userId;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -76,6 +81,14 @@ public class BatchInfoPO implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -93,7 +106,8 @@ public class BatchInfoPO implements Serializable {
             && (this.getBatchId() == null ? other.getBatchId() == null : this.getBatchId().equals(other.getBatchId()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()));
     }
 
     @Override
@@ -106,6 +120,7 @@ public class BatchInfoPO implements Serializable {
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getDays() == null) ? 0 : getDays().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         return result;
     }
 
@@ -121,6 +136,7 @@ public class BatchInfoPO implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", days=").append(days);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", userId=").append(userId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

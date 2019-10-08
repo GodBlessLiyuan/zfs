@@ -10,9 +10,13 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="dr" jdbcType="TINYINT" property="dr" />
+    <result column="com_type_id" jdbcType="INTEGER" property="comTypeId" />
+    <result column="days" jdbcType="INTEGER" property="days" />
+    <result column="com_type_name" jdbcType="CHAR" property="comTypeName" />
   </resultMap>
   <sql id="Base_Column_List">
-    activity_id, activityname, `position`, `state`, a_id, create_time, update_time, dr
+    activity_id, activityname, `position`, `state`, a_id, create_time, update_time, dr, 
+    com_type_id, `days`, com_type_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,10 +31,12 @@
   <insert id="insert" parameterType="com.rpa.web.pojo.ActivityPO">
     insert into t_activity (activity_id, activityname, `position`, 
       `state`, a_id, create_time, 
-      update_time, dr)
+      update_time, dr, com_type_id, 
+      `days`, com_type_name)
     values (#{activityId,jdbcType=INTEGER}, #{activityname,jdbcType=VARCHAR}, #{position,jdbcType=TINYINT}, 
       #{state,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT})
+      #{updateTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT}, #{comTypeId,jdbcType=INTEGER}, 
+      #{days,jdbcType=INTEGER}, #{comTypeName,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.ActivityPO">
     insert into t_activity
@@ -59,6 +65,15 @@
       <if test="dr != null">
         dr,
       </if>
+      <if test="comTypeId != null">
+        com_type_id,
+      </if>
+      <if test="days != null">
+        `days`,
+      </if>
+      <if test="comTypeName != null">
+        com_type_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="activityId != null">
@@ -84,6 +99,15 @@
       </if>
       <if test="dr != null">
         #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="comTypeId != null">
+        #{comTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="days != null">
+        #{days,jdbcType=INTEGER},
+      </if>
+      <if test="comTypeName != null">
+        #{comTypeName,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -111,6 +135,15 @@
       <if test="dr != null">
         dr = #{dr,jdbcType=TINYINT},
       </if>
+      <if test="comTypeId != null">
+        com_type_id = #{comTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="days != null">
+        `days` = #{days,jdbcType=INTEGER},
+      </if>
+      <if test="comTypeName != null">
+        com_type_name = #{comTypeName,jdbcType=CHAR},
+      </if>
     </set>
     where activity_id = #{activityId,jdbcType=INTEGER}
   </update>
@@ -122,7 +155,10 @@
       a_id = #{aId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      dr = #{dr,jdbcType=TINYINT}
+      dr = #{dr,jdbcType=TINYINT},
+      com_type_id = #{comTypeId,jdbcType=INTEGER},
+      `days` = #{days,jdbcType=INTEGER},
+      com_type_name = #{comTypeName,jdbcType=CHAR}
     where activity_id = #{activityId,jdbcType=INTEGER}
   </update>
 </mapper>

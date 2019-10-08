@@ -59,6 +59,10 @@ CREATE TABLE t_activity
 	update_time datetime COMMENT '默认为null',
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除',
+	com_type_id int NOT NULL,
+	days int,
+	-- 日卡，周卡，月卡，年卡
+	com_type_name char(128) COMMENT '日卡，周卡，月卡，年卡',
 	PRIMARY KEY (activity_id),
 	UNIQUE (activity_id)
 );
@@ -187,6 +191,8 @@ CREATE TABLE t_batch_info
 	days int,
 	-- 默认为null
 	update_time datetime COMMENT '默认为null',
+	-- 允许为null
+	user_id bigint NOT NULL COMMENT '允许为null',
 	PRIMARY KEY (id),
 	UNIQUE (id)
 );
@@ -741,6 +747,14 @@ ALTER TABLE t_batch_info
 ;
 
 
+ALTER TABLE t_activity
+	ADD FOREIGN KEY (com_type_id)
+	REFERENCES t_com_type (com_type_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE t_user_gifts
 	ADD FOREIGN KEY (com_type_id)
 	REFERENCES t_com_type (com_type_id)
@@ -842,6 +856,14 @@ ALTER TABLE t_vipcommodity
         REFERENCES t_soft_channel (soft_channel_id)
         ON UPDATE RESTRICT
         ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_batch_info
+	ADD FOREIGN KEY (user_id)
+	REFERENCES t_user (user_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 
