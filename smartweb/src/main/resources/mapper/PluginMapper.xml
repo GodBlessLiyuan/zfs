@@ -13,10 +13,11 @@
     <result column="size" jdbcType="INTEGER" property="size" />
     <result column="md5" jdbcType="CHAR" property="md5" />
     <result column="dr" jdbcType="TINYINT" property="dr" />
+    <result column="url" jdbcType="CHAR" property="url" />
   </resultMap>
   <sql id="Base_Column_List">
     plugin_id, `status`, context, extra, a_id, create_time, update_time, publish_time, 
-    `size`, md5, dr
+    `size`, md5, dr, url
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -32,11 +33,11 @@
     insert into t_plugin (plugin_id, `status`, context, 
       extra, a_id, create_time, 
       update_time, publish_time, `size`, 
-      md5, dr)
+      md5, dr, url)
     values (#{pluginId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{context,jdbcType=CHAR}, 
       #{extra,jdbcType=CHAR}, #{aId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, #{size,jdbcType=INTEGER}, 
-      #{md5,jdbcType=CHAR}, #{dr,jdbcType=TINYINT})
+      #{md5,jdbcType=CHAR}, #{dr,jdbcType=TINYINT}, #{url,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.PluginPO">
     insert into t_plugin
@@ -74,6 +75,9 @@
       <if test="dr != null">
         dr,
       </if>
+      <if test="url != null">
+        url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="pluginId != null">
@@ -108,6 +112,9 @@
       </if>
       <if test="dr != null">
         #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -144,6 +151,9 @@
       <if test="dr != null">
         dr = #{dr,jdbcType=TINYINT},
       </if>
+      <if test="url != null">
+        url = #{url,jdbcType=CHAR},
+      </if>
     </set>
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
@@ -158,7 +168,8 @@
       publish_time = #{publishTime,jdbcType=TIMESTAMP},
       `size` = #{size,jdbcType=INTEGER},
       md5 = #{md5,jdbcType=CHAR},
-      dr = #{dr,jdbcType=TINYINT}
+      dr = #{dr,jdbcType=TINYINT},
+      url = #{url,jdbcType=CHAR}
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
 </mapper>

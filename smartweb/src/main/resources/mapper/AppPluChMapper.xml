@@ -3,7 +3,6 @@
 <mapper namespace="com.rpa.web.mapper.AppPluChMapper">
   <resultMap id="BaseResultMap" type="com.rpa.web.pojo.AppPluChPO">
     <id column="apc_id" jdbcType="INTEGER" property="apcId" />
-    <result column="ac_id" jdbcType="INTEGER" property="acId" />
     <result column="app_id" jdbcType="INTEGER" property="appId" />
     <result column="soft_channel_id" jdbcType="INTEGER" property="softChannelId" />
     <result column="plugin_id" jdbcType="INTEGER" property="pluginId" />
@@ -12,7 +11,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    apc_id, ac_id, app_id, soft_channel_id, plugin_id, `status`, create_time, update_time
+    apc_id, app_id, soft_channel_id, plugin_id, `status`, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -25,21 +24,18 @@
     where apc_id = #{apcId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.rpa.web.pojo.AppPluChPO">
-    insert into t_app_plu_ch (apc_id, ac_id, app_id, 
-      soft_channel_id, plugin_id, `status`, 
-      create_time, update_time)
-    values (#{apcId,jdbcType=INTEGER}, #{acId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, 
-      #{softChannelId,jdbcType=INTEGER}, #{pluginId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into t_app_plu_ch (apc_id, app_id, soft_channel_id, 
+      plugin_id, `status`, create_time, 
+      update_time)
+    values (#{apcId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{softChannelId,jdbcType=INTEGER}, 
+      #{pluginId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.AppPluChPO">
     insert into t_app_plu_ch
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="apcId != null">
         apc_id,
-      </if>
-      <if test="acId != null">
-        ac_id,
       </if>
       <if test="appId != null">
         app_id,
@@ -64,9 +60,6 @@
       <if test="apcId != null">
         #{apcId,jdbcType=INTEGER},
       </if>
-      <if test="acId != null">
-        #{acId,jdbcType=INTEGER},
-      </if>
       <if test="appId != null">
         #{appId,jdbcType=INTEGER},
       </if>
@@ -90,9 +83,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.AppPluChPO">
     update t_app_plu_ch
     <set>
-      <if test="acId != null">
-        ac_id = #{acId,jdbcType=INTEGER},
-      </if>
       <if test="appId != null">
         app_id = #{appId,jdbcType=INTEGER},
       </if>
@@ -116,8 +106,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.AppPluChPO">
     update t_app_plu_ch
-    set ac_id = #{acId,jdbcType=INTEGER},
-      app_id = #{appId,jdbcType=INTEGER},
+    set app_id = #{appId,jdbcType=INTEGER},
       soft_channel_id = #{softChannelId,jdbcType=INTEGER},
       plugin_id = #{pluginId,jdbcType=INTEGER},
       `status` = #{status,jdbcType=TINYINT},

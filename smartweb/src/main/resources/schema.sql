@@ -165,7 +165,6 @@ CREATE TABLE t_app_ch
 CREATE TABLE t_app_plu_ch
 (
 	apc_id int NOT NULL AUTO_INCREMENT,
-	ac_id int NOT NULL,
 	app_id int NOT NULL,
 	soft_channel_id int NOT NULL,
 	plugin_id int NOT NULL,
@@ -225,8 +224,10 @@ CREATE TABLE t_ch_batch
     com_type_name char(128) COMMENT '日卡，周卡，月卡，年卡',
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除',
-    PRIMARY KEY (batch_id),
-    UNIQUE (batch_id)
+	extra char(255),
+	update_a_id int,
+	PRIMARY KEY (batch_id),
+	UNIQUE (batch_id)
 );
 
 
@@ -417,6 +418,7 @@ CREATE TABLE t_plugin
 	md5 char(32),
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除',
+	url char(255),
 	PRIMARY KEY (plugin_id),
 	UNIQUE (plugin_id)
 );
@@ -718,14 +720,6 @@ ALTER TABLE t_app_ch
 ALTER TABLE t_app_plu_ch
 	ADD FOREIGN KEY (app_id)
 	REFERENCES t_app (app_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE t_app_plu_ch
-	ADD FOREIGN KEY (ac_id)
-	REFERENCES t_app_ch (ac_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;

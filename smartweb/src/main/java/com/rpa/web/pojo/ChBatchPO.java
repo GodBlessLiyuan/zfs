@@ -37,6 +37,10 @@ public class ChBatchPO implements Serializable {
      */
     private Byte dr;
 
+    private String extra;
+
+    private Integer updateAId;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getBatchId() {
@@ -119,6 +123,22 @@ public class ChBatchPO implements Serializable {
         this.dr = dr;
     }
 
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+    public Integer getUpdateAId() {
+        return updateAId;
+    }
+
+    public void setUpdateAId(Integer updateAId) {
+        this.updateAId = updateAId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -140,7 +160,9 @@ public class ChBatchPO implements Serializable {
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getComTypeName() == null ? other.getComTypeName() == null : this.getComTypeName().equals(other.getComTypeName()))
-            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()));
+            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()))
+            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
+            && (this.getUpdateAId() == null ? other.getUpdateAId() == null : this.getUpdateAId().equals(other.getUpdateAId()));
     }
 
     @Override
@@ -157,6 +179,8 @@ public class ChBatchPO implements Serializable {
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getComTypeName() == null) ? 0 : getComTypeName().hashCode());
         result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
+        result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
+        result = prime * result + ((getUpdateAId() == null) ? 0 : getUpdateAId().hashCode());
         return result;
     }
 
@@ -176,6 +200,8 @@ public class ChBatchPO implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", comTypeName=").append(comTypeName);
         sb.append(", dr=").append(dr);
+        sb.append(", extra=").append(extra);
+        sb.append(", updateAId=").append(updateAId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

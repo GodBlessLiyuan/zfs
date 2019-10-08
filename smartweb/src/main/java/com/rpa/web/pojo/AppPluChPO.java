@@ -10,8 +10,6 @@ import java.util.Date;
 public class AppPluChPO implements Serializable {
     private Integer apcId;
 
-    private Integer acId;
-
     private Integer appId;
 
     private Integer softChannelId;
@@ -35,14 +33,6 @@ public class AppPluChPO implements Serializable {
 
     public void setApcId(Integer apcId) {
         this.apcId = apcId;
-    }
-
-    public Integer getAcId() {
-        return acId;
-    }
-
-    public void setAcId(Integer acId) {
-        this.acId = acId;
     }
 
     public Integer getAppId() {
@@ -106,7 +96,6 @@ public class AppPluChPO implements Serializable {
         }
         AppPluChPO other = (AppPluChPO) that;
         return (this.getApcId() == null ? other.getApcId() == null : this.getApcId().equals(other.getApcId()))
-            && (this.getAcId() == null ? other.getAcId() == null : this.getAcId().equals(other.getAcId()))
             && (this.getAppId() == null ? other.getAppId() == null : this.getAppId().equals(other.getAppId()))
             && (this.getSoftChannelId() == null ? other.getSoftChannelId() == null : this.getSoftChannelId().equals(other.getSoftChannelId()))
             && (this.getPluginId() == null ? other.getPluginId() == null : this.getPluginId().equals(other.getPluginId()))
@@ -120,7 +109,6 @@ public class AppPluChPO implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getApcId() == null) ? 0 : getApcId().hashCode());
-        result = prime * result + ((getAcId() == null) ? 0 : getAcId().hashCode());
         result = prime * result + ((getAppId() == null) ? 0 : getAppId().hashCode());
         result = prime * result + ((getSoftChannelId() == null) ? 0 : getSoftChannelId().hashCode());
         result = prime * result + ((getPluginId() == null) ? 0 : getPluginId().hashCode());
@@ -137,7 +125,6 @@ public class AppPluChPO implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", apcId=").append(apcId);
-        sb.append(", acId=").append(acId);
         sb.append(", appId=").append(appId);
         sb.append(", softChannelId=").append(softChannelId);
         sb.append(", pluginId=").append(pluginId);

@@ -36,6 +36,8 @@ public class PluginPO implements Serializable {
      */
     private Byte dr;
 
+    private String url;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getPluginId() {
@@ -126,6 +128,14 @@ public class PluginPO implements Serializable {
         this.dr = dr;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -148,7 +158,8 @@ public class PluginPO implements Serializable {
             && (this.getPublishTime() == null ? other.getPublishTime() == null : this.getPublishTime().equals(other.getPublishTime()))
             && (this.getSize() == null ? other.getSize() == null : this.getSize().equals(other.getSize()))
             && (this.getMd5() == null ? other.getMd5() == null : this.getMd5().equals(other.getMd5()))
-            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()));
+            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()))
+            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()));
     }
 
     @Override
@@ -166,6 +177,7 @@ public class PluginPO implements Serializable {
         result = prime * result + ((getSize() == null) ? 0 : getSize().hashCode());
         result = prime * result + ((getMd5() == null) ? 0 : getMd5().hashCode());
         result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
+        result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         return result;
     }
 
@@ -186,6 +198,7 @@ public class PluginPO implements Serializable {
         sb.append(", size=").append(size);
         sb.append(", md5=").append(md5);
         sb.append(", dr=").append(dr);
+        sb.append(", url=").append(url);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
