@@ -14,7 +14,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: xiahui
@@ -93,5 +96,11 @@ public class AppServiceImpl implements IAppService {
         int frist = appMapper.deleteByPrimaryKey(appId);
         int secend = appChMapper.deleteByAppId(appId);
         return frist + secend;
+    }
+
+    @Override
+    public List<AppDTO> queryAll() {
+        List<AppPO> pos = appMapper.queryAll();
+        return AppDTO.convert(pos);
     }
 }

@@ -3,6 +3,7 @@ package com.rpa.web.service;
 import com.rpa.web.dto.AppDTO;
 import com.rpa.web.utils.DTPageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,4 +49,10 @@ public interface IAppService {
      * @return
      */
     int delete(int appId);
+
+    /**
+     * 从应用渠道表查询所有AppId数据
+     * @return
+     */
+    List<AppDTO> queryAll();
 }

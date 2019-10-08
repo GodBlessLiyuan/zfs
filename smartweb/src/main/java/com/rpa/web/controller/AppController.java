@@ -1,6 +1,7 @@
 package com.rpa.web.controller;
 
 import com.rpa.web.dto.AppDTO;
+import com.rpa.web.dto.SoftChannelDTO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,5 +56,11 @@ public class AppController {
     @RequestMapping("/appversion/delete")
     public int delete(@RequestParam(value = "appId") int appId) {
         return service.delete(appId);
+    }
+
+    @RequestMapping("/appversion/queryAll")
+    public List<AppDTO> queryAll() {
+        List<AppDTO> datas = service.queryAll();
+        return datas;
     }
 }
