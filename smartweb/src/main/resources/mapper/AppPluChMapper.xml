@@ -114,4 +114,21 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where apc_id = #{apcId,jdbcType=INTEGER}
   </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_app_plu_ch (apc_id, app_id, soft_channel_id, plugin_id, `status`, create_time, update_time) values
+    <foreach collection="list" item="appPluChPO" index="index" separator=",">
+      (#{appPluChPO.apcId,jdbcType=INTEGER}, #{appPluChPO.appId,jdbcType=INTEGER},
+      #{appPluChPO.softChannelId,jdbcType=INTEGER},
+      #{appPluChPO.pluginId,jdbcType=INTEGER}, #{appPluChPO.status,jdbcType=TINYINT},
+      #{appPluChPO.createTime,jdbcType=TIMESTAMP},
+      #{appPluChPO.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <update id="updateStatus">
+    update t_app_plu_ch set `status` = #{status,jdbcType=TINYINT} where plugin_id = #{pluginId}
+  </update>
+  <delete id="deleteByAppId" parameterType="java.lang.Integer">
+    delete from t_app_plu_ch where plugin_id = #{pluginId,jdbcType=INTEGER}
+  </delete>
 </mapper>
