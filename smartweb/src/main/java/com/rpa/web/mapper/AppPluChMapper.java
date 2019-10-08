@@ -18,4 +18,19 @@ public interface AppPluChMapper extends BaseDAO<AppPluChPO, Integer> {
      * @return
      */
     int batchInsert(List<AppPluChPO> records);
+
+    /**
+     * 根据插件Id更新状态
+     * @param pluginId 插件Id
+     * @param status 状态
+     * @return
+     */
+    int updateStatus(int pluginId, byte status);
+
+    /**
+     * 根据插件Id删除数据
+     * @param pluginId
+     * @return
+     */
+    int deleteByAppId(int pluginId);
 }

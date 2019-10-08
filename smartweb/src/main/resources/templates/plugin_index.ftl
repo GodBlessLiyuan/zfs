@@ -96,7 +96,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>发布人：</label>
-                                            <input id="username" type="text" class="form-control">
+                                            <input id="aId" type="text" class="form-control">
                                         </div>
                                     </div>
                                 </form>
@@ -117,8 +117,7 @@
                                         <th>发布人</th>
                                         <th>文件大小</th>
                                         <th>更新内容</th>
-                                        <th>更新渠道</th>
-                                        <th>支持版本</th>
+                                        <th>版本|渠道</th>
                                         <th>状态</th>
                                         <th>备注</th>
                                         <th>操作</th>
@@ -326,11 +325,11 @@
     }
 
     function deleteClick() {
-        let appId = $('#dAppId').val();
+        let pluginId = $('#dPluginId').val();
 
         $.ajax({
             type: 'GET',
-            url: '/plugin/delete?appId=' + appId,
+            url: '/plugin/delete?pluginId=' + pluginId,
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -339,11 +338,11 @@
     }
 
     function publishClick() {
-        let appId = $('#pAppId').val();
+        let pluginId = $('#pPluginId').val();
 
         $.ajax({
             type: 'GET',
-            url: '/plugin/updateStatus?appId=' + appId + "&status=2",
+            url: '/plugin/updateStatus?pluginId=' + pluginId + "&status=2",
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -352,11 +351,11 @@
     }
 
     function unPublishClick() {
-        let appId = $('#upAppId').val();
+        let pluginId = $('#upPluginId').val();
 
         $.ajax({
             type: 'GET',
-            url: '/plugin/updateStatus?appId=' + appId + "&status=1",
+            url: '/plugin/updateStatus?pluginId=' + pluginId + "&status=1",
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -376,7 +375,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/plugin/query?username=" + $('#username').val(),
+            "ajax": "/plugin/query?aId=" + $('#aId').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -386,15 +385,13 @@
                 {"data": null, "targets": 0},
                 {"data": "publishTime"},
                 {"data": "username"},
-                {"data": "versionName"},
                 {"data": "size"},
-                {"data": "updateType"},
                 {"data": "context"},
-                {"data": "chanName"},
+                {"data": "name"},
                 {"data": "status"},
                 {"data": "extra"},
                 {
-                    "data": "appId",
+                    "data": "pluginId",
                     "render": function (data, type, full) {
 
                         let title = "发布";
@@ -432,13 +429,7 @@
                     }
                 },
                 {
-                    "targets": [5],
-                    "render": function (data, type, full) {
-                        return data === 1 ? "普通更新" : "强制更新";
-                    }
-                },
-                {
-                    "targets": [8],
+                    "targets": [6],
                     "render": function (data, type, full) {
                         return data === 1 ? "未发布" : "已发布";
                     }

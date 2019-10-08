@@ -172,4 +172,17 @@
       url = #{url,jdbcType=CHAR}
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultType="com.rpa.web.pojo.PluginPO">
+    select p.plugin_id as pluginId, p.publish_time as publishTime, au.username, p.size, p.context, sc.name,
+    a.versionname as versionName, p.status, p.extra
+    from t_plugin p
+    left join t_app_plu_ch apc on p.plugin_id = apc.plugin_id
+    left join t_soft_channel sc on apc.soft_channel_id = sc.soft_channel_id
+    left join t_app a on apc.app_id = a.app_id
+    left join t_admin_user au on p.a_id = au.a_id
+    <where>
+      <if test="aId != null and aId != 0">p.a_id = #{aId}</if>
+    </where>
+  </select>
 </mapper>
