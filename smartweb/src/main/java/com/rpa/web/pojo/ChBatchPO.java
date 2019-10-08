@@ -23,7 +23,7 @@ public class ChBatchPO implements Serializable {
     private Date updateTime;
 
     /**
-     * 1 正常 2 冻结  3失效
+     * 1 正常 2 未激活  3 冻结 4 失效 5 结束
      */
     private Byte status;
 

@@ -15,20 +15,14 @@ public class BatchInfoPO implements Serializable {
     private Integer batchId;
 
     /**
-     * 1 激活  2 未激活
+     * 1 激活  2 未激活 3 冻结  4 失效
      */
     private Byte status;
 
     private Integer days;
 
-    /**
-     * 默认为null
-     */
     private Date updateTime;
 
-    /**
-     * 允许为null
-     */
     private Long userId;
 
     private static final long serialVersionUID = 1L;

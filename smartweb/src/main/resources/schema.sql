@@ -55,8 +55,7 @@ CREATE TABLE t_activity
 	state int,
 	a_id int NOT NULL,
 	create_time datetime,
-	-- 默认为null
-	update_time datetime COMMENT '默认为null',
+	update_time datetime,
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除',
 	com_type_id int NOT NULL,
@@ -186,13 +185,11 @@ CREATE TABLE t_batch_info
 	id int NOT NULL AUTO_INCREMENT,
 	vipkey char(16),
 	batch_id int NOT NULL,
-	-- 1 激活  2 未激活
-	status tinyint COMMENT '1 激活  2 未激活',
+	-- 1 激活  2 未激活 3 冻结  4 失效
+	status tinyint COMMENT '1 激活  2 未激活 3 冻结  4 失效',
 	days int,
-	-- 默认为null
-	update_time datetime COMMENT '默认为null',
-	-- 允许为null
-	user_id bigint NOT NULL COMMENT '允许为null',
+	update_time datetime,
+	user_id bigint NOT NULL,
 	PRIMARY KEY (id),
 	UNIQUE (id)
 );
@@ -217,17 +214,17 @@ CREATE TABLE t_channel
 
 CREATE TABLE t_ch_batch
 (
-    batch_id int NOT NULL AUTO_INCREMENT,
-    num int,
-    a_id int NOT NULL,
-    com_type_id int NOT NULL,
-    chan_id int NOT NULL,
-    create_time datetime,
-    update_time datetime,
-    -- 1 正常 2 冻结  3失效
-    status tinyint COMMENT '1 正常 2 冻结  3失效',
-    -- 日卡，周卡，月卡，年卡
-    com_type_name char(128) COMMENT '日卡，周卡，月卡，年卡',
+	batch_id int NOT NULL AUTO_INCREMENT,
+	num int,
+	a_id int NOT NULL,
+	com_type_id int NOT NULL,
+	chan_id int NOT NULL,
+	create_time datetime,
+	update_time datetime,
+	-- 1 正常 2 未激活  3 冻结 4 失效 5 结束
+	status tinyint COMMENT '1 正常 2 未激活  3 冻结 4 失效 5 结束',
+	-- 日卡，周卡，月卡，年卡
+	com_type_name char(128) COMMENT '日卡，周卡，月卡，年卡',
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除',
 	extra char(255),
@@ -254,8 +251,7 @@ CREATE TABLE t_com_type
 
 CREATE TABLE t_device
 (
-	-- 允许为null
-	device_id bigint NOT NULL AUTO_INCREMENT COMMENT '允许为null',
+	device_id bigint NOT NULL AUTO_INCREMENT,
 	utdid varchar(32),
 	androidid varchar(32),
 	-- android系统的版本号
@@ -274,8 +270,7 @@ CREATE TABLE t_device
 
 CREATE TABLE t_device_imei
 (
-	-- 允许为null
-	device_id bigint NOT NULL COMMENT '允许为null',
+	device_id bigint NOT NULL,
 	imei char(32) NOT NULL,
 	PRIMARY KEY (imei)
 );
@@ -284,8 +279,7 @@ CREATE TABLE t_device_imei
 CREATE TABLE t_exception
 (
 	exceptionid int NOT NULL AUTO_INCREMENT,
-	-- 允许为null
-	device_id bigint NOT NULL COMMENT '允许为null',
+	device_id bigint NOT NULL,
 	error text,
 	PRIMARY KEY (exceptionid),
 	UNIQUE (exceptionid)
@@ -313,11 +307,9 @@ CREATE TABLE t_key_value
 CREATE TABLE t_new_user_record
 (
 	nur_id int NOT NULL AUTO_INCREMENT,
-	-- 允许为null
-	user_id bigint COMMENT '允许为null',
+	user_id bigint,
 	user_device_id int,
-	-- 允许为null
-	device_id bigint COMMENT '允许为null',
+	device_id bigint,
 	nug_id int NOT NULL,
 	create_time datetime,
 	PRIMARY KEY (nur_id),
@@ -350,47 +342,44 @@ CREATE TABLE t_order
 	user_device_id int NOT NULL,
 	cmdy_id int NOT NULL,
 	user_id int,
-	-- 允许为null
-	device_id bigint COMMENT '允许为null',
+	device_id bigint,
 	create_time datetime,
 	starttime datetime,
 	endtime datetime,
 	pay_time datetime,
 	-- 1 微信 2支付宝
-	-- 
-	type int COMMENT '1 微信 2支付宝
-',
-    PRIMARY KEY (order_id, order_number),
-    UNIQUE (order_id)
+	type int COMMENT '1 微信 2支付宝',
+	PRIMARY KEY (order_id, order_number),
+	UNIQUE (order_id)
 );
 
 
 CREATE TABLE t_order_feedback
 (
-    wxpayid bigint NOT NULL AUTO_INCREMENT,
-    appid char(20),
-    mch_id char(20),
-    nonce_str char(32),
-    sigin char(32),
-    result_code char(16),
-    err_code char(32),
-    err_code_des char(128),
-    openid char(128),
-    is_subscribe char,
-    trade_type char(16),
-    bank_type char(32),
-    total_fee int,
-    fee_type char(16),
-    cash_fee int,
-    cash_fee_type char(16),
-    coupon_fee int COMMENT '',
-    coupon_count int,
-    transaction_id char(32),
-    out_trade_no char(32),
-    attach char(64),
-    time_end char(16),
-    PRIMARY KEY (wxpayid),
-    UNIQUE (wxpayid)
+	wxpayid bigint NOT NULL AUTO_INCREMENT,
+	appid char(20),
+	mch_id char(20),
+	nonce_str char(32),
+	sigin char(32),
+	result_code char(16),
+	err_code char(32),
+	err_code_des char(128),
+	openid char(128),
+	is_subscribe char,
+	trade_type char(16),
+	bank_type char(32),
+	total_fee int,
+	fee_type char(16),
+	cash_fee int,
+	cash_fee_type char(16),
+	coupon_fee int,
+	coupon_count int,
+	transaction_id char(32),
+	out_trade_no char(32),
+	attach char(64),
+	time_end char(16),
+	PRIMARY KEY (wxpayid),
+	UNIQUE (wxpayid)
 );
 CREATE TABLE t_other_app
 (
@@ -460,14 +449,15 @@ CREATE TABLE t_soft_channel
 
 CREATE TABLE t_user
 (
-    username varchar(32),
-    user_id bigint NOT NULL AUTO_INCREMENT,
-    phone char(11),
-    ip varchar(128),
-    create_time datetime,
-    update_time datetime,
-    PRIMARY KEY (user_id),
-    UNIQUE (user_id)
+	-- 允许为null
+	user_id bigint NOT NULL AUTO_INCREMENT COMMENT '允许为null',
+	username varchar(32),
+	phone char(11),
+	ip varchar(128),
+	create_time datetime,
+	update_time datetime,
+	PRIMARY KEY (user_id),
+	UNIQUE (user_id)
 );
 
 
@@ -491,10 +481,8 @@ CREATE TABLE t_user_activity
 CREATE TABLE t_user_device
 (
 	user_device_id int NOT NULL AUTO_INCREMENT,
-	-- 允许为null
-	user_id bigint NOT NULL COMMENT '允许为null',
-	-- 允许为null
-	device_id bigint NOT NULL COMMENT '允许为null',
+	user_id bigint NOT NULL,
+	device_id bigint NOT NULL,
 	status int,
 	create_time datetime,
 	PRIMARY KEY (user_device_id),
@@ -521,10 +509,8 @@ CREATE TABLE t_user_gifts
 CREATE TABLE t_user_history
 (
 	user_device_id int NOT NULL,
-	-- 允许为null
-	user_id bigint COMMENT '允许为null',
-	-- 允许为null
-	device_id bigint COMMENT '允许为null',
+	user_id bigint,
+	device_id bigint,
 	updatetime time,
 	PRIMARY KEY (user_device_id),
 	UNIQUE (user_device_id)
@@ -537,10 +523,8 @@ CREATE TABLE t_user_notice
 	-- 允许为null
 	user_device_id int COMMENT '允许为null',
 	notice_id int,
-	-- 允许为null
-	user_id bigint COMMENT '允许为null',
-	-- 允许为null
-	device_id bigint COMMENT '允许为null',
+	user_id bigint,
+	device_id bigint,
 	time time,
 	-- 当活动存在多个执行状态时，默认为1
 	status tinyint COMMENT '当活动存在多个执行状态时，默认为1',
