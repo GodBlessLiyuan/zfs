@@ -14,7 +14,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: xiahui
@@ -78,11 +81,26 @@ public class AppServiceImpl implements IAppService {
     @Override
     public int updateStatus(int appId, int status) {
         AppPO appPO = appMapper.selectByPrimaryKey(appId);
+        appPO.setPublishTime(status == 2 ? new Date() : null);
         appPO.setStatus(status);
         int frist = appMapper.updateByPrimaryKey(appPO);
 
         int secend = appChMapper.updateStatus(appId, status);
 
-        return 0;
+        return frist + secend;
+    }
+
+    @Transactional(rollbackFor = {})
+    @Override
+    public int delete(int appId) {
+        int frist = appMapper.deleteByPrimaryKey(appId);
+        int secend = appChMapper.deleteByAppId(appId);
+        return frist + secend;
+    }
+
+    @Override
+    public List<AppDTO> queryAll() {
+        List<AppPO> pos = appMapper.queryAll();
+        return AppDTO.convert(pos);
     }
 }

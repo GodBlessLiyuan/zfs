@@ -210,4 +210,10 @@
             </if>
         </where>
     </select>
+
+    <select id="queryAll" resultType="com.rpa.web.pojo.AppPO">
+        select distinct a.app_id as appId, a.versionname as versionName
+        from t_app a
+        right join t_app_ch ac on a.app_id = ac.app_id
+    </select>
 </mapper>

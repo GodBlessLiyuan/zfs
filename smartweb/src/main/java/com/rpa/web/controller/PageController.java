@@ -132,4 +132,13 @@ public class PageController {
         return "order_index";
     }
 
+    /**
+     * 插件更新
+     * @return
+     */
+    @RequestMapping("/plugin")
+    public String plugin() {
+        return "plugin_index";
+    }
+
 }

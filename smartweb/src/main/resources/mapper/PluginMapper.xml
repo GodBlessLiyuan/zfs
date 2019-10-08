@@ -29,7 +29,7 @@
     delete from t_plugin
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.web.pojo.PluginPO">
+  <insert id="insert" parameterType="com.rpa.web.pojo.PluginPO" useGeneratedKeys="true"  keyProperty="pluginId">
     insert into t_plugin (plugin_id, `status`, context, 
       extra, a_id, create_time, 
       update_time, publish_time, `size`, 
