@@ -55,4 +55,23 @@ public interface IAppService {
      * @return
      */
     List<AppDTO> queryAll();
+
+    /**
+     * 根据ID查询数据
+     * @param appId
+     * @return
+     */
+    List<AppDTO> queryById(int appId);
+
+    /**
+     * 更新
+     * @param appId 应用Id
+     * @param url 链接地址
+     * @param updateType 更新类型
+     * @param softChannel 渠道
+     * @param context 内容
+     * @param extra 备注
+     * @return
+     */
+    int update(int appId, String url, byte updateType, int[] softChannel, String context, String extra);
 }
