@@ -1,4 +1,4 @@
-package com.rpa.web.pojo;
+package com.rpa.web.dto;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_batch_info
  * @author 
  */
-public class BatchInfoPO implements Serializable {
+public class BatchInfoDTO implements Serializable {
     private Integer id;
 
     private String vipkey;
@@ -116,7 +116,6 @@ public class BatchInfoPO implements Serializable {
         this.createTime = createTime;
     }
 
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -128,7 +127,7 @@ public class BatchInfoPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        BatchInfoPO other = (BatchInfoPO) that;
+        BatchInfoDTO other = (BatchInfoDTO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getVipkey() == null ? other.getVipkey() == null : this.getVipkey().equals(other.getVipkey()))
             && (this.getBatchId() == null ? other.getBatchId() == null : this.getBatchId().equals(other.getBatchId()))
