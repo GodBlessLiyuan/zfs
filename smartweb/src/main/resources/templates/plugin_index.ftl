@@ -147,7 +147,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">支持版本:</span>
-                                                    <select id="iAppId" class="form-control">
+                                                    <select id="iAppId" class="form-control"
+                                                            onclick="javascript:iAppIdClick()">
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -168,6 +169,55 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" onclick="insertClick()"
                                                     data-dismiss="modal">确认发布
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">修改插件</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <button type="hidden" id="uPluginId" style="display:none;"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">插件:</span>
+                                                    <button id="uUrl" type="button" class="btn btn-primary"
+                                                            onclick="javascript:uploadFile()"
+                                                            data-dismiss="modal">上传文件
+                                                    </button>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="recipient-name" class="col-form-label">支持版本:</span>
+                                                    <select id="uAppId" class="form-control" onclick="uAppIdClick()">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="recipient-name" class="col-form-label">更新渠道:</span>
+                                                    <select id="uSoftChannel" multiple="multiple">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">更新内容:</span>
+                                                    <input type="text" class="form-control" id="uContext">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">备注:</span>
+                                                    <input type="text" class="form-control" id="uExtra">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" onclick="updateClick()">确认修改
                                             </button>
                                         </div>
                                     </div>
@@ -290,25 +340,92 @@
                 for (let i = 0; i < data.length; i++) {
                     $('#iAppId').append("<option value='" + data[i].appId + "'>" + data[i].versionName +
                         "</option>");
+                    $('#uAppId').append("<option value='" + data[i].appId + "'>" + data[i].versionName +
+                        "</option>");
                 }
-            }
-        })
 
-        $.ajax({
-            type: 'GET',
-            url: '/softchannel/queryAll',
-            dataType: 'JSON',
-            success: function (data) {
-                for (let i = 0; i < data.length; i++) {
-                    $('#iSoftChannel').multiSelect('addOption', {
-                        value: data[i].softChannelId, text: data[i].name,
-                        index: i
-                    });
-                }
-                $('#iSoftChannel').multiSelect("refresh");
+                let appId = $('#iAppId').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/appversion/queryById?appId=' + appId,
+                    dataType: 'JSON',
+                    success: function (data) {
+                        let chanNames = data.chanName.split(',');
+                        $.each(data.chanId.split(','), function (i, chanId) {
+                            $('#iSoftChannel').multiSelect('addOption', {
+                                value: chanId, text: chanNames[i],
+                                index: i
+                            });
+                            $('#uSoftChannel').multiSelect('addOption', {
+                                value: chanId, text: chanNames[i],
+                                index: i
+                            });
+                        })
+                        $('#iSoftChannel').multiSelect("refresh");
+                        $('#uSoftChannel').multiSelect("refresh");
+                    }
+                })
             }
         })
     });
+
+    /**
+     * 新增时，切换版本事件
+     */
+    function iAppIdClick() {
+        let appId = $('#iAppId').val();
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/queryById?appId=' + appId,
+            dataType: 'JSON',
+            success: function (data) {
+                let chanNames = data.chanName.split(',');
+                $('#iSoftChannel').empty();
+                $.each(data.chanId.split(','), function (i, chanId) {
+                    $('#iSoftChannel').multiSelect('addOption', {
+                        value: chanId, text: chanNames[i],
+                        index: i
+                    });
+                })
+                $('#iSoftChannel').multiSelect("refresh");
+            }
+        })
+    }
+
+    /**
+     * 新增时，切换版本事件
+     */
+    function uAppIdClick() {
+        let appId = $('#uAppId').val();
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/queryById?appId=' + appId,
+            dataType: 'JSON',
+            success: function (data) {
+                let chanNames = data.chanName.split(',');
+                $('#uSoftChannel').empty();
+                $.each(data.chanId.split(','), function (i, chanId) {
+                    $('#uSoftChannel').multiSelect('addOption', {
+                        value: chanId, text: chanNames[i],
+                        index: i
+                    });
+                })
+                $('#uSoftChannel').multiSelect("refresh");
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/plugin/querySoftChannelByIds?pluginId=' + $('#uPluginId').val() + "&appId=" + appId,
+                    dataType: 'JSON',
+                    success: function (data) {
+                        $.each(data, function(i, id){
+                            $('#uSoftChannel').find("option[value='" + id + "']").attr("selected", true);
+                        });
+                        $('#uSoftChannel').multiSelect("refresh");
+                    }
+                })
+            }
+        })
+    }
 
     /**
      * 确认上架点击事件
@@ -322,6 +439,28 @@
 
         $.get("/plugin/insert?appId=" + appId + "&softChannel=" + softChannel + "&context=" + context +
             "&extra=" + extra + "&url=" + url);
+    }
+
+    /**
+     * 确认修改点击事件
+     */
+    function updateClick() {
+        let pluginId = $('#uPluginId').val();
+        let url = $('#uUrl').val();
+        let appId = $('#uAppId').val();
+        let softChannel = $('#uSoftChannel').val();
+        let context = $('#uContext').val();
+        let extra = $('#uExtra').val();
+
+        $.ajax({
+            type: 'GET',
+            url: "/plugin/update?pluginId=" + pluginId + "&appId=" + appId + "&softChannel=" + softChannel + "&context="
+                + context + "&extra=" + extra + "&url=" + url,
+            dataType: 'json',
+            success: function (data) {
+                $('#datatab').DataTable().draw(false);
+            }
+        })
     }
 
     function deleteClick() {
@@ -451,6 +590,32 @@
                 }
             }
         });
+    }
+
+    /**
+     * 更新界面设值
+     */
+    function updateModal(pluginId) {
+        $.ajax({
+            type: 'GET',
+            url: '/plugin/queryById?pluginId=' + pluginId,
+            dataType: 'JSON',
+            success: function (data) {
+                $('#uPluginId').val(data.pluginId);
+                $('#uContext').val(data.context);
+                $('#uExtra').val(data.extra);
+
+                // $('#uAppId').empty();
+                // $('#uSoftChannel').empty();
+                $.each(data.ids.split(","), function(i, ids){
+                    ids = ids.split('|');
+                    $('#uAppId').find("option[value='" + ids[0] + "']").attr("selected", true);
+                    $('#uSoftChannel').find("option[value='" + ids[1] + "']").attr("selected", true);
+                });
+                $('#uSoftChannel').multiSelect("refresh");
+
+            }
+        })
     }
 
     /**

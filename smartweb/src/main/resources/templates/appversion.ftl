@@ -517,19 +517,37 @@
     function updateModal(appId) {
         $.ajax({
             type: 'GET',
-            url: '/appversion/queryById?appId=' + appId,
+            url: '/softchannel/queryAll',
             dataType: 'JSON',
             success: function (data) {
-                $('#uAppId').val(data.appId);
-                $('#uUpdateType').find("option[value='" + data.updateType + "']").attr("selected", true);
-                $.each(data.chanId.split(','), function (i, chanId) {
-                    $('#uSoftChannel').find("option[value='" + chanId + "']").attr("selected", true);
-                });
+                $('#uSoftChannel').empty();
+                $('#uUpdateType').find("option[value='1']").attr("selected", false);
+                $('#uUpdateType').find("option[value='2']").attr("selected", false);
+                for (let i = 0; i < data.length; i++) {
+                    $('#uSoftChannel').multiSelect('addOption', {
+                        value: data[i].softChannelId, text: data[i].name,
+                        index: i
+                    });
+                }
                 $('#uSoftChannel').multiSelect("refresh");
-                $('#uContext').val(data.context);
-                $('#uExtra').val(data.extra);
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/appversion/queryById?appId=' + appId,
+                    dataType: 'JSON',
+                    success: function (data) {
+                        $('#uAppId').val(data.appId);
+                        $('#uUpdateType').find("option[value='" + data.updateType + "']").attr("selected", true);
+                        $.each(data.chanId.split(','), function (i, chanId) {
+                            $('#uSoftChannel').find("option[value='" + chanId + "']").attr("selected", true);
+                        });
+                        $('#uSoftChannel').multiSelect("refresh");
+                        $('#uContext').val(data.context);
+                        $('#uExtra').val(data.extra);
+                    }
+                })
             }
-        })
+        });
     }
 
     /**

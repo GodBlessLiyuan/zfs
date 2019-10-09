@@ -19,6 +19,8 @@ public class PluginDTO implements Serializable {
     private String username;
     private Integer size;
     private String context;
+    // 应用Id和渠道Id组合
+    private String ids;
     private String name;
     private Byte status;
     private String extra;
@@ -38,6 +40,7 @@ public class PluginDTO implements Serializable {
         dto.setSize(po.getSize());
         dto.setContext(po.getContext());
         dto.setName(po.getVersionName() + "|" + po.getName());
+        dto.setIds(po.getAppId() + "|" + po.getSoftChannelId());
         dto.setStatus(po.getStatus());
         dto.setExtra(po.getExtra());
 
@@ -58,7 +61,8 @@ public class PluginDTO implements Serializable {
             int pluginId = po.getPluginId();
             if (dtos.containsKey(pluginId)) {
                 PluginDTO dto = dtos.get(pluginId);
-                dto.setName(dto.getName() + ", " + po.getVersionName() + "|" + po.getName());
+                dto.setName(dto.getName() + "," + po.getVersionName() + "|" + po.getName());
+                dto.setIds(dto.getIds() + "," + po.getAppId() + "|" + po.getSoftChannelId());
             } else {
                 dtos.put(pluginId, PluginDTO.convert(po));
             }
@@ -129,5 +133,13 @@ public class PluginDTO implements Serializable {
 
     public void setExtra(String extra) {
         this.extra = extra;
+    }
+
+    public String getIds() {
+        return ids;
+    }
+
+    public void setIds(String ids) {
+        this.ids = ids;
     }
 }
