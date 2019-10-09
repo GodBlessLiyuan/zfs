@@ -16,8 +16,6 @@ public class AdminUserPO implements Serializable {
 
     private String email;
 
-    private Byte role;
-
     private Byte isLock;
 
     private Date createTime;
@@ -28,6 +26,8 @@ public class AdminUserPO implements Serializable {
      * 1 未删除  2删除
      */
     private Byte dr;
+
+    private Integer roleId;
 
     private static final long serialVersionUID = 1L;
 
@@ -63,14 +63,6 @@ public class AdminUserPO implements Serializable {
         this.email = email;
     }
 
-    public Byte getRole() {
-        return role;
-    }
-
-    public void setRole(Byte role) {
-        this.role = role;
-    }
-
     public Byte getIsLock() {
         return isLock;
     }
@@ -103,6 +95,14 @@ public class AdminUserPO implements Serializable {
         this.dr = dr;
     }
 
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -119,11 +119,11 @@ public class AdminUserPO implements Serializable {
             && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
-            && (this.getRole() == null ? other.getRole() == null : this.getRole().equals(other.getRole()))
             && (this.getIsLock() == null ? other.getIsLock() == null : this.getIsLock().equals(other.getIsLock()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getLastTime() == null ? other.getLastTime() == null : this.getLastTime().equals(other.getLastTime()))
-            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()));
+            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()))
+            && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()));
     }
 
     @Override
@@ -134,11 +134,11 @@ public class AdminUserPO implements Serializable {
         result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
-        result = prime * result + ((getRole() == null) ? 0 : getRole().hashCode());
         result = prime * result + ((getIsLock() == null) ? 0 : getIsLock().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getLastTime() == null) ? 0 : getLastTime().hashCode());
         result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
+        result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
         return result;
     }
 
@@ -152,11 +152,11 @@ public class AdminUserPO implements Serializable {
         sb.append(", username=").append(username);
         sb.append(", password=").append(password);
         sb.append(", email=").append(email);
-        sb.append(", role=").append(role);
         sb.append(", isLock=").append(isLock);
         sb.append(", createTime=").append(createTime);
         sb.append(", lastTime=").append(lastTime);
         sb.append(", dr=").append(dr);
+        sb.append(", roleId=").append(roleId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
