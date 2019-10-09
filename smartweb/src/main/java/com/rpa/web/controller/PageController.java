@@ -141,4 +141,13 @@ public class PageController {
         return "plugin_index";
     }
 
+    /**
+     * 活动赠送记录
+     * @return
+     */
+    @RequestMapping("/useractivity")
+    public String userActivity() {
+        return "user_activity";
+    }
+
 }
