@@ -13,11 +13,9 @@ DROP TABLE IF EXISTS t_user_gifts;
 DROP TABLE IF EXISTS t_order;
 DROP TABLE IF EXISTS t_vipcommodity;
 DROP TABLE IF EXISTS t_com_type;
-DROP TABLE IF EXISTS t_user_vip;
-DROP TABLE IF EXISTS t_viptype;
 DROP TABLE IF EXISTS t_admin_user;
-DROP TABLE IF EXISTS t_app_plu_ch;
 DROP TABLE IF EXISTS t_app_ch;
+DROP TABLE IF EXISTS t_app_plu_ch;
 DROP TABLE IF EXISTS t_app;
 DROP TABLE IF EXISTS t_batch_info;
 DROP TABLE IF EXISTS t_ch_batch;
@@ -28,6 +26,8 @@ DROP TABLE IF EXISTS t_user_notice;
 DROP TABLE IF EXISTS t_user_device;
 DROP TABLE IF EXISTS t_whilte_device;
 DROP TABLE IF EXISTS t_device;
+DROP TABLE IF EXISTS t_feedback;
+DROP TABLE IF EXISTS t_functionvideo;
 DROP TABLE IF EXISTS t_key_text;
 DROP TABLE IF EXISTS t_key_value;
 DROP TABLE IF EXISTS t_notice;
@@ -35,10 +35,14 @@ DROP TABLE IF EXISTS t_order_feedback;
 DROP TABLE IF EXISTS t_other_app;
 DROP TABLE IF EXISTS t_plugin;
 DROP TABLE IF EXISTS t_promoter;
+DROP TABLE IF EXISTS t_role;
+DROP TABLE IF EXISTS t_share_activity;
 DROP TABLE IF EXISTS t_soft_channel;
+DROP TABLE IF EXISTS t_user_vip;
 DROP TABLE IF EXISTS t_whilte_user;
 DROP TABLE IF EXISTS t_user;
 DROP TABLE IF EXISTS t_user_history;
+DROP TABLE IF EXISTS t_viptype;
 DROP TABLE IF EXISTS t_wxsupport;
 
 
@@ -107,12 +111,12 @@ CREATE TABLE t_admin_user
 	username varchar(32),
 	password varchar(32),
 	email varchar(32),
-	role tinyint,
 	is_lock tinyint,
 	create_time time,
 	last_time time,
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除',
+	role_id int NOT NULL,
 	PRIMARY KEY (a_id),
 	UNIQUE (username)
 );
@@ -288,6 +292,32 @@ CREATE TABLE t_exception
 );
 
 
+CREATE TABLE t_feedback
+(
+	feedback_id int NOT NULL AUTO_INCREMENT,
+	user_id bigint,
+	device_id bigint,
+	user_device_id int,
+	context char(255),
+	PRIMARY KEY (feedback_id),
+	UNIQUE (feedback_id)
+);
+
+
+CREATE TABLE t_functionvideo
+(
+	function_id int NOT NULL AUTO_INCREMENT,
+	fun_name char(32),
+	url char(255),
+	extra char(255),
+	a_id int,
+	create_time datetime,
+	update_time datetime,
+	PRIMARY KEY (function_id),
+	UNIQUE (function_id)
+);
+
+
 CREATE TABLE t_key_text
 (
     key_name int NOT NULL,
@@ -434,6 +464,34 @@ CREATE TABLE t_promoter
 	dr tinyint COMMENT '1 未删除  2删除',
 	PRIMARY KEY (pro_id),
 	UNIQUE (pro_id)
+);
+
+
+CREATE TABLE t_role
+(
+	role_id int NOT NULL AUTO_INCREMENT,
+	role_name char(64),
+	create_time datetime,
+	update_time datetime,
+	a_id int,
+	role_num char(6),
+	PRIMARY KEY (role_id),
+	UNIQUE (role_id)
+);
+
+
+CREATE TABLE t_share_activity
+(
+	material_id int NOT NULL AUTO_INCREMENT,
+	-- 1 文字 2 图片
+	type tinyint COMMENT '1 文字 2 图片',
+	content char(255),
+	extra char(255),
+	create_time datetime,
+	update_time datetime,
+	a_id int NOT NULL,
+	PRIMARY KEY (material_id),
+	UNIQUE (material_id)
 );
 
 
@@ -800,6 +858,14 @@ ALTER TABLE t_channel
         REFERENCES t_promoter (pro_id)
         ON UPDATE RESTRICT
         ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_admin_user
+	ADD FOREIGN KEY (role_id)
+	REFERENCES t_role (role_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 
