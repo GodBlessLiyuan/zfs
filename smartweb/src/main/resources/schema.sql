@@ -52,7 +52,7 @@ CREATE TABLE t_activity
 	activityname varchar(128),
 	-- 1 会员中心 
 	position tinyint COMMENT '1 会员中心 ',
-	state int,
+	status int,
 	a_id int NOT NULL,
 	create_time datetime,
 	update_time datetime,
@@ -62,6 +62,8 @@ CREATE TABLE t_activity
 	days int,
 	-- 日卡，周卡，月卡，年卡
 	com_type_name char(128) COMMENT '日卡，周卡，月卡，年卡',
+	-- 1 活动赠送
+	source int COMMENT '1 活动赠送',
 	PRIMARY KEY (activity_id),
 	UNIQUE (activity_id)
 );
@@ -524,9 +526,7 @@ CREATE TABLE t_user_notice
 	notice_id int,
 	user_id bigint,
 	device_id bigint,
-	time time,
-	-- 当活动存在多个执行状态时，默认为1
-	status tinyint COMMENT '当活动存在多个执行状态时，默认为1',
+	show_time time,
 	PRIMARY KEY (u_notice_id),
 	UNIQUE (u_notice_id)
 );
@@ -543,6 +543,8 @@ CREATE TABLE t_user_vip
 	status tinyint COMMENT '1 正常 2 过期',
 	create_time datetime,
 	update_time datetime,
+	vcreate_time datetime,
+	vend_time datetime,
 	UNIQUE (user_id)
 );
 
@@ -674,14 +676,6 @@ ALTER TABLE t_com_type
 
 
 ALTER TABLE t_vipcommodity
-    ADD FOREIGN KEY (a_id)
-        REFERENCES t_admin_user (a_id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT
-;
-
-
-ALTER TABLE t_viptype
 	ADD FOREIGN KEY (a_id)
 	REFERENCES t_admin_user (a_id)
 	ON UPDATE RESTRICT

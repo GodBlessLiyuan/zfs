@@ -17,15 +17,12 @@ public class ActivityPO implements Serializable {
      */
     private Byte position;
 
-    private Integer state;
+    private Integer status;
 
     private Integer aId;
 
     private Date createTime;
 
-    /**
-     * 默认为null
-     */
     private Date updateTime;
 
     /**
@@ -41,6 +38,11 @@ public class ActivityPO implements Serializable {
      * 日卡，周卡，月卡，年卡
      */
     private String comTypeName;
+
+    /**
+     * 1 活动赠送
+     */
+    private Integer source;
 
     private static final long serialVersionUID = 1L;
 
@@ -68,12 +70,12 @@ public class ActivityPO implements Serializable {
         this.position = position;
     }
 
-    public Integer getState() {
-        return state;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Integer getaId() {
@@ -132,6 +134,14 @@ public class ActivityPO implements Serializable {
         this.comTypeName = comTypeName;
     }
 
+    public Integer getSource() {
+        return source;
+    }
+
+    public void setSource(Integer source) {
+        this.source = source;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -147,14 +157,15 @@ public class ActivityPO implements Serializable {
         return (this.getActivityId() == null ? other.getActivityId() == null : this.getActivityId().equals(other.getActivityId()))
             && (this.getActivityname() == null ? other.getActivityname() == null : this.getActivityname().equals(other.getActivityname()))
             && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()))
-            && (this.getState() == null ? other.getState() == null : this.getState().equals(other.getState()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()))
             && (this.getComTypeId() == null ? other.getComTypeId() == null : this.getComTypeId().equals(other.getComTypeId()))
             && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
-            && (this.getComTypeName() == null ? other.getComTypeName() == null : this.getComTypeName().equals(other.getComTypeName()));
+            && (this.getComTypeName() == null ? other.getComTypeName() == null : this.getComTypeName().equals(other.getComTypeName()))
+            && (this.getSource() == null ? other.getSource() == null : this.getSource().equals(other.getSource()));
     }
 
     @Override
@@ -164,7 +175,7 @@ public class ActivityPO implements Serializable {
         result = prime * result + ((getActivityId() == null) ? 0 : getActivityId().hashCode());
         result = prime * result + ((getActivityname() == null) ? 0 : getActivityname().hashCode());
         result = prime * result + ((getPosition() == null) ? 0 : getPosition().hashCode());
-        result = prime * result + ((getState() == null) ? 0 : getState().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
@@ -172,6 +183,7 @@ public class ActivityPO implements Serializable {
         result = prime * result + ((getComTypeId() == null) ? 0 : getComTypeId().hashCode());
         result = prime * result + ((getDays() == null) ? 0 : getDays().hashCode());
         result = prime * result + ((getComTypeName() == null) ? 0 : getComTypeName().hashCode());
+        result = prime * result + ((getSource() == null) ? 0 : getSource().hashCode());
         return result;
     }
 
@@ -184,7 +196,7 @@ public class ActivityPO implements Serializable {
         sb.append(", activityId=").append(activityId);
         sb.append(", activityname=").append(activityname);
         sb.append(", position=").append(position);
-        sb.append(", state=").append(state);
+        sb.append(", status=").append(status);
         sb.append(", aId=").append(aId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
@@ -192,6 +204,7 @@ public class ActivityPO implements Serializable {
         sb.append(", comTypeId=").append(comTypeId);
         sb.append(", days=").append(days);
         sb.append(", comTypeName=").append(comTypeName);
+        sb.append(", source=").append(source);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
