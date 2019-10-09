@@ -23,7 +23,7 @@ public class UserVipController {
     @Autowired
     private IUserVipService service;
 
-    @RequestMapping("/newusergifts/query")
+    @RequestMapping("/uservip/query")
     public DTPageInfo<UserVipDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                         @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                         @RequestParam(value = "length", defaultValue = "10") int pageSize,
