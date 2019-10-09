@@ -3,6 +3,7 @@ package com.rpa.web.service;
 import com.rpa.web.dto.PluginDTO;
 import com.rpa.web.utils.DTPageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,4 +52,31 @@ public interface IPluginService {
      * @return
      */
     int delete(int pluginId);
+
+    /**
+     * 更新
+     * @param pluginId 插件Id
+     * @param url apk地址
+     * @param appId 应用Id
+     * @param softChannel 渠道
+     * @param context 内容
+     * @param extra 备注
+     * @return
+     */
+    int update(int pluginId, String url, int appId, int[] softChannel, String context, String extra);
+
+    /**
+     * 根据插件Id 查询数据
+     * @param pluginId 插件Id
+     * @return
+     */
+    List<PluginDTO> queryById(int pluginId);
+
+    /**
+     * 根据PluginId 和 AppId 查询渠道Ids
+     * @param pluginId
+     * @param appId
+     * @return
+     */
+    List<Integer> querySoftChannelByIds(int pluginId, int appId);
 }

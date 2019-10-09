@@ -28,6 +28,8 @@ public class PluginPO implements Serializable {
      */
     private Byte dr;
     private String url;
+    private int softChannelId;
+    private int appId;
     private String username;
     private String name;
     private String versionName;
@@ -150,6 +152,22 @@ public class PluginPO implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getSoftChannelId() {
+        return softChannelId;
+    }
+
+    public void setSoftChannelId(int softChannelId) {
+        this.softChannelId = softChannelId;
+    }
+
+    public int getAppId() {
+        return appId;
+    }
+
+    public void setAppId(int appId) {
+        this.appId = appId;
     }
 
     @Override

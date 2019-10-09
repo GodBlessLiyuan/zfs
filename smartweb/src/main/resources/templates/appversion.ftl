@@ -108,7 +108,7 @@
 
                             <button type="button" class="btn btn-primary " id="reset">重置</button>
                             <button type="button" class="btn btn-primary " id="query"
-                                    onclick="javascript:queryClick();">查询
+                                    onclick="javascript:queryClick()">查询
                             </button>
 
                             <hr>
@@ -176,6 +176,58 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" onclick="insertClick()"
                                                     data-dismiss="modal">确认发布
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">修改版本</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <button type="hidden" id="uAppId" style="display:none;"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">应用:</span>
+                                                    <button id="uUrl" type="button" class="btn btn-primary"
+                                                            onclick="javascript:uploadFile()"
+                                                            data-dismiss="modal">上传文件
+                                                    </button>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="recipient-name" class="col-form-label">更新方式:</span>
+                                                    <select id="uUpdateType" class="form-control">
+                                                        <option value='1'>普通更新</option>
+                                                        <option value='2'>强制更新</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="recipient-name" class="col-form-label">更新渠道:</span>
+                                                    <select id="uSoftChannel" multiple="multiple">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">更新内容:</span>
+                                                    <input type="text" class="form-control" id="uContext">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">备注:</span>
+                                                    <input type="text" class="form-control" id="uExtra">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" onclick="updateClick()"
+                                                    data-dismiss="modal">确认修改
                                             </button>
                                         </div>
                                     </div>
@@ -300,8 +352,13 @@
                         value: data[i].softChannelId, text: data[i].name,
                         index: i
                     });
+                    $('#uSoftChannel').multiSelect('addOption', {
+                        value: data[i].softChannelId, text: data[i].name,
+                        index: i
+                    });
                 }
                 $('#iSoftChannel').multiSelect("refresh");
+                $('#uSoftChannel').multiSelect("refresh");
             }
         })
     });
@@ -455,6 +512,64 @@
                 }
             }
         });
+    }
+
+    function updateModal(appId) {
+        $.ajax({
+            type: 'GET',
+            url: '/softchannel/queryAll',
+            dataType: 'JSON',
+            success: function (data) {
+                $('#uSoftChannel').empty();
+                $('#uUpdateType').find("option[value='1']").attr("selected", false);
+                $('#uUpdateType').find("option[value='2']").attr("selected", false);
+                for (let i = 0; i < data.length; i++) {
+                    $('#uSoftChannel').multiSelect('addOption', {
+                        value: data[i].softChannelId, text: data[i].name,
+                        index: i
+                    });
+                }
+                $('#uSoftChannel').multiSelect("refresh");
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/appversion/queryById?appId=' + appId,
+                    dataType: 'JSON',
+                    success: function (data) {
+                        $('#uAppId').val(data.appId);
+                        $('#uUpdateType').find("option[value='" + data.updateType + "']").attr("selected", true);
+                        $.each(data.chanId.split(','), function (i, chanId) {
+                            $('#uSoftChannel').find("option[value='" + chanId + "']").attr("selected", true);
+                        });
+                        $('#uSoftChannel').multiSelect("refresh");
+                        $('#uContext').val(data.context);
+                        $('#uExtra').val(data.extra);
+                    }
+                })
+            }
+        });
+    }
+
+    /**
+     * 确认上架点击事件
+     */
+    function updateClick() {
+        let appId = $('#uAppId').val();
+        let url = $('#uUrl').val();
+        let updateType = $('#uUpdateType').val();
+        let softChannel = $('#uSoftChannel').val();
+        let context = $('#uContext').val();
+        let extra = $('#uExtra').val();
+
+        $.ajax({
+            type: 'GET',
+            url: "/appversion/update?appId=" + appId + "&url=" + url + "&updateType=" + updateType + "&softChannel=" +
+                softChannel + "&context=" + context + "&extra=" + extra,
+            dataType: 'json',
+            success: function (data) {
+                $('#datatab').DataTable().draw(false);
+            }
+        })
     }
 
     /**

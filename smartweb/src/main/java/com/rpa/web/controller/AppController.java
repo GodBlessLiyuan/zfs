@@ -1,7 +1,6 @@
 package com.rpa.web.controller;
 
 import com.rpa.web.dto.AppDTO;
-import com.rpa.web.dto.SoftChannelDTO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +61,21 @@ public class AppController {
     public List<AppDTO> queryAll() {
         List<AppDTO> datas = service.queryAll();
         return datas;
+    }
+
+    @RequestMapping("/appversion/queryById")
+    public AppDTO queryById(@RequestParam(value = "appId") int appId) {
+        List<AppDTO> dtos = service.queryById(appId);
+        return dtos.get(0);
+    }
+
+    @RequestMapping("/appversion/update")
+    public int update(@RequestParam(value = "appId") int appId,
+                      @RequestParam(value = "url") String url,
+                      @RequestParam(value = "updateType") byte updateType,
+                      @RequestParam(value = "softChannel") int[] softChannel,
+                      @RequestParam(value = "context") String context,
+                      @RequestParam(value = "extra") String extra) {
+        return service.update(appId, url, updateType, softChannel, context, extra);
     }
 }
