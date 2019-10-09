@@ -200,13 +200,16 @@
                 {"data": null, "targets": 0},
                 {"data": "phone"},
                 {"data": "createTime"},
-                {"data": "days"},
-                {"data": "isPay"},
-                {"data": "description"},
-                {"data": "price"},
-                {"data": "showDiscount"},
-                {"data": "discount"},
-                {"data": "createTime"},
+                {"data": "firstTime"},
+                {
+                    "data": "isPay",
+                    "render": function (data, type, full) {
+                        return data === 1 ? "是" : "否";
+                    }
+                },
+                {"data": "endTime"},
+                {"data": "vendTime"},
+                {"data": "lastTime"},
                 {
                     "data": "userId",
                     "render": function (data, type, full) {
@@ -217,12 +220,12 @@
             ],
             "columnDefs": [
                 {
-                    "targets": [2, 5, 6, 7],
+                    "targets": [2, 3, 5, 6, 7],
                     "render": function (data, type, full) {
                         if (data == null || data.trim() == "") {
                             return "";
                         } else {
-                            var date = new Date(data);
+                            let date = new Date(data);
                             return date.getFullYear() + "/" + date.getMonth() + "/" +
                                 date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
                         }
