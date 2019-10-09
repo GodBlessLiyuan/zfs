@@ -8,6 +8,7 @@ import java.util.Date;
  * @author 
  */
 public class ChBatchPO implements Serializable {
+
     private Integer batchId;
 
     private Integer num;
@@ -21,6 +22,17 @@ public class ChBatchPO implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+
+    private String chanNickname;
+
+    private String chanName;
+
+    /**
+     * 对应着管理员a_id
+     */
+    private String creater;
+
+    private String extra;
 
     /**
      * 1 正常 2 未激活  3 冻结 4 失效 5 结束
@@ -37,11 +49,59 @@ public class ChBatchPO implements Serializable {
      */
     private Byte dr;
 
-    private String extra;
-
     private Integer updateAId;
 
+    private Byte activity;
+
+    private Byte nonActivity;
+
+    /**
+     * 对应着更新管理员update_a_id
+     */
+    private String operator;
+
     private static final long serialVersionUID = 1L;
+
+    public String getChanNickname() {
+        return chanNickname;
+    }
+
+    public void setChanNickname(String chanNickname) {
+        this.chanNickname = chanNickname;
+    }
+
+    public String getChanName() {
+        return chanName;
+    }
+
+    public void setChanName(String chanName) {
+        this.chanName = chanName;
+    }
+
+    public String getCreater() {
+        return creater;
+    }
+
+    public void setCreater(String creater) {
+        this.creater = creater;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
 
     public Integer getBatchId() {
         return batchId;
@@ -123,13 +183,6 @@ public class ChBatchPO implements Serializable {
         this.dr = dr;
     }
 
-    public String getExtra() {
-        return extra;
-    }
-
-    public void setExtra(String extra) {
-        this.extra = extra;
-    }
 
     public Integer getUpdateAId() {
         return updateAId;
@@ -137,6 +190,22 @@ public class ChBatchPO implements Serializable {
 
     public void setUpdateAId(Integer updateAId) {
         this.updateAId = updateAId;
+    }
+
+    public Byte getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Byte activity) {
+        this.activity = activity;
+    }
+
+    public Byte getNonActivity() {
+        return nonActivity;
+    }
+
+    public void setNonActivity(Byte nonActivity) {
+        this.nonActivity = nonActivity;
     }
 
     @Override

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rpa.web.mapper.BatchInfoMapper">
+
   <resultMap id="BaseResultMap" type="com.rpa.web.pojo.BatchInfoPO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="vipkey" jdbcType="CHAR" property="vipkey" />
@@ -13,22 +14,38 @@
   <sql id="Base_Column_List">
     id, vipkey, batch_id, `status`, `days`, update_time, user_id
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_batch_info
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_batch_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="query" parameterType="java.lang.Integer" resultType="com.rpa.web.domain.BatchInfoDO">
+        select
+        vipkey, chan_nickname as chanNickname, chan_name as chanName, cb.create_time as createTime,
+        cb.com_type_name as comTypeName, status
+        from t_batch_info bi
+        left join t_ch_batch cb on bi.batch_id = cb.batch_id
+        left join t_channel c on cb.chan_id = c.chan_id
+        <where>
+            <if test="vipkey != null and vipkey != ''">
+                AND vipkey = #{vipkey}
+            </if>
+        </where>
+        >
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_batch_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.web.pojo.BatchInfoPO">
-    insert into t_batch_info (id, vipkey, batch_id, 
-      `status`, `days`, update_time, 
+    <insert id="insert" parameterType="com.rpa.web.pojo.BatchInfoPO">
+    insert into t_batch_info (id, vipkey, batch_id,
+      `status`, `days`, update_time,
       user_id)
-    values (#{id,jdbcType=INTEGER}, #{vipkey,jdbcType=CHAR}, #{batchId,jdbcType=INTEGER}, 
-      #{status,jdbcType=TINYINT}, #{days,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{vipkey,jdbcType=CHAR}, #{batchId,jdbcType=INTEGER},
+      #{status,jdbcType=TINYINT}, #{days,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
       #{userId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.BatchInfoPO">
@@ -113,5 +130,11 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       user_id = #{userId,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateStatusByBatchId">
+    update t_batch_info
+    set `status` = #{status,jdbcType=TINYINT}
+    where batch_id = #{batchId,jdbcType=INTEGER}
   </update>
 </mapper>

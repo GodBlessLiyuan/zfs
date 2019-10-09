@@ -19,12 +19,68 @@
     batch_id, num, a_id, com_type_id, chan_id, create_time, update_time, `status`, com_type_name, 
     dr, extra, update_a_id
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+  <select id="query" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
+    chan_nickname as chanNickname, chan_name as chanName, cb.create_time, a_id, com_type_name as comTypeName,
+    num, extra, status, cb.update_time, au.username as operator,
+    COUNT(CASE WHEN bi.status = '1' then '1' end) as activity,
+    COUNT(CASE WHEN bi.status = '2' then '2' end) as nonActivity
+    from t_ch_batch cb
+    left join t_channel c on cb.chan_id = c.chan_id
+    left join t_admin_user au on cb.update_a_id = au.a_id
+    left join t_batch_info bi on cb.batch_id = bi.batch_id
+    <where>
+      <if test="chanNickname != null and chanNickname != ''">
+        AND chan_nickname = #{chanNickname}
+      </if>
+      <if test="comTypeName != null and comTypeName != ''">
+        AND com_type_name = #{comTypeName}
+      </if>
+      <if test="status != null and status != ''">
+        AND status = #{status}
+      </if>
+      <if test="operator != null and operator != ''">
+        AND au.username like '%' #{operator} '%'
+      </if>
+    </where>
+  </select>
+
+  <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    username
+    from t_admin_user
+    where a_id = #{aId}
+  </select>
+
+  <select id="queryTypenameByTypeid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    name
+    from t_com_type
+    where com_type_id = #{comTypeId}
+  </select>
+
+  <select id="queryTypeIdByBatchId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    com_type_id
+    from t_ch_batch
+    where batch_id = #{batchId}
+  </select>
+
+  <select id="queryDaysByTypeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    days
+    from t_com_type
+    where com_type_id = #{comTypeId}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from t_ch_batch
     where batch_id = #{batchId,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_ch_batch
     where batch_id = #{batchId,jdbcType=INTEGER}
@@ -39,7 +95,8 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{comTypeName,jdbcType=CHAR}, 
       #{dr,jdbcType=TINYINT}, #{extra,jdbcType=CHAR}, #{updateAId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.web.pojo.ChBatchPO">
+
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.ChBatchPO" useGeneratedKeys="true" keyProperty="batchId">
     insert into t_ch_batch
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="batchId != null">
@@ -157,7 +214,7 @@
     </set>
     where batch_id = #{batchId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.ChBatchPO">
+  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.ChBatchPO" useGeneratedKeys="true" keyProperty="batchId">
     update t_ch_batch
     set num = #{num,jdbcType=INTEGER},
       a_id = #{aId,jdbcType=INTEGER},

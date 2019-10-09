@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ChannelMapper extends BaseDAO<ChannelPO, Integer> {
+    String queryUsernameByAid(Integer aId);
 }
