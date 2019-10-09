@@ -449,8 +449,7 @@ CREATE TABLE t_soft_channel
 
 CREATE TABLE t_user
 (
-	-- 允许为null
-	user_id bigint NOT NULL AUTO_INCREMENT COMMENT '允许为null',
+	user_id bigint NOT NULL AUTO_INCREMENT,
 	username varchar(32),
 	phone char(11),
 	ip varchar(128),
@@ -579,12 +578,11 @@ CREATE TABLE t_vipcommodity
 
 CREATE TABLE t_viptype
 (
-    viptype_id int NOT NULL,
-    -- 不同vip和年费vip
-    vipname varchar(32) COMMENT '不同vip和年费vip',
-    a_id int NOT NULL,
-    PRIMARY KEY (viptype_id),
-    UNIQUE (viptype_id)
+	viptype_id int NOT NULL,
+	-- 不同vip和年费vip
+	vipname char(32) COMMENT '不同vip和年费vip',
+	PRIMARY KEY (viptype_id),
+	UNIQUE (viptype_id)
 );
 
 

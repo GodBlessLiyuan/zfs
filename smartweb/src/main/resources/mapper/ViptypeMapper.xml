@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.web.mapper.ViptypeMapper">
+<mapper namespace="com.rpa.web.mapper.VipTypeMapper">
   <resultMap id="BaseResultMap" type="com.rpa.web.pojo.VipTypePO">
     <id column="viptype_id" jdbcType="INTEGER" property="viptypeId" />
-    <result column="vipname" jdbcType="VARCHAR" property="vipname" />
-    <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="vipname" jdbcType="CHAR" property="vipname" />
   </resultMap>
   <sql id="Base_Column_List">
-    viptype_id, vipname, a_id
+    viptype_id, vipname
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,10 +19,8 @@
     where viptype_id = #{viptypeId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.rpa.web.pojo.VipTypePO">
-    insert into t_viptype (viptype_id, vipname, a_id
-      )
-    values (#{viptypeId,jdbcType=INTEGER}, #{vipname,jdbcType=VARCHAR}, #{aId,jdbcType=INTEGER}
-      )
+    insert into t_viptype (viptype_id, vipname)
+    values (#{viptypeId,jdbcType=INTEGER}, #{vipname,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.VipTypePO">
     insert into t_viptype
@@ -34,19 +31,13 @@
       <if test="vipname != null">
         vipname,
       </if>
-      <if test="aId != null">
-        a_id,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="viptypeId != null">
         #{viptypeId,jdbcType=INTEGER},
       </if>
       <if test="vipname != null">
-        #{vipname,jdbcType=VARCHAR},
-      </if>
-      <if test="aId != null">
-        #{aId,jdbcType=INTEGER},
+        #{vipname,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -54,18 +45,14 @@
     update t_viptype
     <set>
       <if test="vipname != null">
-        vipname = #{vipname,jdbcType=VARCHAR},
-      </if>
-      <if test="aId != null">
-        a_id = #{aId,jdbcType=INTEGER},
+        vipname = #{vipname,jdbcType=CHAR},
       </if>
     </set>
     where viptype_id = #{viptypeId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.VipTypePO">
     update t_viptype
-    set vipname = #{vipname,jdbcType=VARCHAR},
-      a_id = #{aId,jdbcType=INTEGER}
+    set vipname = #{vipname,jdbcType=CHAR}
     where viptype_id = #{viptypeId,jdbcType=INTEGER}
   </update>
 </mapper>
