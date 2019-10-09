@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rpa.web.mapper.BatchInfoMapper">
-    <resultMap id="BaseResultMap" type="com.rpa.web.pojo.BatchInfoPO">
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="vipkey" jdbcType="CHAR" property="vipkey"/>
-        <result column="batch_id" jdbcType="INTEGER" property="batchId"/>
-        <result column="status" jdbcType="TINYINT" property="status"/>
-        <result column="days" jdbcType="INTEGER" property="days"/>
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-    id, vipkey, batch_id, `status`, `days`, update_time
+
+  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.BatchInfoPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="vipkey" jdbcType="CHAR" property="vipkey" />
+    <result column="batch_id" jdbcType="INTEGER" property="batchId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="days" jdbcType="INTEGER" property="days" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, vipkey, batch_id, `status`, `days`, update_time, user_id
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -19,7 +21,7 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
-    <select id="query" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="query" parameterType="java.lang.Integer" resultType="com.rpa.web.domain.BatchInfoDO">
         select
         vipkey, chan_nickname as chanNickname, chan_name as chanName, cb.create_time as createTime,
         cb.com_type_name as comTypeName, status
@@ -39,98 +41,94 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.rpa.web.pojo.BatchInfoPO">
-    insert into t_batch_info (id, vipkey, batch_id, 
-      `status`, `days`, update_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{vipkey,jdbcType=CHAR}, #{batchId,jdbcType=INTEGER}, 
-      #{status,jdbcType=TINYINT}, #{days,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+    insert into t_batch_info (id, vipkey, batch_id,
+      `status`, `days`, update_time,
+      user_id)
+    values (#{id,jdbcType=INTEGER}, #{vipkey,jdbcType=CHAR}, #{batchId,jdbcType=INTEGER},
+      #{status,jdbcType=TINYINT}, #{days,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
+      #{userId,jdbcType=BIGINT})
   </insert>
-
-    <insert id="insertBatchInfo" parameterType="java.util.List">
-        insert into t_batch_info (id, vipkey, batch_id,
-        `status`, `days`, update_time
-        )
-        <foreach collection="list" item="batchInfoPO" index="index" separator=",">
-            values (#{batchInfoPO.id,jdbcType=INTEGER}, #{batchInfoPO.vipkey,jdbcType=CHAR},
-            #{batchInfoPO.batchId,jdbcType=INTEGER},
-            #{batchInfoPO.status,jdbcType=TINYINT}, #{batchInfoPO.days,jdbcType=INTEGER},
-            #{batchInfoPO.updateTime,jdbcType=TIMESTAMP}
-            )
-        </foreach>
-    </insert>
-
-    <insert id="insertSelective" parameterType="com.rpa.web.pojo.BatchInfoPO">
-        insert into t_batch_info
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="vipkey != null">
-                vipkey,
-            </if>
-            <if test="batchId != null">
-                batch_id,
-            </if>
-            <if test="status != null">
-                `status`,
-            </if>
-            <if test="days != null">
-                `days`,
-            </if>
-            <if test="updateTime != null">
-                update_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="vipkey != null">
-                #{vipkey,jdbcType=CHAR},
-            </if>
-            <if test="batchId != null">
-                #{batchId,jdbcType=INTEGER},
-            </if>
-            <if test="status != null">
-                #{status,jdbcType=TINYINT},
-            </if>
-            <if test="days != null">
-                #{days,jdbcType=INTEGER},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.BatchInfoPO">
-        update t_batch_info
-        <set>
-            <if test="vipkey != null">
-                vipkey = #{vipkey,jdbcType=CHAR},
-            </if>
-            <if test="batchId != null">
-                batch_id = #{batchId,jdbcType=INTEGER},
-            </if>
-            <if test="status != null">
-                `status` = #{status,jdbcType=TINYINT},
-            </if>
-            <if test="days != null">
-                `days` = #{days,jdbcType=INTEGER},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.BatchInfoPO">
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.BatchInfoPO">
+    insert into t_batch_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="vipkey != null">
+        vipkey,
+      </if>
+      <if test="batchId != null">
+        batch_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="days != null">
+        `days`,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="vipkey != null">
+        #{vipkey,jdbcType=CHAR},
+      </if>
+      <if test="batchId != null">
+        #{batchId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="days != null">
+        #{days,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.BatchInfoPO">
+    update t_batch_info
+    <set>
+      <if test="vipkey != null">
+        vipkey = #{vipkey,jdbcType=CHAR},
+      </if>
+      <if test="batchId != null">
+        batch_id = #{batchId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="days != null">
+        `days` = #{days,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.BatchInfoPO">
     update t_batch_info
     set vipkey = #{vipkey,jdbcType=CHAR},
       batch_id = #{batchId,jdbcType=INTEGER},
       `status` = #{status,jdbcType=TINYINT},
       `days` = #{days,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

@@ -14,10 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: xiahui
@@ -47,9 +44,10 @@ public class AppServiceImpl implements IAppService {
     public int insert(String url, byte updateType, int[] softChannel, String context, String extra) {
         AppPO appPO = new AppPO();
         // 根据url对应的apk获取版本名称、版本号、文件大小
-        appPO.setVersionname("xxxxxxx");
+        appPO.setUrl(url);
+        appPO.setVersionname("insert app");
         appPO.setVersioncode(1);
-        appPO.setSize(120000);
+        appPO.setSize(1000);
 
         appPO.setUrl(url);
         appPO.setUpdateType(updateType);
@@ -102,5 +100,70 @@ public class AppServiceImpl implements IAppService {
     public List<AppDTO> queryAll() {
         List<AppPO> pos = appMapper.queryAll();
         return AppDTO.convert(pos);
+    }
+
+    @Override
+    public List<AppDTO> queryById(int appId) {
+        List<AppPO> pos = appMapper.queryById(appId);
+        return AppDTO.convert(pos);
+    }
+
+    @Transactional(rollbackFor = {})
+    @Override
+    public int update(int appId, String url, byte updateType, int[] softChannel, String context, String extra) {
+        AppPO appPO = appMapper.selectByPrimaryKey(appId);
+        if (url != null && !"".equals(url)) {
+            // 根据url对应的apk获取版本名称、版本号、文件大小
+            appPO.setVersionname("update app");
+            appPO.setVersioncode(2);
+            appPO.setSize(2000);
+
+        }
+        appPO.setUpdateType(updateType);
+        appPO.setContext(context);
+        appPO.setExtra(extra);
+        appPO.setUpdateTime(new Date());
+        int frist = appMapper.updateByPrimaryKey(appPO);
+
+        // 根据appId查询应用渠道数据
+        List<AppChPO> appChPOs = appChMapper.queryByAppId(appId);
+        // 待新增的AppChPO
+        List<AppChPO> insAppChPOs = new ArrayList<>();
+
+        Map<Integer, AppChPO> map = new HashMap<>(appChPOs.size());
+        for (AppChPO appChPO : appChPOs) {
+            map.put(appChPO.getSoftChannelId(), appChPO);
+        }
+
+        for(int scId : softChannel) {
+            if(map.containsKey(scId)) {
+                map.remove(scId);
+            }else {
+                AppChPO appChPO = new AppChPO();
+                appChPO.setStatus(appPO.getStatus().byteValue());
+                appChPO.setAppId(appId);
+                appChPO.setSoftChannelId(scId);
+                insAppChPOs.add(appChPO);
+            }
+        }
+
+        int secend = 0;
+        if(insAppChPOs.size() != 0) {
+            // 新增应用渠道数据
+            secend = appChMapper.batchInsert(insAppChPOs);
+        }
+
+        int third = 0;
+        if(map.size() != 0) {
+            // 待删除的应用渠道数据
+            List<Integer> delAcIds = new ArrayList<>();
+            for(AppChPO po : map.values()) {
+                delAcIds.add(po.getAcId());
+            }
+            third = appChMapper.batchDelete(delAcIds);
+        }
+
+
+        return frist + secend + third;
     }
 }

@@ -5,40 +5,58 @@ import java.util.Date;
 
 /**
  * t_plugin
- * @author 
+ *
+ * @author
  */
 public class PluginPO implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Integer pluginId;
-
     /**
      * 1 未发布 2 发布
      */
     private Byte status;
-
     private String context;
-
     private String extra;
-
     private Integer aId;
-
     private Date createTime;
-
     private Date updateTime;
-
     private Date publishTime;
-
     private Integer size;
-
     private String md5;
-
     /**
      * 1 未删除  2删除
      */
     private Byte dr;
-
     private String url;
+    private int softChannelId;
+    private int appId;
+    private String username;
+    private String name;
+    private String versionName;
 
-    private static final long serialVersionUID = 1L;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVersionName() {
+        return versionName;
+    }
+
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
+    }
 
     public Integer getPluginId() {
         return pluginId;
@@ -136,6 +154,22 @@ public class PluginPO implements Serializable {
         this.url = url;
     }
 
+    public int getSoftChannelId() {
+        return softChannelId;
+    }
+
+    public void setSoftChannelId(int softChannelId) {
+        this.softChannelId = softChannelId;
+    }
+
+    public int getAppId() {
+        return appId;
+    }
+
+    public void setAppId(int appId) {
+        this.appId = appId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -149,17 +183,17 @@ public class PluginPO implements Serializable {
         }
         PluginPO other = (PluginPO) that;
         return (this.getPluginId() == null ? other.getPluginId() == null : this.getPluginId().equals(other.getPluginId()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getContext() == null ? other.getContext() == null : this.getContext().equals(other.getContext()))
-            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
-            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getPublishTime() == null ? other.getPublishTime() == null : this.getPublishTime().equals(other.getPublishTime()))
-            && (this.getSize() == null ? other.getSize() == null : this.getSize().equals(other.getSize()))
-            && (this.getMd5() == null ? other.getMd5() == null : this.getMd5().equals(other.getMd5()))
-            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()))
-            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()));
+                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+                && (this.getContext() == null ? other.getContext() == null : this.getContext().equals(other.getContext()))
+                && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
+                && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+                && (this.getPublishTime() == null ? other.getPublishTime() == null : this.getPublishTime().equals(other.getPublishTime()))
+                && (this.getSize() == null ? other.getSize() == null : this.getSize().equals(other.getSize()))
+                && (this.getMd5() == null ? other.getMd5() == null : this.getMd5().equals(other.getMd5()))
+                && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()))
+                && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()));
     }
 
     @Override

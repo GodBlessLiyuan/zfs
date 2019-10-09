@@ -96,7 +96,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>发布人：</label>
-                                            <input id="username" type="text" class="form-control">
+                                            <input id="aId" type="text" class="form-control">
                                         </div>
                                     </div>
                                 </form>
@@ -117,8 +117,7 @@
                                         <th>发布人</th>
                                         <th>文件大小</th>
                                         <th>更新内容</th>
-                                        <th>更新渠道</th>
-                                        <th>支持版本</th>
+                                        <th>版本|渠道</th>
                                         <th>状态</th>
                                         <th>备注</th>
                                         <th>操作</th>
@@ -148,7 +147,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">支持版本:</span>
-                                                    <select id="iAppId" class="form-control">
+                                                    <select id="iAppId" class="form-control"
+                                                            onclick="javascript:iAppIdClick()">
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -169,6 +169,55 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" onclick="insertClick()"
                                                     data-dismiss="modal">确认发布
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">修改插件</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <button type="hidden" id="uPluginId" style="display:none;"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">插件:</span>
+                                                    <button id="uUrl" type="button" class="btn btn-primary"
+                                                            onclick="javascript:uploadFile()"
+                                                            data-dismiss="modal">上传文件
+                                                    </button>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="recipient-name" class="col-form-label">支持版本:</span>
+                                                    <select id="uAppId" class="form-control" onclick="uAppIdClick()">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="recipient-name" class="col-form-label">更新渠道:</span>
+                                                    <select id="uSoftChannel" multiple="multiple">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">更新内容:</span>
+                                                    <input type="text" class="form-control" id="uContext">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">备注:</span>
+                                                    <input type="text" class="form-control" id="uExtra">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" onclick="updateClick()">确认修改
                                             </button>
                                         </div>
                                     </div>
@@ -291,25 +340,92 @@
                 for (let i = 0; i < data.length; i++) {
                     $('#iAppId').append("<option value='" + data[i].appId + "'>" + data[i].versionName +
                         "</option>");
+                    $('#uAppId').append("<option value='" + data[i].appId + "'>" + data[i].versionName +
+                        "</option>");
                 }
-            }
-        })
 
-        $.ajax({
-            type: 'GET',
-            url: '/softchannel/queryAll',
-            dataType: 'JSON',
-            success: function (data) {
-                for (let i = 0; i < data.length; i++) {
-                    $('#iSoftChannel').multiSelect('addOption', {
-                        value: data[i].softChannelId, text: data[i].name,
-                        index: i
-                    });
-                }
-                $('#iSoftChannel').multiSelect("refresh");
+                let appId = $('#iAppId').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/appversion/queryById?appId=' + appId,
+                    dataType: 'JSON',
+                    success: function (data) {
+                        let chanNames = data.chanName.split(',');
+                        $.each(data.chanId.split(','), function (i, chanId) {
+                            $('#iSoftChannel').multiSelect('addOption', {
+                                value: chanId, text: chanNames[i],
+                                index: i
+                            });
+                            $('#uSoftChannel').multiSelect('addOption', {
+                                value: chanId, text: chanNames[i],
+                                index: i
+                            });
+                        })
+                        $('#iSoftChannel').multiSelect("refresh");
+                        $('#uSoftChannel').multiSelect("refresh");
+                    }
+                })
             }
         })
     });
+
+    /**
+     * 新增时，切换版本事件
+     */
+    function iAppIdClick() {
+        let appId = $('#iAppId').val();
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/queryById?appId=' + appId,
+            dataType: 'JSON',
+            success: function (data) {
+                let chanNames = data.chanName.split(',');
+                $('#iSoftChannel').empty();
+                $.each(data.chanId.split(','), function (i, chanId) {
+                    $('#iSoftChannel').multiSelect('addOption', {
+                        value: chanId, text: chanNames[i],
+                        index: i
+                    });
+                })
+                $('#iSoftChannel').multiSelect("refresh");
+            }
+        })
+    }
+
+    /**
+     * 新增时，切换版本事件
+     */
+    function uAppIdClick() {
+        let appId = $('#uAppId').val();
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/queryById?appId=' + appId,
+            dataType: 'JSON',
+            success: function (data) {
+                let chanNames = data.chanName.split(',');
+                $('#uSoftChannel').empty();
+                $.each(data.chanId.split(','), function (i, chanId) {
+                    $('#uSoftChannel').multiSelect('addOption', {
+                        value: chanId, text: chanNames[i],
+                        index: i
+                    });
+                })
+                $('#uSoftChannel').multiSelect("refresh");
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/plugin/querySoftChannelByIds?pluginId=' + $('#uPluginId').val() + "&appId=" + appId,
+                    dataType: 'JSON',
+                    success: function (data) {
+                        $.each(data, function(i, id){
+                            $('#uSoftChannel').find("option[value='" + id + "']").attr("selected", true);
+                        });
+                        $('#uSoftChannel').multiSelect("refresh");
+                    }
+                })
+            }
+        })
+    }
 
     /**
      * 确认上架点击事件
@@ -325,12 +441,34 @@
             "&extra=" + extra + "&url=" + url);
     }
 
-    function deleteClick() {
-        let appId = $('#dAppId').val();
+    /**
+     * 确认修改点击事件
+     */
+    function updateClick() {
+        let pluginId = $('#uPluginId').val();
+        let url = $('#uUrl').val();
+        let appId = $('#uAppId').val();
+        let softChannel = $('#uSoftChannel').val();
+        let context = $('#uContext').val();
+        let extra = $('#uExtra').val();
 
         $.ajax({
             type: 'GET',
-            url: '/plugin/delete?appId=' + appId,
+            url: "/plugin/update?pluginId=" + pluginId + "&appId=" + appId + "&softChannel=" + softChannel + "&context="
+                + context + "&extra=" + extra + "&url=" + url,
+            dataType: 'json',
+            success: function (data) {
+                $('#datatab').DataTable().draw(false);
+            }
+        })
+    }
+
+    function deleteClick() {
+        let pluginId = $('#dPluginId').val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/plugin/delete?pluginId=' + pluginId,
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -339,11 +477,11 @@
     }
 
     function publishClick() {
-        let appId = $('#pAppId').val();
+        let pluginId = $('#pPluginId').val();
 
         $.ajax({
             type: 'GET',
-            url: '/plugin/updateStatus?appId=' + appId + "&status=2",
+            url: '/plugin/updateStatus?pluginId=' + pluginId + "&status=2",
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -352,11 +490,11 @@
     }
 
     function unPublishClick() {
-        let appId = $('#upAppId').val();
+        let pluginId = $('#upPluginId').val();
 
         $.ajax({
             type: 'GET',
-            url: '/plugin/updateStatus?appId=' + appId + "&status=1",
+            url: '/plugin/updateStatus?pluginId=' + pluginId + "&status=1",
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -376,7 +514,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/plugin/query?username=" + $('#username').val(),
+            "ajax": "/plugin/query?aId=" + $('#aId').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -386,15 +524,13 @@
                 {"data": null, "targets": 0},
                 {"data": "publishTime"},
                 {"data": "username"},
-                {"data": "versionName"},
                 {"data": "size"},
-                {"data": "updateType"},
                 {"data": "context"},
-                {"data": "chanName"},
+                {"data": "name"},
                 {"data": "status"},
                 {"data": "extra"},
                 {
-                    "data": "appId",
+                    "data": "pluginId",
                     "render": function (data, type, full) {
 
                         let title = "发布";
@@ -432,13 +568,7 @@
                     }
                 },
                 {
-                    "targets": [5],
-                    "render": function (data, type, full) {
-                        return data === 1 ? "普通更新" : "强制更新";
-                    }
-                },
-                {
-                    "targets": [8],
+                    "targets": [6],
                     "render": function (data, type, full) {
                         return data === 1 ? "未发布" : "已发布";
                     }
@@ -460,6 +590,32 @@
                 }
             }
         });
+    }
+
+    /**
+     * 更新界面设值
+     */
+    function updateModal(pluginId) {
+        $.ajax({
+            type: 'GET',
+            url: '/plugin/queryById?pluginId=' + pluginId,
+            dataType: 'JSON',
+            success: function (data) {
+                $('#uPluginId').val(data.pluginId);
+                $('#uContext').val(data.context);
+                $('#uExtra').val(data.extra);
+
+                // $('#uAppId').empty();
+                // $('#uSoftChannel').empty();
+                $.each(data.ids.split(","), function(i, ids){
+                    ids = ids.split('|');
+                    $('#uAppId').find("option[value='" + ids[0] + "']").attr("selected", true);
+                    $('#uSoftChannel').find("option[value='" + ids[1] + "']").attr("selected", true);
+                });
+                $('#uSoftChannel').multiSelect("refresh");
+
+            }
+        })
     }
 
     /**

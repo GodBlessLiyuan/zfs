@@ -35,7 +35,7 @@ public class ChBatchPO implements Serializable {
     private String extra;
 
     /**
-     * 1 正常 2 未激活 3 冻结 4失效
+     * 1 正常 2 未激活  3 冻结 4 失效 5 结束
      */
     private Byte status;
 

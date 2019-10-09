@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
  * ViptypeMapper继承基类
  */
 @Mapper
-public interface ViptypeMapper extends BaseDAO<VipTypePO, Integer> {
+public interface VipTypeMapper extends BaseDAO<VipTypePO, Integer> {
 }

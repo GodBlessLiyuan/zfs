@@ -165,7 +165,7 @@ public class ChBatchServiceImpl implements ChBatchService {
         return count;
     }
 
-    
+
     /**
      * 根据aId，从t_admin_user表中查询username
      * @param aId

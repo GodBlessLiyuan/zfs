@@ -35,4 +35,18 @@ public interface AppChMapper extends BaseDAO<AppChPO, Integer> {
      * @return
      */
     int deleteByAppId(int appId);
+
+    /**
+     * 根据appId 查询数据
+     * @param appId
+     * @return
+     */
+    List<AppChPO> queryByAppId(int appId);
+
+    /**
+     * 批量删除
+     * @param delAcIds 应用渠道主键
+     * @return
+     */
+    int batchDelete(List<Integer> delAcIds);
 }

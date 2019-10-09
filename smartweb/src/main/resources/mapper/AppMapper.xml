@@ -216,4 +216,12 @@
         from t_app a
         right join t_app_ch ac on a.app_id = ac.app_id
     </select>
+    <select id="queryById" parameterType="java.lang.Integer" resultType="com.rpa.web.pojo.AppPO">
+        select a.app_id as appId, a.publish_time as publishTime, a.versionname as versionName, a.size,
+        a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra
+        from t_app a
+        left join t_app_ch ac on a.app_id = ac.app_id
+        left join t_soft_channel s on ac.soft_channel_id = s.soft_channel_id
+        where a.app_id = #{appId}
+    </select>
 </mapper>

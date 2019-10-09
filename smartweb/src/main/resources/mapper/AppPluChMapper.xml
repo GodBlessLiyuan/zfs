@@ -11,7 +11,8 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    apc_id, app_id, soft_channel_id, plugin_id, `status`, create_time, update_time
+    apc_id as apcId, app_id as appId, soft_channel_id as softChannelId, plugin_id as pluginId, `status`, create_time
+    as createTime, update_time as updateTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -114,4 +115,31 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where apc_id = #{apcId,jdbcType=INTEGER}
   </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_app_plu_ch (apc_id, app_id, soft_channel_id, plugin_id, `status`, create_time, update_time) values
+    <foreach collection="list" item="appPluChPO" index="index" separator=",">
+      (#{appPluChPO.apcId,jdbcType=INTEGER}, #{appPluChPO.appId,jdbcType=INTEGER},
+      #{appPluChPO.softChannelId,jdbcType=INTEGER},
+      #{appPluChPO.pluginId,jdbcType=INTEGER}, #{appPluChPO.status,jdbcType=TINYINT},
+      #{appPluChPO.createTime,jdbcType=TIMESTAMP},
+      #{appPluChPO.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <update id="updateStatus">
+    update t_app_plu_ch set `status` = #{status,jdbcType=TINYINT} where plugin_id = #{pluginId}
+  </update>
+  <delete id="deleteByAppId" parameterType="java.lang.Integer">
+    delete from t_app_plu_ch where plugin_id = #{pluginId,jdbcType=INTEGER}
+  </delete>
+  <select id="queryByIds" parameterType="java.lang.Integer" resultType="com.rpa.web.pojo.AppPluChPO">
+    select <include refid="Base_Column_List" /> from t_app_plu_ch where plugin_id = #{pluginId} and app_id = #{appId};
+  </select>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from t_app_plu_ch where apc_id in (
+    <foreach collection="list" item="apcId" index="index" separator=",">
+      #{apcId,jdbcType=INTEGER}
+    </foreach>
+    )
+  </delete>
 </mapper>

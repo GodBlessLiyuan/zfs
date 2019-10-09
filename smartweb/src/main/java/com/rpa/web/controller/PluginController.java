@@ -1,6 +1,7 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.AppDTO;
+import com.rpa.web.dto.PluginDTO;
+import com.rpa.web.pojo.PluginPO;
 import com.rpa.web.service.IPluginService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,15 +27,27 @@ public class PluginController {
 
 
     @RequestMapping("/plugin/query")
-    public DTPageInfo<AppDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                    @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                    @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                    @RequestParam(value = "userId") int userId) {
+    public DTPageInfo<PluginDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                       @RequestParam(value = "aId", defaultValue = "0") int aId) {
 
         Map<String, Object> reqData = new HashMap<>(1);
-        reqData.put("userId", userId);
+        reqData.put("aId", aId);
 
-        return null;
+        return service.query(draw, pageNum, pageSize, reqData);
+    }
+
+    @RequestMapping("/plugin/queryById")
+    public PluginDTO queryById(@RequestParam(value = "pluginId") int pluginId) {
+        List<PluginDTO> dtos = service.queryById(pluginId);
+        return dtos.get(0);
+    }
+
+    @RequestMapping("/plugin/querySoftChannelByIds")
+    public List<Integer> querySoftChannelByIds(@RequestParam(value = "pluginId") int pluginId, @RequestParam(value =
+            "appId") int appId) {
+        return service.querySoftChannelByIds(pluginId, appId);
     }
 
     @RequestMapping("/plugin/insert")
@@ -44,5 +58,26 @@ public class PluginController {
                       @RequestParam(value = "extra") String extra) {
 
         return service.insert(url, appId, softChannel, context, extra);
+    }
+
+    @RequestMapping("/plugin/updateStatus")
+    public int updateStatus(@RequestParam(value = "pluginId") int pluginId,
+                            @RequestParam(value = "status") byte status) {
+        return service.updateStatus(pluginId, status);
+    }
+
+    @RequestMapping("/plugin/update")
+    public int update(@RequestParam(value = "pluginId") int pluginId,
+                      @RequestParam(value = "url") String url,
+                      @RequestParam(value = "appId") int appId,
+                      @RequestParam(value = "softChannel") int[] softChannel,
+                      @RequestParam(value = "context") String context,
+                      @RequestParam(value = "extra") String extra) {
+        return service.update(pluginId, url, appId, softChannel, context, extra);
+    }
+
+    @RequestMapping("/plugin/delete")
+    public int delete(@RequestParam(value = "pluginId") int pluginId) {
+        return service.delete(pluginId);
     }
 }

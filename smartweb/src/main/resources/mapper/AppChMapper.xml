@@ -8,7 +8,7 @@
     <result column="soft_channel_id" jdbcType="INTEGER" property="softChannelId" />
   </resultMap>
   <sql id="Base_Column_List">
-    ac_id, `status`, app_id, soft_channel_id
+    ac_id as acId, `status`, app_id as appId, soft_channel_id as softChannelId
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -92,5 +92,15 @@
   </update>
   <delete id="deleteByAppId" parameterType="java.lang.Integer">
     delete from t_app_ch where app_id = #{appId,jdbcType=INTEGER}
+  </delete>
+  <select id="queryByAppId" parameterType="java.lang.Integer" resultType="com.rpa.web.pojo.AppChPO">
+    select <include refid="Base_Column_List" /> from t_app_ch where app_id = #{appId}
+  </select>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from t_app_ch where ac_id in (
+        <foreach collection="list" item="acId" index="index" separator=",">
+            #{acId,jdbcType=INTEGER}
+        </foreach>
+    )
   </delete>
 </mapper>
