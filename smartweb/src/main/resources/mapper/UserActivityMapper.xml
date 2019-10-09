@@ -139,4 +139,14 @@
       device_id = #{deviceId,jdbcType=BIGINT}
     where u_a_id = #{uAId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultType="com.rpa.web.domain.UserActivityDO">
+    select u.phone, ua.create_time as createTime, a.com_type_name as comTypeName, a.days, a.source, ua.status
+    from t_user_activity ua
+    left join t_activity a on ua.activity_id = a.activity_id
+    left join t_user u on ua.user_id = u.user_id
+    <where>
+      <if test="phone != null and phone != ''">u.phone like '%' #{phone} '%'</if>
+    </where>
+  </select>
 </mapper>
