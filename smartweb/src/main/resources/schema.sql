@@ -299,6 +299,14 @@ CREATE TABLE t_feedback
 	device_id bigint,
 	user_device_id int,
 	context char(255),
+	contact char(32),
+	create_time datetime,
+	url char(255),
+	manufacturer char(128),
+	androidmodel char(64),
+	-- android系统的版本号
+	buildversion tinyint COMMENT 'android系统的版本号',
+	versioncode int,
 	PRIMARY KEY (feedback_id),
 	UNIQUE (feedback_id)
 );
@@ -592,8 +600,7 @@ CREATE TABLE t_user_notice
 
 CREATE TABLE t_user_vip
 (
-	-- 允许为null
-	user_id bigint NOT NULL COMMENT '允许为null',
+	user_id bigint NOT NULL,
 	viptype_id int NOT NULL,
 	start_time datetime,
 	end_time datetime,
@@ -603,26 +610,27 @@ CREATE TABLE t_user_vip
 	update_time datetime,
 	vcreate_time datetime,
 	vend_time datetime,
+	first_time datetime,
+	last_time datetime,
 	UNIQUE (user_id)
 );
 
 
 CREATE TABLE t_vipcommodity
 (
-    cmdy_id int NOT NULL AUTO_INCREMENT,
-    viptype_id int NOT NULL,
-    com_type_id int NOT NULL,
-    com_name varchar(64),
-    price int,
-    discount float,
-    -- 1 会员中心 
-    position tinyint COMMENT '1 会员中心 ',
-    create_time datetime,
-
-    soft_channel_id int NOT NULL,
-    name char(20),
-    update_time datetime,
-    days int,
+	cmdy_id int NOT NULL AUTO_INCREMENT,
+	viptype_id int NOT NULL,
+	com_type_id int NOT NULL,
+	com_name varchar(64),
+	price int,
+	discount float,
+	-- 1 会员中心 
+	position tinyint COMMENT '1 会员中心 ',
+	create_time datetime,
+	soft_channel_id int NOT NULL,
+	name char(20),
+	update_time datetime,
+	days int,
 	a_id int NOT NULL,
 	description char(128),
 	show_discount char(32),
