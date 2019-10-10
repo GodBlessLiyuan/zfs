@@ -1,14 +1,13 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.ComTypeDTO;
 import com.rpa.web.dto.SoftChannelDTO;
 import com.rpa.web.service.ISoftChannelService;
 import com.rpa.web.utils.DTPageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,19 +18,14 @@ import java.util.Map;
  * @description: 渠道信息
  * @version: 1.0
  */
+@RequestMapping("softchannel")
 @RestController
 public class SoftChannelController {
 
-    @Resource
+    @Autowired
     private ISoftChannelService service;
 
-    @RequestMapping("/softchannel/insert")
-    public int insert(@RequestParam(value = "channelName") String channelName,
-                      @RequestParam(value = "extra") String extra) {
-        return service.insert(channelName, extra);
-    }
-
-    @RequestMapping("/softchannel/query")
+    @RequestMapping("query")
     public DTPageInfo<SoftChannelDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                             @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                             @RequestParam(value = "length", defaultValue = "10") int pageSize,
@@ -39,13 +33,17 @@ public class SoftChannelController {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("name", channelName);
 
-        DTPageInfo<SoftChannelDTO> data = service.query(draw, pageNum, pageSize, reqData);
-        return data;
+        return service.query(draw, pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("/softchannel/queryAll")
+    @RequestMapping("queryAll")
     public List<SoftChannelDTO> queryAll() {
-        List<SoftChannelDTO> datas = service.queryAll();
-        return datas;
+        return service.queryAll();
+    }
+
+    @RequestMapping("insert")
+    public int insert(@RequestParam(value = "channelName") String channelName,
+                      @RequestParam(value = "extra") String extra) {
+        return service.insert(channelName, extra);
     }
 }

@@ -18,13 +18,14 @@ import java.util.Map;
  * @description: 版本更新
  * @version: 1.0
  */
+@RequestMapping("appversion")
 @RestController
 public class AppController {
 
     @Autowired
     private IAppService service;
 
-    @RequestMapping("/appversion/query")
+    @RequestMapping("query")
     public DTPageInfo<AppDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                     @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                     @RequestParam(value = "length", defaultValue = "10") int pageSize,
@@ -36,7 +37,19 @@ public class AppController {
         return service.query(draw, pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("/appversion/insert")
+    @RequestMapping("queryAll")
+    public List<AppDTO> queryAll() {
+        List<AppDTO> datas = service.queryAll();
+        return datas;
+    }
+
+    @RequestMapping("queryById")
+    public AppDTO queryById(@RequestParam(value = "appId") int appId) {
+        List<AppDTO> dtos = service.queryById(appId);
+        return dtos.get(0);
+    }
+
+    @RequestMapping("insert")
     public int insert(@RequestParam(value = "url") String url,
                       @RequestParam(value = "updateType") byte updateType,
                       @RequestParam(value = "softChannel") int[] softChannel,
@@ -46,30 +59,7 @@ public class AppController {
         return service.insert(url, updateType, softChannel, context, extra);
     }
 
-    @RequestMapping("/appversion/updateStatus")
-    public int updateStatus(@RequestParam(value = "appId") int appId,
-                            @RequestParam(value = "status") int status) {
-        return service.updateStatus(appId, status);
-    }
-
-    @RequestMapping("/appversion/delete")
-    public int delete(@RequestParam(value = "appId") int appId) {
-        return service.delete(appId);
-    }
-
-    @RequestMapping("/appversion/queryAll")
-    public List<AppDTO> queryAll() {
-        List<AppDTO> datas = service.queryAll();
-        return datas;
-    }
-
-    @RequestMapping("/appversion/queryById")
-    public AppDTO queryById(@RequestParam(value = "appId") int appId) {
-        List<AppDTO> dtos = service.queryById(appId);
-        return dtos.get(0);
-    }
-
-    @RequestMapping("/appversion/update")
+    @RequestMapping("update")
     public int update(@RequestParam(value = "appId") int appId,
                       @RequestParam(value = "url") String url,
                       @RequestParam(value = "updateType") byte updateType,
@@ -78,4 +68,17 @@ public class AppController {
                       @RequestParam(value = "extra") String extra) {
         return service.update(appId, url, updateType, softChannel, context, extra);
     }
+
+    @RequestMapping("updateStatus")
+    public int updateStatus(@RequestParam(value = "appId") int appId,
+                            @RequestParam(value = "status") int status) {
+        return service.updateStatus(appId, status);
+    }
+
+    @RequestMapping("delete")
+    public int delete(@RequestParam(value = "appId") int appId) {
+        return service.delete(appId);
+    }
+
+
 }

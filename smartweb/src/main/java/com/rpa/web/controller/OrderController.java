@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +17,7 @@ import java.util.Map;
  * @description: 订单信息
  * @version: 1.0
  */
+@RequestMapping("order")
 @RestController
 public class OrderController {
 
@@ -38,7 +38,7 @@ public class OrderController {
      * @param number 订单编号
      * @return 一页数据
      */
-    @RequestMapping("/order/query")
+    @RequestMapping("query")
     public DTPageInfo<OrderDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,

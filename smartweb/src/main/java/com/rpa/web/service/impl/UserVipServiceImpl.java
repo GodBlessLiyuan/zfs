@@ -94,6 +94,6 @@ public class UserVipServiceImpl implements IUserVipService {
             userVipDetailsDTOs.add(dto);
         }
 
-        return new DTPageInfo<>(draw, 10, userVipDetailsDTOs);
+        return new DTPageInfo<>(draw, userActivityDOs.size(), userVipDetailsDTOs);
     }
 }

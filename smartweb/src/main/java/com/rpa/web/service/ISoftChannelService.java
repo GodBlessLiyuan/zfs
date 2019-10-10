@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * @author: xiahui
  * @date: Created in 2019/9/29 8:49
- * @description: TODO
+ * @description: 渠道信息
  * @version: 1.0
  */
 public interface ISoftChannelService {
@@ -25,16 +25,16 @@ public interface ISoftChannelService {
     DTPageInfo<SoftChannelDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
+     * 查询全部数据
+     * @return
+     */
+    List<SoftChannelDTO> queryAll();
+
+    /**
      * 插入
      * @param channelName 渠道名称
      * @param extra 备注
      * @return
      */
     int insert(String channelName, String extra);
-
-    /**
-     * 查询全部数据
-     * @return
-     */
-    List<SoftChannelDTO> queryAll();
 }

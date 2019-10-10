@@ -88,6 +88,63 @@
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#insertModal" data-whatever="@getbootstrap">新增商品
                             </button>
+                            <button type="button" class="btn btn-primary" id="export"
+                                    onclick="javascript:exportClick();">导出
+                            </button>
+
+                            <hr>
+                            <div class="basic-form">
+                                <form>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>操作人</label>
+                                            <input id="username" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>产品类型</label>
+                                            <select id="comTypeId" class="form-control">
+                                                <option value='0' selected='selected'>全选</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>销售渠道</label>
+                                            <select id="channelId" class="form-control">
+                                                <option value='0' selected='selected'>全选</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <button type="button" class="btn btn-primary " id="reset">重置</button>
+                            <button type="button" class="btn btn-primary " id="query"
+                                    onclick="javascript:queryClick();">查询
+                            </button>
+
+                            <hr>
+                            <div class="table-responsive">
+                                <table id="datatab" class="display" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>销售渠道</th>
+                                        <th>产品类型</th>
+                                        <th>会员天数</th>
+                                        <th>商品名称</th>
+                                        <th>商品描述</th>
+                                        <th>原价</th>
+                                        <th>折扣</th>
+                                        <th>售价</th>
+                                        <th>是否上架</th>
+                                        <th>是否置顶</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
+                                        <th>操作人</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
                             <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -102,12 +159,12 @@
                                             <form>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">销售渠道:</span>
-                                                    <select id="insertChannelName" class="form-control">
+                                                    <select id="iChannelId" class="form-control">
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">产品类型:</span>
-                                                    <select id="insertComTypeName" class="form-control">
+                                                    <select id="iComTypeId" class="form-control">
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -159,11 +216,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">销售渠道:</span>
-                                                    <label id="uChannelName">xxx</label>
+                                                    <label id="uChannelId">xxx</label>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">产品类型:</span>
-                                                    <label id="uComTypeName">XXX</label>
+                                                    <label id="uComTypeId">XXX</label>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">商品名称:</span>
@@ -195,61 +252,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button type="button" class="btn btn-primary" id="export"
-                                    onclick="javascript:exportClick();">导出
-                            </button>
-
-                            <hr>
-                            <div class="basic-form">
-                                <form>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label>操作人</label>
-                                            <input id="username" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>产品类型</label>
-                                            <select id="comTypeName" class="form-control">
-                                                <option value='0' selected='selected'>全选</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>销售渠道</label>
-                                            <select id="channelName" class="form-control">
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <button type="button" class="btn btn-primary " id="reset">重置</button>
-                            <button type="button" class="btn btn-primary " id="query"
-                                    onclick="javascript:queryClick();">查询
-                            </button>
-
-                            <hr>
-                            <div class="table-responsive">
-                                <table id="datatab" class="display" style="width:100%">
-                                    <thead>
-                                    <tr>
-                                        <th>序号</th>
-                                        <th>销售渠道</th>
-                                        <th>产品类型</th>
-                                        <th>会员天数</th>
-                                        <th>商品名称</th>
-                                        <th>商品描述</th>
-                                        <th>原价</th>
-                                        <th>折扣</th>
-                                        <th>售价</th>
-                                        <th>是否上架</th>
-                                        <th>是否置顶</th>
-                                        <th>创建时间</th>
-                                        <th>操作</th>
-                                        <th>操作人</th>
-                                    </tr>
-                                    </thead>
-                                </table>
                             </div>
 
                         </div>
@@ -291,16 +293,31 @@
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        // 下拉框请求后端并赋值
+        // 产品列表
         $.ajax({
             type: 'GET',
             url: '/comtype/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
-                    $('#insertComTypeName').append("<option value='" + data[i].comTypeId + "'>" + data[i].name +
+                    $('#iComTypeId').append("<option value='" + data[i].comTypeId + "'>" + data[i].name +
                         "</option>");
-                    $('#comTypeName').append("<option value='" + data[i].comTypeId + "'>" + data[i].name +
+                    $('#comTypeId').append("<option value='" + data[i].comTypeId + "'>" + data[i].name +
+                        "</option>");
+                }
+            }
+        });
+
+        // 渠道信息
+        $.ajax({
+            type: 'GET',
+            url: '/softchannel/queryAll',
+            dataType: 'JSON',
+            success: function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    $('#iChannelId').append("<option value='" + data[i].softChannelId + "'>" + data[i].name +
+                        "</option>");
+                    $('#channelId').append("<option value='" + data[i].softChannelId + "'>" + data[i].name +
                         "</option>");
                 }
             }
@@ -311,8 +328,8 @@
      * 确认上架点击事件
      */
     function insertClick() {
-        let channelId = $('#insertChannelName').val();
-        let comTypeId = $('#insertComTypeName').val();
+        let channelId = $('#iChannelId').val();
+        let comTypeId = $('#iComTypeId').val();
         let comName = $('#comName').val();
         let description = $('#description').val();
         let price = $('#price').val();
@@ -457,8 +474,8 @@
             dataType: 'JSON',
             success: function (data) {
                 $('#uCmdyId').val(data.cmdyId);
-                $('#uChannelName').text(data.name);
-                $('#uComTypeName').text(data.comTypeName);
+                $('#uChannelId').text(data.name);
+                $('#uComTypeId').text(data.comTypeName);
                 $('#uComName').val(data.comName);
                 $('#uDescription').val(data.description);
                 $('#uPrice').val(data.price);
