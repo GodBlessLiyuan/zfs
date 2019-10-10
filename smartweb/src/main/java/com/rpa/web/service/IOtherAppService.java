@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.OtherAppDTO;
 import com.rpa.web.utils.DTPageInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -32,12 +33,14 @@ public interface IOtherAppService {
      * @param iconUrl      应用图标
      * @param downloadType 下载方式
      * @param appUrl       下载地址
+     * @param aId          管理员Id
      * @return
      */
-    int insert(String oName, String extra, String iconUrl, byte downloadType, String appUrl);
+    int insert(String oName, String extra, MultipartFile iconUrl, byte downloadType, String appUrl, int aId);
 
     /**
      * 删除
+     *
      * @param oId 主键
      * @return
      */
