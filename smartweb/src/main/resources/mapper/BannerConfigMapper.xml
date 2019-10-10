@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rpa.web.mapper.BannerConfigMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.BannerConfig">
+  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.BannerConfigPO">
     <id column="banner_id" jdbcType="INTEGER" property="bannerId" />
     <result column="a_id" jdbcType="INTEGER" property="aId" />
     <result column="name" jdbcType="CHAR" property="name" />
@@ -11,9 +11,11 @@
     <result column="dr" jdbcType="TINYINT" property="dr" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="url" jdbcType="CHAR" property="url" />
+    <result column="pic_path" jdbcType="CHAR" property="picPath" />
   </resultMap>
   <sql id="Base_Column_List">
-    banner_id, a_id, `name`, create_time, update_time, `status`, dr, start_time, url
+    banner_id, a_id, `name`, create_time, update_time, `status`, dr, start_time, url, 
+    pic_path
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -25,15 +27,17 @@
     delete from t_bannerconfig
     where banner_id = #{bannerId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.web.pojo.BannerConfig">
+  <insert id="insert" parameterType="com.rpa.web.pojo.BannerConfigPO">
     insert into t_bannerconfig (banner_id, a_id, `name`, 
       create_time, update_time, `status`, 
-      dr, start_time, url)
+      dr, start_time, url, 
+      pic_path)
     values (#{bannerId,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, #{name,jdbcType=CHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
-      #{dr,jdbcType=TINYINT}, #{startTime,jdbcType=TIMESTAMP}, #{url,jdbcType=CHAR})
+      #{dr,jdbcType=TINYINT}, #{startTime,jdbcType=TIMESTAMP}, #{url,jdbcType=CHAR}, 
+      #{picPath,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.web.pojo.BannerConfig">
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.BannerConfigPO">
     insert into t_bannerconfig
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="bannerId != null">
@@ -62,6 +66,9 @@
       </if>
       <if test="url != null">
         url,
+      </if>
+      <if test="picPath != null">
+        pic_path,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -92,9 +99,12 @@
       <if test="url != null">
         #{url,jdbcType=CHAR},
       </if>
+      <if test="picPath != null">
+        #{picPath,jdbcType=CHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.BannerConfig">
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.BannerConfigPO">
     update t_bannerconfig
     <set>
       <if test="aId != null">
@@ -121,10 +131,13 @@
       <if test="url != null">
         url = #{url,jdbcType=CHAR},
       </if>
+      <if test="picPath != null">
+        pic_path = #{picPath,jdbcType=CHAR},
+      </if>
     </set>
     where banner_id = #{bannerId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.BannerConfig">
+  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.BannerConfigPO">
     update t_bannerconfig
     set a_id = #{aId,jdbcType=INTEGER},
       `name` = #{name,jdbcType=CHAR},
@@ -133,7 +146,8 @@
       `status` = #{status,jdbcType=TINYINT},
       dr = #{dr,jdbcType=TINYINT},
       start_time = #{startTime,jdbcType=TIMESTAMP},
-      url = #{url,jdbcType=CHAR}
+      url = #{url,jdbcType=CHAR},
+      pic_path = #{picPath,jdbcType=CHAR}
     where banner_id = #{bannerId,jdbcType=INTEGER}
   </update>
 </mapper>

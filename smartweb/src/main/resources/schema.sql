@@ -200,6 +200,7 @@ CREATE TABLE t_bannerconfig
 	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	start_time datetime,
 	url char(255),
+	pic_path char(255),
 	PRIMARY KEY (banner_id),
 	UNIQUE (banner_id)
 );
