@@ -2,6 +2,7 @@ package com.rpa.web.utils;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,10 +21,11 @@ public class FileUtil {
      * 文件上传处理
      *
      * @param file 文件信息
+     * @param req
      * @return 文件路径
      * @throws IOException
      */
-    public static String uploadFile(MultipartFile file) {
+    public static String uploadFile(MultipartFile file, HttpServletRequest req) {
         String fileName = file.getOriginalFilename();
         File targetFile = new File(FileUtil.FILE_PATH);
         if (!targetFile.exists()) {
@@ -48,6 +50,7 @@ public class FileUtil {
             }
         }
 
-        return filePath;
+        return req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath() +
+                "/file/" + fileName;
     }
 }

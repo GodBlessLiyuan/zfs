@@ -296,7 +296,12 @@
                 {"data": null, "targets": 0},
                 {"data": "oName"},
                 {"data": "extra"},
-                {"data": "iconUrl"},
+                {
+                    "data": "iconUrl",
+                    "render": function (data, type, full) {
+                        return "<img src='" + data + "' height='50px' width='50px'/>";
+                    }
+                },
                 {
                     "data": "downloadType",
                     "render": function (data, type, full) {
