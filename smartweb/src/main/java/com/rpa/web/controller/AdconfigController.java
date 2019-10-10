@@ -50,7 +50,7 @@ public class AdconfigController {
     }
 
     /**
-     * 查询
+     * 查询广告展示策略
      * @return
      */
     @GetMapping("/query/strategy")
