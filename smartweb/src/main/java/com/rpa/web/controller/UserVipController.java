@@ -18,13 +18,14 @@ import java.util.Map;
  * @description: 用户会员数据
  * @version: 1.0
  */
+@RequestMapping("uservip")
 @RestController
 public class UserVipController {
 
     @Autowired
     private IUserVipService service;
 
-    @RequestMapping("/uservip/query")
+    @RequestMapping("query")
     public DTPageInfo<UserVipDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                         @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                         @RequestParam(value = "length", defaultValue = "10") int pageSize,
@@ -37,7 +38,7 @@ public class UserVipController {
         return service.query(draw, pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("/uservip/queryDetails")
+    @RequestMapping("queryDetails")
     public DTPageInfo<UserVipDetailsDTO> queryDetails(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,

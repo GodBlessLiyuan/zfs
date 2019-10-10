@@ -139,9 +139,10 @@
 
 
   <select id="queryByUserId" resultType="com.rpa.web.domain.BatchInfoDO">
-    select cb.create_time as createTime, cb.com_type_name as comTypeName, cb.days
+    select u.chan_name as userChanName, cb.create_time as createTime, cb.com_type_name as comTypeName, cb.days
     from t_batch_info bi
     left join t_ch_batch cb on bi.batch_id = cb.batch_id
+    left join t_user u on bi.user_id = u.user_id
     where bi.user_id = #{userId}
   </select>
 </mapper>

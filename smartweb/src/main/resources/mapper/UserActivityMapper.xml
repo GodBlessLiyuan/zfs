@@ -172,9 +172,10 @@
     </where>
   </select>
   <select id="queryByUserId" resultType="com.rpa.web.domain.UserActivityDO">
-    select ua.create_time as createTime, a.com_type_name as comTypeName, a.days
+    select u.chan_name as userChanName, ua.create_time as createTime, a.com_type_name as comTypeName, a.days
     from t_user_activity ua
     left join t_activity a on ua.activity_id = a.activity_id
+    left join t_user u on ua.user_id = u.user_id
     where ua.user_id = #{userId}
   </select>
 

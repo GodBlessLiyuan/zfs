@@ -2,6 +2,7 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.rpa.web.common.UserVipConstant;
 import com.rpa.web.domain.*;
 import com.rpa.web.dto.UserVipDTO;
 import com.rpa.web.dto.UserVipDetailsDTO;
@@ -51,9 +52,9 @@ public class UserVipServiceImpl implements IUserVipService {
         List<UserVipDetailsDTO> userVipDetailsDTOs = new ArrayList<>();
         // 购买
         List<OrderDO> orderPOs = orderMapper.queryByUserId(userId);
-        for(OrderDO orderDO: orderPOs) {
+        for (OrderDO orderDO : orderPOs) {
             UserVipDetailsDTO dto = new UserVipDetailsDTO();
-            dto.setVipType(UserVipDetailsDTO.TYPE_ORDER);
+            dto.setVipType(UserVipConstant.USER_VIP_ORDER);
             dto.setUserChanName(orderDO.getUserChanName());
             dto.setSaleChanName(orderDO.getSaleChanName());
             dto.setType(orderDO.getType());
@@ -63,10 +64,12 @@ public class UserVipServiceImpl implements IUserVipService {
             userVipDetailsDTOs.add(dto);
         }
         // 好评活动赠送
-        List<UserActivityDO>  userActivityDOs = userActivityMapper.queryByUserId(userId);
-        for(UserActivityDO userActivityDO: userActivityDOs) {
+        List<UserActivityDO> userActivityDOs = userActivityMapper.queryByUserId(userId);
+        for (UserActivityDO userActivityDO : userActivityDOs) {
             UserVipDetailsDTO dto = new UserVipDetailsDTO();
-            dto.setVipType(UserVipDetailsDTO.TYPE_ACTIVITY);
+            dto.setVipType(UserVipConstant.USER_VIP_ACTIVITY);
+            dto.setUserChanName(userActivityDO.getUserChanName());
+            dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(userActivityDO.getCreateTime());
             dto.setComTypeName(userActivityDO.getComTypeName());
             dto.setDays(userActivityDO.getDays());
@@ -74,9 +77,11 @@ public class UserVipServiceImpl implements IUserVipService {
         }
         // 新用户赠送
         List<NewUserRecordDO> newUserRecordDOs = newUserRecordMapper.queryByUserId(userId);
-        for(NewUserRecordDO newUserRecordDO : newUserRecordDOs) {
+        for (NewUserRecordDO newUserRecordDO : newUserRecordDOs) {
             UserVipDetailsDTO dto = new UserVipDetailsDTO();
-            dto.setVipType(UserVipDetailsDTO.TYPE_USER_GIFTS);
+            dto.setVipType(UserVipConstant.USER_VIP_GIFTS);
+            dto.setUserChanName(newUserRecordDO.getUserChanName());
+            dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(newUserRecordDO.getCreateTime());
             dto.setComTypeName(newUserRecordDO.getComTypeName());
             dto.setDays(newUserRecordDO.getDays());
@@ -86,15 +91,17 @@ public class UserVipServiceImpl implements IUserVipService {
 
         // 卡密激活
         List<BatchInfoDO> batchInfoDOs = infoMapper.queryByUserId(userId);
-        for(BatchInfoDO batchInfoDO: batchInfoDOs) {
+        for (BatchInfoDO batchInfoDO : batchInfoDOs) {
             UserVipDetailsDTO dto = new UserVipDetailsDTO();
-            dto.setVipType(UserVipDetailsDTO.TYPE_BATCH_INFO);
+            dto.setVipType(UserVipConstant.USER_VIP_BATCH);
+            dto.setUserChanName(batchInfoDO.getUserChanName());
+            dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(batchInfoDO.getCreateTime());
             dto.setComTypeName(batchInfoDO.getComTypeName());
             dto.setDays(batchInfoDO.getDays());
             userVipDetailsDTOs.add(dto);
         }
 
-        return new DTPageInfo<>(draw, userActivityDOs.size(), userVipDetailsDTOs);
+        return new DTPageInfo<>(draw, userVipDetailsDTOs.size(), userVipDetailsDTOs);
     }
 }

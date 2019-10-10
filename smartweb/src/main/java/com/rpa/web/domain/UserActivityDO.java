@@ -11,6 +11,7 @@ import com.rpa.web.pojo.UserActivityPO;
 public class UserActivityDO extends UserActivityPO {
 
     private String phone;
+    private String userChanName;
     /**
      * 日卡，周卡，月卡，年卡
      */
@@ -32,6 +33,14 @@ public class UserActivityDO extends UserActivityPO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getUserChanName() {
+        return userChanName;
+    }
+
+    public void setUserChanName(String userChanName) {
+        this.userChanName = userChanName;
     }
 
     public String getComTypeName() {

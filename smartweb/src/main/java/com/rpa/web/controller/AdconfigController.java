@@ -1,12 +1,15 @@
 package com.rpa.web.controller;
 
 import com.rpa.web.dto.AdconfigDTO;
+import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.service.AdconfigService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+
+import static com.rpa.web.common.Constant.SHOW_INTERVAL;
 
 
 /**
@@ -44,6 +47,15 @@ public class AdconfigController {
         // 调用业务层，返回页面结果
         DTPageInfo<AdconfigDTO> dTPageInfo = adconfigService.query(draw, pageNum, pageSize, name, adNumber, status);
         return dTPageInfo;
+    }
+
+    /**
+     * 查询
+     * @return
+     */
+    @GetMapping("/query/strategy")
+    public KeyValueDTO queryStrategy( ) {
+        return this.adconfigService.queryStrategy(SHOW_INTERVAL);
     }
 
     /**
