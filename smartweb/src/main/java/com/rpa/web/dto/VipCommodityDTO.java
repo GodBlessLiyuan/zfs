@@ -31,6 +31,48 @@ public class VipCommodityDTO implements Serializable {
     private Date createTime;
     private String username;
 
+    /**
+     * PO 转 DTO
+     *
+     * @param po PO
+     * @return DTO
+     */
+    public static VipCommodityDTO convert(VipCommodityPO po) {
+        VipCommodityDTO dto = new VipCommodityDTO();
+
+        dto.setCmdyId(po.getCmdyId());
+        dto.setName(po.getName());
+        dto.setComTypeName(po.getComTypeName());
+        dto.setDays(po.getDays());
+        dto.setComName(po.getComName());
+        dto.setDescription(po.getDescription());
+        dto.setPrice(po.getPrice());
+        dto.setShowDiscount(po.getShowDiscount());
+        dto.setDiscount(po.getDiscount());
+        dto.setStatus(po.getStatus());
+        dto.setIstop(po.getIstop());
+        dto.setCreateTime(po.getCreateTime());
+        dto.setUsername(po.getUsername());
+
+        return dto;
+    }
+
+    /**
+     * PO 批量转 DTO
+     *
+     * @param pos POs
+     * @return DTOs
+     */
+    public static List<VipCommodityDTO> convert(List<VipCommodityPO> pos) {
+        List<VipCommodityDTO> dtos = new ArrayList<>();
+
+        for (VipCommodityPO po : pos) {
+            dtos.add(VipCommodityDTO.convert(po));
+        }
+
+        return dtos;
+    }
+
     public Integer getCmdyId() {
         return cmdyId;
     }
@@ -133,47 +175,5 @@ public class VipCommodityDTO implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    /**
-     * PO 转 DTO
-     *
-     * @param po PO
-     * @return DTO
-     */
-    public static VipCommodityDTO convert(VipCommodityPO po) {
-        VipCommodityDTO dto = new VipCommodityDTO();
-
-        dto.setCmdyId(po.getCmdyId());
-        dto.setName(po.getName());
-        dto.setComTypeName(po.getComTypeName());
-        dto.setDays(po.getDays());
-        dto.setComName(po.getComName());
-        dto.setDescription(po.getDescription());
-        dto.setPrice(po.getPrice());
-        dto.setShowDiscount(po.getShowDiscount());
-        dto.setDiscount(po.getDiscount());
-        dto.setStatus(po.getStatus());
-        dto.setIstop(po.getIstop());
-        dto.setCreateTime(po.getCreateTime());
-        dto.setUsername(po.getUsername());
-
-        return dto;
-    }
-
-    /**
-     * PO 批量转 DTO
-     *
-     * @param pos POs
-     * @return DTOs
-     */
-    public static List<VipCommodityDTO> convert(List<VipCommodityPO> pos) {
-        List<VipCommodityDTO> dtos = new ArrayList<>();
-
-        for (VipCommodityPO po : pos) {
-            dtos.add(VipCommodityDTO.convert(po));
-        }
-
-        return dtos;
     }
 }

@@ -3,10 +3,13 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.rpa.web.common.VipCommodityConstant;
 import com.rpa.web.dto.VipCommodityDTO;
 import com.rpa.web.mapper.ComTypeMapper;
+import com.rpa.web.mapper.SoftChannelMapper;
 import com.rpa.web.mapper.VipCommodityMapper;
 import com.rpa.web.pojo.ComTypePO;
+import com.rpa.web.pojo.SoftChannelPO;
 import com.rpa.web.pojo.VipCommodityPO;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
@@ -20,7 +23,7 @@ import java.util.Map;
 /**
  * @author: xiahui
  * @date: Created in 2019/9/26 12:03
- * @description: TODO
+ * @description: 商品列表
  * @version: 1.0
  */
 @Service
@@ -32,6 +35,9 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     @Resource
     private ComTypeMapper comTypeMapper;
 
+    @Resource
+    private SoftChannelMapper softChannelMapper;
+
     @Override
     public DTPageInfo<VipCommodityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
 
@@ -42,36 +48,43 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     }
 
     @Override
-    public void insert(int channelId, int comTypeId, String comName, String description, int price, String showDiscount, float discount, int aId) {
+    public VipCommodityDTO queryById(int cmdyId) {
+        return VipCommodityDTO.convert(vipCommodityMapper.selectByPrimaryKey(cmdyId));
+    }
 
-        // 查询产品信息数据
-        ComTypePO comTypePO = comTypeMapper.selectByPrimaryKey(comTypeId);
+    @Override
+    public int insert(int channelId, int comTypeId, String comName, String description, int price, String showDiscount,
+                      float discount, int aId) {
         VipCommodityPO vipCommodityPO = new VipCommodityPO();
-
-        vipCommodityPO.setaId(aId);
         vipCommodityPO.setSoftChannelId(channelId);
         vipCommodityPO.setComTypeId(comTypeId);
-        vipCommodityPO.setComTypeName(comTypePO.getName());
-        vipCommodityPO.setDays(comTypePO.getDays());
         vipCommodityPO.setComName(comName);
         vipCommodityPO.setDescription(description);
         vipCommodityPO.setPrice(price);
         vipCommodityPO.setShowDiscount(showDiscount);
         vipCommodityPO.setDiscount(discount);
+        vipCommodityPO.setaId(aId);
+
+        // 查询产品信息数据
+        ComTypePO comTypePO = comTypeMapper.selectByPrimaryKey(comTypeId);
+        /**
+         * 产品天数大于年会员规定天数则设置未年会员，否则设置未普通会员
+         */
+        int vipTypeId = comTypePO.getDays() >= VipCommodityConstant.YEAR_MEMBER_DAY ?
+                VipCommodityConstant.YEAR_MEMBER_KEY : VipCommodityConstant.COMM_MEMBER_KEY;
+        vipCommodityPO.setViptypeId(vipTypeId);
+        vipCommodityPO.setComTypeName(comTypePO.getName());
+        vipCommodityPO.setDays(comTypePO.getDays());
+
+        // 查询渠道信息数据
+        SoftChannelPO softChannelPO = softChannelMapper.selectByPrimaryKey(channelId);
+        vipCommodityPO.setName(softChannelPO.getName());
+
         vipCommodityPO.setCreateTime(new Date());
         vipCommodityPO.setStatus((byte) 1);
         vipCommodityPO.setIstop((byte) 1);
 
-        vipCommodityPO.setaId(1);
-        vipCommodityPO.setViptypeId(1);
-        vipCommodityPO.setSoftChannelId(1);
-
-        vipCommodityMapper.insert(vipCommodityPO);
-    }
-
-    @Override
-    public VipCommodityDTO queryById(int cmdyId) {
-        return VipCommodityDTO.convert(vipCommodityMapper.selectByPrimaryKey(cmdyId));
+        return vipCommodityMapper.insert(vipCommodityPO);
     }
 
     @Override
