@@ -25,7 +25,6 @@ public class AdconfigController {
 
     /**
      * 查询
-     *
      * @param pageNum
      * @param pageSize
      * @param name
