@@ -259,8 +259,8 @@ CREATE TABLE t_com_type
 CREATE TABLE t_device
 (
 	device_id bigint NOT NULL AUTO_INCREMENT,
-	utdid varchar(32),
-	androidid varchar(32),
+	utdid char(32),
+	androidid char(32),
 	-- android系统的版本号
 	buildversion tinyint COMMENT 'android系统的版本号',
 	soft_channel_id int,
@@ -512,7 +512,8 @@ CREATE TABLE t_soft_channel
 	create_time datetime,
 	update_time datetime,
 	PRIMARY KEY (soft_channel_id),
-	UNIQUE (soft_channel_id)
+	UNIQUE (soft_channel_id),
+	UNIQUE (name)
 );
 
 
@@ -525,6 +526,7 @@ CREATE TABLE t_user
 	create_time datetime,
 	update_time datetime,
 	chan_name char(64),
+	soft_channel_id int,
 	PRIMARY KEY (user_id),
 	UNIQUE (user_id)
 );

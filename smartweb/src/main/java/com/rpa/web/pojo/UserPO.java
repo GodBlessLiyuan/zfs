@@ -21,10 +21,13 @@ public class UserPO implements Serializable {
     private Date updateTime;
 
     private String chanName;
+
     private Integer versionCode;
     private Byte buildVersion;
     private String manufacturer;
     private String androidModel;
+
+    private Integer softChannelId;
 
     private static final long serialVersionUID = 1L;
 
@@ -114,6 +117,15 @@ public class UserPO implements Serializable {
 
     public void setAndroidModel(String androidModel) {
         this.androidModel = androidModel;
+    }
+
+
+    public Integer getSoftChannelId() {
+        return softChannelId;
+    }
+
+    public void setSoftChannelId(Integer softChannelId) {
+        this.softChannelId = softChannelId;
     }
 
     @Override
