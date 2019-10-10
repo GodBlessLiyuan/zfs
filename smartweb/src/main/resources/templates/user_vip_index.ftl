@@ -133,6 +133,38 @@
                                 </table>
                             </div>
 
+                            <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">会员详情</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="table-responsive">
+                                                <table id="details-tab" class="display" style="width:100%">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>序号</th>
+                                                        <th>会员获取方式</th>
+                                                        <th>用户渠道</th>
+                                                        <th>销售渠道</th>
+                                                        <th>支付方式</th>
+                                                        <th>获得会员时间</th>
+                                                        <th>产品类型</th>
+                                                        <th>会员天数</th>
+                                                    </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -213,7 +245,7 @@
                 {
                     "data": "userId",
                     "render": function (data, type, full) {
-                        return "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
+                        return "<a data-toggle='modal' data-target='#detailsModal' data-whatever='@getbootstrap' " +
                             "class='text-primary' onclick='javascript:detailsModal(" + data + ")'>查看详情</a>";
                     }
                 }
@@ -251,7 +283,67 @@
     }
 
     function detailsModal(userId) {
+        if ($.fn.dataTable.isDataTable('#datatab')) {
+            $('#details-tab').DataTable().destroy();
+        }
 
+        $('#details-tab').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": "/uservip/queryDetails?userId=" + userId,
+            "fnDrawCallback": function () {
+                this.api().column(0).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            },
+            "columns": [
+                {"data": null, "targets": 0},
+                {"data": "vipType"},
+                {"data": "softChannelName"},
+                {"data": null, "render": function (data, type, full) {
+                        return "";
+                    }},
+                {
+                    "data": "type",
+                    "render": function (data, type, full) {
+                        return data === 1 ? "微信" : data ===2 ? "支付宝" : "";
+
+                    }
+                },
+                {"data": "createTime"},
+                {"data": "comTypeName"},
+                {"data": "days"}
+            ],
+            "columnDefs": [
+                {
+                    "targets": [5],
+                    "render": function (data, type, full) {
+                        if (data == null || data.trim() == "") {
+                            return "";
+                        } else {
+                            let date = new Date(data);
+                            return date.getFullYear() + "/" + date.getMonth() + "/" +
+                                date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                        }
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "对不起，没有匹配的数据",
+                "sInfo": "第 _START_ - _END_ 条 / 共 _TOTAL_ 条数据",
+                "sInfoEmpty": "没有匹配的数据",
+                "sInfoFiltered": "(数据表中共 _MAX_ 条记录)",
+                "sProcessing": "正在加载中...",
+                "sSearch": "全文搜索：",
+                "oPaginate": {
+                    "sFirst": "第一页",
+                    "sPrevious": " 上一页 ",
+                    "sNext": " 下一页 ",
+                    "sLast": " 最后一页 "
+                }
+            }
+        });
     }
 </script>
 

@@ -178,4 +178,12 @@
       <if test="number != null and number != ''"> and o.order_number like '%' #{number} '%'</if>
     </where>
   </select>
+
+  <select id="queryByUserId" resultType="com.rpa.web.domain.OrderDO">
+    select v.name as softChannelName, o.type, o.create_time as createTime, v.com_type_name as comTypeName,
+    v.days
+    from t_order o
+    left join t_vipcommodity v on o.cmdy_id = v.cmdy_id
+    where o.user_id = #{userId}
+  </select>
 </mapper>
