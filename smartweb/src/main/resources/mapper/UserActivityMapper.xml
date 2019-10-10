@@ -12,10 +12,11 @@
     <result column="user_device_id" jdbcType="INTEGER" property="userDeviceId" />
     <result column="device_id" jdbcType="BIGINT" property="deviceId" />
     <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="url" jdbcType="CHAR" property="url" />
   </resultMap>
   <sql id="Base_Column_List">
     u_a_id, activity_id, user_id, `time`, `status`, create_time, update_time, user_device_id, 
-    device_id, a_id
+    device_id, a_id, url
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -31,11 +32,11 @@
     insert into t_user_activity (u_a_id, activity_id, user_id, 
       `time`, `status`, create_time, 
       update_time, user_device_id, device_id, 
-      a_id)
+      a_id, url)
     values (#{uAId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
       #{time,jdbcType=TIME}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{userDeviceId,jdbcType=INTEGER}, #{deviceId,jdbcType=BIGINT}, 
-      #{aId,jdbcType=INTEGER})
+      #{aId,jdbcType=INTEGER}, #{url,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.UserActivityPO">
     insert into t_user_activity
@@ -70,6 +71,9 @@
       <if test="aId != null">
         a_id,
       </if>
+      <if test="url != null">
+        url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uAId != null">
@@ -101,6 +105,9 @@
       </if>
       <if test="aId != null">
         #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -134,6 +141,9 @@
       <if test="aId != null">
         a_id = #{aId,jdbcType=INTEGER},
       </if>
+      <if test="url != null">
+        url = #{url,jdbcType=CHAR},
+      </if>
     </set>
     where u_a_id = #{uAId,jdbcType=INTEGER}
   </update>
@@ -147,7 +157,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       user_device_id = #{userDeviceId,jdbcType=INTEGER},
       device_id = #{deviceId,jdbcType=BIGINT},
-      a_id = #{aId,jdbcType=INTEGER}
+      a_id = #{aId,jdbcType=INTEGER},
+      url = #{url,jdbcType=CHAR}
     where u_a_id = #{uAId,jdbcType=INTEGER}
   </update>
 

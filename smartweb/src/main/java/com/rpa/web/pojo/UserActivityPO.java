@@ -31,6 +31,8 @@ public class UserActivityPO implements Serializable {
 
     private Integer aId;
 
+    private String url;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getuAId() {
@@ -113,6 +115,14 @@ public class UserActivityPO implements Serializable {
         this.aId = aId;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -134,7 +144,8 @@ public class UserActivityPO implements Serializable {
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getUserDeviceId() == null ? other.getUserDeviceId() == null : this.getUserDeviceId().equals(other.getUserDeviceId()))
             && (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()))
-            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()));
+            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
+            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()));
     }
 
     @Override
@@ -151,6 +162,7 @@ public class UserActivityPO implements Serializable {
         result = prime * result + ((getUserDeviceId() == null) ? 0 : getUserDeviceId().hashCode());
         result = prime * result + ((getDeviceId() == null) ? 0 : getDeviceId().hashCode());
         result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
+        result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         return result;
     }
 
@@ -170,6 +182,7 @@ public class UserActivityPO implements Serializable {
         sb.append(", userDeviceId=").append(userDeviceId);
         sb.append(", deviceId=").append(deviceId);
         sb.append(", aId=").append(aId);
+        sb.append(", url=").append(url);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
