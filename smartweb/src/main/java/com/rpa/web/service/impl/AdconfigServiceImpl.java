@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.rpa.web.common.Constant;
 import com.rpa.web.dto.AdconfigDTO;
+import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.mapper.AdconfigMapper;
 import com.rpa.web.mapper.KeyValueMapper;
 import com.rpa.web.pojo.AdconfigPO;
@@ -80,6 +81,23 @@ public class AdconfigServiceImpl implements AdconfigService {
         //根据分页查询的结果，封装最终的返回结果
         return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
     }
+
+    /**
+     * 查询广告策略
+     * @param showInterval
+     * @return
+     */
+    @Override
+    public KeyValueDTO queryStrategy(int showInterval) {
+
+        KeyValuePO keyValuePO = this.keyValueMapper.selectByPrimaryKey(showInterval);
+        KeyValueDTO keyValueDTO = new KeyValueDTO();
+        keyValueDTO.setKeyName(keyValuePO.getKeyName());
+        keyValueDTO.setValue(keyValuePO.getValue());
+
+        return keyValueDTO;
+    }
+
 
     /**
      * 插入
@@ -178,6 +196,7 @@ public class AdconfigServiceImpl implements AdconfigService {
 
 
     }
+
 
 
     /**
