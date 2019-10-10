@@ -19,6 +19,11 @@ public class BatchInfoDO extends BatchInfoPO {
     private String comTypeName;
 
     private Date createTime;
+
+    /**
+     * 用户渠道
+     */
+    private String userChanName;
     
     public String getChanNickname() {
         return chanNickname;
@@ -57,5 +62,13 @@ public class BatchInfoDO extends BatchInfoPO {
     
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getUserChanName() {
+        return userChanName;
+    }
+
+    public void setUserChanName(String userChanName) {
+        this.userChanName = userChanName;
     }
 }
