@@ -29,7 +29,7 @@ public class PageController {
      */
     @RequestMapping("/comtype")
     public String comType() {
-        return "comtype";
+        return "com_type_index";
     }
 
     /**
@@ -39,7 +39,7 @@ public class PageController {
      */
     @RequestMapping("/vipcommodity")
     public String commodity() {
-        return "vipcommodity";
+        return "vip_commodity_index";
     }
 
     /**
@@ -49,7 +49,7 @@ public class PageController {
      */
     @RequestMapping("/softchannel")
     public String softChannel() {
-        return "softchannel";
+        return "soft_channel_index";
     }
 
     /**
@@ -69,7 +69,7 @@ public class PageController {
      */
     @RequestMapping("/otherapp")
     public String otherApp() {
-        return "otherapp";
+        return "other_app_index";
     }
 
     /**
@@ -147,7 +147,7 @@ public class PageController {
      */
     @RequestMapping("/useractivity")
     public String userActivity() {
-        return "user_activity";
+        return "user_activity_index";
     }
 
     /**

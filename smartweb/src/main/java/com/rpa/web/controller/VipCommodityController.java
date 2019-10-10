@@ -19,30 +19,14 @@ import java.util.Map;
  * @description: 商品列表
  * @version: 1.0
  */
+@RequestMapping("vipcommodity")
 @RestController
 public class VipCommodityController {
 
     @Resource
     private IVipCommodityService service;
 
-    @RequestMapping("/vipcommodity/insert")
-    public void insert(@RequestParam(value = "channelId") int channelId,
-                       @RequestParam(value = "comTypeId") int comTypeId,
-                       @RequestParam(value = "comName") String comName,
-                       @RequestParam(value = "description") String description,
-                       @RequestParam(value = "price") int price,
-                       @RequestParam(value = "showDiscount") String showDiscount,
-                       @RequestParam(value = "discount") float discount, HttpSession session) {
-
-        // 从Session里获取管理员Id
-        AdminUserPO loginUser = (AdminUserPO) session.getAttribute("loginUser");
-
-        service.insert(channelId, comTypeId, comName, description, price, showDiscount,
-                discount, 1);
-
-    }
-
-    @RequestMapping("/vipcommodity/query")
+    @RequestMapping("query")
     public DTPageInfo<VipCommodityDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                              @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                              @RequestParam(value = "length", defaultValue = "10") int pageSize,
@@ -55,17 +39,32 @@ public class VipCommodityController {
         reqData.put("comname", comname);
         reqData.put("channelname", channelname);
 
-        DTPageInfo<VipCommodityDTO> data = service.query(draw, pageNum, pageSize, reqData);
-        return data;
+        return service.query(draw, pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("/vipcommodity/queryById")
+    @RequestMapping("queryById")
     public VipCommodityDTO queryById(@RequestParam(value = "cmdyId") int cmdyId) {
-        VipCommodityDTO dto = service.queryById(cmdyId);
-        return dto;
+        return service.queryById(cmdyId);
     }
 
-    @RequestMapping("/vipcommodity/update")
+    @RequestMapping("insert")
+    public int insert(@RequestParam(value = "channelId") int channelId,
+                      @RequestParam(value = "comTypeId") int comTypeId,
+                      @RequestParam(value = "comName") String comName,
+                      @RequestParam(value = "description") String description,
+                      @RequestParam(value = "price") int price,
+                      @RequestParam(value = "showDiscount") String showDiscount,
+                      @RequestParam(value = "discount") float discount, HttpSession session) {
+
+        // 从Session里获取管理员Id
+        AdminUserPO loginUser = (AdminUserPO) session.getAttribute("loginUser");
+
+        return service.insert(channelId, comTypeId, comName, description, price, showDiscount,
+                discount, 1);
+
+    }
+
+    @RequestMapping("update")
     public int update(@RequestParam(value = "cmdyId") int cmdyId,
                       @RequestParam(value = "comName") String comName,
                       @RequestParam(value = "description") String description,
@@ -76,13 +75,13 @@ public class VipCommodityController {
         return service.update(cmdyId, comName, description, price, showDiscount, discount);
     }
 
-    @RequestMapping("/vipcommodity/updateStatus")
+    @RequestMapping("updateStatus")
     public int updateStatus(@RequestParam(value = "cmdyId") int cmdyId,
                             @RequestParam(value = "status") byte status) {
         return service.updateStatus(cmdyId, status);
     }
 
-    @RequestMapping("/vipcommodity/updateIsTop")
+    @RequestMapping("updateIsTop")
     public int updateIsTop(@RequestParam(value = "cmdyId") int cmdyId,
                            @RequestParam(value = "isTop") byte isTop) {
         return service.updateIsTop(cmdyId, isTop);

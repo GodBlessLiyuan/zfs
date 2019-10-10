@@ -34,6 +34,12 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
     }
 
     @Override
+    public List<SoftChannelDTO> queryAll() {
+        List<SoftChannelPO> pos = softChannelMapper.queryAll();
+        return SoftChannelDTO.convert(pos);
+    }
+
+    @Override
     public int insert(String channelName, String extra) {
         SoftChannelPO po = new SoftChannelPO();
 
@@ -42,11 +48,5 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
         po.setCreateTime(new Date());
 
         return softChannelMapper.insert(po);
-    }
-
-    @Override
-    public List<SoftChannelDTO> queryAll() {
-        List<SoftChannelPO> pos = softChannelMapper.queryAll();
-        return SoftChannelDTO.convert(pos);
     }
 }

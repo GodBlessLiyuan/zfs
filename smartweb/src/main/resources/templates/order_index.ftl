@@ -196,7 +196,7 @@
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        // 下拉框请求后端并赋值
+        // 产品列表
         $.ajax({
             type: 'GET',
             url: '/comtype/queryAll',
@@ -209,6 +209,7 @@
             }
         });
 
+        // 渠道信息
         $.ajax({
             type: 'GET',
             url: '/softchannel/queryAll',

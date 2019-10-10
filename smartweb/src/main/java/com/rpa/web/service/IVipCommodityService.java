@@ -1,7 +1,6 @@
 package com.rpa.web.service;
 
 import com.rpa.web.dto.VipCommodityDTO;
-import com.rpa.web.pojo.VipCommodityPO;
 import com.rpa.web.utils.DTPageInfo;
 
 import java.util.Map;
@@ -26,6 +25,14 @@ public interface IVipCommodityService {
     DTPageInfo<VipCommodityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
+     * 根据主键查询数据
+     *
+     * @param cmdyId 主键
+     * @return
+     */
+    VipCommodityDTO queryById(int cmdyId);
+
+    /**
      * 新增
      *
      * @param channelId    销售渠道Id
@@ -36,30 +43,26 @@ public interface IVipCommodityService {
      * @param showDiscount 折扣
      * @param discount     售价
      * @param aId          管理员Id
-     */
-    void insert(int channelId, int comTypeId, String comName, String description,
-                int price, String showDiscount, float discount, int aId);
-
-    /**
-     * 根据主键查询数据
-     * @param cmdyId 主键
      * @return
      */
-    VipCommodityDTO queryById(int cmdyId);
+    int insert(int channelId, int comTypeId, String comName, String description, int price, String showDiscount, float discount, int aId);
 
     /**
      * 更新
-     * @param cmdyId 主键
-     * @param comName 商品名称
-     * @param description 商品描述
-     * @param price 原价
+     *
+     * @param cmdyId       主键
+     * @param comName      商品名称
+     * @param description  商品描述
+     * @param price        原价
      * @param showDiscount 折扣
-     * @param discount 售价
+     * @param discount     售价
+     * @return
      */
     int update(int cmdyId, String comName, String description, int price, String showDiscount, float discount);
 
     /**
      * 更新是否上架
+     *
      * @param cmdyId
      * @param status
      * @return
@@ -68,6 +71,7 @@ public interface IVipCommodityService {
 
     /**
      * 更新是否置顶
+     *
      * @param cmdyId
      * @param isTop
      * @return
