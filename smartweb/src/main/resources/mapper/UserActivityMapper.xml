@@ -177,4 +177,24 @@
     left join t_activity a on ua.activity_id = a.activity_id
     where ua.user_id = #{userId}
   </select>
+
+  <select id="goodCommentQuery" resultType="com.rpa.web.domain.UserActivityDO">
+    select u.phone, ua.create_time as createTime, ua.url, a.com_type_name as comTypeName, ua.status, us.a_id as aId
+    from t_user_activity ua
+    left join t_activity a on ua.activity_id = a.activity_id
+    left join t_user u on ua.user_id = u.user_id
+    <where>
+      <if test="phone != null and phone != ''">
+       u.phone like '%' #{phone} '%'
+      </if>
+    </where>
+  </select>
+
+  <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    username
+    from t_admin_user
+    where a_id = #{aId}
+  </select>
+
 </mapper>

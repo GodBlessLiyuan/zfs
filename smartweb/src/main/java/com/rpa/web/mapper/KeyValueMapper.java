@@ -8,5 +8,4 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface KeyValueMapper extends BaseDAO<KeyValuePO, Integer> {
-    int updateStrategy(int showInterval, int show_interval);
 }

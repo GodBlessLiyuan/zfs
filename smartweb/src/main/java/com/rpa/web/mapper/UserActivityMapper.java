@@ -4,6 +4,7 @@ import com.rpa.web.domain.UserActivityDO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * UserActivityMapper继承基类
@@ -16,4 +17,8 @@ public interface UserActivityMapper extends BaseDAO<UserActivityDO, Integer> {
      * @return
      */
     List<UserActivityDO> queryByUserId(int userId);
+
+    List<UserActivityDO> goodCommentQuery(Map<String, Object> map);
+
+    String queryUsernameByAid(Integer aId);
 }

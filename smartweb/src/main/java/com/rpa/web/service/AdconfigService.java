@@ -22,5 +22,5 @@ public interface AdconfigService {
 
     int updateStatus(AdconfigDTO adconfigDTO, HttpSession httpSession);
 
-    int updateStrategy(int show_interval);
+    int updateStrategy(String show_interval);
 }

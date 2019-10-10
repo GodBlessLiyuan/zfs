@@ -2,10 +2,12 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.rpa.web.common.Constant;
 import com.rpa.web.dto.AdconfigDTO;
 import com.rpa.web.mapper.AdconfigMapper;
 import com.rpa.web.mapper.KeyValueMapper;
 import com.rpa.web.pojo.AdconfigPO;
+import com.rpa.web.pojo.KeyValuePO;
 import com.rpa.web.service.AdconfigService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,7 @@ public class AdconfigServiceImpl implements AdconfigService {
 
     /**
      * 查询
+     *
      * @param draw
      * @param pageNum
      * @param pageSize
@@ -59,7 +62,7 @@ public class AdconfigServiceImpl implements AdconfigService {
 
         // 将查询到的 AdconfigPO 数据转换为 AdconfigDTO
         List<AdconfigDTO> lists_DTO = new ArrayList<>();
-        for(AdconfigPO po: lists_PO) {
+        for (AdconfigPO po : lists_PO) {
             AdconfigDTO dto = new AdconfigDTO();
             dto.setAdId(po.getAdId());
             dto.setAdNumber(po.getAdNumber());
@@ -80,6 +83,7 @@ public class AdconfigServiceImpl implements AdconfigService {
 
     /**
      * 插入
+     *
      * @param adconfigDTO
      * @TODO 需插入操作人，即管理员ID，需从session中获取
      */
@@ -96,8 +100,8 @@ public class AdconfigServiceImpl implements AdconfigService {
         adconfigPO.setTotal(adconfigDTO.getTotal());
         adconfigPO.setUpdateTime(new Date());
         adconfigPO.setCreateTime(new Date());
-        adconfigPO.setStatus((byte)1);
-        adconfigPO.setDr((byte)1);
+        adconfigPO.setStatus((byte) 1);
+        adconfigPO.setDr((byte) 1);
 
         int count = this.adconfigMapper.insert(adconfigPO);
         return count;
@@ -105,6 +109,7 @@ public class AdconfigServiceImpl implements AdconfigService {
 
     /**
      * 修改
+     *
      * @param adconfigDTO
      * @param httpSession
      * @TODO 还需要修改操作人，即管理员a_id字段，需从session中获取
@@ -130,6 +135,7 @@ public class AdconfigServiceImpl implements AdconfigService {
 
     /**
      * 修改状态
+     *
      * @param adconfigDTO
      * @param httpSession
      * @return
@@ -149,17 +155,34 @@ public class AdconfigServiceImpl implements AdconfigService {
 
     /**
      * 修改广告展现间隔
+     *
      * @param show_interval
      * @return
      */
     @Override
-    public int updateStrategy(int show_interval) {
-        return this.keyValueMapper.updateStrategy(SHOW_INTERVAL, show_interval);
+    public int updateStrategy(String show_interval) {
+
+        KeyValuePO po = new KeyValuePO();
+        po.setKeyName(SHOW_INTERVAL);
+        po.setValue(show_interval);
+
+        // 先查询下t_key_value表中是否有SHOW_INTERVAL数据
+        KeyValuePO keyValuePO = this.keyValueMapper.selectByPrimaryKey(SHOW_INTERVAL);
+        if (keyValuePO == null) {
+            return this.keyValueMapper.insert(po);
+        }
+        return this.keyValueMapper.updateByPrimaryKey(po);
+
+
+
+
+
     }
 
 
     /**
      * 删除广告
+     *
      * @param adId
      * @return
      */
@@ -170,10 +193,9 @@ public class AdconfigServiceImpl implements AdconfigService {
     }
 
 
-
-
     /**
      * 根据aId，从t_admin_user表中查询username
+     *
      * @param aId
      * @return
      */

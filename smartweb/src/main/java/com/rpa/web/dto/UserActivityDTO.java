@@ -23,6 +23,8 @@ public class UserActivityDTO implements Serializable {
     private Integer days;
     private Integer source;
     private Byte status;
+    private String url;
+    private String operator;
 
     public static UserActivityDTO convert(UserActivityDO d) {
         UserActivityDTO dto = new UserActivityDTO();
@@ -99,5 +101,21 @@ public class UserActivityDTO implements Serializable {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 }

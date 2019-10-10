@@ -74,7 +74,7 @@ public class AdconfigController {
     }
 
     @PostMapping("/update/strategy")
-    public int updateStrategy(int show_interval) {
+    public int updateStrategy(String show_interval) {
         return this.adconfigService.updateStrategy(show_interval);
     }
 
