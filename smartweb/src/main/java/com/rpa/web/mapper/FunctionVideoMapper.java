@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface FunctionVideoMapper extends BaseDAO<FunctionVideoPO, Integer> {
+    String queryUsernameByAid(Integer aId);
 }

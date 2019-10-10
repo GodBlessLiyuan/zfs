@@ -8,9 +8,8 @@ import java.util.Date;
  * @author 
  */
 public class AdconfigDTO implements Serializable {
-    private Integer adId;
 
-    private Integer aId;
+    private Integer adId;
 
     private String adNumber;
 
@@ -33,6 +32,8 @@ public class AdconfigDTO implements Serializable {
      */
     private Byte status;
 
+    private String operator;
+
     private static final long serialVersionUID = 1L;
 
 
@@ -42,14 +43,6 @@ public class AdconfigDTO implements Serializable {
 
     public void setAdId(Integer adId) {
         this.adId = adId;
-    }
-
-    public Integer getaId() {
-        return aId;
-    }
-
-    public void setaId(Integer aId) {
-        this.aId = aId;
     }
 
     public String getAdNumber() {
@@ -124,6 +117,14 @@ public class AdconfigDTO implements Serializable {
         this.status = status;
     }
 
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -137,7 +138,7 @@ public class AdconfigDTO implements Serializable {
         }
         AdconfigDTO other = (AdconfigDTO) that;
         return (this.getAdId() == null ? other.getAdId() == null : this.getAdId().equals(other.getAdId()))
-            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
+            && (this.getOperator() == null ? other.getOperator() == null : this.getOperator().equals(other.getOperator()))
             && (this.getAdNumber() == null ? other.getAdNumber() == null : this.getAdNumber().equals(other.getAdNumber()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getPriority() == null ? other.getPriority() == null : this.getPriority().equals(other.getPriority()))
@@ -154,7 +155,7 @@ public class AdconfigDTO implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getAdId() == null) ? 0 : getAdId().hashCode());
-        result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
+        result = prime * result + ((getOperator() == null) ? 0 : getOperator().hashCode());
         result = prime * result + ((getAdNumber() == null) ? 0 : getAdNumber().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getPriority() == null) ? 0 : getPriority().hashCode());
@@ -174,7 +175,7 @@ public class AdconfigDTO implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", adId=").append(adId);
-        sb.append(", aId=").append(aId);
+        sb.append(", operator=").append(operator);
         sb.append(", adNumber=").append(adNumber);
         sb.append(", name=").append(name);
         sb.append(", priority=").append(priority);

@@ -8,7 +8,7 @@ import java.util.Date;
  * @author: dangyi
  * @date: Created in 10:31 2019/10/9
  * @version: 1.0.0
- * @description: TODO
+ * @description:
  */
 public class BatchInfoDO extends BatchInfoPO {
 
