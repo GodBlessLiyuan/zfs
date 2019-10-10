@@ -86,9 +86,9 @@ CREATE TABLE t_adconfig
 	contacts char(20),
 	total tinyint,
 	-- 1关闭 2开启 3 删除
-	status tinyint COMMENT '1关闭 2开启 3 删除',
+	status tinyint DEFAULT 1 COMMENT '1关闭 2开启 3 删除',
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	PRIMARY KEY (ad_id),
 	UNIQUE (ad_id)
 );
@@ -530,18 +530,19 @@ CREATE TABLE t_user
 
 CREATE TABLE t_user_activity
 (
-    u_a_id int NOT NULL AUTO_INCREMENT,
-    activity_id int NOT NULL,
-    user_id bigint NOT NULL,
-    time time,
-    -- 当活动存在多个执行状态时，默认为1
-    status tinyint COMMENT '当活动存在多个执行状态时，默认为1',
-    create_time datetime,
-    update_time datetime,
-    user_device_id int,
-    device_id bigint,
-    PRIMARY KEY (u_a_id),
-    UNIQUE (u_a_id)
+	u_a_id int NOT NULL AUTO_INCREMENT,
+	activity_id int NOT NULL,
+	user_id bigint NOT NULL,
+	time time,
+	-- 当活动存在多个执行状态时，默认为1     10 通过   20 驳回
+	status tinyint COMMENT '当活动存在多个执行状态时，默认为1     10 通过   20 驳回',
+	create_time datetime,
+	update_time datetime,
+	user_device_id int,
+	device_id bigint,
+	a_id int,
+	PRIMARY KEY (u_a_id),
+	UNIQUE (u_a_id)
 );
 
 

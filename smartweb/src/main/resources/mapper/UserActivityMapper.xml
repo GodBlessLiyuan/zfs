@@ -11,10 +11,11 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="user_device_id" jdbcType="INTEGER" property="userDeviceId" />
     <result column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="a_id" jdbcType="INTEGER" property="aId" />
   </resultMap>
   <sql id="Base_Column_List">
     u_a_id, activity_id, user_id, `time`, `status`, create_time, update_time, user_device_id, 
-    device_id
+    device_id, a_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -29,12 +30,12 @@
   <insert id="insert" parameterType="com.rpa.web.pojo.UserActivityPO">
     insert into t_user_activity (u_a_id, activity_id, user_id, 
       `time`, `status`, create_time, 
-      update_time, user_device_id, device_id
-      )
+      update_time, user_device_id, device_id, 
+      a_id)
     values (#{uAId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
       #{time,jdbcType=TIME}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{userDeviceId,jdbcType=INTEGER}, #{deviceId,jdbcType=BIGINT}
-      )
+      #{updateTime,jdbcType=TIMESTAMP}, #{userDeviceId,jdbcType=INTEGER}, #{deviceId,jdbcType=BIGINT}, 
+      #{aId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.UserActivityPO">
     insert into t_user_activity
@@ -66,6 +67,9 @@
       <if test="deviceId != null">
         device_id,
       </if>
+      <if test="aId != null">
+        a_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uAId != null">
@@ -94,6 +98,9 @@
       </if>
       <if test="deviceId != null">
         #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -124,6 +131,9 @@
       <if test="deviceId != null">
         device_id = #{deviceId,jdbcType=BIGINT},
       </if>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
     </set>
     where u_a_id = #{uAId,jdbcType=INTEGER}
   </update>
@@ -136,7 +146,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       user_device_id = #{userDeviceId,jdbcType=INTEGER},
-      device_id = #{deviceId,jdbcType=BIGINT}
+      device_id = #{deviceId,jdbcType=BIGINT},
+      a_id = #{aId,jdbcType=INTEGER}
     where u_a_id = #{uAId,jdbcType=INTEGER}
   </update>
 
