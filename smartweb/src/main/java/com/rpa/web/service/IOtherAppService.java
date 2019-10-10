@@ -4,6 +4,7 @@ import com.rpa.web.dto.OtherAppDTO;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -36,7 +37,7 @@ public interface IOtherAppService {
      * @param aId          管理员Id
      * @return
      */
-    int insert(String oName, String extra, MultipartFile iconUrl, byte downloadType, String appUrl, int aId);
+    int insert(String oName, String extra, MultipartFile iconUrl, byte downloadType, String appUrl, int aId, HttpServletRequest req);
 
     /**
      * 删除
