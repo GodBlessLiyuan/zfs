@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS t_admin_user;
 DROP TABLE IF EXISTS t_app_ch;
 DROP TABLE IF EXISTS t_app_plu_ch;
 DROP TABLE IF EXISTS t_app;
+DROP TABLE IF EXISTS t_bannerconfig;
 DROP TABLE IF EXISTS t_batch_info;
 DROP TABLE IF EXISTS t_ch_batch;
 DROP TABLE IF EXISTS t_channel;
@@ -183,6 +184,24 @@ CREATE TABLE t_app_plu_ch
 	update_time datetime,
 	PRIMARY KEY (apc_id),
 	UNIQUE (apc_id)
+);
+
+
+CREATE TABLE t_bannerconfig
+(
+	banner_id int NOT NULL AUTO_INCREMENT,
+	a_id int NOT NULL,
+	name char(32),
+	create_time datetime,
+	update_time datetime,
+	-- 1关闭 2开启 3 删除
+	status tinyint DEFAULT 1 COMMENT '1关闭 2开启 3 删除',
+	-- 1 未删除  2删除
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
+	start_time datetime,
+	url char(255),
+	PRIMARY KEY (banner_id),
+	UNIQUE (banner_id)
 );
 
 
