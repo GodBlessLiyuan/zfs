@@ -22,4 +22,6 @@ public interface IUserActivityService {
      * @return
      */
     DTPageInfo<UserActivityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+
+    DTPageInfo<UserActivityDTO> goodCommentQuery(int draw, int pageNum, int pageSize, String phone);
 }
