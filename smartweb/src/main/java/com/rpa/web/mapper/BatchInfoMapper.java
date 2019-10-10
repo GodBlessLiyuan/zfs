@@ -13,4 +13,11 @@ import java.util.List;
 public interface BatchInfoMapper extends BaseDAO<BatchInfoDO, Integer> {
     void insertBatchInfo(List<BatchInfoPO> batchInfoPOs);
     void updateStatusByBatchId(Byte status, Integer batchId);
+
+    /**
+     * 根据用户Id查询数据
+     * @param userId
+     * @return
+     */
+    List<BatchInfoDO> queryByUserId(int userId);
 }
