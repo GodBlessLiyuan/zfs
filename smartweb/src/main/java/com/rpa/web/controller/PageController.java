@@ -150,4 +150,12 @@ public class PageController {
         return "user_activity";
     }
 
+    /**
+     * 用户会员数据
+     * @return
+     */
+    @RequestMapping("/uservip")
+    public String userVip() {
+        return "user_vip_index";
+    }
 }

@@ -8,9 +8,6 @@ import java.util.Date;
  * @author 
  */
 public class UserVipPO implements Serializable {
-    /**
-     * 允许为null
-     */
     private Long userId;
 
     private Integer viptypeId;
@@ -31,6 +28,10 @@ public class UserVipPO implements Serializable {
     private Date vcreateTime;
 
     private Date vendTime;
+
+    private Date firstTime;
+
+    private Date lastTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -106,6 +107,22 @@ public class UserVipPO implements Serializable {
         this.vendTime = vendTime;
     }
 
+    public Date getFirstTime() {
+        return firstTime;
+    }
+
+    public void setFirstTime(Date firstTime) {
+        this.firstTime = firstTime;
+    }
+
+    public Date getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(Date lastTime) {
+        this.lastTime = lastTime;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -126,7 +143,9 @@ public class UserVipPO implements Serializable {
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getVcreateTime() == null ? other.getVcreateTime() == null : this.getVcreateTime().equals(other.getVcreateTime()))
-            && (this.getVendTime() == null ? other.getVendTime() == null : this.getVendTime().equals(other.getVendTime()));
+            && (this.getVendTime() == null ? other.getVendTime() == null : this.getVendTime().equals(other.getVendTime()))
+            && (this.getFirstTime() == null ? other.getFirstTime() == null : this.getFirstTime().equals(other.getFirstTime()))
+            && (this.getLastTime() == null ? other.getLastTime() == null : this.getLastTime().equals(other.getLastTime()));
     }
 
     @Override
@@ -142,6 +161,8 @@ public class UserVipPO implements Serializable {
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getVcreateTime() == null) ? 0 : getVcreateTime().hashCode());
         result = prime * result + ((getVendTime() == null) ? 0 : getVendTime().hashCode());
+        result = prime * result + ((getFirstTime() == null) ? 0 : getFirstTime().hashCode());
+        result = prime * result + ((getLastTime() == null) ? 0 : getLastTime().hashCode());
         return result;
     }
 
@@ -160,6 +181,8 @@ public class UserVipPO implements Serializable {
         sb.append(", updateTime=").append(updateTime);
         sb.append(", vcreateTime=").append(vcreateTime);
         sb.append(", vendTime=").append(vendTime);
+        sb.append(", firstTime=").append(firstTime);
+        sb.append(", lastTime=").append(lastTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

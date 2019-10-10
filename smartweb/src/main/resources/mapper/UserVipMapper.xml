@@ -11,16 +11,18 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="vcreate_time" jdbcType="TIMESTAMP" property="vcreateTime" />
     <result column="vend_time" jdbcType="TIMESTAMP" property="vendTime" />
+    <result column="first_time" jdbcType="TIMESTAMP" property="firstTime" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
   </resultMap>
   <insert id="insert" parameterType="com.rpa.web.pojo.UserVipPO">
     insert into t_user_vip (user_id, viptype_id, start_time, 
       end_time, `status`, create_time, 
-      update_time, vcreate_time, vend_time
-      )
+      update_time, vcreate_time, vend_time, 
+      first_time, last_time)
     values (#{userId,jdbcType=BIGINT}, #{viptypeId,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, 
       #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{vcreateTime,jdbcType=TIMESTAMP}, #{vendTime,jdbcType=TIMESTAMP}
-      )
+      #{updateTime,jdbcType=TIMESTAMP}, #{vcreateTime,jdbcType=TIMESTAMP}, #{vendTime,jdbcType=TIMESTAMP}, 
+      #{firstTime,jdbcType=TIMESTAMP}, #{lastTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.UserVipPO">
     insert into t_user_vip
@@ -52,6 +54,12 @@
       <if test="vendTime != null">
         vend_time,
       </if>
+      <if test="firstTime != null">
+        first_time,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -81,6 +89,25 @@
       <if test="vendTime != null">
         #{vendTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="firstTime != null">
+        #{firstTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
+
+  <select id="query" resultType="com.rpa.web.domain.UserVipDO">
+    select uv.user_id as userId, u.phone, u.create_time as createTime, uv.first_time as firstTime, uv.end_time as
+    endTime, uv.vend_time as
+    vendTime, uv.last_time as lastTime
+    from t_user_vip uv
+    left join t_user u on uv.user_id = u.user_id
+    <where>
+      <if test="phone != null and phone != ''"> and u.phone like '%' #{phone} '%'</if>
+      <if test="isPay == 1"> and uv.first_time is not null</if>
+      <if test="isPay == 2"> and uv.first_time is null</if>
+    </where>
+  </select>
 </mapper>
