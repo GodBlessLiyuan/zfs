@@ -29,6 +29,8 @@ public class UserActivityPO implements Serializable {
 
     private Long deviceId;
 
+    private Integer aId;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getuAId() {
@@ -103,6 +105,14 @@ public class UserActivityPO implements Serializable {
         this.deviceId = deviceId;
     }
 
+    public Integer getaId() {
+        return aId;
+    }
+
+    public void setaId(Integer aId) {
+        this.aId = aId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -123,7 +133,8 @@ public class UserActivityPO implements Serializable {
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getUserDeviceId() == null ? other.getUserDeviceId() == null : this.getUserDeviceId().equals(other.getUserDeviceId()))
-            && (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()));
+            && (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()))
+            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()));
     }
 
     @Override
@@ -139,6 +150,7 @@ public class UserActivityPO implements Serializable {
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getUserDeviceId() == null) ? 0 : getUserDeviceId().hashCode());
         result = prime * result + ((getDeviceId() == null) ? 0 : getDeviceId().hashCode());
+        result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
         return result;
     }
 
@@ -157,6 +169,7 @@ public class UserActivityPO implements Serializable {
         sb.append(", updateTime=").append(updateTime);
         sb.append(", userDeviceId=").append(userDeviceId);
         sb.append(", deviceId=").append(deviceId);
+        sb.append(", aId=").append(aId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

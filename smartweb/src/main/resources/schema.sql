@@ -541,6 +541,7 @@ CREATE TABLE t_user_activity
 	update_time datetime,
 	user_device_id int,
 	device_id bigint,
+	a_id int,
 	PRIMARY KEY (u_a_id),
 	UNIQUE (u_a_id)
 );
