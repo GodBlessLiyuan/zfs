@@ -5,7 +5,8 @@ import java.util.Date;
 
 /**
  * t_batch_info
- * @author 
+ *
+ * @author
  */
 public class BatchInfoPO implements Serializable {
     private Integer id;
@@ -25,14 +26,6 @@ public class BatchInfoPO implements Serializable {
      * 默认为null
      */
     private Date updateTime;
-
-    private String chanNickname;
-
-    private String chanName;
-
-    private String comTypeName;
-
-    private Date createTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -84,38 +77,6 @@ public class BatchInfoPO implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public String getChanNickname() {
-        return chanNickname;
-    }
-
-    public void setChanNickname(String chanNickname) {
-        this.chanNickname = chanNickname;
-    }
-
-    public String getChanName() {
-        return chanName;
-    }
-
-    public void setChanName(String chanName) {
-        this.chanName = chanName;
-    }
-
-    public String getComTypeName() {
-        return comTypeName;
-    }
-
-    public void setComTypeName(String comTypeName) {
-        this.comTypeName = comTypeName;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
 
     @Override
     public boolean equals(Object that) {
@@ -130,11 +91,11 @@ public class BatchInfoPO implements Serializable {
         }
         BatchInfoPO other = (BatchInfoPO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getVipkey() == null ? other.getVipkey() == null : this.getVipkey().equals(other.getVipkey()))
-            && (this.getBatchId() == null ? other.getBatchId() == null : this.getBatchId().equals(other.getBatchId()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+                && (this.getVipkey() == null ? other.getVipkey() == null : this.getVipkey().equals(other.getVipkey()))
+                && (this.getBatchId() == null ? other.getBatchId() == null : this.getBatchId().equals(other.getBatchId()))
+                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+                && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override

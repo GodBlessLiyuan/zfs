@@ -8,7 +8,6 @@ import java.util.Date;
  * @author 
  */
 public class ChBatchPO implements Serializable {
-
     private Integer batchId;
 
     private Integer num;
@@ -59,6 +58,8 @@ public class ChBatchPO implements Serializable {
      * 对应着更新管理员update_a_id
      */
     private String operator;
+
+    private Integer days;
 
     private static final long serialVersionUID = 1L;
 
@@ -208,6 +209,14 @@ public class ChBatchPO implements Serializable {
         this.nonActivity = nonActivity;
     }
 
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -231,7 +240,8 @@ public class ChBatchPO implements Serializable {
             && (this.getComTypeName() == null ? other.getComTypeName() == null : this.getComTypeName().equals(other.getComTypeName()))
             && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()))
             && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
-            && (this.getUpdateAId() == null ? other.getUpdateAId() == null : this.getUpdateAId().equals(other.getUpdateAId()));
+            && (this.getUpdateAId() == null ? other.getUpdateAId() == null : this.getUpdateAId().equals(other.getUpdateAId()))
+            && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()));
     }
 
     @Override
@@ -250,6 +260,7 @@ public class ChBatchPO implements Serializable {
         result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
         result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
         result = prime * result + ((getUpdateAId() == null) ? 0 : getUpdateAId().hashCode());
+        result = prime * result + ((getDays() == null) ? 0 : getDays().hashCode());
         return result;
     }
 
@@ -271,6 +282,7 @@ public class ChBatchPO implements Serializable {
         sb.append(", dr=").append(dr);
         sb.append(", extra=").append(extra);
         sb.append(", updateAId=").append(updateAId);
+        sb.append(", days=").append(days);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -235,6 +235,7 @@ CREATE TABLE t_ch_batch
 	dr tinyint COMMENT '1 未删除  2删除',
 	extra char(255),
 	update_a_id int,
+	days int,
 	PRIMARY KEY (batch_id),
 	UNIQUE (batch_id)
 );
@@ -540,7 +541,6 @@ CREATE TABLE t_user_activity
 	update_time datetime,
 	user_device_id int,
 	device_id bigint,
-	a_id int,
 	PRIMARY KEY (u_a_id),
 	UNIQUE (u_a_id)
 );

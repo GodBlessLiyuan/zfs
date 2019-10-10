@@ -19,43 +19,42 @@ public class BatchInfoDO extends BatchInfoPO {
     private String comTypeName;
 
     private Date createTime;
-
-    @Override
+    
     public String getChanNickname() {
         return chanNickname;
     }
 
-    @Override
+    
     public void setChanNickname(String chanNickname) {
         this.chanNickname = chanNickname;
     }
 
-    @Override
+    
     public String getChanName() {
         return chanName;
     }
 
-    @Override
+    
     public void setChanName(String chanName) {
         this.chanName = chanName;
     }
 
-    @Override
+    
     public String getComTypeName() {
         return comTypeName;
     }
 
-    @Override
+    
     public void setComTypeName(String comTypeName) {
         this.comTypeName = comTypeName;
     }
 
-    @Override
+    
     public Date getCreateTime() {
         return createTime;
     }
 
-    @Override
+    
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }

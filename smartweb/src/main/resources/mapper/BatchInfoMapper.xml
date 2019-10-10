@@ -33,7 +33,6 @@
                 AND vipkey = #{vipkey}
             </if>
         </where>
-        >
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

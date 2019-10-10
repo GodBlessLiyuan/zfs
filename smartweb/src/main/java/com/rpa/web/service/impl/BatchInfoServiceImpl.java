@@ -2,9 +2,9 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.rpa.web.domain.BatchInfoDO;
 import com.rpa.web.dto.BatchInfoDTO;
 import com.rpa.web.mapper.BatchInfoMapper;
-import com.rpa.web.pojo.BatchInfoPO;
 import com.rpa.web.service.BatchInfoService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +47,11 @@ public class BatchInfoServiceImpl implements BatchInfoService {
         map.put("vipkey", vipkey);
 
         // 按照条件查询数据
-        List<BatchInfoPO> lists_PO = batchInfoMapper.query(map);
+        List<BatchInfoDO> lists_PO = batchInfoMapper.query(map);
 
         // 将查询到的 BatchInfoPO 数据转换为 BatchInfoDTO
         List<BatchInfoDTO> lists_DTO = new ArrayList<>();
-        for(BatchInfoPO po: lists_PO) {
+        for(BatchInfoDO po: lists_PO) {
             BatchInfoDTO dto = new BatchInfoDTO();
             dto.setVipkey(po.getVipkey());
             dto.setChanNickname(po.getChanNickname());
