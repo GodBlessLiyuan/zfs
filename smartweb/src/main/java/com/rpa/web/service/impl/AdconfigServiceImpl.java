@@ -4,19 +4,23 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.rpa.web.dto.AdconfigDTO;
 import com.rpa.web.mapper.AdconfigMapper;
+import com.rpa.web.mapper.KeyValueMapper;
 import com.rpa.web.pojo.AdconfigPO;
 import com.rpa.web.service.AdconfigService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
+
+import static com.rpa.web.common.Constant.SHOW_INTERVAL;
 
 /**
  * @author: dangyi
  * @date: Created in 18:56 2019/9/25
  * @version: 1.0.0
- * @description: TODO
+ * @description:
  */
 
 @Service
@@ -24,6 +28,9 @@ public class AdconfigServiceImpl implements AdconfigService {
 
     @Autowired
     private AdconfigMapper adconfigMapper;
+
+    @Autowired
+    private KeyValueMapper keyValueMapper;
 
     /**
      * 查询
@@ -54,17 +61,15 @@ public class AdconfigServiceImpl implements AdconfigService {
         List<AdconfigDTO> lists_DTO = new ArrayList<>();
         for(AdconfigPO po: lists_PO) {
             AdconfigDTO dto = new AdconfigDTO();
-            dto.setaId(po.getaId());
             dto.setAdId(po.getAdId());
             dto.setAdNumber(po.getAdNumber());
             dto.setName(po.getName());
-            dto.setPriority(po.getPriority());
-            dto.setPhone(po.getPhone());
             dto.setContacts(po.getContacts());
+            dto.setPhone(po.getPhone());
+            dto.setPriority(po.getPriority());
             dto.setTotal(po.getTotal());
             dto.setStatus(po.getStatus());
-            dto.setUpdateTime(po.getUpdateTime());
-            dto.setCreateTime(po.getCreateTime());
+            dto.setOperator(queryUsernameByAid(po.getaId()));
 
             lists_DTO.add(dto);
         }
@@ -74,52 +79,84 @@ public class AdconfigServiceImpl implements AdconfigService {
     }
 
     /**
-     * 新增广告
+     * 插入
      * @param adconfigDTO
+     * @TODO 需插入操作人，即管理员ID，需从session中获取
      */
     @Override
-    public int insert(AdconfigDTO adconfigDTO) {
+    public int insert(AdconfigDTO adconfigDTO, HttpSession httpSession) {
 
         // 把adconfigDTO 转换为 adconfigPO
         AdconfigPO adconfigPO = new AdconfigPO();
-        adconfigPO.setaId(adconfigDTO.getaId());
         adconfigPO.setAdNumber(adconfigDTO.getAdNumber());
         adconfigPO.setName(adconfigDTO.getName());
-        adconfigPO.setPriority(adconfigDTO.getPriority());
-        adconfigPO.setPhone(adconfigDTO.getPhone());
         adconfigPO.setContacts(adconfigDTO.getContacts());
+        adconfigPO.setPhone(adconfigDTO.getPhone());
+        adconfigPO.setPriority(adconfigDTO.getPriority());
         adconfigPO.setTotal(adconfigDTO.getTotal());
-        adconfigPO.setStatus(adconfigDTO.getStatus());
         adconfigPO.setUpdateTime(new Date());
         adconfigPO.setCreateTime(new Date());
+        adconfigPO.setStatus((byte)1);
+        adconfigPO.setDr((byte)1);
 
         int count = this.adconfigMapper.insert(adconfigPO);
         return count;
     }
 
     /**
-     * 修改广告
+     * 修改
      * @param adconfigDTO
+     * @param httpSession
+     * @TODO 还需要修改操作人，即管理员a_id字段，需从session中获取
      */
     @Override
-    public int update(AdconfigDTO adconfigDTO) {
+    public int update(AdconfigDTO adconfigDTO, HttpSession httpSession) {
 
-        // 把adconfigDTO 转换为 adconfigPO
-        AdconfigPO adconfigPO = new AdconfigPO();
-        adconfigPO.setaId(adconfigDTO.getaId());
-        adconfigPO.setAdId(adconfigDTO.getAdId());
+        // 根据 ad_id，从数据库获取要修改的数据对象
+        AdconfigPO adconfigPO = this.adconfigMapper.selectByPrimaryKey(adconfigDTO.getAdId());
+
+        // 把 adconfigDTO 转换为 adconfigPO
         adconfigPO.setAdNumber(adconfigDTO.getAdNumber());
         adconfigPO.setName(adconfigDTO.getName());
-        adconfigPO.setPriority(adconfigDTO.getPriority());
-        adconfigPO.setPhone(adconfigDTO.getPhone());
         adconfigPO.setContacts(adconfigDTO.getContacts());
+        adconfigPO.setPhone(adconfigDTO.getPhone());
+        adconfigPO.setPriority(adconfigDTO.getPriority());
         adconfigPO.setTotal(adconfigDTO.getTotal());
+        adconfigPO.setUpdateTime(new Date());
+
+        int count = adconfigMapper.updateByPrimaryKey(adconfigPO);
+        return count;
+    }
+
+    /**
+     * 修改状态
+     * @param adconfigDTO
+     * @param httpSession
+     * @return
+     * @TODO 还需要修改操作人，即管理员a_id字段，需从session中获取
+     */
+    @Override
+    public int updateStatus(AdconfigDTO adconfigDTO, HttpSession httpSession) {
+
+        // 根据主键ad_id，从数据库查出要修改的数据
+        AdconfigPO adconfigPO = this.adconfigMapper.selectByPrimaryKey(adconfigDTO.getAdId());
+
         adconfigPO.setStatus(adconfigDTO.getStatus());
         adconfigPO.setUpdateTime(new Date());
 
-        int count = adconfigMapper.updateByPrimaryKeySelective(adconfigPO);
-        return count;
+        return this.adconfigMapper.updateByPrimaryKey(adconfigPO);
     }
+
+    /**
+     * 修改广告展现间隔
+     * @param show_interval
+     * @return
+     */
+    @Override
+    public int updateStrategy(int show_interval) {
+        return this.keyValueMapper.updateStrategy(SHOW_INTERVAL, show_interval);
+    }
+
 
     /**
      * 删除广告
@@ -130,5 +167,17 @@ public class AdconfigServiceImpl implements AdconfigService {
     public int delete(int adId) {
         int count = adconfigMapper.deleteByPrimaryKey(adId);
         return count;
+    }
+
+
+
+
+    /**
+     * 根据aId，从t_admin_user表中查询username
+     * @param aId
+     * @return
+     */
+    private String queryUsernameByAid(Integer aId) {
+        return this.adconfigMapper.queryUsernameByAid(aId);
     }
 }

@@ -55,4 +55,10 @@
     set `value` = #{value,jdbcType=VARCHAR}
     where key_name = #{keyName,jdbcType=INTEGER}
   </update>
+
+  <update id="updateStrategy">
+    update t_key_value
+    set `value` = #{show_interval,jdbcType=VARCHAR}
+    where key_name = #{SHOW_INTERVAL,jdbcType=INTEGER}
+  </update>
 </mapper>

@@ -7,6 +7,7 @@ import java.io.Serializable;
  * @author 
  */
 public class KeyValuePO implements Serializable {
+
     private Integer keyName;
 
     private String value;
