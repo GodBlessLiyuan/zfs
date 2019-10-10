@@ -9,4 +9,14 @@ import com.rpa.web.pojo.NewUserRecordPO;
  * @version: 1.0
  */
 public class NewUserRecordDO extends NewUserRecordPO {
+
+    private String userChanName;
+
+    public String getUserChanName() {
+        return userChanName;
+    }
+
+    public void setUserChanName(String userChanName) {
+        this.userChanName = userChanName;
+    }
 }

@@ -299,14 +299,12 @@
             "columns": [
                 {"data": null, "targets": 0},
                 {"data": "vipType"},
-                {"data": "softChannelName"},
-                {"data": null, "render": function (data, type, full) {
-                        return "";
-                    }},
+                {"data": "userChanName"},
+                {"data": "saleChanName"},
                 {
                     "data": "type",
                     "render": function (data, type, full) {
-                        return data === 1 ? "微信" : data ===2 ? "支付宝" : "";
+                        return data === 1 ? "微信" : data ===2 ? "支付宝" : "无";
 
                     }
                 },

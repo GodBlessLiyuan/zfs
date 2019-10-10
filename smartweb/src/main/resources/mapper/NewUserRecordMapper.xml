@@ -117,9 +117,10 @@
   </select>
 
   <select id="queryByUserId" resultType="com.rpa.web.domain.NewUserRecordDO">
-    select nur.create_time as createTime, ug.com_type_name as comTypeName, ug.days
+    select u.chan_name as userChanName, nur.create_time as createTime, ug.com_type_name as comTypeName, ug.days
     from t_new_user_record nur
     left join t_user_gifts ug on nur.nug_id = ug.nug_id
+    left join t_user u on nur.user_id = u.user_id
     where nur.user_id = #{userId}
   </select>
 </mapper>

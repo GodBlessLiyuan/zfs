@@ -10,11 +10,6 @@ import java.util.Date;
  * @version: 1.0
  */
 public class UserVipDetailsDTO implements Serializable {
-    public static final String TYPE_ORDER = "购买";
-    public static final String TYPE_ACTIVITY = "好评活动赠送";
-    public static final String TYPE_USER_GIFTS = "新用户赠送";
-    public static final String TYPE_V = "V商神器赠送";
-    public static final String TYPE_BATCH_INFO = "卡密激活";
     private static final long serialVersionUID = 1L;
     /**
      * 会员获取方式
