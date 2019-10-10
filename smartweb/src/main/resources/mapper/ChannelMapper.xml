@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.rpa.web.pojo.ChannelPO">
     <id column="chan_id" jdbcType="INTEGER" property="chanId" />
     <result column="chan_nickname" jdbcType="CHAR" property="chanNickname" />
-    <result column="chan_name" jdbcType="VARCHAR" property="chanName" />
+    <result column="chan_name" jdbcType="CHAR" property="chanName" />
     <result column="pro_id" jdbcType="INTEGER" property="proId" />
     <result column="a_id" jdbcType="INTEGER" property="aId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -54,7 +54,7 @@
       pro_id, a_id, create_time, 
       update_time, extra, dr
       )
-    values (#{chanId,jdbcType=INTEGER}, #{chanNickname,jdbcType=CHAR}, #{chanName,jdbcType=VARCHAR}, 
+    values (#{chanId,jdbcType=INTEGER}, #{chanNickname,jdbcType=CHAR}, #{chanName,jdbcType=CHAR}, 
       #{proId,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{extra,jdbcType=CHAR}, #{dr,jdbcType=TINYINT}
       )
@@ -98,7 +98,7 @@
         #{chanNickname,jdbcType=CHAR},
       </if>
       <if test="chanName != null">
-        #{chanName,jdbcType=VARCHAR},
+        #{chanName,jdbcType=CHAR},
       </if>
       <if test="proId != null">
         #{proId,jdbcType=INTEGER},
@@ -127,7 +127,7 @@
         chan_nickname = #{chanNickname,jdbcType=CHAR},
       </if>
       <if test="chanName != null">
-        chan_name = #{chanName,jdbcType=VARCHAR},
+        chan_name = #{chanName,jdbcType=CHAR},
       </if>
       <if test="proId != null">
         pro_id = #{proId,jdbcType=INTEGER},
@@ -153,7 +153,7 @@
   <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.ChannelPO">
     update t_channel
     set chan_nickname = #{chanNickname,jdbcType=CHAR},
-      chan_name = #{chanName,jdbcType=VARCHAR},
+      chan_name = #{chanName,jdbcType=CHAR},
       pro_id = #{proId,jdbcType=INTEGER},
       a_id = #{aId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

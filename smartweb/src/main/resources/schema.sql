@@ -108,12 +108,12 @@ CREATE TABLE t_admin_log
 CREATE TABLE t_admin_user
 (
 	a_id int NOT NULL AUTO_INCREMENT,
-	username varchar(32),
-	password varchar(32),
-	email varchar(32),
+	username char(32),
+	password char(32),
+	email char(128),
 	is_lock tinyint,
-	create_time time,
-	last_time time,
+	create_time datetime,
+	last_time datetime,
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除',
 	role_id int NOT NULL,
@@ -205,7 +205,7 @@ CREATE TABLE t_channel
 (
 	chan_id int NOT NULL AUTO_INCREMENT,
 	chan_nickname char(20),
-	chan_name varchar(64),
+	chan_name char(64),
 	pro_id int NOT NULL,
 	a_id int NOT NULL,
 	create_time datetime,
@@ -264,7 +264,7 @@ CREATE TABLE t_device
 	-- android系统的版本号
 	buildversion tinyint COMMENT 'android系统的版本号',
 	soft_channel_id int,
-	chan_name varchar(64),
+	chan_name char(64),
 	create_time datetime,
 	update_time datetime,
 	versioncode int,
@@ -519,11 +519,12 @@ CREATE TABLE t_soft_channel
 CREATE TABLE t_user
 (
 	user_id bigint NOT NULL AUTO_INCREMENT,
-	username varchar(32),
+	username char(32),
 	phone char(11),
 	ip varchar(128),
 	create_time datetime,
 	update_time datetime,
+	chan_name char(64),
 	PRIMARY KEY (user_id),
 	UNIQUE (user_id)
 );
@@ -541,7 +542,8 @@ CREATE TABLE t_user_activity
 	update_time datetime,
 	user_device_id int,
 	device_id bigint,
-	a_id int,
+	a_id int DEFAULT 0,
+	url char(255),
 	PRIMARY KEY (u_a_id),
 	UNIQUE (u_a_id)
 );
@@ -658,8 +660,7 @@ CREATE TABLE t_viptype
 
 CREATE TABLE t_whilte_device
 (
-	-- 允许为null
-	device_id bigint NOT NULL COMMENT '允许为null',
+	device_id bigint NOT NULL,
 	extra char(255),
 	status tinyint,
 	a_id int,
@@ -671,9 +672,8 @@ CREATE TABLE t_whilte_device
 
 CREATE TABLE t_whilte_user
 (
-	-- 允许为null
-	user_id bigint NOT NULL COMMENT '允许为null',
-	username varchar(32),
+	user_id bigint NOT NULL,
+	username char(32),
 	phone char(11),
 	UNIQUE (user_id)
 );
