@@ -114,7 +114,13 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <span for="recipient-name" class="col-form-label">用户渠道：</span>
-                                            <select id="chanId" class="form-control">
+                                            <select id="uChanId" class="form-control">
+                                                <option value='0' selected='selected'>全选</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <span for="recipient-name" class="col-form-label">销售渠道：</span>
+                                            <select id="sChanId" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
                                             </select>
                                         </div>
@@ -143,6 +149,7 @@
                                         <th>序号</th>
                                         <th>订单编号</th>
                                         <th>用户渠道</th>
+                                        <th>销售渠道</th>
                                         <th>支付方式</th>
                                         <th>购买账号</th>
                                         <th>发起时间</th>
@@ -216,7 +223,9 @@
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
-                    $('#chanId').append("<option value='" + data[i].softChannelId + "'>" + data[i].name +
+                    $('#uChanId').append("<option value='" + data[i].softChannelId + "'>" + data[i].name +
+                        "</option>");
+                    $('#sChanId').append("<option value='" + data[i].softChannelId + "'>" + data[i].name +
                         "</option>");
                 }
             }
@@ -236,15 +245,17 @@
         let endDate = $('#endDate').val();
         let comTypeId = $('#comTypeId').val();
         let type = $('#type').val();
-        let chanId = $('#chanId').val();
+        let uChanId = $('#uChanId').val();
+        let sChanId = $('#sChanId').val();
         let phone = $('#phone').val();
         let number = $('#number').val();
 
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/order/query?startDate=" + startDate + "&endDate=" + endDate + "&comTypeId=" + comTypeId + "&type=" + type + "&chanId="
-                + chanId + "&phone=" + phone + "&number=" + number,
+            "ajax": "/order/query?startDate=" + startDate + "&endDate=" + endDate + "&comTypeId=" + comTypeId +
+                "&type=" + type + "&uChanId=" + uChanId + "&sChanId=" + sChanId + "&phone=" + phone + "&number=" +
+                number,
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -253,11 +264,12 @@
             "columns": [
                 {"data": null, "targets": 0},
                 {"data": "orderNumber"},
-                {"data": "name"},
+                {"data": "userChanName"},
+                {"data": "saleChanName"},
                 {
                     "data": "type",
                     "render": function (data, type, full) {
-                        return data === 1? "微信": "支付宝";
+                        return data === 1 ? "微信" : "支付宝";
                     }
                 },
                 {"data": "phone"},
@@ -271,7 +283,7 @@
             ],
             "columnDefs": [
                 {
-                    "targets": [5, 6],
+                    "targets": [6, 7],
                     "render": function (data, type, full) {
                         if (data == null || data.trim() == "") {
                             return "";

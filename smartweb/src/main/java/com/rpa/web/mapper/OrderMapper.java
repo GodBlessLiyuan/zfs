@@ -11,7 +11,7 @@ import java.util.List;
  * OrderMapper继承基类
  */
 @Mapper
-public interface OrderMapper extends BaseDAO<OrderPO, OrderPOKey> {
+public interface OrderMapper extends BaseDAO<OrderDO, OrderPOKey> {
     /**
      * 根据userId查询数据
      *

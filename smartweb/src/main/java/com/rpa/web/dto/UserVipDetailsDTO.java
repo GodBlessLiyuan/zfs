@@ -10,23 +10,35 @@ import java.util.Date;
  * @version: 1.0
  */
 public class UserVipDetailsDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     public static final String TYPE_ORDER = "购买";
     public static final String TYPE_ACTIVITY = "好评活动赠送";
     public static final String TYPE_USER_GIFTS = "新用户赠送";
     public static final String TYPE_V = "V商神器赠送";
     public static final String TYPE_BATCH_INFO = "卡密激活";
-
-    /** 会员获取方式 */
+    private static final long serialVersionUID = 1L;
+    /**
+     * 会员获取方式
+     */
     private String vipType;
-    /** 用户渠道名称 */
-    private String softChannelName;
-    /** 获得会员时间 */
+    /**
+     * 用户渠道名称
+     */
+    private String userChanName;
+    /**
+     * 销售渠道名称
+     */
+    private String saleChanName;
+    /**
+     * 获得会员时间
+     */
     private Date createTime;
-    /** 产品类型 */
+    /**
+     * 产品类型
+     */
     private String comTypeName;
-    /** 会员天数 */
+    /**
+     * 会员天数
+     */
     private Integer days;
     /**
      * 支付方式：1-微信；2-支付宝
@@ -41,12 +53,20 @@ public class UserVipDetailsDTO implements Serializable {
         this.vipType = vipType;
     }
 
-    public String getSoftChannelName() {
-        return softChannelName;
+    public String getUserChanName() {
+        return userChanName;
     }
 
-    public void setSoftChannelName(String softChannelName) {
-        this.softChannelName = softChannelName;
+    public void setUserChanName(String userChanName) {
+        this.userChanName = userChanName;
+    }
+
+    public String getSaleChanName() {
+        return saleChanName;
+    }
+
+    public void setSaleChanName(String saleChanName) {
+        this.saleChanName = saleChanName;
     }
 
     public Date getCreateTime() {

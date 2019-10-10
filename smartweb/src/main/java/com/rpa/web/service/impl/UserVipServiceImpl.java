@@ -54,7 +54,8 @@ public class UserVipServiceImpl implements IUserVipService {
         for(OrderDO orderDO: orderPOs) {
             UserVipDetailsDTO dto = new UserVipDetailsDTO();
             dto.setVipType(UserVipDetailsDTO.TYPE_ORDER);
-            dto.setSoftChannelName(orderDO.getSoftChannelName());
+            dto.setUserChanName(orderDO.getUserChanName());
+            dto.setSaleChanName(orderDO.getSaleChanName());
             dto.setType(orderDO.getType());
             dto.setCreateTime(orderDO.getCreateTime());
             dto.setComTypeName(orderDO.getComTypeName());

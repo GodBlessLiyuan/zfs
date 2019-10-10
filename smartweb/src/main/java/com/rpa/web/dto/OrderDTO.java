@@ -1,6 +1,6 @@
 package com.rpa.web.dto;
 
-import com.rpa.web.pojo.OrderPO;
+import com.rpa.web.domain.OrderDO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +18,8 @@ public class OrderDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String orderNumber;
-    private String name;
+    private String userChanName;
+    private String saleChanName;
     private Integer type;
     private String phone;
     private Date createTime;
@@ -30,40 +31,41 @@ public class OrderDTO implements Serializable {
     private Float discount;
 
     /**
-     * po 转 dto
+     * do 转 dto
      *
-     * @param po
+     * @param d
      * @return
      */
-    public static OrderDTO convert(OrderPO po) {
+    public static OrderDTO convert(OrderDO d) {
         OrderDTO dto = new OrderDTO();
 
-        dto.setOrderNumber(po.getOrderNumber());
-        dto.setName(po.getName());
-        dto.setType(po.getType());
-        dto.setPhone(po.getPhone());
-        dto.setCreateTime(po.getCreateTime());
-        dto.setPayTime(po.getPayTime());
-        dto.setComName(po.getComName());
-        dto.setDays(po.getDays());
-        dto.setPrice(po.getPrice());
-        dto.setShowDiscount(po.getShowDiscount());
-        dto.setDiscount(po.getDiscount());
+        dto.setOrderNumber(d.getOrderNumber());
+        dto.setUserChanName(d.getUserChanName());
+        dto.setSaleChanName(d.getSaleChanName());
+        dto.setType(d.getType());
+        dto.setPhone(d.getPhone());
+        dto.setCreateTime(d.getCreateTime());
+        dto.setPayTime(d.getPayTime());
+        dto.setComName(d.getComName());
+        dto.setDays(d.getDays());
+        dto.setPrice(d.getPrice());
+        dto.setShowDiscount(d.getShowDiscount());
+        dto.setDiscount(d.getDiscount());
 
         return dto;
     }
 
     /**
-     * pos 转 dtos
+     * dos 转 dtos
      *
-     * @param pos
+     * @param dos
      * @return
      */
-    public static List<OrderDTO> convert(List<OrderPO> pos) {
+    public static List<OrderDTO> convert(List<OrderDO> dos) {
 
         List<OrderDTO> dtos = new ArrayList<>();
-        for (OrderPO po : pos) {
-            dtos.add(OrderDTO.convert(po));
+        for (OrderDO d : dos) {
+            dtos.add(OrderDTO.convert(d));
         }
 
         return dtos;
@@ -77,12 +79,20 @@ public class OrderDTO implements Serializable {
         this.orderNumber = orderNumber;
     }
 
-    public String getName() {
-        return name;
+    public String getUserChanName() {
+        return userChanName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserChanName(String userChanName) {
+        this.userChanName = userChanName;
+    }
+
+    public String getSaleChanName() {
+        return saleChanName;
+    }
+
+    public void setSaleChanName(String saleChanName) {
+        this.saleChanName = saleChanName;
     }
 
     public Integer getType() {
