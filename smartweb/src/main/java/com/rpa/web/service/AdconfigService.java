@@ -1,6 +1,7 @@
 package com.rpa.web.service;
 
 import com.rpa.web.dto.AdconfigDTO;
+import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.utils.DTPageInfo;
 
 import javax.servlet.http.HttpSession;
@@ -23,4 +24,6 @@ public interface AdconfigService {
     int updateStatus(AdconfigDTO adconfigDTO, HttpSession httpSession);
 
     int updateStrategy(String show_interval);
+
+    KeyValueDTO queryStrategy(int showInterval);
 }

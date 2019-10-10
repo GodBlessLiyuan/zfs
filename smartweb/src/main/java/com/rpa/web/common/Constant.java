@@ -13,4 +13,11 @@ public class Constant {
      */
     public static final int SHOW_INTERVAL = 1;
 
+    /**
+     * 养号教程
+     */
+    public static final int TUTORIAL_URL = 2;
+
+
+
 }
