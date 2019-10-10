@@ -2,6 +2,7 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.rpa.web.domain.OrderDO;
 import com.rpa.web.dto.OrderDTO;
 import com.rpa.web.mapper.OrderMapper;
 import com.rpa.web.pojo.OrderPO;
@@ -28,8 +29,8 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public DTPageInfo<OrderDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<OrderPO> page = PageHelper.startPage(pageNum, pageSize);
-        List<OrderPO> pos = orderMapper.query(reqData);
+        Page<OrderDO> page = PageHelper.startPage(pageNum, pageSize);
+        List<OrderDO> pos = orderMapper.query(reqData);
         return new DTPageInfo<>(draw, page.getTotal(), OrderDTO.convert(pos));
     }
 }

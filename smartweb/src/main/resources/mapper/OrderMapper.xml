@@ -162,9 +162,10 @@
       and order_number = #{orderNumber,jdbcType=VARCHAR}
   </update>
 
-  <select id="query" resultType="com.rpa.web.pojo.OrderPO">
-    select o.order_number as orderNumber, v.name, o.type, u.phone, o.create_time as createTime, o.pay_time as
-    payTime, v.com_name as comName, v.days, v.price, v.show_discount as showDiscount, v.discount
+  <select id="query" resultType="com.rpa.web.domain.OrderDO">
+    select o.order_number as orderNumber, u.chan_name as userChanName, v.name as saleChanName, o.type, u.phone,
+    o.create_time as createTime, o.pay_time as payTime, v.com_name as comName, v.days, v.price, v.show_discount as
+    showDiscount, v.discount
     from t_order o
     left join t_vipcommodity v on o.cmdy_id = v.cmdy_id
     left join t_user u on o.user_id = u.user_id
@@ -173,7 +174,8 @@
       <if test="endDate != null and endDate != ''"> and o.pay_time &lt;= #{endDate}</if>
       <if test="comTypeId != null and comTypeId != 0"> and v.com_type_id = #{comTypeId}</if>
       <if test="type != null and type != 0"> and o.type = #{type}</if>
-      <if test="chanId != null and chanId != 0"> and v.soft_channel_id = #{chanId}</if>
+      <if test="uChanId != null and uChanId != 0"> and u.soft_channel_id = #{uChanId}</if>
+      <if test="sChanId != null and sChanId != 0"> and v.soft_channel_id = #{sChanId}</if>
       <if test="phone != null and phone != ''"> and u.phone like '%' #{phone} '%'</if>
       <if test="number != null and number != ''"> and o.order_number like '%' #{number} '%'</if>
     </where>

@@ -17,13 +17,14 @@ import java.util.Map;
  * @description: 新用户赠送记录
  * @version: 1.0
  */
+@RequestMapping("newuserrecord")
 @RestController
 public class NewUserRecordController {
 
     @Autowired
     private INewUserRecordService service;
 
-    @RequestMapping("/newuserrecord/query")
+    @RequestMapping("query")
     public DTPageInfo<NewUserRecordDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                               @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                               @RequestParam(value = "length", defaultValue = "10") int pageSize,
