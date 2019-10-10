@@ -3,12 +3,12 @@
 <mapper namespace="com.rpa.web.mapper.AdminUserMapper">
   <resultMap id="BaseResultMap" type="com.rpa.web.pojo.AdminUserPO">
     <id column="a_id" jdbcType="INTEGER" property="aId" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="username" jdbcType="CHAR" property="username" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="email" jdbcType="CHAR" property="email" />
     <result column="is_lock" jdbcType="TINYINT" property="isLock" />
-    <result column="create_time" jdbcType="TIME" property="createTime" />
-    <result column="last_time" jdbcType="TIME" property="lastTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
     <result column="dr" jdbcType="TINYINT" property="dr" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
@@ -28,10 +28,12 @@
   <insert id="insert" parameterType="com.rpa.web.pojo.AdminUserPO">
     insert into t_admin_user (a_id, username, `password`, 
       email, is_lock, create_time, 
-      last_time, dr, role_id)
-    values (#{aId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{isLock,jdbcType=TINYINT}, #{createTime,jdbcType=TIME}, 
-      #{lastTime,jdbcType=TIME}, #{dr,jdbcType=TINYINT}, #{roleId,jdbcType=INTEGER})
+      last_time, dr, role_id
+      )
+    values (#{aId,jdbcType=INTEGER}, #{username,jdbcType=CHAR}, #{password,jdbcType=CHAR}, 
+      #{email,jdbcType=CHAR}, #{isLock,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT}, #{roleId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.AdminUserPO">
     insert into t_admin_user
@@ -69,22 +71,22 @@
         #{aId,jdbcType=INTEGER},
       </if>
       <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+        #{username,jdbcType=CHAR},
       </if>
       <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+        #{password,jdbcType=CHAR},
       </if>
       <if test="email != null">
-        #{email,jdbcType=VARCHAR},
+        #{email,jdbcType=CHAR},
       </if>
       <if test="isLock != null">
         #{isLock,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=TIME},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastTime != null">
-        #{lastTime,jdbcType=TIME},
+        #{lastTime,jdbcType=TIMESTAMP},
       </if>
       <if test="dr != null">
         #{dr,jdbcType=TINYINT},
@@ -98,22 +100,22 @@
     update t_admin_user
     <set>
       <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
+        username = #{username,jdbcType=CHAR},
       </if>
       <if test="password != null">
-        `password` = #{password,jdbcType=VARCHAR},
+        `password` = #{password,jdbcType=CHAR},
       </if>
       <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
+        email = #{email,jdbcType=CHAR},
       </if>
       <if test="isLock != null">
         is_lock = #{isLock,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIME},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastTime != null">
-        last_time = #{lastTime,jdbcType=TIME},
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
       </if>
       <if test="dr != null">
         dr = #{dr,jdbcType=TINYINT},
@@ -126,12 +128,12 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.AdminUserPO">
     update t_admin_user
-    set username = #{username,jdbcType=VARCHAR},
-      `password` = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
+    set username = #{username,jdbcType=CHAR},
+      `password` = #{password,jdbcType=CHAR},
+      email = #{email,jdbcType=CHAR},
       is_lock = #{isLock,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIME},
-      last_time = #{lastTime,jdbcType=TIME},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
       dr = #{dr,jdbcType=TINYINT},
       role_id = #{roleId,jdbcType=INTEGER}
     where a_id = #{aId,jdbcType=INTEGER}
