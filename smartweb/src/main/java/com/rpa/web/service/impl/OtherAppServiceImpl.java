@@ -7,7 +7,9 @@ import com.rpa.web.mapper.OtherAppMapper;
 import com.rpa.web.pojo.OtherAppPO;
 import com.rpa.web.service.IOtherAppService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.FileUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -34,13 +36,13 @@ public class OtherAppServiceImpl implements IOtherAppService {
     }
 
     @Override
-    public int insert(String oName, String extra, String iconUrl, byte downloadType, String appUrl) {
+    public int insert(String oName, String extra, MultipartFile iconUrl, byte downloadType, String appUrl, int aId) {
         OtherAppPO po = new OtherAppPO();
 
-        po.setaId(1);
+        po.setaId(aId);
         po.setoName(oName);
         po.setExtra(extra);
-        po.setIconUrl(iconUrl);
+        po.setIconUrl(FileUtil.uploadFile(iconUrl));
         po.setDownloadType(downloadType);
         po.setAppUrl(appUrl);
         po.setCreateTime(new Date());

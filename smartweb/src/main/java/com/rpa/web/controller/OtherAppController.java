@@ -3,9 +3,11 @@ package com.rpa.web.controller;
 import com.rpa.web.dto.OtherAppDTO;
 import com.rpa.web.service.IOtherAppService;
 import com.rpa.web.utils.DTPageInfo;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -17,13 +19,14 @@ import java.util.Map;
  * @description: 其他产品
  * @version: 1.0
  */
+@RequestMapping("otherapp")
 @RestController
 public class OtherAppController {
 
     @Resource
     private IOtherAppService service;
 
-    @RequestMapping("/otherapp/query")
+    @RequestMapping("query")
     public DTPageInfo<OtherAppDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                          @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                          @RequestParam(value = "length", defaultValue = "10") int pageSize,
@@ -34,17 +37,19 @@ public class OtherAppController {
         return service.query(draw, pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("/otherapp/insert")
+    @PostMapping("insert")
     public int insert(@RequestParam(value = "oName") String oName,
                       @RequestParam(value = "extra") String extra,
-                      @RequestParam(value = "iconUrl") String iconUrl,
+                      @RequestParam(value = "iconUrl") MultipartFile iconUrl,
                       @RequestParam(value = "downloadType") byte downloadType,
                       @RequestParam(value = "appUrl") String appUrl) {
 
-        return service.insert(oName, extra, iconUrl, downloadType, appUrl);
+        int aId = 1;
+
+        return service.insert(oName, extra, iconUrl, downloadType, appUrl, aId);
     }
 
-    @RequestMapping("/otherapp/delete")
+    @RequestMapping("delete")
     public int delete(@RequestParam(value = "oId") int oId) {
         return service.delete(oId);
     }
