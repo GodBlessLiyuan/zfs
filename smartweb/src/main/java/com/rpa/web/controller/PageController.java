@@ -79,7 +79,7 @@ public class PageController {
      */
     @RequestMapping("/wxsupport")
     public String wxSupport() {
-        return "wxsupport";
+        return "wxsupport_index";
     }
 
     /**
@@ -99,7 +99,7 @@ public class PageController {
      */
     @RequestMapping("/appversion")
     public String app() {
-        return "appversion";
+        return "app_index";
     }
 
     /**
@@ -109,7 +109,7 @@ public class PageController {
      */
     @RequestMapping("/newusergifts")
     public String userGifts() {
-        return "newusergifts";
+        return "new_user_gifts_index";
     }
 
     /**
@@ -119,7 +119,7 @@ public class PageController {
      */
     @RequestMapping("/newuserrecord")
     public String newUserRecord() {
-        return "newuserrecord";
+        return "new_user_record_index";
     }
 
     /**

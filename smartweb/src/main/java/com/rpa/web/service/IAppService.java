@@ -2,7 +2,9 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.AppDTO;
 import com.rpa.web.utils.DTPageInfo;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,7 @@ public interface IAppService {
 
     /**
      * 分页查询
+     *
      * @param draw
      * @param pageNum
      * @param pageSize
@@ -26,17 +29,20 @@ public interface IAppService {
 
     /**
      * 插入
-     * @param url apk文件路径
-     * @param updateType 更新方式
+     *
+     * @param file         apk文件
+     * @param updateType  更新方式
      * @param softChannel 更新渠道
-     * @param context 更新内容
-     * @param extra 备注
+     * @param context     更新内容
+     * @param extra       备注
+     * @param req
      * @return
      */
-    int insert(String url, byte updateType, int[] softChannel, String context, String extra);
+    int insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra, HttpServletRequest req);
 
     /**
      * 更新状态（发布&取消发布）
+     *
      * @param appId
      * @param status
      * @return
@@ -45,6 +51,7 @@ public interface IAppService {
 
     /**
      * 删除
+     *
      * @param appId
      * @return
      */
@@ -52,12 +59,14 @@ public interface IAppService {
 
     /**
      * 从应用渠道表查询所有AppId数据
+     *
      * @return
      */
     List<AppDTO> queryAll();
 
     /**
      * 根据ID查询数据
+     *
      * @param appId
      * @return
      */
@@ -65,13 +74,15 @@ public interface IAppService {
 
     /**
      * 更新
-     * @param appId 应用Id
-     * @param url 链接地址
-     * @param updateType 更新类型
+     *
+     * @param appId       应用Id
+     * @param file        链接地址
+     * @param updateType  更新类型
      * @param softChannel 渠道
-     * @param context 内容
-     * @param extra 备注
+     * @param context     内容
+     * @param extra       备注
+     * @param req
      * @return
      */
-    int update(int appId, String url, byte updateType, int[] softChannel, String context, String extra);
+    int update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra, HttpServletRequest req);
 }

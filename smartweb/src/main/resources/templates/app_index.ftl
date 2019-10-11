@@ -146,10 +146,7 @@
                                             <form>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">应用:</span>
-                                                    <button id="iUrl" type="button" class="btn btn-primary"
-                                                            onclick="javascript:uploadFile()"
-                                                            data-dismiss="modal">上传文件
-                                                    </button>
+                                                    <input id="iFile" type="file"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">更新方式:</span>
@@ -198,10 +195,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">应用:</span>
-                                                    <button id="uUrl" type="button" class="btn btn-primary"
-                                                            onclick="javascript:uploadFile()"
-                                                            data-dismiss="modal">上传文件
-                                                    </button>
+                                                    <input id="uFile" type="file"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">更新方式:</span>
@@ -364,59 +358,6 @@
     });
 
     /**
-     * 确认上架点击事件
-     */
-    function insertClick() {
-        let url = $('#iUrl').val();
-        let updateType = $('#iUpdateType').val();
-        let softChannel = $('#iSoftChannel').val();
-        let context = $('#iContext').val();
-        let extra = $('#iExtra').val();
-
-        $.get("/appversion/insert?updateType=" + updateType + "&softChannel=" + softChannel + "&context=" + context + "&extra=" +
-            extra + "&url=" + url);
-    }
-
-    function deleteClick() {
-        let appId = $('#dAppId').val();
-
-        $.ajax({
-            type: 'GET',
-            url: '/appversion/delete?appId=' + appId,
-            dataType: 'json',
-            success: function (data) {
-                $('#datatab').DataTable().draw(false);
-            }
-        })
-    }
-
-    function publishClick() {
-        let appId = $('#pAppId').val();
-
-        $.ajax({
-            type: 'GET',
-            url: '/appversion/updateStatus?appId=' + appId + "&status=2",
-            dataType: 'json',
-            success: function (data) {
-                $('#datatab').DataTable().draw(false);
-            }
-        })
-    }
-
-    function unPublishClick() {
-        let appId = $('#upAppId').val();
-
-        $.ajax({
-            type: 'GET',
-            url: '/appversion/updateStatus?appId=' + appId + "&status=1",
-            dataType: 'json',
-            success: function (data) {
-                $('#datatab').DataTable().draw(false);
-            }
-        })
-    }
-
-    /**
      * 查询点击事件
      */
     function queryClick() {
@@ -514,6 +455,94 @@
         });
     }
 
+    /**
+     * 确认上架点击事件
+     */
+    function insertClick() {
+        let reqData = new FormData();
+        reqData.append("file", $('#iFile')[0].files[0]);
+        reqData.append("updateType", $('#iUpdateType').val());
+        reqData.append("softChannel", $('#iSoftChannel').val());
+        reqData.append("context", $('#iContext').val());
+        reqData.append("extra", $('#iExtra').val());
+
+        $.ajax({
+            type: 'post',
+            url: '/appversion/insert',
+            dataType: 'json',
+            data: reqData,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                $('#datatab').DataTable().draw(false);
+            }
+        });
+    }
+
+    /**
+     * 确认上架点击事件
+     */
+    function updateClick() {
+        let reqData = new FormData();
+        reqData.append("appId", $('#uAppId').val())
+        reqData.append("file", $('#uFile')[0].files[0]);
+        reqData.append("updateType", $('#uUpdateType').val());
+        reqData.append("softChannel", $('#uSoftChannel').val());
+        reqData.append("context", $('#uContext').val());
+        reqData.append("extra", $('#uExtra').val());
+
+        $.ajax({
+            type: 'post',
+            url: '/appversion/update',
+            dataType: 'json',
+            data: reqData,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                $('#datatab').DataTable().draw(false);
+            }
+        });
+    }
+
+    function deleteClick() {
+        let appId = $('#dAppId').val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/delete?appId=' + appId,
+            dataType: 'json',
+            success: function (data) {
+                $('#datatab').DataTable().draw(false);
+            }
+        })
+    }
+
+    function publishClick() {
+        let appId = $('#pAppId').val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/updateStatus?appId=' + appId + "&status=2",
+            dataType: 'json',
+            success: function (data) {
+                $('#datatab').DataTable().draw(false);
+            }
+        })
+    }
+
+    function unPublishClick() {
+        let appId = $('#upAppId').val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/updateStatus?appId=' + appId + "&status=1",
+            dataType: 'json',
+            success: function (data) {
+                $('#datatab').DataTable().draw(false);
+            }
+        })
+    }
+
     function updateModal(appId) {
         $.ajax({
             type: 'GET',
@@ -551,28 +580,6 @@
     }
 
     /**
-     * 确认上架点击事件
-     */
-    function updateClick() {
-        let appId = $('#uAppId').val();
-        let url = $('#uUrl').val();
-        let updateType = $('#uUpdateType').val();
-        let softChannel = $('#uSoftChannel').val();
-        let context = $('#uContext').val();
-        let extra = $('#uExtra').val();
-
-        $.ajax({
-            type: 'GET',
-            url: "/appversion/update?appId=" + appId + "&url=" + url + "&updateType=" + updateType + "&softChannel=" +
-                softChannel + "&context=" + context + "&extra=" + extra,
-            dataType: 'json',
-            success: function (data) {
-                $('#datatab').DataTable().draw(false);
-            }
-        })
-    }
-
-    /**
      * 删除弹框界面设值
      * @param data cmdyId
      */
@@ -587,10 +594,6 @@
      */
     function publishModal(appId, status) {
         status === 1 ? $('#pAppId').val(appId) : $('#upAppId').val(appId);
-    }
-
-    function uploadFile() {
-
     }
 </script>
 
