@@ -35,10 +35,9 @@ public interface IAppService {
      * @param softChannel 更新渠道
      * @param context     更新内容
      * @param extra       备注
-     * @param req
      * @return
      */
-    int insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra, HttpServletRequest req);
+    int insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra);
 
     /**
      * 更新状态（发布&取消发布）
@@ -81,8 +80,7 @@ public interface IAppService {
      * @param softChannel 渠道
      * @param context     内容
      * @param extra       备注
-     * @param req
      * @return
      */
-    int update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra, HttpServletRequest req);
+    int update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra);
 }

@@ -30,11 +30,10 @@ public class FileUtil {
      *
      * @param file 文件信息
      * @param dir file存放文件目录
-     * @param req
      * @return 文件路径
      * @throws IOException
      */
-    public static String uploadFile(MultipartFile file, String dir, HttpServletRequest req) {
+    public static String uploadFile(MultipartFile file, String dir) {
         String fileName = file.getOriginalFilename();
         File targetFile = new File(rootPath + dir);
         if (!targetFile.exists()) {
@@ -59,8 +58,7 @@ public class FileUtil {
             }
         }
 
-        return req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath() +
-                "/file/" + dir + fileName;
+        return "/file/" + dir + fileName;
     }
 
     /**
@@ -68,15 +66,14 @@ public class FileUtil {
      *
      * @param file
      * @param apkDir
-     * @param req
      * @return
      */
-    public static Map<String, Object> resolveApk(MultipartFile file, String apkDir, HttpServletRequest req) {
+    public static Map<String, Object> resolveApk(MultipartFile file, String apkDir) {
         Map<String, Object> apkInfo = new HashMap<>(8);
 
         try {
             // 上传apk文件
-            apkInfo.put("filePath", uploadFile(file, apkDir, req));
+            apkInfo.put("filePath", uploadFile(file, apkDir));
             ApkFile apkFile = new ApkFile(rootPath + apkDir + file.getOriginalFilename());
             ApkMeta apkMeta = apkFile.getApkMeta();
             apkInfo.put("pkgname", apkMeta.getPackageName());

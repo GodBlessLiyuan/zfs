@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,11 +42,11 @@ public class OtherAppController {
                       @RequestParam(value = "extra") String extra,
                       @RequestParam(value = "iconUrl") MultipartFile iconUrl,
                       @RequestParam(value = "downloadType") byte downloadType,
-                      @RequestParam(value = "appUrl") String appUrl, HttpServletRequest req) {
+                      @RequestParam(value = "appUrl") String appUrl) {
 
         int aId = 1;
 
-        return service.insert(oName, extra, iconUrl, downloadType, appUrl, aId, req);
+        return service.insert(oName, extra, iconUrl, downloadType, appUrl, aId);
     }
 
     @RequestMapping("delete")
