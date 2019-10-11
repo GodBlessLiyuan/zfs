@@ -9,11 +9,14 @@ import com.rpa.web.pojo.AppChPO;
 import com.rpa.web.pojo.AppPO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.FileUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -39,17 +42,29 @@ public class AppServiceImpl implements IAppService {
         return new DTPageInfo<>(draw, page.getTotal(), AppDTO.convert(pos));
     }
 
+    @Override
+    public List<AppDTO> queryAll() {
+        List<AppPO> pos = appMapper.queryAll();
+        return AppDTO.convert(pos);
+    }
+
+    @Override
+    public List<AppDTO> queryById(int appId) {
+        List<AppPO> pos = appMapper.queryById(appId);
+        return AppDTO.convert(pos);
+    }
+
     @Transactional(rollbackFor = {})
     @Override
-    public int insert(String url, byte updateType, int[] softChannel, String context, String extra) {
+    public int insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra,
+                      HttpServletRequest req) {
         AppPO appPO = new AppPO();
         // 根据url对应的apk获取版本名称、版本号、文件大小
-        appPO.setUrl(url);
-        appPO.setVersionname("insert app");
+        appPO.setUrl(FileUtil.uploadFile(file, req));
+        appPO.setVersionname(file.getOriginalFilename());
         appPO.setVersioncode(1);
-        appPO.setSize(1000);
+        appPO.setSize((int) file.getSize());
 
-        appPO.setUrl(url);
         appPO.setUpdateType(updateType);
         appPO.setContext(context);
         appPO.setExtra(extra);
@@ -77,46 +92,14 @@ public class AppServiceImpl implements IAppService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int updateStatus(int appId, int status) {
+    public int update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra, HttpServletRequest req) {
         AppPO appPO = appMapper.selectByPrimaryKey(appId);
-        appPO.setPublishTime(status == 2 ? new Date() : null);
-        appPO.setStatus(status);
-        int frist = appMapper.updateByPrimaryKey(appPO);
-
-        int secend = appChMapper.updateStatus(appId, status);
-
-        return frist + secend;
-    }
-
-    @Transactional(rollbackFor = {})
-    @Override
-    public int delete(int appId) {
-        int frist = appMapper.deleteByPrimaryKey(appId);
-        int secend = appChMapper.deleteByAppId(appId);
-        return frist + secend;
-    }
-
-    @Override
-    public List<AppDTO> queryAll() {
-        List<AppPO> pos = appMapper.queryAll();
-        return AppDTO.convert(pos);
-    }
-
-    @Override
-    public List<AppDTO> queryById(int appId) {
-        List<AppPO> pos = appMapper.queryById(appId);
-        return AppDTO.convert(pos);
-    }
-
-    @Transactional(rollbackFor = {})
-    @Override
-    public int update(int appId, String url, byte updateType, int[] softChannel, String context, String extra) {
-        AppPO appPO = appMapper.selectByPrimaryKey(appId);
-        if (url != null && !"".equals(url)) {
+        if (file != null && !"".equals(file)) {
             // 根据url对应的apk获取版本名称、版本号、文件大小
-            appPO.setVersionname("update app");
+            appPO.setUrl(FileUtil.uploadFile(file, req));
+            appPO.setVersionname(file.getOriginalFilename());
             appPO.setVersioncode(2);
-            appPO.setSize(2000);
+            appPO.setSize((int) file.getSize());
 
         }
         appPO.setUpdateType(updateType);
@@ -135,10 +118,10 @@ public class AppServiceImpl implements IAppService {
             map.put(appChPO.getSoftChannelId(), appChPO);
         }
 
-        for(int scId : softChannel) {
-            if(map.containsKey(scId)) {
+        for (int scId : softChannel) {
+            if (map.containsKey(scId)) {
                 map.remove(scId);
-            }else {
+            } else {
                 AppChPO appChPO = new AppChPO();
                 appChPO.setStatus(appPO.getStatus().byteValue());
                 appChPO.setAppId(appId);
@@ -148,16 +131,16 @@ public class AppServiceImpl implements IAppService {
         }
 
         int secend = 0;
-        if(insAppChPOs.size() != 0) {
+        if (insAppChPOs.size() != 0) {
             // 新增应用渠道数据
             secend = appChMapper.batchInsert(insAppChPOs);
         }
 
         int third = 0;
-        if(map.size() != 0) {
+        if (map.size() != 0) {
             // 待删除的应用渠道数据
             List<Integer> delAcIds = new ArrayList<>();
-            for(AppChPO po : map.values()) {
+            for (AppChPO po : map.values()) {
                 delAcIds.add(po.getAcId());
             }
             third = appChMapper.batchDelete(delAcIds);
@@ -165,5 +148,26 @@ public class AppServiceImpl implements IAppService {
 
 
         return frist + secend + third;
+    }
+
+    @Transactional(rollbackFor = {})
+    @Override
+    public int updateStatus(int appId, int status) {
+        AppPO appPO = appMapper.selectByPrimaryKey(appId);
+        appPO.setPublishTime(status == 2 ? new Date() : null);
+        appPO.setStatus(status);
+        int frist = appMapper.updateByPrimaryKey(appPO);
+
+        int secend = appChMapper.updateStatus(appId, status);
+
+        return frist + secend;
+    }
+
+    @Transactional(rollbackFor = {})
+    @Override
+    public int delete(int appId) {
+        int frist = appMapper.deleteByPrimaryKey(appId);
+        int secend = appChMapper.deleteByAppId(appId);
+        return frist + secend;
     }
 }

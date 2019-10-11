@@ -39,9 +39,9 @@ public class UploadFileConfig implements WebMvcConfigurer {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         factory.setLocation(uploadFolder);
         //文件最大
-        factory.setMaxFileSize(DataSize.ofMegabytes(10));
+        factory.setMaxFileSize(DataSize.ofGigabytes(10));
         // 设置总上传数据总大小
-        factory.setMaxRequestSize(DataSize.ofMegabytes(10));
+        factory.setMaxRequestSize(DataSize.ofGigabytes(1000));
         return factory.createMultipartConfig();
     }
 

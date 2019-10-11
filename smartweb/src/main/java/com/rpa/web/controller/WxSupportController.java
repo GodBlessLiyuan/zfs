@@ -17,13 +17,14 @@ import java.util.Map;
  * @description: 微信白名单
  * @version: 1.0
  */
+@RequestMapping("wxsupport")
 @RestController
 public class WxSupportController {
 
     @Resource
     private IWxSupportService service;
 
-    @RequestMapping("/wxsupport/query")
+    @RequestMapping("query")
     public DTPageInfo<WxSupportDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                           @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                           @RequestParam(value = "length", defaultValue = "10") int pageSize,
@@ -34,13 +35,13 @@ public class WxSupportController {
         return service.query(draw, pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("/wxsupport/insert")
+    @RequestMapping("insert")
     public int insert(@RequestParam(value = "packageName") String packageName,
                       @RequestParam(value = "extra") String extra) {
         return service.insert(packageName, extra);
     }
 
-    @RequestMapping("/wxsupport/delete")
+    @RequestMapping("delete")
     public int delete(@RequestParam(value = "wId") int wId) {
         return service.delete(wId);
     }

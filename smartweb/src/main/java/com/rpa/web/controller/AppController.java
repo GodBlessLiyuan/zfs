@@ -4,10 +4,13 @@ import com.rpa.web.dto.AppDTO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,24 +52,24 @@ public class AppController {
         return dtos.get(0);
     }
 
-    @RequestMapping("insert")
-    public int insert(@RequestParam(value = "url") String url,
+    @PostMapping("insert")
+    public int insert(@RequestParam(value = "file") MultipartFile file,
                       @RequestParam(value = "updateType") byte updateType,
                       @RequestParam(value = "softChannel") int[] softChannel,
                       @RequestParam(value = "context") String context,
-                      @RequestParam(value = "extra") String extra) {
+                      @RequestParam(value = "extra") String extra, HttpServletRequest req) {
 
-        return service.insert(url, updateType, softChannel, context, extra);
+        return service.insert(file, updateType, softChannel, context, extra, req);
     }
 
-    @RequestMapping("update")
+    @PostMapping("update")
     public int update(@RequestParam(value = "appId") int appId,
-                      @RequestParam(value = "url") String url,
+                      @RequestParam(value = "file") MultipartFile file,
                       @RequestParam(value = "updateType") byte updateType,
                       @RequestParam(value = "softChannel") int[] softChannel,
                       @RequestParam(value = "context") String context,
-                      @RequestParam(value = "extra") String extra) {
-        return service.update(appId, url, updateType, softChannel, context, extra);
+                      @RequestParam(value = "extra") String extra, HttpServletRequest req) {
+        return service.update(appId, file, updateType, softChannel, context, extra, req);
     }
 
     @RequestMapping("updateStatus")
@@ -79,6 +82,4 @@ public class AppController {
     public int delete(@RequestParam(value = "appId") int appId) {
         return service.delete(appId);
     }
-
-
 }
