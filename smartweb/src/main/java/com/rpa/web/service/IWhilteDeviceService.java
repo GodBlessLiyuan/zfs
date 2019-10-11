@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.WhilteDeviceDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public interface IWhilteDeviceService {
      * @param extra 备注
      * @return
      */
-    int insert(String imei, String extra);
+    ResultVO insert(String imei, String extra);
 
     /**
      * 删除

@@ -218,7 +218,18 @@
         let imei = $('#iImei').val();
         let extra = $('#iExtra').val();
 
-        $.get("/whiltedevice/insert?imei=" + imei + "&extra=" + extra);
+        $.ajax({
+            type: 'GET',
+            url: "/whiltedevice/insert?imei=" + imei + "&extra=" + extra,
+            dataType: 'json',
+            success: function (data) {
+                if(data.code == 0) {
+                    $('#datatab').DataTable().draw(false);
+                }else {
+                    alert(data.msg);
+                }
+            }
+        })
     }
 
     function deleteClick() {
