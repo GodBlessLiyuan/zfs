@@ -17,13 +17,14 @@ import java.util.Map;
  * @description: 未注册用户信息
  * @version: 1.0
  */
+@RequestMapping("unregistered")
 @RestController
 public class UnregisteredController {
 
     @Resource
     private IUnregisteredService service;
 
-    @RequestMapping("/unregistered/query")
+    @RequestMapping("query")
     public DTPageInfo<DeviceDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                        @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                        @RequestParam(value = "length", defaultValue = "10") int pageSize,
