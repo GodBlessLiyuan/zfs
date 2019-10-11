@@ -1,7 +1,5 @@
 package com.rpa.web.mapper;
 
-import com.rpa.web.pojo.ComTypePO;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;

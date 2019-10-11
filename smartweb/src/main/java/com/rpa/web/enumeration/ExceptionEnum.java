@@ -27,7 +27,13 @@ public enum ExceptionEnum {
 
     PASSWORD_ERROR(1002, "您输入的密码有误，请重新输入！"),
 
-    PASSWORD_UPDATE_ERROR(1003, "修改密码失败！");
+    PASSWORD_UPDATE_ERROR(1003, "修改密码失败！"),
+
+    INSERT_ERROR(1004, "新增失败！"),
+
+    UPDATE_ERROR(1005, "修改失败！"),
+
+    DELETE_ERROR(1006, "删除失败！");
 
     /**
      * 提示码
