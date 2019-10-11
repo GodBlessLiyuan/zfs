@@ -1,6 +1,7 @@
 package com.rpa.web.domain;
 
 import com.rpa.web.pojo.UserActivityPO;
+import lombok.ToString;
 
 /**
  * @author: xiahui
@@ -8,6 +9,7 @@ import com.rpa.web.pojo.UserActivityPO;
  * @description: 活动赠送记录
  * @version: 1.0
  */
+@ToString
 public class UserActivityDO extends UserActivityPO {
 
     private String phone;

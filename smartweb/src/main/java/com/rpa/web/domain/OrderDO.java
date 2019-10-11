@@ -1,6 +1,7 @@
 package com.rpa.web.domain;
 
 import com.rpa.web.pojo.OrderPO;
+import lombok.ToString;
 
 /**
  * @author: xiahui
@@ -8,6 +9,7 @@ import com.rpa.web.pojo.OrderPO;
  * @description: TODO
  * @version: 1.0
  */
+@ToString
 public class OrderDO extends OrderPO {
 
     private String userChanName;

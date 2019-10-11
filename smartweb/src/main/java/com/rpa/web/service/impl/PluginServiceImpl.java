@@ -175,12 +175,11 @@ public class PluginServiceImpl implements IPluginService {
      * @param pluginPO 插件PO
      */
     private void setPluginPObyFile(MultipartFile file, PluginPO pluginPO) {
-        Map<String, Object> apkInfo = FileUtil.resolveApk(file, pluginDir);
-        pluginPO.setUrl((String) apkInfo.get("url"));
+        pluginPO.setUrl(FileUtil.uploadFile(file, pluginDir));
         pluginPO.setSize((int) file.getSize());
         try {
             pluginPO.setMd5(DigestUtils.md5DigestAsHex(file.getBytes()));
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
