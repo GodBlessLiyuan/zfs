@@ -1,4 +1,6 @@
-package com.rpa.web.dto;
+package com.rpa.web.domain;
+
+import com.rpa.web.pojo.AdminUserPO;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.Date;
  * t_admin_user
  * @author 
  */
-public class AdminUserDTO implements Serializable {
+public class AdminUserDO extends AdminUserPO implements Serializable {
     private Integer aId;
 
     private String username;
@@ -38,8 +40,6 @@ public class AdminUserDTO implements Serializable {
     private String phone;
 
     private String roleName;
-
-    private String operator;
 
     private static final long serialVersionUID = 1L;
 
@@ -155,14 +155,6 @@ public class AdminUserDTO implements Serializable {
         this.roleName = roleName;
     }
 
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -174,7 +166,7 @@ public class AdminUserDTO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        AdminUserDTO other = (AdminUserDTO) that;
+        AdminUserDO other = (AdminUserDO) that;
         return (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
