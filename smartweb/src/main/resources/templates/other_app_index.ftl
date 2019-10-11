@@ -110,14 +110,13 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">应用图标:</span>
-                                                    <button id="iIconUrl" type="button" class="btn btn-primary"
-                                                            onclick="javascript:uploadFile()"
-                                                            data-dismiss="modal">上传文件
-                                                    </button>
+                                                    <input id="iIconUrl" type="file"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">下载方式:</span>
                                                     <select id="iDownloadType" class="form-control">
+                                                        <option value='1' selected='selected'>直接下载应用文件</option>
+                                                        <option value='2'>跳转至应用市场</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -234,16 +233,24 @@
      * 确认上架点击事件
      */
     function insertClick() {
-        let oName = $('#iOName').val();
-        let extra = $('#iExtra').val();
-        let iconUrl = $('#iIconUrl').val();
-        // let downloadType = $('#iDownloadType').val();
-        let downloadType = 1;
-        let appUrl = $('#iAppUrl').val();
+        let reqData = new FormData();
+        reqData.append("oName", $('#iOName').val());
+        reqData.append("extra", $('#iExtra').val());
+        reqData.append("iconUrl", $('#iIconUrl')[0].files[0]);
+        reqData.append("downloadType", $('#iDownloadType').val());
+        reqData.append("appUrl", $('#iAppUrl').val());
 
-        $.get("/otherapp/insert?oName=" + oName + "&extra=" + extra + "&iconUrl=" + iconUrl + "&downloadType=" +
-            downloadType +
-            "&appUrl=" + appUrl);
+        $.ajax({
+            type: 'post',
+            url: '/otherapp/insert',
+            dataType: 'json',
+            data: reqData,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                $('#datatab').DataTable().draw(false);
+            }
+        });
     }
 
     function deleteClick() {
@@ -289,8 +296,18 @@
                 {"data": null, "targets": 0},
                 {"data": "oName"},
                 {"data": "extra"},
-                {"data": "iconUrl"},
-                {"data": "downloadType"},
+                {
+                    "data": "iconUrl",
+                    "render": function (data, type, full) {
+                        return "<img src='" + data + "' height='50px' width='50px'/>";
+                    }
+                },
+                {
+                    "data": "downloadType",
+                    "render": function (data, type, full) {
+                        return data === 1 ? "直接下载应用文件" : "跳转至应用市场";
+                    }
+                },
                 {"data": "appUrl"},
                 {
                     "data": "oId",

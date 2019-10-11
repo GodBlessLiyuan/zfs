@@ -128,7 +128,7 @@
 
     <select id="query" resultType="com.rpa.web.pojo.UserPO">
         select
-        u.phone, u.create_time as createTime, d.chan_name as chanName, d.versioncode as versionCode, d.buildversion
+        u.phone, u.create_time as createTime, u.chan_name as chanName, d.versioncode as versionCode, d.buildversion
         as buildVersion, d.manufacturer, d.androidmodel
         from t_user u left join t_user_device ud on u.user_id = ud.user_id left join t_device d on ud.device_id =
         d.device_id

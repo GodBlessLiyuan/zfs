@@ -3,12 +3,16 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.rpa.web.dto.WhilteDeviceDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.exception.PromptException;
 import com.rpa.web.mapper.DeviceImeiMapper;
 import com.rpa.web.mapper.WhilteDeviceMapper;
 import com.rpa.web.pojo.DeviceImeiPO;
 import com.rpa.web.pojo.WhilteDevicePO;
 import com.rpa.web.service.IWhilteDeviceService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,11 +43,11 @@ public class WhiteDeviceServiceImpl implements IWhilteDeviceService {
     }
 
     @Override
-    public int insert(String imei, String extra) {
+    public ResultVO insert(String imei, String extra) {
         List<DeviceImeiPO> deviceImeiPOs = deviceImeiMapper.queryByImei(imei);
         if (deviceImeiPOs == null || deviceImeiPOs.size() == 0) {
-            // 输入的Imei不正确，没有对应的deviceId
-            return -1;
+            // 未找到对应的deviceId
+            throw new PromptException(ExceptionEnum.IMEI_INPUT_ERROR);
         }
 
         // deviced 与 imei 是1-n关系,故这里deviceId有且仅有一个
@@ -51,7 +55,7 @@ public class WhiteDeviceServiceImpl implements IWhilteDeviceService {
         List<WhilteDevicePO> whilteDevicePOs = whilteDeviceMapper.queryByDeviceId(deviceId);
         if (whilteDevicePOs != null && whilteDevicePOs.size() > 0) {
             // 已存在在白名单里
-            return -2;
+            throw new PromptException(ExceptionEnum.IMEI_EXIST);
         }
 
         WhilteDevicePO po = new WhilteDevicePO();
@@ -61,7 +65,9 @@ public class WhiteDeviceServiceImpl implements IWhilteDeviceService {
         po.setCreateTime(new Date());
         po.setaId(1);
 
-        return whilteDeviceMapper.insert(po);
+        whilteDeviceMapper.insert(po);
+
+        return ResultVOUtil.success();
     }
 
     @Override
