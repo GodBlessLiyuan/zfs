@@ -73,7 +73,6 @@ public class AdconfigController {
      * 修改
      * @param adconfigDTO
      * @return
-     * @TODO 还需设置开放渠道
      */
     @PostMapping("update")
     public int update(AdconfigDTO adconfigDTO, HttpSession httpSession) {
@@ -90,11 +89,6 @@ public class AdconfigController {
         return this.adconfigService.updateStrategy(show_interval);
     }
 
-   /**
-    @PostMapping("/update/channel")
-    public int update(AdconfigDTO adconfigDTO, HttpSession httpSession) {
-        return this.adconfigService.update(adconfigDTO, httpSession);
-    }
 
     /**
      * 删除
