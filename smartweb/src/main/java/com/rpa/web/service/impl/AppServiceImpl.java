@@ -35,8 +35,8 @@ public class AppServiceImpl implements IAppService {
     @Resource
     private AppChMapper appChMapper;
 
-    @Value("${file.apkDir}")
-    private String apkDir;
+    @Value("${file.appDir}")
+    private String appDir;
 
     @Override
     public DTPageInfo<AppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
@@ -174,8 +174,8 @@ public class AppServiceImpl implements IAppService {
      * @param appPO appPO
      */
     private void setAppPObyFile(MultipartFile file, AppPO appPO) {
-        Map<String, Object> apkInfo = FileUtil.resolveApk(file, apkDir);
-        appPO.setUrl((String) apkInfo.get("filePath"));
+        Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir);
+        appPO.setUrl((String) apkInfo.get("url"));
         appPO.setVersionname((String) apkInfo.get("versionname"));
         appPO.setVersioncode(Math.toIntExact((Long) apkInfo.get("versioncode")));
         appPO.setSize((int) file.getSize());

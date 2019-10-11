@@ -73,7 +73,7 @@ public class FileUtil {
 
         try {
             // 上传apk文件
-            apkInfo.put("filePath", uploadFile(file, apkDir));
+            apkInfo.put("url", uploadFile(file, apkDir));
             ApkFile apkFile = new ApkFile(rootPath + apkDir + file.getOriginalFilename());
             ApkMeta apkMeta = apkFile.getApkMeta();
             apkInfo.put("pkgname", apkMeta.getPackageName());

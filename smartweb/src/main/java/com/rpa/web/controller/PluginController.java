@@ -1,13 +1,14 @@
 package com.rpa.web.controller;
 
 import com.rpa.web.dto.PluginDTO;
-import com.rpa.web.pojo.PluginPO;
 import com.rpa.web.service.IPluginService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,30 +51,30 @@ public class PluginController {
         return service.querySoftChannelByIds(pluginId, appId);
     }
 
-    @RequestMapping("/plugin/insert")
-    public int insert(@RequestParam(value = "url") String url,
+    @PostMapping("/plugin/insert")
+    public int insert(@RequestParam(value = "file") MultipartFile file,
                       @RequestParam(value = "appId") int appId,
                       @RequestParam(value = "softChannel") int[] softChannel,
                       @RequestParam(value = "context") String context,
                       @RequestParam(value = "extra") String extra) {
 
-        return service.insert(url, appId, softChannel, context, extra);
+        return service.insert(file, appId, softChannel, context, extra);
+    }
+
+    @PostMapping("/plugin/update")
+    public int update(@RequestParam(value = "pluginId") int pluginId,
+                      @RequestParam(value = "file") MultipartFile file,
+                      @RequestParam(value = "appId") int appId,
+                      @RequestParam(value = "softChannel") int[] softChannel,
+                      @RequestParam(value = "context") String context,
+                      @RequestParam(value = "extra") String extra) {
+        return service.update(pluginId, file, appId, softChannel, context, extra);
     }
 
     @RequestMapping("/plugin/updateStatus")
     public int updateStatus(@RequestParam(value = "pluginId") int pluginId,
                             @RequestParam(value = "status") byte status) {
         return service.updateStatus(pluginId, status);
-    }
-
-    @RequestMapping("/plugin/update")
-    public int update(@RequestParam(value = "pluginId") int pluginId,
-                      @RequestParam(value = "url") String url,
-                      @RequestParam(value = "appId") int appId,
-                      @RequestParam(value = "softChannel") int[] softChannel,
-                      @RequestParam(value = "context") String context,
-                      @RequestParam(value = "extra") String extra) {
-        return service.update(pluginId, url, appId, softChannel, context, extra);
     }
 
     @RequestMapping("/plugin/delete")

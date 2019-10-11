@@ -140,10 +140,7 @@
                                             <form>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">插件:</span>
-                                                    <button id="iUrl" type="button" class="btn btn-primary"
-                                                            onclick="javascript:uploadFile()"
-                                                            data-dismiss="modal">上传文件
-                                                    </button>
+                                                    <input id="iFile" type="file"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">支持版本:</span>
@@ -191,10 +188,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">插件:</span>
-                                                    <button id="uUrl" type="button" class="btn btn-primary"
-                                                            onclick="javascript:uploadFile()"
-                                                            data-dismiss="modal">上传文件
-                                                    </button>
+                                                    <input id="uFile" type="file"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">支持版本:</span>
@@ -431,36 +425,49 @@
      * 确认上架点击事件
      */
     function insertClick() {
-        let url = $('#iUrl').val();
-        let appId = $('#iAppId').val();
-        let softChannel = $('#iSoftChannel').val();
-        let context = $('#iContext').val();
-        let extra = $('#iExtra').val();
+        let reqData = new FormData();
+        reqData.append("file", $('#iFile')[0].files[0]);
+        reqData.append("appId", $('#iAppId').val());
+        reqData.append("softChannel", $('#iSoftChannel').val());
+        reqData.append("context", $('#iContext').val());
+        reqData.append("extra", $('#iExtra').val());
 
-        $.get("/plugin/insert?appId=" + appId + "&softChannel=" + softChannel + "&context=" + context +
-            "&extra=" + extra + "&url=" + url);
+        $.ajax({
+            type: 'post',
+            url: '/plugin/insert',
+            dataType: 'json',
+            data: reqData,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                $('#datatab').DataTable().draw(false);
+            }
+        });
     }
 
     /**
      * 确认修改点击事件
      */
     function updateClick() {
-        let pluginId = $('#uPluginId').val();
-        let url = $('#uUrl').val();
-        let appId = $('#uAppId').val();
-        let softChannel = $('#uSoftChannel').val();
-        let context = $('#uContext').val();
-        let extra = $('#uExtra').val();
+        let reqData = new FormData();
+        reqData.append("pluginId", $('#uPluginId').val())
+        reqData.append("file", $('#uFile')[0].files[0]);
+        reqData.append("appId", $('#uAppId').val());
+        reqData.append("softChannel", $('#uSoftChannel').val());
+        reqData.append("context", $('#uContext').val());
+        reqData.append("extra", $('#uExtra').val());
 
         $.ajax({
-            type: 'GET',
-            url: "/plugin/update?pluginId=" + pluginId + "&appId=" + appId + "&softChannel=" + softChannel + "&context="
-                + context + "&extra=" + extra + "&url=" + url,
+            type: 'post',
+            url: '/plugin/update',
             dataType: 'json',
-            success: function (data) {
+            data: reqData,
+            contentType: false,
+            processData: false,
+            success: function (res) {
                 $('#datatab').DataTable().draw(false);
             }
-        })
+        });
     }
 
     function deleteClick() {
