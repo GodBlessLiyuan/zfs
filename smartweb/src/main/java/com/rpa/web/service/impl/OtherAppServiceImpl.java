@@ -8,6 +8,7 @@ import com.rpa.web.pojo.OtherAppPO;
 import com.rpa.web.service.IOtherAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +30,9 @@ public class OtherAppServiceImpl implements IOtherAppService {
     @Resource
     private OtherAppMapper otherAppMapper;
 
+    @Value("${file.iconDir}")
+    private String iconDir;
+
     @Override
     public DTPageInfo<OtherAppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<OtherAppPO> page = PageHelper.startPage(pageNum, pageSize);
@@ -44,7 +48,7 @@ public class OtherAppServiceImpl implements IOtherAppService {
         po.setaId(aId);
         po.setoName(oName);
         po.setExtra(extra);
-        po.setIconUrl(FileUtil.uploadFile(iconUrl, req));
+        po.setIconUrl(FileUtil.uploadFile(iconUrl, iconDir, req));
         po.setDownloadType(downloadType);
         po.setAppUrl(appUrl);
         po.setCreateTime(new Date());
