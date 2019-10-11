@@ -3,6 +3,7 @@ package com.rpa.web.controller;
 import com.rpa.web.dto.WhilteDeviceDTO;
 import com.rpa.web.service.IWhilteDeviceService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,13 +18,14 @@ import java.util.Map;
  * @description: 测试白名单
  * @version: 1.0
  */
+@RequestMapping("whiltedevice")
 @RestController
 public class WhilteDeviceController {
 
     @Resource
     private IWhilteDeviceService service;
 
-    @RequestMapping("/whiltedevice/query")
+    @RequestMapping("query")
     public DTPageInfo<WhilteDeviceDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                              @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                              @RequestParam(value = "length", defaultValue = "10") int pageSize,
@@ -34,13 +36,13 @@ public class WhilteDeviceController {
         return service.query(draw, pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("/whiltedevice/insert")
-    public int insert(@RequestParam(value = "imei") String imei,
-                      @RequestParam(value = "extra") String extra) {
+    @RequestMapping("insert")
+    public ResultVO insert(@RequestParam(value = "imei") String imei,
+                           @RequestParam(value = "extra") String extra) {
         return service.insert(imei, extra);
     }
 
-    @RequestMapping("/whiltedevice/delete")
+    @RequestMapping("delete")
     public int delete(@RequestParam(value = "deviceId") int deviceId) {
         return service.deleteByDeviceId(deviceId);
     }

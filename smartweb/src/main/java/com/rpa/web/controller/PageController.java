@@ -89,7 +89,7 @@ public class PageController {
      */
     @RequestMapping("/whiltedevice")
     public String whilteDevice() {
-        return "whiltedevice";
+        return "whilte_device_index";
     }
 
     /**
