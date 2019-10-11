@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -60,12 +59,11 @@ public class AppServiceImpl implements IAppService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra,
-                      HttpServletRequest req) {
+    public int insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra) {
         AppPO appPO = new AppPO();
 
         // 根据url对应的apk获取版本名称、版本号、文件大小
-        this.setAppPObyFile(file, req, appPO);
+        this.setAppPObyFile(file, appPO);
 
         appPO.setUpdateType(updateType);
         appPO.setContext(context);
@@ -94,11 +92,11 @@ public class AppServiceImpl implements IAppService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra, HttpServletRequest req) {
+    public int update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra) {
         AppPO appPO = appMapper.selectByPrimaryKey(appId);
         if (file != null && !"".equals(file)) {
             // 根据url对应的apk获取版本名称、版本号、文件大小
-            this.setAppPObyFile(file, req, appPO);
+            this.setAppPObyFile(file, appPO);
         }
         appPO.setUpdateType(updateType);
         appPO.setContext(context);
@@ -173,11 +171,10 @@ public class AppServiceImpl implements IAppService {
      * 根据前端File设置AppPO相关信息
      *
      * @param file  文件
-     * @param req   请求
      * @param appPO appPO
      */
-    private void setAppPObyFile(MultipartFile file, HttpServletRequest req, AppPO appPO) {
-        Map<String, Object> apkInfo = FileUtil.resolveApk(file, apkDir, req);
+    private void setAppPObyFile(MultipartFile file, AppPO appPO) {
+        Map<String, Object> apkInfo = FileUtil.resolveApk(file, apkDir);
         appPO.setUrl((String) apkInfo.get("filePath"));
         appPO.setVersionname((String) apkInfo.get("versionname"));
         appPO.setVersioncode(Math.toIntExact((Long) apkInfo.get("versioncode")));

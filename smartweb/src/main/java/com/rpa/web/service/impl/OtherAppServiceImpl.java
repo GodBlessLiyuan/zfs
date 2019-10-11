@@ -41,14 +41,13 @@ public class OtherAppServiceImpl implements IOtherAppService {
     }
 
     @Override
-    public int insert(String oName, String extra, MultipartFile iconUrl, byte downloadType, String appUrl, int aId,
-                      HttpServletRequest req) {
+    public int insert(String oName, String extra, MultipartFile iconUrl, byte downloadType, String appUrl, int aId) {
         OtherAppPO po = new OtherAppPO();
 
         po.setaId(aId);
         po.setoName(oName);
         po.setExtra(extra);
-        po.setIconUrl(FileUtil.uploadFile(iconUrl, iconDir, req));
+        po.setIconUrl(FileUtil.uploadFile(iconUrl, iconDir));
         po.setDownloadType(downloadType);
         po.setAppUrl(appUrl);
         po.setCreateTime(new Date());

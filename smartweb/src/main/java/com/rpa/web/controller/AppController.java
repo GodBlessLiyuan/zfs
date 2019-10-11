@@ -57,9 +57,9 @@ public class AppController {
                       @RequestParam(value = "updateType") byte updateType,
                       @RequestParam(value = "softChannel") int[] softChannel,
                       @RequestParam(value = "context") String context,
-                      @RequestParam(value = "extra") String extra, HttpServletRequest req) {
+                      @RequestParam(value = "extra") String extra) {
 
-        return service.insert(file, updateType, softChannel, context, extra, req);
+        return service.insert(file, updateType, softChannel, context, extra);
     }
 
     @PostMapping("update")
@@ -68,8 +68,8 @@ public class AppController {
                       @RequestParam(value = "updateType") byte updateType,
                       @RequestParam(value = "softChannel") int[] softChannel,
                       @RequestParam(value = "context") String context,
-                      @RequestParam(value = "extra") String extra, HttpServletRequest req) {
-        return service.update(appId, file, updateType, softChannel, context, extra, req);
+                      @RequestParam(value = "extra") String extra) {
+        return service.update(appId, file, updateType, softChannel, context, extra);
     }
 
     @RequestMapping("updateStatus")

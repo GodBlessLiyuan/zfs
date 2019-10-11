@@ -35,10 +35,9 @@ public interface IOtherAppService {
      * @param downloadType 下载方式
      * @param appUrl       下载地址
      * @param aId          管理员Id
-     * @param req
      * @return
      */
-    int insert(String oName, String extra, MultipartFile iconUrl, byte downloadType, String appUrl, int aId, HttpServletRequest req);
+    int insert(String oName, String extra, MultipartFile iconUrl, byte downloadType, String appUrl, int aId);
 
     /**
      * 删除
