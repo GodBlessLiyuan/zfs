@@ -18,12 +18,16 @@ public enum ExceptionEnum {
     /**
      * imei输入有误
      */
-    IMEI_INPUT_ERROR(100, "输入的imei号没有对应的设备！"),
+    IMEI_INPUT_ERROR(1000, "输入的imei号没有对应的设备！"),
 
     /**
      * imei已存在
      */
-    IMEI_EXIST(101, "输入的imei已在白名单中！");
+    IMEI_EXIST(1001, "输入的imei已在白名单中！"),
+
+    PASSWORD_ERROR(1002, "您输入的密码有误，请重新输入！"),
+
+    PASSWORD_UPDATE_ERROR(1003, "修改密码失败！");
 
     /**
      * 提示码

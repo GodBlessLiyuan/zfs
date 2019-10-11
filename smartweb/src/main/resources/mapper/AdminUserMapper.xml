@@ -26,6 +26,13 @@
     from t_admin_user
     where a_id = #{aId,jdbcType=INTEGER}
   </select>
+
+  <select id="queryPassword" parameterType="java.lang.Integer">
+    select password
+    from t_admin_user
+    where a_id = #{aId,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_admin_user
     where a_id = #{aId,jdbcType=INTEGER}
@@ -183,6 +190,12 @@
       `name` = #{name,jdbcType=CHAR},
       extra = #{extra,jdbcType=CHAR},
       phone = #{phone,jdbcType=CHAR}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updatePassword">
+    update t_admin_user
+    set `password` = #{newPassword,jdbcType=CHAR},
     where a_id = #{aId,jdbcType=INTEGER}
   </update>
 </mapper>

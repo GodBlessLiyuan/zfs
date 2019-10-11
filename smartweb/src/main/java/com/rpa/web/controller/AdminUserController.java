@@ -4,21 +4,21 @@ import com.rpa.web.exception.PasswordErrorException;
 import com.rpa.web.exception.UserNotExistsException;
 import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.pojo.ResultInfo;
-import com.rpa.web.service.LoginService;
+import com.rpa.web.service.AdminUserService;
 import com.rpa.web.utils.Md5Util;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
 @RestController
-public class LoginController {
+public class AdminUserController {
 
     @Autowired
-    private LoginService loginService;
+    private AdminUserService adminUserService;
 
     /**
      * 登录
@@ -28,7 +28,6 @@ public class LoginController {
      * @return ResultInfo
      */
     @PostMapping("login")
-    @ResponseBody
     public ResultInfo login(HttpSession session,
                             @RequestParam("username") String username,
                             @RequestParam("password") String password,
@@ -65,7 +64,7 @@ public class LoginController {
             password = Md5Util.encodeByMd5(password);
 
             // 调用业务进行登录
-            AdminUserPO loginUser = loginService.login(username, password);
+            AdminUserPO loginUser = adminUserService.login(username, password);
 
             // 登录成功，返回成功信息
             if (loginUser != null) {
@@ -85,5 +84,18 @@ public class LoginController {
             resultInfo = new ResultInfo(false, null, "服务器忙");
         }
         return resultInfo;
+    }
+
+    /**
+     * 修改密码
+     * @param oldPassword
+     * @param newPassword
+     * @param httpSession
+     * @return
+     */
+    public ResultVO updatePassword (HttpSession httpSession,
+                                    @RequestParam("oldPassword") String oldPassword,
+                                    @RequestParam("newPassword") String newPassword){
+        return this.adminUserService.updatePassword(httpSession, oldPassword, newPassword);
     }
 }
