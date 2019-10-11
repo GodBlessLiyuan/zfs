@@ -29,6 +29,14 @@ public class AdminUserPO implements Serializable {
 
     private Integer roleId;
 
+    private Integer relationAId;
+
+    private String name;
+
+    private String extra;
+
+    private String phone;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getaId() {
@@ -103,6 +111,38 @@ public class AdminUserPO implements Serializable {
         this.roleId = roleId;
     }
 
+    public Integer getRelationAId() {
+        return relationAId;
+    }
+
+    public void setRelationAId(Integer relationAId) {
+        this.relationAId = relationAId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -123,7 +163,11 @@ public class AdminUserPO implements Serializable {
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getLastTime() == null ? other.getLastTime() == null : this.getLastTime().equals(other.getLastTime()))
             && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()))
-            && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()));
+            && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
+            && (this.getRelationAId() == null ? other.getRelationAId() == null : this.getRelationAId().equals(other.getRelationAId()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
+            && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()));
     }
 
     @Override
@@ -139,6 +183,10 @@ public class AdminUserPO implements Serializable {
         result = prime * result + ((getLastTime() == null) ? 0 : getLastTime().hashCode());
         result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
         result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
+        result = prime * result + ((getRelationAId() == null) ? 0 : getRelationAId().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
+        result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
         return result;
     }
 
@@ -157,6 +205,10 @@ public class AdminUserPO implements Serializable {
         sb.append(", lastTime=").append(lastTime);
         sb.append(", dr=").append(dr);
         sb.append(", roleId=").append(roleId);
+        sb.append(", relationAId=").append(relationAId);
+        sb.append(", name=").append(name);
+        sb.append(", extra=").append(extra);
+        sb.append(", phone=").append(phone);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

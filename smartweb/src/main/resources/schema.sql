@@ -118,6 +118,10 @@ CREATE TABLE t_admin_user
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除',
 	role_id int NOT NULL,
+	relation_a_id int,
+	name char(64),
+	extra char(255),
+	phone char(20),
 	PRIMARY KEY (a_id),
 	UNIQUE (username)
 );

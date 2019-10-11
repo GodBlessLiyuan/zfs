@@ -11,9 +11,14 @@
     <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
     <result column="dr" jdbcType="TINYINT" property="dr" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="relation_a_id" jdbcType="INTEGER" property="relationAId" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="extra" jdbcType="CHAR" property="extra" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
   </resultMap>
   <sql id="Base_Column_List">
-    a_id, username, `password`, email, is_lock, create_time, last_time, dr, role_id
+    a_id, username, `password`, email, is_lock, create_time, last_time, dr, role_id, 
+    relation_a_id, `name`, extra, phone
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -28,12 +33,14 @@
   <insert id="insert" parameterType="com.rpa.web.pojo.AdminUserPO">
     insert into t_admin_user (a_id, username, `password`, 
       email, is_lock, create_time, 
-      last_time, dr, role_id
-      )
+      last_time, dr, role_id, 
+      relation_a_id, `name`, extra, 
+      phone)
     values (#{aId,jdbcType=INTEGER}, #{username,jdbcType=CHAR}, #{password,jdbcType=CHAR}, 
       #{email,jdbcType=CHAR}, #{isLock,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{lastTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT}, #{roleId,jdbcType=INTEGER}
-      )
+      #{lastTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT}, #{roleId,jdbcType=INTEGER}, 
+      #{relationAId,jdbcType=INTEGER}, #{name,jdbcType=CHAR}, #{extra,jdbcType=CHAR}, 
+      #{phone,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.AdminUserPO">
     insert into t_admin_user
@@ -65,6 +72,18 @@
       <if test="roleId != null">
         role_id,
       </if>
+      <if test="relationAId != null">
+        relation_a_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="extra != null">
+        extra,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="aId != null">
@@ -93,6 +112,18 @@
       </if>
       <if test="roleId != null">
         #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="relationAId != null">
+        #{relationAId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="extra != null">
+        #{extra,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -123,6 +154,18 @@
       <if test="roleId != null">
         role_id = #{roleId,jdbcType=INTEGER},
       </if>
+      <if test="relationAId != null">
+        relation_a_id = #{relationAId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=CHAR},
+      </if>
+      <if test="extra != null">
+        extra = #{extra,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=CHAR},
+      </if>
     </set>
     where a_id = #{aId,jdbcType=INTEGER}
   </update>
@@ -135,7 +178,11 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_time = #{lastTime,jdbcType=TIMESTAMP},
       dr = #{dr,jdbcType=TINYINT},
-      role_id = #{roleId,jdbcType=INTEGER}
+      role_id = #{roleId,jdbcType=INTEGER},
+      relation_a_id = #{relationAId,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=CHAR},
+      extra = #{extra,jdbcType=CHAR},
+      phone = #{phone,jdbcType=CHAR}
     where a_id = #{aId,jdbcType=INTEGER}
   </update>
 </mapper>
