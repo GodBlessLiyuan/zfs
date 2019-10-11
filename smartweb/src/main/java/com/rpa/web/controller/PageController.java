@@ -19,7 +19,7 @@ public class PageController {
      */
     @RequestMapping("/userinfo")
     public String userInfo() {
-        return "userinfo";
+        return "user_info_index";
     }
 
     /**
@@ -59,7 +59,7 @@ public class PageController {
      */
     @RequestMapping("/unregistered")
     public String unregistered() {
-        return "unregistered";
+        return "unregistered_index";
     }
 
     /**
