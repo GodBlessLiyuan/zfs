@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.web.mapper.WithdrawUserMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.WithdrawUserPO">
+    <id column="withdraw_id" jdbcType="INTEGER" property="withdrawId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="user_device_id" jdbcType="INTEGER" property="userDeviceId" />
+    <result column="withdraw" jdbcType="BIGINT" property="withdraw" />
+    <result column="remaining" jdbcType="BIGINT" property="remaining" />
+    <result column="ali_account" jdbcType="CHAR" property="aliAccount" />
+    <result column="ali_name" jdbcType="CHAR" property="aliName" />
+    <result column="withdraw_time" jdbcType="INTEGER" property="withdrawTime" />
+    <result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="a_id" jdbcType="INTEGER" property="aId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    withdraw_id, create_time, user_id, device_id, user_device_id, withdraw, remaining, 
+    ali_account, ali_name, withdraw_time, audit_time, end_time, `status`, a_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_withdraw_user
+    where withdraw_id = #{withdrawId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_withdraw_user
+    where withdraw_id = #{withdrawId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.web.pojo.WithdrawUserPO">
+    insert into t_withdraw_user (withdraw_id, create_time, user_id, 
+      device_id, user_device_id, withdraw, 
+      remaining, ali_account, ali_name, 
+      withdraw_time, audit_time, end_time, 
+      `status`, a_id)
+    values (#{withdrawId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, 
+      #{deviceId,jdbcType=BIGINT}, #{userDeviceId,jdbcType=INTEGER}, #{withdraw,jdbcType=BIGINT}, 
+      #{remaining,jdbcType=BIGINT}, #{aliAccount,jdbcType=CHAR}, #{aliName,jdbcType=CHAR}, 
+      #{withdrawTime,jdbcType=INTEGER}, #{auditTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{aId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.WithdrawUserPO">
+    insert into t_withdraw_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="withdrawId != null">
+        withdraw_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="userDeviceId != null">
+        user_device_id,
+      </if>
+      <if test="withdraw != null">
+        withdraw,
+      </if>
+      <if test="remaining != null">
+        remaining,
+      </if>
+      <if test="aliAccount != null">
+        ali_account,
+      </if>
+      <if test="aliName != null">
+        ali_name,
+      </if>
+      <if test="withdrawTime != null">
+        withdraw_time,
+      </if>
+      <if test="auditTime != null">
+        audit_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="aId != null">
+        a_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="withdrawId != null">
+        #{withdrawId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="userDeviceId != null">
+        #{userDeviceId,jdbcType=INTEGER},
+      </if>
+      <if test="withdraw != null">
+        #{withdraw,jdbcType=BIGINT},
+      </if>
+      <if test="remaining != null">
+        #{remaining,jdbcType=BIGINT},
+      </if>
+      <if test="aliAccount != null">
+        #{aliAccount,jdbcType=CHAR},
+      </if>
+      <if test="aliName != null">
+        #{aliName,jdbcType=CHAR},
+      </if>
+      <if test="withdrawTime != null">
+        #{withdrawTime,jdbcType=INTEGER},
+      </if>
+      <if test="auditTime != null">
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.WithdrawUserPO">
+    update t_withdraw_user
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="userDeviceId != null">
+        user_device_id = #{userDeviceId,jdbcType=INTEGER},
+      </if>
+      <if test="withdraw != null">
+        withdraw = #{withdraw,jdbcType=BIGINT},
+      </if>
+      <if test="remaining != null">
+        remaining = #{remaining,jdbcType=BIGINT},
+      </if>
+      <if test="aliAccount != null">
+        ali_account = #{aliAccount,jdbcType=CHAR},
+      </if>
+      <if test="aliName != null">
+        ali_name = #{aliName,jdbcType=CHAR},
+      </if>
+      <if test="withdrawTime != null">
+        withdraw_time = #{withdrawTime,jdbcType=INTEGER},
+      </if>
+      <if test="auditTime != null">
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where withdraw_id = #{withdrawId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.WithdrawUserPO">
+    update t_withdraw_user
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT},
+      device_id = #{deviceId,jdbcType=BIGINT},
+      user_device_id = #{userDeviceId,jdbcType=INTEGER},
+      withdraw = #{withdraw,jdbcType=BIGINT},
+      remaining = #{remaining,jdbcType=BIGINT},
+      ali_account = #{aliAccount,jdbcType=CHAR},
+      ali_name = #{aliName,jdbcType=CHAR},
+      withdraw_time = #{withdrawTime,jdbcType=INTEGER},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},
+      a_id = #{aId,jdbcType=INTEGER}
+    where withdraw_id = #{withdrawId,jdbcType=INTEGER}
+  </update>
+</mapper>

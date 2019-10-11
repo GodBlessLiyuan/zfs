@@ -351,6 +351,19 @@ CREATE TABLE t_functionvideo
 );
 
 
+CREATE TABLE t_invite_user
+(
+	invite_id int NOT NULL AUTO_INCREMENT,
+	user_id bigint,
+	invite_phone char(16),
+	create_time datetime,
+	update_time datetime,
+	ip char(64),
+	PRIMARY KEY (invite_id),
+	UNIQUE (invite_id)
+);
+
+
 CREATE TABLE t_key_text
 (
     key_name int NOT NULL,
@@ -497,6 +510,19 @@ CREATE TABLE t_promoter
 	dr tinyint COMMENT '1 未删除  2删除',
 	PRIMARY KEY (pro_id),
 	UNIQUE (pro_id)
+);
+
+
+CREATE TABLE t_revenue_user
+(
+	user_id bigint NOT NULL,
+	invite_count int,
+	register_count bigint,
+	total_revenue bigint,
+	withdraw bigint,
+	withdraw_time int,
+	PRIMARY KEY (user_id),
+	UNIQUE (user_id)
 );
 
 
@@ -702,6 +728,28 @@ CREATE TABLE t_whilte_user
 	username char(32),
 	phone char(11),
 	UNIQUE (user_id)
+);
+
+
+CREATE TABLE t_withdraw_user
+(
+	withdraw_id int NOT NULL AUTO_INCREMENT,
+	create_time datetime,
+	user_id bigint,
+	device_id bigint,
+	user_device_id int,
+	withdraw bigint,
+	remaining bigint,
+	ali_account char(64),
+	ali_name char(64),
+	withdraw_time int,
+	audit_time datetime,
+	end_time datetime,
+	-- 1 待审核  2 运营驳回 3 打款中  4 支付宝驳回  5 完成
+	status tinyint COMMENT '1 待审核  2 运营驳回 3 打款中  4 支付宝驳回  5 完成',
+	a_id int,
+	PRIMARY KEY (withdraw_id),
+	UNIQUE (withdraw_id)
 );
 
 
