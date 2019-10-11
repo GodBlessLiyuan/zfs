@@ -10,6 +10,7 @@ import com.rpa.web.pojo.AppPO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,9 @@ public class AppServiceImpl implements IAppService {
     @Resource
     private AppChMapper appChMapper;
 
+    @Value("${file.apkDir}")
+    private String apkDir;
+
     @Override
     public DTPageInfo<AppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<AppPO> page = PageHelper.startPage(pageNum, pageSize);
@@ -59,11 +63,9 @@ public class AppServiceImpl implements IAppService {
     public int insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra,
                       HttpServletRequest req) {
         AppPO appPO = new AppPO();
+
         // 根据url对应的apk获取版本名称、版本号、文件大小
-        appPO.setUrl(FileUtil.uploadFile(file, req));
-        appPO.setVersionname(file.getOriginalFilename());
-        appPO.setVersioncode(1);
-        appPO.setSize((int) file.getSize());
+        this.setAppPObyFile(file, req, appPO);
 
         appPO.setUpdateType(updateType);
         appPO.setContext(context);
@@ -96,11 +98,7 @@ public class AppServiceImpl implements IAppService {
         AppPO appPO = appMapper.selectByPrimaryKey(appId);
         if (file != null && !"".equals(file)) {
             // 根据url对应的apk获取版本名称、版本号、文件大小
-            appPO.setUrl(FileUtil.uploadFile(file, req));
-            appPO.setVersionname(file.getOriginalFilename());
-            appPO.setVersioncode(2);
-            appPO.setSize((int) file.getSize());
-
+            this.setAppPObyFile(file, req, appPO);
         }
         appPO.setUpdateType(updateType);
         appPO.setContext(context);
@@ -166,8 +164,23 @@ public class AppServiceImpl implements IAppService {
     @Transactional(rollbackFor = {})
     @Override
     public int delete(int appId) {
-        int frist = appMapper.deleteByPrimaryKey(appId);
-        int secend = appChMapper.deleteByAppId(appId);
+        int frist = appChMapper.deleteByAppId(appId);
+        int secend = appMapper.deleteByPrimaryKey(appId);
         return frist + secend;
+    }
+
+    /**
+     * 根据前端File设置AppPO相关信息
+     *
+     * @param file  文件
+     * @param req   请求
+     * @param appPO appPO
+     */
+    private void setAppPObyFile(MultipartFile file, HttpServletRequest req, AppPO appPO) {
+        Map<String, Object> apkInfo = FileUtil.resolveApk(file, apkDir, req);
+        appPO.setUrl((String) apkInfo.get("filePath"));
+        appPO.setVersionname((String) apkInfo.get("versionname"));
+        appPO.setVersioncode(Math.toIntExact((Long) apkInfo.get("versioncode")));
+        appPO.setSize((int) file.getSize());
     }
 }
