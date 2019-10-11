@@ -1,6 +1,7 @@
 package com.rpa.web.domain;
 
 import com.rpa.web.pojo.UserVipPO;
+import lombok.ToString;
 
 import java.util.Date;
 
@@ -10,6 +11,7 @@ import java.util.Date;
  * @description: 用户会员数据
  * @version: 1.0
  */
+@ToString
 public class UserVipDO extends UserVipPO {
     private String phone;
     private Date createTime;

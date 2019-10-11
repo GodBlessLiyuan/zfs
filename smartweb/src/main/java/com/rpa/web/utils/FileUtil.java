@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,7 +28,7 @@ public class FileUtil {
      * 文件上传处理
      *
      * @param file 文件信息
-     * @param dir file存放文件目录
+     * @param dir  file存放文件目录
      * @return 文件路径
      * @throws IOException
      */

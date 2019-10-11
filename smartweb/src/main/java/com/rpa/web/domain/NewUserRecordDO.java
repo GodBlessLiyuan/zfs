@@ -1,6 +1,7 @@
 package com.rpa.web.domain;
 
 import com.rpa.web.pojo.NewUserRecordPO;
+import lombok.ToString;
 
 /**
  * @author: xiahui
@@ -8,6 +9,7 @@ import com.rpa.web.pojo.NewUserRecordPO;
  * @description: TODO
  * @version: 1.0
  */
+@ToString
 public class NewUserRecordDO extends NewUserRecordPO {
 
     private String userChanName;
