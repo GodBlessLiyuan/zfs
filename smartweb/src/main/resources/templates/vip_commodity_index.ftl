@@ -116,7 +116,8 @@
                                 </form>
                             </div>
 
-                            <button type="button" class="btn btn-primary " id="reset">重置</button>
+                            <button type="button" class="btn btn-primary " id="reset"
+                                    onclick="javascript:resetClick()">重置</button>
                             <button type="button" class="btn btn-primary " id="query"
                                     onclick="javascript:queryClick();">查询
                             </button>
@@ -515,6 +516,15 @@
                 $('#datatab').DataTable().draw(false);
             }
         })
+    }
+
+    /**
+     * 重置
+     */
+    function resetClick() {
+        $('#username').val(null);
+        $('#comTypeId option:first').prop('selected', 'selected');
+        $('#channelId option:first').prop('selected', 'selected');
     }
 </script>
 

@@ -96,13 +96,15 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>发布人：</label>
-                                            <input id="aId" type="text" class="form-control">
+                                            <input id="username" type="text" class="form-control">
                                         </div>
                                     </div>
                                 </form>
                             </div>
 
-                            <button type="button" class="btn btn-primary " id="reset">重置</button>
+                            <button type="button" class="btn btn-primary " id="reset"
+                                    onclick="javascript:resetClick()">重置
+                            </button>
                             <button type="button" class="btn btn-primary " id="query"
                                     onclick="javascript:queryClick();">查询
                             </button>
@@ -364,64 +366,6 @@
     });
 
     /**
-     * 新增时，切换版本事件
-     */
-    function iAppIdClick() {
-        let appId = $('#iAppId').val();
-        $.ajax({
-            type: 'GET',
-            url: '/appversion/queryById?appId=' + appId,
-            dataType: 'JSON',
-            success: function (data) {
-                let chanNames = data.chanName.split(',');
-                $('#iSoftChannel').empty();
-                $.each(data.chanId.split(','), function (i, chanId) {
-                    $('#iSoftChannel').multiSelect('addOption', {
-                        value: chanId, text: chanNames[i],
-                        index: i
-                    });
-                })
-                $('#iSoftChannel').multiSelect("refresh");
-            }
-        })
-    }
-
-    /**
-     * 新增时，切换版本事件
-     */
-    function uAppIdClick() {
-        let appId = $('#uAppId').val();
-        $.ajax({
-            type: 'GET',
-            url: '/appversion/queryById?appId=' + appId,
-            dataType: 'JSON',
-            success: function (data) {
-                let chanNames = data.chanName.split(',');
-                $('#uSoftChannel').empty();
-                $.each(data.chanId.split(','), function (i, chanId) {
-                    $('#uSoftChannel').multiSelect('addOption', {
-                        value: chanId, text: chanNames[i],
-                        index: i
-                    });
-                })
-                $('#uSoftChannel').multiSelect("refresh");
-
-                $.ajax({
-                    type: 'GET',
-                    url: '/plugin/querySoftChannelByIds?pluginId=' + $('#uPluginId').val() + "&appId=" + appId,
-                    dataType: 'JSON',
-                    success: function (data) {
-                        $.each(data, function(i, id){
-                            $('#uSoftChannel').find("option[value='" + id + "']").attr("selected", true);
-                        });
-                        $('#uSoftChannel').multiSelect("refresh");
-                    }
-                })
-            }
-        })
-    }
-
-    /**
      * 确认上架点击事件
      */
     function insertClick() {
@@ -521,7 +465,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/plugin/query?aId=" + $('#aId').val(),
+            "ajax": "/plugin/query?username=" + $('#username').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -600,6 +544,64 @@
     }
 
     /**
+     * 新增时，切换版本事件
+     */
+    function iAppIdClick() {
+        let appId = $('#iAppId').val();
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/queryById?appId=' + appId,
+            dataType: 'JSON',
+            success: function (data) {
+                let chanNames = data.chanName.split(',');
+                $('#iSoftChannel').empty();
+                $.each(data.chanId.split(','), function (i, chanId) {
+                    $('#iSoftChannel').multiSelect('addOption', {
+                        value: chanId, text: chanNames[i],
+                        index: i
+                    });
+                })
+                $('#iSoftChannel').multiSelect("refresh");
+            }
+        })
+    }
+
+    /**
+     * 新增时，切换版本事件
+     */
+    function uAppIdClick() {
+        let appId = $('#uAppId').val();
+        $.ajax({
+            type: 'GET',
+            url: '/appversion/queryById?appId=' + appId,
+            dataType: 'JSON',
+            success: function (data) {
+                let chanNames = data.chanName.split(',');
+                $('#uSoftChannel').empty();
+                $.each(data.chanId.split(','), function (i, chanId) {
+                    $('#uSoftChannel').multiSelect('addOption', {
+                        value: chanId, text: chanNames[i],
+                        index: i
+                    });
+                })
+                $('#uSoftChannel').multiSelect("refresh");
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/plugin/querySoftChannelByIds?pluginId=' + $('#uPluginId').val() + "&appId=" + appId,
+                    dataType: 'JSON',
+                    success: function (data) {
+                        $.each(data, function (i, id) {
+                            $('#uSoftChannel').find("option[value='" + id + "']").attr("selected", true);
+                        });
+                        $('#uSoftChannel').multiSelect("refresh");
+                    }
+                })
+            }
+        })
+    }
+
+    /**
      * 更新界面设值
      */
     function updateModal(pluginId) {
@@ -614,7 +616,7 @@
 
                 // $('#uAppId').empty();
                 // $('#uSoftChannel').empty();
-                $.each(data.ids.split(","), function(i, ids){
+                $.each(data.ids.split(","), function (i, ids) {
                     ids = ids.split('|');
                     $('#uAppId').find("option[value='" + ids[0] + "']").attr("selected", true);
                     $('#uSoftChannel').find("option[value='" + ids[1] + "']").attr("selected", true);
@@ -642,8 +644,11 @@
         status === 1 ? $('#pPluginId').val(pluginId) : $('#upPluginId').val(pluginId);
     }
 
-    function uploadFile() {
-
+    /**
+     * 重置
+     */
+    function resetClick() {
+        $('#username').val(null);
     }
 </script>
 

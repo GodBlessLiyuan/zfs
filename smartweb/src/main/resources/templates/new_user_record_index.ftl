@@ -101,7 +101,9 @@
                                 </form>
                             </div>
 
-                            <button type="button" class="btn btn-primary " id="reset">重置</button>
+                            <button type="button" class="btn btn-primary " id="reset"
+                                    onclick="javascript:resetClick()">重置
+                            </button>
                             <button type="button" class="btn btn-primary " id="query"
                                     onclick="javascript:queryClick();">查询
                             </button>
@@ -223,6 +225,12 @@
 
     }
 
+    /**
+     * 重置
+     */
+    function resetClick() {
+        $('#phone').val(null);
+    }
 </script>
 
 </body>
