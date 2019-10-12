@@ -63,7 +63,7 @@ public class PluginController {
 
     @PostMapping("/plugin/update")
     public int update(@RequestParam(value = "pluginId") int pluginId,
-                      @RequestParam(value = "file") MultipartFile file,
+                      @RequestParam(value = "file", required = false) MultipartFile file,
                       @RequestParam(value = "appId") int appId,
                       @RequestParam(value = "softChannel") int[] softChannel,
                       @RequestParam(value = "context") String context,

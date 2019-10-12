@@ -64,7 +64,7 @@ public class AppController {
 
     @PostMapping("update")
     public int update(@RequestParam(value = "appId") int appId,
-                      @RequestParam(value = "file") MultipartFile file,
+                      @RequestParam(value = "file", required = false) MultipartFile file,
                       @RequestParam(value = "updateType") byte updateType,
                       @RequestParam(value = "softChannel") int[] softChannel,
                       @RequestParam(value = "context") String context,
