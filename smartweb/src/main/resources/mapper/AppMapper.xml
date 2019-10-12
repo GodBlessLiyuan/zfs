@@ -27,10 +27,10 @@
         from t_app
         where app_id = #{appId,jdbcType=INTEGER}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_app
-    where app_id = #{appId,jdbcType=INTEGER}
-  </delete>
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        update t_app set dr = 2
+        where app_id = #{appId,jdbcType=INTEGER}
+    </update>
     <insert id="insert" parameterType="com.rpa.web.pojo.AppPO" useGeneratedKeys="true"  keyProperty="appId" >
     insert into t_app (app_id, versionname, versioncode, 
       create_time, update_time, url, 
@@ -203,18 +203,17 @@
         from t_app a
         left join t_app_ch ac on a.app_id = ac.app_id
         left join t_soft_channel s on ac.soft_channel_id = s.soft_channel_id
-        left join t_admin_user au on a.a_id = au.a_id
-        <where>
-            <if test="updateType != null and updateType != 0">
-                and a.update_type = #{updateType}
-            </if>
-        </where>
+        left join t_admin_user au on a.a_id = au.a_id where a.dr = 1
+        <if test="updateType != null and updateType != 0">
+            and a.update_type = #{updateType}
+        </if>
     </select>
 
     <select id="queryAll" resultType="com.rpa.web.pojo.AppPO">
         select distinct a.app_id as appId, a.versionname as versionName
         from t_app a
         right join t_app_ch ac on a.app_id = ac.app_id
+        where a.dr = 1
     </select>
     <select id="queryById" parameterType="java.lang.Integer" resultType="com.rpa.web.pojo.AppPO">
         select a.app_id as appId, a.publish_time as publishTime, a.versionname as versionName, a.size,
@@ -222,6 +221,6 @@
         from t_app a
         left join t_app_ch ac on a.app_id = ac.app_id
         left join t_soft_channel s on ac.soft_channel_id = s.soft_channel_id
-        where a.app_id = #{appId}
+        where a.app_id = #{appId} and a.dr = 1
     </select>
 </mapper>
