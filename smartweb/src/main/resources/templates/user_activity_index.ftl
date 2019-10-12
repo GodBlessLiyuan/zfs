@@ -101,7 +101,9 @@
                                 </form>
                             </div>
 
-                            <button type="button" class="btn btn-primary " id="reset">重置</button>
+                            <button type="button" class="btn btn-primary " id="reset"
+                                    onclick="javascript:resetClick()">重置
+                            </button>
                             <button type="button" class="btn btn-primary " id="query"
                                     onclick="javascript:queryClick();">查询
                             </button>
@@ -196,13 +198,13 @@
                 {
                     "data": "source",
                     "render": function (data, type, full) {
-                        return data == 1? "好评活动": "其他";
+                        return data == 1 ? "好评活动" : "其他";
                     }
                 },
                 {
                     "data": "status",
                     "render": function (data, type, full) {
-                        return data == 1? "未激活": "激活";
+                        return data == 1 ? "未激活" : "激活";
                     }
                 }
             ],
@@ -236,6 +238,13 @@
                 }
             }
         });
+    }
+
+    /**
+     * 重置
+     */
+    function resetClick() {
+        $('#phone').val(null);
     }
 </script>
 

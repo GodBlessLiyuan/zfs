@@ -88,6 +88,41 @@
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#insertModal" data-whatever="@getbootstrap">添加白名单
                             </button>
+
+                            <hr>
+                            <div class="basic-form">
+                                <form>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>包名</label>
+                                            <input id="packageName" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <button type="button" class="btn btn-primary " id="reset"
+                                    onclick="javascript:resetClick()">重置
+                            </button>
+                            <button type="button" class="btn btn-primary " id="query"
+                                    onclick="javascript:queryClick();">查询
+                            </button>
+
+                            <hr>
+                            <div class="table-responsive">
+                                <table id="datatab" class="display" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>包名</th>
+                                        <th>添加时间</th>
+                                        <th>备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
                             <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -139,38 +174,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <hr>
-                            <div class="basic-form">
-                                <form>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label>包名</label>
-                                            <input id="packageName" type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <button type="button" class="btn btn-primary " id="reset">重置</button>
-                            <button type="button" class="btn btn-primary " id="query"
-                                    onclick="javascript:queryClick();">查询
-                            </button>
-
-                            <hr>
-                            <div class="table-responsive">
-                                <table id="datatab" class="display" style="width:100%">
-                                    <thead>
-                                    <tr>
-                                        <th>序号</th>
-                                        <th>包名</th>
-                                        <th>添加时间</th>
-                                        <th>备注</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                </table>
                             </div>
 
                         </div>
@@ -311,6 +314,13 @@
      */
     function deleteModal(wId) {
         $('#dWId').val(wId);
+    }
+
+    /**
+     * 重置
+     */
+    function resetClick() {
+        $('#packageName').val(null);
     }
 </script>
 

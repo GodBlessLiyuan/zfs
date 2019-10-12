@@ -130,7 +130,7 @@
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                            id="reset">重置
+                                            id="reset" onclick="javascipt:resetClick()">重置
                                     </button>
                                     <button type="button" class="btn btn-primary m-r-5 m-b-5"
                                             onclick="javascript:queryClick();"
@@ -258,6 +258,13 @@
             }
         }
         });
+    }
+
+    /**
+     * 重置
+     */
+    function resetClick() {
+        $('#username').val(null);
     }
 </script>
 

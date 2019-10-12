@@ -106,7 +106,8 @@
                                 </form>
                             </div>
 
-                            <button type="button" class="btn btn-primary " id="reset">重置</button>
+                            <button type="button" class="btn btn-primary " id="reset"
+                                    onclick="javascript:resetClick()">重置</button>
                             <button type="button" class="btn btn-primary " id="query"
                                     onclick="javascript:queryClick()">查询
                             </button>
@@ -594,6 +595,13 @@
      */
     function publishModal(appId, status) {
         status === 1 ? $('#pAppId').val(appId) : $('#upAppId').val(appId);
+    }
+
+    /**
+     * 重置
+     */
+    function resetClick() {
+        $('#updateType option:first').prop('selected', 'selected');
     }
 </script>
 

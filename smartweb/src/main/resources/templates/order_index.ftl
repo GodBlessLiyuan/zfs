@@ -136,7 +136,8 @@
                                 </form>
                             </div>
 
-                            <button type="button" class="btn btn-primary " id="reset">重置</button>
+                            <button type="button" class="btn btn-primary " id="reset"
+                                    onclick="javascript:resetClick()">重置</button>
                             <button type="button" class="btn btn-primary " id="query"
                                     onclick="javascript:queryClick();">查询
                             </button>
@@ -318,6 +319,20 @@
      */
     function exportClick() {
 
+    }
+
+    /**
+     * 重置
+     */
+    function resetClick() {
+        $('#startDate').val(null);
+        $('#endDate').val(null);
+        $('#comTypeId option:first').prop('selected', 'selected');
+        $('#type option:first').prop('selected', 'selected');
+        $('#uChanId option:first').prop('selected', 'selected');
+        $('#sChanId option:first').prop('selected', 'selected');
+        $('#phone').val(null);
+        $('#number').val(null);
     }
 
 </script>

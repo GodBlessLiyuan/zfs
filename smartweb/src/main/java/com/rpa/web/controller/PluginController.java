@@ -31,10 +31,10 @@ public class PluginController {
     public DTPageInfo<PluginDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                        @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                        @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                       @RequestParam(value = "aId", defaultValue = "0") int aId) {
+                                       @RequestParam(value = "username") String username) {
 
         Map<String, Object> reqData = new HashMap<>(1);
-        reqData.put("aId", aId);
+        reqData.put("username", username);
 
         return service.query(draw, pageNum, pageSize, reqData);
     }
