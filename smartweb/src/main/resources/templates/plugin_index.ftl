@@ -507,18 +507,6 @@
             ],
             "columnDefs": [
                 {
-                    "targets": [1],
-                    "render": function (data, type, full) {
-                        if (data == null || data.trim() == "") {
-                            return "";
-                        } else {
-                            var date = new Date(data);
-                            return date.getFullYear() + "/" + date.getMonth() + "/" +
-                                date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-                        }
-                    }
-                },
-                {
                     "targets": [6],
                     "render": function (data, type, full) {
                         return data === 1 ? "未发布" : "已发布";

@@ -251,20 +251,6 @@
                     }
                 }
             ],
-            "columnDefs": [
-                {
-                    "targets": [2, 3, 5, 6, 7],
-                    "render": function (data, type, full) {
-                        if (data == null || data.trim() == "") {
-                            return "";
-                        } else {
-                            let date = new Date(data);
-                            return date.getFullYear() + "/" + date.getMonth() + "/" +
-                                date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-                        }
-                    }
-                }
-            ],
             "oLanguage": {
                 "sLengthMenu": "每页显示 _MENU_ 条记录",
                 "sZeroRecords": "对不起，没有匹配的数据",

@@ -414,18 +414,6 @@
             ],
             "columnDefs": [
                 {
-                    "targets": [1],
-                    "render": function (data, type, full) {
-                        if (data == null || data.trim() == "") {
-                            return "";
-                        } else {
-                            var date = new Date(data);
-                            return date.getFullYear() + "/" + date.getMonth() + "/" +
-                                date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-                        }
-                    }
-                },
-                {
                     "targets": [5],
                     "render": function (data, type, full) {
                         return data === 1 ? "普通更新" : "强制更新";
