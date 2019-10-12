@@ -31,13 +31,13 @@ public class VipCommodityController {
                                              @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                              @RequestParam(value = "length", defaultValue = "10") int pageSize,
                                              @RequestParam(value = "username") String username,
-                                             @RequestParam(value = "comname") String comname,
-                                             @RequestParam(value = "channelname") String channelname) {
+                                             @RequestParam(value = "comTypeId") int comTypeId,
+                                             @RequestParam(value = "channelId") int channelId) {
 
         Map<String, Object> reqData = new HashMap<>(3);
         reqData.put("username", username);
-        reqData.put("comname", comname);
-        reqData.put("channelname", channelname);
+        reqData.put("comTypeId", comTypeId);
+        reqData.put("channelId", channelId);
 
         return service.query(draw, pageNum, pageSize, reqData);
     }

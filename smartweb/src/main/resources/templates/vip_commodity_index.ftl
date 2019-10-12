@@ -117,7 +117,8 @@
                             </div>
 
                             <button type="button" class="btn btn-primary " id="reset"
-                                    onclick="javascript:resetClick()">重置</button>
+                                    onclick="javascript:resetClick()">重置
+                            </button>
                             <button type="button" class="btn btn-primary " id="query"
                                     onclick="javascript:queryClick();">查询
                             </button>
@@ -255,6 +256,25 @@
                                 </div>
                             </div>
 
+                            <#assign modalId = "topModal">
+                            <#assign moduleTitle = "是否置顶该商品？">
+                            <#assign moduleClick = "statusClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
+
+                            <#assign modalId = "downModal">
+                            <#assign moduleTitle = "是否取消置顶该商品？">
+                            <#assign moduleClick = "statusClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
+
+                            <#assign modalId = "shelfModal">
+                            <#assign moduleTitle = "是否上架该商品？">
+                            <#assign moduleClick = "statusClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
+
+                            <#assign modalId = "obtainModal">
+                            <#assign moduleTitle = "是否下架该商品？">
+                            <#assign moduleClick = "statusClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
                         </div>
                     </div>
                 </div>
@@ -293,6 +313,8 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
+    let moduleData = new Map();
+
     $(document).ready(function () {
         // 产品列表
         $.ajax({
@@ -324,6 +346,110 @@
             }
         })
     });
+
+    /**
+     * 查询点击事件
+     */
+    function queryClick() {
+
+        if ($.fn.dataTable.isDataTable('#datatab')) {
+            $('#datatab').DataTable().destroy();
+        }
+
+        $('#datatab').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": "/vipcommodity/query?username=" + $('#username').val() + "&comTypeId=" + $('#comTypeId').val() +
+                "&channelId=" + $('#channelId').val(),
+            "fnDrawCallback": function () {
+                this.api().column(0).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            },
+            "columns": [
+                {"data": null, "targets": 0},
+                {"data": "name"},
+                {"data": "comTypeName"},
+                {"data": "days"},
+                {"data": "comName"},
+                {"data": "description"},
+                {"data": "price"},
+                {"data": "showDiscount"},
+                {"data": "discount"},
+                {
+                    "data": "status",
+                    "render": function (data, type, full) {
+                        let title = "未上架";
+                        let style = "class='badge badge-dark'";
+                        let modalId = "data-target='#shelfModal'";
+                        if (data === 2) {
+                            title = "已上架";
+                            style = "class='badge badge-primary'";
+                            modalId = "data-target='#obtainModal'";
+                        }
+
+                        return "<button type='button' data-toggle='modal' data-whatever='@getbootstrap' " + modalId +
+                            style + " onclick='statusModal(" + full.cmdyId + "," + data + ", 1)'>" +
+                            title + "</button>";
+                    }
+                },
+                {
+                    "data": "istop",
+                    "render": function (data, type, full) {
+                        let title = "未置顶";
+                        let style = "class='badge badge-dark'";
+                        let modalId = "data-target='#topModal'";
+                        if (data === 2) {
+                            title = "已置顶";
+                            style = "class='badge badge-primary'";
+                            modalId = "data-target='#downModal'";
+                        }
+                        return "<button type='button' data-toggle='modal' data-whatever='@getbootstrap' " + modalId +
+                            style + "onclick='statusModal(" + full.cmdyId + "," + data + ", 2)'>" + title +
+                            "</button>";
+                    }
+                },
+                {"data": "createTime"},
+                {
+                    "data": "cmdyId",
+                    "render": function (data, type, full) {
+                        return "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
+                            "class='text-primary' onclick='updateModal(" + data + ")'>修改</a>";
+                    }
+                },
+                {"data": "username"}
+            ],
+            "columnDefs": [
+                {
+                    "targets": [11],
+                    "render": function (data, type, full) {
+                        if (data == null || data.trim() == "") {
+                            return "";
+                        } else {
+                            var date = new Date(data);
+                            return date.getFullYear() + "/" + date.getMonth() + "/" +
+                                date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                        }
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "对不起，没有匹配的数据",
+                "sInfo": "第 _START_ - _END_ 条 / 共 _TOTAL_ 条数据",
+                "sInfoEmpty": "没有匹配的数据",
+                "sInfoFiltered": "(数据表中共 _MAX_ 条记录)",
+                "sProcessing": "正在加载中...",
+                "sSearch": "全文搜索：",
+                "oPaginate": {
+                    "sFirst": "第一页",
+                    "sPrevious": " 上一页 ",
+                    "sNext": " 下一页 ",
+                    "sLast": " 最后一页 "
+                }
+            }
+        });
+    }
 
     /**
      * 确认上架点击事件
@@ -363,108 +489,6 @@
     }
 
     /**
-     * 导出点击事件
-     */
-    function exportClick() {
-
-    }
-
-    /**
-     * 查询点击事件
-     */
-    function queryClick() {
-
-        if ($.fn.dataTable.isDataTable('#datatab')) {
-            $('#datatab').DataTable().destroy();
-        }
-
-        $('#datatab').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": "/vipcommodity/query?username=" + $('#username').val() + "&comname=" + $('#comname').val() +
-                "&channelname=" + $('#channelname').val(),
-            "fnDrawCallback": function () {
-                this.api().column(0).nodes().each(function (cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
-            "columns": [
-                {"data": null, "targets": 0},
-                {"data": "name"},
-                {"data": "comTypeName"},
-                {"data": "days"},
-                {"data": "comName"},
-                {"data": "description"},
-                {"data": "price"},
-                {"data": "showDiscount"},
-                {"data": "discount"},
-                {
-                    "data": "status",
-                    "render": function (data, type, full) {
-                        if (data == 1) {
-                            return "<button class='badge badge-dark' type='button' " +
-                                "onclick='javascript:statusClick(" + full.cmdyId + "," + data + ")'>未上架</button>";
-                        } else {
-                            return "<button class='badge badge-primary' type='button' " +
-                                "onclick='javascript:statusClick(" + full.cmdyId + "," + data + ")'>已上架</button>";
-                        }
-                    }
-                },
-                {
-                    "data": "istop",
-                    "render": function (data, type, full) {
-                        if (data == 1) {
-                            return "<button class='badge badge-dark' type='button' " +
-                                "onclick='javascript:isTopClick(" + full.cmdyId + "," + data + ")'>未置顶</button>";
-                        } else {
-                            return "<button class='badge badge-primary' type='button' " +
-                                "onclick='javascript:isTopClick(" + full.cmdyId + "," + data + ")'>已置顶</button>";
-                        }
-                    }
-                },
-                {"data": "createTime"},
-                {
-                    "data": "cmdyId",
-                    "render": function (data, type, full) {
-                        return "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:updateModal(" + data + ")'>修改</a>";
-                    }
-                },
-                {"data": "username"}
-            ],
-            "columnDefs": [
-                {
-                    "targets": [11],
-                    "render": function (data, type, full) {
-                        if (data == null || data.trim() == "") {
-                            return "";
-                        } else {
-                            var date = new Date(data);
-                            return date.getFullYear() + "/" + date.getMonth() + "/" +
-                                date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-                        }
-                    }
-                }
-            ],
-            "oLanguage": {
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "对不起，没有匹配的数据",
-                "sInfo": "第 _START_ - _END_ 条 / 共 _TOTAL_ 条数据",
-                "sInfoEmpty": "没有匹配的数据",
-                "sInfoFiltered": "(数据表中共 _MAX_ 条记录)",
-                "sProcessing": "正在加载中...",
-                "sSearch": "全文搜索：",
-                "oPaginate": {
-                    "sFirst": "第一页",
-                    "sPrevious": " 上一页 ",
-                    "sNext": " 下一页 ",
-                    "sLast": " 最后一页 "
-                }
-            }
-        });
-    }
-
-    /**
      * 更新弹框界面设值
      * @param data cmdyId
      */
@@ -486,15 +510,27 @@
         })
     }
 
+    function statusModal(cmdyId, status, type) {
+        moduleData.set("id", cmdyId);
+        moduleData.set("status", status);
+        moduleData.set("type", type);
+    }
+
     /**
-     * 是否上架点击事件
+     * 是否上架/置顶点击事件
      * @param status 状态
      */
-    function statusClick(cmdyId, status) {
+    function statusClick() {
+        let cmdyId = moduleData.get("id");
+        let status = moduleData.get("status");
+        let type = moduleData.get("type");
+
         status = status === 1 ? 2 : 1;
+        type = type === 2 ? "updateIsTop?isTop=" : "updateStatus?status=";
+
         $.ajax({
             type: 'GET',
-            url: '/vipcommodity/updateStatus?cmdyId=' + cmdyId + '&status=' + status,
+            url: '/vipcommodity/' + type + status + '&cmdyId=' + cmdyId,
             dataType: 'JSON',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -503,19 +539,10 @@
     }
 
     /**
-     * 是否置顶点击事件
-     * @param status 状态
+     * 导出点击事件
      */
-    function isTopClick(cmdyId, isTop) {
-        isTop = isTop === 1 ? 2 : 1;
-        $.ajax({
-            type: 'GET',
-            url: '/vipcommodity/updateIsTop?cmdyId=' + cmdyId + '&isTop=' + isTop,
-            dataType: 'JSON',
-            success: function (data) {
-                $('#datatab').DataTable().draw(false);
-            }
-        })
+    function exportClick() {
+
     }
 
     /**
