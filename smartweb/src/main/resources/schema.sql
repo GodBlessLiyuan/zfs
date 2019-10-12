@@ -29,6 +29,7 @@ DROP TABLE IF EXISTS t_whilte_device;
 DROP TABLE IF EXISTS t_device;
 DROP TABLE IF EXISTS t_feedback;
 DROP TABLE IF EXISTS t_functionvideo;
+DROP TABLE IF EXISTS t_invite_user;
 DROP TABLE IF EXISTS t_key_text;
 DROP TABLE IF EXISTS t_key_value;
 DROP TABLE IF EXISTS t_notice;
@@ -36,6 +37,7 @@ DROP TABLE IF EXISTS t_order_feedback;
 DROP TABLE IF EXISTS t_other_app;
 DROP TABLE IF EXISTS t_plugin;
 DROP TABLE IF EXISTS t_promoter;
+DROP TABLE IF EXISTS t_revenue_user;
 DROP TABLE IF EXISTS t_role;
 DROP TABLE IF EXISTS t_share_activity;
 DROP TABLE IF EXISTS t_soft_channel;
@@ -44,6 +46,7 @@ DROP TABLE IF EXISTS t_whilte_user;
 DROP TABLE IF EXISTS t_user;
 DROP TABLE IF EXISTS t_user_history;
 DROP TABLE IF EXISTS t_viptype;
+DROP TABLE IF EXISTS t_withdraw_user;
 DROP TABLE IF EXISTS t_wxsupport;
 
 
@@ -517,10 +520,12 @@ CREATE TABLE t_revenue_user
 (
 	user_id bigint NOT NULL,
 	invite_count int,
+	pay_count int,
 	register_count bigint,
 	total_revenue bigint,
 	withdraw bigint,
 	withdraw_time int,
+	remaining bigint,
 	PRIMARY KEY (user_id),
 	UNIQUE (user_id)
 );
