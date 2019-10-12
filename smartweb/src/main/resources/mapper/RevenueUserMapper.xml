@@ -21,6 +21,33 @@
     from t_revenue_user
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
+
+  <select id="query" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_revenue_user ru
+    left join t_user u on ru.user_id = u.user_id
+    <where>
+      <if test="phone != null and phone != ''">
+        u.phone = #{phone}
+      </if>
+    </where>
+    <if test="orderBy == 1"> order by invite_count </if>
+    <if test="orderBy == 2"> order by register_count </if>
+    <if test="orderBy == 3"> order by pay_count </if>
+    <if test="orderBy == 4"> order by total_revenue </if>
+    <if test="orderBy == 5"> order by remaining </if>
+    <if test="orderBy == 6"> order by withdraw </if>
+    <if test="orderBy == 7"> order by withdraw_time </if>
+  </select>
+
+  <select id="queryPhoneByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    phone
+    from t_user
+    where user_id = #{userId}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_revenue_user
     where user_id = #{userId,jdbcType=BIGINT}
