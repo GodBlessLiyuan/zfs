@@ -163,8 +163,9 @@ public class PluginServiceImpl implements IPluginService {
     @Transactional(rollbackFor = {})
     @Override
     public int delete(int pluginId) {
-        int frist = pluginMapper.deleteByPrimaryKey(pluginId);
-        int secend = appPluChMapper.deleteByAppId(pluginId);
+        int frist = appPluChMapper.deleteByAppId(pluginId);
+        // 插件表进行假删除
+        int secend = pluginMapper.deleteByPrimaryKey(pluginId);
         return frist + secend;
     }
 

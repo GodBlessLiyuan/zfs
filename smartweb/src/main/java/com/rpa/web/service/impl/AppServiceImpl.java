@@ -163,6 +163,7 @@ public class AppServiceImpl implements IAppService {
     @Override
     public int delete(int appId) {
         int frist = appChMapper.deleteByAppId(appId);
+        // 应用表进行假删除
         int secend = appMapper.deleteByPrimaryKey(appId);
         return frist + secend;
     }
