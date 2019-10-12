@@ -743,7 +743,7 @@ CREATE TABLE t_withdraw_user
 	user_id bigint,
 	device_id bigint,
 	user_device_id int,
-	withdraw bigint,
+	withdraw bigint DEFAULT 1,
 	remaining bigint,
 	ali_account char(64),
 	ali_name char(64),
