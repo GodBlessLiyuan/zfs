@@ -37,7 +37,7 @@ public class LoginController {
      * @param password 密码
      * @return
      */
-    @GetMapping("/test")
+    @GetMapping("/login/login")
     public String login(HttpSession session,
                         Map<String, Object> result,
                         @RequestParam(value = "username", required = false) String username,
