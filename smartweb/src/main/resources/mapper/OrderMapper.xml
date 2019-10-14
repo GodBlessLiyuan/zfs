@@ -30,6 +30,13 @@
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=VARCHAR}
   </delete>
+
+  <select id="queryPayCount" resultType="java.lang.Integer">
+    select count(order_id)
+    from t_order
+    where pay_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
+  </select>
+
   <insert id="insert" parameterType="com.rpa.web.pojo.OrderPO">
     insert into t_order (order_id, order_number, user_device_id, 
       cmdy_id, user_id, device_id, 

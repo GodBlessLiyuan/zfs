@@ -1,7 +1,13 @@
 package com.rpa.web.controller;
 
+import com.rpa.web.service.LoginService;
+import com.rpa.web.vo.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
@@ -9,18 +15,48 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Random;
 
 /**
- * 验证码生成
- *
+ * @author: dangyi
+ * @date: Created in 16:30 2019/10/12
+ * @version: 1.0.0
+ * @description:
  */
 @Controller
-@RequestMapping("code")
-public class CodeController {
 
-    @RequestMapping("checkCode")
-    public void checkCode(HttpServletResponse response, HttpSession session) throws IOException {
+public class LoginController {
+
+    @Autowired
+    private LoginService loginService;
+
+    /**
+     * 用户登录
+     * @param username 用户名
+     * @param password 密码
+     * @return
+     */
+    @GetMapping("/test")
+    public String login(HttpSession session,
+                        Map<String, Object> result,
+                        @RequestParam(value = "username", required = false) String username,
+                        @RequestParam(value = "password", required = false) String password,
+                        @RequestParam(value = "checkcode",required = false) String checkcode
+                        ) {
+      String res = this.loginService.login(session, result, username, password, checkcode);
+      return res;
+    }
+
+
+    /**
+     * 获取验证码
+     * @param response
+     * @param session
+     * @throws IOException
+     */
+    @RequestMapping("/get/checkcode")
+    public void getCheckcode(HttpServletResponse response, HttpSession session) throws IOException {
         //服务器通知浏览器不要缓存
         response.setHeader("pragma","no-cache");
         response.setHeader("cache-control","no-cache");
@@ -42,7 +78,7 @@ public class CodeController {
         g.fillRect(0,0, width,height);
 
         //产生4个随机验证码，12Ey
-        String checkCode = getCheckCode();
+        String checkCode = getCheckcodeString();
         //将验证码放入HttpSession中
         session.setAttribute("CHECKCODE_SERVER",checkCode);
 
@@ -63,7 +99,7 @@ public class CodeController {
     /**
      * 产生4位随机字符串
      */
-    private String getCheckCode() {
+    private String getCheckcodeString() {
         String base = "0123456789ABCDEFGabcdefg";
         int size = base.length();
         Random r = new Random();
@@ -78,6 +114,19 @@ public class CodeController {
         }
         return sb.toString();
     }
+
+
+    /**
+     * 修改密码
+     * @param oldPassword
+     * @param newPassword
+     * @param httpSession
+     * @return
+     */
+    @PostMapping("updatePassword")
+    public ResultVO updatePassword (HttpSession httpSession,
+                                    @RequestParam("oldPassword") String oldPassword,
+                                    @RequestParam("newPassword") String newPassword){
+        return this.loginService.updatePassword(httpSession, oldPassword, newPassword);
+    }
 }
-
-
