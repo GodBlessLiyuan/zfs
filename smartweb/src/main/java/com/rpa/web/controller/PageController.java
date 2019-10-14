@@ -17,7 +17,7 @@ public class PageController {
      *
      * @return
      */
-    @RequestMapping("/userinfo")
+    @RequestMapping("/vip/userinfo")
     public String userInfo() {
         return "user_info_index";
     }
@@ -163,7 +163,7 @@ public class PageController {
      * 登录页面
      * @return
      */
-    @RequestMapping("/login")
+    @RequestMapping("/login/login")
     public String login() {
         return "login_index";
     }
