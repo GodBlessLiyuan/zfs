@@ -32,6 +32,21 @@
     from t_vipcommodity
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}
   </select>
+
+  <select id="queryRevenue" resultType="java.lang.Float">
+    select sum(v.discount)
+    from t_vipcommodity v
+    left join t_order o on v.cmdy_id = o.cmdy_id
+    where o.pay_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
+  </select>
+
+  <select id="queryMonthRevenue" resultType="java.lang.Float">
+    select sum(v.discount)
+    from t_vipcommodity v
+    left join t_order o on v.cmdy_id = o.cmdy_id
+    where o.pay_time >= (select timestamp(date_add(curdate(), interval - day(curdate()) + 1 day)))
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_vipcommodity
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}

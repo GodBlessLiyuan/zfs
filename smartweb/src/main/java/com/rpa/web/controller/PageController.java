@@ -158,4 +158,13 @@ public class PageController {
     public String userVip() {
         return "user_vip_index";
     }
+
+    /**
+     * 登录页面
+     * @return
+     */
+    @RequestMapping("/login")
+    public String login() {
+        return "login_index";
+    }
 }

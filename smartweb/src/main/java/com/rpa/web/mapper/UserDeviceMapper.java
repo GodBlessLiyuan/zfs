@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserDeviceMapper extends BaseDAO<UserDevicePO, Integer> {
+    int queryNewUser();
 }
