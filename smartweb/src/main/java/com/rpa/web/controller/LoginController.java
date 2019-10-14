@@ -4,7 +4,6 @@ import com.rpa.web.service.LoginService;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +24,6 @@ import java.util.Random;
  * @description:
  */
 @Controller
-
 public class LoginController {
 
     @Autowired
@@ -37,7 +35,7 @@ public class LoginController {
      * @param password 密码
      * @return
      */
-    @GetMapping("/login/login")
+    @PostMapping("entry")
     public String login(HttpSession session,
                         Map<String, Object> result,
                         @RequestParam(value = "username", required = false) String username,
@@ -55,7 +53,7 @@ public class LoginController {
      * @param session
      * @throws IOException
      */
-    @RequestMapping("/get/checkcode")
+    @RequestMapping("/login/get/checkcode")
     public void getCheckcode(HttpServletResponse response, HttpSession session) throws IOException {
         //服务器通知浏览器不要缓存
         response.setHeader("pragma","no-cache");
