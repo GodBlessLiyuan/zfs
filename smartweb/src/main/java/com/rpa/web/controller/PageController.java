@@ -17,7 +17,7 @@ public class PageController {
      *
      * @return
      */
-    @RequestMapping("/vip/userinfo")
+    @RequestMapping("/userinfo")
     public String userInfo() {
         return "user_info_index";
     }
