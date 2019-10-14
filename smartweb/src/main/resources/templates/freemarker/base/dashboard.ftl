@@ -58,7 +58,7 @@
                             <li><a href="/wxsupport">微信白名单</a></li>
                             <li><a href="/softchannel">渠道信息</a></li>
                             <li><a href="/otherapp">其他产品</a></li>
-                            <li><a href="/">异常渠道</a></li>
+                            <li><a href="/otherapp">异常渠道</a></li>
                         </ul>
                     </li>
 
