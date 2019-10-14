@@ -3,7 +3,6 @@
 <html class="h-100" lang="en">
 
 <head>
-    <base href="${basePath}"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -14,6 +13,8 @@
     <link href="css/style.css" rel="stylesheet">
 
     <script src="./plugins/jquery/jquery.min.js"></script>
+
+
 
 </head>
 
@@ -46,7 +47,7 @@
                         <div class="card-body pt-5">
                             <a class="text-center" href="index.html"> <h4>砖助智能助手业务后台</h4></a>
 
-                            <form class="mt-8 mb-8 login-input" action="/test">
+                            <form class="mt-8 mb-8 login-input" method="post" action="/entry">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Username" name="username">
                                 </div>
@@ -55,8 +56,8 @@
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="checkcode" placeholder="Checkcode" name="checkcode">
-                                    <img id="img" src="/get/checkcode" />
-                                    <a href="#" onclick="javascript:changeImg()" style="color:blue;">看不清？</a>
+                                    <img id="img" src="/login/get/checkcode" />
+                                    <a onclick="javascript:changeImg()" style="color:blue;">看不清？</a>
                                     <span id="msg"></span>
                                 </div>
 
@@ -83,10 +84,8 @@
 <script>
     function changeImg(){
         var img = document.getElementById("img");
-        img.src = "./get/checkcode?date=" + new Date();
+        img.src = "/login/get/checkcode?date=" + new Date();
     }
-
-    changeImg();
 </script>
 
 

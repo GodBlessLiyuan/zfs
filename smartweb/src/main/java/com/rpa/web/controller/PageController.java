@@ -163,7 +163,7 @@ public class PageController {
      * 登录页面
      * @return
      */
-    @RequestMapping("/login/login")
+    @RequestMapping("/login")
     public String login() {
         return "login_index";
     }
