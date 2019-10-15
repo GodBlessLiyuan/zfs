@@ -1,6 +1,6 @@
 ## 砖助接口文档 -- v.10 ##
 
-
+nohup  mvn spring-boot:run &
 
 ## 接口说明 ##
 

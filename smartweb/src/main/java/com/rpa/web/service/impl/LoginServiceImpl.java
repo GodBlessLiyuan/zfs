@@ -4,7 +4,6 @@ import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.service.LoginService;
-import com.rpa.web.utils.Md5Util;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.stereotype.Service;
@@ -53,34 +52,34 @@ public class LoginServiceImpl implements LoginService {
         if (serverCheckcode == null) {
             result.put("flag", false);
             result.put("msg", "服务器异常，请联系管理员！");
-            return "forward:/login";
+            return "forward:/";
         }
 
         else if (!serverCheckcode.equalsIgnoreCase(checkcode)) {
             // 验证码校验失败
             result.put("flag", false);
             result.put("msg", "验证码输入错误，请重新输入！");
-            return "forward:/login";
+            return "forward:/";
         }
 
         //判断用户名是否存在
         else if (po == null) {
             result.put("flag", false);
             result.put("msg", "用户名不存在");
-            return "forward:/login";
+            return "forward:/";
         }
 
         //判断密码是否正确
         else if (!po.getPassword().equals(password)) {
             result.put("flag", false);
             result.put("msg", "密码错误");
-            return "forward:/login";
+            return "forward:/";
         }
 
         else {
             // 登录成功，将登录用户数据写入session
             session.setAttribute(ADMIN_USER, po);
-            return "redirect:/";
+            return "redirect:/main";
         }
     }
 
