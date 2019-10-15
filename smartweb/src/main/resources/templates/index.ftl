@@ -4,6 +4,7 @@
 
 <head>
     <base href="${basePath}"/>
+    <#--<base href="http://localhost:8080"/>-->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -14,9 +15,6 @@
     <link href="css/style.css" rel="stylesheet">
 
     <script src="./plugins/jquery/jquery.min.js"></script>
-
-
-
 </head>
 
 <body class="h-100">
@@ -34,9 +32,6 @@
 <!--*******************
     Preloader end
 ********************-->
-
-
-
 
 
 <div class="login-form-bg h-100">
@@ -66,61 +61,6 @@
 
                             </form>
                         </div>
-
-        <a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
-        "class='text-primary' onclick='updateModal(" + data + ")'>修改</a>
-
-        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">修改密码</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <button type="hidden" id="uCmdyId" name="uCmdyId"
-                                        style="display:none;"/>
-                            </div>
-                            <div class="form-group">
-                                <span for="recipient-name" class="col-form-label">销售渠道:</span>
-                                <label id="uChannelId">xxx</label>
-                            </div>
-                            <div class="form-group">
-                                <span for="message-text" class="col-form-label">产品类型:</span>
-                                <label id="uComTypeId">XXX</label>
-                            </div>
-                            <div class="form-group">
-                                <span for="message-text" class="col-form-label">商品名称:</span>
-                                <input type="text" class="form-control" id="uComName">
-                            </div>
-                            <div class="form-group">
-                                <span for="message-text" class="col-form-label">商品描述:</span>
-                                <input type="text" class="form-control" id="uDescription">
-                            </div>
-                            <div class="form-group">
-                                <span for="message-text" class="col-form-label">原价:</span>
-                                <input type="text" class="form-control" id="uPrice">
-                            </div>
-                            <div class="form-group">
-                                <span for="message-text" class="col-form-label">折扣:</span>
-                                <input type="text" class="form-control" id="uShowDiscount">
-                            </div>
-                            <div class="form-group">
-                                <span for="message-text" class="col-form-label">售价:</span>
-                                <input type="text" class="form-control" id="uDiscount">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="updateClick()"
-                                data-dismiss="modal"
-                        >确认修改
-                        </button>
                     </div>
                 </div>
             </div>

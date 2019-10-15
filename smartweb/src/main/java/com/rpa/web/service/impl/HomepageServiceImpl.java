@@ -45,9 +45,9 @@ public class HomepageServiceImpl implements HomepageService {
 
         int newRegister = this.userMapper.queryNewRegister();
         int newUser = this.userDeviceMapper.queryNewUser();
-        float dayRevenue = this.vipCommodityMapper.queryRevenue();
+        Float dayRevenue = this.vipCommodityMapper.queryRevenue();
         int payCount = this.orderMapper.queryPayCount();
-        float monthRevenue = this.vipCommodityMapper.queryMonthRevenue();
+        Float monthRevenue = this.vipCommodityMapper.queryMonthRevenue();
 
         // 创建一个map，存放返回给前端的结果
         Map<String, Object> result = new HashMap<>();
