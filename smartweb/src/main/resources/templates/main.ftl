@@ -224,14 +224,19 @@
 
         var oldPassword = $('#oldPassword').val();
         var newPassword = $('#newPassword').val();
+        var confirm = $('#confirm').val();
 
-        $.post("/updatePassword", {oldPassword:oldPassword, newPassword:newPassword}, function (result) {
-            if (result.code === 0) {
-                alert("密码修改成功！")
-            } else {
-                alert("密码修改失败！")
-            }
-        }, "json");
+        if (newPassword != confirm) {
+            alert("输入密码不一致，请重新输入！");
+        } else {
+            $.post("/updatePassword", {oldPassword:oldPassword, newPassword:newPassword}, function (result) {
+                if (result.code === 0) {
+                    alert("密码修改成功！")
+                } else {
+                    alert("密码修改失败！")
+                }
+            }, "json");
+        }
     }
 </script>
 
