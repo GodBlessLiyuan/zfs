@@ -110,7 +110,46 @@
         <br/>
         <br/>
         <br/>
-        <a href="#" style="color:blue">修改密码</a>
+
+
+        <!--弹框：修改密码-->
+        <a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' class='text-primary' style="color:blue">修改密码</a>
+
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">修改密码</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <span for="message-text" class="col-form-label">旧密码:</span>
+                                <input type="text" class="form-control" id="oldPassword">
+                            </div>
+                            <div class="form-group">
+                                <span for="message-text" class="col-form-label">新密码:</span>
+                                <input type="text" class="form-control" id="newPassword">
+                            </div>
+                            <div class="form-group">
+                                <span for="message-text" class="col-form-label">确认新密码:</span>
+                                <input type="text" class="form-control" id="confirm">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="updatePassword()" data-dismiss="modal">
+                            确认修改
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
     <!--**********************************
@@ -176,6 +215,29 @@
     }
 
     showtime();
+</script>
+
+
+<!--发送新旧密码到后台-->
+<script>
+    function updatePassword() {
+
+        var oldPassword = $('#oldPassword').val();
+        var newPassword = $('#newPassword').val();
+        var confirm = $('#confirm').val();
+
+        if (newPassword != confirm) {
+            alert("输入密码不一致，请重新输入！");
+        } else {
+            $.post("/updatePassword", {oldPassword:oldPassword, newPassword:newPassword}, function (result) {
+                if (result.code === 0) {
+                    alert("密码修改成功！")
+                } else {
+                    alert("密码修改失败！")
+                }
+            }, "json");
+        }
+    }
 </script>
 
 

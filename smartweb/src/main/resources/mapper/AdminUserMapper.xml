@@ -44,7 +44,7 @@
     </where>
   </select>
 
-  <select id="queryPassword" parameterType="java.lang.Integer">
+  <select id="queryPassword" parameterType="java.lang.Integer" resultType="java.lang.String">
     select password
     from t_admin_user
     where a_id = #{aId,jdbcType=INTEGER}
@@ -226,7 +226,7 @@
 
   <update id="updatePassword">
     update t_admin_user
-    set `password` = #{newPassword,jdbcType=CHAR},
+    set `password` = #{newPassword,jdbcType=CHAR}
     where a_id = #{aId,jdbcType=INTEGER}
   </update>
 </mapper>
