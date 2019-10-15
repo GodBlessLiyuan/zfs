@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SoftChannelMapper extends BaseMapper<SoftChannelPO, Integer> {
+    Integer queryIdbyName(String chanName);
 }

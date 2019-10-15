@@ -1,5 +1,6 @@
 package com.rpa.server.service.impl;
 
+import com.rpa.server.common.RedisCache;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.DeviceDTO;
 import com.rpa.server.mapper.DeviceImeiMapper;
@@ -28,22 +29,26 @@ public class DeviceServiceImpl implements IDeviceService {
     private DeviceMapper deviceMapper;
     @Resource
     private DeviceImeiMapper deviceImeiMapper;
+    @Resource
+    private RedisCache cache;
 
     @Override
     public ResultVO queryDevice(DeviceDTO dto) {
         List<String> imei = dto.getImei();
         if (imei == null || imei.size() == 0) {
             // 新增设备信息
-            DevicePO po = DeviceDTO.convertPO(dto);
-            deviceMapper.insert(po);
-            return this.buildResultVO(po.getDeviceId());
+            DevicePO devicePO = new DevicePO();
+            this.updatePObyDTO(devicePO, dto);
+            deviceMapper.insert(devicePO);
+            return this.buildResultVO(devicePO.getDeviceId());
         }
 
         List<Long> deviceIds = deviceImeiMapper.queryDevIdsByImei(imei);
         if (deviceIds == null || deviceIds.size() == 0) {
             // 没有查询到相关设备信息
             // 新增设备信息
-            DevicePO devicePO = DeviceDTO.convertPO(dto);
+            DevicePO devicePO = new DevicePO();
+            this.updatePObyDTO(devicePO, dto);
             deviceMapper.insert(devicePO);
             // 新增设备imei号
             List<DeviceImeiPO> devImeiPOs = new ArrayList<>();
@@ -77,7 +82,7 @@ public class DeviceServiceImpl implements IDeviceService {
      */
     private DevicePO updateDevicePO(Long deviceId, DeviceDTO dto) {
         DevicePO devicePO = deviceMapper.selectByPrimaryKey(deviceId);
-        DeviceDTO.updatePObyDTO(devicePO, dto);
+        this.updatePObyDTO(devicePO, dto);
         return devicePO;
     }
 
@@ -94,5 +99,38 @@ public class DeviceServiceImpl implements IDeviceService {
         vo.setVerify(DigestUtils.md5DigestAsHex(deviceId.toString().getBytes()));
 
         return new ResultVO<>(1000, vo);
+    }
+
+    /**
+     * 跟新po值
+     *
+     * @param po
+     * @param dto
+     */
+    private void updatePObyDTO(DevicePO po, DeviceDTO dto) {
+        if (dto.getAndroidid() != null) {
+            po.setAndroidid(dto.getAndroidid());
+        }
+        if (dto.getUtdid() != null) {
+            po.setUtdid(dto.getUtdid());
+        }
+        if (dto.getOsv() != null) {
+            po.setBuildversion(dto.getOsv());
+        }
+        if (dto.getChannel() != null) {
+            po.setSoftChannelId(cache.getSoftChannelId(dto.getChannel()));
+        }
+        if (dto.getFactory() != null) {
+            po.setManufacturer(dto.getFactory());
+        }
+        if (dto.getModel() != null) {
+            po.setAndroidmodel(dto.getModel());
+        }
+        if (dto.getSoftv() != null) {
+            po.setVersioncode(dto.getSoftv());
+        }
+        if (dto.getUuid() != null) {
+            po.setUuid(dto.getUuid());
+        }
     }
 }
