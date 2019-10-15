@@ -1,5 +1,6 @@
 package com.rpa.server.dto;
 
+import com.rpa.server.pojo.DevicePO;
 import lombok.Data;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class DeviceDTO {
     /**
      * 系统版本号
      */
-    private String osv;
+    private Byte osv;
     /**
      * 应用渠道
      */
@@ -52,4 +53,47 @@ public class DeviceDTO {
      * 设备imei或meid
      */
     private List<String> imei;
+
+
+    /**
+     * dto 转 po
+     * @param dto
+     * @return
+     */
+    public static DevicePO convertPO(DeviceDTO dto) {
+        DevicePO po = new DevicePO();
+        DeviceDTO.updatePObyDTO(po, dto);
+        return po;
+    }
+
+    /**
+     * 跟新po值
+     *
+     * @param po
+     * @param dto
+     */
+    public static void updatePObyDTO(DevicePO po, DeviceDTO dto) {
+        if (dto.getAndroidid() != null) {
+            po.setAndroidid(dto.getAndroidid());
+        }
+        if (dto.getUtdid() != null) {
+            po.setUtdid(dto.getUtdid());
+        }
+        if (dto.getOsv() != null) {
+            po.setBuildversion(dto.getOsv());
+        }
+//        po.setSoftChannelId(dto.getChannel()); // Redis 查询
+        if (dto.getFactory() != null) {
+            po.setManufacturer(dto.getFactory());
+        }
+        if (dto.getModel() != null) {
+            po.setAndroidmodel(dto.getModel());
+        }
+        if (dto.getSoftv() != null) {
+            po.setVersioncode(dto.getSoftv());
+        }
+        if (dto.getUuid() != null) {
+            po.setUuid(dto.getUuid());
+        }
+    }
 }

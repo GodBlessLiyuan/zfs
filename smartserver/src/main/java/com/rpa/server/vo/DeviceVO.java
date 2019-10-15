@@ -13,7 +13,7 @@ public class DeviceVO {
     /**
      * 设备唯一标识
      */
-    private String id;
+    private Long id;
     /**
      * 设备唯一标识的md5值
      */
