@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 import static com.rpa.web.common.Constant.ADMIN_USER;
 
@@ -17,4 +18,11 @@ public class MainController {
         }
         return "main";
     }
+
+    @RequestMapping("/login")
+    public String index(Map<String, Object> result){
+        return "index";
+    }
+
+
 }
