@@ -97,7 +97,8 @@ public class LoginServiceImpl implements LoginService {
 
         // 先从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        int aId = (int) httpSession.getAttribute("aId");
+        AdminUserPO po = (AdminUserPO)httpSession.getAttribute(ADMIN_USER);
+        int aId = po.getaId();
 
         // 对输入的旧密码进行校验，以确保的确是用户本人在进行修改密码操作
         String password = this.adminUserMapper.queryPassword(aId);

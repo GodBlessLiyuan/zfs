@@ -3,6 +3,7 @@
 <html class="h-100" lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -13,9 +14,6 @@
     <link href="css/style.css" rel="stylesheet">
 
     <script src="./plugins/jquery/jquery.min.js"></script>
-
-
-
 </head>
 
 <body class="h-100">
@@ -33,9 +31,6 @@
 <!--*******************
     Preloader end
 ********************-->
-
-
-
 
 
 <div class="login-form-bg h-100">
@@ -64,7 +59,6 @@
                                 <button class="btn login-form__btn submit w-100">Login</button>
 
                             </form>
-
                         </div>
                     </div>
                 </div>

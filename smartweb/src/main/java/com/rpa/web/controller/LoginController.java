@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
@@ -121,6 +122,7 @@ public class LoginController {
      * @param httpSession
      * @return
      */
+    @ResponseBody
     @PostMapping("updatePassword")
     public ResultVO updatePassword (HttpSession httpSession,
                                     @RequestParam("oldPassword") String oldPassword,
