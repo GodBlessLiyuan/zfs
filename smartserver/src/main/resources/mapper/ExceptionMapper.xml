@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.server.mapper.ExceptionMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.server.pojo.ExceptionPO">
+    <id column="exceptionid" jdbcType="INTEGER" property="exceptionid" />
+    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="buildversion" jdbcType="TINYINT" property="buildversion" />
+    <result column="versioncode" jdbcType="INTEGER" property="versioncode" />
+    <result column="androidmodel" jdbcType="CHAR" property="androidmodel" />
+    <result column="pkg" jdbcType="CHAR" property="pkg" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.rpa.server.pojo.ExceptionPO">
+    <result column="error" jdbcType="LONGVARCHAR" property="error" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    exceptionid, device_id, buildversion, versioncode, androidmodel, pkg
+  </sql>
+  <sql id="Blob_Column_List">
+    error
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_exception
+    where exceptionid = #{exceptionid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_exception
+    where exceptionid = #{exceptionid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.server.pojo.ExceptionPO">
+    insert into t_exception (exceptionid, device_id, buildversion, 
+      versioncode, androidmodel, pkg, 
+      error)
+    values (#{exceptionid,jdbcType=INTEGER}, #{deviceId,jdbcType=BIGINT}, #{buildversion,jdbcType=TINYINT}, 
+      #{versioncode,jdbcType=INTEGER}, #{androidmodel,jdbcType=CHAR}, #{pkg,jdbcType=CHAR}, 
+      #{error,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.server.pojo.ExceptionPO">
+    insert into t_exception
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="exceptionid != null">
+        exceptionid,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="buildversion != null">
+        buildversion,
+      </if>
+      <if test="versioncode != null">
+        versioncode,
+      </if>
+      <if test="androidmodel != null">
+        androidmodel,
+      </if>
+      <if test="pkg != null">
+        pkg,
+      </if>
+      <if test="error != null">
+        error,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="exceptionid != null">
+        #{exceptionid,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="buildversion != null">
+        #{buildversion,jdbcType=TINYINT},
+      </if>
+      <if test="versioncode != null">
+        #{versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="androidmodel != null">
+        #{androidmodel,jdbcType=CHAR},
+      </if>
+      <if test="pkg != null">
+        #{pkg,jdbcType=CHAR},
+      </if>
+      <if test="error != null">
+        #{error,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.server.pojo.ExceptionPO">
+    update t_exception
+    <set>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="buildversion != null">
+        buildversion = #{buildversion,jdbcType=TINYINT},
+      </if>
+      <if test="versioncode != null">
+        versioncode = #{versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="androidmodel != null">
+        androidmodel = #{androidmodel,jdbcType=CHAR},
+      </if>
+      <if test="pkg != null">
+        pkg = #{pkg,jdbcType=CHAR},
+      </if>
+      <if test="error != null">
+        error = #{error,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where exceptionid = #{exceptionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.rpa.server.pojo.ExceptionPO">
+    update t_exception
+    set device_id = #{deviceId,jdbcType=BIGINT},
+      buildversion = #{buildversion,jdbcType=TINYINT},
+      versioncode = #{versioncode,jdbcType=INTEGER},
+      androidmodel = #{androidmodel,jdbcType=CHAR},
+      pkg = #{pkg,jdbcType=CHAR},
+      error = #{error,jdbcType=LONGVARCHAR}
+    where exceptionid = #{exceptionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.server.pojo.ExceptionPO">
+    update t_exception
+    set device_id = #{deviceId,jdbcType=BIGINT},
+      buildversion = #{buildversion,jdbcType=TINYINT},
+      versioncode = #{versioncode,jdbcType=INTEGER},
+      androidmodel = #{androidmodel,jdbcType=CHAR},
+      pkg = #{pkg,jdbcType=CHAR}
+    where exceptionid = #{exceptionid,jdbcType=INTEGER}
+  </update>
+</mapper>
