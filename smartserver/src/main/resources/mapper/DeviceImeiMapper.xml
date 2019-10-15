@@ -9,7 +9,7 @@
     imei, device_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_device_imei
     where imei = #{imei,jdbcType=CHAR}
@@ -55,4 +55,19 @@
     set device_id = #{deviceId,jdbcType=BIGINT}
     where imei = #{imei,jdbcType=CHAR}
   </update>
+
+  <select id="queryDevIdsByImei" parameterType="java.util.List" resultType="java.lang.Long">
+    select distinct device_id from t_device_imei where imei in (
+    <foreach collection="list" item="imei" index="index" separator=",">
+      #{imei,jdbcType=CHAR}
+    </foreach>
+    )
+  </select>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_device_imei (imei, device_id) values
+    <foreach collection="list" item="devImeiPO" index="index" separator=",">
+      (#{devImeiPO.imei,jdbcType=CHAR}, #{devImeiPO.deviceId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
 </mapper>

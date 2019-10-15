@@ -1,4 +1,4 @@
-package com.rpa.server.vo;
+package com.rpa.server.common;
 
 import lombok.Data;
 

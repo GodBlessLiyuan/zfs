@@ -2,7 +2,7 @@ package com.rpa.server.controller;
 
 import com.rpa.server.dto.DeviceDTO;
 import com.rpa.server.service.IDeviceService;
-import com.rpa.server.vo.ResultVO;
+import com.rpa.server.common.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +24,6 @@ public class DeviceController {
 
     @PostMapping("device")
     public ResultVO device(@RequestBody DeviceDTO dto) {
-        return new ResultVO<>(1000, dto);
+        return service.queryDevice(dto);
     }
 }
