@@ -52,28 +52,28 @@ public class LoginServiceImpl implements LoginService {
         if (serverCheckcode == null) {
             result.put("flag", false);
             result.put("msg", "服务器异常，请联系管理员！");
-            return "forward:/";
+            return "forward:/login";
         }
 
         else if (!serverCheckcode.equalsIgnoreCase(checkcode)) {
             // 验证码校验失败
             result.put("flag", false);
             result.put("msg", "验证码输入错误，请重新输入！");
-            return "forward:/";
+            return "forward:/login";
         }
 
         //判断用户名是否存在
         else if (po == null) {
             result.put("flag", false);
             result.put("msg", "用户名不存在");
-            return "forward:/";
+            return "forward:/login";
         }
 
         //判断密码是否正确
         else if (!po.getPassword().equals(password)) {
             result.put("flag", false);
             result.put("msg", "密码错误");
-            return "forward:/";
+            return "forward:/login";
         }
 
         else {
