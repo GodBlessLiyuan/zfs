@@ -1,4 +1,4 @@
-package com.rpa.server.common;
+package com.rpa.server.utils;
 
 import com.rpa.server.constant.LoginConstant;
 import com.rpa.server.mapper.SoftChannelMapper;
@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @version: 1.0
  */
 @Component
-public class RedisCache {
+public class RedisCacheUtil {
 
     @Autowired
     private StringRedisTemplate template;
@@ -52,5 +52,19 @@ public class RedisCache {
      */
     public void cacheVerifyCode(String phone, String code) {
         template.opsForValue().set(LoginConstant.VERIFY_CODE_PREFIX + phone, code, 5, TimeUnit.MINUTES);
+    }
+
+    /**
+     * 短信码校验
+     *
+     * @param phone 手机号
+     * @param sms   短信码
+     */
+    public boolean checkSmsByCache(String phone, String sms) {
+        if (sms == null || sms.length() != LoginConstant.VERIFY_CODE_LENGTH) {
+            return false;
+        }
+
+        return sms.equals(template.opsForValue().get(LoginConstant.VERIFY_CODE_PREFIX + phone));
     }
 }

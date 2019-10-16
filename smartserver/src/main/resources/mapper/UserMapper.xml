@@ -24,7 +24,7 @@
     delete from t_user
     where user_id = #{userId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.server.pojo.UserPO">
+  <insert id="insert" parameterType="com.rpa.server.pojo.UserPO" useGeneratedKeys="true" keyProperty="userId">
     insert into t_user (user_id, username, phone, 
       ip, create_time, update_time, 
       chan_name, soft_channel_id)
@@ -125,4 +125,11 @@
       soft_channel_id = #{softChannelId,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
+
+  <select id="queryByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where phone = #{phone,jdbcType=CHAR}
+  </select>
 </mapper>

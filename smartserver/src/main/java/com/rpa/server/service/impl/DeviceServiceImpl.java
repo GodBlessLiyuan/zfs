@@ -1,6 +1,6 @@
 package com.rpa.server.service.impl;
 
-import com.rpa.server.common.RedisCache;
+import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.DeviceDTO;
 import com.rpa.server.mapper.DeviceImeiMapper;
@@ -30,7 +30,7 @@ public class DeviceServiceImpl implements IDeviceService {
     @Resource
     private DeviceImeiMapper deviceImeiMapper;
     @Resource
-    private RedisCache cache;
+    private RedisCacheUtil cache;
 
     @Override
     public ResultVO queryDevice(DeviceDTO dto) {
@@ -70,7 +70,7 @@ public class DeviceServiceImpl implements IDeviceService {
             return this.buildResultVO(devicePO.getDeviceId());
         }
 
-        return null;
+        return new ResultVO<>(2000);
     }
 
     /**

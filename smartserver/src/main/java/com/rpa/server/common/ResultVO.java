@@ -14,16 +14,16 @@ import java.io.Serializable;
 public class ResultVO<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer code;
+    private Integer status;
 
     private T data;
 
-    public ResultVO(Integer code) {
-        this(code, null);
+    public ResultVO(Integer status) {
+        this(status, null);
     }
 
-    public ResultVO(Integer code, T data) {
-        this.code = code;
+    public ResultVO(Integer status, T data) {
+        this.status = status;
         this.data = data;
     }
 }
