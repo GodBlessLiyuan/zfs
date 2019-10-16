@@ -22,6 +22,9 @@
         <module>common-lib</module>
         <module>smartweb</module>
         <module>smartserver</module>
+        <module>eureka</module>
+        <module>smarteureka</module>
+        <module>smartzuul</module>
     </modules>
 
     <dependencyManagement>

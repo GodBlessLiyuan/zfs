@@ -18,6 +18,10 @@ public class ResultVO<T> implements Serializable {
 
     private T data;
 
+    public ResultVO(Integer code) {
+        this(code, null);
+    }
+
     public ResultVO(Integer code, T data) {
         this.code = code;
         this.data = data;

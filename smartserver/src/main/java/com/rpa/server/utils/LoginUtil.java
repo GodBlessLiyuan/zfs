@@ -1,0 +1,50 @@
+package com.rpa.server.utils;
+
+import org.springframework.util.DigestUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * @author: xiahui
+ * @date: Created in 2019/10/16 9:49
+ * @description: 注册/登录 工具
+ * @version: 1.0
+ */
+public class LoginUtil {
+
+    /**
+     * 中国手机号码
+     */
+    private static Pattern CHINESE_PHONE_PATTERN = Pattern.compile("((13|15|17|18)\\d{9})|(14[57]\\d{8})");
+
+    /**
+     * 验证设备Id与设备Md5是否一致
+     *
+     * @param id
+     * @param md5
+     * @return
+     */
+    public static boolean checkDeviceId(Long id, String md5) {
+        if (id == null || md5 == null) {
+            return false;
+        }
+
+        return md5.equals(DigestUtils.md5DigestAsHex(id.toString().getBytes()));
+    }
+
+    /**
+     * 验证手机号是否符合规范
+     *
+     * @param phone 手机号
+     * @return
+     */
+    public static boolean checkPhone(String phone) {
+        if (phone == null || phone.length() != 11) {
+            return false;
+        }
+
+        Matcher matcher = CHINESE_PHONE_PATTERN.matcher(phone);
+        return matcher.matches();
+    }
+}
