@@ -1,7 +1,5 @@
 package com.rpa.server.dto;
 
-import com.rpa.server.common.RedisCache;
-import com.rpa.server.pojo.DevicePO;
 import lombok.Data;
 
 import java.util.List;

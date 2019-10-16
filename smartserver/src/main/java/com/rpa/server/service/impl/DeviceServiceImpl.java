@@ -94,10 +94,8 @@ public class DeviceServiceImpl implements IDeviceService {
      */
     private ResultVO buildResultVO(Long deviceId) {
         DeviceVO vo = new DeviceVO();
-
         vo.setId(deviceId);
         vo.setVerify(DigestUtils.md5DigestAsHex(deviceId.toString().getBytes()));
-
         return new ResultVO<>(1000, vo);
     }
 
