@@ -1,5 +1,6 @@
 package com.rpa.server.common;
 
+import com.rpa.server.constant.LoginConstant;
 import com.rpa.server.mapper.SoftChannelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -22,6 +23,12 @@ public class RedisCache {
     @Resource
     private SoftChannelMapper softChannelMapper;
 
+    /**
+     * 通过渠道名获取渠道ID
+     *
+     * @param chanName
+     * @return
+     */
     public Integer getSoftChannelId(String chanName) {
         String chanId = this.template.opsForValue().get(chanName);
         if (null != chanId) {
@@ -35,5 +42,15 @@ public class RedisCache {
         }
 
         return 0;
+    }
+
+    /**
+     * 缓存手机验证码
+     *
+     * @param phone 手机号
+     * @param code  验证码
+     */
+    public void cacheVerifyCode(String phone, String code) {
+        template.opsForValue().set(LoginConstant.VERIFY_CODE_PREFIX + phone, code, 5, TimeUnit.MINUTES);
     }
 }

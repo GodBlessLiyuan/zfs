@@ -2,6 +2,7 @@ package com.rpa.server.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,9 @@ import java.util.List;
  * @version: 1.0
  */
 @Data
-public class DeviceDTO {
+public class DeviceDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * androidid唯一标识
      */
