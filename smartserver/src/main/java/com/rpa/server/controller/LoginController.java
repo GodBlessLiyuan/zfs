@@ -1,8 +1,9 @@
 package com.rpa.server.controller;
 
-import com.rpa.server.common.RedisCache;
+import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.common.ResultVO;
-import com.rpa.server.dto.SmsDTO;
+import com.rpa.server.dto.LoginDTO;
+import com.rpa.server.service.ILoginService;
 import com.rpa.server.utils.LoginUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
 
 /**
@@ -23,10 +25,12 @@ import java.util.Random;
 public class LoginController {
 
     @Autowired
-    private RedisCache cache;
+    private RedisCacheUtil cache;
+    @Autowired
+    private ILoginService loginService;
 
     @PostMapping("sms")
-    public ResultVO sms(@RequestBody SmsDTO dto) {
+    public ResultVO sms(@RequestBody LoginDTO dto) {
         if (!LoginUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !LoginUtil.checkPhone(dto.getPh())) {
             return new ResultVO<>(2000);
         }
@@ -36,5 +40,15 @@ public class LoginController {
         cache.cacheVerifyCode(dto.getPh(), verifyCode);
 
         return new ResultVO<>(1000);
+    }
+
+    @PostMapping("register")
+    public ResultVO register(@RequestBody LoginDTO dto, HttpServletRequest req) {
+        if (!LoginUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !LoginUtil.checkPhone(dto.getPh())
+                || !cache.checkSmsByCache(dto.getPh(), dto.getSms())) {
+            return new ResultVO(2000);
+        }
+
+        return loginService.register(dto, req);
     }
 }

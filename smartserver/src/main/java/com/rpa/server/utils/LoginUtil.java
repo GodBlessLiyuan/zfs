@@ -1,9 +1,9 @@
 package com.rpa.server.utils;
 
+import com.rpa.server.constant.LoginConstant;
 import org.springframework.util.DigestUtils;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author: xiahui
@@ -12,11 +12,6 @@ import java.util.regex.Pattern;
  * @version: 1.0
  */
 public class LoginUtil {
-
-    /**
-     * 中国手机号码
-     */
-    private static Pattern CHINESE_PHONE_PATTERN = Pattern.compile("((13|15|17|18)\\d{9})|(14[57]\\d{8})");
 
     /**
      * 验证设备Id与设备Md5是否一致
@@ -40,11 +35,11 @@ public class LoginUtil {
      * @return
      */
     public static boolean checkPhone(String phone) {
-        if (phone == null || phone.length() != 11) {
+        if (phone == null || phone.length() != LoginConstant.PHONE_LENGTH) {
             return false;
         }
 
-        Matcher matcher = CHINESE_PHONE_PATTERN.matcher(phone);
+        Matcher matcher = LoginConstant.CHINESE_PHONE_PATTERN.matcher(phone);
         return matcher.matches();
     }
 }

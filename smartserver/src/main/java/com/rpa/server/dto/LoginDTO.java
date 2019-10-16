@@ -6,13 +6,14 @@ import java.io.Serializable;
 
 /**
  * @author: xiahui
- * @date: Created in 2019/10/16 9:52
- * @description: 短信验证
+ * @date: Created in 2019/10/16 10:58
+ * @description: 注册/登录 DTO
  * @version: 1.0
  */
 @Data
-public class SmsDTO implements Serializable {
+public class LoginDTO implements Serializable {
     private static final long serialVersionUID = 1L;
+
     /**
      * 设备唯一标识
      */
@@ -22,7 +23,15 @@ public class SmsDTO implements Serializable {
      */
     private String ph;
     /**
-     * 设备注册接口返回的md5值
+     * 设备唯一标识md5，设备接口返回数据
      */
     private String verify;
+    /**
+     * 短信验证码
+     */
+    private String sms;
+    /**
+     * 应用渠道
+     */
+    private String channel;
 }

@@ -8,4 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<UserPO, Long> {
+    /**
+     * 根据phone查询数据
+     * @param ph
+     * @return
+     */
+    UserPO queryByPhone(String ph);
 }
