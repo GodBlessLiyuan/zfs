@@ -1,7 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.AppDTO;
 import com.rpa.web.mapper.AppChMapper;
 import com.rpa.web.mapper.AppMapper;

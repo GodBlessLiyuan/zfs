@@ -1,7 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.rpa.web.common.PageHelper;
 import com.rpa.web.domain.BatchInfoDO;
 import com.rpa.web.dto.BatchInfoDTO;
 import com.rpa.web.mapper.BatchInfoMapper;

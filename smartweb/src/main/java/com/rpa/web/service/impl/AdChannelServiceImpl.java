@@ -1,10 +1,9 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.rpa.web.common.PageHelper;
 import com.rpa.web.domain.AdChannelDO;
 import com.rpa.web.dto.AdChannelDTO;
-import com.rpa.web.dto.AdconfigDTO;
 import com.rpa.web.mapper.AdChannelMapper;
 import com.rpa.web.pojo.AdChannelPO;
 import com.rpa.web.service.AdChannelService;

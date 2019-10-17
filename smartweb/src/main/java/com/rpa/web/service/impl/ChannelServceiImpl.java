@@ -1,7 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.ChannelDTO;
 import com.rpa.web.mapper.ChannelMapper;
 import com.rpa.web.pojo.ChannelPO;

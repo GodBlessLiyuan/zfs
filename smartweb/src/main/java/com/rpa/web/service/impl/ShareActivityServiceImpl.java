@@ -1,7 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.ShareActivityDTO;
 import com.rpa.web.mapper.ShareActivityMapper;
 import com.rpa.web.pojo.ShareActivityPO;
