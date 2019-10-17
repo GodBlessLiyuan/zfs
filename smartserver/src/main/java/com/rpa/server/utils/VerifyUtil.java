@@ -8,10 +8,10 @@ import java.util.regex.Matcher;
 /**
  * @author: xiahui
  * @date: Created in 2019/10/16 9:49
- * @description: 注册/登录 工具
+ * @description: 验证工具
  * @version: 1.0
  */
-public class LoginUtil {
+public class VerifyUtil {
 
     /**
      * 验证设备Id与设备Md5是否一致
