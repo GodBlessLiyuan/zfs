@@ -1,7 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.ComTypeDTO;
 import com.rpa.web.mapper.ComTypeMapper;
 import com.rpa.web.pojo.ComTypePO;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
