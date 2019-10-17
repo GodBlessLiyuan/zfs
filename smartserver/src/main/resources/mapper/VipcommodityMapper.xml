@@ -27,7 +27,7 @@
     com_type_name, istop
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_vipcommodity
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}
@@ -245,4 +245,10 @@
       istop = #{istop,jdbcType=TINYINT}
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryByChanId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_vipcommodity
+    where status = 2 and soft_channel_id = #{softChannelId,jdbcType=INTEGER}
+  </select>
 </mapper>

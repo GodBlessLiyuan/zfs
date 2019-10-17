@@ -450,9 +450,18 @@
         let showDiscount = $('#showDiscount').val();
         let discount = $('#discount').val();
 
-        $.get("/vipcommodity/insert?channelId=" + channelId + "&comTypeId=" + comTypeId + "&comName=" + comName +
-            "&description=" + description + "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" +
-            discount);
+        $.ajax({
+            type: 'GET',
+            url: "/vipcommodity/insert?channelId=" + channelId + "&comTypeId=" + comTypeId + "&comName=" + comName +
+                "&description=" + description + "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" +
+                discount,
+            dataType: 'json',
+            success: function (res) {
+                if(res.code !== 0) {
+                    alert(res.msg);
+                }
+            }
+        })
     }
 
     function updateClick() {

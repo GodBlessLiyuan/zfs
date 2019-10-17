@@ -275,4 +275,10 @@
       </where>
   </select>
 
+  <select id="queryByChanIdAndComTypeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_vipcommodity
+    where soft_channel_id = #{softChannelId,jdbcType=INTEGER} and com_type_id = #{comTypeId,jdbcType=INTEGER}
+  </select>
+
 </mapper>

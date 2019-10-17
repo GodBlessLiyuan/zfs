@@ -4,6 +4,7 @@ import com.rpa.web.dto.VipCommodityDTO;
 import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,13 +49,13 @@ public class VipCommodityController {
     }
 
     @RequestMapping("insert")
-    public int insert(@RequestParam(value = "channelId") int channelId,
-                      @RequestParam(value = "comTypeId") int comTypeId,
-                      @RequestParam(value = "comName") String comName,
-                      @RequestParam(value = "description") String description,
-                      @RequestParam(value = "price") int price,
-                      @RequestParam(value = "showDiscount") String showDiscount,
-                      @RequestParam(value = "discount") float discount, HttpSession session) {
+    public ResultVO insert(@RequestParam(value = "channelId") int channelId,
+                           @RequestParam(value = "comTypeId") int comTypeId,
+                           @RequestParam(value = "comName") String comName,
+                           @RequestParam(value = "description") String description,
+                           @RequestParam(value = "price") int price,
+                           @RequestParam(value = "showDiscount") String showDiscount,
+                           @RequestParam(value = "discount") float discount, HttpSession session) {
 
         // 从Session里获取管理员Id
         AdminUserPO loginUser = (AdminUserPO) session.getAttribute("loginUser");

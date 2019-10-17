@@ -11,4 +11,13 @@ public interface VipCommodityMapper extends BaseDAO<VipCommodityPO, Integer> {
     Float queryRevenue();
 
     Float queryMonthRevenue();
+
+    /**
+     * 根据渠道Id和产品Id查询数据
+     *
+     * @param softChannelId 渠道Id
+     * @param comTypeId 产品Id
+     * @return
+     */
+    VipCommodityPO queryByChanIdAndComTypeId(int softChannelId, int comTypeId);
 }

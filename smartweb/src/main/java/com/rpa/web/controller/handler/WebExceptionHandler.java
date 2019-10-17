@@ -3,6 +3,7 @@ package com.rpa.web.controller.handler;
 import com.rpa.web.exception.PromptException;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @version: 1.0
  */
 @RestControllerAdvice
-public class ExceptionHandler {
+public class WebExceptionHandler {
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(value = PromptException.class)
+    @ExceptionHandler(value = PromptException.class)
     public ResultVO handlerPromptException(PromptException e) {
         return ResultVOUtil.error(e.getCode(), e.getMessage());
     }
