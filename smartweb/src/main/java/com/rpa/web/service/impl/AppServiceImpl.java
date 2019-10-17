@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -180,5 +182,11 @@ public class AppServiceImpl implements IAppService {
         appPO.setVersionname((String) apkInfo.get("versionname"));
         appPO.setVersioncode(Math.toIntExact((Long) apkInfo.get("versioncode")));
         appPO.setSize((int) file.getSize());
+
+        try {
+            appPO.setMd5(DigestUtils.md5DigestAsHex(file.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
