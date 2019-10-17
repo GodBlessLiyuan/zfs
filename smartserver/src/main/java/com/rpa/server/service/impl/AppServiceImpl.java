@@ -32,7 +32,7 @@ public class AppServiceImpl implements IAppService {
         // 需要更新
         AppVO vo = new AppVO();
         vo.setUrl(appPO.getUrl());
-        vo.setMd5(null);
+        vo.setMd5(appPO.getMd5());
         return new ResultVO<>(1009, vo);
     }
 }

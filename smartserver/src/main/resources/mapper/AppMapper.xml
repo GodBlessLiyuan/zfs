@@ -209,8 +209,10 @@
   </update>
 
   <select id="queryMaxByVerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select max(versioncode)
+    select <include refid="Base_Column_List" />
     from t_app
-    where versioncode > #{versioncode,jdbcType=INTEGER}
+    where dr = 1 and versioncode > #{versioncode,jdbcType=INTEGER}
+    order by versioncode desc
+    limit 1
   </select>
 </mapper>
