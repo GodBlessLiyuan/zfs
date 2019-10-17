@@ -46,6 +46,8 @@ public class AppPO implements Serializable {
      */
     private Byte dr;
 
+    private String md5;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getAppId() {
@@ -184,6 +186,14 @@ public class AppPO implements Serializable {
         this.chanName = chanName;
     }
 
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -209,7 +219,8 @@ public class AppPO implements Serializable {
             && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
             && (this.getContext() == null ? other.getContext() == null : this.getContext().equals(other.getContext()))
             && (this.getPublishTime() == null ? other.getPublishTime() == null : this.getPublishTime().equals(other.getPublishTime()))
-            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()));
+            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()))
+            && (this.getMd5() == null ? other.getMd5() == null : this.getMd5().equals(other.getMd5()));
     }
 
     @Override
@@ -230,6 +241,7 @@ public class AppPO implements Serializable {
         result = prime * result + ((getContext() == null) ? 0 : getContext().hashCode());
         result = prime * result + ((getPublishTime() == null) ? 0 : getPublishTime().hashCode());
         result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
+        result = prime * result + ((getMd5() == null) ? 0 : getMd5().hashCode());
         return result;
     }
 
@@ -253,6 +265,7 @@ public class AppPO implements Serializable {
         sb.append(", context=").append(context);
         sb.append(", publishTime=").append(publishTime);
         sb.append(", dr=").append(dr);
+        sb.append(", md5=").append(md5);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

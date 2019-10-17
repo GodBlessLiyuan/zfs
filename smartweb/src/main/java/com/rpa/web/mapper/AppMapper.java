@@ -2,7 +2,6 @@ package com.rpa.web.mapper;
 
 import com.rpa.web.pojo.AppPO;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
