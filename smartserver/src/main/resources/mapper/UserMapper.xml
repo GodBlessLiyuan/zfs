@@ -5,7 +5,7 @@
     <id column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="username" jdbcType="CHAR" property="username" />
     <result column="phone" jdbcType="CHAR" property="phone" />
-    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="ip" jdbcType="CHAR" property="ip" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="chan_name" jdbcType="CHAR" property="chanName" />
@@ -29,7 +29,7 @@
       ip, create_time, update_time, 
       chan_name, soft_channel_id)
     values (#{userId,jdbcType=BIGINT}, #{username,jdbcType=CHAR}, #{phone,jdbcType=CHAR}, 
-      #{ip,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{ip,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{chanName,jdbcType=CHAR}, #{softChannelId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.server.pojo.UserPO">
@@ -71,7 +71,7 @@
         #{phone,jdbcType=CHAR},
       </if>
       <if test="ip != null">
-        #{ip,jdbcType=VARCHAR},
+        #{ip,jdbcType=CHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -97,7 +97,7 @@
         phone = #{phone,jdbcType=CHAR},
       </if>
       <if test="ip != null">
-        ip = #{ip,jdbcType=VARCHAR},
+        ip = #{ip,jdbcType=CHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -118,7 +118,7 @@
     update t_user
     set username = #{username,jdbcType=CHAR},
       phone = #{phone,jdbcType=CHAR},
-      ip = #{ip,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       chan_name = #{chanName,jdbcType=CHAR},

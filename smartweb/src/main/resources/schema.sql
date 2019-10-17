@@ -136,8 +136,8 @@ CREATE TABLE t_ad_channel
 	soft_channel_id int NOT NULL,
 	create_time datetime,
 	update_time datetime,
-	-- 1 当前版本  2 历史版本 
-	type tinyint COMMENT '1 当前版本  2 历史版本 ',
+	-- 1 开始 2 关闭
+	type tinyint DEFAULT 1 COMMENT '1 开始 2 关闭',
 	app_id int NOT NULL,
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除'
@@ -162,6 +162,7 @@ CREATE TABLE t_app
 	publish_time datetime,
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除',
+	md5 char(32),
 	PRIMARY KEY (app_id),
 	UNIQUE (app_id)
 );
@@ -297,8 +298,10 @@ CREATE TABLE t_device
 	versioncode int,
 	manufacturer char(128),
 	androidmodel char(64),
+	uuid char(32),
 	PRIMARY KEY (device_id),
-	UNIQUE (device_id)
+	UNIQUE (device_id),
+	UNIQUE (uuid)
 );
 
 
@@ -315,6 +318,11 @@ CREATE TABLE t_exception
 	exceptionid int NOT NULL AUTO_INCREMENT,
 	device_id bigint NOT NULL,
 	error text,
+	-- android系统的版本号
+	buildversion tinyint COMMENT 'android系统的版本号',
+	versioncode int,
+	androidmodel char(64),
+	pkg char(32),
 	PRIMARY KEY (exceptionid),
 	UNIQUE (exceptionid)
 );
@@ -577,7 +585,7 @@ CREATE TABLE t_user
 	user_id bigint NOT NULL AUTO_INCREMENT,
 	username char(32),
 	phone char(11),
-	ip varchar(128),
+	ip char(64),
 	create_time datetime,
 	update_time datetime,
 	chan_name char(64),
@@ -611,7 +619,8 @@ CREATE TABLE t_user_device
 	user_device_id int NOT NULL AUTO_INCREMENT,
 	user_id bigint NOT NULL,
 	device_id bigint NOT NULL,
-	status int,
+	-- 1 登录  2 登出
+	status tinyint DEFAULT 1 COMMENT '1 登录  2 登出',
 	create_time datetime,
 	PRIMARY KEY (user_device_id),
 	UNIQUE (user_device_id)

@@ -14,7 +14,10 @@ public class UserDevicePO implements Serializable {
 
     private Long deviceId;
 
-    private Integer status;
+    /**
+     * 1 登录  2 登出
+     */
+    private Byte status;
 
     private Date createTime;
 
@@ -44,11 +47,11 @@ public class UserDevicePO implements Serializable {
         this.deviceId = deviceId;
     }
 
-    public Integer getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 

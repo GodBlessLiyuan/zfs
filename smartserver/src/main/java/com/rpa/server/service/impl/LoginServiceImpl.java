@@ -61,7 +61,7 @@ public class LoginServiceImpl implements ILoginService {
             UserDevicePO userDevPO = new UserDevicePO();
             userDevPO.setDeviceId(dto.getId());
             userDevPO.setUserId(po.getUserId());
-            userDevPO.setStatus(1);
+            userDevPO.setStatus((byte)1);
             userDevPO.setCreateTime(new Date());
             userDeviceMapper.insert(userDevPO);
 
@@ -85,11 +85,11 @@ public class LoginServiceImpl implements ILoginService {
             UserDevicePO po = new UserDevicePO();
             po.setDeviceId(dto.getId());
             po.setUserId(userPO.getUserId());
-            po.setStatus(1);
+            po.setStatus((byte)1);
             po.setCreateTime(new Date());
             userDeviceMapper.insert(po);
         } else {
-            userDevicePO.setStatus(1);
+            userDevicePO.setStatus((byte)1);
             userDeviceMapper.updateByPrimaryKey(userDevicePO);
         }
 

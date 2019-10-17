@@ -16,13 +16,14 @@
     <result column="context" jdbcType="CHAR" property="context" />
     <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
     <result column="dr" jdbcType="TINYINT" property="dr" />
+    <result column="md5" jdbcType="CHAR" property="md5" />
   </resultMap>
   <sql id="Base_Column_List">
     app_id, versionname, versioncode, create_time, update_time, url, a_id, `status`, 
-    update_type, `size`, extra, context, publish_time, dr
+    update_type, `size`, extra, context, publish_time, dr, md5
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
+    select 
     <include refid="Base_Column_List" />
     from t_app
     where app_id = #{appId,jdbcType=INTEGER}
@@ -36,12 +37,12 @@
       create_time, update_time, url, 
       a_id, `status`, update_type, 
       `size`, extra, context, publish_time, 
-      dr)
+      dr, md5)
     values (#{appId,jdbcType=INTEGER}, #{versionname,jdbcType=CHAR}, #{versioncode,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, 
       #{aId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{updateType,jdbcType=TINYINT}, 
       #{size,jdbcType=INTEGER}, #{extra,jdbcType=CHAR}, #{context,jdbcType=CHAR}, #{publishTime,jdbcType=TIMESTAMP}, 
-      #{dr,jdbcType=TINYINT})
+      #{dr,jdbcType=TINYINT}, #{md5,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.server.pojo.AppPO">
     insert into t_app
@@ -88,6 +89,9 @@
       <if test="dr != null">
         dr,
       </if>
+      <if test="md5 != null">
+        md5,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="appId != null">
@@ -131,6 +135,9 @@
       </if>
       <if test="dr != null">
         #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="md5 != null">
+        #{md5,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -176,6 +183,9 @@
       <if test="dr != null">
         dr = #{dr,jdbcType=TINYINT},
       </if>
+      <if test="md5 != null">
+        md5 = #{md5,jdbcType=CHAR},
+      </if>
     </set>
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
@@ -193,7 +203,8 @@
       extra = #{extra,jdbcType=CHAR},
       context = #{context,jdbcType=CHAR},
       publish_time = #{publishTime,jdbcType=TIMESTAMP},
-      dr = #{dr,jdbcType=TINYINT}
+      dr = #{dr,jdbcType=TINYINT},
+      md5 = #{md5,jdbcType=CHAR}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
 

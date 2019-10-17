@@ -5,7 +5,7 @@
     <id column="user_device_id" jdbcType="INTEGER" property="userDeviceId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="device_id" jdbcType="BIGINT" property="deviceId" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -25,7 +25,7 @@
     insert into t_user_device (user_device_id, user_id, device_id, 
       `status`, create_time)
     values (#{userDeviceId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, 
-      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.server.pojo.UserDevicePO">
     insert into t_user_device
@@ -57,7 +57,7 @@
         #{deviceId,jdbcType=BIGINT},
       </if>
       <if test="status != null">
-        #{status,jdbcType=INTEGER},
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -74,7 +74,7 @@
         device_id = #{deviceId,jdbcType=BIGINT},
       </if>
       <if test="status != null">
-        `status` = #{status,jdbcType=INTEGER},
+        `status` = #{status,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -86,7 +86,7 @@
     update t_user_device
     set user_id = #{userId,jdbcType=BIGINT},
       device_id = #{deviceId,jdbcType=BIGINT},
-      `status` = #{status,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where user_device_id = #{userDeviceId,jdbcType=INTEGER}
   </update>
