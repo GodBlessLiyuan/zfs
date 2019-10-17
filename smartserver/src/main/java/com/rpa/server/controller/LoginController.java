@@ -4,7 +4,7 @@ import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.LoginDTO;
 import com.rpa.server.service.ILoginService;
-import com.rpa.server.utils.LoginUtil;
+import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +31,7 @@ public class LoginController {
 
     @PostMapping("sms")
     public ResultVO sms(@RequestBody LoginDTO dto) {
-        if (!LoginUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !LoginUtil.checkPhone(dto.getPh())) {
+        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !VerifyUtil.checkPhone(dto.getPh())) {
             return new ResultVO<>(2000);
         }
 
@@ -44,7 +44,7 @@ public class LoginController {
 
     @PostMapping("register")
     public ResultVO register(@RequestBody LoginDTO dto, HttpServletRequest req) {
-        if (!LoginUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !LoginUtil.checkPhone(dto.getPh())
+        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !VerifyUtil.checkPhone(dto.getPh())
                 || !cache.checkSmsByCache(dto.getPh(), dto.getSms())) {
             return new ResultVO(2000);
         }

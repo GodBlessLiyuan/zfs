@@ -22,7 +22,7 @@
     update_type, `size`, extra, context, publish_time, dr
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_app
     where app_id = #{appId,jdbcType=INTEGER}
@@ -196,4 +196,10 @@
       dr = #{dr,jdbcType=TINYINT}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryMaxByVerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select max(versioncode)
+    from t_app
+    where versioncode > #{versioncode,jdbcType=INTEGER}
+  </select>
 </mapper>

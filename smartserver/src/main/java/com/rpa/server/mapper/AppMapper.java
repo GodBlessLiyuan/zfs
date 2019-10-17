@@ -8,4 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AppMapper extends BaseMapper<AppPO, Integer> {
+    /**
+     * 查询大于指定版本中VersionId最大的一条记录
+     *
+     * @param softv
+     * @return
+     */
+    AppPO queryMaxByVerId(Integer softv);
 }
