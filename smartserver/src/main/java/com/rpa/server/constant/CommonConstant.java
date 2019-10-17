@@ -20,5 +20,9 @@ public class CommonConstant {
      * 年会员类型
      */
     public static final int YEAR_VIP = 20;
+    /**
+     * 渠道默认ID
+     */
+    public static final int CHAN_DEF = 1;
 
 }

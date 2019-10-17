@@ -26,7 +26,7 @@ public class RedisCacheUtil {
     /**
      * 通过渠道名获取渠道ID
      *
-     * @param chanName
+     * @param chanName 渠道名称
      * @return
      */
     public Integer getSoftChannelId(String chanName) {

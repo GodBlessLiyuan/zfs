@@ -12,7 +12,6 @@ import lombok.Getter;
 @Getter
 public class PromptException extends RuntimeException {
     private Integer code;
-    private String msg;
 
     public PromptException(ExceptionEnum exceptionEnum) {
         super(exceptionEnum.getMsg());
@@ -20,7 +19,7 @@ public class PromptException extends RuntimeException {
     }
 
     public PromptException(Integer code, String msg) {
+        super(msg);
         this.code = code;
-        this.msg = msg;
     }
 }

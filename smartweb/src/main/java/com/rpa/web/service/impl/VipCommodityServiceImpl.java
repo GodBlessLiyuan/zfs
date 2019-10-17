@@ -5,6 +5,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.rpa.web.common.VipCommodityConstant;
 import com.rpa.web.dto.VipCommodityDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.exception.PromptException;
 import com.rpa.web.mapper.ComTypeMapper;
 import com.rpa.web.mapper.SoftChannelMapper;
 import com.rpa.web.mapper.VipCommodityMapper;
@@ -13,6 +15,7 @@ import com.rpa.web.pojo.SoftChannelPO;
 import com.rpa.web.pojo.VipCommodityPO;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -53,8 +56,13 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     }
 
     @Override
-    public int insert(int channelId, int comTypeId, String comName, String description, int price, String showDiscount,
-                      float discount, int aId) {
+    public ResultVO insert(int channelId, int comTypeId, String comName, String description, int price, String showDiscount,
+                           float discount, int aId) {
+        VipCommodityPO po = vipCommodityMapper.queryByChanIdAndComTypeId(channelId, comTypeId);
+        if (po != null) {
+            throw new PromptException(3000, "当前渠道-产品已存在！");
+        }
+
         VipCommodityPO vipCommodityPO = new VipCommodityPO();
         vipCommodityPO.setSoftChannelId(channelId);
         vipCommodityPO.setComTypeId(comTypeId);
@@ -84,7 +92,9 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         vipCommodityPO.setStatus((byte) 1);
         vipCommodityPO.setIstop((byte) 1);
 
-        return vipCommodityMapper.insert(vipCommodityPO);
+        vipCommodityMapper.insert(vipCommodityPO);
+
+        return new ResultVO(ExceptionEnum.SUCCESS);
     }
 
     @Override

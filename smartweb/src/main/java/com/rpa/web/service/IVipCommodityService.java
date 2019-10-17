@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.VipCommodityDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public interface IVipCommodityService {
      * @param aId          管理员Id
      * @return
      */
-    int insert(int channelId, int comTypeId, String comName, String description, int price, String showDiscount, float discount, int aId);
+    ResultVO insert(int channelId, int comTypeId, String comName, String description, int price, String showDiscount, float discount, int aId);
 
     /**
      * 更新
