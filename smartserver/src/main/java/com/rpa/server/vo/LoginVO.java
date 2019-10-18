@@ -25,7 +25,7 @@ public class LoginVO implements Serializable {
     /**
      * 用户设备唯一标识
      */
-    private Long udd;
+    private Integer udd;
     /**
      * 用户签名验证
      */
