@@ -13,14 +13,14 @@
 
     <select id="queryByIds" resultMap="BaseResultMap">
         select ad_id, soft_channel_id, create_time, update_time, `type`, app_id, dr
-        from t_adconfig
+        from t_ad_channel
         where ad_id = #{adId,jdbcType=INTEGER}
         AND soft_channel_id = #{softChannelId}
         AND app_id = #{appId}
     </select>
 
-    <select id="query" parameterType="com.rpa.web.domain.AdChannelDO">
-        select ac.ad_id as adId, sc.name, a.versionname
+    <select id="query" resultType="com.rpa.web.domain.AdChannelDO">
+        select ac.ad_id as adId, ac.type, sc.name, a.versionname, a.app_id as appId, sc.soft_channel_id as softChannelId
         from t_ad_channel ac
         left join t_soft_channel sc on ac.soft_channel_id = sc.soft_channel_id
         left join t_app a on ac.app_id = a.app_id

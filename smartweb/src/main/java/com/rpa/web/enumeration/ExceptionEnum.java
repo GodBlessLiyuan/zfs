@@ -33,7 +33,13 @@ public enum ExceptionEnum {
 
     UPDATE_ERROR(1005, "修改失败！"),
 
-    DELETE_ERROR(1006, "删除失败！");
+    DELETE_ERROR(1006, "删除失败！"),
+
+    QUERY_ERROR(1007, "查询失败！")
+
+    ;
+
+
 
     /**
      * 提示码

@@ -9,7 +9,7 @@
 
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">运营中心</a>
                         <ul aria-expanded="false">
-                            <li><a href="">开屏广告</a></li>
+                            <li><a href="/adconfig">开屏广告</a></li>
                             <li><a href="">首页banner</a></li>
                             <li><a href="">通知管理</a></li>
                             <li><a href="">功能视频</a></li>

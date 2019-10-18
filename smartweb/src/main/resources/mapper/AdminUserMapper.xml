@@ -50,9 +50,8 @@
     where a_id = #{aId,jdbcType=INTEGER}
   </select>
 
-  <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    username
+  <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select username
     from t_admin_user
     where a_id = #{aId}
   </select>

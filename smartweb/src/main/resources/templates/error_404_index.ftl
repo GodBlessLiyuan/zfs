@@ -39,25 +39,7 @@
                 <div class="form-input-content">
                     <div class="card login-form mb-0">
                         <div class="card-body pt-5">
-                            <a class="text-center" href="index.html"> <h4>砖助智能助手业务后台</h4></a>
-
-                            <form class="mt-8 mb-8 login-input" method="post" action="/entry">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Username" name="username">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Password" name="password">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="checkcode" placeholder="Checkcode" name="checkcode">
-                                    <img id="img" src="/login/get/checkcode" />
-                                    <a onclick="javascript:changeImg()" style="color:blue;">看不清？</a>
-                                    <span id="msg"></span>
-                                </div>
-
-                                <button class="btn login-form__btn submit w-100">Login</button>
-
-                            </form>
+                            <a class="text-center" href="index.html"> <h1>404</h1></a>
                         </div>
                     </div>
                 </div>
@@ -72,15 +54,6 @@
 <!--**********************************
     Scripts
 ***********************************-->
-
-<--!更换验证码内容-->
-<script>
-    function changeImg(){
-        var img = document.getElementById("img");
-        img.src = "/login/get/checkcode?date=" + new Date();
-    }
-</script>
-
 
 <script src="plugins/common/common.min.js"></script>
 <script src="js/custom.min.js"></script>

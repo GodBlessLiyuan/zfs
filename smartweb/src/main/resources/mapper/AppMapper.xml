@@ -234,4 +234,9 @@
         left join t_soft_channel s on ac.soft_channel_id = s.soft_channel_id
         where a.app_id = #{appId} and a.dr = 1
     </select>
+
+    <select id="queryVersionname" resultMap="BaseResultMap">
+        select app_id, versionname
+        from t_app
+    </select>
 </mapper>
