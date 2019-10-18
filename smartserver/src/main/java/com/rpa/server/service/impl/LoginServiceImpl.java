@@ -61,7 +61,7 @@ public class LoginServiceImpl implements ILoginService {
             UserDevicePO userDevPO = new UserDevicePO();
             userDevPO.setDeviceId(dto.getId());
             userDevPO.setUserId(po.getUserId());
-            userDevPO.setStatus((byte)1);
+            userDevPO.setStatus((byte) 1);
             userDevPO.setCreateTime(new Date());
             userDeviceMapper.insert(userDevPO);
 
@@ -85,11 +85,11 @@ public class LoginServiceImpl implements ILoginService {
             UserDevicePO po = new UserDevicePO();
             po.setDeviceId(dto.getId());
             po.setUserId(userPO.getUserId());
-            po.setStatus((byte)1);
+            po.setStatus((byte) 1);
             po.setCreateTime(new Date());
             userDeviceMapper.insert(po);
         } else {
-            userDevicePO.setStatus((byte)1);
+            userDevicePO.setStatus((byte) 1);
             userDeviceMapper.updateByPrimaryKey(userDevicePO);
         }
 
@@ -106,7 +106,7 @@ public class LoginServiceImpl implements ILoginService {
         LoginVO loginVO = new LoginVO();
         loginVO.setUd(userDevPO.getUserId());
         loginVO.setUm(DigestUtils.md5DigestAsHex(userDevPO.getUserId().toString().getBytes()));
-        loginVO.setUdd(userDevPO.getDeviceId());
+        loginVO.setUdd(userDevPO.getUserDeviceId());
         loginVO.setToken(JWT.create().withAudience(userDevPO.getUserId().toString(), userDevPO.getDeviceId().toString(),
                 userDevPO.getUserDeviceId().toString()).sign(Algorithm.HMAC256(userDevPO.getUserId().toString())));
 
