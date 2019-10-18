@@ -2,6 +2,9 @@ package com.rpa.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Map;
 
 /**
  * @author: xiahui
@@ -157,6 +160,37 @@ public class PageController {
     @RequestMapping("/uservip")
     public String userVip() {
         return "user_vip_index";
+    }
+
+    /**
+     * 开屏广告
+     * @return
+     */
+    @RequestMapping("/adconfig")
+    public String adconfig() {
+        return "adconfig_index";
+    }
+
+    /**
+     * 广告开放渠道
+     * @return
+     */
+    @RequestMapping("/adchannel")
+    public String adchannel(@RequestParam(value = "adId") Integer adId, Map<String, Integer> map) {
+        if (null == adId) {
+            return "error_404_index";
+        }
+        map.put("adId", adId);
+        return "adchannel_index";
+    }
+
+    /**
+     * 错误页面：404
+     * @return
+     */
+    @RequestMapping("/error_404")
+    public String error_404() {
+        return "error_404_index";
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: dangyi
@@ -16,7 +17,7 @@ import java.util.List;
  * @description:
  */
 @RestController
-@RequestMapping("adChannel")
+@RequestMapping("adchannel")
 public class AdChannelController {
 
     @Autowired
@@ -40,14 +41,23 @@ public class AdChannelController {
         return dTPageInfo;
     }
 
+
+    /**
+     * 查询：查询t_app表中所有的版本名称
+     */
+    @GetMapping("queryVersionname")
+    public ResultVO queryVersionname() {
+        return this.adChannelService.queryVersionname();
+    }
+
     /**
      * 设置开发渠道——修改
      * 即是否开启广告
-     * @param adChannelDTOs
+     * @param list
      * @return
      */
     @PostMapping("update")
-    public ResultVO update(List<AdChannelDTO> adChannelDTOs) {
-        return this.adChannelService.update(adChannelDTOs);
+    public ResultVO update(@RequestBody List<AdChannelDTO> list) {
+        return this.adChannelService.update(list);
     }
 }

@@ -4,8 +4,12 @@ import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.domain.AdChannelDO;
 import com.rpa.web.dto.AdChannelDTO;
+import com.rpa.web.dto.AppDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdChannelMapper;
+import com.rpa.web.mapper.AppMapper;
 import com.rpa.web.pojo.AdChannelPO;
+import com.rpa.web.pojo.AppPO;
 import com.rpa.web.service.AdChannelService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.ResultVOUtil;
@@ -32,6 +36,9 @@ public class AdChannelServiceImpl implements AdChannelService {
 
     @Autowired
     private AdChannelMapper adChannelMapper;
+
+    @Autowired
+    private AppMapper appMapper;
 
     /**
      * 查询
@@ -77,25 +84,60 @@ public class AdChannelServiceImpl implements AdChannelService {
     }
 
     /**
+     * 查询版本名称
+     * @return
+     */
+    @Override
+    public ResultVO queryVersionname() {
+
+        List<AppPO> appPOS = this.appMapper.queryVersionname();
+
+        if (null == appPOS) {
+            return ResultVOUtil.error(ExceptionEnum.QUERY_ERROR);
+        }
+
+        // 将 po 转换为 dto 返回给前端
+        List<AppDTO> dtos = new ArrayList<>();
+        for (AppPO po : appPOS) {
+            AppDTO dto = new AppDTO();
+            dto.setAppId(po.getAppId());
+            dto.setVersionName(po.getVersionname());
+
+            dtos.add(dto);
+        }
+        return ResultVOUtil.success(dtos);
+    }
+
+
+    /**
      * 修改
-     * @param adChannelDTOs
+     * @param list
      * @return
      */
     @Override
     @Transactional
-    public ResultVO update(List<AdChannelDTO> adChannelDTOs) {
+    public ResultVO update(List<AdChannelDTO> list) {
 
         // 对传过来的 DTOs 进行迭代，并转换为 PO
-        for (AdChannelDTO dto : adChannelDTOs) {
+        for (AdChannelDTO dto : list) {
 
             // 先在数据库中查询出要修改的数据
             AdChannelPO po = this.adChannelMapper.queryByIds(dto.getAdId(), dto.getAppId(), dto.getSoftChannelId());
 
-            if (po != null) {
-                po.setType(dto.getType());
-                this.adChannelMapper.update(po);
+            if (null == po) {
+                return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
             }
+
+            int type = dto.getType();
+            if (type == 1) {
+                po.setType((byte) 2);
+            } else {
+                po.setType((byte) 1);
+            }
+
+            this.adChannelMapper.update(po);
         }
+
         return ResultVOUtil.success();
     }
 }

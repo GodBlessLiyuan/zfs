@@ -4,6 +4,7 @@ import com.rpa.web.dto.AdconfigDTO;
 import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.service.AdconfigService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,11 +51,21 @@ public class AdconfigController {
     }
 
     /**
-     * 查询广告展示策略
+     * 查询
+     * @param id
+     * @return
+     */
+    @GetMapping("queryById")
+    public ResultVO queryById (@RequestParam(value = "adId") int id) {
+        return this.adconfigService.queryById(id);
+    }
+
+    /**
+     * 查询：展示广告策略
      * @return
      */
     @GetMapping("/query/strategy")
-    public KeyValueDTO queryStrategy( ) {
+    public ResultVO queryStrategy( ) {
         return this.adconfigService.queryStrategy(SHOW_INTERVAL);
     }
 
@@ -65,7 +76,7 @@ public class AdconfigController {
      * @return
      */
     @PostMapping("insert")
-    public int insert(AdconfigDTO adconfigDTO, HttpSession httpSession) {
+    public ResultVO insert(AdconfigDTO adconfigDTO, HttpSession httpSession) {
         return this.adconfigService.insert(adconfigDTO, httpSession);
     }
 
@@ -75,17 +86,17 @@ public class AdconfigController {
      * @return
      */
     @PostMapping("update")
-    public int update(AdconfigDTO adconfigDTO, HttpSession httpSession) {
+    public ResultVO update(AdconfigDTO adconfigDTO, HttpSession httpSession) {
         return this.adconfigService.update(adconfigDTO, httpSession);
     }
 
     @PostMapping("/update/status")
-    public int updateStatus(AdconfigDTO adconfigDTO, HttpSession httpSession) {
-        return this.adconfigService.updateStatus(adconfigDTO, httpSession);
+    public ResultVO updateStatus(@RequestParam(value = "adId")Integer adId, HttpSession httpSession) {
+        return this.adconfigService.updateStatus(adId, httpSession);
     }
 
     @PostMapping("/update/strategy")
-    public int updateStrategy(String show_interval) {
+    public ResultVO updateStrategy(@RequestParam(value = "show_interval")String show_interval) {
         return this.adconfigService.updateStrategy(show_interval);
     }
 
@@ -96,7 +107,7 @@ public class AdconfigController {
      * @return
      */
     @PostMapping("delete")
-    public int delete(int adId) {
+    public ResultVO delete(int adId) {
         return this.adconfigService.delete(adId);
     }
 }

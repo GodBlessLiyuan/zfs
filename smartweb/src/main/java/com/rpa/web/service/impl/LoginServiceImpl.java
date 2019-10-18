@@ -1,5 +1,6 @@
 package com.rpa.web.service.impl;
 
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.pojo.AdminUserPO;
@@ -29,9 +30,6 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String login(HttpSession session, Map<String, Object> result,
                         String username, String password, String checkcode) {
-
-        //定义一个map型集合，封装登陆结果
-        //Map<String, Object> result = new HashMap<>();
 
         // 先校验验证码，从session中获取服务器端生成并传递给前端的验证码
         String serverCheckcode = (String) session.getAttribute("CHECKCODE_SERVER");
@@ -78,7 +76,23 @@ public class LoginServiceImpl implements LoginService {
 
         else {
             // 登录成功，将登录用户数据写入session
-            session.setAttribute(ADMIN_USER, po);
+            // 考虑到将来要被其他模块引用，这里将 po 转换为 dto，将 dto 存入session
+            AdminUserDTO dto = new AdminUserDTO();
+            dto.setaId(po.getaId());
+            dto.setUsername(po.getUsername());
+            dto.setPassword(po.getPassword());
+            dto.setEmail(po.getEmail());
+            dto.setIsLock(po.getIsLock());
+            dto.setCreateTime(po.getCreateTime());
+            dto.setLastTime(po.getLastTime());
+            dto.setDr(po.getDr());
+            dto.setRoleId(po.getRoleId());
+            dto.setName(po.getName());
+            dto.setExtra(po.getExtra());
+            dto.setPhone(po.getPhone());
+
+            session.setAttribute(ADMIN_USER, dto);
+
             return "redirect:/main";
         }
     }
@@ -97,8 +111,8 @@ public class LoginServiceImpl implements LoginService {
 
         // 先从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserPO po = (AdminUserPO)httpSession.getAttribute(ADMIN_USER);
-        int aId = po.getaId();
+        AdminUserDTO dto = (AdminUserDTO) httpSession.getAttribute(ADMIN_USER);
+        int aId = dto.getaId();
 
         // 对输入的旧密码进行校验，以确保的确是用户本人在进行修改密码操作
         String password = this.adminUserMapper.queryPassword(aId);

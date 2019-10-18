@@ -3,6 +3,7 @@ package com.rpa.web.service;
 import com.rpa.web.dto.AdconfigDTO;
 import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,15 +16,17 @@ import javax.servlet.http.HttpSession;
 public interface AdconfigService {
     public DTPageInfo<AdconfigDTO> query(int draw, int pageNum, int pageSize, String name, String adNumber, Byte status);
 
-    int insert(AdconfigDTO adconfigDTO, HttpSession httpSession);
+    ResultVO insert(AdconfigDTO adconfigDTO, HttpSession httpSession);
 
-    int update(AdconfigDTO adconfigDTO, HttpSession httpSession);
+    ResultVO update(AdconfigDTO adconfigDTO, HttpSession httpSession);
 
-    int delete(int adId);
+    ResultVO delete(int adId);
 
-    int updateStatus(AdconfigDTO adconfigDTO, HttpSession httpSession);
+    ResultVO updateStatus(Integer adId, HttpSession httpSession);
 
-    int updateStrategy(String show_interval);
+    ResultVO updateStrategy(String show_interval);
 
-    KeyValueDTO queryStrategy(int showInterval);
+    ResultVO queryStrategy(int showInterval);
+
+    ResultVO queryById(int id);
 }

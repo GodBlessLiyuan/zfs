@@ -3,6 +3,7 @@ package com.rpa.web.mapper;
 import com.rpa.web.pojo.AppPO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,4 +17,6 @@ public interface AppMapper extends BaseDAO<AppPO, Integer> {
      * @return
      */
     List<AppPO> queryById(int appId);
+
+    List<AppPO> queryVersionname();
 }

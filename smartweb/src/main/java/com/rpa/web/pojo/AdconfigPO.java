@@ -29,7 +29,7 @@ public class AdconfigPO implements Serializable {
     private Byte total;
 
     /**
-     * 1关闭 2开启 3 删除
+     * 1关闭 2开启
      */
     private Byte status;
 
