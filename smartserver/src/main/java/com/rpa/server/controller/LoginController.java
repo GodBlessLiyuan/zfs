@@ -1,5 +1,6 @@
 package com.rpa.server.controller;
 
+import com.rpa.server.service.ISmsService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.LoginDTO;
@@ -28,6 +29,8 @@ public class LoginController {
     private RedisCacheUtil cache;
     @Autowired
     private ILoginService loginService;
+    @Autowired
+    private ISmsService smsService;
 
     @PostMapping("sms")
     public ResultVO sms(@RequestBody LoginDTO dto) {
@@ -39,14 +42,21 @@ public class LoginController {
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
         cache.cacheVerifyCode(dto.getPh(), verifyCode);
 
-        return new ResultVO<>(1000);
+        if(smsService.sendSMS(dto.getPh(),verifyCode) == 1){
+            return new ResultVO(1000);
+        }else {
+            return new ResultVO<>(2000);
+        }
     }
 
     @PostMapping("register")
     public ResultVO register(@RequestBody LoginDTO dto, HttpServletRequest req) {
-        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !VerifyUtil.checkPhone(dto.getPh())
-                || !cache.checkSmsByCache(dto.getPh(), dto.getSms())) {
+        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !VerifyUtil.checkPhone(dto.getPh())) {
             return new ResultVO(2000);
+        }
+        // 短信码过期
+        if(!cache.checkSmsByCache(dto.getPh(), dto.getSms())){
+            return new ResultVO(1013);
         }
 
         return loginService.register(dto, req);
