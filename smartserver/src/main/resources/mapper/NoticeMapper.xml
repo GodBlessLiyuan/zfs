@@ -156,4 +156,14 @@
       end_time = #{endTime,jdbcType=TIMESTAMP}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_notice
+    where status = 2
+    order by notice_id desc
+  </select>
 </mapper>
