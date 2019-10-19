@@ -211,6 +211,15 @@ public class PageController {
         return "functionvideo_index";
     }
 
+    /**
+     * 问题反馈
+     * @return
+     */
+    @RequestMapping("/feedback")
+    public String feedback() {
+        return "feedback_index";
+    }
+
 
 
     /**

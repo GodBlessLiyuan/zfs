@@ -31,8 +31,8 @@
     <include refid="Base_Column_List" />
     from t_feedback
     <where>
-      <if test="startTime != null and endTime != null">
-        AND create_time >= #{startTime} AND create_time &lt;= #{endTime}
+      <if test="(startTime != null and startTime != '') and (endTime != null and endTime != '')">
+        AND create_time between #{startTime} AND #{endTime}
       </if>
       <if test="userId != null and userId != ''">
         AND user_id =  #{userId}
