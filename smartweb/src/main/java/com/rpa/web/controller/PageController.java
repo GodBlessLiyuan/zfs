@@ -185,6 +185,17 @@ public class PageController {
     }
 
     /**
+     * 首页banner
+     * @return
+     */
+    @RequestMapping("/bannerconfig")
+    public String bannerConfig() {
+        return "banner_index";
+    }
+
+
+
+    /**
      * 错误页面：404
      * @return
      */

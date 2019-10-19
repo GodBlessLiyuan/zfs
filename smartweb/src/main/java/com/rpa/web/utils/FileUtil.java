@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +55,56 @@ public class FileUtil {
         }
 
         return "/file/" + dir + fileName;
+    }
+
+    /**
+     * 文件上传处理
+     *
+     * @param srcPath 上传文件的路径
+     * @param targetPath 拟存放文件的路径
+     * @return 文件路径
+     * @throws IOException
+     */
+    public static String uploadFile(String srcPath, String targetPath) {
+
+        // 获取源文件的文件名
+        String fileName = srcPath.substring(srcPath.lastIndexOf('\\')+1);
+
+        // 创建存放文件的路径
+        File realTargetPath = new File(rootPath + targetPath);
+        if (!realTargetPath.exists()) {
+            realTargetPath.mkdirs();
+        }
+
+        // 复制文件
+        File srcFile = new File(srcPath);
+        File targetFile = new File(realTargetPath + File.separator + fileName);
+
+        FileInputStream in = null;
+        FileOutputStream out = null;
+        try {
+            in = new FileInputStream(srcFile);
+            out = new FileOutputStream(targetFile);
+            byte[] buf = new byte[8 * 1024];
+            int len = 0;
+            while ((len = in.read(buf)) != -1) {
+                out.write(buf, 0, len);
+                out.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // 返回文件所存放的路径位置
+        System.out.println("/file/" + targetPath + fileName);
+        return "/file/" + targetPath + fileName;
     }
 
     /**

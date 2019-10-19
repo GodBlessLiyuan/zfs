@@ -8,5 +8,4 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface BannerConfigMapper extends BaseDAO<BannerConfigPO, Integer> {
-    String queryUsernameByAid(Integer aId);
 }

@@ -3,6 +3,7 @@ package com.rpa.web.controller;
 import com.rpa.web.dto.BannerConfigDTO;
 import com.rpa.web.service.BannerConfigService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 @RestController
-@RequestMapping("bannerConfig")
+@RequestMapping("bannerconfig")
 public class BannerConfigController {
 
     @Autowired
@@ -50,7 +51,7 @@ public class BannerConfigController {
      * @return
      */
     @PostMapping("insert")
-    public int insert(BannerConfigDTO bannerConfigDTO, HttpSession httpSession) {
+    public ResultVO insert(BannerConfigDTO bannerConfigDTO, HttpSession httpSession) {
         return this.bannerConfigService.insert(bannerConfigDTO, httpSession);
     }
 
@@ -61,7 +62,7 @@ public class BannerConfigController {
      * @return
      */
     @PostMapping("/update/status")
-    public int update(BannerConfigDTO bannerConfigDTO, HttpSession httpSession) {
+    public ResultVO update(BannerConfigDTO bannerConfigDTO, HttpSession httpSession) {
         return this.bannerConfigService.update(bannerConfigDTO, httpSession);
     }
 
@@ -71,9 +72,8 @@ public class BannerConfigController {
      * @return
      */
     @PostMapping("delete")
-    public int delete(int bannerId) {
+    public ResultVO delete(@RequestParam(value = "bannerId")Integer bannerId) {
         return this.bannerConfigService.delete(bannerId);
     }
-
 
 }
