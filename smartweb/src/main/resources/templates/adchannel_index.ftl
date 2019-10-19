@@ -208,9 +208,8 @@
      * 重置
      */
     function resetClick() {
-        $('#name').val(null);
-        $('#adNumber').val(null);
-        $('#status option:first').prop('selected', 'selected');
+        $('#channel').val(null);
+        $('#version option:first').prop('selected', 'selected');
     }
 
     /**

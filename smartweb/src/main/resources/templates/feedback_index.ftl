@@ -185,9 +185,10 @@
      * 重置
      */
     function resetClick() {
-        $('#name').val(null);
-        $('#adNumber').val(null);
-        $('#status option:first').prop('selected', 'selected');
+        $('#startTime').val(null);
+        $('#endTime').val(null);
+        $('#userId').val(null);
+        $('#contact').val(null);
     }
 
     /**

@@ -18,7 +18,7 @@
                             <li><a href="">协议管理</a></li>
                             <li><a href="">分享素材</a></li>
                             <li><a href="">常见问题</a></li>
-                            <li><a href="">好评活动</a></li>
+                            <li><a href="/goodcomment">好评活动</a></li>
                             <li><a href="">养生账号</a></li>
                         </ul>
                     </li>

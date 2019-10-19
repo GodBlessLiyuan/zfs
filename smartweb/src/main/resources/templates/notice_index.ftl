@@ -97,8 +97,9 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>名称</label>
-                                            <input id="name" type="text" class="form-control">
+                                            <label>时间</label>
+                                            <input id="startTime" type="date" class="form-control"> 至
+                                            <input id="endTime" type="date" class="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>状态</label>
@@ -107,6 +108,19 @@
                                                 <option value='1'>关闭</option>
                                                 <option value='2'>开启</option>
                                             </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>通知类型</label>
+                                            <select id="notice_type" class="form-control">
+                                                <option value='0' selected='selected'>全选</option>
+                                                <option value='1'>文本</option>
+                                                <option value='2'>图片</option>
+                                                <option value='3'>图文</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>通知名称</label>
+                                            <input id="name" type="text" class="form-control">
                                         </div>
                                     </div>
                                 </form>
@@ -125,10 +139,14 @@
                                     <thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>名称</th>
-                                        <th>上线时间</th>
-                                        <th>banner图</th>
-                                        <th>跳转</th>
+                                        <th>通知类型</th>
+                                        <th>通知名称</th>
+                                        <th>创建时间</th>
+                                        <th>提示时间</th>
+                                        <th>开始时间</th>
+                                        <th>结束时间</th>
+                                        <th>跳转地址</th>
+                                        <th>通知详情</th>
                                         <th>状态</th>
                                         <th>操作</th>
                                         <th>操作人</th>
@@ -164,16 +182,32 @@
                             <button type="hidden" id="insert" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">名称:</span>
+                            <span for="message-text" class="col-form-label">通知类型:</span>
+                            <label><input name="insert_notice_type" class="form-control" type="radio" value="1"/>文本</label>
+                            <label><input name="insert_notice_type" class="form-control" type="radio" value="2"/>图片</label>
+                            <label><input name="insert_notice_type" class="form-control" type="radio" value="3"/>图文</label>
+                        </div>
+                        <div class="form-group">
+                            <span for="message-text" class="col-form-label">图片:</span>
+                            <input id="insert_pic" class="form-control" type="file"/>
+                        </div>
+                        <div class="form-group">
+                            <span for="recipient-name" class="col-form-label">文字:</span>
+                            <input id="insert_text" class="form-control" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <span for="recipient-name" class="col-form-label">通知名称:</span>
                             <input id="insert_name" class="form-control" type="text"/>
-                        </div>
-                        <div class="form-group">
-                            <span for="message-text" class="col-form-label">banner图:</span>
-                            <input id="insert_banner_pic" class="form-control" type="file"/>
-                        </div>
-                        <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">跳转:</span>
+                        </div><div class="form-group">
+                            <span for="recipient-name" class="col-form-label">跳转地址:</span>
                             <input id="insert_url" class="form-control" type="text"/>
+                        </div><div class="form-group">
+                            <span for="recipient-name" class="col-form-label">提示时间:</span>
+                            <input id="insert_showtime" class="form-control" type="date"/>
+                        </div><div class="form-group">
+                            <span for="recipient-name" class="col-form-label">有效时间:</span>
+                            <input id="insert_startDate" type="date" class="form-control"> 至
+                            <input id="insert_endDate" type="date" class="form-control">
                         </div>
                     </form>
                 </div>
@@ -267,8 +301,9 @@
      */
     function insertClick() {
 
-        var name = $('#insert_name').val();
-        var picPath = $('#insert_banner_pic').val();
+        var type = $('input[type="radio"][name="notice_type]');
+        var picPath = $('#insert_pic').val();
+        var picPath = $('#insert_text').val();
         var url = $('#insert_url').val();
 
         $.post("/bannerconfig/insert", {name:name, picPath:picPath, url:url}, function (result) {
@@ -286,8 +321,11 @@
      * 重置
      */
     function resetClick() {
-        $('#name').val(null);
+        $('#startTime').val(null);
+        $('#endTime').val(null);
         $('#status option:first').prop('selected', 'selected');
+        $('#notice_type option:first').prop('selected', 'selected');
+        $('#name').val(null);
     }
 
     /**

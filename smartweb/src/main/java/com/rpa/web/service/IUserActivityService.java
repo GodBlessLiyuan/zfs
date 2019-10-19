@@ -2,7 +2,9 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.UserActivityDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -24,4 +26,6 @@ public interface IUserActivityService {
     DTPageInfo<UserActivityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     DTPageInfo<UserActivityDTO> goodCommentQuery(int draw, int pageNum, int pageSize, String phone);
+
+    ResultVO updateStatus(HttpSession httpSession, Integer uAId, Byte status);
 }

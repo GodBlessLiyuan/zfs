@@ -17,6 +17,7 @@ public class UserActivityDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Integer uAId;
     private String phone;
     private Date createTime;
     private String comTypeName;
@@ -53,6 +54,14 @@ public class UserActivityDTO implements Serializable {
         }
 
         return dtos;
+    }
+
+    public Integer getuAId() {
+        return uAId;
+    }
+
+    public void setuAId(Integer uAId) {
+        this.uAId = uAId;
     }
 
     public String getPhone() {

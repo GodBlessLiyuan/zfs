@@ -189,6 +189,7 @@
         </div>
     </div>
 
+
     <!--弹框：修改-->
     <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
@@ -306,9 +307,7 @@
      * 重置
      */
     function resetClick() {
-        $('#name').val(null);
-        $('#adNumber').val(null);
-        $('#status option:first').prop('selected', 'selected');
+        $('#fun_name').val(null);
     }
 
     /**

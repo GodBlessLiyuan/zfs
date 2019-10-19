@@ -88,25 +88,13 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <button type="button" class="btn btn-primary" data-toggle='modal' data-target='#insertModal'>
-                                新增
-                            </button>
 
-                            <hr>
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>名称</label>
-                                            <input id="name" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>状态</label>
-                                            <select id="status" class="form-control">
-                                                <option value='0' selected='selected'>全选</option>
-                                                <option value='1'>关闭</option>
-                                                <option value='2'>开启</option>
-                                            </select>
+                                            <label>手机号</label>
+                                            <input id="phone" type="text" class="form-control">
                                         </div>
                                     </div>
                                 </form>
@@ -125,11 +113,11 @@
                                     <thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>名称</th>
-                                        <th>上线时间</th>
-                                        <th>banner图</th>
-                                        <th>跳转</th>
-                                        <th>状态</th>
+                                        <th>手机号</th>
+                                        <th>参与时间</th>
+                                        <th>截图</th>
+                                        <th>产品类型</th>
+                                        <th>审核状态</th>
                                         <th>操作</th>
                                         <th>操作人</th>
                                     </tr>
@@ -147,82 +135,55 @@
     <!--**********************************
         弹框
     ***********************************-->
-    <!--弹框：新增-->
-    <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <!--弹框：查看图片-->
+    <div class="modal fade" id="imageModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                <div class="form-group">
+                    <img src="" id="image" height='50px' width='50px'/>
                 </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <button type="hidden" id="insert" style="display:none;"/>
-                        </div>
-                        <div class="form-group">
-                            <span for="message-text" class="col-form-label">名称:</span>
-                            <input id="insert_name" class="form-control" type="text"/>
-                        </div>
-                        <div class="form-group">
-                            <span for="message-text" class="col-form-label">banner图:</span>
-                            <input id="insert_banner_pic" class="form-control" type="file"/>
-                        </div>
-                        <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">跳转:</span>
-                            <input id="insert_url" class="form-control" type="text"/>
-                        </div>
-                    </form>
+            </div>
+        </div>
+    </div>
+
+    <!--弹框：修改状态，提示是否真的要通过-->
+    <div class="modal fade" id="passModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="form-group">
+                    <button type="hidden" id="pass" style="display:none;"/>
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title">提示</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
+                </div>
+                <div class="modal-body">是否确认通过审核，赠送奖励？
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定上架</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:passClick()">确认</button>
                 </div>
             </div>
         </div>
     </div>
 
 
-    <!--弹框：修改状态，提示是否真的要切换状态-->
-    <div class="modal fade" id="statusModal" style="display: none;" aria-hidden="true">
+    <!--弹框：修改状态，提示是否真的要驳回-->
+    <div class="modal fade" id="rejectModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="form-group">
-                    <button type="hidden" id="statusExchange" style="display:none;"/>
+                    <button type="hidden" id="reject" style="display:none;"/>
                 </div>
                 <div class="modal-header">
                     <h5 class="modal-title">提示</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
                 </div>
-                <div class="modal-body">是否切换状态？
+                <div class="modal-body">是否确认驳回？
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:statusClick()">确认</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!--弹框：删除，提示是否真的要删除-->
-    <div class="modal fade" id="deleteModal" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="form-group">
-                    <button type="hidden" id="delete" style="display:none;"/>
-                </div>
-                <div class="modal-header">
-                    <h5 class="modal-title">提示</h5>
-                    <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
-                </div>
-                <div class="modal-body">是否删除此信息？
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:deleteClick()">确认</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:rejectClick()">确认</button>
                 </div>
             </div>
         </div>
@@ -262,32 +223,12 @@
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 
 <script>
-    /**
-     * 新增：在弹框中点击确定按钮后，将数据发送给后台
-     */
-    function insertClick() {
-
-        var name = $('#insert_name').val();
-        var picPath = $('#insert_banner_pic').val();
-        var url = $('#insert_url').val();
-
-        $.post("/bannerconfig/insert", {name:name, picPath:picPath, url:url}, function (result) {
-            if (result.code === 0) {
-                alert("新增成功！")
-                $('#datatab').DataTable().draw(false);
-            } else {
-                alert("新增失败！")
-            }
-        }, "json");
-    }
-
 
     /**
      * 重置
      */
     function resetClick() {
-        $('#name').val(null);
-        $('#status option:first').prop('selected', 'selected');
+        $('#phone').val(null);
     }
 
     /**
@@ -302,7 +243,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/bannerconfig/query?name=" + $('#name').val() + "&status=" + $('#status').val(),
+            "ajax": "/goodcomment/query?phone=" + $('#phone').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -310,42 +251,44 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "name"},
-                {"data": "startTime"},
-                {
-                    "data": "picPath",
-                    "render": function (data, type, full) {
-                        return "<img src='" + data + "' height='50px' width='50px'/>";
-                    }
-                },
+                {"data": "phone"},
+                {"data": "createTime"},
                 {
                     "data": "url",
                     "render": function (data, type, full) {
-                        return  "<a href='"+ data +"'>"+ data +"</a>";
+
+                        return  "<button type='button' data-toggle='modal' data-target='#imageModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:imageModal(" + data + ")'>查看</button>";
                     }
                 },
+                {"data": "comTypeName"},
                 {
                     "data": "status",
                     "render": function (data, type, full) {
                         var sta;
                         if (data === 1) {
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary' onclick='javascript:statusModal(" + full.bannerId + ")'>关闭</button>";
-                        }else{
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary' onclick='javascript:statusModal(" + full.bannerId + ")'>开启</button>";
+                            sta = "待审核"
+                        }else if (data === 2) {
+                            sta = "已通过";
+                        } else {
+                            sta = "已驳回"
                         }
-                        return sta;
+                        return "<p  data-whatever='@getbootstrap'>" + sta + "</p>";
                     }
                 },
                 {
-                    "data": "bannerId",
+                    "data": "uAId",
                     "render": function (data, type, full) {
 
-                        var delete_button = "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:deleteModal(" + data + ")'>删除</button>";
+                        var pass_button = "<button type='button' data-toggle='modal' data-target='#passModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:passModal(" + data + ")'>通过</button>";
+                        var reject_button = "<button type='button' data-toggle='modal' data-target='#rejectModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:rejectModal(" + data + ")'>驳回</button>";
 
-                        return delete_button;
+                        if (full.status == 1) {
+                            return pass_button + reject_button;
+                        }
+                        return "";
                     }
                 },
                 {"data": "operator"}
@@ -370,18 +313,27 @@
 
 
     /**
-     * 修改状态：将要修改数据的ID存到提示框里
+     * 查看图片：把图片地址传递给弹框
      */
-    function statusModal(bannerId) {
-        $('#statusExchange').val(bannerId);
+    function imageModal(url) {
+        //document.getElementById("image").src = url;
+        $('#image').attr("src", url)
+    }
+
+
+    /**
+     * 修改状态：通过，将要修改数据的ID存到提示框里
+     */
+    function passModal(uAId) {
+        $('#pass').val(uAId);
     }
 
     /**
-     * 修改状态：从提示框里取出ID，发送给后台
+     * 修改状态：通过，从提示框里取出ID，发送给后台
      */
-    function statusClick() {
-        var bannerId = $('#statusExchange').val();
-        $.post("/bannerconfig/update/status", {bannerId:bannerId}, function (result) {
+    function passClick() {
+        var uAId = $('#pass').val();
+        $.post("/goodcomment/update/status", {uAId:uAId, status:2}, function (result) {
             if (result.code === 0) {
                 alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
@@ -392,24 +344,23 @@
     }
 
     /**
-     * 删除：表格中的删除按钮，作用是将要删除数据的ID传递给提示框
-     */
-    function deleteModal(bannerId) {
-        //不是取值，而是给弹框赋值
-        $('#delete').val(bannerId);
+    * 修改状态：驳回，将要修改数据的ID存到提示框里
+    */
+    function rejectModal(uAId) {
+        $('#reject').val(uAId);
     }
 
     /**
-     * 删除：真正的删除操作，从弹框中获取要删除数据的ID
+     * 修改状态：驳回，从提示框里取出ID，发送给后台
      */
-    function deleteClick() {
-        var bannerId = $('#delete').val();
-        $.post("/bannerconfig/delete", {bannerId:bannerId}, function (result) {
+    function rejectClick() {
+        var uAId = $('#reject').val();
+        $.post("/goodcomment/update/status", {uAId:uAId, status:3}, function (result) {
             if (result.code === 0) {
-                alert("删除成功！")
+                alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
             } else {
-                alert("删除失败！")
+                alert("状态修改失败！")
             }
         }, "json");
     }

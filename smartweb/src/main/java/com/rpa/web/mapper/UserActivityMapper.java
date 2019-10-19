@@ -1,6 +1,7 @@
 package com.rpa.web.mapper;
 
 import com.rpa.web.domain.UserActivityDO;
+import com.rpa.web.pojo.UserActivityPO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,5 +21,5 @@ public interface UserActivityMapper extends BaseDAO<UserActivityDO, Integer> {
 
     List<UserActivityDO> goodCommentQuery(Map<String, Object> map);
 
-    String queryUsernameByAid(Integer aId);
+    int updateStatus(UserActivityPO po);
 }
