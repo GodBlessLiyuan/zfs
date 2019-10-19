@@ -113,7 +113,6 @@ public class BannerConfigServiceImpl implements BannerConfigService {
      * @param dto
      * @param httpSession
      * @return
-     * @TODO 需插入操作人，即管理员a_id
      */
     @Override
     public ResultVO update(BannerConfigDTO dto, HttpSession httpSession) {

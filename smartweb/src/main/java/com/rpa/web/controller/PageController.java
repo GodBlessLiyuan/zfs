@@ -193,6 +193,24 @@ public class PageController {
         return "banner_index";
     }
 
+    /**
+     * 通知管理
+     * @return
+     */
+    @RequestMapping("/notice")
+    public String notice() {
+        return "notice_index";
+    }
+
+    /**
+     * 功能视频
+     * @return
+     */
+    @RequestMapping("/functionvideo")
+    public String functionvideo() {
+        return "functionvideo_index";
+    }
+
 
 
     /**

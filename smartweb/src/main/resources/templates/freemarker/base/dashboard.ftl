@@ -11,8 +11,8 @@
                         <ul aria-expanded="false">
                             <li><a href="/adconfig">开屏广告</a></li>
                             <li><a href="/bannerconfig">首页banner</a></li>
-                            <li><a href="">通知管理</a></li>
-                            <li><a href="">功能视频</a></li>
+                            <li><a href="/notice">通知管理</a></li>
+                            <li><a href="/functionvideo">功能视频</a></li>
                             <li><a href="">问题反馈</a></li>
                             <li><a href="">联系客服</a></li>
                             <li><a href="">协议管理</a></li>

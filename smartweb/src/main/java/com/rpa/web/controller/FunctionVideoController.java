@@ -3,6 +3,7 @@ package com.rpa.web.controller;
 import com.rpa.web.dto.FunctionVideoDTO;
 import com.rpa.web.service.FunctionVideoService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
  */
 
 @RestController
-@RequestMapping("functionVideo")
+@RequestMapping("functionvideo")
 public class FunctionVideoController {
 
     @Autowired
@@ -43,14 +44,47 @@ public class FunctionVideoController {
     }
 
     /**
+     * 查询
+     * @param functionId
+     * @return
+     */
+    @GetMapping("queryById")
+    public ResultVO queryById(@RequestParam(value = "functionId") Integer functionId) {
+        return this.functionVideoService.queryById(functionId);
+    }
+
+    /**
      * 插入
      * @param functionVideoDTO
      * @param httpSession
      * @return
-     * @TODO 还需插入操作人，即管理员a_id，需从session中获取
      */
     @PostMapping("insert")
-    public int insert(FunctionVideoDTO functionVideoDTO, HttpSession httpSession) {
+    public ResultVO insert(FunctionVideoDTO functionVideoDTO, HttpSession httpSession) {
         return this.functionVideoService.insert(functionVideoDTO, httpSession);
     }
+
+    /**
+     * 修改
+     * @param functionVideoDTO
+     * @param httpSession
+     * @return
+     */
+    @PostMapping("update")
+    public ResultVO update(FunctionVideoDTO functionVideoDTO, HttpSession httpSession) {
+        return this.functionVideoService.update(functionVideoDTO, httpSession);
+    }
+
+    /**
+     * 删除
+     * @param functionId
+     * @return
+     */
+    @PostMapping("delete")
+    public ResultVO delete(@RequestParam(value = "functionId") Integer functionId) {
+        return this.functionVideoService.delete(functionId);
+    }
+
+
+
 }

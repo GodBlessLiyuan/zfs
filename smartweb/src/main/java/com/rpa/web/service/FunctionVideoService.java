@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.FunctionVideoDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,5 +15,11 @@ import javax.servlet.http.HttpSession;
 public interface FunctionVideoService {
     DTPageInfo<FunctionVideoDTO> query(int draw, int pageNum, int pageSize, String funName);
 
-    int insert(FunctionVideoDTO functionVideoDTO, HttpSession httpSession);
+    ResultVO insert(FunctionVideoDTO functionVideoDTO, HttpSession httpSession);
+
+    ResultVO queryById(Integer functionId);
+
+    ResultVO update(FunctionVideoDTO functionVideoDTO, HttpSession httpSession);
+
+    ResultVO delete(Integer functionId);
 }
