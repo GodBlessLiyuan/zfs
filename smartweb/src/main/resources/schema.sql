@@ -419,6 +419,7 @@ CREATE TABLE t_notice
 	-- 1 未发布 2 发布
 	status int COMMENT '1 未发布 2 发布',
 	end_time datetime,
+	picurl char(255),
 	PRIMARY KEY (notice_id),
 	UNIQUE (notice_id)
 );
