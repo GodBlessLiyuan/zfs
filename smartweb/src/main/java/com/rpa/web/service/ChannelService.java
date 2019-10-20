@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.ChannelDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,7 +14,11 @@ import javax.servlet.http.HttpSession;
  */
 public interface ChannelService {
 
-    DTPageInfo<ChannelDTO> query(int draw, int pageNum, int pageSize, String chanNickname, String proName);
+    DTPageInfo<ChannelDTO> query(int draw, int pageNum, int pageSize, String chanNickname, Integer proId);
 
-    int insert(ChannelDTO channelDTO, HttpSession httpSession);
+    ResultVO insert(ChannelDTO channelDTO, HttpSession httpSession);
+
+    ResultVO queryProNames();
+
+    ResultVO queryAllProNames();
 }

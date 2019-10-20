@@ -247,6 +247,15 @@ public class PageController {
         return "promoter_index";
     }
 
+    /**
+     * 推广渠道
+     * @return
+     */
+    @RequestMapping("/channel")
+    public String channel() {
+        return "channel_index";
+    }
+
 
     /**
      * 错误页面：404

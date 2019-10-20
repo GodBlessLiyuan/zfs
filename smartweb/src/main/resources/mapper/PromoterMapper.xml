@@ -35,6 +35,11 @@
     </where>
   </select>
 
+  <select id="queryAllProNames" resultMap="BaseResultMap">
+    select pro_id, pro_name
+    from t_promoter
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_promoter
     where pro_id = #{proId,jdbcType=INTEGER}

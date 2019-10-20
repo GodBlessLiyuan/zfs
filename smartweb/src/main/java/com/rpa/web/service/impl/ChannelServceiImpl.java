@@ -3,10 +3,17 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.ChannelDTO;
+import com.rpa.web.dto.PromoterDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.mapper.ChannelMapper;
+import com.rpa.web.mapper.PromoterMapper;
 import com.rpa.web.pojo.ChannelPO;
+import com.rpa.web.pojo.PromoterPO;
 import com.rpa.web.service.ChannelService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,17 +32,23 @@ public class ChannelServceiImpl implements ChannelService {
     @Autowired
     private ChannelMapper channelMapper;
 
+    @Autowired
+    private AdminUserMapper adminUserMapper;
+
+    @Autowired
+    private PromoterMapper promoterMapper;
+
     /**
      * 查询
      * @param draw
      * @param pageNum
      * @param pageSize
      * @param chanNickname
-     * @param proName
+     * @param proId
      * @return
      */
     @Override
-    public DTPageInfo<ChannelDTO> query(int draw, int pageNum, int pageSize, String chanNickname, String proName) {
+    public DTPageInfo<ChannelDTO> query(int draw, int pageNum, int pageSize, String chanNickname, Integer proId) {
 
         // 分页
         Page<ChannelDTO> page = PageHelper.startPage(pageNum, pageSize);
@@ -43,7 +56,7 @@ public class ChannelServceiImpl implements ChannelService {
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
         map.put("chanNickname", chanNickname);
-        map.put("proName", proName);
+        map.put("proId", proId);
 
         // 按照条件查询数据
         List<ChannelPO> lists_PO = channelMapper.query(map);
@@ -67,35 +80,85 @@ public class ChannelServceiImpl implements ChannelService {
         return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
     }
 
+
+    /**
+     * 查询：从t_channel表中查出当前所有的pro_id，及其所对应的pro_name
+     * @return
+     */
+    @Override
+    public ResultVO queryProNames() {
+
+        List<ChannelPO> POs = this.channelMapper.queryProNames();
+
+        // 将查询到的 PO 转换为 DTO
+        List<ChannelDTO> DTOs = new ArrayList<>();
+        for (ChannelPO po : POs) {
+            ChannelDTO dto = new ChannelDTO();
+            dto.setProId(po.getProId());
+            dto.setProName(po.getProName());
+            DTOs.add(dto);
+        }
+        return ResultVOUtil.success(DTOs);
+    }
+
+    /**
+     * 查询：从t_promoter表中查出当前所有的pro_id，及其所对应的pro_name
+     * @return
+     */
+    @Override
+    public ResultVO queryAllProNames() {
+
+        List<PromoterPO> POs = this.promoterMapper.queryAllProNames();
+
+        // 将查询到的 PO 转换为 DTO
+        List<PromoterDTO> DTOs = new ArrayList<>();
+        for (PromoterPO po : POs) {
+            PromoterDTO dto = new PromoterDTO();
+            dto.setProId(po.getProId());
+            dto.setProName(po.getProName());
+            DTOs.add(dto);
+        }
+        return ResultVOUtil.success(DTOs);
+    }
+
+    /**
+     * 插入
+     * @param dto
+     * @param httpSession
+     * @return
+     */
+    @Override
+    public ResultVO insert(ChannelDTO dto, HttpSession httpSession) {
+
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        //int aId = adminUserDTO.getaId();
+
+        // 把 DTO 转换为 PO
+        ChannelPO po = new ChannelPO();
+        po.setChanNickname(dto.getChanNickname());
+        po.setChanName(dto.getChanName());
+        po.setProId(dto.getProId());
+        po.setExtra(dto.getExtra());
+        po.setDr((byte)1);
+        po.setCreateTime(new Date());
+        po.setUpdateTime(new Date());
+        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+
+        int count = this.channelMapper.insert(po);
+        return count ==1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+    }
+
+
+
+
     /**
      * 通过aId从t_admin_user中查询username
      * @param aId
      * @return
      */
     private String queryUsernameByAid(Integer aId) {
-        return this.channelMapper.queryUsernameByAid(aId);
-    }
-
-    /**
-     * 插入
-     * @param channelDTO
-     * @return
-     * @TODO 需插入管理员字段a_id，从session中获取
-     */
-    @Override
-    public int insert(ChannelDTO channelDTO, HttpSession httpSession) {
-
-        // 把 channelDTO 转换为 channelPO
-        ChannelPO channelPO = new ChannelPO();
-        channelPO.setChanNickname(channelDTO.getChanNickname());
-        channelPO.setChanName(channelDTO.getChanName());
-        channelPO.setProId(channelDTO.getProId());
-        channelPO.setExtra(channelDTO.getExtra());
-        channelPO.setDr((byte)1);
-        channelPO.setCreateTime(new Date());
-        channelPO.setUpdateTime(new Date());
-
-        int count = this.channelMapper.insert(channelPO);
-        return count;
+        return this.adminUserMapper.queryUsernameByAid(aId);
     }
 }

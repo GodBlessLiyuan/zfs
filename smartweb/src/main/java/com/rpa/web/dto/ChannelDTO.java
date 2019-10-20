@@ -18,7 +18,7 @@ public class ChannelDTO implements Serializable {
 
     private Integer proId;
 
-    private Integer phone;
+    private String phone;
 
     private String extra;
 
@@ -70,11 +70,11 @@ public class ChannelDTO implements Serializable {
         this.proId = proId;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
