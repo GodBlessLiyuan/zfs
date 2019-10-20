@@ -218,14 +218,24 @@ public class PageController {
     @RequestMapping("/feedback")
     public String feedback() {
         return "feedback_index";
-    }/**
+    }
 
+    /**
      * 好评活动
      * @return
      */
     @RequestMapping("/goodcomment")
     public String goodcomment() {
         return "goodcomment_index";
+    }
+
+    /**
+     * 养号教程
+     * @return
+     */
+    @RequestMapping("/accounttutorial")
+    public String accounttutorial() {
+        return "account_tutorial_index";
     }
 
 
