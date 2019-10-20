@@ -3,10 +3,14 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.PromoterDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.mapper.PromoterMapper;
 import com.rpa.web.pojo.PromoterPO;
 import com.rpa.web.service.PromoterService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +27,9 @@ public class PromoterServiceImpl implements PromoterService {
 
     @Autowired
     private PromoterMapper promoterMapper;
+
+    @Autowired
+    private AdminUserMapper adminUserMapper;
 
     /**
      * 查询
@@ -58,6 +65,7 @@ public class PromoterServiceImpl implements PromoterService {
             dto.setaId(po.getaId());
             dto.setCreateTime(po.getCreateTime());
             dto.setUpdateTime(po.getUpdateTime());
+            dto.setOperator(queryUsernameByAid(po.getaId()));
 
             lists_DTO.add(dto);
         }
@@ -68,45 +76,70 @@ public class PromoterServiceImpl implements PromoterService {
 
     /**
      * 插入
-     * @param promoterDTO
+     * @param dto
      * @return
      */
     @Override
-    public int insert(PromoterDTO promoterDTO) {
+    public ResultVO insert(PromoterDTO dto) {
 
-        // 把 promoterDTO 转换为 prometerPO
-        PromoterPO promoterPO = new PromoterPO();
-        promoterPO.setProName(promoterDTO.getProName());
-        promoterPO.setPhone(promoterDTO.getPhone());
-        promoterPO.setExtra(promoterDTO.getExtra());
-        promoterPO.setaId(promoterDTO.getaId());
-        promoterPO.setCreateTime(new Date());
-        promoterPO.setUpdateTime(new Date());
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        //int aId = adminUserDTO.getaId();
 
-        int count = this.promoterMapper.insert(promoterPO);
-        return count;
+        // 把 dto 转换为 po
+        PromoterPO po = new PromoterPO();
+        po.setProName(dto.getProName());
+        po.setPhone(dto.getPhone());
+        po.setExtra(dto.getExtra());
+        po.setaId(dto.getaId());
+        po.setCreateTime(new Date());
+        po.setUpdateTime(new Date());
+        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+
+        int count = this.promoterMapper.insert(po);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
     }
 
     /**
      * 修改
-     * @param promoterDTO
+     * @param dto
      * @return
      */
     @Override
-    public int update(PromoterDTO promoterDTO) {
+    public ResultVO update(PromoterDTO dto) {
 
-        // 把 promoterDTO 转换为 promoterPO
-        PromoterPO promoterPO = new PromoterPO();
-        promoterPO.setProId(promoterDTO.getProId());
-        promoterPO.setProName(promoterDTO.getProName());
-        promoterPO.setPhone(promoterDTO.getPhone());
-        promoterPO.setExtra(promoterDTO.getExtra());
-        promoterPO.setaId(promoterDTO.getaId());
-        promoterPO.setUpdateTime(new Date());
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        //int aId = adminUserDTO.getaId();
 
-        // 更新
-        int count = promoterMapper.updateByPrimaryKeySelective(promoterPO);
-        return count;
+        // 从数据库中查询出要修改的数据
+        PromoterPO po = this.promoterMapper.selectByPrimaryKey(dto.getProId());
 
+        if (null == po) {
+            return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        }
+
+        // 把 dto 转换为 po
+        po.setProName(dto.getProName());
+        po.setPhone(dto.getPhone());
+        po.setExtra(dto.getExtra());
+        po.setaId(dto.getaId());
+        po.setUpdateTime(new Date());
+        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+
+        int count = promoterMapper.updateByPrimaryKey(po);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+
+    }
+
+    /**
+     * 根据aId，从t_admin_user表中查询username
+     * @param aId
+     * @return
+     */
+    private String queryUsernameByAid(Integer aId) {
+        return this.adminUserMapper.queryUsernameByAid(aId);
     }
 }

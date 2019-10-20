@@ -238,6 +238,14 @@ public class PageController {
         return "account_tutorial_index";
     }
 
+    /**
+     * 推广负责人
+     * @return
+     */
+    @RequestMapping("/promoter")
+    public String promoter() {
+        return "promoter_index";
+    }
 
 
     /**

@@ -20,6 +20,21 @@
     from t_promoter
     where pro_id = #{proId,jdbcType=INTEGER}
   </select>
+
+  <select id="query" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_promoter
+    <where>
+      <if test="proName != null and proName != ''">
+        and pro_name like '%' #{proName} '%'
+      </if>
+      <if test="phone != null and phone != ''">
+        and phone = #{phone}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_promoter
     where pro_id = #{proId,jdbcType=INTEGER}

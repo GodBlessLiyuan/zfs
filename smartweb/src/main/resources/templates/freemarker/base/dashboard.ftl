@@ -36,7 +36,7 @@
 
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">会员卡推广</a>
                         <ul aria-expanded="false">
-                            <li><a href="">推广负责人</a></li>
+                            <li><a href="/promoter">推广负责人</a></li>
                             <li><a href="">推广渠道</a></li>
                             <li><a href="">会员卡配置</a></li>
                             <li><a href="">会员卡查询</a></li>
