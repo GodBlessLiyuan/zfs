@@ -8,11 +8,15 @@ import javax.servlet.http.HttpSession;
 
 public interface AdminUserService {
 
-    DTPageInfo<AdminUserDTO> query(int draw, int pageNum, int pageSize, String phone, Byte extra);
+    DTPageInfo<AdminUserDTO> query(int draw, int pageNum, int pageSize, String phone, String extra);
 
     ResultVO insert(AdminUserDTO adminUserDTO, HttpSession httpSession);
 
     ResultVO update(AdminUserDTO adminUserDTO, HttpSession httpSession);
 
-    ResultVO delete(int aId);
+    ResultVO delete(Integer aId);
+
+    ResultVO queryAllRoles();
+
+    ResultVO queryById(Integer aId);
 }

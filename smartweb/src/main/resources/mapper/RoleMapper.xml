@@ -32,6 +32,12 @@
     </where>>
   </select>
 
+  <select id="queryAllRoles"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_role
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_role
     where role_id = #{roleId,jdbcType=INTEGER}

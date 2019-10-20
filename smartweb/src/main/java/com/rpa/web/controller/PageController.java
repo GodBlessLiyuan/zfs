@@ -265,6 +265,15 @@ public class PageController {
         return "channel_index";
     }
 
+    /**
+     * 账号管理
+     * @return
+     */
+    @RequestMapping("/admin")
+    public String admin() {
+        return "adminuser_index";
+    }
+
 
     /**
      * 错误页面：404
