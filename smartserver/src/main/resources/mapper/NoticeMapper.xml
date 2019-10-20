@@ -10,12 +10,13 @@
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="picurl" jdbcType="CHAR" property="picurl" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.rpa.server.pojo.NoticePO">
     <result column="url" jdbcType="LONGVARCHAR" property="url" />
   </resultMap>
   <sql id="Base_Column_List">
-    notice_id, title, `text`, `type`, show_time, start_time, `status`, end_time
+    notice_id, title, `text`, `type`, show_time, start_time, `status`, end_time, picurl
   </sql>
   <sql id="Blob_Column_List">
     url
@@ -39,8 +40,8 @@
       )
     values (#{noticeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, 
       #{type,jdbcType=TINYINT}, #{showTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, #{url,jdbcType=LONGVARCHAR}
-      )
+      #{status,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, #{picurl,jdbcType=CHAR}, 
+      #{url,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.server.pojo.NoticePO">
     insert into t_notice
@@ -68,6 +69,9 @@
       </if>
       <if test="endTime != null">
         end_time,
+      </if>
+      <if test="picurl != null">
+        picurl,
       </if>
       <if test="url != null">
         url,
@@ -98,6 +102,9 @@
       <if test="endTime != null">
         #{endTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="picurl != null">
+        #{picurl,jdbcType=CHAR},
+      </if>
       <if test="url != null">
         #{url,jdbcType=LONGVARCHAR},
       </if>
@@ -127,6 +134,9 @@
       <if test="endTime != null">
         end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="picurl != null">
+        picurl = #{picurl,jdbcType=CHAR},
+      </if>
       <if test="url != null">
         url = #{url,jdbcType=LONGVARCHAR},
       </if>
@@ -142,6 +152,7 @@
       start_time = #{startTime,jdbcType=TIMESTAMP},
       `status` = #{status,jdbcType=INTEGER},
       end_time = #{endTime,jdbcType=TIMESTAMP},
+      picurl = #{picurl,jdbcType=CHAR},
       url = #{url,jdbcType=LONGVARCHAR}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
@@ -153,7 +164,8 @@
       show_time = #{showTime,jdbcType=TIMESTAMP},
       start_time = #{startTime,jdbcType=TIMESTAMP},
       `status` = #{status,jdbcType=INTEGER},
-      end_time = #{endTime,jdbcType=TIMESTAMP}
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      picurl = #{picurl,jdbcType=CHAR}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
 

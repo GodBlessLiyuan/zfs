@@ -30,6 +30,8 @@ public class NoticePO implements Serializable {
 
     private Date endTime;
 
+    private String picurl;
+
     private String url;
 
     private static final long serialVersionUID = 1L;
@@ -98,6 +100,14 @@ public class NoticePO implements Serializable {
         this.endTime = endTime;
     }
 
+    public String getPicurl() {
+        return picurl;
+    }
+
+    public void setPicurl(String picurl) {
+        this.picurl = picurl;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -126,6 +136,7 @@ public class NoticePO implements Serializable {
             && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
+            && (this.getPicurl() == null ? other.getPicurl() == null : this.getPicurl().equals(other.getPicurl()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()));
     }
 
@@ -141,6 +152,7 @@ public class NoticePO implements Serializable {
         result = prime * result + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
+        result = prime * result + ((getPicurl() == null) ? 0 : getPicurl().hashCode());
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         return result;
     }
@@ -159,6 +171,7 @@ public class NoticePO implements Serializable {
         sb.append(", startTime=").append(startTime);
         sb.append(", status=").append(status);
         sb.append(", endTime=").append(endTime);
+        sb.append(", picurl=").append(picurl);
         sb.append(", url=").append(url);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
