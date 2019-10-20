@@ -31,13 +31,6 @@
     </where>
   </select>
 
-  <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    username
-    from t_admin_user
-    where a_id = #{aId}
-  </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_functionvideo
     where function_id = #{functionId,jdbcType=INTEGER}

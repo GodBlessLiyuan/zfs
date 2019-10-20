@@ -21,6 +21,7 @@
     <link href="./plugins/datatables/jquery.dataTables.min.css">
 
 
+
 </head>
 
 <body>
@@ -91,14 +92,17 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>渠道</label>
-                                            <input id="channel" type="text" class="form-control">
+                                            <label>时间</label>
+                                            <input id="startTime" type="date" class="form-control"> 至
+                                            <input id="endTime" type="date" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label>版本</label>
-                                            <select id="version" class="form-control">
-                                                <option value='0' selected='selected'>全部</option>
-                                            </select>
+                                        <div class="form-group col-md-6">
+                                            <label>用户账号</label>
+                                            <input id="userId" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>联系方式</label>
+                                            <input id="contact" type="text" class="form-control">
                                         </div>
                                     </div>
                                 </form>
@@ -117,25 +121,20 @@
                                     <thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>渠道</th>
-                                        <th>版本</th>
-                                        <th>操作</th>
+                                        <th>用户账号</th>
+                                        <th>标识</th>
+                                        <th>厂商</th>
+                                        <th>型号</th>
+                                        <th>系统版本</th>
+                                        <th>应用版本</th>
+                                        <th>反馈时间</th>
+                                        <th>联系方式</th>
+                                        <th>反馈内容</th>
+                                        <th>图片</th>
                                     </tr>
                                     </thead>
                                 </table>
                             </div>
-
-
-                            <button type="button" class="btn btn-primary " id="chooseAll"
-                                    onclick="javascript:checkAllClick()">全选
-                            </button>
-                            <button type="button" class="btn btn-primary " id="submit"
-                                    onclick="javascript:submitClick();">提交
-                            </button>
-                            <button type="button" class="btn btn-primary " id="back"
-                                    onclick="javascript:backClick();">返回
-                            </button>
-
                         </div>
                     </div>
                 </div>
@@ -143,6 +142,10 @@
         </div>
     </div>
 
+
+    <!--**********************************
+        弹框
+    ***********************************-->
 
     <!--**********************************
         Content body end
@@ -176,40 +179,16 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 
-
 <script>
-    /**
-     * 页面加载事件：查询所有的版本名
-     */
-    $(document).ready(function () {
-        // 产品列表
-        $.ajax({
-            type: 'GET',
-            url: '/adchannel/queryVersionname',
-            dataType: 'JSON',
-            success: function (result) {
-                for (var i = 0; i < result.data.length; i++) {
-                    $('#version').append("<option value='" + result.data[i].appId + "'>" + result.data[i].versionName + "</option>");
-                }
-            }
-        });
-    })
-
-
-    /**
-     * 页面加载事件：一进入页面，就进行一次查询
-     */
-    $(document).ready(function () {
-        queryClick();
-    })
-
 
     /**
      * 重置
      */
     function resetClick() {
-        $('#channel').val(null);
-        $('#version option:first').prop('selected', 'selected');
+        $('#startTime').val(null);
+        $('#endTime').val(null);
+        $('#userId').val(null);
+        $('#contact').val(null);
     }
 
     /**
@@ -224,7 +203,8 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/adchannel/query?adId=" + ${adId} + "&name=" + $('#channel').val() + "&appId=" + $('#version').val(),
+            "ajax": "/feedback/query?startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val() +
+                "&userId=" + $('#userId').val() + "&contact=" + $('#contact').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -232,14 +212,19 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "name"},
-                {"data": "versionname"},
+                {"data": "userId"},
+                {"data": "deviceId"},
+                {"data": "manufacturer"},
+                {"data": "androidmodel"},
+                {"data": "buildversion"},
+                {"data": "versioncode"},
+                {"data": "createTime"},
+                {"data": "contact"},
+                {"data": "context"},
                 {
-                    "data": "type",
+                    "data": "url",
                     "render": function (data, type, full) {
-                        var checked = data === 1 ? "checked='checked'" : "";
-                        return "<input type='checkbox' id='checkbox' name='type' data-whatever='@getbootstrap' value='"+ data +"'" + checked +
-                        " onclick='javascript:statusModal(" + full.adId + "," + full.appId + "," + full.softChannelId + "," + data + ")'>开启广告</input>";
+                        return "<img src='" + data + "' height='50px' width='50px'/>";
                     }
                 }
             ],
@@ -259,91 +244,6 @@
                 }
             }
         });
-    }
-
-
-    /**
-     * 修改状态：先将要修改的数据存到map中
-     */
-    var map = new Map();
-
-    function statusModal(adId, appId, softChannelId, type) {
-        var key = adId + "_" + appId + "_" + softChannelId;
-        if(map.has(key)) {
-            map.delete(key);
-        }else {
-            map.set(key, type);
-        }
-    }
-
-
-    /**
-     * 全选：点击按钮，勾选所有未勾选的
-     */
-    var allChecked = false;
-    function checkAllClick() {
-        if(allChecked) {
-            // 反选
-            $("input[name = 'type']").each(function () {
-                if (this.checked) {
-                    this.click();
-                }
-            })
-            allChecked = false;
-        }else {
-            // 全选
-            $("input[name = 'type']").each(function () {
-                if (!this.checked) {
-                    this.click();
-                }
-            })
-            allChecked = true;
-        }
-    }
-
-
-    /**
-     * 提交：将所选中的数据发送给后台，修改开启广告的设置
-     */
-    function submitClick() {
-        // 解析map，转换成json格式，放入数组中
-        var arr = [];
-        map.forEach(function (value, key) {
-            var splitArray = key.split("_");
-            var o = {
-                "adId": parseInt(splitArray[0]),
-                "appId": parseInt(splitArray[1]),
-                "softChannelId": parseInt(splitArray[2]),
-                "type": value
-            }
-            arr.push(o);
-        })
-
-
-        $.ajax({
-            type: 'post',
-            url: '/adchannel/update',
-            dataType: 'json',
-            data: JSON.stringify(arr),
-            contentType: "application/json",
-            processData: false,
-            success: function (result) {
-                if (result.code == 0) {
-                    alert("更改成功！");
-                } else {
-                    alert("更改失败！");
-                }
-                map.clear();
-                $('#datatab').DataTable().draw(false);
-            }
-        });
-    }
-
-    /**
-     * 返回：跳转回原来的页面
-     */
-    function backClick() {
-        window.location.href = '/adconfig';
     }
 </script>
 

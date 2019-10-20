@@ -185,6 +185,52 @@ public class PageController {
     }
 
     /**
+     * 首页banner
+     * @return
+     */
+    @RequestMapping("/bannerconfig")
+    public String bannerConfig() {
+        return "banner_index";
+    }
+
+    /**
+     * 通知管理
+     * @return
+     */
+    @RequestMapping("/notice")
+    public String notice() {
+        return "notice_index";
+    }
+
+    /**
+     * 功能视频
+     * @return
+     */
+    @RequestMapping("/functionvideo")
+    public String functionvideo() {
+        return "functionvideo_index";
+    }
+
+    /**
+     * 问题反馈
+     * @return
+     */
+    @RequestMapping("/feedback")
+    public String feedback() {
+        return "feedback_index";
+    }/**
+
+     * 好评活动
+     * @return
+     */
+    @RequestMapping("/goodcomment")
+    public String goodcomment() {
+        return "goodcomment_index";
+    }
+
+
+
+    /**
      * 错误页面：404
      * @return
      */

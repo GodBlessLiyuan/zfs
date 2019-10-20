@@ -4,16 +4,19 @@ import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.domain.UserActivityDO;
 import com.rpa.web.dto.UserActivityDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.mapper.UserActivityMapper;
+import com.rpa.web.pojo.UserActivityPO;
 import com.rpa.web.service.IUserActivityService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 /**
  * @author: xiahui
@@ -26,6 +29,9 @@ public class UserActivityServiceImpl implements IUserActivityService {
 
     @Resource
     private UserActivityMapper userActivityMapper;
+
+    @Resource
+    private AdminUserMapper adminUserMapper;
 
     @Override
     public DTPageInfo<UserActivityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
@@ -60,6 +66,7 @@ public class UserActivityServiceImpl implements IUserActivityService {
         List<UserActivityDTO> lists_DTO = new ArrayList<>();
         for(UserActivityDO userActivityDO : lists_DO) {
             UserActivityDTO dto = new UserActivityDTO();
+            dto.setuAId(userActivityDO.getuAId());
             dto.setPhone(userActivityDO.getPhone());
             dto.setCreateTime(userActivityDO.getCreateTime());
             dto.setUrl(userActivityDO.getUrl());
@@ -74,12 +81,45 @@ public class UserActivityServiceImpl implements IUserActivityService {
         return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
     }
 
+
+    /**
+     * 好评活动：修改审核状态
+     * @author dangyi
+     * @param httpSession
+     * @param uAId
+     * @param status
+     * @return
+     */
+    @Override
+    public ResultVO updateStatus(HttpSession httpSession, Integer uAId, Byte status) {
+
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        //int aId = adminUserDTO.getaId();
+
+        // 根据uAId，查询出要修改的数据
+        UserActivityPO po = this.userActivityMapper.selectByPrimaryKey(uAId);
+
+        if (null == po) {
+            return ResultVOUtil.error(ExceptionEnum.QUERY_ERROR);
+        }
+
+        po.setStatus(status);
+        po.setUpdateTime(new Date());
+        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+
+        int count = this.userActivityMapper.updateStatus(po);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+    }
+
     /**
      * 根据aId，从t_admin_user表中查询username
+     * @author dangyi
      * @param aId
      * @return
      */
     private String queryUsernameByAid(Integer aId) {
-        return this.userActivityMapper.queryUsernameByAid(aId);
+        return this.adminUserMapper.queryUsernameByAid(aId);
     }
 }

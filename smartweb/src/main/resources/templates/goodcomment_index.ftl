@@ -21,6 +21,7 @@
     <link href="./plugins/datatables/jquery.dataTables.min.css">
 
 
+
 </head>
 
 <body>
@@ -87,18 +88,13 @@
                     <div class="card">
                         <div class="card-body">
 
+
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>渠道</label>
-                                            <input id="channel" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>版本</label>
-                                            <select id="version" class="form-control">
-                                                <option value='0' selected='selected'>全部</option>
-                                            </select>
+                                            <label>手机号</label>
+                                            <input id="phone" type="text" class="form-control">
                                         </div>
                                     </div>
                                 </form>
@@ -117,27 +113,77 @@
                                     <thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>渠道</th>
-                                        <th>版本</th>
+                                        <th>手机号</th>
+                                        <th>参与时间</th>
+                                        <th>截图</th>
+                                        <th>产品类型</th>
+                                        <th>审核状态</th>
                                         <th>操作</th>
+                                        <th>操作人</th>
                                     </tr>
                                     </thead>
                                 </table>
                             </div>
-
-
-                            <button type="button" class="btn btn-primary " id="chooseAll"
-                                    onclick="javascript:checkAllClick()">全选
-                            </button>
-                            <button type="button" class="btn btn-primary " id="submit"
-                                    onclick="javascript:submitClick();">提交
-                            </button>
-                            <button type="button" class="btn btn-primary " id="back"
-                                    onclick="javascript:backClick();">返回
-                            </button>
-
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--**********************************
+        弹框
+    ***********************************-->
+    <!--弹框：查看图片-->
+    <div class="modal fade" id="imageModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="form-group">
+                    <img src="" id="image" height='50px' width='50px'/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--弹框：修改状态，提示是否真的要通过-->
+    <div class="modal fade" id="passModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="form-group">
+                    <button type="hidden" id="pass" style="display:none;"/>
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title">提示</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
+                </div>
+                <div class="modal-body">是否确认通过审核，赠送奖励？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:passClick()">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--弹框：修改状态，提示是否真的要驳回-->
+    <div class="modal fade" id="rejectModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="form-group">
+                    <button type="hidden" id="reject" style="display:none;"/>
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title">提示</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
+                </div>
+                <div class="modal-body">是否确认驳回？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:rejectClick()">确认</button>
                 </div>
             </div>
         </div>
@@ -176,40 +222,13 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 
-
 <script>
-    /**
-     * 页面加载事件：查询所有的版本名
-     */
-    $(document).ready(function () {
-        // 产品列表
-        $.ajax({
-            type: 'GET',
-            url: '/adchannel/queryVersionname',
-            dataType: 'JSON',
-            success: function (result) {
-                for (var i = 0; i < result.data.length; i++) {
-                    $('#version').append("<option value='" + result.data[i].appId + "'>" + result.data[i].versionName + "</option>");
-                }
-            }
-        });
-    })
-
-
-    /**
-     * 页面加载事件：一进入页面，就进行一次查询
-     */
-    $(document).ready(function () {
-        queryClick();
-    })
-
 
     /**
      * 重置
      */
     function resetClick() {
-        $('#channel').val(null);
-        $('#version option:first').prop('selected', 'selected');
+        $('#phone').val(null);
     }
 
     /**
@@ -224,7 +243,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/adchannel/query?adId=" + ${adId} + "&name=" + $('#channel').val() + "&appId=" + $('#version').val(),
+            "ajax": "/goodcomment/query?phone=" + $('#phone').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -232,16 +251,47 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "name"},
-                {"data": "versionname"},
+                {"data": "phone"},
+                {"data": "createTime"},
                 {
-                    "data": "type",
+                    "data": "url",
                     "render": function (data, type, full) {
-                        var checked = data === 1 ? "checked='checked'" : "";
-                        return "<input type='checkbox' id='checkbox' name='type' data-whatever='@getbootstrap' value='"+ data +"'" + checked +
-                        " onclick='javascript:statusModal(" + full.adId + "," + full.appId + "," + full.softChannelId + "," + data + ")'>开启广告</input>";
+
+                        return  "<button type='button' data-toggle='modal' data-target='#imageModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:imageModal(" + data + ")'>查看</button>";
                     }
-                }
+                },
+                {"data": "comTypeName"},
+                {
+                    "data": "status",
+                    "render": function (data, type, full) {
+                        var sta;
+                        if (data === 1) {
+                            sta = "待审核"
+                        }else if (data === 2) {
+                            sta = "已通过";
+                        } else {
+                            sta = "已驳回"
+                        }
+                        return "<p  data-whatever='@getbootstrap'>" + sta + "</p>";
+                    }
+                },
+                {
+                    "data": "uAId",
+                    "render": function (data, type, full) {
+
+                        var pass_button = "<button type='button' data-toggle='modal' data-target='#passModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:passModal(" + data + ")'>通过</button>";
+                        var reject_button = "<button type='button' data-toggle='modal' data-target='#rejectModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:rejectModal(" + data + ")'>驳回</button>";
+
+                        if (full.status == 1) {
+                            return pass_button + reject_button;
+                        }
+                        return "";
+                    }
+                },
+                {"data": "operator"}
             ],
             "oLanguage": {
                 "sLengthMenu": "每页显示 _MENU_ 条记录",
@@ -263,87 +313,56 @@
 
 
     /**
-     * 修改状态：先将要修改的数据存到map中
+     * 查看图片：把图片地址传递给弹框
      */
-    var map = new Map();
-
-    function statusModal(adId, appId, softChannelId, type) {
-        var key = adId + "_" + appId + "_" + softChannelId;
-        if(map.has(key)) {
-            map.delete(key);
-        }else {
-            map.set(key, type);
-        }
+    function imageModal(url) {
+        //document.getElementById("image").src = url;
+        $('#image').attr("src", url)
     }
 
 
     /**
-     * 全选：点击按钮，勾选所有未勾选的
+     * 修改状态：通过，将要修改数据的ID存到提示框里
      */
-    var allChecked = false;
-    function checkAllClick() {
-        if(allChecked) {
-            // 反选
-            $("input[name = 'type']").each(function () {
-                if (this.checked) {
-                    this.click();
-                }
-            })
-            allChecked = false;
-        }else {
-            // 全选
-            $("input[name = 'type']").each(function () {
-                if (!this.checked) {
-                    this.click();
-                }
-            })
-            allChecked = true;
-        }
+    function passModal(uAId) {
+        $('#pass').val(uAId);
     }
 
-
     /**
-     * 提交：将所选中的数据发送给后台，修改开启广告的设置
+     * 修改状态：通过，从提示框里取出ID，发送给后台
      */
-    function submitClick() {
-        // 解析map，转换成json格式，放入数组中
-        var arr = [];
-        map.forEach(function (value, key) {
-            var splitArray = key.split("_");
-            var o = {
-                "adId": parseInt(splitArray[0]),
-                "appId": parseInt(splitArray[1]),
-                "softChannelId": parseInt(splitArray[2]),
-                "type": value
-            }
-            arr.push(o);
-        })
-
-
-        $.ajax({
-            type: 'post',
-            url: '/adchannel/update',
-            dataType: 'json',
-            data: JSON.stringify(arr),
-            contentType: "application/json",
-            processData: false,
-            success: function (result) {
-                if (result.code == 0) {
-                    alert("更改成功！");
-                } else {
-                    alert("更改失败！");
-                }
-                map.clear();
+    function passClick() {
+        var uAId = $('#pass').val();
+        $.post("/goodcomment/update/status", {uAId:uAId, status:2}, function (result) {
+            if (result.code === 0) {
+                alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
+            } else {
+                alert("状态修改失败！")
             }
-        });
+        }, "json");
     }
 
     /**
-     * 返回：跳转回原来的页面
+    * 修改状态：驳回，将要修改数据的ID存到提示框里
+    */
+    function rejectModal(uAId) {
+        $('#reject').val(uAId);
+    }
+
+    /**
+     * 修改状态：驳回，从提示框里取出ID，发送给后台
      */
-    function backClick() {
-        window.location.href = '/adconfig';
+    function rejectClick() {
+        var uAId = $('#reject').val();
+        $.post("/goodcomment/update/status", {uAId:uAId, status:3}, function (result) {
+            if (result.code === 0) {
+                alert("状态修改成功！")
+                $('#datatab').DataTable().draw(false);
+            } else {
+                alert("状态修改失败！")
+            }
+        }, "json");
     }
 </script>
 

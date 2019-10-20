@@ -3,12 +3,11 @@ package com.rpa.web.controller;
 import com.rpa.web.dto.UserActivityDTO;
 import com.rpa.web.service.IUserActivityService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +43,7 @@ public class UserActivityController {
      * @param phone
      * @return
      */
-    @GetMapping("/useractivity/goodcomment/query")
+    @GetMapping("/goodcomment/query")
     public DTPageInfo<UserActivityDTO> goodCommentQuery(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
@@ -53,5 +52,19 @@ public class UserActivityController {
         // 调用业务层，返回页面结果
         DTPageInfo<UserActivityDTO> dTPageInfo = this.service.goodCommentQuery(draw, pageNum, pageSize, phone);
         return dTPageInfo;
+    }
+
+    /**
+     * 好评活动：修改审核状态
+     * @param httpSession
+     * @param uAId
+     * @param status
+     * @return
+     */
+    @PostMapping("/goodcomment/update/status")
+    public ResultVO updateStatus(HttpSession httpSession,
+                                 @RequestParam(value = "uAId") Integer uAId,
+                                 @RequestParam(value = "status") Byte status) {
+        return this.service.updateStatus(httpSession, uAId, status);
     }
 }

@@ -3,11 +3,17 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.BannerConfigDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.mapper.BannerConfigMapper;
 import com.rpa.web.pojo.BannerConfigPO;
 import com.rpa.web.service.BannerConfigService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.FileUtil;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -24,6 +30,12 @@ public class BannerConfigServiceImpl implements BannerConfigService {
 
     @Autowired
     private BannerConfigMapper bannerConfigMapper;
+
+    @Autowired
+    private AdminUserMapper adminUserMapper;
+
+    @Value("${file.iconDir}")
+    private String iconDir;
 
     /**
      * 查询
@@ -69,47 +81,64 @@ public class BannerConfigServiceImpl implements BannerConfigService {
 
     /**
      * 插入
-     * @param bannerConfigDTO
+     * @param dto
      * @param httpSession
      * @return
-     * @TODO 还需插入管理员a_id，需从session中获取
      */
     @Override
-    public int insert(BannerConfigDTO bannerConfigDTO, HttpSession httpSession) {
+    public ResultVO insert(BannerConfigDTO dto, HttpSession httpSession) {
+
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        //int aId = adminUserDTO.getaId();
 
         // 把 DTO 转换为 PO
-        BannerConfigPO bannerConfigPO = new BannerConfigPO();
-        bannerConfigPO.setName(bannerConfigDTO.getName());
-        bannerConfigPO.setPicPath(bannerConfigDTO.getPicPath());
-        bannerConfigPO.setUrl(bannerConfigDTO.getUrl());
-        bannerConfigPO.setCreateTime(new Date());
-        bannerConfigPO.setUpdateTime(new Date());
-        bannerConfigPO.setStatus((byte)1);
-        bannerConfigPO.setDr((byte)1);
+        BannerConfigPO po = new BannerConfigPO();
+        po.setName(dto.getName());
+        po.setPicPath(FileUtil.uploadFile(dto.getPicPath(), iconDir));
+        po.setUrl(dto.getUrl());
+        po.setCreateTime(new Date());
+        po.setUpdateTime(new Date());
+        po.setStatus((byte)1);
+        po.setDr((byte)1);
+        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
 
-        int count = this.bannerConfigMapper.insert(bannerConfigPO);
-        return count;
+        int count = this.bannerConfigMapper.insert(po);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
     }
 
     /**
      * 修改状态
-     * @param bannerConfigDTO
+     * @param dto
      * @param httpSession
      * @return
-     * @TODO 需插入操作人，即管理员a_id
      */
     @Override
-    public int update(BannerConfigDTO bannerConfigDTO, HttpSession httpSession) {
+    public ResultVO update(BannerConfigDTO dto, HttpSession httpSession) {
+
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        //int aId = adminUserDTO.getaId();
 
         // 先查出要修改的数据
-        BannerConfigPO bannerConfigPO = this.bannerConfigMapper.selectByPrimaryKey(bannerConfigDTO.getBannerId());
-        bannerConfigPO.setStatus(bannerConfigDTO.getStatus());
-        bannerConfigPO.setUpdateTime(new Date());
-        if (bannerConfigDTO.getStatus() == 2) {
-            bannerConfigPO.setStartTime(new Date());
+        BannerConfigPO po = this.bannerConfigMapper.selectByPrimaryKey(dto.getBannerId());
+        if (null == po) {
+            return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
         }
 
-        return this.bannerConfigMapper.updateByPrimaryKey(bannerConfigPO);
+        if (po.getStatus() == 1) {
+            po.setStatus((byte) 2);
+            po.setStartTime(new Date());
+        } else {
+            po.setStatus((byte)1);
+        }
+        po.setUpdateTime(new Date());
+        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+
+        int count = this.bannerConfigMapper.updateByPrimaryKey(po);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
 
     /**
@@ -118,8 +147,9 @@ public class BannerConfigServiceImpl implements BannerConfigService {
      * @return
      */
     @Override
-    public int delete(int bannerId) {
-        return this.bannerConfigMapper.deleteByPrimaryKey(bannerId);
+    public ResultVO delete(int bannerId) {
+        int count = this.bannerConfigMapper.deleteByPrimaryKey(bannerId);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
     }
 
 
@@ -129,6 +159,6 @@ public class BannerConfigServiceImpl implements BannerConfigService {
      * @return
      */
     private String queryUsernameByAid(Integer aId) {
-        return this.bannerConfigMapper.queryUsernameByAid(aId);
+        return this.adminUserMapper.queryUsernameByAid(aId);
     }
 }

@@ -3,10 +3,14 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.FunctionVideoDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.mapper.FunctionVideoMapper;
 import com.rpa.web.pojo.FunctionVideoPO;
 import com.rpa.web.service.FunctionVideoService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,9 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
 
     @Autowired
     private FunctionVideoMapper functionVideoMapper;
+
+    @Autowired
+    private AdminUserMapper adminUserMapper;
 
     /**
      * 查询
@@ -63,27 +70,94 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
     }
 
+
+    @Override
+    public ResultVO queryById(Integer functionId) {
+
+        FunctionVideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
+        if (null == po) {
+            return ResultVOUtil.error(ExceptionEnum.QUERY_ERROR);
+        }
+
+        FunctionVideoDTO dto = new FunctionVideoDTO();
+        dto.setFunName(po.getFunName());
+        dto.setUrl(po.getUrl());
+        dto.setExtra(po.getExtra());
+
+        return ResultVOUtil.success(dto);
+    }
+
+
     /**
      * 插入
-     * @param functionVideoDTO
+     * @param dto
      * @param httpSession
      * @return
-     * @TODO 还需插入操作人，即管理员ID
      */
     @Override
-    public int insert(FunctionVideoDTO functionVideoDTO, HttpSession httpSession) {
+    public ResultVO insert(FunctionVideoDTO dto, HttpSession httpSession) {
 
-        // 把functionVideoDTO 转换为 functionVideoPO
-        FunctionVideoPO functionVideoPO = new FunctionVideoPO();
-        functionVideoPO.setFunName(functionVideoDTO.getFunName());
-        functionVideoPO.setUrl(functionVideoDTO.getUrl());
-        functionVideoPO.setExtra(functionVideoDTO.getExtra());
-        functionVideoPO.setUpdateTime(new Date());
-        functionVideoPO.setCreateTime(new Date());
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        //int aId = adminUserDTO.getaId();
 
-        int count = this.functionVideoMapper.insert(functionVideoPO);
-        return count;
+        // 把 dto 转换为 po
+        FunctionVideoPO po = new FunctionVideoPO();
+        po.setFunName(dto.getFunName());
+        po.setUrl(dto.getUrl());
+        po.setExtra(dto.getExtra());
+        po.setUpdateTime(new Date());
+        po.setCreateTime(new Date());
+        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+
+        int count = this.functionVideoMapper.insert(po);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
     }
+
+    /**
+     * 修改
+     * @param dto
+     * @param httpSession
+     * @return
+     */
+    @Override
+    public ResultVO update(FunctionVideoDTO dto, HttpSession httpSession) {
+
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        //int aId = adminUserDTO.getaId();
+
+        // 从数据库中查询出要修改的数据
+        FunctionVideoPO po = this.functionVideoMapper.selectByPrimaryKey(dto.getFunctionId());
+
+        if (null == po) {
+            return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        }
+
+        po.setFunName(dto.getFunName());
+        po.setUrl(dto.getUrl());
+        po.setExtra(dto.getExtra());
+        po.setUpdateTime(new Date());
+        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+
+        int count = this.functionVideoMapper.updateByPrimaryKey(po);
+
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+    }
+
+    /**
+     * 删除
+     * @param functionId
+     * @return
+     */
+    @Override
+    public ResultVO delete(Integer functionId) {
+        int count = this.functionVideoMapper.deleteByPrimaryKey(functionId);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
+    }
+
 
     /**
      * 根据aId，从t_admin_user表中查询username
@@ -91,6 +165,6 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
      * @return
      */
     private String queryUsernameByAid(Integer aId) {
-        return this.functionVideoMapper.queryUsernameByAid(aId);
+        return this.adminUserMapper.queryUsernameByAid(aId);
     }
 }
