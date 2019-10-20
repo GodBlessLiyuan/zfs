@@ -248,6 +248,15 @@ public class PageController {
     }
 
     /**
+     * 会员卡查询
+     * @return
+     */
+    @RequestMapping("/batchinfo")
+    public String batchinfo() {
+        return "batchinfo_index";
+    }
+
+    /**
      * 推广渠道
      * @return
      */
