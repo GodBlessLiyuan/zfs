@@ -5,8 +5,7 @@ import java.util.Date;
 
 /**
  * t_batch_info
- *
- * @author
+ * @author 
  */
 public class BatchInfoPO implements Serializable {
     private Integer id;
@@ -22,10 +21,9 @@ public class BatchInfoPO implements Serializable {
 
     private Integer days;
 
-    /**
-     * 默认为null
-     */
     private Date updateTime;
+
+    private Long userId;
 
     private static final long serialVersionUID = 1L;
 
@@ -77,6 +75,13 @@ public class BatchInfoPO implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     @Override
     public boolean equals(Object that) {
@@ -91,11 +96,12 @@ public class BatchInfoPO implements Serializable {
         }
         BatchInfoPO other = (BatchInfoPO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getVipkey() == null ? other.getVipkey() == null : this.getVipkey().equals(other.getVipkey()))
-                && (this.getBatchId() == null ? other.getBatchId() == null : this.getBatchId().equals(other.getBatchId()))
-                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-                && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
-                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getVipkey() == null ? other.getVipkey() == null : this.getVipkey().equals(other.getVipkey()))
+            && (this.getBatchId() == null ? other.getBatchId() == null : this.getBatchId().equals(other.getBatchId()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()));
     }
 
     @Override
@@ -108,6 +114,7 @@ public class BatchInfoPO implements Serializable {
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getDays() == null) ? 0 : getDays().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         return result;
     }
 
@@ -123,6 +130,7 @@ public class BatchInfoPO implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", days=").append(days);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", userId=").append(userId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
