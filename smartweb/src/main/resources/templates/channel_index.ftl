@@ -119,7 +119,7 @@
 
                             <hr>
                             <div class="table-responsive">
-                                <table id="datatab" class="display" style="width:100%">
+                                <table id="datatab" class="table table-striped table-bordered zero-configuration">
                                     <thead>
                                     <tr>
                                         <th>序号</th>

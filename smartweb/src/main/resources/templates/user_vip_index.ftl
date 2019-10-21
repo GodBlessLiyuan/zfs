@@ -118,7 +118,7 @@
 
                             <hr>
                             <div class="table-responsive">
-                                <table id="datatab" class="display" style="width:100%">
+                                <table id="datatab" class="table table-striped table-bordered zero-configuration">
                                     <thead>
                                     <tr>
                                         <th>序号</th>
@@ -147,7 +147,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="table-responsive">
-                                                <table id="details-tab" class="display" style="width:100%">
+                                                <table id="details-tab" class="table table-striped table-bordered zero-configuration">
                                                     <thead>
                                                     <tr>
                                                         <th>序号</th>

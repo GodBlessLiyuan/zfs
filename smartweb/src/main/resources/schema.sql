@@ -999,15 +999,6 @@ ALTER TABLE t_vipcommodity
         ON DELETE RESTRICT
 ;
 
-
-ALTER TABLE t_batch_info
-	ADD FOREIGN KEY (user_id)
-	REFERENCES t_user (user_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
 ALTER TABLE t_user_activity
     ADD FOREIGN KEY (user_id)
         REFERENCES t_user (user_id)
