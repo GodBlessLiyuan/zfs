@@ -11,4 +11,6 @@ import com.rpa.web.utils.DTPageInfo;
  */
 public interface BatchInfoService {
     DTPageInfo<BatchInfoDTO> query(int draw, int pageNum, int pageSize, String vipkey);
+
+    DTPageInfo<BatchInfoDTO> queryByBatchid(int draw, int pageNum, int pageSize, Integer batchId);
 }

@@ -21,25 +21,22 @@
     dr, extra, update_a_id, `days`
   </sql>
 
-  <select id="query" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="query" parameterType="java.lang.Integer" resultType="com.rpa.web.pojo.ChBatchPO">
     select
-    chan_nickname as chanNickname, chan_name as chanName, cb.create_time, a_id, com_type_name as comTypeName,
-    num, extra, status, cb.update_time, au.username as operator,
-    COUNT(CASE WHEN bi.status = '1' then '1' end) as activity,
-    COUNT(CASE WHEN bi.status = '2' then '2' end) as nonActivity
+    cb.batch_id as batchId, c.chan_nickname as chanNickname, c.chan_name as chanName, cb.create_time as createTime,
+    cb.a_id as aId, cb.com_type_name as comTypeName, cb.num, cb.extra, cb.status, cb.update_time as updateTime, cb.update_a_id
     from t_ch_batch cb
     left join t_channel c on cb.chan_id = c.chan_id
     left join t_admin_user au on cb.update_a_id = au.a_id
-    left join t_batch_info bi on cb.batch_id = bi.batch_id
     <where>
       <if test="chanNickname != null and chanNickname != ''">
-        AND chan_nickname = #{chanNickname}
+        AND c.chan_nickname = #{chanNickname}
       </if>
-      <if test="comTypeName != null and comTypeName != ''">
-        AND com_type_name = #{comTypeName}
+      <if test="comTypeId != 0">
+        AND cb.com_type_id = #{comTypeId}
       </if>
       <if test="status != null and status != ''">
-        AND status = #{status}
+        AND cb.status = #{status}
       </if>
       <if test="operator != null and operator != ''">
         AND au.username like '%' #{operator} '%'
@@ -54,21 +51,14 @@
     where a_id = #{aId}
   </select>
 
-  <select id="queryTypenameByTypeid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    name
-    from t_com_type
-    where com_type_id = #{comTypeId}
-  </select>
-
-  <select id="queryTypeIdByBatchId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="queryTypeIdByBatchId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select
     com_type_id
     from t_ch_batch
     where batch_id = #{batchId}
   </select>
 
-  <select id="queryDaysByTypeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="queryDaysByTypeId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select
     days
     from t_com_type
@@ -85,7 +75,7 @@
     delete from t_ch_batch
     where batch_id = #{batchId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.web.pojo.ChBatchPO">
+  <insert id="insert"  keyProperty="batchId" useGeneratedKeys="true" parameterType="com.rpa.web.pojo.ChBatchPO">
     insert into t_ch_batch (batch_id, num, a_id, 
       com_type_id, chan_id, create_time, 
       update_time, `status`, com_type_name, 

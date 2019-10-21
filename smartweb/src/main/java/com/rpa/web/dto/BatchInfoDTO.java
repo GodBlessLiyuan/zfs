@@ -34,6 +34,8 @@ public class BatchInfoDTO implements Serializable {
 
     private Date createTime;
 
+    private String phone;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -114,6 +116,14 @@ public class BatchInfoDTO implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override

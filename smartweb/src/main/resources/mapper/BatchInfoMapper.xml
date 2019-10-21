@@ -35,6 +35,14 @@
         </where>
     </select>
 
+  <select id="queryByBatchid"  resultType="com.rpa.web.domain.BatchInfoDO">
+        select
+        vipkey, status, bi.update_time as updateTime, phone
+        from t_batch_info bi
+        left join t_user u on bi.user_id = u.user_id
+        where batch_id = #{batchId}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_batch_info
     where id = #{id,jdbcType=INTEGER}
@@ -47,6 +55,19 @@
       #{status,jdbcType=TINYINT}, #{days,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
       #{userId,jdbcType=BIGINT})
   </insert>
+
+  <insert id="insertBatchInfo" keyProperty="id" parameterType="java.util.List">
+    insert into t_batch_info (vipkey, batch_id,
+      `status`, `days`, update_time,
+      user_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+    (#{item.vipkey,jdbcType=CHAR}, #{item.batchId,jdbcType=INTEGER},
+      #{item.status,jdbcType=TINYINT}, #{item.days,jdbcType=INTEGER}, #{item.updateTime,jdbcType=TIMESTAMP},
+      #{item.userId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.BatchInfoPO">
     insert into t_batch_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -134,7 +155,7 @@
   <update id="updateStatusByBatchId">
     update t_batch_info
     set `status` = #{status,jdbcType=TINYINT}
-    where batch_id = #{batchId,jdbcType=INTEGER}
+    where batch_id = #{batchId,jdbcType=INTEGER} and `status` != 2
   </update>
 
 
@@ -144,5 +165,11 @@
     left join t_ch_batch cb on bi.batch_id = cb.batch_id
     left join t_user u on bi.user_id = u.user_id
     where bi.user_id = #{userId}
+  </select>
+
+  <select id="queryStatusById" resultType="java.lang.Integer">
+    select count(batch_id)
+    from t_batch_info
+    where batch_id = #{batchId} and status = #{status}
   </select>
 </mapper>

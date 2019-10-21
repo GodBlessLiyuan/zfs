@@ -28,9 +28,9 @@ public class ChBatchDTO implements Serializable {
 
     private Integer num;
 
-    private Byte activity;
+    private Integer activity;
 
-    private Byte nonActivity;
+    private Integer nonActivity;
 
     private String extra;
 
@@ -114,19 +114,19 @@ public class ChBatchDTO implements Serializable {
         this.num = num;
     }
 
-    public Byte getActivity() {
+    public Integer getActivity() {
         return activity;
     }
 
-    public void setActivity(Byte activity) {
+    public void setActivity(Integer activity) {
         this.activity = activity;
     }
 
-    public Byte getNonActivity() {
+    public Integer getNonActivity() {
         return nonActivity;
     }
 
-    public void setNonActivity(Byte nonActivity) {
+    public void setNonActivity(Integer nonActivity) {
         this.nonActivity = nonActivity;
     }
 
