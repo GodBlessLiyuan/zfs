@@ -66,4 +66,42 @@ public class BatchInfoServiceImpl implements BatchInfoService {
         //根据分页查询的结果，封装最终的返回结果
         return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
     }
+
+
+    /**
+     * 根据batchId，查询详情
+     * @param draw
+     * @param pageNum
+     * @param pageSize
+     * @param batchId
+     * @return
+     */
+    @Override
+    public DTPageInfo<BatchInfoDTO> queryByBatchid(int draw, int pageNum, int pageSize, Integer batchId) {
+
+        // 分页
+        Page<BatchInfoDTO> page = PageHelper.startPage(pageNum, pageSize);
+
+        // 创建map对象，封装查询条件，作为动态sql语句的参数
+        Map<String, Object> map = new HashMap<>(1);
+        map.put("batchId", batchId);
+
+        // 按照条件查询数据
+        List<BatchInfoDO> lists_DO = batchInfoMapper.queryByBatchid(map);
+
+        // 将查询到的 BatchInfoDO 数据转换为 BatchInfoDTO
+        List<BatchInfoDTO> lists_DTO = new ArrayList<>();
+        for(BatchInfoDO po: lists_DO) {
+            BatchInfoDTO dto = new BatchInfoDTO();
+            dto.setVipkey(po.getVipkey());
+            dto.setStatus(po.getStatus());
+            dto.setUpdateTime(po.getUpdateTime());
+            dto.setPhone(po.getPhone());
+
+            lists_DTO.add(dto);
+        }
+
+        //根据分页查询的结果，封装最终的返回结果
+        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+    }
 }

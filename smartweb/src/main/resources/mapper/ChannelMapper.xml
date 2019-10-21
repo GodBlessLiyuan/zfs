@@ -46,6 +46,11 @@
     left join t_promoter p on c.pro_id = p.pro_id
   </select>
 
+  <select id="queryChanNicknames" resultType="com.rpa.web.pojo.ChannelPO">
+    select chan_id as chanId, chan_nickname as chanNickname
+    from t_channel
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_channel
     where chan_id = #{chanId,jdbcType=INTEGER}

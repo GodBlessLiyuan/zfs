@@ -11,12 +11,9 @@ import java.util.List;
  */
 @Mapper
 public interface ChBatchMapper extends BaseDAO<ChBatchPO, Integer> {
-    String queryUsernameByAid(Integer aId);
 
-    String queryTypenameByTypeid(Integer comTypeId);
+    Integer queryTypeIdByBatchId(Integer batchId);
 
-    int queryTypeIdByBatchId(Integer batchId);
-
-    Integer queryDaysByTypeId(int typeId);
+    Integer queryDaysByTypeId(Integer typeId);
 
 }

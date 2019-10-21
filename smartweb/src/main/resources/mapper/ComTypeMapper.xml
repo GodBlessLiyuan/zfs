@@ -131,4 +131,10 @@
         <include refid="Base_Column_List"/>
         from t_com_type order by com_type_id asc
     </select>
+
+    <select id="queryTypenameByTypeid" resultType="java.lang.String">
+        select name
+        from t_com_type
+        where com_type_id = #{comTypeId}
+    </select>
 </mapper>

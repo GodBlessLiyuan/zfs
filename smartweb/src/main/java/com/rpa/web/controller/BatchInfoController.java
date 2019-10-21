@@ -41,4 +41,27 @@ public class BatchInfoController {
         DTPageInfo<BatchInfoDTO> dTPageInfo = batchInfoService.query(draw, pageNum, pageSize, vipkey);
         return dTPageInfo;
     }
+
+
+    /**
+     * 查询
+     * @param draw
+     * @param pageNum
+     * @param pageSize
+     * @param batchId
+     * @return
+     */
+    @GetMapping("queryByBatchid")
+    public DTPageInfo<BatchInfoDTO> queryByBatchid(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                                   @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                                   @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                                   @RequestParam(value = "batchId") Integer batchId
+    ){
+        // 调用业务层，返回页面结果
+        DTPageInfo<BatchInfoDTO> dTPageInfo = batchInfoService.queryByBatchid(draw, pageNum, pageSize, batchId);
+        return dTPageInfo;
+    }
+
+
+
 }

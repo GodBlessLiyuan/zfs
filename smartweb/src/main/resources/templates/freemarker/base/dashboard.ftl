@@ -38,7 +38,7 @@
                         <ul aria-expanded="false">
                             <li><a href="/promoter">推广负责人</a></li>
                             <li><a href="/channel">推广渠道</a></li>
-                            <li><a href="">会员卡配置</a></li>
+                            <li><a href="/chbatch">会员卡配置</a></li>
                             <li><a href="/batchinfo">会员卡查询</a></li>
                         </ul>
                     </li>

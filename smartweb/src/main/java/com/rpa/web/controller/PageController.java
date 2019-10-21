@@ -257,6 +257,15 @@ public class PageController {
     }
 
     /**
+     * 会员卡配置
+     * @return
+     */
+    @RequestMapping("/chbatch")
+    public String chbatch() {
+        return "chbatch_index";
+    }
+
+    /**
      * 推广渠道
      * @return
      */
@@ -272,6 +281,20 @@ public class PageController {
     @RequestMapping("/admin")
     public String admin() {
         return "adminuser_index";
+    }
+
+
+    /**
+     * 卡密表详情
+     * @return
+     */
+    @RequestMapping("/batchinfo/detail")
+    public String batchinfo(@RequestParam(value = "batchId") Integer batchId, Map<String, Integer> map) {
+        if (null == batchId) {
+            return "error_404_index";
+        }
+        map.put("batchId", batchId);
+        return "batchinfo_detail_index";
     }
 
 

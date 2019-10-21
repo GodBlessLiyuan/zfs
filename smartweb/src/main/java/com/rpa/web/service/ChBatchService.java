@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.ChBatchDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,9 +14,13 @@ import javax.servlet.http.HttpSession;
  */
 public interface ChBatchService {
 
-    DTPageInfo<ChBatchDTO> query(int draw, int pageNum, int pageSize, String chanNickname, String comTypeName, String status, String username);
+    DTPageInfo<ChBatchDTO> query(int draw, int pageNum, int pageSize, String chanNickname, Integer comTypeId, Byte status, String operator);
 
-    int insert(ChBatchDTO chBatchDTO, HttpSession httpSession);
+    ResultVO insert(ChBatchDTO chBatchDTO, HttpSession httpSession);
 
-    int update(ChBatchDTO chBatchDTO, HttpSession httpSession);
+    ResultVO queryComTypes();
+
+    ResultVO queryChanNicknames();
+
+    ResultVO updateStatus(Integer batchId, Byte status, HttpSession httpSession);
 }

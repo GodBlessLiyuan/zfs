@@ -20,6 +20,10 @@ public class BatchInfoDO extends BatchInfoPO {
 
     private Date createTime;
 
+    private String phone;
+
+
+
     /**
      * 用户渠道
      */
@@ -70,5 +74,13 @@ public class BatchInfoDO extends BatchInfoPO {
 
     public void setUserChanName(String userChanName) {
         this.userChanName = userChanName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

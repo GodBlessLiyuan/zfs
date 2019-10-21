@@ -13,4 +13,6 @@ public interface ChannelMapper extends BaseDAO<ChannelPO, Integer> {
     String queryUsernameByAid(Integer aId);
 
     List<ChannelPO> queryProNames();
+
+    List<ChannelPO> queryChanNicknames();
 }
