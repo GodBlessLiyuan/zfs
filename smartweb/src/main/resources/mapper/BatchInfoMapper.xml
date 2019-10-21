@@ -24,7 +24,7 @@
     <select id="query" parameterType="java.lang.Integer" resultType="com.rpa.web.domain.BatchInfoDO">
         select
         vipkey, chan_nickname as chanNickname, chan_name as chanName, cb.create_time as createTime,
-        cb.com_type_name as comTypeName, status
+        cb.com_type_name as comTypeName, bi.status
         from t_batch_info bi
         left join t_ch_batch cb on bi.batch_id = cb.batch_id
         left join t_channel c on cb.chan_id = c.chan_id

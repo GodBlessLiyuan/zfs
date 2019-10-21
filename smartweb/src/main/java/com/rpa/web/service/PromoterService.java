@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.PromoterDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 /**
  * @author: dangyi
@@ -12,7 +13,7 @@ import com.rpa.web.utils.DTPageInfo;
 public interface PromoterService {
     DTPageInfo<PromoterDTO> query(int draw, int pageNum, int pageSize, String proName, String phone);
 
-    int insert(PromoterDTO promoterDTO);
+    ResultVO insert(PromoterDTO promoterDTO);
 
-    int update(PromoterDTO promoterDTO);
+    ResultVO update(PromoterDTO promoterDTO);
 }

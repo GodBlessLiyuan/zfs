@@ -56,8 +56,8 @@ public class BatchInfoServiceImpl implements BatchInfoService {
             dto.setVipkey(po.getVipkey());
             dto.setChanNickname(po.getChanNickname());
             dto.setChanName(po.getChanName());
-            dto.setComTypeName(po.getComTypeName());
             dto.setCreateTime(po.getCreateTime());
+            dto.setComTypeName(po.getComTypeName());
             dto.setStatus(po.getStatus());
 
             lists_DTO.add(dto);

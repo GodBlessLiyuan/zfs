@@ -30,12 +30,33 @@ public class AdminUserController {
                                           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                           @RequestParam(value = "phone", required = false) String phone,
-                                          @RequestParam(value = "extra", required = false) Byte extra
+                                          @RequestParam(value = "extra", required = false) String extra
     ) {
 
         // 调用业务层，返回页面结果
         DTPageInfo<AdminUserDTO> dTPageInfo = adminUserService.query(draw, pageNum, pageSize, phone, extra);
         return dTPageInfo;
+    }
+
+
+    /**
+     * 查询所有角色
+     * @return
+     */
+    @GetMapping("queryAllRoles")
+    public ResultVO queryAllRoles() {
+        return this.adminUserService.queryAllRoles();
+    }
+
+
+    /**
+     * 查询
+     * @param aId
+     * @return
+     */
+    @GetMapping("queryById")
+    public ResultVO queryById(@RequestParam(value = "aId")Integer aId) {
+        return this.adminUserService.queryById(aId);
     }
 
     /**
@@ -64,7 +85,7 @@ public class AdminUserController {
      * @return
      */
     @PostMapping("delete")
-    public ResultVO delete(int aId) {
+    public ResultVO delete(@RequestParam(value = "aId")Integer aId) {
         return this.adminUserService.delete(aId);
     }
 }

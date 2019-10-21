@@ -3,6 +3,7 @@ package com.rpa.web.controller;
 import com.rpa.web.dto.PromoterDTO;
 import com.rpa.web.service.PromoterService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +48,7 @@ public class PromoterController {
      * @return
      */
     @PostMapping("insert")
-    public int insert(PromoterDTO promoterDTO) {
+    public ResultVO insert(PromoterDTO promoterDTO) {
         return this.promoterService.insert(promoterDTO);
     }
 
@@ -57,7 +58,7 @@ public class PromoterController {
      * @return
      */
     @PostMapping("update")
-    public int update(PromoterDTO promoterDTO){
+    public ResultVO update(PromoterDTO promoterDTO){
         return this.promoterService.update(promoterDTO);
     }
 }

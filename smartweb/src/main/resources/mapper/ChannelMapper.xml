@@ -23,26 +23,27 @@
     where chan_id = #{chanId,jdbcType=INTEGER}
   </select>
 
-  <select id="query" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="query" parameterType="java.lang.Integer" resultType="com.rpa.web.pojo.ChannelPO">
     select
-      chan_nickname as chanNickname, chan_name as chanName, pro_name as proName, phone, c.extra, c.create_time as createTime, c.a_id as aId
+      chan_nickname as chanNickname, chan_name as chanName, c.pro_id as proId, p.pro_name as proName,
+      phone, c.extra, c.create_time as createTime, c.a_id as aId
     from t_channel c
     left join t_promoter p on c.pro_id = p.pro_id
     <where>
       <if test="chanNickname != null and chanNickname != ''">
         AND chan_nickname = #{chanNickname}
       </if>
-      <if test="proName != null and proName != ''">
-        AND pro_name like '%' #{proName} '%'
+      <if test="proId != null and proId != ''">
+        AND c.pro_id = #{proId}
       </if>
     </where>
   </select>
 
-  <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    username
-    from t_admin_user
-    where a_id = #{aId}
+  <select id="queryProNames" resultType="com.rpa.web.pojo.ChannelPO">
+    select distinct
+    p.pro_name as proName, c.pro_id as proId
+    from t_channel c
+    left join t_promoter p on c.pro_id = p.pro_id
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

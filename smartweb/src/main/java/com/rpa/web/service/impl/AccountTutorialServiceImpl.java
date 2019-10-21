@@ -1,9 +1,12 @@
 package com.rpa.web.service.impl;
 
 import com.rpa.web.dto.KeyValueDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.KeyValueMapper;
 import com.rpa.web.pojo.KeyValuePO;
 import com.rpa.web.service.AccountTutorialService;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +30,21 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
      * @return
      */
     @Override
-    public KeyValueDTO query(int tutorial_url) {
+    public ResultVO query(int tutorial_url) {
 
         // 从t_key_value表中查出数据
-        KeyValuePO keyValuePO = this.keyValueMapper.selectByPrimaryKey(tutorial_url);
+        KeyValuePO po = this.keyValueMapper.selectByPrimaryKey(tutorial_url);
 
-        // 将查出的 KeyValuePO 数据转换为 KeyValueDTO
-        KeyValueDTO keyValueDTO = new KeyValueDTO();
-        keyValueDTO.setKeyName(keyValuePO.getKeyName());
-        keyValueDTO.setValue(keyValuePO.getValue());
+        if (null == po) {
+            return ResultVOUtil.success("");
+        }
 
-        return keyValueDTO;
+        // 将查出的 PO 数据转换为 DTO
+        KeyValueDTO dto = new KeyValueDTO();
+        dto.setKeyName(po.getKeyName());
+        dto.setValue(po.getValue());
+
+        return ResultVOUtil.success(dto);
     }
 
     /**
@@ -46,7 +53,7 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
      * @return
      */
     @Override
-    public int insert(String url) {
+    public ResultVO insert(String url) {
 
         KeyValuePO po = new KeyValuePO();
         po.setKeyName(TUTORIAL_URL);
@@ -55,10 +62,13 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
         // 从t_key_value表中查出数据
         KeyValuePO keyValuePO = this.keyValueMapper.selectByPrimaryKey(TUTORIAL_URL);
 
+        int count = 0;
         if (keyValuePO == null) {
-            return this.keyValueMapper.insert(po);
+            count = this.keyValueMapper.insert(po);
+        } else {
+            count = this.keyValueMapper.updateByPrimaryKey(po);
         }
-        return this.keyValueMapper.updateByPrimaryKey(po);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
 
 

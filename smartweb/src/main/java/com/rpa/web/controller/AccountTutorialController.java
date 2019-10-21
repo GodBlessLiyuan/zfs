@@ -2,11 +2,9 @@ package com.rpa.web.controller;
 
 import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.service.AccountTutorialService;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.rpa.web.common.Constant.TUTORIAL_URL;
 
@@ -29,7 +27,7 @@ public class AccountTutorialController {
      * @return
      */
     @GetMapping("query")
-    public KeyValueDTO query( ) {
+    public ResultVO query( ) {
         return this.accountTutorialService.query(TUTORIAL_URL);
     }
 
@@ -39,7 +37,7 @@ public class AccountTutorialController {
      * @return
      */
     @PostMapping("insert")
-    public int insert(String url) {
+    public ResultVO insert(@RequestParam(value = "url") String url) {
         return this.accountTutorialService.insert(url);
     }
 }

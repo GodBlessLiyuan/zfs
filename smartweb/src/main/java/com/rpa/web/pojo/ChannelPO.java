@@ -31,7 +31,7 @@ public class ChannelPO implements Serializable {
      */
     private Byte dr;
 
-    private Integer phone;
+    private String phone;
 
     private static final long serialVersionUID = 1L;
 
@@ -115,11 +115,11 @@ public class ChannelPO implements Serializable {
         this.dr = dr;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

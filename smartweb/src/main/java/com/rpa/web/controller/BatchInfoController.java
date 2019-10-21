@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author: dangyi
  * @date: Created in 19:45 2019/10/8
  * @version: 1.0.0
- * @description: TODO
+ * @description: 会员卡查询
  */
 
-@RequestMapping("batchInfo")
+@RequestMapping("batchinfo")
 @RestController
 public class BatchInfoController {
 

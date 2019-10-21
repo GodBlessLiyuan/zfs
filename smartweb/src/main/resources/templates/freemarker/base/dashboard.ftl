@@ -19,7 +19,7 @@
                             <li><a href="">分享素材</a></li>
                             <li><a href="">常见问题</a></li>
                             <li><a href="/goodcomment">好评活动</a></li>
-                            <li><a href="">养生账号</a></li>
+                            <li><a href="/accounttutorial">养号教程</a></li>
                         </ul>
                     </li>
 
@@ -36,10 +36,10 @@
 
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">会员卡推广</a>
                         <ul aria-expanded="false">
-                            <li><a href="">推广负责人</a></li>
-                            <li><a href="">推广渠道</a></li>
+                            <li><a href="/promoter">推广负责人</a></li>
+                            <li><a href="/channel">推广渠道</a></li>
                             <li><a href="">会员卡配置</a></li>
-                            <li><a href="">会员卡查询</a></li>
+                            <li><a href="/batchinfo">会员卡查询</a></li>
                         </ul>
                     </li>
 
@@ -73,7 +73,7 @@
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">系统管理</a>
                         <ul aria-expanded="false">
                             <li><a href="./page-error-404.html">权限管理</a></li>
-                            <li><a href="./page-error-403.html">账号管理</a></li>
+                            <li><a href="/admin">账号管理</a></li>
                         </ul>
                     </li>
 

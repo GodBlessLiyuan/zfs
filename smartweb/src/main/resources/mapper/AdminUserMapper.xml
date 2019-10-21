@@ -27,13 +27,13 @@
     where a_id = #{aId,jdbcType=INTEGER}
   </select>
 
-  <select id="query" resultType="com.rpa.web.domain.AdminUserDO">
+  <select id="queryBy" resultType="com.rpa.web.domain.AdminUserDO">
     select
-    a_id as aId, username as userName, `password`, email, is_lock as isLock, create_time as createTime,
-    last_time as lastTime, dr, role_id as roleId, relation_a_id as relationAId, `name`, extra, phone,
+    au.a_id as aId, username as userName, `password`, email, is_lock as isLock, au.create_time as createTime,
+    last_time as lastTime, dr, au.role_id as roleId, relation_a_id as relationAId, `name`, extra, phone,
     r.role_name as roleName
     from t_admin_user au
-    left join t_role r on au.role_id = r.id
+    left join t_role r on au.role_id = r.role_id
     <where>
       <if test="phone != null and phone != ''">
         AND phone = #{phone}
@@ -42,6 +42,16 @@
         AND extra like '%' #{extra} '%'
       </if>
     </where>
+  </select>
+
+  <select id="queryById" resultType="com.rpa.web.domain.AdminUserDO">
+    select
+    au.a_id as aId, username as userName, `password`, email, is_lock as isLock, au.create_time as createTime,
+    last_time as lastTime, dr, au.role_id as roleId, relation_a_id as relationAId, `name`, extra, phone,
+    r.role_name as roleName
+    from t_admin_user au
+    left join t_role r on au.role_id = r.role_id
+    where au.a_id = #{aId}
   </select>
 
   <select id="queryPassword" parameterType="java.lang.Integer" resultType="java.lang.String">

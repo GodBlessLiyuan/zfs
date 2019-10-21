@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.KeyValueDTO;
+import com.rpa.web.vo.ResultVO;
 
 /**
  * @author: dangyi
@@ -9,7 +9,7 @@ import com.rpa.web.dto.KeyValueDTO;
  * @description:
  */
 public interface AccountTutorialService {
-    int insert(String url);
+    ResultVO insert(String url);
 
-    KeyValueDTO query(int tutorial_url);
+    ResultVO query(int tutorial_url);
 }

@@ -218,8 +218,9 @@ public class PageController {
     @RequestMapping("/feedback")
     public String feedback() {
         return "feedback_index";
-    }/**
+    }
 
+    /**
      * 好评活动
      * @return
      */
@@ -228,6 +229,50 @@ public class PageController {
         return "goodcomment_index";
     }
 
+    /**
+     * 养号教程
+     * @return
+     */
+    @RequestMapping("/accounttutorial")
+    public String accounttutorial() {
+        return "account_tutorial_index";
+    }
+
+    /**
+     * 推广负责人
+     * @return
+     */
+    @RequestMapping("/promoter")
+    public String promoter() {
+        return "promoter_index";
+    }
+
+    /**
+     * 会员卡查询
+     * @return
+     */
+    @RequestMapping("/batchinfo")
+    public String batchinfo() {
+        return "batchinfo_index";
+    }
+
+    /**
+     * 推广渠道
+     * @return
+     */
+    @RequestMapping("/channel")
+    public String channel() {
+        return "channel_index";
+    }
+
+    /**
+     * 账号管理
+     * @return
+     */
+    @RequestMapping("/admin")
+    public String admin() {
+        return "adminuser_index";
+    }
 
 
     /**

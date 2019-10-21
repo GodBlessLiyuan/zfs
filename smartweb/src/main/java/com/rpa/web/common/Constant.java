@@ -16,9 +16,10 @@ public class Constant {
     /**
      * 养号教程
      */
-    public static final int TUTORIAL_URL = 2; /**
+    public static final int TUTORIAL_URL = 2;
 
-     * 养号教程
+    /**
+     * 用户名
      */
     public static final String ADMIN_USER = "admin_user";
 
