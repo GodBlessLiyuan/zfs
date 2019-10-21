@@ -54,7 +54,7 @@ public class FileUtil {
             }
         }
 
-        return "/file/" + dir + fileName;
+        return filePath;
     }
 
     /**
