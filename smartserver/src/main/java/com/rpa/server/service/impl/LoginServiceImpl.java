@@ -82,12 +82,12 @@ public class LoginServiceImpl implements ILoginService {
         UserDevicePO userDevicePO = userDeviceMapper.queryByDevIdAndUserId(dto.getId(), userPO.getUserId());
         if (userDevicePO == null) {
             // 新增用户-设备关系
-            UserDevicePO po = new UserDevicePO();
-            po.setDeviceId(dto.getId());
-            po.setUserId(userPO.getUserId());
-            po.setStatus((byte) 1);
-            po.setCreateTime(new Date());
-            userDeviceMapper.insert(po);
+            userDevicePO = new UserDevicePO();
+            userDevicePO.setDeviceId(dto.getId());
+            userDevicePO.setUserId(userPO.getUserId());
+            userDevicePO.setStatus((byte) 1);
+            userDevicePO.setCreateTime(new Date());
+            userDeviceMapper.insert(userDevicePO);
         } else {
             userDevicePO.setStatus((byte) 1);
             userDeviceMapper.updateByPrimaryKey(userDevicePO);
