@@ -2,7 +2,6 @@ package com.rpa.server.service.impl;
 
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.FeedbackDTO;
-import com.rpa.server.mapper.DeviceMapper;
 import com.rpa.server.mapper.FeedbackMapper;
 import com.rpa.server.pojo.FeedbackPO;
 import com.rpa.server.service.IFeedbackService;
