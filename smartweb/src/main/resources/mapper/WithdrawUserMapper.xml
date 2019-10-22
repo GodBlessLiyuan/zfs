@@ -28,9 +28,11 @@
     where withdraw_id = #{withdrawId,jdbcType=INTEGER}
   </select>
 
-  <select id="query" resultMap="BaseResultMap">
+  <select id="query" resultType="com.rpa.web.pojo.WithdrawUserPO">
     select
-    <include refid="Base_Column_List" />
+    withdraw_id as withdrawId, wu.create_time as createTime, wu.user_id as userId, device_id as deviceId,
+    user_device_id as userDeviceId, withdraw, remaining, ali_account as aliAccount, ali_name as aliName,
+    withdraw_time as withdrawTime, audit_time as auditTime, end_time as endTime, `status`, a_id as aId
     from t_withdraw_user wu
     left join t_user u on wu.user_id = u.user_id
     <where>
@@ -41,20 +43,6 @@
         status = #{status}
       </if>
     </where>
-  </select>
-
-  <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    username
-    from t_admin_user
-    where a_id = #{aId}
-  </select>
-
-  <select id="queryPhoneByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
-    phone
-    from t_user
-    where user_id = #{userId}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

@@ -10,6 +10,4 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface WithdrawUserMapper extends BaseDAO<WithdrawUserPO, Integer> {
     String queryUsernameByAid(Integer aId);
-
-    String queryPhoneByUserId(Long userId);
 }

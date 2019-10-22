@@ -103,8 +103,8 @@ public class FileUtil {
         }
 
         // 返回文件所存放的路径位置
-        System.out.println("/file/" + targetPath + fileName);
-        return "/file/" + targetPath + fileName;
+        System.out.println("/file" + targetPath + fileName);
+        return "/file" + targetPath + fileName;
     }
 
     /**

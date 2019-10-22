@@ -15,5 +15,5 @@ import javax.servlet.http.HttpSession;
 public interface WithdrawUserService {
     DTPageInfo<WithdrawUserDTO> query(int draw, int pageNum, int pageSize, String phone, Byte status);
 
-    ResultVO update(WithdrawUserDTO withdrawUserDTO, HttpSession httpSession);
+    ResultVO update(Integer withdrawId, Byte status, HttpSession httpSession);
 }
