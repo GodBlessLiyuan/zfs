@@ -24,6 +24,8 @@
         <module>smartserver</module>
         <module>smarteureka</module>
         <module>smartzuul</module>
+        <module>smartproducer</module>
+        <module>smartconsumer</module>
     </modules>
 
     <dependencyManagement>

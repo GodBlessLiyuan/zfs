@@ -239,4 +239,12 @@
         select app_id, versionname
         from t_app
     </select>
+
+    <select id="queryByVersionCode" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        from t_app
+        where dr = 1 and versioncode = #{versionCode}
+        order by app_id
+        limit 1
+    </select>
 </mapper>

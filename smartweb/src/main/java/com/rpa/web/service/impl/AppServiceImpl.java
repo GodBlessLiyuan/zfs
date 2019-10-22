@@ -10,6 +10,8 @@ import com.rpa.web.pojo.AppPO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -33,7 +35,6 @@ public class AppServiceImpl implements IAppService {
 
     @Resource
     private AppMapper appMapper;
-
     @Resource
     private AppChMapper appChMapper;
 
@@ -61,22 +62,48 @@ public class AppServiceImpl implements IAppService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra) {
-        AppPO appPO = new AppPO();
+    public ResultVO insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra,
+                           int aId) {
+        // 解析Apk
+        Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir);
+        // 查询是否已存在
+        AppPO appPO = appMapper.queryByVersionCode(apkInfo.get("versioncode"));
+        if (appPO != null) {
+            // 更新
+            buildAppVO(file, updateType, context, extra, aId, apkInfo, appPO);
+            appMapper.updateByPrimaryKey(appPO);
+            // 根据appId查询应用渠道数据
+            List<AppChPO> appChPOs = appChMapper.queryByAppId(appPO.getAppId());
 
-        // 根据url对应的apk获取版本名称、版本号、文件大小
-        this.setAppPObyFile(file, appPO);
+            Map<Integer, AppChPO> map = new HashMap<>(appChPOs.size());
+            for (AppChPO appChPO : appChPOs) {
+                map.put(appChPO.getSoftChannelId(), appChPO);
+            }
+            // 待新增的AppChPO
+            List<AppChPO> insAppChPOs = new ArrayList<>();
+            for (int scId : softChannel) {
+                if (!map.containsKey(scId)) {
+                    AppChPO appChPO = new AppChPO();
+                    appChPO.setStatus(appPO.getStatus().byteValue());
+                    appChPO.setAppId(appPO.getAppId());
+                    appChPO.setSoftChannelId(scId);
+                    insAppChPOs.add(appChPO);
+                }
+            }
 
-        appPO.setUpdateType(updateType);
-        appPO.setContext(context);
-        appPO.setExtra(extra);
+            if (insAppChPOs.size() != 0) {
+                // 新增应用渠道数据
+                appChMapper.batchInsert(insAppChPOs);
+            }
 
-        appPO.setCreateTime(new Date());
-        appPO.setaId(1);
-        appPO.setStatus(1);
-        appPO.setDr((byte) 1);
+            return ResultVOUtil.success();
+        }
 
-        int frist = appMapper.insert(appPO);
+        // 新增
+        appPO = new AppPO();
+        buildAppVO(file, updateType, context, extra, aId, apkInfo, appPO);
+
+        appMapper.insert(appPO);
 
         List<AppChPO> appChPOs = new ArrayList<>();
         for (int chanId : softChannel) {
@@ -87,9 +114,9 @@ public class AppServiceImpl implements IAppService {
             appChPOs.add(appChPO);
         }
 
-        int secend = appChMapper.batchInsert(appChPOs);
+        appChMapper.batchInsert(appChPOs);
 
-        return frist + secend;
+        return ResultVOUtil.success();
     }
 
     @Transactional(rollbackFor = {})
@@ -148,6 +175,20 @@ public class AppServiceImpl implements IAppService {
         return frist + secend + third;
     }
 
+    private void setAppPObyFile(MultipartFile file, AppPO appPO) {
+        Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir);
+        appPO.setUrl((String) apkInfo.get("url"));
+        appPO.setVersionname((String) apkInfo.get("versionname"));
+        appPO.setVersioncode(Math.toIntExact((Long) apkInfo.get("versioncode")));
+        appPO.setSize((int) file.getSize());
+
+        try {
+            appPO.setMd5(DigestUtils.md5DigestAsHex(file.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Transactional(rollbackFor = {})
     @Override
     public int updateStatus(int appId, int status) {
@@ -171,13 +212,17 @@ public class AppServiceImpl implements IAppService {
     }
 
     /**
-     * 根据前端File设置AppPO相关信息
+     * 构建AppVO
      *
-     * @param file  文件
-     * @param appPO appPO
+     * @param file
+     * @param updateType
+     * @param context
+     * @param extra
+     * @param aId
+     * @param apkInfo
+     * @param appPO
      */
-    private void setAppPObyFile(MultipartFile file, AppPO appPO) {
-        Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir);
+    private void buildAppVO(MultipartFile file, byte updateType, String context, String extra, int aId, Map<String, Object> apkInfo, AppPO appPO) {
         appPO.setUrl((String) apkInfo.get("url"));
         appPO.setVersionname((String) apkInfo.get("versionname"));
         appPO.setVersioncode(Math.toIntExact((Long) apkInfo.get("versioncode")));
@@ -188,5 +233,13 @@ public class AppServiceImpl implements IAppService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        appPO.setUpdateType(updateType);
+        appPO.setContext(context);
+        appPO.setExtra(extra);
+
+        appPO.setCreateTime(new Date());
+        appPO.setaId(aId);
+        appPO.setStatus(1);
+        appPO.setDr((byte) 1);
     }
 }
