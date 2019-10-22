@@ -22,4 +22,8 @@ public class AppVO implements Serializable {
      * 下载应用的md5值
      */
     private String md5;
+    /**
+     * 跟新类型
+     */
+    private Byte type;
 }

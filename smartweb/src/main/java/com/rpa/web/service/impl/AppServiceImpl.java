@@ -66,6 +66,10 @@ public class AppServiceImpl implements IAppService {
                            int aId) {
         // 解析Apk
         Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir);
+        if (apkInfo.get("channel") == null || !"vboooster".equals(apkInfo.get("channel"))) {
+            return ResultVOUtil.error(2000, "上传应用非官方渠道！");
+        }
+
         // 查询是否已存在
         AppPO appPO = appMapper.queryByVersionCode(apkInfo.get("versioncode"));
         if (appPO != null) {
