@@ -1,6 +1,10 @@
 package com.rpa.web.controller;
 
+import com.rpa.web.common.Constant;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.OtherAppDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.exception.PromptException;
 import com.rpa.web.service.IOtherAppService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,11 +47,14 @@ public class OtherAppController {
                       @RequestParam(value = "extra") String extra,
                       @RequestParam(value = "iconUrl") MultipartFile iconUrl,
                       @RequestParam(value = "downloadType") byte downloadType,
-                      @RequestParam(value = "appUrl") String appUrl) {
+                      @RequestParam(value = "appUrl") String appUrl, HttpServletRequest req) {
+        // 从Session里获取管理员Id
+        AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
+        if (admin == null) {
+            throw new PromptException(ExceptionEnum.SESSION_ERROR);
+        }
 
-        int aId = 1;
-
-        return service.insert(oName, extra, iconUrl, downloadType, appUrl, aId);
+        return service.insert(oName, extra, iconUrl, downloadType, appUrl, admin.getaId());
     }
 
     @RequestMapping("delete")

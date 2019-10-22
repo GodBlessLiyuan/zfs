@@ -43,7 +43,7 @@ public class WhiteDeviceServiceImpl implements IWhilteDeviceService {
     }
 
     @Override
-    public ResultVO insert(String imei, String extra) {
+    public ResultVO insert(String imei, String extra, int aId) {
         List<DeviceImeiPO> deviceImeiPOs = deviceImeiMapper.queryByImei(imei);
         if (deviceImeiPOs == null || deviceImeiPOs.size() == 0) {
             // 未找到对应的deviceId
@@ -63,7 +63,7 @@ public class WhiteDeviceServiceImpl implements IWhilteDeviceService {
         po.setDeviceId(deviceId);
         po.setExtra(extra);
         po.setCreateTime(new Date());
-        po.setaId(1);
+        po.setaId(aId);
 
         whilteDeviceMapper.insert(po);
 
