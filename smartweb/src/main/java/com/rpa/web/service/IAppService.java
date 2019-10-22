@@ -2,9 +2,9 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.AppDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -30,14 +30,15 @@ public interface IAppService {
     /**
      * 插入
      *
-     * @param file         apk文件
+     * @param file        apk文件
      * @param updateType  更新方式
      * @param softChannel 更新渠道
      * @param context     更新内容
      * @param extra       备注
+     * @param aId         管理员
      * @return
      */
-    int insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra);
+    ResultVO insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra, int aId);
 
     /**
      * 更新状态（发布&取消发布）

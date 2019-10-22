@@ -1,0 +1,14 @@
+server:
+  port: 7889
+spring:
+  application:
+    name: smartconsumer
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 192.168.10.3:9092
+          auto-create-topics: true
+        bindings:
+          input:
+            destination: event-demo

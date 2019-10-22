@@ -30,7 +30,7 @@ public class FileUtil {
      * @throws IOException
      */
     public static String uploadFile(MultipartFile file, String dir) {
-        String fileName = file.getOriginalFilename();
+        String fileName = System.currentTimeMillis() + file.getOriginalFilename();
         File targetFile = new File(rootPath + dir);
         if (!targetFile.exists()) {
             targetFile.mkdirs();
@@ -60,7 +60,7 @@ public class FileUtil {
     /**
      * 文件上传处理
      *
-     * @param srcPath 上传文件的路径
+     * @param srcPath    上传文件的路径
      * @param targetPath 拟存放文件的路径
      * @return 文件路径
      * @throws IOException
@@ -68,7 +68,7 @@ public class FileUtil {
     public static String uploadFile(String srcPath, String targetPath) {
 
         // 获取源文件的文件名
-        String fileName = srcPath.substring(srcPath.lastIndexOf('\\')+1);
+        String fileName = srcPath.substring(srcPath.lastIndexOf('\\') + 1);
 
         // 创建存放文件的路径
         File realTargetPath = new File(rootPath + targetPath);
@@ -119,12 +119,18 @@ public class FileUtil {
 
         try {
             // 上传apk文件
-            apkInfo.put("url", uploadFile(file, apkDir));
-            ApkFile apkFile = new ApkFile(rootPath + apkDir + file.getOriginalFilename());
+            String filePath = FileUtil.uploadFile(file, apkDir);
+            ApkFile apkFile = new ApkFile(filePath);
             ApkMeta apkMeta = apkFile.getApkMeta();
             apkInfo.put("pkgname", apkMeta.getPackageName());
             apkInfo.put("versioncode", apkMeta.getVersionCode());
             apkInfo.put("versionname", apkMeta.getVersionName());
+            // 重命名
+            String newFile = rootPath + apkDir + apkMeta.getPackageName() + "_" + apkMeta.getVersionCode() +
+                    "_" + System.currentTimeMillis() + ".apk";
+            apkFile.close();
+            new File(filePath).renameTo(new File(newFile));
+            apkInfo.put("url", newFile);
         } catch (IOException e) {
             e.printStackTrace();
         }

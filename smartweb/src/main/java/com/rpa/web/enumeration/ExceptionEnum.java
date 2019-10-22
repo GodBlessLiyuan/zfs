@@ -35,7 +35,9 @@ public enum ExceptionEnum {
 
     DELETE_ERROR(1006, "删除失败！"),
 
-    QUERY_ERROR(1007, "查询失败！")
+    QUERY_ERROR(1007, "查询失败！"),
+
+    SESSION_ERROR(1008, "未取到Session信息！")
 
     ;
 

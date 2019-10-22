@@ -1,8 +1,14 @@
 package com.rpa.web.controller;
 
+import com.rpa.web.common.Constant;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.AppDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.exception.PromptException;
+import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,13 +59,17 @@ public class AppController {
     }
 
     @PostMapping("insert")
-    public int insert(@RequestParam(value = "file") MultipartFile file,
-                      @RequestParam(value = "updateType") byte updateType,
-                      @RequestParam(value = "softChannel") int[] softChannel,
-                      @RequestParam(value = "context") String context,
-                      @RequestParam(value = "extra") String extra) {
+    public ResultVO insert(@RequestParam(value = "file") MultipartFile file,
+                           @RequestParam(value = "updateType") byte updateType,
+                           @RequestParam(value = "softChannel") int[] softChannel,
+                           @RequestParam(value = "context") String context,
+                           @RequestParam(value = "extra") String extra, HttpServletRequest req) {
+        AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
+        if (admin == null) {
+            throw new PromptException(ExceptionEnum.SESSION_ERROR);
+        }
 
-        return service.insert(file, updateType, softChannel, context, extra);
+        return service.insert(file, updateType, softChannel, context, extra, admin.getaId());
     }
 
     @PostMapping("update")

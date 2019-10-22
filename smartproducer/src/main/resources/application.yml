@@ -1,0 +1,15 @@
+server:
+  port: 7888
+spring:
+  application:
+    name: smartproducer
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 192.168.10.3:9092
+          auto-create-topics: true
+        bindings:
+          output:
+            destination: event-demo
+            content-type: text/plain
