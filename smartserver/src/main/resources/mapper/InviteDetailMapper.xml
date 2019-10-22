@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.server.mapper.InviteDetailMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.server.pojo.InviteDetailPO">
+    <id column="inde_id" jdbcType="BIGINT" property="indeId" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="com_type_id" jdbcType="INTEGER" property="comTypeId" />
+    <result column="com_type_name" jdbcType="CHAR" property="comTypeName" />
+    <result column="pay" jdbcType="BIGINT" property="pay" />
+    <result column="earnings" jdbcType="BIGINT" property="earnings" />
+    <result column="proportion" jdbcType="TINYINT" property="proportion" />
+    <result column="invite_id" jdbcType="BIGINT" property="inviteId" />
+    <result column="invitee_id" jdbcType="BIGINT" property="inviteeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    inde_id, order_id, com_type_id, com_type_name, pay, earnings, proportion, invite_id, 
+    invitee_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_invite_detail
+    where inde_id = #{indeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_invite_detail
+    where inde_id = #{indeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.server.pojo.InviteDetailPO">
+    insert into t_invite_detail (inde_id, order_id, com_type_id, 
+      com_type_name, pay, earnings, 
+      proportion, invite_id, invitee_id
+      )
+    values (#{indeId,jdbcType=BIGINT}, #{orderId,jdbcType=INTEGER}, #{comTypeId,jdbcType=INTEGER}, 
+      #{comTypeName,jdbcType=CHAR}, #{pay,jdbcType=BIGINT}, #{earnings,jdbcType=BIGINT}, 
+      #{proportion,jdbcType=TINYINT}, #{inviteId,jdbcType=BIGINT}, #{inviteeId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.server.pojo.InviteDetailPO">
+    insert into t_invite_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="indeId != null">
+        inde_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="comTypeId != null">
+        com_type_id,
+      </if>
+      <if test="comTypeName != null">
+        com_type_name,
+      </if>
+      <if test="pay != null">
+        pay,
+      </if>
+      <if test="earnings != null">
+        earnings,
+      </if>
+      <if test="proportion != null">
+        proportion,
+      </if>
+      <if test="inviteId != null">
+        invite_id,
+      </if>
+      <if test="inviteeId != null">
+        invitee_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="indeId != null">
+        #{indeId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="comTypeId != null">
+        #{comTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="comTypeName != null">
+        #{comTypeName,jdbcType=CHAR},
+      </if>
+      <if test="pay != null">
+        #{pay,jdbcType=BIGINT},
+      </if>
+      <if test="earnings != null">
+        #{earnings,jdbcType=BIGINT},
+      </if>
+      <if test="proportion != null">
+        #{proportion,jdbcType=TINYINT},
+      </if>
+      <if test="inviteId != null">
+        #{inviteId,jdbcType=BIGINT},
+      </if>
+      <if test="inviteeId != null">
+        #{inviteeId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.server.pojo.InviteDetailPO">
+    update t_invite_detail
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="comTypeId != null">
+        com_type_id = #{comTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="comTypeName != null">
+        com_type_name = #{comTypeName,jdbcType=CHAR},
+      </if>
+      <if test="pay != null">
+        pay = #{pay,jdbcType=BIGINT},
+      </if>
+      <if test="earnings != null">
+        earnings = #{earnings,jdbcType=BIGINT},
+      </if>
+      <if test="proportion != null">
+        proportion = #{proportion,jdbcType=TINYINT},
+      </if>
+      <if test="inviteId != null">
+        invite_id = #{inviteId,jdbcType=BIGINT},
+      </if>
+      <if test="inviteeId != null">
+        invitee_id = #{inviteeId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where inde_id = #{indeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.server.pojo.InviteDetailPO">
+    update t_invite_detail
+    set order_id = #{orderId,jdbcType=INTEGER},
+      com_type_id = #{comTypeId,jdbcType=INTEGER},
+      com_type_name = #{comTypeName,jdbcType=CHAR},
+      pay = #{pay,jdbcType=BIGINT},
+      earnings = #{earnings,jdbcType=BIGINT},
+      proportion = #{proportion,jdbcType=TINYINT},
+      invite_id = #{inviteId,jdbcType=BIGINT},
+      invitee_id = #{inviteeId,jdbcType=BIGINT}
+    where inde_id = #{indeId,jdbcType=BIGINT}
+  </update>
+</mapper>
