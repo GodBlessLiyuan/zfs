@@ -33,7 +33,7 @@ public class WithdrawUserPO implements Serializable {
     private Date endTime;
 
     /**
-     * 1 待审核  2 运营驳回 3 打款中  4 支付宝驳回  5 完成
+     * 1待审核  2运营驳回  3打款中  4支付宝驳回  5已完成
      */
     private Byte status;
 

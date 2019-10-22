@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.WithdrawUserDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.mapper.AdminUserMapper;
+import com.rpa.web.mapper.UserMapper;
 import com.rpa.web.mapper.WithdrawUserMapper;
 import com.rpa.web.pojo.WithdrawUserPO;
 import com.rpa.web.service.WithdrawUserService;
@@ -28,6 +30,12 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
     @Autowired
     private WithdrawUserMapper withdrawUserMapper;
 
+    @Autowired
+    private AdminUserMapper adminUserMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
     /**
      * 查询
      * @param draw
@@ -45,7 +53,7 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
-        map.put("name", phone);
+        map.put("phone", phone);
         map.put("status", status);
 
         // 按照条件查询数据
@@ -55,6 +63,7 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
         List<WithdrawUserDTO> lists_DTO = new ArrayList<>();
         for (WithdrawUserPO po : lists_PO) {
             WithdrawUserDTO dto = new WithdrawUserDTO();
+            dto.setWithdrawId(po.getWithdrawId());
             dto.setCreateTime(po.getCreateTime());
             dto.setPhone(queryPhoneByUserId(po.getUserId()));
             dto.setWithdraw(po.getWithdraw());
@@ -76,32 +85,45 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
 
     /**
      * 修改状态
-     * @param withdrawUserDTO
+     * @param withdrawId
+     * @param status
      * @param httpSession
      * @return
-     * @TODO 还需要修改操作人，即管理员a_id字段，需从session中获取
      */
     @Override
-    public ResultVO update(WithdrawUserDTO withdrawUserDTO, HttpSession httpSession) {
+    public ResultVO update(Integer withdrawId, Byte status, HttpSession httpSession) {
+
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        //int aId = adminUserDTO.getaId();
 
         // 根据主键withdraw_id，从数据库查出要修改的数据
-        WithdrawUserPO withdrawUserPO = this.withdrawUserMapper.selectByPrimaryKey(withdrawUserDTO.getWithdrawId());
+        WithdrawUserPO po = this.withdrawUserMapper.selectByPrimaryKey(withdrawId);
 
-        withdrawUserPO.setStatus(withdrawUserDTO.getStatus());
-        if (withdrawUserDTO.getStatus() == 1) {
-            withdrawUserPO.setAuditTime(new Date());
+        if (null == po) {
+            return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
         }
 
-        int count = this.withdrawUserMapper.updateByPrimaryKey(withdrawUserPO);
+        po.setStatus(status);
+        po.setAuditTime(new Date());
+        po.setEndTime(new Date());
+        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
 
-        // 调用支付宝接口，进行付款操作
-        this.AliPay(withdrawUserDTO.getAliAccount(), withdrawUserDTO.getAliName());
+        int count = this.withdrawUserMapper.updateByPrimaryKey(po);
+
+
+        /**
+         * 调用支付宝接口，进行付款操作
+         */
+        this.AliPay(po.getAliAccount(), po.getAliName());
 
         if (count == 1) {
             return ResultVOUtil.success();
         }
         return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
+
 
     /**
      * 根据aId，从t_admin_user表中查询username
@@ -110,8 +132,9 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
      * @return
      */
     private String queryUsernameByAid(Integer aId) {
-        return this.withdrawUserMapper.queryUsernameByAid(aId);
+        return this.adminUserMapper.queryUsernameByAid(aId);
     }
+
 
     /**
      * 根据userId，从t_user表中查询phone
@@ -120,10 +143,16 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
      * @return
      */
     private String queryPhoneByUserId(Long userId) {
-        return this.withdrawUserMapper.queryPhoneByUserId(userId);
+        return this.userMapper.queryPhoneByUserId(userId);
     }
 
 
+    /**
+     * 预留接口：Alipay
+     * @param aliAccount
+     * @param aliName
+     * @return
+     */
     private int AliPay(String aliAccount, String aliName) {
 
         // 业务逻辑：根据该方法返回状态，对提现数据的状态进行修改，并更新结束时间

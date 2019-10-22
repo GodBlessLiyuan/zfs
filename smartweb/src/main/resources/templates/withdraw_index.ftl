@@ -88,8 +88,8 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <button type="button" class="btn btn-primary" data-toggle='modal' data-target='#insertModal'>
-                                新增
+                            <button type="button" class="btn btn-primary" id="export"
+                                    onclick="javascript:exportClick();">导出
                             </button>
 
                             <hr>
@@ -97,15 +97,18 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>名称</label>
-                                            <input id="name" type="text" class="form-control">
+                                            <label>申请账号：</label>
+                                            <input id="phone" type="text" class="form-control">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label>状态</label>
+                                            <label>状态：</label>
                                             <select id="status" class="form-control">
-                                                <option value='0' selected='selected'>全选</option>
-                                                <option value='1'>关闭</option>
-                                                <option value='2'>开启</option>
+                                                <option value='0' selected='selected'>全部</option>
+                                                <option value='1'>待审核</option>
+                                                <option value='2'>运营驳回</option>
+                                                <option value='3'>打款中</option>
+                                                <option value='4'>支付宝驳回</option>
+                                                <option value='5'>已完成</option>
                                             </select>
                                         </div>
                                     </div>
@@ -121,14 +124,19 @@
 
                             <hr>
                             <div class="table-responsive">
-                                <table id="datatab" class="table table-striped table-bordered zero-configuration">
+                                <table id="datatab" class="display" style="width:100%">
                                     <thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>名称</th>
-                                        <th>上线时间</th>
-                                        <th>banner图</th>
-                                        <th>跳转</th>
+                                        <th>申请时间</th>
+                                        <th>申请账号</th>
+                                        <th>提款金额</th>
+                                        <th>账户余额</th>
+                                        <th>支付宝账号</th>
+                                        <th>支付宝姓名</th>
+                                        <th>提款次数</th>
+                                        <th>审核时间</th>
+                                        <th>结束状态</th>
                                         <th>状态</th>
                                         <th>操作</th>
                                         <th>操作人</th>
@@ -147,56 +155,19 @@
     <!--**********************************
         弹框
     ***********************************-->
-    <!--弹框：新增-->
-    <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <button type="hidden" id="insert" style="display:none;"/>
-                        </div>
-                        <div class="form-group">
-                            <span for="message-text" class="col-form-label">名称:</span>
-                            <input id="insert_name" class="form-control" type="text"/>
-                        </div>
-                        <div class="form-group">
-                            <span for="message-text" class="col-form-label">banner图:</span>
-                            <input id="insert_banner_pic" class="form-control" type="file"/>
-                        </div>
-                        <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">跳转:</span>
-                            <input id="insert_url" class="form-control" type="text"/>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定上架</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <!--弹框：修改状态，提示是否真的要切换状态-->
     <div class="modal fade" id="statusModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="form-group">
-                    <button type="hidden" id="statusExchange" style="display:none;"/>
+                    <button type="hidden" id="statusChange_1" style="display:none;"/>
+                    <button type="hidden" id="statusChange_2" style="display:none;"/>
                 </div>
                 <div class="modal-header">
                     <h5 class="modal-title">提示</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
                 </div>
-                <div class="modal-body">是否切换状态？
+                <div class="modal-body" id="statusChange_3">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -205,30 +176,6 @@
             </div>
         </div>
     </div>
-
-
-    <!--弹框：删除，提示是否真的要删除-->
-    <div class="modal fade" id="deleteModal" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="form-group">
-                    <button type="hidden" id="delete" style="display:none;"/>
-                </div>
-                <div class="modal-header">
-                    <h5 class="modal-title">提示</h5>
-                    <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
-                </div>
-                <div class="modal-body">是否删除此信息？
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:deleteClick()">确认</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <!--**********************************
         Content body end
     ***********************************-->
@@ -261,37 +208,22 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 
+
+
 <script>
     /**
-     * 新增：在弹框中点击确定按钮后，将数据发送给后台
+     * 导出
      */
-    function insertClick() {
-
-        var reqData = new FormData();
-        reqData.append("name", $('#insert_name').val());
-        reqData.append("picPath", $('#insert_banner_pic')[0].files[0]);
-        reqData.append("url", $('#insert_url').val());
-
-        $.ajax({
-            type: 'post',
-            url: '/bannerconfig/insert',
-            dataType: 'json',
-            data: reqData,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                alert("新增成功！")
-                $('#datatab').DataTable().draw(false);
-            }
-        });
+    function exportClick() {
     }
+
 
 
     /**
      * 重置
      */
     function resetClick() {
-        $('#name').val(null);
+        $('#phone').val(null);
         $('#status option:first').prop('selected', 'selected');
     }
 
@@ -307,7 +239,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/bannerconfig/query?name=" + $('#name').val() + "&status=" + $('#status').val(),
+            "ajax": "/withdraw/query?phone=" + $('#phone').val() + "&status=" + $('#status').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -315,42 +247,50 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "name"},
-                {"data": "startTime"},
-                {
-                    "data": "picPath",
-                    "render": function (data, type, full) {
-                        return "<img src='" + data + "' height='50px' width='50px'/>";
-                    }
-                },
-                {
-                    "data": "url",
-                    "render": function (data, type, full) {
-                        return  "<a href='"+ data +"'>"+ data +"</a>";
-                    }
-                },
+                {"data": "createTime"},
+                {"data": "phone"},
+                {"data": "withDraw"},
+                {"data": "remaining"},
+                {"data": "aliAccount"},
+                {"data": "aliName"},
+                {"data": "withdrawTime"},
+                {"data": "auditTime"},
+                {"data": "endTime"},
                 {
                     "data": "status",
                     "render": function (data, type, full) {
                         var sta;
                         if (data === 1) {
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary' onclick='javascript:statusModal(" + full.bannerId + ")'>关闭</button>";
-                        }else{
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary' onclick='javascript:statusModal(" + full.bannerId + ")'>开启</button>";
+                            sta = "<button type='button'  data-toggle='modal' data-whatever='@getbootstrap' " +
+                                "class='btn btn-primary'>待审核</button>";
+                        }else if(data === 2){
+                            sta = "<button type='button'  data-toggle='modal' data-whatever='@getbootstrap' " +
+                                "class='btn btn-primary'>运营驳回</button>";
+                        }else if(data === 3) {
+                            sta = "<button type='button'  data-toggle='modal' data-whatever='@getbootstrap' " +
+                                "class='btn btn-primary'>打款中</button>";
+                        }else if(data === 4){
+                            sta = "<button type='button'  data-toggle='modal' data-whatever='@getbootstrap' " +
+                                "class='btn btn-primary'>支付宝驳回</button>";
+                        }else if(data === 5){
+                            sta = "<button type='button'  data-toggle='modal' data-whatever='@getbootstrap' " +
+                                "class='btn btn-primary'>已完成</button>";
                         }
                         return sta;
                     }
                 },
                 {
-                    "data": "bannerId",
+                    "data": "withdrawId",
                     "render": function (data, type, full) {
 
-                        var delete_button = "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:deleteModal(" + data + ")'>删除</button>";
+                        var reject_button = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ 2 +")'>驳回</button>";
+                        var pass_button = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ 5 +")'>通过</button>";
 
-                        return delete_button;
+                        if (full.status === 1) {
+                            return reject_button + pass_button;
+                        }
                     }
                 },
                 {"data": "operator"}
@@ -375,46 +315,32 @@
 
 
     /**
-     * 修改状态：将要修改数据的ID存到提示框里
+     * 修改状态：将要修改数据的ID、状态码存到提示框里
      */
-    function statusModal(bannerId) {
-        $('#statusExchange').val(bannerId);
+    function statusModal(withdrawId, status) {
+        $('#statusChange_1').val(withdrawId);
+        $('#statusChange_2').val(status);
+
+        if (status == 2) {
+            document.getElementById("statusChange_3").innerText = "是否驳回此提款请求？"
+        }else if (status == 5) {
+            document.getElementById("statusChange_3").innerText = "是否同意此提款请求？"
+        }
     }
 
     /**
-     * 修改状态：从提示框里取出ID，发送给后台
+     * 修改状态：从提示框里取出ID和状态码，发送给后台
      */
     function statusClick() {
-        var bannerId = $('#statusExchange').val();
-        $.post("/bannerconfig/update/status", {bannerId:bannerId}, function (result) {
+        var withdrawId = $('#statusChange_1').val();
+        var status = $('#statusChange_2').val();
+
+        $.post("/withdraw/update", {withdrawId:withdrawId, status:status}, function (result) {
             if (result.code === 0) {
                 alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
             } else {
                 alert("状态修改失败！")
-            }
-        }, "json");
-    }
-
-    /**
-     * 删除：表格中的删除按钮，作用是将要删除数据的ID传递给提示框
-     */
-    function deleteModal(bannerId) {
-        //不是取值，而是给弹框赋值
-        $('#delete').val(bannerId);
-    }
-
-    /**
-     * 删除：真正的删除操作，从弹框中获取要删除数据的ID
-     */
-    function deleteClick() {
-        var bannerId = $('#delete').val();
-        $.post("/bannerconfig/delete", {bannerId:bannerId}, function (result) {
-            if (result.code === 0) {
-                alert("删除成功！")
-                $('#datatab').DataTable().draw(false);
-            } else {
-                alert("删除失败！")
             }
         }, "json");
     }

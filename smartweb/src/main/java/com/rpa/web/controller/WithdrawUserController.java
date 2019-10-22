@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
  * @author: dangyi
  * @date: Created in 8:47 2019/10/12
  * @version: 1.0.0
- * @description:
+ * @description：提现
  */
 @RestController
 @RequestMapping("withdraw")
@@ -46,11 +46,15 @@ public class WithdrawUserController {
 
     /**
      * 修改
-     * @param withdrawUserDTO
+     * @param withdrawId
+     * @param status
+     * @param httpSession
      * @return
      */
     @PostMapping("update")
-    public ResultVO update(WithdrawUserDTO withdrawUserDTO, HttpSession httpSession) {
-        return this.withdrawUserService.update(withdrawUserDTO, httpSession);
+    public ResultVO update(@RequestParam(value = "withdrawId") Integer withdrawId,
+                           @RequestParam(value = "status") Byte status,
+                           HttpSession httpSession) {
+        return this.withdrawUserService.update(withdrawId, status, httpSession);
     }
 }

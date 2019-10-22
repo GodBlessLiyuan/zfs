@@ -6,6 +6,7 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,13 +47,18 @@ public class BannerConfigController {
 
     /**
      * 插入
-     * @param bannerConfigDTO
+     * @param name
+     * @param picPath
+     * @param url
      * @param httpSession
      * @return
      */
     @PostMapping("insert")
-    public ResultVO insert(BannerConfigDTO bannerConfigDTO, HttpSession httpSession) {
-        return this.bannerConfigService.insert(bannerConfigDTO, httpSession);
+    public ResultVO insert(@RequestParam(value = "name") String name,
+                           @RequestParam(value = "picPath") MultipartFile picPath,
+                           @RequestParam(value = "url") String url,
+                           HttpSession httpSession) {
+        return this.bannerConfigService.insert(name, picPath, url, httpSession);
     }
 
     /**

@@ -307,6 +307,14 @@ public class PageController {
         return "batchinfo_detail_index";
     }
 
+    /**
+     * 爱收益：提现
+     * @return
+     */
+    @RequestMapping("/withdraw")
+    public String withdraw() {
+        return "withdraw_index";
+    }
 
     /**
      * 错误页面：404
