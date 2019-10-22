@@ -1,6 +1,10 @@
 package com.rpa.web.controller;
 
+import com.rpa.web.common.Constant;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.VipCommodityDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.exception.PromptException;
 import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,10 +60,13 @@ public class VipCommodityController {
                            @RequestParam(value = "description") String description,
                            @RequestParam(value = "price") int price,
                            @RequestParam(value = "showDiscount") String showDiscount,
-                           @RequestParam(value = "discount") float discount, HttpSession session) {
+                           @RequestParam(value = "discount") float discount, HttpServletRequest req) {
 
         // 从Session里获取管理员Id
-        AdminUserPO loginUser = (AdminUserPO) session.getAttribute("loginUser");
+        AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
+        if (admin == null) {
+            throw new PromptException(ExceptionEnum.SESSION_ERROR);
+        }
 
         return service.insert(channelId, comTypeId, comName, description, price, showDiscount,
                 discount, 1);

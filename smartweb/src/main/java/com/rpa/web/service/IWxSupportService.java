@@ -30,9 +30,10 @@ public interface IWxSupportService {
      *
      * @param packageName 包名
      * @param extra       备注
+     * @param aId
      * @return
      */
-    int insert(String packageName, String extra);
+    int insert(String packageName, String extra, int aId);
 
     /**
      * 主键

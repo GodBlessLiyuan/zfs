@@ -1,10 +1,10 @@
 package com.rpa.server.controller;
 
-import com.rpa.server.service.ISmsService;
-import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.LoginDTO;
 import com.rpa.server.service.ILoginService;
+import com.rpa.server.service.ISmsService;
+import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,9 +42,9 @@ public class LoginController {
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
         cache.cacheVerifyCode(dto.getPh(), verifyCode);
 
-        if(smsService.sendSMS(dto.getPh(),verifyCode) == 1){
+        if (smsService.sendSMS(dto.getPh(), verifyCode) == 1) {
             return new ResultVO(1000);
-        }else {
+        } else {
             return new ResultVO<>(2000);
         }
     }
@@ -54,9 +54,10 @@ public class LoginController {
         if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !VerifyUtil.checkPhone(dto.getPh())) {
             return new ResultVO(2000);
         }
-        // 短信码过期
-        if(!cache.checkSmsByCache(dto.getPh(), dto.getSms())){
-            return new ResultVO(1013);
+        // 短信码
+        int code = cache.checkSmsByCache(dto.getPh(), dto.getSms());
+        if (1000 != code) {
+            return new ResultVO(code);
         }
 
         return loginService.register(dto, req);

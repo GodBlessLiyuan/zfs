@@ -30,9 +30,10 @@ public interface IWhilteDeviceService {
      *
      * @param imei  imei
      * @param extra 备注
+     * @param aId
      * @return
      */
-    ResultVO insert(String imei, String extra);
+    ResultVO insert(String imei, String extra, int aId);
 
     /**
      * 删除

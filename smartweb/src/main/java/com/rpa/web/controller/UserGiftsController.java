@@ -1,6 +1,10 @@
 package com.rpa.web.controller;
 
+import com.rpa.web.common.Constant;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.UserGiftsDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.exception.PromptException;
 import com.rpa.web.service.IUserGiftsSercive;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,8 +43,13 @@ public class UserGiftsController {
     }
 
     @RequestMapping("insert")
-    public int insert(@RequestParam(value = "comTypeId") int comTypeId) {
-        return sercive.insert(comTypeId);
+    public int insert(@RequestParam(value = "comTypeId") int comTypeId, HttpServletRequest req) {
+        // 从Session里获取管理员Id
+        AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
+        if (admin == null) {
+            throw new PromptException(ExceptionEnum.SESSION_ERROR);
+        }
+        return sercive.insert(comTypeId, admin.getaId());
     }
 
     @RequestMapping("updateStatus")

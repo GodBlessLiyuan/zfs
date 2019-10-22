@@ -40,7 +40,7 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
     }
 
     @Override
-    public int insert(int comTypeId) {
+    public int insert(int comTypeId, int aId) {
         ComTypePO comTypePO = comTypeMapper.selectByPrimaryKey(comTypeId);
 
         UserGiftsPO userGiftsPO = new UserGiftsPO();
@@ -50,7 +50,7 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
 
         userGiftsPO.setStatus((byte) 1);
         userGiftsPO.setCreateTime(new Date());
-        userGiftsPO.setaId(1);
+        userGiftsPO.setaId(aId);
 
         return userGiftsMapper.insert(userGiftsPO);
     }
