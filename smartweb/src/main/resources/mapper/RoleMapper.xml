@@ -20,16 +20,8 @@
   </select>
 
   <select id="query" resultMap="BaseResultMap">
-    select
-    role_id as roleId, role_name as roleName, role_num as roleNum
-    from t_role r
-    left join t_admin_user au on r.role_id = au.role_id
-    left join t_adconfig a on au.a_id = a.a_id
-    <where>
-      <if test="phone != null and phone != ''">
-        AND a.phone = #{phone}
-      </if>
-    </where>>
+    select  role_id, role_name, role_num
+    from t_role
   </select>
 
   <select id="queryAllRoles"  resultMap="BaseResultMap">

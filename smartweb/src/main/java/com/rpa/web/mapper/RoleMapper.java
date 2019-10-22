@@ -11,4 +11,6 @@ import java.util.List;
 @Mapper
 public interface RoleMapper extends BaseDAO<RolePO, Integer> {
     List<RolePO> queryAllRoles();
+
+    List<RolePO> query();
 }

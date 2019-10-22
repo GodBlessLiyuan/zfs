@@ -72,7 +72,7 @@
 
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">系统管理</a>
                         <ul aria-expanded="false">
-                            <li><a href="./page-error-404.html">权限管理</a></li>
+                            <li><a href="/role">权限管理</a></li>
                             <li><a href="/admin">账号管理</a></li>
                         </ul>
                     </li>
