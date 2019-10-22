@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.domain.AdminUserDO;
 import com.rpa.web.dto.AdminUserDTO;
@@ -81,26 +82,26 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @return
      */
     @Override
-    public ResultVO insert(AdminUserDTO adminUserDTO, HttpSession httpSession) {
+    public ResultVO insert(AdminUserDTO dto, HttpSession httpSession) {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 把 DTO 转换为 PO
-        AdminUserPO adminUserPO = new AdminUserPO();
-        adminUserPO.setRoleId(adminUserDTO.getRoleId());
-        adminUserPO.setUsername(adminUserDTO.getUsername());
-        adminUserPO.setPassword(adminUserDTO.getPassword());
-        adminUserPO.setName(adminUserDTO.getName());
-        adminUserPO.setPhone(adminUserDTO.getPhone());
-        adminUserPO.setEmail(adminUserDTO.getEmail());
-        adminUserPO.setExtra(adminUserDTO.getExtra());
-        adminUserPO.setCreateTime(new Date());
-        adminUserPO.setRelationAId(1);//测试的时候，暂且写为1，正常参数应为aId
+        AdminUserPO po = new AdminUserPO();
+        po.setRoleId(dto.getRoleId());
+        po.setUsername(dto.getUsername());
+        po.setPassword(dto.getPassword());
+        po.setName(dto.getName());
+        po.setPhone(dto.getPhone());
+        po.setEmail(dto.getEmail());
+        po.setExtra(dto.getExtra());
+        po.setCreateTime(new Date());
+        po.setRelationAId(aId);//测试的时候，暂且写为1，正常参数应为aId
 
-        int count = this.adminUserMapper.insert(adminUserPO);
+        int count = this.adminUserMapper.insert(po);
         if (count == 1) {
             return ResultVOUtil.success();
         }
@@ -166,32 +167,32 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     /**
      * 账号管理——修改
-     * @param adminUserDTO
+     * @param dto
      * @param httpSession
      * @return
      */
     @Override
-    public ResultVO update(AdminUserDTO adminUserDTO, HttpSession httpSession) {
+    public ResultVO update(AdminUserDTO dto, HttpSession httpSession) {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 根据 a_id，从数据库获取要修改的数据对象
-        AdminUserPO adminUserPO = this.adminUserMapper.selectByPrimaryKey(adminUserDTO.getaId());
+        AdminUserPO po = this.adminUserMapper.selectByPrimaryKey(dto.getaId());
 
         // 把 DTO 转换为 PO
-        adminUserPO.setRoleId(adminUserDTO.getRoleId());
-        adminUserPO.setUsername(adminUserDTO.getUsername());
-        adminUserPO.setPassword(adminUserDTO.getPassword());
-        adminUserPO.setName(adminUserDTO.getName());
-        adminUserPO.setPhone(adminUserDTO.getPhone());
-        adminUserPO.setEmail(adminUserDTO.getEmail());
-        adminUserPO.setExtra(adminUserDTO.getExtra());
-        adminUserPO.setRelationAId(1);//测试的时候，暂且写为1，正常参数应为aId
+        po.setRoleId(dto.getRoleId());
+        po.setUsername(dto.getUsername());
+        po.setPassword(dto.getPassword());
+        po.setName(dto.getName());
+        po.setPhone(dto.getPhone());
+        po.setEmail(dto.getEmail());
+        po.setExtra(dto.getExtra());
+        po.setRelationAId(aId);//测试的时候，暂且写为1，正常参数应为aId
 
-        int count = adminUserMapper.updateByPrimaryKey(adminUserPO);
+        int count = adminUserMapper.updateByPrimaryKey(po);
         if (count == 1) {
             return ResultVOUtil.success();
         }

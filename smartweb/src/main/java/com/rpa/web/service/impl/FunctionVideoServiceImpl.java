@@ -1,7 +1,9 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.FunctionVideoDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdminUserMapper;
@@ -99,8 +101,8 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 把 dto 转换为 po
         FunctionVideoPO po = new FunctionVideoPO();
@@ -109,7 +111,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         po.setExtra(dto.getExtra());
         po.setUpdateTime(new Date());
         po.setCreateTime(new Date());
-        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
 
         int count = this.functionVideoMapper.insert(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
@@ -126,8 +128,8 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 从数据库中查询出要修改的数据
         FunctionVideoPO po = this.functionVideoMapper.selectByPrimaryKey(dto.getFunctionId());
@@ -140,7 +142,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         po.setUrl(dto.getUrl());
         po.setExtra(dto.getExtra());
         po.setUpdateTime(new Date());
-        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
 
         int count = this.functionVideoMapper.updateByPrimaryKey(po);
 

@@ -1,7 +1,9 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.BannerConfigDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdminUserMapper;
@@ -91,8 +93,8 @@ public class BannerConfigServiceImpl implements BannerConfigService {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         BannerConfigPO po = new BannerConfigPO();
         po.setName(name);
@@ -102,7 +104,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         po.setUpdateTime(new Date());
         po.setStatus((byte)1);
         po.setDr((byte)1);
-        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
 
         int count = this.bannerConfigMapper.insert(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
@@ -119,8 +121,8 @@ public class BannerConfigServiceImpl implements BannerConfigService {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 先查出要修改的数据
         BannerConfigPO po = this.bannerConfigMapper.selectByPrimaryKey(dto.getBannerId());
@@ -135,7 +137,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
             po.setStatus((byte)1);
         }
         po.setUpdateTime(new Date());
-        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
 
         int count = this.bannerConfigMapper.updateByPrimaryKey(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
