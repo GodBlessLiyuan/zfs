@@ -27,9 +27,10 @@ public interface IUserGiftsSercive {
      * 插入
      *
      * @param comTypeId
+     * @param aId
      * @return
      */
-    int insert(int comTypeId);
+    int insert(int comTypeId, int aId);
 
     /**
      * 跟新状态

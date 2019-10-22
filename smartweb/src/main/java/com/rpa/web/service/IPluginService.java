@@ -52,9 +52,10 @@ public interface IPluginService {
      * @param softChannel 渠道
      * @param context     插件内容
      * @param extra       插件备注
+     * @param aId
      * @return
      */
-    int insert(MultipartFile file, int appId, int[] softChannel, String context, String extra);
+    int insert(MultipartFile file, int appId, int[] softChannel, String context, String extra, int aId);
 
     /**
      * 状态更新

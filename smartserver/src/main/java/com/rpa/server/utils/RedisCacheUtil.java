@@ -59,12 +59,20 @@ public class RedisCacheUtil {
      *
      * @param phone 手机号
      * @param sms   短信码
+     * @return 返回码
      */
-    public boolean checkSmsByCache(String phone, String sms) {
+    public int checkSmsByCache(String phone, String sms) {
         if (sms == null || sms.length() != LoginConstant.VERIFY_CODE_LENGTH) {
-            return false;
+            return 1014;
+        }
+        String cacheSms = template.opsForValue().get(LoginConstant.VERIFY_CODE_PREFIX + phone);
+        if(cacheSms == null) {
+            return 1013;
+        }
+        if(!sms.equals(cacheSms)) {
+            return 1014;
         }
 
-        return sms.equals(template.opsForValue().get(LoginConstant.VERIFY_CODE_PREFIX + phone));
+        return 1000;
     }
 }

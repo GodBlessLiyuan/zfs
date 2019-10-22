@@ -34,14 +34,14 @@ public class WxSupportServiceImpl implements IWxSupportService {
     }
 
     @Override
-    public int insert(String packageName, String extra) {
+    public int insert(String packageName, String extra, int aId) {
         WxSupportPO po = new WxSupportPO();
 
         po.setPackageName(packageName);
         po.setExtra(extra);
         po.setCreateTime(new Date());
 
-        po.setaId(1);
+        po.setaId(aId);
 
         return wxSupportMapper.insert(po);
     }

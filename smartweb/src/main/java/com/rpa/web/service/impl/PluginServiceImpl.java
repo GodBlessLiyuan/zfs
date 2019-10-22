@@ -67,14 +67,14 @@ public class PluginServiceImpl implements IPluginService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int insert(MultipartFile file, int appId, int[] softChannel, String context, String extra) {
+    public int insert(MultipartFile file, int appId, int[] softChannel, String context, String extra, int aId) {
         PluginPO pluginPO = new PluginPO();
         this.setPluginPObyFile(file, pluginPO);
 
         pluginPO.setStatus((byte) 1);
         pluginPO.setContext(context);
         pluginPO.setExtra(extra);
-        pluginPO.setaId(1);
+        pluginPO.setaId(aId);
         pluginPO.setCreateTime(new Date());
         pluginPO.setDr((byte) 1);
 
