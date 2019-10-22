@@ -27,28 +27,24 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 查询
+     *
      * @param draw
      * @param pageNum
      * @param pageSize
-     * @param phone
      * @return
      */
     @Override
-    public DTPageInfo<RoleDTO> query(int draw, int pageNum, int pageSize, String phone) {
+    public DTPageInfo<RoleDTO> query(int draw, int pageNum, int pageSize) {
 
         // 分页
         Page<RoleDTO> page = PageHelper.startPage(pageNum, pageSize);
 
-        // 创建map对象，封装查询条件，作为动态sql语句的参数
-        Map<String, Object> map = new HashMap<>(1);
-        map.put("phone", phone);
-
         // 按照条件查询数据
-        List<RolePO> lists_PO = roleMapper.query(map);
+        List<RolePO> lists_PO = roleMapper.query();
 
         // 将查询到的 PO 数据转换为 DTO
         List<RoleDTO> lists_DTO = new ArrayList<>();
-        for(RolePO po: lists_PO) {
+        for (RolePO po : lists_PO) {
             RoleDTO dto = new RoleDTO();
             dto.setRoleId(po.getRoleId());
             dto.setRoleNum(po.getRoleNum());
@@ -59,29 +55,5 @@ public class RoleServiceImpl implements RoleService {
 
         //根据分页查询的结果，封装最终的返回结果
         return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
-    }
-
-    /**
-     * 修改
-     * @param roleDTO
-     * @param httpSession
-     * @return
-     * @TODO 还需修改管理员a_id，需从session中获取
-     */
-    @Override
-    public int update(RoleDTO roleDTO, HttpSession httpSession) {
-
-        // 先查询出需要修改的数据
-        RolePO rolePO = this.roleMapper.selectByPrimaryKey(roleDTO.getRoleId());
-        rolePO.setRoleNum(roleDTO.getRoleNum());
-        rolePO.setRoleName(roleDTO.getRoleName());
-        rolePO.setUpdateTime(new Date());
-
-        return this.roleMapper.updateByPrimaryKey(rolePO);
-    }
-
-    @Override
-    public int delete(int roleId) {
-        return this.roleMapper.deleteByPrimaryKey(roleId);
     }
 }

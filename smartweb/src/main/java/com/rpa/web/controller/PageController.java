@@ -275,6 +275,16 @@ public class PageController {
     }
 
     /**
+     * 权限管理
+     * @return
+     */
+    @RequestMapping("/role")
+    public String role() {
+        return "role_index";
+    }
+
+
+    /**
      * 账号管理
      * @return
      */

@@ -12,9 +12,5 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface RoleService {
-    DTPageInfo<RoleDTO> query(int draw, int pageNum, int pageSize, String phone);
-
-    int update(RoleDTO roleDTO, HttpSession httpSession);
-
-    int delete(int roleId);
+    DTPageInfo<RoleDTO> query(int draw, int pageNum, int pageSize);
 }
