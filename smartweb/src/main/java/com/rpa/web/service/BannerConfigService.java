@@ -3,6 +3,7 @@ package com.rpa.web.service;
 import com.rpa.web.dto.BannerConfigDTO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.ResultVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,9 +16,9 @@ import javax.servlet.http.HttpSession;
 public interface BannerConfigService {
     DTPageInfo<BannerConfigDTO> query(int draw, int pageNum, int pageSize, String name, Byte status);
 
-    ResultVO insert(BannerConfigDTO bannerConfigDTO, HttpSession httpSession);
-
     ResultVO update(BannerConfigDTO bannerConfigDTO, HttpSession httpSession);
 
     ResultVO delete(int bannerId);
+
+    ResultVO insert(String name, MultipartFile picPath, String url, HttpSession httpSession);
 }

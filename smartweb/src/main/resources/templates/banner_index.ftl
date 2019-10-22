@@ -267,18 +267,23 @@
      */
     function insertClick() {
 
-        var name = $('#insert_name').val();
-        var picPath = $('#insert_banner_pic').val();
-        var url = $('#insert_url').val();
+        var reqData = new FormData();
+        reqData.append("name", $('#insert_name').val());
+        reqData.append("picPath", $('#insert_banner_pic')[0].files[0]);
+        reqData.append("url", $('#insert_url').val());
 
-        $.post("/bannerconfig/insert", {name:name, picPath:picPath, url:url}, function (result) {
-            if (result.code === 0) {
+        $.ajax({
+            type: 'post',
+            url: '/bannerconfig/insert',
+            dataType: 'json',
+            data: reqData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
                 alert("新增成功！")
                 $('#datatab').DataTable().draw(false);
-            } else {
-                alert("新增失败！")
             }
-        }, "json");
+        });
     }
 
 

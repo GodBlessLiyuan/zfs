@@ -15,6 +15,7 @@ import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -81,23 +82,22 @@ public class BannerConfigServiceImpl implements BannerConfigService {
 
     /**
      * 插入
-     * @param dto
+     * @param
      * @param httpSession
      * @return
      */
     @Override
-    public ResultVO insert(BannerConfigDTO dto, HttpSession httpSession) {
+    public ResultVO insert(String name, MultipartFile picPath, String url, HttpSession httpSession) {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
         //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
         //int aId = adminUserDTO.getaId();
 
-        // 把 DTO 转换为 PO
         BannerConfigPO po = new BannerConfigPO();
-        po.setName(dto.getName());
-        po.setPicPath(FileUtil.uploadFile(dto.getPicPath(), iconDir));
-        po.setUrl(dto.getUrl());
+        po.setName(name);
+        po.setPicPath(FileUtil.uploadFile(picPath, iconDir));
+        po.setUrl(url);
         po.setCreateTime(new Date());
         po.setUpdateTime(new Date());
         po.setStatus((byte)1);

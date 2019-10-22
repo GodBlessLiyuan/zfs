@@ -26,10 +26,14 @@ public class UploadFileConfig implements WebMvcConfigurer {
     @Value("${file.uploadFolder}")
     private String uploadFolder;
 
+
+    /**
+     * 项目中访问图片等静态资源的虚拟路径，映射保存有图片等资源的本地磁盘实际路径
+     * handler为前端访问的虚拟路径，locations为存有资源的磁盘实际路径
+     * @param registry
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        //文件磁盘图片url 映射
-        //配置server虚拟路径，handler为前台访问的目录，locations为files相对应的本地路径
         registry.addResourceHandler(staticAccessPath).addResourceLocations("file:" + uploadFolder);
     }
 
