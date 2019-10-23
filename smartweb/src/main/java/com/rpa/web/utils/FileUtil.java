@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 public class FileUtil {
 
     public static String rootPath;
+    public static String projectDir;
 
     /**
      * 文件上传处理
@@ -36,12 +37,12 @@ public class FileUtil {
      */
     public static String uploadFile(MultipartFile file, String dir) {
         String fileName = System.currentTimeMillis() + file.getOriginalFilename();
-        File targetFile = new File(rootPath + dir);
+        File targetFile = new File(rootPath + projectDir + dir);
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
 
-        String filePath = rootPath + dir + fileName;
+        String filePath = rootPath + projectDir + dir + fileName;
         BufferedOutputStream stream = null;
         try {
             stream = new BufferedOutputStream(new FileOutputStream(filePath));
@@ -59,7 +60,7 @@ public class FileUtil {
             }
         }
 
-        return dir + fileName;
+        return projectDir + dir + fileName;
     }
 
 
@@ -82,7 +83,7 @@ public class FileUtil {
             apkInfo.put("versioncode", apkMeta.getVersionCode());
             apkInfo.put("versionname", apkMeta.getVersionName());
             // 重命名
-            String newFile = apkDir + apkMeta.getPackageName() + "_" + apkMeta.getVersionCode() +
+            String newFile = projectDir + apkDir + apkMeta.getPackageName() + "_" + apkMeta.getVersionCode() +
                     "_" + System.currentTimeMillis() + ".apk";
             apkFile.close();
             new File(rootPath + filePath).renameTo(new File(rootPath + newFile));
@@ -119,5 +120,10 @@ public class FileUtil {
     @Value("${file.uploadFolder}")
     public void setPROFILE(String rootPath) {
         FileUtil.rootPath = rootPath;
+    }
+
+    @Value("${file.projectDir}")
+    public void setProjectDir(String projectDir) {
+        FileUtil.projectDir = projectDir;
     }
 }
