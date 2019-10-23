@@ -1,17 +1,13 @@
-package com.rpa.web.pojo;
+package com.rpa.server.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * t_whilte_device
- *
- * @author
+ * t_white_device
+ * @author 
  */
-public class WhilteDevicePO implements Serializable {
-    /**
-     * 允许为null
-     */
+public class WhiteDevicePO implements Serializable {
     private Long deviceId;
 
     private String extra;
@@ -23,8 +19,6 @@ public class WhilteDevicePO implements Serializable {
     private Date createTime;
 
     private Date updateTime;
-
-    private String imei;
 
     private static final long serialVersionUID = 1L;
 
@@ -76,14 +70,6 @@ public class WhilteDevicePO implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public String getImei() {
-        return imei;
-    }
-
-    public void setImei(String imei) {
-        this.imei = imei;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -95,13 +81,13 @@ public class WhilteDevicePO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        WhilteDevicePO other = (WhilteDevicePO) that;
+        WhiteDevicePO other = (WhiteDevicePO) that;
         return (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()))
-                && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
-                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-                && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
-                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.rpa.web.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * t_invite_detail
@@ -26,6 +27,8 @@ public class InviteDetailPO implements Serializable {
     private Long inviteeId;
 
     private Integer viptypeId;
+
+    private Date payTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -109,6 +112,14 @@ public class InviteDetailPO implements Serializable {
         this.viptypeId = viptypeId;
     }
 
+    public Date getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Date payTime) {
+        this.payTime = payTime;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -130,7 +141,8 @@ public class InviteDetailPO implements Serializable {
             && (this.getProportion() == null ? other.getProportion() == null : this.getProportion().equals(other.getProportion()))
             && (this.getInviteId() == null ? other.getInviteId() == null : this.getInviteId().equals(other.getInviteId()))
             && (this.getInviteeId() == null ? other.getInviteeId() == null : this.getInviteeId().equals(other.getInviteeId()))
-            && (this.getViptypeId() == null ? other.getViptypeId() == null : this.getViptypeId().equals(other.getViptypeId()));
+            && (this.getViptypeId() == null ? other.getViptypeId() == null : this.getViptypeId().equals(other.getViptypeId()))
+            && (this.getPayTime() == null ? other.getPayTime() == null : this.getPayTime().equals(other.getPayTime()));
     }
 
     @Override
@@ -147,6 +159,7 @@ public class InviteDetailPO implements Serializable {
         result = prime * result + ((getInviteId() == null) ? 0 : getInviteId().hashCode());
         result = prime * result + ((getInviteeId() == null) ? 0 : getInviteeId().hashCode());
         result = prime * result + ((getViptypeId() == null) ? 0 : getViptypeId().hashCode());
+        result = prime * result + ((getPayTime() == null) ? 0 : getPayTime().hashCode());
         return result;
     }
 
@@ -166,6 +179,7 @@ public class InviteDetailPO implements Serializable {
         sb.append(", inviteId=").append(inviteId);
         sb.append(", inviteeId=").append(inviteeId);
         sb.append(", viptypeId=").append(viptypeId);
+        sb.append(", payTime=").append(payTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

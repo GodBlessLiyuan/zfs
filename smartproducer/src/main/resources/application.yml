@@ -6,11 +6,13 @@ spring:
       bootstrap-servers: 192.168.10.3:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-eurek
+  application:
+    name: smartproducer
 
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
 
-
-
-  .default-zone=http://localhost:8761/eureka/
 
 

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.web.mapper.WhilteUserMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.WhilteUserPO">
+<mapper namespace="com.rpa.web.mapper.WhiteUserMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.WhiteUserPO">
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="username" jdbcType="CHAR" property="username" />
     <result column="phone" jdbcType="CHAR" property="phone" />
   </resultMap>
-  <insert id="insert" parameterType="com.rpa.web.pojo.WhilteUserPO">
-    insert into t_whilte_user (user_id, username, phone
+  <insert id="insert" parameterType="com.rpa.web.pojo.WhiteUserPO">
+    insert into t_white_user (user_id, username, phone
       )
-    values (#{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}
+    values (#{userId,jdbcType=BIGINT}, #{username,jdbcType=CHAR}, #{phone,jdbcType=CHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.web.pojo.WhilteUserPO">
-    insert into t_whilte_user
+  <insert id="insertSelective" parameterType="com.rpa.web.pojo.WhiteUserPO">
+    insert into t_white_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         user_id,
@@ -30,7 +30,7 @@
         #{userId,jdbcType=BIGINT},
       </if>
       <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+        #{username,jdbcType=CHAR},
       </if>
       <if test="phone != null">
         #{phone,jdbcType=CHAR},

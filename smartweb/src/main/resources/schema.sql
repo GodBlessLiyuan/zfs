@@ -25,10 +25,11 @@ DROP TABLE IF EXISTS t_device_imei;
 DROP TABLE IF EXISTS t_exception;
 DROP TABLE IF EXISTS t_user_notice;
 DROP TABLE IF EXISTS t_user_device;
-DROP TABLE IF EXISTS t_whilte_device;
+DROP TABLE IF EXISTS t_white_device;
 DROP TABLE IF EXISTS t_device;
 DROP TABLE IF EXISTS t_feedback;
 DROP TABLE IF EXISTS t_functionvideo;
+DROP TABLE IF EXISTS t_invite_detail;
 DROP TABLE IF EXISTS t_invite_user;
 DROP TABLE IF EXISTS t_key_text;
 DROP TABLE IF EXISTS t_key_value;
@@ -42,7 +43,7 @@ DROP TABLE IF EXISTS t_role;
 DROP TABLE IF EXISTS t_share_activity;
 DROP TABLE IF EXISTS t_soft_channel;
 DROP TABLE IF EXISTS t_user_vip;
-DROP TABLE IF EXISTS t_whilte_user;
+DROP TABLE IF EXISTS t_white_user;
 DROP TABLE IF EXISTS t_user;
 DROP TABLE IF EXISTS t_user_history;
 DROP TABLE IF EXISTS t_viptype;
@@ -155,7 +156,8 @@ CREATE TABLE t_app
 	a_id int,
 	-- 1 未发布 2 发布
 	status int COMMENT '1 未发布 2 发布',
-	update_type tinyint,
+	-- 1 普通更新 2 强制更新
+	update_type tinyint DEFAULT 1 COMMENT '1 普通更新 2 强制更新',
 	size int,
 	extra char(255),
 	context char(255),
@@ -219,11 +221,11 @@ CREATE TABLE t_batch_info
 	id int NOT NULL AUTO_INCREMENT,
 	vipkey char(16),
 	batch_id int NOT NULL,
-	-- 1 激活  2 未激活 3 冻结  4 失效
-	status tinyint COMMENT '1 激活  2 未激活 3 冻结  4 失效',
+	-- 1 未激活 2 激活  3 冻结  4 失效
+	status tinyint DEFAULT 1 COMMENT '1 未激活 2 激活  3 冻结  4 失效',
 	days int,
 	update_time datetime,
-	user_id bigint NOT NULL,
+	user_id bigint DEFAULT 0,
 	PRIMARY KEY (id),
 	UNIQUE (id)
 );
@@ -299,6 +301,7 @@ CREATE TABLE t_device
 	manufacturer char(128),
 	androidmodel char(64),
 	uuid char(32),
+	buildrelease char(16),
 	PRIMARY KEY (device_id),
 	UNIQUE (device_id),
 	UNIQUE (uuid)
@@ -323,6 +326,7 @@ CREATE TABLE t_exception
 	versioncode int,
 	androidmodel char(64),
 	pkg char(32),
+	buildrelease char(16),
 	PRIMARY KEY (exceptionid),
 	UNIQUE (exceptionid)
 );
@@ -343,6 +347,7 @@ CREATE TABLE t_feedback
 	-- android系统的版本号
 	buildversion tinyint COMMENT 'android系统的版本号',
 	versioncode int,
+	buildrelease char(16),
 	PRIMARY KEY (feedback_id),
 	UNIQUE (feedback_id)
 );
@@ -359,6 +364,24 @@ CREATE TABLE t_functionvideo
 	update_time datetime,
 	PRIMARY KEY (function_id),
 	UNIQUE (function_id)
+);
+
+
+CREATE TABLE t_invite_detail
+(
+	inde_id bigint NOT NULL AUTO_INCREMENT,
+	order_id int,
+	com_type_id int,
+	com_type_name char(128),
+	pay bigint,
+	earnings bigint,
+	proportion tinyint,
+	invite_id bigint NOT NULL,
+	invitee_id bigint NOT NULL,
+	viptype_id int DEFAULT 0,
+	pay_time datetime,
+	PRIMARY KEY (inde_id),
+	UNIQUE (inde_id)
 );
 
 
@@ -725,7 +748,7 @@ CREATE TABLE t_viptype
 );
 
 
-CREATE TABLE t_whilte_device
+CREATE TABLE t_white_device
 (
 	device_id bigint NOT NULL,
 	extra char(255),
@@ -737,7 +760,7 @@ CREATE TABLE t_whilte_device
 );
 
 
-CREATE TABLE t_whilte_user
+CREATE TABLE t_white_user
 (
 	user_id bigint NOT NULL,
 	username char(32),
@@ -928,7 +951,7 @@ ALTER TABLE t_user_device
 ;
 
 
-ALTER TABLE t_whilte_device
+ALTER TABLE t_white_device
 	ADD FOREIGN KEY (device_id)
 	REFERENCES t_device (device_id)
 	ON UPDATE RESTRICT
@@ -937,10 +960,10 @@ ALTER TABLE t_whilte_device
 
 
 ALTER TABLE t_user_notice
-    ADD FOREIGN KEY (notice_id)
-        REFERENCES t_notice (notice_id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT
+	ADD FOREIGN KEY (notice_id)
+	REFERENCES t_notice (notice_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 
@@ -1023,11 +1046,11 @@ ALTER TABLE t_user_vip
 ;
 
 
-ALTER TABLE t_whilte_user
-    ADD FOREIGN KEY (user_id)
-        REFERENCES t_user (user_id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT
+ALTER TABLE t_white_user
+	ADD FOREIGN KEY (user_id)
+	REFERENCES t_user (user_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 

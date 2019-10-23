@@ -1,15 +1,16 @@
 package com.rpa.web.mapper;
 
-import com.rpa.web.pojo.WhilteDevicePO;
+import com.rpa.web.pojo.WhiteDevicePO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
- * WhilteDeviceMapper继承基类
+ * WhiteDeviceMapper继承基类
  */
 @Mapper
-public interface WhilteDeviceMapper extends BaseDAO<WhilteDevicePO, WhilteDevicePO> {
+public interface WhiteDeviceMapper extends BaseDAO<WhiteDevicePO, WhiteDevicePO> {
+
 
     /**
      * 删除
@@ -21,8 +22,9 @@ public interface WhilteDeviceMapper extends BaseDAO<WhilteDevicePO, WhilteDevice
 
     /**
      * 查询
+     *
      * @param deviceId 设备id
      * @return
      */
-    List<WhilteDevicePO> queryByDeviceId(Long deviceId);
+    List<WhiteDevicePO> queryByDeviceId(Long deviceId);
 }

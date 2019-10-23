@@ -1,13 +1,13 @@
-package com.rpa.server.pojo;
+package com.rpa.web.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * t_whilte_device
+ * t_white_device
  * @author 
  */
-public class WhilteDevicePO implements Serializable {
+public class WhiteDevicePO implements Serializable {
     private Long deviceId;
 
     private String extra;
@@ -81,7 +81,7 @@ public class WhilteDevicePO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        WhilteDevicePO other = (WhilteDevicePO) that;
+        WhiteDevicePO other = (WhiteDevicePO) that;
         return (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()))
             && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))

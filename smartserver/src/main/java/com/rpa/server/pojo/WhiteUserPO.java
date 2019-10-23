@@ -1,12 +1,12 @@
-package com.rpa.web.pojo;
+package com.rpa.server.pojo;
 
 import java.io.Serializable;
 
 /**
- * t_whilte_user
+ * t_white_user
  * @author 
  */
-public class WhilteUserPO implements Serializable {
+public class WhiteUserPO implements Serializable {
     private Long userId;
 
     private String username;
@@ -50,7 +50,7 @@ public class WhilteUserPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        WhilteUserPO other = (WhilteUserPO) that;
+        WhiteUserPO other = (WhiteUserPO) that;
         return (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
             && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()));

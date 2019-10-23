@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author: xiahui
  * @date: Created in 2019/10/17 8:51
@@ -23,11 +25,11 @@ public class AppController {
     private IAppService appService;
 
     @PostMapping("check")
-    public ResultVO check(@RequestBody AppDTO dto) {
+    public ResultVO check(@RequestBody AppDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify())) {
             return new ResultVO(2000);
         }
 
-        return appService.check(dto);
+        return appService.check(dto, req);
     }
 }

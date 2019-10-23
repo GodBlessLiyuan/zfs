@@ -1,8 +1,13 @@
 package com.rpa.producer.service;
 
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: xiahui
@@ -16,7 +21,10 @@ public class ProducerService {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendMsg(String msg) {
-        this.kafkaTemplate.send("smart", msg);
+    public void sendMsg(Object data, HttpServletRequest req) {
+        Map<String, Object> msg = new HashMap<>(1);
+        msg.put("ip", req.getRemoteAddr());
+        msg.put("data", data);
+        this.kafkaTemplate.send("smart", JSON.toJSONString(msg));
     }
 }

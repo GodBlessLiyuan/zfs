@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -22,6 +25,7 @@ import java.util.regex.Pattern;
 public class FileUtil {
 
     public static String rootPath;
+    public static String projectDir;
 
     /**
      * 文件上传处理
@@ -33,12 +37,12 @@ public class FileUtil {
      */
     public static String uploadFile(MultipartFile file, String dir) {
         String fileName = System.currentTimeMillis() + file.getOriginalFilename();
-        File targetFile = new File(rootPath + dir);
+        File targetFile = new File(rootPath + projectDir + dir);
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
 
-        String filePath = rootPath + dir + fileName;
+        String filePath = rootPath + projectDir + dir + fileName;
         BufferedOutputStream stream = null;
         try {
             stream = new BufferedOutputStream(new FileOutputStream(filePath));
@@ -56,7 +60,7 @@ public class FileUtil {
             }
         }
 
-        return filePath;
+        return projectDir + dir + fileName;
     }
 
 
@@ -73,16 +77,16 @@ public class FileUtil {
         try {
             // 上传apk文件
             String filePath = FileUtil.uploadFile(file, apkDir);
-            ApkFile apkFile = new ApkFile(filePath);
+            ApkFile apkFile = new ApkFile(rootPath + filePath);
             ApkMeta apkMeta = apkFile.getApkMeta();
             apkInfo.put("pkgname", apkMeta.getPackageName());
             apkInfo.put("versioncode", apkMeta.getVersionCode());
             apkInfo.put("versionname", apkMeta.getVersionName());
             // 重命名
-            String newFile = rootPath + apkDir + apkMeta.getPackageName() + "_" + apkMeta.getVersionCode() +
+            String newFile = projectDir + apkDir + apkMeta.getPackageName() + "_" + apkMeta.getVersionCode() +
                     "_" + System.currentTimeMillis() + ".apk";
             apkFile.close();
-            new File(filePath).renameTo(new File(newFile));
+            new File(rootPath + filePath).renameTo(new File(rootPath + newFile));
             apkInfo.put("url", newFile);
             apkInfo.put("channel", getChannel(apkFile.getManifestXml()));
 
@@ -101,13 +105,13 @@ public class FileUtil {
      * @param manifestXml
      * @return
      */
-    public static String getChannel(String manifestXml){
+    public static String getChannel(String manifestXml) {
         String pattern = "meta-data android:name=\"UMENG_CHANNEL\" android:value=\"([a-zA-Z0-9]*)";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(manifestXml);
-        if(m.find()){
+        if (m.find()) {
             String str = m.group(0);
-            String channel = str.substring(str.lastIndexOf("\"")+1);
+            String channel = str.substring(str.lastIndexOf("\"") + 1);
             return channel;
         }
         return null;
@@ -116,5 +120,10 @@ public class FileUtil {
     @Value("${file.uploadFolder}")
     public void setPROFILE(String rootPath) {
         FileUtil.rootPath = rootPath;
+    }
+
+    @Value("${file.projectDir}")
+    public void setProjectDir(String projectDir) {
+        FileUtil.projectDir = projectDir;
     }
 }
