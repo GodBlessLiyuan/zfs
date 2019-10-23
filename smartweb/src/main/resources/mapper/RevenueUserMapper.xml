@@ -22,9 +22,10 @@
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
 
-  <select id="query" resultMap="BaseResultMap">
+  <select id="query" resultType="com.rpa.web.pojo.RevenueUserPO">
     select
-    <include refid="Base_Column_List" />
+    ru.user_id as userId, invite_count as inviteCount, pay_count as payCount, register_count as registerCount,
+    total_revenue as totalRevenue, withdraw, withdraw_time as withdrawTime, remaining
     from t_revenue_user ru
     left join t_user u on ru.user_id = u.user_id
     <where>

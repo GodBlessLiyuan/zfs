@@ -177,9 +177,12 @@ public class PageController {
      */
     @RequestMapping("/adchannel")
     public String adchannel(@RequestParam(value = "adId") Integer adId, Map<String, Integer> map) {
-        if (null == adId) {
-            return "error_404_index";
-        }
+
+        /**
+         * 逻辑判断：session是否存在，以确认是已登录的用户跳转到该页面
+         * 如果不是的话，跳转到错误页面  return "error_404_index"
+         */
+
         map.put("adId", adId);
         return "adchannel_index";
     }
@@ -300,9 +303,11 @@ public class PageController {
      */
     @RequestMapping("/batchinfo/detail")
     public String batchinfo(@RequestParam(value = "batchId") Integer batchId, Map<String, Integer> map) {
-        if (null == batchId) {
-            return "error_404_index";
-        }
+        /**
+         * 逻辑判断：session是否存在，以确认是已登录的用户跳转到该页面
+         * 如果不是的话，跳转到错误页面  return "error_404_index"
+         */
+
         map.put("batchId", batchId);
         return "batchinfo_detail_index";
     }
@@ -315,6 +320,50 @@ public class PageController {
     public String withdraw() {
         return "withdraw_index";
     }
+
+
+    /**
+     * 爱收益：用户关联数据
+     * @return
+     */
+    @RequestMapping("/revenue")
+    public String revenue() {
+        return "revenue_index";
+    }
+
+    /**
+     * 被邀请用户
+     * @return
+     */
+    @RequestMapping("/inviteduser")
+    public String inviteduser(@RequestParam(value = "userId") Integer userId, Map<String, Integer> map) {
+
+        /**
+         * 逻辑判断：session是否存在，以确认是已登录的用户跳转到该页面
+         * 如果不是的话，跳转到错误页面  return "error_404_index"
+         */
+
+        map.put("userId", userId);
+        return "inviteduser_index";
+    }
+
+
+    /**
+     * 被邀请用户详情
+     * @return
+     */
+    @RequestMapping("/inviteduser/detail")
+    public String inviteduserDetail(@RequestParam(value = "userId") Integer userId, Map<String, Integer> map) {
+
+        /**
+         * 逻辑判断：session是否存在，以确认是已登录的用户跳转到该页面
+         * 如果不是的话，跳转到错误页面  return "error_404_index"
+         */
+
+        map.put("userId", userId);
+        return "inviteduser_detail_index";
+    }
+
 
     /**
      * 错误页面：404

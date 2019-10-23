@@ -489,7 +489,12 @@
      * 查看详情：页面跳转
      */
     function detailModal(batchId) {
-        window.location.href = '/batchinfo/detail?batchId='+ batchId;
+        if (null === batchId) {
+            alert("出了些问题，无法跳转，请联系工程师！");
+        } else {
+
+            window.location.href = '/batchinfo/detail?batchId='+ batchId;
+        }
     }
 
 </script>
