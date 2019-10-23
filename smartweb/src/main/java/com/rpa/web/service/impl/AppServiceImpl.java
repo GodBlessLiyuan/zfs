@@ -1,6 +1,5 @@
 package com.rpa.web.service.impl;
 
-import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.AppDTO;
 import com.rpa.web.mapper.AppChMapper;
@@ -43,9 +42,10 @@ public class AppServiceImpl implements IAppService {
 
     @Override
     public DTPageInfo<AppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<AppPO> page = PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<AppPO> pos = appMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), AppDTO.convert(pos));
+        List<AppDTO> dto = AppDTO.convert(pos);
+        return new DTPageInfo<>(draw, dto.size(), dto);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class AppServiceImpl implements IAppService {
                            int aId) {
         // 解析Apk
         Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir);
-        if (apkInfo.get("channel") == null || !"vboooster".equals(apkInfo.get("channel"))) {
+        if (apkInfo.get("channel") == null || !"vbooster".equals(apkInfo.get("channel"))) {
             return ResultVOUtil.error(2000, "上传应用非官方渠道！");
         }
 

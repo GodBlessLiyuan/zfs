@@ -1,15 +1,16 @@
 server:
-  port: 7888
+  port: 9000
 spring:
-  application:
-    name: smartproducer
-  cloud:
-    stream:
-      kafka:
-        binder:
-          brokers: 192.168.10.3:9092
-          auto-create-topics: true
-        bindings:
-          output:
-            destination: event-demo
-            content-type: text/plain
+  kafka:
+    producer:
+      bootstrap-servers: 192.168.10.3:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+eurek
+
+
+
+
+  .default-zone=http://localhost:8761/eureka/
+
+

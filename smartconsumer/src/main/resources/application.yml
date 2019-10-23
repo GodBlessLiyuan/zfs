@@ -1,14 +1,12 @@
 server:
-  port: 7889
+  port: 9001
 spring:
   application:
     name: smartconsumer
-  cloud:
-    stream:
-      kafka:
-        binder:
-          brokers: 192.168.10.3:9092
-          auto-create-topics: true
-        bindings:
-          input:
-            destination: event-demo
+  kafka:
+    consumer:
+      bootstrap-servers: 192.168.10.3:9092
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer

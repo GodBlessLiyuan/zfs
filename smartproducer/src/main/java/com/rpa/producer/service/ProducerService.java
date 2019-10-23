@@ -1,23 +1,22 @@
 package com.rpa.producer.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.messaging.Source;
-import org.springframework.integration.support.MessageBuilder;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
 
 /**
  * @author: xiahui
  * @date: Created in 2019/10/21 20:14
- * @description: TODO
+ * @description: Kafka producer
  * @version: 1.0
  */
-@EnableBinding(Source.class)
+@Service
 public class ProducerService {
 
     @Autowired
-    private Source source;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMsg(String msg) {
-        source.output().send(MessageBuilder.withPayload(msg).build());
+        this.kafkaTemplate.send("smart", msg);
     }
 }

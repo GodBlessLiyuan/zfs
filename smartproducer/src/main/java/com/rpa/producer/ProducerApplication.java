@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author: xiahui
  * @date: Created in 2019/10/21 20:12
- * @description: TODO
+ * @description: Kafka producer
  * @version: 1.0
  */
 @SpringBootApplication
