@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author: xiahui
  * @date: Created in 2019/10/21 20:16
@@ -21,7 +23,7 @@ public class ProducerController {
     private ProducerService service;
 
     @PostMapping("s_data")
-    public void send(@RequestBody ProducerDTO dto) {
-        service.sendMsg(dto.getData());
+    public void send(@RequestBody ProducerDTO dto, HttpServletRequest req) {
+        service.sendMsg(dto.getData(), req);
     }
 }
