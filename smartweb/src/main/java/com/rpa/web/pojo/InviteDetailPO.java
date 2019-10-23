@@ -25,6 +25,8 @@ public class InviteDetailPO implements Serializable {
 
     private Long inviteeId;
 
+    private Integer viptypeId;
+
     private static final long serialVersionUID = 1L;
 
     public Long getIndeId() {
@@ -99,6 +101,14 @@ public class InviteDetailPO implements Serializable {
         this.inviteeId = inviteeId;
     }
 
+    public Integer getViptypeId() {
+        return viptypeId;
+    }
+
+    public void setViptypeId(Integer viptypeId) {
+        this.viptypeId = viptypeId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -119,7 +129,8 @@ public class InviteDetailPO implements Serializable {
             && (this.getEarnings() == null ? other.getEarnings() == null : this.getEarnings().equals(other.getEarnings()))
             && (this.getProportion() == null ? other.getProportion() == null : this.getProportion().equals(other.getProportion()))
             && (this.getInviteId() == null ? other.getInviteId() == null : this.getInviteId().equals(other.getInviteId()))
-            && (this.getInviteeId() == null ? other.getInviteeId() == null : this.getInviteeId().equals(other.getInviteeId()));
+            && (this.getInviteeId() == null ? other.getInviteeId() == null : this.getInviteeId().equals(other.getInviteeId()))
+            && (this.getViptypeId() == null ? other.getViptypeId() == null : this.getViptypeId().equals(other.getViptypeId()));
     }
 
     @Override
@@ -135,6 +146,7 @@ public class InviteDetailPO implements Serializable {
         result = prime * result + ((getProportion() == null) ? 0 : getProportion().hashCode());
         result = prime * result + ((getInviteId() == null) ? 0 : getInviteId().hashCode());
         result = prime * result + ((getInviteeId() == null) ? 0 : getInviteeId().hashCode());
+        result = prime * result + ((getViptypeId() == null) ? 0 : getViptypeId().hashCode());
         return result;
     }
 
@@ -153,6 +165,7 @@ public class InviteDetailPO implements Serializable {
         sb.append(", proportion=").append(proportion);
         sb.append(", inviteId=").append(inviteId);
         sb.append(", inviteeId=").append(inviteeId);
+        sb.append(", viptypeId=").append(viptypeId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
