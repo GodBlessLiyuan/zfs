@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.WhilteDeviceDTO;
+import com.rpa.web.dto.WhiteDeviceDTO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.ResultVO;
 
@@ -12,7 +12,7 @@ import java.util.Map;
  * @description: 测试白名单
  * @version: 1.0
  */
-public interface IWhilteDeviceService {
+public interface IWhiteDeviceService {
 
     /**
      * 分页查询
@@ -23,7 +23,7 @@ public interface IWhilteDeviceService {
      * @param reqData
      * @return
      */
-    DTPageInfo<WhilteDeviceDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<WhiteDeviceDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 插入

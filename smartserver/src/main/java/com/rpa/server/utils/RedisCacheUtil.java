@@ -2,7 +2,7 @@ package com.rpa.server.utils;
 
 import com.rpa.server.constant.LoginConstant;
 import com.rpa.server.mapper.SoftChannelMapper;
-import com.rpa.server.mapper.WhilteDeviceMapper;
+import com.rpa.server.mapper.WhiteDeviceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class RedisCacheUtil {
     @Resource
     private SoftChannelMapper softChannelMapper;
     @Resource
-    private WhilteDeviceMapper whilteDeviceMapper;
+    private WhiteDeviceMapper whiteDeviceMapper;
 
     /**
      * 通过渠道名获取渠道ID
@@ -88,7 +88,7 @@ public class RedisCacheUtil {
     public boolean checkWhiteDeviceByDevId(long devId) {
         Set<String> cacheDevIds = template.opsForSet().members("whiteDevIds");
         if (cacheDevIds == null || cacheDevIds.size() == 0) {
-            Set<String> devIds = whilteDeviceMapper.queryAllDevId();
+            Set<String> devIds = whiteDeviceMapper.queryAllDevId();
             if (devIds == null || devIds.size() == 0) {
                 return false;
             }
