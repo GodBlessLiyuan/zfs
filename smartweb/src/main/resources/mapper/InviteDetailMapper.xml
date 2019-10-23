@@ -12,10 +12,11 @@
     <result column="invite_id" jdbcType="BIGINT" property="inviteId" />
     <result column="invitee_id" jdbcType="BIGINT" property="inviteeId" />
     <result column="viptype_id" jdbcType="INTEGER" property="viptypeId" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
   </resultMap>
   <sql id="Base_Column_List">
     inde_id, order_id, com_type_id, com_type_name, pay, earnings, proportion, invite_id, 
-    invitee_id, viptype_id
+    invitee_id, viptype_id, pay_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -31,11 +32,11 @@
     insert into t_invite_detail (inde_id, order_id, com_type_id, 
       com_type_name, pay, earnings, 
       proportion, invite_id, invitee_id, 
-      viptype_id)
+      viptype_id, pay_time)
     values (#{indeId,jdbcType=BIGINT}, #{orderId,jdbcType=INTEGER}, #{comTypeId,jdbcType=INTEGER}, 
       #{comTypeName,jdbcType=CHAR}, #{pay,jdbcType=BIGINT}, #{earnings,jdbcType=BIGINT}, 
       #{proportion,jdbcType=TINYINT}, #{inviteId,jdbcType=BIGINT}, #{inviteeId,jdbcType=BIGINT}, 
-      #{viptypeId,jdbcType=INTEGER})
+      #{viptypeId,jdbcType=INTEGER}, #{payTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.InviteDetailPO">
     insert into t_invite_detail
@@ -70,6 +71,9 @@
       <if test="viptypeId != null">
         viptype_id,
       </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="indeId != null">
@@ -101,6 +105,9 @@
       </if>
       <if test="viptypeId != null">
         #{viptypeId,jdbcType=INTEGER},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -134,6 +141,9 @@
       <if test="viptypeId != null">
         viptype_id = #{viptypeId,jdbcType=INTEGER},
       </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where inde_id = #{indeId,jdbcType=BIGINT}
   </update>
@@ -147,7 +157,8 @@
       proportion = #{proportion,jdbcType=TINYINT},
       invite_id = #{inviteId,jdbcType=BIGINT},
       invitee_id = #{inviteeId,jdbcType=BIGINT},
-      viptype_id = #{viptypeId,jdbcType=INTEGER}
+      viptype_id = #{viptypeId,jdbcType=INTEGER},
+      pay_time = #{payTime,jdbcType=TIMESTAMP}
     where inde_id = #{indeId,jdbcType=BIGINT}
   </update>
 </mapper>
