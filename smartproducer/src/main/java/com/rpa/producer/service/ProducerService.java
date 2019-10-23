@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author: xiahui
  * @date: Created in 2019/10/21 20:14
- * @description: TODO
+ * @description: Kafka producer
  * @version: 1.0
  */
 @Service
@@ -17,6 +17,6 @@ public class ProducerService {
     private KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMsg(String msg) {
-        this.kafkaTemplate.send("test", msg);
+        this.kafkaTemplate.send("smart", msg);
     }
 }

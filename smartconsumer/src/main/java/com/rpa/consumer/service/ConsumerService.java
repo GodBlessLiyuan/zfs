@@ -3,17 +3,19 @@ package com.rpa.consumer.service;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
 
 /**
  * @author: xiahui
  * @date: Created in 2019/10/21 20:22
- * @description: TODO
+ * @description: Kafka consumer
  * @version: 1.0
  */
-@EnableBinding(Sink.class)
+@Service
 public class ConsumerService {
 
-    @StreamListener(Sink.INPUT)
+    @KafkaListener(topics = {"smart"} )
     public void consume(Object payload) {
         System.out.println(payload);
     }
