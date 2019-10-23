@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * @author: xiahui
  * @date: Created in 2019/10/21 20:17
- * @description: TODO
+ * @description: Kafka producer
  * @version: 1.0
  */
 @Data

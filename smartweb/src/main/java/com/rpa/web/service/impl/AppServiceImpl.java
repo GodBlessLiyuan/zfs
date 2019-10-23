@@ -43,9 +43,10 @@ public class AppServiceImpl implements IAppService {
 
     @Override
     public DTPageInfo<AppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<AppPO> page = PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<AppPO> pos = appMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), AppDTO.convert(pos));
+        List<AppDTO> dto = AppDTO.convert(pos);
+        return new DTPageInfo<>(draw, dto.size(), dto);
     }
 
     @Override

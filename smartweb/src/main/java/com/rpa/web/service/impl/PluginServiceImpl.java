@@ -43,9 +43,10 @@ public class PluginServiceImpl implements IPluginService {
 
     @Override
     public DTPageInfo<PluginDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<PluginPO> page = PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<PluginPO> pos = pluginMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), PluginDTO.convert(pos));
+        List<PluginDTO> dtos = PluginDTO.convert(pos);
+        return new DTPageInfo<>(draw, dtos.size(), dtos);
     }
 
     @Override
