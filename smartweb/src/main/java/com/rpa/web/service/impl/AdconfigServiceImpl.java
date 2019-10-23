@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.Constant;
 import com.rpa.web.dto.AdconfigDTO;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdconfigMapper;
@@ -137,13 +138,13 @@ public class AdconfigServiceImpl implements AdconfigService {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 把adconfigDTO 转换为 adconfigPO
         AdconfigPO po = new AdconfigPO();
         po.setAdNumber(dto.getAdNumber());
-        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
         po.setName(dto.getName());
         po.setContacts(dto.getContacts());
         po.setPhone(dto.getPhone());
@@ -203,8 +204,8 @@ public class AdconfigServiceImpl implements AdconfigService {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 根据主键ad_id，从数据库查出要修改的数据
         AdconfigPO po = this.adconfigMapper.selectByPrimaryKey(adId);
@@ -220,7 +221,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         }
 
         po.setUpdateTime(new Date());
-        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
 
         int count = this.adconfigMapper.updateByPrimaryKey(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);

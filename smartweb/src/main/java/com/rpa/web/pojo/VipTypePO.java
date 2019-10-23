@@ -10,7 +10,7 @@ public class VipTypePO implements Serializable {
     private Integer viptypeId;
 
     /**
-     * 不同vip和年费vip
+     * 10普通会员  20年费会员
      */
     private String vipname;
 

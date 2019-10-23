@@ -7,6 +7,8 @@ import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author: dangyi
  * @date: Created in 14:15 2019/9/27
@@ -48,8 +50,8 @@ public class PromoterController {
      * @return
      */
     @PostMapping("insert")
-    public ResultVO insert(PromoterDTO promoterDTO) {
-        return this.promoterService.insert(promoterDTO);
+    public ResultVO insert(PromoterDTO promoterDTO, HttpSession httpSession) {
+        return this.promoterService.insert(promoterDTO, httpSession);
     }
 
     /**
@@ -58,7 +60,7 @@ public class PromoterController {
      * @return
      */
     @PostMapping("update")
-    public ResultVO update(PromoterDTO promoterDTO){
-        return this.promoterService.update(promoterDTO);
+    public ResultVO update(PromoterDTO promoterDTO, HttpSession httpSession){
+        return this.promoterService.update(promoterDTO, httpSession);
     }
 }

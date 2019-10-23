@@ -14,6 +14,13 @@
     from t_viptype
     where viptype_id = #{viptypeId,jdbcType=INTEGER}
   </select>
+
+  <select id="queryVipnameByVipid" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select vipname
+    from t_viptype
+    where viptype_id = #{viptypeId,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_viptype
     where viptype_id = #{viptypeId,jdbcType=INTEGER}

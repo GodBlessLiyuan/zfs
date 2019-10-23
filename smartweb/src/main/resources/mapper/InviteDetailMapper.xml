@@ -24,6 +24,20 @@
     from t_invite_detail
     where inde_id = #{indeId,jdbcType=BIGINT}
   </select>
+
+  <select id="queryInviteduserDetail" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_invite_detail
+    where invitee_id = #{userId}
+    <if test="viptypeId != null">
+      AND viptype_id = #{viptypeId}
+    </if>
+    <if test="(startTime != null and startTime != '') and (endTime != null and endTime != '')">
+      AND pay_time between #{startTime} AND #{endTime}
+    </if>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_invite_detail
     where inde_id = #{indeId,jdbcType=BIGINT}

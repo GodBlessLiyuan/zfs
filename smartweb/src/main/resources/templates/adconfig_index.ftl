@@ -536,7 +536,12 @@
      * 设置开放渠道：页面跳转
      */
     function channelModal(adId) {
-        window.location.href = '/adchannel?adId='+ adId;
+        if (null === adId) {
+            alert("出了些问题，无法跳转，请联系工程师！");
+        } else {
+
+            window.location.href = '/adchannel?adId='+ adId;
+        }
     }
 
     /**

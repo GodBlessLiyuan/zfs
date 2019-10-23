@@ -18,6 +18,17 @@
     from t_invite_user
     where invite_id = #{inviteId,jdbcType=INTEGER}
   </select>
+
+  <select id="queryInviteduser" resultType="com.rpa.web.domain.InviteUserDO">
+    select u.user_id as userId, iu.invite_phone as invitePhone, iu.create_time as acceptTime, u.create_time as
+    registerTime, (select sum(id.earnings) from t_invite_detail id where userId = id.invitee_id group by id.invitee_id) as earnings
+    from t_invite_user iu
+    left join t_user u on iu.invite_phone = u.phone
+    where iu.user_id = #{userId}
+    <if test="invitePhone != null and invitePhone != ''">
+      iu.invite_phone = #{invitePhone}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_invite_user
     where invite_id = #{inviteId,jdbcType=INTEGER}

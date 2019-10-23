@@ -45,7 +45,7 @@
 
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">用户自推广</a>
                         <ul aria-expanded="false">
-                            <li><a href="">用户关联数据</a></li>
+                            <li><a href="/revenue">用户关联数据</a></li>
                             <li><a href="/withdraw">提现</a></li>
                         </ul>
                     </li>

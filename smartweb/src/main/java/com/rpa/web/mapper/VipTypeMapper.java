@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface VipTypeMapper extends BaseDAO<VipTypePO, Integer> {
+    String queryVipnameByVipid(Integer viptypeId);
 }

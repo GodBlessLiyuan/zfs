@@ -1,7 +1,9 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.WithdrawUserDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdminUserMapper;
@@ -95,8 +97,8 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 根据主键withdraw_id，从数据库查出要修改的数据
         WithdrawUserPO po = this.withdrawUserMapper.selectByPrimaryKey(withdrawId);
@@ -108,7 +110,7 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
         po.setStatus(status);
         po.setAuditTime(new Date());
         po.setEndTime(new Date());
-        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
 
         int count = this.withdrawUserMapper.updateByPrimaryKey(po);
 

@@ -25,6 +25,8 @@ public class RevenueUserDTO implements Serializable {
 
     private String invitePhone;
 
+    private String phone;
+
     private static final long serialVersionUID = 1L;
 
     public Long getUserId() {
@@ -97,6 +99,14 @@ public class RevenueUserDTO implements Serializable {
 
     public void setInvitePhone(String invitePhone) {
         this.invitePhone = invitePhone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
