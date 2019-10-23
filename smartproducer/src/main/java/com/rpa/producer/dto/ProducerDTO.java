@@ -16,5 +16,5 @@ public class ProducerDTO implements Serializable {
 
     private Long id;
     private String verify;
-    private String data;
+    private Object data;
 }
