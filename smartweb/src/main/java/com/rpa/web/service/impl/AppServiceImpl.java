@@ -1,6 +1,5 @@
 package com.rpa.web.service.impl;
 
-import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.AppDTO;
 import com.rpa.web.mapper.AppChMapper;
@@ -67,7 +66,7 @@ public class AppServiceImpl implements IAppService {
                            int aId) {
         // 解析Apk
         Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir);
-        if (apkInfo.get("channel") == null || !"vboooster".equals(apkInfo.get("channel"))) {
+        if (apkInfo.get("channel") == null || !"vbooster".equals(apkInfo.get("channel"))) {
             return ResultVOUtil.error(2000, "上传应用非官方渠道！");
         }
 
