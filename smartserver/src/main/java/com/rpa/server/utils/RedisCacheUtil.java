@@ -1,6 +1,5 @@
 package com.rpa.server.utils;
 
-import com.alibaba.fastjson.JSON;
 import com.rpa.server.constant.LoginConstant;
 import com.rpa.server.mapper.SoftChannelMapper;
 import com.rpa.server.mapper.WhilteDeviceMapper;
@@ -89,10 +88,13 @@ public class RedisCacheUtil {
     public boolean checkWhiteDeviceByDevId(long devId) {
         Set<String> cacheDevIds = template.opsForSet().members("whiteDevIds");
         if (cacheDevIds == null || cacheDevIds.size() == 0) {
-            Set<Long> devIds = whilteDeviceMapper.queryAllDevId();
-            template.opsForSet().add("whiteDevIds", JSON.toJSONString(devIds));
+            Set<String> devIds = whilteDeviceMapper.queryAllDevId();
+            if (devIds == null || devIds.size() == 0) {
+                return false;
+            }
+            template.opsForSet().add("whiteDevIds", devIds.toArray(new String[0]));
             template.expire("whiteDevIds", 1, TimeUnit.DAYS);
-            return devIds.contains(devId);
+            return devIds.contains(String.valueOf(devId));
         }
 
         return cacheDevIds.contains(String.valueOf(devId));

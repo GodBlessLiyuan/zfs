@@ -27,7 +27,7 @@ public class AppServiceImpl implements IAppService {
     @Override
     public ResultVO check(AppDTO dto) {
         // 从Redis中取出设备白名单
-        int status = cache.checkWhiteDeviceByDevId(dto.getId()) ? 1 : 2;
+        int status = cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
         AppPO appPO = appMapper.queryMaxByVerId(dto.getSoftv(), status);
         if (appPO == null) {
             // 最新版本

@@ -14,5 +14,5 @@ public interface WhilteDeviceMapper extends BaseMapper<WhilteDevicePO, WhilteDev
      * 查询所有白名单设备Id
      * @return
      */
-    Set<Long> queryAllDevId();
+    Set<String> queryAllDevId();
 }
