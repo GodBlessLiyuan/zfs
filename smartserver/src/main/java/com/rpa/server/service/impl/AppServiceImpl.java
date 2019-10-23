@@ -8,6 +8,7 @@ import com.rpa.server.service.IAppService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.utils.RequestUtil;
 import com.rpa.server.vo.AppVO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +26,8 @@ public class AppServiceImpl implements IAppService {
     private AppMapper appMapper;
     @Resource
     private RedisCacheUtil cache;
+    @Value("${file.publicPath}")
+    private String filePublicPath;
 
     @Override
     public ResultVO check(AppDTO dto, HttpServletRequest req) {
@@ -38,8 +41,7 @@ public class AppServiceImpl implements IAppService {
 
         // 需要更新
         AppVO vo = new AppVO();
-        String url = "http://" + RequestUtil.getIpAddr(req) + ":" + req.getServerPort() + appPO.getUrl();
-        vo.setUrl(url);
+        vo.setUrl(filePublicPath + appPO.getUrl());
         vo.setMd5(appPO.getMd5());
         vo.setType(appPO.getUpdateType());
         return new ResultVO<>(1009, vo);
