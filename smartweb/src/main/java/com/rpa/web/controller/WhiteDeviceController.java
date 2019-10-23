@@ -2,10 +2,10 @@ package com.rpa.web.controller;
 
 import com.rpa.web.common.Constant;
 import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.WhilteDeviceDTO;
+import com.rpa.web.dto.WhiteDeviceDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.exception.PromptException;
-import com.rpa.web.service.IWhilteDeviceService;
+import com.rpa.web.service.IWhiteDeviceService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,16 +25,16 @@ import java.util.Map;
  */
 @RequestMapping("whiltedevice")
 @RestController
-public class WhilteDeviceController {
+public class WhiteDeviceController {
 
     @Resource
-    private IWhilteDeviceService service;
+    private IWhiteDeviceService service;
 
     @RequestMapping("query")
-    public DTPageInfo<WhilteDeviceDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                             @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                             @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                             @RequestParam(value = "imei") String imei) {
+    public DTPageInfo<WhiteDeviceDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                            @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                            @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                            @RequestParam(value = "imei") String imei) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("imei", imei);
 

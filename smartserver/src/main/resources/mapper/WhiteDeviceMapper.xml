@@ -60,4 +60,9 @@
       </if>
     </trim>
   </insert>
+
+  <select id="queryAllDevId" resultType="java.lang.String">
+    select distinct device_id
+    from t_white_device
+  </select>
 </mapper>

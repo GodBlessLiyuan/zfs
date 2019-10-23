@@ -18,7 +18,7 @@ public interface BaseDAO<Model, PK extends Serializable> {
 
     Model selectByPrimaryKey(PK id);
 
-    List<Model> query(Map<String, Object> map);
+    List query(Map<String, Object> map);
 
     int updateByPrimaryKeySelective(Model record);
 

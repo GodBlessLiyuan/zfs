@@ -2,14 +2,15 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.WhilteDeviceDTO;
+import com.rpa.web.domain.WhiteDeviceDO;
+import com.rpa.web.dto.WhiteDeviceDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.exception.PromptException;
 import com.rpa.web.mapper.DeviceImeiMapper;
-import com.rpa.web.mapper.WhilteDeviceMapper;
+import com.rpa.web.mapper.WhiteDeviceMapper;
 import com.rpa.web.pojo.DeviceImeiPO;
-import com.rpa.web.pojo.WhilteDevicePO;
-import com.rpa.web.service.IWhilteDeviceService;
+import com.rpa.web.pojo.WhiteDevicePO;
+import com.rpa.web.service.IWhiteDeviceService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
@@ -27,19 +28,18 @@ import java.util.Map;
  * @version: 1.0
  */
 @Service
-public class WhiteDeviceServiceImpl implements IWhilteDeviceService {
+public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
 
     @Resource
-    private WhilteDeviceMapper whilteDeviceMapper;
-
+    private WhiteDeviceMapper whiteDeviceMapper;
     @Resource
     private DeviceImeiMapper deviceImeiMapper;
 
     @Override
-    public DTPageInfo<WhilteDeviceDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<WhilteDevicePO> page = PageHelper.offsetPage(pageNum, pageSize);
-        List<WhilteDevicePO> pos = whilteDeviceMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), WhilteDeviceDTO.convert(pos));
+    public DTPageInfo<WhiteDeviceDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+        Page<WhiteDeviceDO> page = PageHelper.offsetPage(pageNum, pageSize);
+        List<WhiteDeviceDO> pos = whiteDeviceMapper.query(reqData);
+        return new DTPageInfo<>(draw, page.getTotal(), WhiteDeviceDTO.convert(pos));
     }
 
     @Override
@@ -52,26 +52,26 @@ public class WhiteDeviceServiceImpl implements IWhilteDeviceService {
 
         // deviced 与 imei 是1-n关系,故这里deviceId有且仅有一个
         long deviceId = deviceImeiPOs.get(0).getDeviceId();
-        List<WhilteDevicePO> whilteDevicePOs = whilteDeviceMapper.queryByDeviceId(deviceId);
-        if (whilteDevicePOs != null && whilteDevicePOs.size() > 0) {
+        List<WhiteDevicePO> whiteDevicePOs = whiteDeviceMapper.queryByDeviceId(deviceId);
+        if (whiteDevicePOs != null && whiteDevicePOs.size() > 0) {
             // 已存在在白名单里
             throw new PromptException(ExceptionEnum.IMEI_EXIST);
         }
 
-        WhilteDevicePO po = new WhilteDevicePO();
+        WhiteDevicePO po = new WhiteDevicePO();
 
         po.setDeviceId(deviceId);
         po.setExtra(extra);
         po.setCreateTime(new Date());
         po.setaId(aId);
 
-        whilteDeviceMapper.insert(po);
+        whiteDeviceMapper.insert(po);
 
         return ResultVOUtil.success();
     }
 
     @Override
     public int deleteByDeviceId(int deviceId) {
-        return whilteDeviceMapper.deleteByDeviceId(deviceId);
+        return whiteDeviceMapper.deleteByDeviceId(deviceId);
     }
 }
