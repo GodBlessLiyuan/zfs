@@ -1,13 +1,13 @@
 server:
   port: 9000
-  application:
-    name: smartserver
 spring:
   kafka:
     producer:
       bootstrap-servers: 192.168.10.3:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  application:
+    name: smartproducer
 
 eureka:
   client:

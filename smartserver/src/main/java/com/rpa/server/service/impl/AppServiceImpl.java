@@ -6,10 +6,12 @@ import com.rpa.server.mapper.AppMapper;
 import com.rpa.server.pojo.AppPO;
 import com.rpa.server.service.IAppService;
 import com.rpa.server.utils.RedisCacheUtil;
+import com.rpa.server.utils.RequestUtil;
 import com.rpa.server.vo.AppVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author: xiahui
@@ -25,7 +27,7 @@ public class AppServiceImpl implements IAppService {
     private RedisCacheUtil cache;
 
     @Override
-    public ResultVO check(AppDTO dto) {
+    public ResultVO check(AppDTO dto, HttpServletRequest req) {
         // 从Redis中取出设备白名单
         int status = cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
         AppPO appPO = appMapper.queryMaxByVerId(dto.getSoftv(), status);
@@ -36,7 +38,8 @@ public class AppServiceImpl implements IAppService {
 
         // 需要更新
         AppVO vo = new AppVO();
-        vo.setUrl(appPO.getUrl());
+        String url = "http://" + RequestUtil.getIpAddr(req) + ":" + req.getServerPort() + appPO.getUrl();
+        vo.setUrl(url);
         vo.setMd5(appPO.getMd5());
         vo.setType(appPO.getUpdateType());
         return new ResultVO<>(1009, vo);
