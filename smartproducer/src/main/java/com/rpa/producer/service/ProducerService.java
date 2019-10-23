@@ -23,7 +23,8 @@ public class ProducerService {
 
     public void sendMsg(Object data, HttpServletRequest req) {
         Map<String, Object> msg = new HashMap<>(1);
-        msg.put(req.getRemoteAddr(), data);
+        msg.put("ip", req.getRemoteAddr());
+        msg.put("data", data);
         this.kafkaTemplate.send("smart", JSON.toJSONString(msg));
     }
 }
