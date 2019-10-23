@@ -1,12 +1,15 @@
 package com.rpa.server.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.rpa.server.constant.LoginConstant;
 import com.rpa.server.mapper.SoftChannelMapper;
+import com.rpa.server.mapper.WhilteDeviceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,6 +25,8 @@ public class RedisCacheUtil {
     private StringRedisTemplate template;
     @Resource
     private SoftChannelMapper softChannelMapper;
+    @Resource
+    private WhilteDeviceMapper whilteDeviceMapper;
 
     /**
      * 通过渠道名获取渠道ID
@@ -66,13 +71,30 @@ public class RedisCacheUtil {
             return 1014;
         }
         String cacheSms = template.opsForValue().get(LoginConstant.VERIFY_CODE_PREFIX + phone);
-        if(cacheSms == null) {
+        if (cacheSms == null) {
             return 1013;
         }
-        if(!sms.equals(cacheSms)) {
+        if (!sms.equals(cacheSms)) {
             return 1014;
         }
 
         return 1000;
+    }
+
+    /**
+     * 获取缓存白名单数据
+     *
+     * @return
+     */
+    public boolean checkWhiteDeviceByDevId(long devId) {
+        Set<String> cacheDevIds = template.opsForSet().members("whiteDevIds");
+        if (cacheDevIds == null || cacheDevIds.size() == 0) {
+            Set<Long> devIds = whilteDeviceMapper.queryAllDevId();
+            template.opsForSet().add("whiteDevIds", JSON.toJSONString(devIds));
+            template.expire("whiteDevIds", 1, TimeUnit.DAYS);
+            return devIds.contains(devId);
+        }
+
+        return cacheDevIds.contains(String.valueOf(devId));
     }
 }

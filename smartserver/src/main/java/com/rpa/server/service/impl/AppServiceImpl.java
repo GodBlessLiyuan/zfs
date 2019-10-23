@@ -5,6 +5,7 @@ import com.rpa.server.dto.AppDTO;
 import com.rpa.server.mapper.AppMapper;
 import com.rpa.server.pojo.AppPO;
 import com.rpa.server.service.IAppService;
+import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.AppVO;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,14 @@ import javax.annotation.Resource;
 public class AppServiceImpl implements IAppService {
     @Resource
     private AppMapper appMapper;
+    @Resource
+    private RedisCacheUtil cache;
 
     @Override
     public ResultVO check(AppDTO dto) {
-        AppPO appPO = appMapper.queryMaxByVerId(dto.getSoftv());
+        // 从Redis中取出设备白名单
+        int status = cache.checkWhiteDeviceByDevId(dto.getId()) ? 1 : 2;
+        AppPO appPO = appMapper.queryMaxByVerId(dto.getSoftv(), status);
         if (appPO == null) {
             // 最新版本
             return new ResultVO(1008);
