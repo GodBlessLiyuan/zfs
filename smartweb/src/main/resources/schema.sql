@@ -379,6 +379,7 @@ CREATE TABLE t_invite_detail
 	invite_id bigint NOT NULL,
 	invitee_id bigint NOT NULL,
 	viptype_id int DEFAULT 0,
+	pay_time datetime,
 	PRIMARY KEY (inde_id),
 	UNIQUE (inde_id)
 );
