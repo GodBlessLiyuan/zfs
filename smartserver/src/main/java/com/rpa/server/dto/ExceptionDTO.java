@@ -17,6 +17,7 @@ public class ExceptionDTO implements Serializable {
     private Long id;
     private String verify;
     private Byte osv;
+    private String osre;
     private Integer softv;
     private String model;
     private String exception;

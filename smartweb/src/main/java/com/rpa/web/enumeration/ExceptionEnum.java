@@ -37,7 +37,7 @@ public enum ExceptionEnum {
 
     QUERY_ERROR(1007, "查询失败！"),
 
-    SESSION_ERROR(1008, "未取到Session信息！")
+    SESSION_ERROR(1008, "登录超时，请重新登录！")
 
     ;
 

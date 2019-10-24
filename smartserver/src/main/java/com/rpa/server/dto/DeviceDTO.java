@@ -28,6 +28,10 @@ public class DeviceDTO implements Serializable {
      */
     private Byte osv;
     /**
+     * 系统版本号 Build.VERSION.RELEASE
+     */
+    private String osre;
+    /**
      * 应用渠道
      */
     private String channel;
