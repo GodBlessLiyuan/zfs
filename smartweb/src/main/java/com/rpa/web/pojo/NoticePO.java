@@ -32,6 +32,10 @@ public class NoticePO implements Serializable {
 
     private String picurl;
 
+    private Date createTime;
+
+    private Date updateTime;
+
     private String url;
 
     private static final long serialVersionUID = 1L;
@@ -108,6 +112,22 @@ public class NoticePO implements Serializable {
         this.picurl = picurl;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -137,6 +157,8 @@ public class NoticePO implements Serializable {
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
             && (this.getPicurl() == null ? other.getPicurl() == null : this.getPicurl().equals(other.getPicurl()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()));
     }
 
@@ -153,6 +175,8 @@ public class NoticePO implements Serializable {
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
         result = prime * result + ((getPicurl() == null) ? 0 : getPicurl().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         return result;
     }
@@ -172,6 +196,8 @@ public class NoticePO implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", endTime=").append(endTime);
         sb.append(", picurl=").append(picurl);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append(", url=").append(url);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
