@@ -109,10 +109,10 @@
                             </div>
 
                             <button type="button" class="btn btn-primary " id="reset"
-                                    onclick="javascript:resetClick()">重置
+                                    onclick="resetClick()">重置
                             </button>
                             <button type="button" class="btn btn-primary " id="query"
-                                    onclick="javascript:queryClick()">查询
+                                    onclick="queryClick()">查询
                             </button>
 
                             <hr>
@@ -139,7 +139,7 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增商品</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
+                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -245,7 +245,19 @@
     function insertClick() {
         let comTypeId = $('#iComType').val();
 
-        $.get("/newusergifts/insert?comTypeId=" + comTypeId);
+        $.ajax({
+            type: 'GET',
+            url: "/newusergifts/insert?comTypeId=" + comTypeId,
+            dataType: 'json',
+            success: function (res) {
+                if (res.code !== 0) {
+                    alert(res.msg);
+                } else {
+                    clearInsModal();
+                    $('#datatab').DataTable().draw(false);
+                }
+            }
+        });
     }
 
     /**
@@ -356,6 +368,13 @@
     function resetClick() {
         $('#username').val(null);
         $('#comType option:first').prop('selected', 'selected');
+    }
+
+    /**
+     * 清空插入框数据
+     */
+    function clearInsModal() {
+        $('#iComType option:first').prop('selected', 'selected');
     }
 </script>
 

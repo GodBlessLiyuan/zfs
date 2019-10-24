@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.ComTypeDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 import java.util.List;
 import java.util.Map;
@@ -19,13 +20,13 @@ public interface IComTypeService {
      */
     /**
      * 新增
-     *
-     * @param name  产品类型
+     *  @param name  产品类型
      * @param days  产品天数
      * @param extra 备注信息
      * @param aId   管理员Id
+     * @return
      */
-    void insert(String name, int days, String extra, int aId);
+    ResultVO insert(String name, int days, String extra, int aId);
 
     /**
      * 查询

@@ -7,6 +7,8 @@ import com.rpa.web.mapper.WxSupportMapper;
 import com.rpa.web.pojo.WxSupportPO;
 import com.rpa.web.service.IWxSupportService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,7 +36,7 @@ public class WxSupportServiceImpl implements IWxSupportService {
     }
 
     @Override
-    public int insert(String packageName, String extra, int aId) {
+    public ResultVO insert(String packageName, String extra, int aId) {
         WxSupportPO po = new WxSupportPO();
 
         po.setPackageName(packageName);
@@ -43,7 +45,9 @@ public class WxSupportServiceImpl implements IWxSupportService {
 
         po.setaId(aId);
 
-        return wxSupportMapper.insert(po);
+        wxSupportMapper.insert(po);
+
+        return ResultVOUtil.success();
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.exception.PromptException;
 import com.rpa.web.service.IUserGiftsSercive;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +44,7 @@ public class UserGiftsController {
     }
 
     @RequestMapping("insert")
-    public int insert(@RequestParam(value = "comTypeId") int comTypeId, HttpServletRequest req) {
+    public ResultVO insert(@RequestParam(value = "comTypeId") int comTypeId, HttpServletRequest req) {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {

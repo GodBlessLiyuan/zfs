@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.PluginDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -55,7 +56,7 @@ public interface IPluginService {
      * @param aId
      * @return
      */
-    int insert(MultipartFile file, int appId, int[] softChannel, String context, String extra, int aId);
+    ResultVO insert(MultipartFile file, int appId, int[] softChannel, String context, String extra, int aId);
 
     /**
      * 状态更新

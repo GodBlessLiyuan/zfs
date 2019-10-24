@@ -7,13 +7,13 @@ import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.exception.PromptException;
 import com.rpa.web.service.IComTypeService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,14 +49,14 @@ public class ComTypeController {
     }
 
     @RequestMapping("insert")
-    public void insert(@RequestParam(value = "name") String name,
-                       @RequestParam(value = "days") int days,
-                       @RequestParam(value = "extra") String extra, HttpServletRequest req) {
+    public ResultVO insert(@RequestParam(value = "name") String name,
+                           @RequestParam(value = "days") int days,
+                           @RequestParam(value = "extra") String extra, HttpServletRequest req) {
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {
             throw new PromptException(ExceptionEnum.SESSION_ERROR);
         }
 
-        service.insert(name, days, extra, admin.getaId());
+        return service.insert(name, days, extra, admin.getaId());
     }
 }

@@ -133,7 +133,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增产品</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close" onclick="clearInsModal()">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
@@ -189,7 +190,7 @@
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
                                             </button>
                                             <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="javascript:deleteClick()">确认删除
+                                                    onclick="deleteClick()">确认删除
                                             </button>
                                         </div>
                                     </div>
@@ -253,7 +254,12 @@
             contentType: false,
             processData: false,
             success: function (res) {
-                $('#datatab').DataTable().draw(false);
+                if (res.code === 0) {
+                    $('#datatab').DataTable().draw(false);
+                    clearInsModal();
+                } else {
+                    alert(res.msg);
+                }
             }
         });
     }
@@ -354,6 +360,17 @@
      */
     function resetClick() {
         $('#name').val(null);
+    }
+
+    /**
+     * 清空插入框数据
+     */
+    function clearInsModal() {
+        $('#iOName').val(null);
+        $('#iExtra').val(null);
+        $('#iIconUrl').val(null);
+        $('#iDownloadType option:first').prop('selected', 'selected');
+        $('#iAppUrl').val(null);
     }
 </script>
 

@@ -1,6 +1,5 @@
 package com.rpa.web.service.impl;
 
-import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.PluginDTO;
 import com.rpa.web.mapper.AppPluChMapper;
@@ -10,6 +9,8 @@ import com.rpa.web.pojo.PluginPO;
 import com.rpa.web.service.IPluginService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -68,7 +69,7 @@ public class PluginServiceImpl implements IPluginService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int insert(MultipartFile file, int appId, int[] softChannel, String context, String extra, int aId) {
+    public ResultVO insert(MultipartFile file, int appId, int[] softChannel, String context, String extra, int aId) {
         PluginPO pluginPO = new PluginPO();
         this.setPluginPObyFile(file, pluginPO);
 
@@ -79,7 +80,7 @@ public class PluginServiceImpl implements IPluginService {
         pluginPO.setCreateTime(new Date());
         pluginPO.setDr((byte) 1);
 
-        int frist = pluginMapper.insert(pluginPO);
+        pluginMapper.insert(pluginPO);
 
         List<AppPluChPO> appPluChPOs = new ArrayList<>();
         for (int chanId : softChannel) {
@@ -94,9 +95,9 @@ public class PluginServiceImpl implements IPluginService {
             appPluChPOs.add(appPluChPO);
         }
 
-        int secend = appPluChMapper.batchInsert(appPluChPOs);
+        appPluChMapper.batchInsert(appPluChPOs);
 
-        return frist + secend;
+        return ResultVOUtil.success();
     }
 
     @Transactional(rollbackFor = {})

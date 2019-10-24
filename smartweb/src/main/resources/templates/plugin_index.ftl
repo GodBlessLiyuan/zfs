@@ -136,7 +136,7 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增插件</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
+                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -148,7 +148,7 @@
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">支持版本:</span>
                                                     <select id="iAppId" class="form-control"
-                                                            onclick="javascript:iAppIdClick()">
+                                                            onclick="iAppIdClick()">
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -385,7 +385,12 @@
             contentType: false,
             processData: false,
             success: function (res) {
-                $('#datatab').DataTable().draw(false);
+                if(res.code === 0) {
+                    $('#datatab').DataTable().draw(false);
+                    clearInsModal();
+                }else {
+                    alert(res.msg);
+                }
             }
         });
     }
@@ -638,6 +643,17 @@
      */
     function resetClick() {
         $('#username').val(null);
+    }
+
+    /**
+     * 清空插入框数据
+     */
+    function clearInsModal() {
+        $('#iFile').val(null);
+        // $('#iUpdateType option:first').prop('selected', 'selected');
+        $('#iSoftChannel').multiSelect('deselect_all');
+        $('#iContext').val(null);
+        $('#iExtra').val(null);
     }
 </script>
 

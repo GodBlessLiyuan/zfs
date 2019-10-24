@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.WxSupportDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public interface IWxSupportService {
      * @param aId
      * @return
      */
-    int insert(String packageName, String extra, int aId);
+    ResultVO insert(String packageName, String extra, int aId);
 
     /**
      * 主键

@@ -90,7 +90,7 @@
                                     data-target="#insertModal" data-whatever="@getbootstrap">新增商品
                             </button>
                             <button type="button" class="btn btn-primary" id="export"
-                                    onclick="javascript:exportClick();">导出
+                                    onclick="exportClick();">导出
                             </button>
 
                             <hr>
@@ -118,10 +118,10 @@
                             </div>
 
                             <button type="button" class="btn btn-primary " id="reset"
-                                    onclick="javascript:resetClick()">重置
+                                    onclick="resetClick()">重置
                             </button>
                             <button type="button" class="btn btn-primary " id="query"
-                                    onclick="javascript:queryClick();">查询
+                                    onclick="queryClick();">查询
                             </button>
 
                             <hr>
@@ -155,7 +155,7 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增商品</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
+                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -180,7 +180,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">原价:</span>
-                                                    <input type="text" class="form-control" id="price">
+                                                    <input type="number" class="form-control" id="price">
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">折扣:</span>
@@ -188,7 +188,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">售价:</span>
-                                                    <input type="text" class="form-control" id="discount">
+                                                    <input type="number" class="form-control" id="discount">
                                                 </div>
                                             </form>
                                         </div>
@@ -235,7 +235,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">原价:</span>
-                                                    <input type="text" class="form-control" id="uPrice">
+                                                    <input type="number" class="form-control" id="uPrice">
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">折扣:</span>
@@ -243,7 +243,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">售价:</span>
-                                                    <input type="text" class="form-control" id="uDiscount">
+                                                    <input type="number" class="form-control" id="uDiscount">
                                                 </div>
                                             </form>
                                         </div>
@@ -457,8 +457,11 @@
                 discount,
             dataType: 'json',
             success: function (res) {
-                if(res.code !== 0) {
+                if (res.code !== 0) {
                     alert(res.msg);
+                } else {
+                    clearInsModal();
+                    $('#datatab').DataTable().draw(false);
                 }
             }
         })
@@ -548,6 +551,19 @@
         $('#username').val(null);
         $('#comTypeId option:first').prop('selected', 'selected');
         $('#channelId option:first').prop('selected', 'selected');
+    }
+
+    /**
+     * 清空插入框数据
+     */
+    function clearInsModal() {
+        $('#iChannelId option:first').prop('selected', 'selected');
+        $('#iComTypeId option:first').prop('selected', 'selected');
+        $('#comName').val(null);
+        $('#description').val(null);
+        $('#price').val(null);
+        $('#showDiscount').val(null);
+        $('#discount').val(null);
     }
 </script>
 

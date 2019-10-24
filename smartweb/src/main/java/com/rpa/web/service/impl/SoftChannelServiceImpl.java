@@ -7,6 +7,8 @@ import com.rpa.web.mapper.SoftChannelMapper;
 import com.rpa.web.pojo.SoftChannelPO;
 import com.rpa.web.service.ISoftChannelService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -40,13 +42,15 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
     }
 
     @Override
-    public int insert(String channelName, String extra) {
+    public ResultVO insert(String channelName, String extra) {
         SoftChannelPO po = new SoftChannelPO();
 
         po.setName(channelName);
         po.setExtra(extra);
         po.setCreateTime(new Date());
 
-        return softChannelMapper.insert(po);
+        softChannelMapper.insert(po);
+
+        return ResultVOUtil.success();
     }
 }

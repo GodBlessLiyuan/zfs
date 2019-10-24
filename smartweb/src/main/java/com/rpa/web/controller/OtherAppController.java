@@ -7,6 +7,7 @@ import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.exception.PromptException;
 import com.rpa.web.service.IOtherAppService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,11 +44,11 @@ public class OtherAppController {
     }
 
     @PostMapping("insert")
-    public int insert(@RequestParam(value = "oName") String oName,
-                      @RequestParam(value = "extra") String extra,
-                      @RequestParam(value = "iconUrl") MultipartFile iconUrl,
-                      @RequestParam(value = "downloadType") byte downloadType,
-                      @RequestParam(value = "appUrl") String appUrl, HttpServletRequest req) {
+    public ResultVO insert(@RequestParam(value = "oName") String oName,
+                           @RequestParam(value = "extra") String extra,
+                           @RequestParam(value = "iconUrl") MultipartFile iconUrl,
+                           @RequestParam(value = "downloadType") byte downloadType,
+                           @RequestParam(value = "appUrl") String appUrl, HttpServletRequest req) {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {
