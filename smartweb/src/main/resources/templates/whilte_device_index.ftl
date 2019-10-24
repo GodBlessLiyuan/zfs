@@ -103,10 +103,10 @@
                             </div>
 
                             <button type="button" class="btn btn-primary " id="reset"
-                                    onclick="javascript:resetClick()">重置
+                                    onclick="resetClick()">重置
                             </button>
                             <button type="button" class="btn btn-primary " id="query"
-                                    onclick="javascript:queryClick();">查询
+                                    onclick="queryClick();">查询
                             </button>
 
                             <hr>
@@ -130,7 +130,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增白名单</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close" onclick="clearInsModal()">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
@@ -226,8 +227,9 @@
             url: "/whiltedevice/insert?imei=" + imei + "&extra=" + extra,
             dataType: 'json',
             success: function (data) {
-                if (data.code == 0) {
+                if (data.code === 0) {
                     $('#datatab').DataTable().draw(false);
+                    clearInsModal();
                 } else {
                     alert(data.msg);
                 }
@@ -268,6 +270,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "ordering": false, // 禁用排序
             "ajax": "/whiltedevice/query?imei=" + $('#imei').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
@@ -318,6 +321,14 @@
      */
     function resetClick() {
         $('#imei').val(null);
+    }
+
+    /**
+     * 清空插入框数据
+     */
+    function clearInsModal() {
+        $('#iImei').val(null);
+        $('#iExtra').val(null);
     }
 </script>
 

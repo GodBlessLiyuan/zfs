@@ -86,42 +86,11 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">新增产品</button>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">新增产品</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="form-group">
-                                                    <span for="recipient-name" class="col-form-label">产品类型:</span>
-                                                    <input type="text" class="form-control" id="comtype-name">
-                                                </div>
-                                                <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">产品天数:</span>
-                                                    <input type="text" class="form-control" id="comtype-days">
-                                                </div>
-                                                <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">备注信息:</span>
-                                                    <input type="text" class="form-control" id="comtype-extra">
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
-                                                    data-dismiss="modal"
-                                            >确认上架</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#exampleModal" data-whatever="@getbootstrap">新增产品
+                            </button>
 
                             <hr>
-
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
@@ -131,10 +100,10 @@
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                            id="reset" onclick="javascipt:resetClick()">重置
+                                            id="reset" onclick="resetClick()">重置
                                     </button>
                                     <button type="button" class="btn btn-primary m-r-5 m-b-5"
-                                            onclick="javascript:queryClick();"
+                                            onclick="queryClick();"
                                             id="query">查询
                                     </button>
                                 </form>
@@ -154,6 +123,42 @@
                                     </tr>
                                     </thead>
                                 </table>
+                            </div>
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">新增产品</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <span for="recipient-name" class="col-form-label">产品类型:</span>
+                                                    <input type="text" class="form-control" id="iName">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">产品天数:</span>
+                                                    <input type="number" class="form-control" id="iDays">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">备注信息:</span>
+                                                    <input type="text" class="form-control" id="iExtra">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
+                                                    data-dismiss="modal"
+                                            >确认上架
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -196,14 +201,6 @@
 <script>
 
     /**
-     * 确认上架点击事件
-     */
-    function insertClick() {
-        $.get("/comtype/insert?name=" + $('#comtype-name').val() + "&days=" + parseInt($('#comtype-days').val()) + "&extra=" + $
-        ('#comtype-extra').val());
-    }
-
-    /**
      * 查询点击事件
      */
     function queryClick() {
@@ -215,6 +212,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "ordering": false, // 禁用排序
             "ajax": "/comtype/query?username=" + $('#username').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
@@ -230,7 +228,7 @@
                 {"data": "username"}
             ],
             "oLanguage": {
-            "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
                 "sZeroRecords": "对不起，没有匹配的数据",
                 "sInfo": "第 _START_ - _END_ 条 / 共 _TOTAL_ 条数据",
                 "sInfoEmpty": "没有匹配的数据",
@@ -238,12 +236,32 @@
                 "sProcessing": "正在加载中...",
                 "sSearch": "全文搜索：",
                 "oPaginate": {
-                "sFirst": "第一页",
+                    "sFirst": "第一页",
                     "sPrevious": " 上一页 ",
                     "sNext": " 下一页 ",
                     "sLast": " 最后一页 "
+                }
             }
-        }
+        });
+    }
+
+    /**
+     * 确认上架点击事件
+     */
+    function insertClick() {
+        $.ajax({
+            type: 'GET',
+            url: "/comtype/insert?name=" + $('#iName').val() + "&days=" + parseInt($('#iDays').val()) + "&extra=" + $
+            ('#iExtra').val(),
+            dataType: 'JSON',
+            success: function (res) {
+                if(res.code === 0) {
+                    clearInsModal();
+                    $('#datatab').DataTable().draw(false);
+                }else {
+                    alert(res.msg);
+                }
+            }
         });
     }
 
@@ -252,6 +270,15 @@
      */
     function resetClick() {
         $('#username').val(null);
+    }
+
+    /**
+     * 清空插入模板数据
+     */
+    function clearInsModal() {
+        $('#iName').val(null);
+        $('#iDays').val(null);
+        $('#iExtra').val(null);
     }
 </script>
 

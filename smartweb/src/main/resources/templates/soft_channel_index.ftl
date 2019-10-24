@@ -128,7 +128,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增渠道</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close" onclick="clearInsModal()">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
@@ -199,7 +200,19 @@
         let channelName = $('#iChannelName').val();
         let extra = $('#iExtra').val();
 
-        $.get("/softchannel/insert?channelName=" + channelName + "&extra=" + extra);
+        $.ajax({
+            type: 'GET',
+            url: "/softchannel/insert?channelName=" + channelName + "&extra=" + extra,
+            dataType: 'json',
+            success: function (res) {
+                if (res.code === 0) {
+                    $('#datatab').DataTable().draw(false);
+                    clearInsModal();
+                } else {
+                    alert(res.msg);
+                }
+            }
+        });
     }
 
     /**
@@ -214,6 +227,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "ordering": false, // 禁用排序
             "ajax": "/softchannel/query?channelName=" + $('#channelName').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
@@ -249,6 +263,14 @@
      */
     function resetClick() {
         $('#channelName').val(null);
+    }
+
+    /**
+     * 清空插入框数据
+     */
+    function clearInsModal() {
+        $('#iChannelName').val(null);
+        $('#iExtra').val(null);
     }
 </script>
 

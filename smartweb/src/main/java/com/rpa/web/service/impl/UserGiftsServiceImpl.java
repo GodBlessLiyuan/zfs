@@ -9,6 +9,8 @@ import com.rpa.web.pojo.ComTypePO;
 import com.rpa.web.pojo.UserGiftsPO;
 import com.rpa.web.service.IUserGiftsSercive;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -40,7 +42,7 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
     }
 
     @Override
-    public int insert(int comTypeId, int aId) {
+    public ResultVO insert(int comTypeId, int aId) {
         ComTypePO comTypePO = comTypeMapper.selectByPrimaryKey(comTypeId);
 
         UserGiftsPO userGiftsPO = new UserGiftsPO();
@@ -52,7 +54,9 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
         userGiftsPO.setCreateTime(new Date());
         userGiftsPO.setaId(aId);
 
-        return userGiftsMapper.insert(userGiftsPO);
+        userGiftsMapper.insert(userGiftsPO);
+
+        return ResultVOUtil.success();
     }
 
     @Override

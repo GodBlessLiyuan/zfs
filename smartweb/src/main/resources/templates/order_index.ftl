@@ -255,6 +255,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "ordering": false, // 禁用排序
             "ajax": "/order/query?startDate=" + startDate + "&endDate=" + endDate + "&comTypeId=" + comTypeId +
                 "&type=" + type + "&uChanId=" + uChanId + "&sChanId=" + sChanId + "&phone=" + phone + "&number=" +
                 number,

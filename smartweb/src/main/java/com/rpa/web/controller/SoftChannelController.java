@@ -3,6 +3,7 @@ package com.rpa.web.controller;
 import com.rpa.web.dto.SoftChannelDTO;
 import com.rpa.web.service.ISoftChannelService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,8 +43,8 @@ public class SoftChannelController {
     }
 
     @RequestMapping("insert")
-    public int insert(@RequestParam(value = "channelName") String channelName,
-                      @RequestParam(value = "extra") String extra) {
+    public ResultVO insert(@RequestParam(value = "channelName") String channelName,
+                           @RequestParam(value = "extra") String extra) {
         return service.insert(channelName, extra);
     }
 }

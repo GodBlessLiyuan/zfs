@@ -108,10 +108,10 @@
                             </div>
 
                             <button type="button" class="btn btn-primary " id="reset"
-                                    onclick="javascript:resetClick()">重置
+                                    onclick="resetClick()">重置
                             </button>
                             <button type="button" class="btn btn-primary " id="query"
-                                    onclick="javascript:queryClick()">查询
+                                    onclick="queryClick()">查询
                             </button>
 
                             <hr>
@@ -142,7 +142,7 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增版本</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
+                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -246,7 +246,7 @@
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
                                             </button>
                                             <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="javascript:deleteClick()">确认删除
+                                                    onclick="deleteClick()">确认删除
                                             </button>
                                         </div>
                                     </div>
@@ -268,7 +268,7 @@
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
                                             </button>
                                             <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="javascript:publishClick()">确认发布
+                                                    onclick="publishClick()">确认发布
                                             </button>
                                         </div>
                                     </div>
@@ -290,7 +290,7 @@
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
                                             </button>
                                             <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="javascript:unPublishClick()">确认取消
+                                                    onclick="unPublishClick()">确认取消
                                             </button>
                                         </div>
                                     </div>
@@ -372,6 +372,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "ordering": false, // 禁用排序
             "ajax": "/appversion/query?updateType=" + $('#updateType').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
@@ -402,13 +403,13 @@
                         }
 
                         let dA = full.status === 1 ? "<a data-toggle='modal' data-target='#deleteModal' " +
-                            "data-whatever='@getbootstrap' class='text-primary' onclick='javascript:deleteModal(" +
+                            "data-whatever='@getbootstrap' class='text-primary' onclick='deleteModal(" +
                             data + ")'>删除</a>   " : "";
                         let pA = "<a data-toggle='modal' " + modal + " data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:publishModal(" + data + "," + full.status + ")" +
+                            "class='text-primary' onclick='publishModal(" + data + "," + full.status + ")" +
                             "'>" + title + "</a>  ";
                         let uA = "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:updateModal(" + data + ")'>修改</a>";
+                            "class='text-primary' onclick='updateModal(" + data + ")'>修改</a>";
                         return dA + pA + uA;
 
                     }
@@ -468,6 +469,7 @@
                 if (res.code !== 0) {
                     alert(res.msg);
                 } else {
+                    clearInsModal()
                     $('#datatab').DataTable().draw(false);
                 }
             }
@@ -596,6 +598,17 @@
      */
     function resetClick() {
         $('#updateType option:first').prop('selected', 'selected');
+    }
+
+    /**
+     * 清空插入框数据
+     */
+    function clearInsModal() {
+        $('#iFile').val(null);
+        $('#iUpdateType option:first').prop('selected', 'selected');
+        $('#iSoftChannel').multiSelect('deselect_all');
+        $('#iContext').val(null);
+        $('#iExtra').val(null);
     }
 </script>
 

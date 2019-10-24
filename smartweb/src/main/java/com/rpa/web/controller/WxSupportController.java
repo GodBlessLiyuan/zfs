@@ -7,6 +7,7 @@ import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.exception.PromptException;
 import com.rpa.web.service.IWxSupportService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,8 +42,8 @@ public class WxSupportController {
     }
 
     @RequestMapping("insert")
-    public int insert(@RequestParam(value = "packageName") String packageName,
-                      @RequestParam(value = "extra") String extra, HttpServletRequest req) {
+    public ResultVO insert(@RequestParam(value = "packageName") String packageName,
+                           @RequestParam(value = "extra") String extra, HttpServletRequest req) {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {

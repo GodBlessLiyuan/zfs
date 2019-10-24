@@ -7,6 +7,7 @@ import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.exception.PromptException;
 import com.rpa.web.service.IPluginService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,11 +58,11 @@ public class PluginController {
     }
 
     @PostMapping("/plugin/insert")
-    public int insert(@RequestParam(value = "file") MultipartFile file,
-                      @RequestParam(value = "appId") int appId,
-                      @RequestParam(value = "softChannel") int[] softChannel,
-                      @RequestParam(value = "context") String context,
-                      @RequestParam(value = "extra") String extra, HttpServletRequest req) {
+    public ResultVO insert(@RequestParam(value = "file") MultipartFile file,
+                           @RequestParam(value = "appId") int appId,
+                           @RequestParam(value = "softChannel") int[] softChannel,
+                           @RequestParam(value = "context") String context,
+                           @RequestParam(value = "extra") String extra, HttpServletRequest req) {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {

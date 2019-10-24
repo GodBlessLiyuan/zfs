@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.UserGiftsDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public interface IUserGiftsSercive {
      * @param aId
      * @return
      */
-    int insert(int comTypeId, int aId);
+    ResultVO insert(int comTypeId, int aId);
 
     /**
      * 跟新状态

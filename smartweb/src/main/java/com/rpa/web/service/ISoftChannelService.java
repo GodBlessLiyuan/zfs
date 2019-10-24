@@ -2,6 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.SoftChannelDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 
 import java.util.List;
 import java.util.Map;
@@ -36,5 +37,5 @@ public interface ISoftChannelService {
      * @param extra 备注
      * @return
      */
-    int insert(String channelName, String extra);
+    ResultVO insert(String channelName, String extra);
 }

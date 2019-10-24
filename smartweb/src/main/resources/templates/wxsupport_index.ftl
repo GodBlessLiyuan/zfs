@@ -131,7 +131,7 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增白名单</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
+                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -222,7 +222,19 @@
         let packageName = $('#iPackageName').val();
         let extra = $('#iExtra').val();
 
-        $.get("/wxsupport/insert?packageName=" + packageName + "&extra=" + extra);
+        $.ajax({
+            type: 'GET',
+            url: "/wxsupport/insert?packageName=" + packageName + "&extra=" + extra,
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 0) {
+                    $('#datatab').DataTable().draw(false);
+                    clearInsModal();
+                } else {
+                    alert(data.msg);
+                }
+            }
+        });
     }
 
     function deleteClick() {
@@ -258,6 +270,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "ordering": false, // 禁用排序
             "ajax": "/wxsupport/query?packageName=" + $('#packageName').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
@@ -308,6 +321,14 @@
      */
     function resetClick() {
         $('#packageName').val(null);
+    }
+
+    /**
+     * 清空插入框数据
+     */
+    function clearInsModal() {
+        $('#iPackageName').val(null);
+        $('#iExtra').val(null);
     }
 </script>
 
