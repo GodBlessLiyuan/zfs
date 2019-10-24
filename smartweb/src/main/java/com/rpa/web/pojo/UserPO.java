@@ -22,11 +22,6 @@ public class UserPO implements Serializable {
 
     private String chanName;
 
-    private Integer versionCode;
-    private Byte buildVersion;
-    private String manufacturer;
-    private String androidModel;
-
     private Integer softChannelId;
 
     private static final long serialVersionUID = 1L;
@@ -87,39 +82,6 @@ public class UserPO implements Serializable {
         this.chanName = chanName;
     }
 
-    public Integer getVersionCode() {
-        return versionCode;
-    }
-
-    public void setVersionCode(Integer versionCode) {
-        this.versionCode = versionCode;
-    }
-
-    public Byte getBuildVersion() {
-        return buildVersion;
-    }
-
-    public void setBuildVersion(Byte buildVersion) {
-        this.buildVersion = buildVersion;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getAndroidModel() {
-        return androidModel;
-    }
-
-    public void setAndroidModel(String androidModel) {
-        this.androidModel = androidModel;
-    }
-
-
     public Integer getSoftChannelId() {
         return softChannelId;
     }
@@ -173,6 +135,8 @@ public class UserPO implements Serializable {
         sb.append(", ip=").append(ip);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", chanName=").append(chanName);
+        sb.append(", softChannelId=").append(softChannelId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
