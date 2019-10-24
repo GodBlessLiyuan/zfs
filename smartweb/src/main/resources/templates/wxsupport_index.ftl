@@ -270,6 +270,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "ordering": false, // 禁用排序
             "ajax": "/wxsupport/query?packageName=" + $('#packageName').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {

@@ -212,6 +212,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "ordering": false, // 禁用排序
             "ajax": "/comtype/query?username=" + $('#username').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
