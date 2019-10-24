@@ -14,10 +14,11 @@
     <result column="androidmodel" jdbcType="CHAR" property="androidmodel" />
     <result column="buildversion" jdbcType="TINYINT" property="buildversion" />
     <result column="versioncode" jdbcType="INTEGER" property="versioncode" />
+    <result column="buildrelease" jdbcType="CHAR" property="buildrelease" />
   </resultMap>
   <sql id="Base_Column_List">
     feedback_id, user_id, device_id, user_device_id, context, contact, create_time, url, 
-    manufacturer, androidmodel, buildversion, versioncode
+    manufacturer, androidmodel, buildversion, versioncode, buildrelease
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -54,13 +55,13 @@
     insert into t_feedback (feedback_id, user_id, device_id, 
       user_device_id, context, contact, 
       create_time, url, manufacturer, 
-      androidmodel, buildversion, versioncode
-      )
+      androidmodel, buildversion, versioncode, 
+      buildrelease)
     values (#{feedbackId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, 
       #{userDeviceId,jdbcType=INTEGER}, #{context,jdbcType=CHAR}, #{contact,jdbcType=CHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{url,jdbcType=CHAR}, #{manufacturer,jdbcType=CHAR}, 
-      #{androidmodel,jdbcType=CHAR}, #{buildversion,jdbcType=TINYINT}, #{versioncode,jdbcType=INTEGER}
-      )
+      #{androidmodel,jdbcType=CHAR}, #{buildversion,jdbcType=TINYINT}, #{versioncode,jdbcType=INTEGER}, 
+      #{buildrelease,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.FeedbackPO">
     insert into t_feedback
@@ -101,6 +102,9 @@
       <if test="versioncode != null">
         versioncode,
       </if>
+      <if test="buildrelease != null">
+        buildrelease,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="feedbackId != null">
@@ -138,6 +142,9 @@
       </if>
       <if test="versioncode != null">
         #{versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="buildrelease != null">
+        #{buildrelease,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -177,6 +184,9 @@
       <if test="versioncode != null">
         versioncode = #{versioncode,jdbcType=INTEGER},
       </if>
+      <if test="buildrelease != null">
+        buildrelease = #{buildrelease,jdbcType=CHAR},
+      </if>
     </set>
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </update>
@@ -192,7 +202,8 @@
       manufacturer = #{manufacturer,jdbcType=CHAR},
       androidmodel = #{androidmodel,jdbcType=CHAR},
       buildversion = #{buildversion,jdbcType=TINYINT},
-      versioncode = #{versioncode,jdbcType=INTEGER}
+      versioncode = #{versioncode,jdbcType=INTEGER},
+      buildrelease = #{buildrelease,jdbcType=CHAR}
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </update>
 </mapper>

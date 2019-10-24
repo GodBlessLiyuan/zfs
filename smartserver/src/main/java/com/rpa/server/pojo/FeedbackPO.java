@@ -35,6 +35,8 @@ public class FeedbackPO implements Serializable {
 
     private Integer versioncode;
 
+    private String buildrelease;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getFeedbackId() {
@@ -133,6 +135,14 @@ public class FeedbackPO implements Serializable {
         this.versioncode = versioncode;
     }
 
+    public String getBuildrelease() {
+        return buildrelease;
+    }
+
+    public void setBuildrelease(String buildrelease) {
+        this.buildrelease = buildrelease;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -156,7 +166,8 @@ public class FeedbackPO implements Serializable {
             && (this.getManufacturer() == null ? other.getManufacturer() == null : this.getManufacturer().equals(other.getManufacturer()))
             && (this.getAndroidmodel() == null ? other.getAndroidmodel() == null : this.getAndroidmodel().equals(other.getAndroidmodel()))
             && (this.getBuildversion() == null ? other.getBuildversion() == null : this.getBuildversion().equals(other.getBuildversion()))
-            && (this.getVersioncode() == null ? other.getVersioncode() == null : this.getVersioncode().equals(other.getVersioncode()));
+            && (this.getVersioncode() == null ? other.getVersioncode() == null : this.getVersioncode().equals(other.getVersioncode()))
+            && (this.getBuildrelease() == null ? other.getBuildrelease() == null : this.getBuildrelease().equals(other.getBuildrelease()));
     }
 
     @Override
@@ -175,6 +186,7 @@ public class FeedbackPO implements Serializable {
         result = prime * result + ((getAndroidmodel() == null) ? 0 : getAndroidmodel().hashCode());
         result = prime * result + ((getBuildversion() == null) ? 0 : getBuildversion().hashCode());
         result = prime * result + ((getVersioncode() == null) ? 0 : getVersioncode().hashCode());
+        result = prime * result + ((getBuildrelease() == null) ? 0 : getBuildrelease().hashCode());
         return result;
     }
 
@@ -196,6 +208,7 @@ public class FeedbackPO implements Serializable {
         sb.append(", androidmodel=").append(androidmodel);
         sb.append(", buildversion=").append(buildversion);
         sb.append(", versioncode=").append(versioncode);
+        sb.append(", buildrelease=").append(buildrelease);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

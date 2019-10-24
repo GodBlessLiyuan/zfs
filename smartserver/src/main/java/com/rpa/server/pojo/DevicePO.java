@@ -35,6 +35,8 @@ public class DevicePO implements Serializable {
 
     private String uuid;
 
+    private String buildrelease;
+
     private static final long serialVersionUID = 1L;
 
     public Long getDeviceId() {
@@ -133,6 +135,14 @@ public class DevicePO implements Serializable {
         this.uuid = uuid;
     }
 
+    public String getBuildrelease() {
+        return buildrelease;
+    }
+
+    public void setBuildrelease(String buildrelease) {
+        this.buildrelease = buildrelease;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -156,7 +166,8 @@ public class DevicePO implements Serializable {
             && (this.getVersioncode() == null ? other.getVersioncode() == null : this.getVersioncode().equals(other.getVersioncode()))
             && (this.getManufacturer() == null ? other.getManufacturer() == null : this.getManufacturer().equals(other.getManufacturer()))
             && (this.getAndroidmodel() == null ? other.getAndroidmodel() == null : this.getAndroidmodel().equals(other.getAndroidmodel()))
-            && (this.getUuid() == null ? other.getUuid() == null : this.getUuid().equals(other.getUuid()));
+            && (this.getUuid() == null ? other.getUuid() == null : this.getUuid().equals(other.getUuid()))
+            && (this.getBuildrelease() == null ? other.getBuildrelease() == null : this.getBuildrelease().equals(other.getBuildrelease()));
     }
 
     @Override
@@ -175,6 +186,7 @@ public class DevicePO implements Serializable {
         result = prime * result + ((getManufacturer() == null) ? 0 : getManufacturer().hashCode());
         result = prime * result + ((getAndroidmodel() == null) ? 0 : getAndroidmodel().hashCode());
         result = prime * result + ((getUuid() == null) ? 0 : getUuid().hashCode());
+        result = prime * result + ((getBuildrelease() == null) ? 0 : getBuildrelease().hashCode());
         return result;
     }
 
@@ -196,6 +208,7 @@ public class DevicePO implements Serializable {
         sb.append(", manufacturer=").append(manufacturer);
         sb.append(", androidmodel=").append(androidmodel);
         sb.append(", uuid=").append(uuid);
+        sb.append(", buildrelease=").append(buildrelease);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

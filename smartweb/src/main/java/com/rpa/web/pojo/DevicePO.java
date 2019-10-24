@@ -8,9 +8,6 @@ import java.util.Date;
  * @author 
  */
 public class DevicePO implements Serializable {
-    /**
-     * 允许为null
-     */
     private Long deviceId;
 
     private String utdid;
@@ -35,6 +32,10 @@ public class DevicePO implements Serializable {
     private String manufacturer;
 
     private String androidmodel;
+
+    private String uuid;
+
+    private String buildrelease;
 
     private static final long serialVersionUID = 1L;
 
@@ -126,6 +127,22 @@ public class DevicePO implements Serializable {
         this.androidmodel = androidmodel;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getBuildrelease() {
+        return buildrelease;
+    }
+
+    public void setBuildrelease(String buildrelease) {
+        this.buildrelease = buildrelease;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -148,7 +165,9 @@ public class DevicePO implements Serializable {
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getVersioncode() == null ? other.getVersioncode() == null : this.getVersioncode().equals(other.getVersioncode()))
             && (this.getManufacturer() == null ? other.getManufacturer() == null : this.getManufacturer().equals(other.getManufacturer()))
-            && (this.getAndroidmodel() == null ? other.getAndroidmodel() == null : this.getAndroidmodel().equals(other.getAndroidmodel()));
+            && (this.getAndroidmodel() == null ? other.getAndroidmodel() == null : this.getAndroidmodel().equals(other.getAndroidmodel()))
+            && (this.getUuid() == null ? other.getUuid() == null : this.getUuid().equals(other.getUuid()))
+            && (this.getBuildrelease() == null ? other.getBuildrelease() == null : this.getBuildrelease().equals(other.getBuildrelease()));
     }
 
     @Override
@@ -166,6 +185,8 @@ public class DevicePO implements Serializable {
         result = prime * result + ((getVersioncode() == null) ? 0 : getVersioncode().hashCode());
         result = prime * result + ((getManufacturer() == null) ? 0 : getManufacturer().hashCode());
         result = prime * result + ((getAndroidmodel() == null) ? 0 : getAndroidmodel().hashCode());
+        result = prime * result + ((getUuid() == null) ? 0 : getUuid().hashCode());
+        result = prime * result + ((getBuildrelease() == null) ? 0 : getBuildrelease().hashCode());
         return result;
     }
 
@@ -186,6 +207,8 @@ public class DevicePO implements Serializable {
         sb.append(", versioncode=").append(versioncode);
         sb.append(", manufacturer=").append(manufacturer);
         sb.append(", androidmodel=").append(androidmodel);
+        sb.append(", uuid=").append(uuid);
+        sb.append(", buildrelease=").append(buildrelease);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

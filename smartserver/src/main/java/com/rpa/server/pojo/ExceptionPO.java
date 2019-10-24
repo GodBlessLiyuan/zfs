@@ -22,6 +22,8 @@ public class ExceptionPO implements Serializable {
 
     private String pkg;
 
+    private String buildrelease;
+
     private String error;
 
     private static final long serialVersionUID = 1L;
@@ -74,6 +76,14 @@ public class ExceptionPO implements Serializable {
         this.pkg = pkg;
     }
 
+    public String getBuildrelease() {
+        return buildrelease;
+    }
+
+    public void setBuildrelease(String buildrelease) {
+        this.buildrelease = buildrelease;
+    }
+
     public String getError() {
         return error;
     }
@@ -100,6 +110,7 @@ public class ExceptionPO implements Serializable {
             && (this.getVersioncode() == null ? other.getVersioncode() == null : this.getVersioncode().equals(other.getVersioncode()))
             && (this.getAndroidmodel() == null ? other.getAndroidmodel() == null : this.getAndroidmodel().equals(other.getAndroidmodel()))
             && (this.getPkg() == null ? other.getPkg() == null : this.getPkg().equals(other.getPkg()))
+            && (this.getBuildrelease() == null ? other.getBuildrelease() == null : this.getBuildrelease().equals(other.getBuildrelease()))
             && (this.getError() == null ? other.getError() == null : this.getError().equals(other.getError()));
     }
 
@@ -113,6 +124,7 @@ public class ExceptionPO implements Serializable {
         result = prime * result + ((getVersioncode() == null) ? 0 : getVersioncode().hashCode());
         result = prime * result + ((getAndroidmodel() == null) ? 0 : getAndroidmodel().hashCode());
         result = prime * result + ((getPkg() == null) ? 0 : getPkg().hashCode());
+        result = prime * result + ((getBuildrelease() == null) ? 0 : getBuildrelease().hashCode());
         result = prime * result + ((getError() == null) ? 0 : getError().hashCode());
         return result;
     }
@@ -129,6 +141,7 @@ public class ExceptionPO implements Serializable {
         sb.append(", versioncode=").append(versioncode);
         sb.append(", androidmodel=").append(androidmodel);
         sb.append(", pkg=").append(pkg);
+        sb.append(", buildrelease=").append(buildrelease);
         sb.append(", error=").append(error);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

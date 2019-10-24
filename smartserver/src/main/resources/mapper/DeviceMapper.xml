@@ -14,10 +14,11 @@
     <result column="manufacturer" jdbcType="CHAR" property="manufacturer" />
     <result column="androidmodel" jdbcType="CHAR" property="androidmodel" />
     <result column="uuid" jdbcType="CHAR" property="uuid" />
+    <result column="buildrelease" jdbcType="CHAR" property="buildrelease" />
   </resultMap>
   <sql id="Base_Column_List">
     device_id, utdid, androidid, buildversion, soft_channel_id, chan_name, create_time, 
-    update_time, versioncode, manufacturer, androidmodel, uuid
+    update_time, versioncode, manufacturer, androidmodel, uuid, buildrelease
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -33,13 +34,13 @@
     insert into t_device (device_id, utdid, androidid, 
       buildversion, soft_channel_id, chan_name, 
       create_time, update_time, versioncode, 
-      manufacturer, androidmodel, uuid
-      )
+      manufacturer, androidmodel, uuid, 
+      buildrelease)
     values (#{deviceId,jdbcType=BIGINT}, #{utdid,jdbcType=CHAR}, #{androidid,jdbcType=CHAR}, 
       #{buildversion,jdbcType=TINYINT}, #{softChannelId,jdbcType=INTEGER}, #{chanName,jdbcType=CHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{versioncode,jdbcType=INTEGER}, 
-      #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR}, #{uuid,jdbcType=CHAR}
-      )
+      #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR}, #{uuid,jdbcType=CHAR}, 
+      #{buildrelease,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.server.pojo.DevicePO">
     insert into t_device
@@ -80,6 +81,9 @@
       <if test="uuid != null">
         uuid,
       </if>
+      <if test="buildrelease != null">
+        buildrelease,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="deviceId != null">
@@ -117,6 +121,9 @@
       </if>
       <if test="uuid != null">
         #{uuid,jdbcType=CHAR},
+      </if>
+      <if test="buildrelease != null">
+        #{buildrelease,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -156,6 +163,9 @@
       <if test="uuid != null">
         uuid = #{uuid,jdbcType=CHAR},
       </if>
+      <if test="buildrelease != null">
+        buildrelease = #{buildrelease,jdbcType=CHAR},
+      </if>
     </set>
     where device_id = #{deviceId,jdbcType=BIGINT}
   </update>
@@ -171,7 +181,8 @@
       versioncode = #{versioncode,jdbcType=INTEGER},
       manufacturer = #{manufacturer,jdbcType=CHAR},
       androidmodel = #{androidmodel,jdbcType=CHAR},
-      uuid = #{uuid,jdbcType=CHAR}
+      uuid = #{uuid,jdbcType=CHAR},
+      buildrelease = #{buildrelease,jdbcType=CHAR}
     where device_id = #{deviceId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -13,11 +13,13 @@
     <result column="versioncode" jdbcType="INTEGER" property="versioncode" />
     <result column="manufacturer" jdbcType="CHAR" property="manufacturer" />
     <result column="androidmodel" jdbcType="CHAR" property="androidmodel" />
+    <result column="uuid" jdbcType="CHAR" property="uuid" />
+    <result column="buildrelease" jdbcType="CHAR" property="buildrelease" />
   </resultMap>
   <sql id="Base_Column_List">
     device_id as deviceId, utdid, androidid, buildversion, soft_channel_id as softChannelId, chan_name as chanName,
     create_time as createTime,
-    update_time as updateTime, versioncode, manufacturer, androidmodel
+    update_time as updateTime, versioncode, manufacturer, androidmodel, buildrelease
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -33,11 +35,13 @@
     insert into t_device (device_id, utdid, androidid, 
       buildversion, soft_channel_id, chan_name, 
       create_time, update_time, versioncode, 
-      manufacturer, androidmodel)
+      manufacturer, androidmodel, uuid, 
+      buildrelease)
     values (#{deviceId,jdbcType=BIGINT}, #{utdid,jdbcType=CHAR}, #{androidid,jdbcType=CHAR}, 
       #{buildversion,jdbcType=TINYINT}, #{softChannelId,jdbcType=INTEGER}, #{chanName,jdbcType=CHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{versioncode,jdbcType=INTEGER}, 
-      #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR})
+      #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR}, #{uuid,jdbcType=CHAR}, 
+      #{buildrelease,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.DevicePO">
     insert into t_device
@@ -75,6 +79,12 @@
       <if test="androidmodel != null">
         androidmodel,
       </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="buildrelease != null">
+        buildrelease,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="deviceId != null">
@@ -109,6 +119,12 @@
       </if>
       <if test="androidmodel != null">
         #{androidmodel,jdbcType=CHAR},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=CHAR},
+      </if>
+      <if test="buildrelease != null">
+        #{buildrelease,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -145,6 +161,12 @@
       <if test="androidmodel != null">
         androidmodel = #{androidmodel,jdbcType=CHAR},
       </if>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=CHAR},
+      </if>
+      <if test="buildrelease != null">
+        buildrelease = #{buildrelease,jdbcType=CHAR},
+      </if>
     </set>
     where device_id = #{deviceId,jdbcType=BIGINT}
   </update>
@@ -159,7 +181,9 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       versioncode = #{versioncode,jdbcType=INTEGER},
       manufacturer = #{manufacturer,jdbcType=CHAR},
-      androidmodel = #{androidmodel,jdbcType=CHAR}
+      androidmodel = #{androidmodel,jdbcType=CHAR},
+      uuid = #{uuid,jdbcType=CHAR},
+      buildrelease = #{buildrelease,jdbcType=CHAR}
     where device_id = #{deviceId,jdbcType=BIGINT}
   </update>
 
@@ -167,7 +191,7 @@
         select
         d.device_id as deviceId, d.utdid, d.androidid, d.buildversion, d.soft_channel_id as softChannelId, d.chan_name
         as chanName, d.create_time as createTime, d.update_time as updateTime, d.versioncode, d.manufacturer,
-        d.androidmodel
+        d.androidmodel, d.buildrelease
         from t_device d
         left join t_user_device u on d.device_id = u.device_id where u.user_id is null
         <if test="channelId!=null and channelId!=''">AND soft_channel_id = #{channelId}</if>

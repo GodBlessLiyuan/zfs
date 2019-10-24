@@ -8,12 +8,13 @@
     <result column="versioncode" jdbcType="INTEGER" property="versioncode" />
     <result column="androidmodel" jdbcType="CHAR" property="androidmodel" />
     <result column="pkg" jdbcType="CHAR" property="pkg" />
+    <result column="buildrelease" jdbcType="CHAR" property="buildrelease" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.rpa.server.pojo.ExceptionPO">
     <result column="error" jdbcType="LONGVARCHAR" property="error" />
   </resultMap>
   <sql id="Base_Column_List">
-    exceptionid, device_id, buildversion, versioncode, androidmodel, pkg
+    exceptionid, device_id, buildversion, versioncode, androidmodel, pkg, buildrelease
   </sql>
   <sql id="Blob_Column_List">
     error
@@ -33,10 +34,10 @@
   <insert id="insert" parameterType="com.rpa.server.pojo.ExceptionPO">
     insert into t_exception (exceptionid, device_id, buildversion, 
       versioncode, androidmodel, pkg, 
-      error)
+      buildrelease, error)
     values (#{exceptionid,jdbcType=INTEGER}, #{deviceId,jdbcType=BIGINT}, #{buildversion,jdbcType=TINYINT}, 
       #{versioncode,jdbcType=INTEGER}, #{androidmodel,jdbcType=CHAR}, #{pkg,jdbcType=CHAR}, 
-      #{error,jdbcType=LONGVARCHAR})
+      #{buildrelease,jdbcType=CHAR}, #{error,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.server.pojo.ExceptionPO">
     insert into t_exception
@@ -58,6 +59,9 @@
       </if>
       <if test="pkg != null">
         pkg,
+      </if>
+      <if test="buildrelease != null">
+        buildrelease,
       </if>
       <if test="error != null">
         error,
@@ -82,6 +86,9 @@
       <if test="pkg != null">
         #{pkg,jdbcType=CHAR},
       </if>
+      <if test="buildrelease != null">
+        #{buildrelease,jdbcType=CHAR},
+      </if>
       <if test="error != null">
         #{error,jdbcType=LONGVARCHAR},
       </if>
@@ -105,6 +112,9 @@
       <if test="pkg != null">
         pkg = #{pkg,jdbcType=CHAR},
       </if>
+      <if test="buildrelease != null">
+        buildrelease = #{buildrelease,jdbcType=CHAR},
+      </if>
       <if test="error != null">
         error = #{error,jdbcType=LONGVARCHAR},
       </if>
@@ -118,6 +128,7 @@
       versioncode = #{versioncode,jdbcType=INTEGER},
       androidmodel = #{androidmodel,jdbcType=CHAR},
       pkg = #{pkg,jdbcType=CHAR},
+      buildrelease = #{buildrelease,jdbcType=CHAR},
       error = #{error,jdbcType=LONGVARCHAR}
     where exceptionid = #{exceptionid,jdbcType=INTEGER}
   </update>
@@ -127,7 +138,8 @@
       buildversion = #{buildversion,jdbcType=TINYINT},
       versioncode = #{versioncode,jdbcType=INTEGER},
       androidmodel = #{androidmodel,jdbcType=CHAR},
-      pkg = #{pkg,jdbcType=CHAR}
+      pkg = #{pkg,jdbcType=CHAR},
+      buildrelease = #{buildrelease,jdbcType=CHAR}
     where exceptionid = #{exceptionid,jdbcType=INTEGER}
   </update>
 </mapper>
