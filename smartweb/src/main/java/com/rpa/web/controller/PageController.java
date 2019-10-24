@@ -223,14 +223,16 @@ public class PageController {
         return "feedback_index";
     }
 
+
     /**
-     * 好评活动
+     * 分享素材
      * @return
      */
-    @RequestMapping("/goodcomment")
-    public String goodcomment() {
-        return "goodcomment_index";
+    @RequestMapping("/shareactivity")
+    public String shareactivity() {
+        return "share_activity_index";
     }
+
 
     /**
      * 养号教程

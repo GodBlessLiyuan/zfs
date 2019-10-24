@@ -2,6 +2,8 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.ShareActivityDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,11 +14,13 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface ShareActivityService {
-    DTPageInfo<ShareActivityDTO> query(int draw, int pageNum, int pageSize, int type);
+    DTPageInfo<ShareActivityDTO> query(int draw, int pageNum, int pageSize, Byte type);
+    
+    ResultVO delete(int materialId);
 
-    int insert(ShareActivityDTO shareActivityDTO, HttpSession httpSession);
+    ResultVO queryById(Integer materialId);
 
-    int update(ShareActivityDTO shareActivityDTO, HttpSession httpSession);
+    ResultVO update(Integer materialId, Byte type, String contentText, MultipartFile contentImage, String extra, HttpSession httpSession);
 
-    int delete(int materialId);
+    ResultVO insert(Byte type, String contentText, MultipartFile contentImage, String extra, HttpSession httpSession);
 }
