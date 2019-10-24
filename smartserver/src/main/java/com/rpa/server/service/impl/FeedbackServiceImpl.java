@@ -44,6 +44,7 @@ public class FeedbackServiceImpl implements IFeedbackService {
         feedbackPO.setManufacturer(dto.getFactory());
         feedbackPO.setAndroidmodel(dto.getModel());
         feedbackPO.setBuildversion(dto.getOsv());
+        feedbackPO.setBuildrelease(dto.getOsre());
 
         feedbackMapper.insert(feedbackPO);
 

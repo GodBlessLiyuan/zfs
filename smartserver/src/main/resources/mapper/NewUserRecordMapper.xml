@@ -103,4 +103,10 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where nur_id = #{nurId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryByUserId" parameterType="java.lang.Long" resultType="com.rpa.server.bo.NewUserRecordBO">
+    select ug.com_type_name as comTypeName, nur.create_time as createTime
+    from t_new_user_record nur left join t_user_gifts ug on nur.nug_id = ug.nug_id
+    where nur.user_id = #{userId}
+  </select>
 </mapper>

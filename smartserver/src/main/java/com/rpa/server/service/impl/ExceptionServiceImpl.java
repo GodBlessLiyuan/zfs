@@ -26,6 +26,7 @@ public class ExceptionServiceImpl implements IExceptionService {
         po.setDeviceId(dto.getId());
         po.setError(dto.getException());
         po.setBuildversion(dto.getOsv());
+        po.setBuildrelease(dto.getOsre());
         po.setVersioncode(dto.getSoftv());
         po.setAndroidmodel(dto.getModel());
         po.setPkg(dto.getPkg());

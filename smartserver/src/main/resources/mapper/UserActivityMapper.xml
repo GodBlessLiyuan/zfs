@@ -161,4 +161,10 @@
       url = #{url,jdbcType=CHAR}
     where u_a_id = #{uAId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryByUserId" parameterType="java.lang.Long" resultType="com.rpa.server.bo.UserActivityBO">
+    select ua.update_time as updateTime, a.com_type_name as comTypeName
+    from t_user_activity ua left join t_activity a on ua.activity_id = a.activity_id
+    where ua.user_id = #{userId} and ua.`status` = 30
+  </select>
 </mapper>
