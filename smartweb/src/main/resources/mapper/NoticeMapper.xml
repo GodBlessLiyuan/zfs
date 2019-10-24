@@ -11,12 +11,15 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="picurl" jdbcType="CHAR" property="picurl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.rpa.web.pojo.NoticePO">
     <result column="url" jdbcType="LONGVARCHAR" property="url" />
   </resultMap>
   <sql id="Base_Column_List">
-    notice_id, title, `text`, `type`, show_time, start_time, `status`, end_time, picurl
+    notice_id, title, `text`, `type`, show_time, start_time, `status`, end_time, picurl, 
+    create_time, update_time
   </sql>
   <sql id="Blob_Column_List">
     url
@@ -37,11 +40,13 @@
     insert into t_notice (notice_id, title, `text`, 
       `type`, show_time, start_time, 
       `status`, end_time, picurl, 
-      url)
+      create_time, update_time, url
+      )
     values (#{noticeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, 
       #{type,jdbcType=TINYINT}, #{showTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, #{picurl,jdbcType=CHAR}, 
-      #{url,jdbcType=LONGVARCHAR})
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{url,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.NoticePO">
     insert into t_notice
@@ -72,6 +77,12 @@
       </if>
       <if test="picurl != null">
         picurl,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
       </if>
       <if test="url != null">
         url,
@@ -105,6 +116,12 @@
       <if test="picurl != null">
         #{picurl,jdbcType=CHAR},
       </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="url != null">
         #{url,jdbcType=LONGVARCHAR},
       </if>
@@ -137,6 +154,12 @@
       <if test="picurl != null">
         picurl = #{picurl,jdbcType=CHAR},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="url != null">
         url = #{url,jdbcType=LONGVARCHAR},
       </if>
@@ -153,6 +176,8 @@
       `status` = #{status,jdbcType=INTEGER},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       picurl = #{picurl,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
       url = #{url,jdbcType=LONGVARCHAR}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
@@ -165,7 +190,9 @@
       start_time = #{startTime,jdbcType=TIMESTAMP},
       `status` = #{status,jdbcType=INTEGER},
       end_time = #{endTime,jdbcType=TIMESTAMP},
-      picurl = #{picurl,jdbcType=CHAR}
+      picurl = #{picurl,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
 </mapper>
