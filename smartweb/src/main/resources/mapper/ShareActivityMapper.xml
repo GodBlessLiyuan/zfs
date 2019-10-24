@@ -20,11 +20,15 @@
     where material_id = #{materialId,jdbcType=INTEGER}
   </select>
 
-  <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="query" resultMap="BaseResultMap">
     select
-    username
-    from t_admin_user
-    where a_id = #{aId}
+    <include refid="Base_Column_List" />
+    from t_share_activity
+    <where>
+      <if test="type != 0">
+      type = #{type}
+      </if>
+    </where>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
