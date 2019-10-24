@@ -36,6 +36,8 @@ public class NoticePO implements Serializable {
 
     private Date updateTime;
 
+    private Integer aId;
+
     private String url;
 
     private static final long serialVersionUID = 1L;
@@ -128,6 +130,14 @@ public class NoticePO implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public Integer getaId() {
+        return aId;
+    }
+
+    public void setaId(Integer aId) {
+        this.aId = aId;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -159,6 +169,7 @@ public class NoticePO implements Serializable {
             && (this.getPicurl() == null ? other.getPicurl() == null : this.getPicurl().equals(other.getPicurl()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()));
     }
 
@@ -177,6 +188,7 @@ public class NoticePO implements Serializable {
         result = prime * result + ((getPicurl() == null) ? 0 : getPicurl().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         return result;
     }
@@ -198,6 +210,7 @@ public class NoticePO implements Serializable {
         sb.append(", picurl=").append(picurl);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", aId=").append(aId);
         sb.append(", url=").append(url);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
