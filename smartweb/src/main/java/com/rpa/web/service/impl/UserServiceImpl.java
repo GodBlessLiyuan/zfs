@@ -2,6 +2,7 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
+import com.rpa.web.domain.UserDO;
 import com.rpa.web.dto.UserDTO;
 import com.rpa.web.mapper.UserMapper;
 import com.rpa.web.pojo.UserPO;
@@ -29,7 +30,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public DTPageInfo<UserDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<UserPO> page = PageHelper.startPage(pageNum, pageSize);
-        List<UserPO> pos = userMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), UserDTO.convert(pos));
+        List<UserDO> dos = userMapper.query(reqData);
+        return new DTPageInfo<>(draw, page.getTotal(), UserDTO.convert(dos));
     }
 }

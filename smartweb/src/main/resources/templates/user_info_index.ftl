@@ -197,7 +197,7 @@
                 {"data": "createTime"},
                 {"data": "chanName"},
                 {"data": "versionCode"},
-                {"data": "buildVersion"},
+                {"data": "buildRelease"},
                 {"data": "manufacturer"},
                 {"data": "androidModel"}
             ],
