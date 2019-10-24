@@ -1,7 +1,9 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.PromoterDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdminUserMapper;
@@ -14,6 +16,7 @@ import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -80,12 +83,12 @@ public class PromoterServiceImpl implements PromoterService {
      * @return
      */
     @Override
-    public ResultVO insert(PromoterDTO dto) {
+    public ResultVO insert(PromoterDTO dto, HttpSession httpSession) {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 把 dto 转换为 po
         PromoterPO po = new PromoterPO();
@@ -95,7 +98,7 @@ public class PromoterServiceImpl implements PromoterService {
         po.setaId(dto.getaId());
         po.setCreateTime(new Date());
         po.setUpdateTime(new Date());
-        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
 
         int count = this.promoterMapper.insert(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
@@ -107,12 +110,12 @@ public class PromoterServiceImpl implements PromoterService {
      * @return
      */
     @Override
-    public ResultVO update(PromoterDTO dto) {
+    public ResultVO update(PromoterDTO dto, HttpSession httpSession) {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
-        //AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        //int aId = adminUserDTO.getaId();
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 从数据库中查询出要修改的数据
         PromoterPO po = this.promoterMapper.selectByPrimaryKey(dto.getProId());
@@ -127,7 +130,7 @@ public class PromoterServiceImpl implements PromoterService {
         po.setExtra(dto.getExtra());
         po.setaId(dto.getaId());
         po.setUpdateTime(new Date());
-        po.setaId(1);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
 
         int count = promoterMapper.updateByPrimaryKey(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
