@@ -180,7 +180,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">原价:</span>
-                                                    <input type="number" class="form-control" id="price">
+                                                    <input type="number" class="form-control" id="price"
+                                                           onkeyup="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">折扣:</span>
@@ -188,7 +189,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">售价:</span>
-                                                    <input type="number" class="form-control" id="discount">
+                                                    <input type="number" class="form-control" id="discount"
+                                                           onkeyup="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
                                                 </div>
                                             </form>
                                         </div>
@@ -235,7 +237,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">原价:</span>
-                                                    <input type="number" class="form-control" id="uPrice">
+                                                    <input type="number" class="form-control" id="uPrice"
+                                                           onkeyup="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">折扣:</span>
@@ -243,7 +246,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">售价:</span>
-                                                    <input type="number" class="form-control" id="uDiscount">
+                                                    <input type="number" class="form-control" id="uDiscount"
+                                                           onkeyup="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
                                                 </div>
                                             </form>
                                         </div>
