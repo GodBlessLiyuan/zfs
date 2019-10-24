@@ -443,6 +443,9 @@ CREATE TABLE t_notice
 	status int COMMENT '1 未发布 2 发布',
 	end_time datetime,
 	picurl char(255),
+	create_time datetime,
+	update_time datetime,
+	a_id int,
 	PRIMARY KEY (notice_id),
 	UNIQUE (notice_id)
 );
