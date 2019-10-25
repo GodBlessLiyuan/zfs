@@ -1,14 +1,23 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.ShareActivityDTO;
+import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.mapper.ShareActivityMapper;
 import com.rpa.web.pojo.ShareActivityPO;
 import com.rpa.web.service.ShareActivityService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.FileUtil;
+import com.rpa.web.utils.ResultVOUtil;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -25,6 +34,12 @@ public class ShareActivityServiceImpl implements ShareActivityService {
     @Autowired
     private ShareActivityMapper shareActivityMapper;
 
+    @Autowired
+    private AdminUserMapper adminUserMapper;
+
+    @Value("${file.iconDir}")
+    private String iconDir;
+
     /**
      * 查询
      * @param draw
@@ -34,7 +49,7 @@ public class ShareActivityServiceImpl implements ShareActivityService {
      * @return
      */
     @Override
-    public DTPageInfo<ShareActivityDTO> query(int draw, int pageNum, int pageSize, int type) {
+    public DTPageInfo<ShareActivityDTO> query(int draw, int pageNum, int pageSize, Byte type) {
 
         // 分页
         Page<ShareActivityDTO> page = PageHelper.startPage(pageNum, pageSize);
@@ -63,48 +78,73 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
     }
 
+
     /**
      * 插入
-     * @param shareActivityDTO
+     * @param type
+     * @param contentText
+     * @param contentImage
+     * @param extra
      * @param httpSession
      * @return
-     * @TODO 缺少管理员a_id这个字段，值需从session中取
      */
     @Override
-    public int insert(ShareActivityDTO shareActivityDTO, HttpSession httpSession) {
+    public ResultVO insert(Byte type, String contentText, MultipartFile contentImage, String extra, HttpSession httpSession) {
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
-        // 把 shareActivityDTO 转换为 shareActivityPO
-        ShareActivityPO shareActivityPO = new ShareActivityPO();
-        shareActivityPO.setType(shareActivityDTO.getType());
-        shareActivityPO.setContent(shareActivityDTO.getContent());
-        shareActivityPO.setExtra(shareActivityDTO.getExtra());
-        shareActivityPO.setCreateTime(new Date());
-        shareActivityPO.setUpdateTime(new Date());
+        // 创建一个 po 对象
+        ShareActivityPO po = new ShareActivityPO();
+        po.setType(type);
+        if (type == 1) {
+            po.setContent(contentText);
+        } else {
+            po.setContent(FileUtil.uploadFile(contentImage, iconDir));
+        }
+        po.setExtra(extra);
+        po.setCreateTime(new Date());
+        po.setaId(aId);
 
-        int count = this.shareActivityMapper.insert(shareActivityPO);
-        return count;
+        int count = this.shareActivityMapper.insert(po);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
     }
+
 
     /**
      * 修改
-     * @param shareActivityDTO
+     * @param type
+     * @param contentText
+     * @param contentImage
+     * @param extra
      * @param httpSession
      * @return
-     * @TODO 缺乏管理人a_id字段，需从session中获取
      */
     @Override
-    public int update(ShareActivityDTO shareActivityDTO, HttpSession httpSession) {
+    public ResultVO update(Integer materialId, Byte type, String contentText, MultipartFile contentImage, String extra, HttpSession httpSession) {
+
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 根据material_id字段，从表t_share_activity中查出要修改的数据
-        ShareActivityPO shareActivityPO = this.shareActivityMapper.selectByPrimaryKey(shareActivityDTO.getMaterialId());
-        shareActivityPO.setType(shareActivityDTO.getType());
-        shareActivityPO.setContent(shareActivityDTO.getContent());
-        shareActivityPO.setExtra(shareActivityDTO.getExtra());
-        shareActivityPO.setUpdateTime(new Date());
+        ShareActivityPO po = this.shareActivityMapper.selectByPrimaryKey(materialId);
+        po.setType(type);
+        if (type == 1) {
+            po.setContent(contentText);
+        } else {
+            po.setContent(FileUtil.uploadFile(contentImage, iconDir));
+        }
+        po.setExtra(extra);
+        po.setUpdateTime(new Date());
+        po.setaId(aId);
 
-        int count = this.shareActivityMapper.updateByPrimaryKey(shareActivityPO);
-        return count;
+        int count = this.shareActivityMapper.updateByPrimaryKey(po);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
+
 
     /**
      * 删除
@@ -112,9 +152,35 @@ public class ShareActivityServiceImpl implements ShareActivityService {
      * @return
      */
     @Override
-    public int delete(int materialId) {
-        return this.shareActivityMapper.deleteByPrimaryKey(materialId);
+    public ResultVO delete(int materialId) {
+        int count = this.shareActivityMapper.deleteByPrimaryKey(materialId);
+        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
     }
+
+
+    /**
+     * 查询：根据ID查询数据
+     * @param materialId
+     * @return
+     */
+    @Override
+    public ResultVO queryById(Integer materialId) {
+
+        ShareActivityPO po = this.shareActivityMapper.selectByPrimaryKey(materialId);
+        if (null == po) {
+            return ResultVOUtil.error(ExceptionEnum.QUERY_ERROR);
+        }
+
+        // 将查询到的 po 转换为 dto
+        ShareActivityDTO dto = new ShareActivityDTO();
+        dto.setType(po.getType());
+        dto.setContent(po.getContent());
+        dto.setExtra(po.getExtra());
+
+        return ResultVOUtil.success(dto);
+    }
+
+
 
     /**
      * 根据aId，从t_admin_user表中查询username
@@ -122,6 +188,6 @@ public class ShareActivityServiceImpl implements ShareActivityService {
      * @return
      */
     private String queryUsernameByAid(Integer aId) {
-        return this.shareActivityMapper.queryUsernameByAid(aId);
+        return this.adminUserMapper.queryUsernameByAid(aId);
     }
 }

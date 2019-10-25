@@ -3,8 +3,10 @@ package com.rpa.web.controller;
 import com.rpa.web.dto.ShareActivityDTO;
 import com.rpa.web.service.ShareActivityService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +17,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 @RestController
-@RequestMapping("shareActivity")
+@RequestMapping("shareactivity")
 public class ShareActivityController {
 
     @Autowired
@@ -33,7 +35,7 @@ public class ShareActivityController {
     public DTPageInfo<ShareActivityDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                               @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-                                              @RequestParam(value = "type", required = false) int type
+                                              @RequestParam(value = "type", required = false) Byte type
     ) {
 
         // 调用业务层，返回页面结果
@@ -41,27 +43,55 @@ public class ShareActivityController {
         return dTPageInfo;
     }
 
+
+    /**
+     * 查询：根据ID查询数据
+     * @param materialId
+     * @return
+     */
+    @PostMapping("queryById")
+    public ResultVO queryById(@RequestParam(value = "materialId")Integer materialId) {
+        return this.shareActivityService.queryById(materialId);
+    }
+
+
     /**
      * 插入
-     * @param shareActivityDTO
+     * @param type
+     * @param contentText
+     * @param contentImage
+     * @param extra
      * @param httpSession
      * @return
      */
     @PostMapping("insert")
-    public int insert(ShareActivityDTO shareActivityDTO, HttpSession httpSession) {
-        return this.shareActivityService.insert(shareActivityDTO, httpSession);
+    public ResultVO insert(@RequestParam(value = "type")Byte type,
+                      @RequestParam(value = "contentText", required = false)String contentText,
+                      @RequestParam(value = "contentImage", required = false) MultipartFile contentImage,
+                      @RequestParam(value = "extra", required = false) String extra,
+                      HttpSession httpSession) {
+        return this.shareActivityService.insert(type, contentText, contentImage, extra, httpSession);
     }
 
     /**
      * 修改
-     * @param shareActivityDTO
+     * @param type
+     * @param contentText
+     * @param contentImage
+     * @param extra
      * @param httpSession
      * @return
      */
     @PostMapping("update")
-    public int update(ShareActivityDTO shareActivityDTO, HttpSession httpSession){
-        return this.shareActivityService.update(shareActivityDTO, httpSession);
+    public ResultVO update(@RequestParam(value = "materialId")Integer materialId,
+                           @RequestParam(value = "type")Byte type,
+                           @RequestParam(value = "contentText", required = false)String contentText,
+                           @RequestParam(value = "contentImage", required = false) MultipartFile contentImage,
+                           @RequestParam(value = "extra", required = false) String extra,
+                           HttpSession httpSession){
+        return this.shareActivityService.update(materialId, type, contentText, contentImage, extra, httpSession);
     }
+
 
     /**
      * 删除
@@ -69,7 +99,7 @@ public class ShareActivityController {
      * @return
      */
     @PostMapping("delete")
-    public int update(int materialId){
+    public ResultVO update(int materialId){
         return this.shareActivityService.delete(materialId);
     }
 }
