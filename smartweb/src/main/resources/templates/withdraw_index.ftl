@@ -249,7 +249,7 @@
                 {"data": null, "targets": 0},
                 {"data": "createTime"},
                 {"data": "phone"},
-                {"data": "withDraw"},
+                {"data": "withdraw"},
                 {"data": "remaining"},
                 {"data": "aliAccount"},
                 {"data": "aliName"},
@@ -290,7 +290,7 @@
 
                         if (full.status === 1) {
                             return reject_button + pass_button;
-                        }
+                        }return "";
                     }
                 },
                 {"data": "operator"}

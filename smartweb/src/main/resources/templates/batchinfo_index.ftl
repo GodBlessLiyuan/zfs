@@ -196,7 +196,22 @@
                 {"data": "chanName"},
                 {"data": "createTime"},
                 {"data": "comTypeName"},
-                {"data": "status"},
+                {
+                    "data": "status",
+                    "render": function (data, type, full) {
+                        var sta;
+                        if (data === 1) {
+                            sta = "未激活";
+                        }else if (data === 2) {
+                            sta = "已激活";
+                        }else if (data === 3) {
+                            sta = "已冻结";
+                        }else if (data === 4) {
+                            sta = "已失效";
+                        }
+                        return sta;
+                    }
+                }
             ],
             "oLanguage": {
                 "sLengthMenu": "每页显示 _MENU_ 条记录",

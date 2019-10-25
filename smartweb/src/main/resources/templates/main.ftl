@@ -112,9 +112,11 @@
         <br/>
 
 
-        <!--弹框：修改密码-->
-        <a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' class='text-primary' style="color:blue">修改密码</a>
 
+        <!--**********************************
+                    弹框
+        ***********************************-->
+        <!--弹框：修改密码-->
         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog" role="document">
