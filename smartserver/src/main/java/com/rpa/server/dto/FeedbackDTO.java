@@ -1,5 +1,6 @@
 package com.rpa.server.dto;
 
+import com.rpa.server.dto.base.VerifyDTO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,14 +12,11 @@ import java.io.Serializable;
  * @version: 1.0
  */
 @Data
-public class FeedbackDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class FeedbackDTO extends VerifyDTO {
 
     private Long ud;
-    private Long id;
     private String um;
     private Integer udd;
-    private String verify;
     private String context;
     private String picdata;
     private String ph;

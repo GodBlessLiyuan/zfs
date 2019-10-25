@@ -1,8 +1,7 @@
 package com.rpa.server.dto;
 
+import com.rpa.server.dto.base.VerifyDTO;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * @author: xiahui
@@ -11,11 +10,7 @@ import java.io.Serializable;
  * @version: 1.0
  */
 @Data
-public class ExceptionDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    private Long id;
-    private String verify;
+public class ExceptionDTO extends VerifyDTO {
     private Byte osv;
     private String osre;
     private Integer softv;

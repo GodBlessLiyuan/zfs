@@ -34,7 +34,7 @@ public class LoginController {
 
     @PostMapping("sms")
     public ResultVO sms(@RequestBody LoginDTO dto) {
-        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !VerifyUtil.checkPhone(dto.getPh())) {
+        if (!VerifyUtil.checkDeviceId(dto) || !VerifyUtil.checkPhone(dto.getPh())) {
             return new ResultVO<>(2000);
         }
 
@@ -51,7 +51,7 @@ public class LoginController {
 
     @PostMapping("register")
     public ResultVO register(@RequestBody LoginDTO dto, HttpServletRequest req) {
-        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify()) || !VerifyUtil.checkPhone(dto.getPh())) {
+        if (!VerifyUtil.checkDeviceId(dto) || !VerifyUtil.checkPhone(dto.getPh())) {
             return new ResultVO(2000);
         }
         // 短信码

@@ -26,7 +26,7 @@ public class AppController {
 
     @PostMapping("check")
     public ResultVO check(@RequestBody AppDTO dto, HttpServletRequest req) {
-        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify())) {
+        if (!VerifyUtil.checkDeviceId(dto)) {
             return new ResultVO(2000);
         }
 

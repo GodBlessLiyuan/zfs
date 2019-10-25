@@ -22,7 +22,7 @@ public class VipCommodityController {
 
     @PostMapping("getcommodity")
     public ResultVO getCommodity(@RequestBody VipCommodityDTO dto) {
-        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify())) {
+        if (!VerifyUtil.checkDeviceId(dto)) {
             return new ResultVO(2000);
         }
 

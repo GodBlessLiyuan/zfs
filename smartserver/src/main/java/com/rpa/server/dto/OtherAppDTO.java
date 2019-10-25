@@ -5,16 +5,12 @@ import lombok.Data;
 
 /**
  * @author: xiahui
- * @date: Created in 2019/10/17 15:33
- * @description: 商品列表
+ * @date: Created in 2019/10/25 11:16
+ * @description: 其他应用
  * @version: 1.0
  */
 @Data
-public class VipCommodityDTO extends VerifyDTO {
-    /**
-     * 应用版本
-     */
-    private Integer softv;
+public class OtherAppDTO extends VerifyDTO {
     /**
      * 应用渠道
      */

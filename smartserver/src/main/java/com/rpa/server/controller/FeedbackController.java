@@ -24,7 +24,7 @@ public class FeedbackController {
 
     @PostMapping("feedback")
     public ResultVO feedback(@RequestBody FeedbackDTO dto) {
-        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify())) {
+        if (!VerifyUtil.checkDeviceId(dto)) {
             return new ResultVO(2000);
         }
 

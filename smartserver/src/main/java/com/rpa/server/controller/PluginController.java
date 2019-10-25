@@ -25,7 +25,7 @@ public class PluginController {
 
     @PostMapping("checkplugin")
     public ResultVO checkPlugin(@RequestBody PluginDTO dto) {
-        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify())) {
+        if (!VerifyUtil.checkDeviceId(dto)) {
             return new ResultVO(2000);
         }
 

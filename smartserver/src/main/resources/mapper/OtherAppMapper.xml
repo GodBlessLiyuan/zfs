@@ -138,4 +138,8 @@
       extra = #{extra,jdbcType=CHAR}
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from t_other_app
+  </select>
 </mapper>

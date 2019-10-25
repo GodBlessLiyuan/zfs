@@ -2,7 +2,8 @@ package com.rpa.server.utils;
 
 import com.auth0.jwt.JWT;
 import com.rpa.server.constant.LoginConstant;
-import com.rpa.server.dto.TokenDTO;
+import com.rpa.server.dto.base.TokenDTO;
+import com.rpa.server.dto.base.VerifyDTO;
 import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,17 +20,15 @@ public class VerifyUtil {
 
     /**
      * 验证设备Id与设备Md5是否一致
-     *
-     * @param id
-     * @param md5
+     * @param dto
      * @return
      */
-    public static boolean checkDeviceId(Long id, String md5) {
-        if (id == null || md5 == null) {
+    public static boolean checkDeviceId(VerifyDTO dto) {
+        if (dto.getId() == null || dto.getVerify() == null) {
             return false;
         }
 
-        return md5.equals(DigestUtils.md5DigestAsHex(id.toString().getBytes()));
+        return dto.getVerify().equals(DigestUtils.md5DigestAsHex(dto.getId().toString().getBytes()));
     }
 
     /**
