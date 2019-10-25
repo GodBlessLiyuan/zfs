@@ -1,4 +1,4 @@
-package com.rpa.server.dto;
+package com.rpa.server.dto.base;
 
 import lombok.Data;
 

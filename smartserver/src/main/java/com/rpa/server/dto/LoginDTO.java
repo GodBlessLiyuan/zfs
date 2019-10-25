@@ -1,8 +1,7 @@
 package com.rpa.server.dto;
 
+import com.rpa.server.dto.base.VerifyDTO;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * @author: xiahui
@@ -11,21 +10,11 @@ import java.io.Serializable;
  * @version: 1.0
  */
 @Data
-public class LoginDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 设备唯一标识
-     */
-    private Long id;
+public class LoginDTO extends VerifyDTO {
     /**
      * 手机号码
      */
     private String ph;
-    /**
-     * 设备唯一标识md5，设备接口返回数据
-     */
-    private String verify;
     /**
      * 短信验证码
      */

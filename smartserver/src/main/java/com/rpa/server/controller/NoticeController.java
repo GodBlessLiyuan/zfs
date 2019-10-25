@@ -24,7 +24,7 @@ public class NoticeController {
 
     @PostMapping("notice")
     public ResultVO notice(@RequestBody NoticeDTO dto){
-        if (!VerifyUtil.checkDeviceId(dto.getId(), dto.getVerify())) {
+        if (!VerifyUtil.checkDeviceId(dto)) {
             return new ResultVO(2000);
         }
 
