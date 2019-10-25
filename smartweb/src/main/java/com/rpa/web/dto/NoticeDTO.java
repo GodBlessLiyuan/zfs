@@ -30,7 +30,13 @@ public class NoticeDTO implements Serializable {
 
     private Date endTime;
 
+    private Date createTime;
+
     private String url;
+
+    private String picurl;
+
+    private String operator;
 
     private static final long serialVersionUID = 1L;
 
@@ -105,6 +111,31 @@ public class NoticeDTO implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public String getPicurl() {
+        return picurl;
+    }
+
+    public void setPicurl(String picurl) {
+        this.picurl = picurl;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
 
     @Override
     public boolean equals(Object that) {

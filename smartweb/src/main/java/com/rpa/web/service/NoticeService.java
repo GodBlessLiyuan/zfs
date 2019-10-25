@@ -2,7 +2,10 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.NoticeDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.ResultVO;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
@@ -12,9 +15,12 @@ import java.util.Date;
  * @description: TODO
  */
 public interface NoticeService {
-    DTPageInfo<NoticeDTO> query(int draw, int pageNum, int pageSize, Date startTime, Date endTime, Integer status, Byte type, String title);
+    DTPageInfo<NoticeDTO> query(int draw, int pageNum, int pageSize, String startTime, String endTime, Integer status, Byte type, String title);
 
-    int insert(NoticeDTO noticeDTO);
 
-    int delete(int id);
+    ResultVO delete(Integer noticeId);
+
+    ResultVO updateStatus(Integer noticeId, Integer status, HttpSession httpSession);
+
+    ResultVO insert(Byte type, String text, MultipartFile picurl, String title, String url, String showTime, String startTime, String endTime, HttpSession httpSession);
 }
