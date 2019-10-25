@@ -26,4 +26,5 @@ public class FeedbackDTO implements Serializable {
     private String model;
     private Integer softv;
     private Byte osv;
+    private String osre;
 }
