@@ -89,7 +89,7 @@
                         <div class="card-body">
 
                             <button type="button" class="btn btn-primary" data-toggle='modal' data-target='#insertModal'>
-                                新增
+                                新增通知
                             </button>
 
                             <hr>
@@ -112,7 +112,7 @@
                                         <div class="form-group col-md-4">
                                             <label>通知类型</label>
                                             <select id="notice_type" class="form-control">
-                                                <option value='0' selected='selected'>全选</option>
+                                                <option value='0' selected='selected'>全部</option>
                                                 <option value='1'>文本</option>
                                                 <option value='2'>图片</option>
                                                 <option value='3'>图文</option>
@@ -120,7 +120,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>通知名称</label>
-                                            <input id="name" type="text" class="form-control">
+                                            <input id="title" type="text" class="form-control">
                                         </div>
                                     </div>
                                 </form>
@@ -183,31 +183,31 @@
                         </div>
                         <div class="form-group">
                             <span for="message-text" class="col-form-label">通知类型:</span>
-                            <label><input name="insert_notice_type" class="form-control" type="radio" value="1"/>文本</label>
-                            <label><input name="insert_notice_type" class="form-control" type="radio" value="2"/>图片</label>
-                            <label><input name="insert_notice_type" class="form-control" type="radio" value="3"/>图文</label>
+                            <label><input type="radio" name="insert_notice_type" value="1" onclick="insertTypeClick()"/>文本</label>
+                            <label><input type="radio" name="insert_notice_type" value="2" onclick="insertTypeClick()"/>图片</label>
+                            <label><input type="radio" name="insert_notice_type" value="3" onclick="insertTypeClick()"/>图文</label>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="picModal">
                             <span for="message-text" class="col-form-label">图片:</span>
                             <input id="insert_pic" class="form-control" type="file"/>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="textModal">
                             <span for="recipient-name" class="col-form-label">文字:</span>
                             <input id="insert_text" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
                             <span for="recipient-name" class="col-form-label">通知名称:</span>
-                            <input id="insert_name" class="form-control" type="text"/>
+                            <input id="insert_title" class="form-control" type="text"/>
                         </div><div class="form-group">
                             <span for="recipient-name" class="col-form-label">跳转地址:</span>
                             <input id="insert_url" class="form-control" type="text"/>
                         </div><div class="form-group">
                             <span for="recipient-name" class="col-form-label">提示时间:</span>
-                            <input id="insert_showtime" class="form-control" type="date"/>
+                            <input id="insert_showTime" class="form-control" type="time"/>
                         </div><div class="form-group">
                             <span for="recipient-name" class="col-form-label">有效时间:</span>
-                            <input id="insert_startDate" type="date" class="form-control"> 至
-                            <input id="insert_endDate" type="date" class="form-control">
+                            <input id="insert_startTime" type="date" class="form-control"> 至
+                            <input id="insert_endTime" type="date" class="form-control">
                         </div>
                     </form>
                 </div>
@@ -219,18 +219,43 @@
     </div>
 
 
+    <!--弹框：查看通知详情-->
+    <div class="modal fade" id="noticeDetailModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="form-group">
+                    <button type="hidden" id="" style="display:none;"/>
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title">通知详情</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
+                </div>
+                <div class="modal-body">
+                    <img src='' id="notice_detail_pic" height='50px' width='50px'/>
+                    <p id="notice_detail_text"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!--弹框：修改状态，提示是否真的要切换状态-->
     <div class="modal fade" id="statusModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="form-group">
-                    <button type="hidden" id="statusExchange" style="display:none;"/>
+                    <button type="hidden" id="statusChange_1" style="display:none;"/>
+                    <button type="hidden" id="statusChange_2" style="display:none;"/>
                 </div>
                 <div class="modal-header">
                     <h5 class="modal-title">提示</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
                 </div>
-                <div class="modal-body">是否切换状态？
+                <div class="modal-body" id="statusChange_3">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -301,19 +326,55 @@
      */
     function insertClick() {
 
-        var type = $('input[type="radio"][name="notice_type]');
-        var picPath = $('#insert_pic').val();
-        var picPath = $('#insert_text').val();
-        var url = $('#insert_url').val();
+        var type = $('input[type="radio"][name="insert_notice_type"]:checked').val();
+        var reqData = new FormData();
+        reqData.append("type", type);
+        if (type == 1) {
+            reqData.append("text", $('#insert_text').val());
+            reqData.append("picurl", null);
+        } else if (type == 2) {
+            reqData.append("text", null);
+            reqData.append("picurl", $('#insert_pic')[0].files[0]);
+        } else {
+            reqData.append("text", $('#insert_text').val());
+            reqData.append("picurl", $('#insert_pic')[0].files[0]);
+        }
+        reqData.append("title", $('#insert_title').val());
+        reqData.append("url", $('#insert_url').val());
+        reqData.append("showTime", $('#insert_showTime').val());
+        reqData.append("startTime", $('#insert_startTime').val());
+        reqData.append("endTime", $('#insert_endTime').val());
 
-        $.post("/bannerconfig/insert", {name:name, picPath:picPath, url:url}, function (result) {
-            if (result.code === 0) {
+        $.ajax({
+            type: 'post',
+            url: '/notice/insert',
+            dataType: 'json',
+            data: reqData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
                 alert("新增成功！")
                 $('#datatab').DataTable().draw(false);
-            } else {
-                alert("新增失败！")
             }
-        }, "json");
+        });
+    }
+
+
+    /**
+     * 新增：点击新增弹出框中不同的通知类型按钮，显现出相应的内容类型框
+     */
+    function insertTypeClick() {
+        var type = $('input[type="radio"][name="insert_notice_type"]:checked').val();
+        if (type == 1) {
+            document.getElementById("picModal").style.display = "none";
+            document.getElementById("textModal").style.display = "block";
+        } else if (type == 2) {
+            document.getElementById("picModal").style.display = "block";
+            document.getElementById("textModal").style.display = "none";
+        } else {
+            document.getElementById("picModal").style.display = "block";
+            document.getElementById("textModal").style.display = "block";
+        }
     }
 
 
@@ -340,7 +401,8 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/bannerconfig/query?name=" + $('#name').val() + "&status=" + $('#status').val(),
+            "ajax": "/notice/query?startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val() +
+                "&status=" + $('#status').val() + "&type=" + $('#notice_type').val() + "&title=" + $('#title').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -348,42 +410,37 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "name"},
+                {"data": "type"},
+                {"data": "title"},
+                {"data": "createTime"},
+                {"data": "showTime"},
                 {"data": "startTime"},
+                {"data": "endTime"},
+                {"data": "url"},
                 {
-                    "data": "picPath",
+                    "data": "type",
                     "render": function (data, type, full) {
-                        return "<img src='" + data + "' height='50px' width='50px'/>";
-                    }
-                },
-                {
-                    "data": "url",
-                    "render": function (data, type, full) {
-                        return  "<a href='"+ data +"'>"+ data +"</a>";
+
+                        return "<button type='button'  data-toggle='modal' data-target='#noticeDetailModal' data-whatever='@getbootstrap' " +
+                        "class='btn btn-primary' onclick='viewClick("+ data +",\""+ full.text +"\",\""+ full.picurl +"\")'>查看</button>";
                     }
                 },
                 {
                     "data": "status",
                     "render": function (data, type, full) {
-                        var sta;
-                        if (data === 1) {
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary' onclick='javascript:statusModal(" + full.bannerId + ")'>关闭</button>";
-                        }else{
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary' onclick='javascript:statusModal(" + full.bannerId + ")'>开启</button>";
-                        }
-                        return sta;
+
+                        var sta_str = data == 1 ? "关闭" : "开启"
+                        var sta_num = data == 1 ? 2 : 1
+                        return "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + full.noticeId +","+ sta_num +")'>"+ sta_str +"</button>";
                     }
                 },
                 {
-                    "data": "bannerId",
+                    "data": "noticeId",
                     "render": function (data, type, full) {
 
-                        var delete_button = "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
+                        return "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
                             "class='btn btn-primary' onclick='javascript:deleteModal(" + data + ")'>删除</button>";
-
-                        return delete_button;
                     }
                 },
                 {"data": "operator"}
@@ -408,18 +465,45 @@
 
 
     /**
-     * 修改状态：将要修改数据的ID存到提示框里
+     * 查看详情：根据状态类型，来控制详情弹框中所展示的内容
      */
-    function statusModal(bannerId) {
-        $('#statusExchange').val(bannerId);
+    function viewClick(type, text, picurl) {
+        if (type == 1) {
+            document.getElementById("notice_detail_text").style.display = "block";
+            document.getElementById("notice_detail_text").innerText = text;
+            document.getElementById("notice_detail_pic").style.display = "none";
+        } else if (type == 2) {
+            document.getElementById("notice_detail_text").style.display = "none";
+            document.getElementById("notice_detail_pic").src = picurl;
+            document.getElementById("notice_detail_pic").style.display = "block";
+        } else {
+            document.getElementById("notice_detail_text").style.display = "block";
+            document.getElementById("notice_detail_text").innerText = text;
+            document.getElementById("notice_detail_pic").src = picurl;
+            document.getElementById("notice_detail_pic").style.display = "block";
+        }
+    }
+
+
+    /**
+     * 修改状态：将要修改数据的ID、状态码存到提示框里
+     */
+    function statusModal(noticeId, status) {
+        $('#statusChange_1').val(noticeId);
+        $('#statusChange_2').val(status);
+
+        var tip = status == 1 ? "确认开启？" : "确认关闭？"
+        document.getElementById("statusChange_3").innerText = tip;
     }
 
     /**
-     * 修改状态：从提示框里取出ID，发送给后台
+     * 修改状态：从提示框里取出ID和状态码，发送给后台
      */
     function statusClick() {
-        var bannerId = $('#statusExchange').val();
-        $.post("/bannerconfig/update/status", {bannerId:bannerId}, function (result) {
+        var noticeId = $('#statusChange_1').val();
+        var status = $('#statusChange_2').val();
+
+        $.post("/notice/update/status", {noticeId:noticeId, status:status}, function (result) {
             if (result.code === 0) {
                 alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
@@ -432,17 +516,17 @@
     /**
      * 删除：表格中的删除按钮，作用是将要删除数据的ID传递给提示框
      */
-    function deleteModal(bannerId) {
+    function deleteModal(noticeId) {
         //不是取值，而是给弹框赋值
-        $('#delete').val(bannerId);
+        $('#delete').val(noticeId);
     }
 
     /**
      * 删除：真正的删除操作，从弹框中获取要删除数据的ID
      */
     function deleteClick() {
-        var bannerId = $('#delete').val();
-        $.post("/bannerconfig/delete", {bannerId:bannerId}, function (result) {
+        var noticeId = $('#delete').val();
+        $.post("/notice/delete", {noticeId:noticeId}, function (result) {
             if (result.code === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);
