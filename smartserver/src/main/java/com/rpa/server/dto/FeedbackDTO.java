@@ -18,7 +18,9 @@ public class FeedbackDTO extends VerifyDTO {
     private String um;
     private Integer udd;
     private String context;
-    private String picdata;
+    private String picdata1;
+    private String picdata2;
+    private String picdata3;
     private String ph;
     private String factory;
     private String model;

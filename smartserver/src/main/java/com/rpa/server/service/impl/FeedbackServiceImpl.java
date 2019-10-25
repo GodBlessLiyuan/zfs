@@ -25,13 +25,6 @@ public class FeedbackServiceImpl implements IFeedbackService {
     @Override
     public ResultVO insert(FeedbackDTO dto) {
         FeedbackPO feedbackPO = new FeedbackPO();
-        // 图片处理
-        String url;
-        try {
-            url = UploadUtil.uploadBase64Image(dto.getPicdata());
-        } catch (Exception e) {
-            return new ResultVO(2000);
-        }
         // 基本信息
         feedbackPO.setUserId(dto.getUd());
         feedbackPO.setDeviceId(dto.getId());
@@ -40,11 +33,20 @@ public class FeedbackServiceImpl implements IFeedbackService {
         feedbackPO.setContact(dto.getPh());
         feedbackPO.setCreateTime(new Date());
         feedbackPO.setVersioncode(dto.getSoftv());
-        feedbackPO.setUrl(url);
         feedbackPO.setManufacturer(dto.getFactory());
         feedbackPO.setAndroidmodel(dto.getModel());
         feedbackPO.setBuildversion(dto.getOsv());
         feedbackPO.setBuildrelease(dto.getOsre());
+        // 图片处理
+        if(dto.getPicdata1() != null) {
+            feedbackPO.setUrl1(UploadUtil.uploadBase64Image(dto.getPicdata1()));
+        }
+        if(dto.getPicdata2() != null) {
+            feedbackPO.setUrl2(UploadUtil.uploadBase64Image(dto.getPicdata2()));
+        }
+        if(dto.getPicdata3() != null) {
+            feedbackPO.setUrl3(UploadUtil.uploadBase64Image(dto.getPicdata3()));
+        }
 
         feedbackMapper.insert(feedbackPO);
 
