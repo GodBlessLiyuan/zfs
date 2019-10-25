@@ -51,7 +51,7 @@ public class OrderServiceImpl implements IOrderService {
             orderVOs.add(vo);
         }
         // 好评活动赠送
-        List<UserActivityBO> userActivityBOs = userActivityMapper.queryByUserId(dto.getUd());
+        List<UserActivityBO> userActivityBOs = userActivityMapper.queryActivatedByUserId(dto.getUd());
         for (UserActivityBO bo : userActivityBOs) {
             OrderVO vo = new OrderVO();
             vo.setType(2);
