@@ -26,6 +26,7 @@
         <module>smartzuul</module>
         <module>smartproducer</module>
         <module>smartconsumer</module>
+        <module>smartfront</module>
     </modules>
 
     <dependencyManagement>
