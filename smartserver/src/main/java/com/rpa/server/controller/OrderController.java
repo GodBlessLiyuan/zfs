@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.OrderDTO;
 import com.rpa.server.service.IOrderService;
+import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,13 +29,7 @@ public class OrderController {
 
     @PostMapping("order")
     public ResultVO order(@RequestBody OrderDTO dto, HttpServletRequest req) {
-        String token = req.getHeader("token");
-        if (token == null) {
-            return new ResultVO(2000);
-        }
-        List<String> audience = JWT.decode(token).getAudience();
-        if (!dto.getUd().toString().equals(audience.get(0)) || !dto.getId().toString().equals(audience.get(1))
-                || !dto.getUdd().toString().equals(audience.get(2))) {
+        if(!VerifyUtil.checkToken(dto, req)) {
             return new ResultVO(2000);
         }
 
