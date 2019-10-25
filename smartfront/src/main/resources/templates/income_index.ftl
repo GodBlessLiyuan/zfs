@@ -9,7 +9,7 @@
     <title>爱收益</title>
 </head>
 <body>
-    context
+    余额：${res.balance}
 </body>
 </html>
 
