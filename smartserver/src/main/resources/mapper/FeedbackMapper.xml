@@ -9,16 +9,18 @@
     <result column="context" jdbcType="CHAR" property="context" />
     <result column="contact" jdbcType="CHAR" property="contact" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="url" jdbcType="CHAR" property="url" />
     <result column="manufacturer" jdbcType="CHAR" property="manufacturer" />
     <result column="androidmodel" jdbcType="CHAR" property="androidmodel" />
     <result column="buildversion" jdbcType="TINYINT" property="buildversion" />
     <result column="versioncode" jdbcType="INTEGER" property="versioncode" />
     <result column="buildrelease" jdbcType="CHAR" property="buildrelease" />
+    <result column="url1" jdbcType="CHAR" property="url1" />
+    <result column="url2" jdbcType="CHAR" property="url2" />
+    <result column="url3" jdbcType="CHAR" property="url3" />
   </resultMap>
   <sql id="Base_Column_List">
-    feedback_id, user_id, device_id, user_device_id, context, contact, create_time, url, 
-    manufacturer, androidmodel, buildversion, versioncode, buildrelease
+    feedback_id, user_id, device_id, user_device_id, context, contact, create_time, manufacturer, 
+    androidmodel, buildversion, versioncode, buildrelease, url1, url2, url3
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -33,14 +35,14 @@
   <insert id="insert" parameterType="com.rpa.server.pojo.FeedbackPO">
     insert into t_feedback (feedback_id, user_id, device_id, 
       user_device_id, context, contact, 
-      create_time, url, manufacturer, 
-      androidmodel, buildversion, versioncode, 
-      buildrelease)
+      create_time, manufacturer, androidmodel, 
+      buildversion, versioncode, buildrelease, 
+      url1, url2, url3)
     values (#{feedbackId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, 
       #{userDeviceId,jdbcType=INTEGER}, #{context,jdbcType=CHAR}, #{contact,jdbcType=CHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{url,jdbcType=CHAR}, #{manufacturer,jdbcType=CHAR}, 
-      #{androidmodel,jdbcType=CHAR}, #{buildversion,jdbcType=TINYINT}, #{versioncode,jdbcType=INTEGER}, 
-      #{buildrelease,jdbcType=CHAR})
+      #{createTime,jdbcType=TIMESTAMP}, #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR}, 
+      #{buildversion,jdbcType=TINYINT}, #{versioncode,jdbcType=INTEGER}, #{buildrelease,jdbcType=CHAR}, 
+      #{url1,jdbcType=CHAR}, #{url2,jdbcType=CHAR}, #{url3,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.server.pojo.FeedbackPO">
     insert into t_feedback
@@ -66,9 +68,6 @@
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="url != null">
-        url,
-      </if>
       <if test="manufacturer != null">
         manufacturer,
       </if>
@@ -83,6 +82,15 @@
       </if>
       <if test="buildrelease != null">
         buildrelease,
+      </if>
+      <if test="url1 != null">
+        url1,
+      </if>
+      <if test="url2 != null">
+        url2,
+      </if>
+      <if test="url3 != null">
+        url3,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -107,9 +115,6 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="url != null">
-        #{url,jdbcType=CHAR},
-      </if>
       <if test="manufacturer != null">
         #{manufacturer,jdbcType=CHAR},
       </if>
@@ -124,6 +129,15 @@
       </if>
       <if test="buildrelease != null">
         #{buildrelease,jdbcType=CHAR},
+      </if>
+      <if test="url1 != null">
+        #{url1,jdbcType=CHAR},
+      </if>
+      <if test="url2 != null">
+        #{url2,jdbcType=CHAR},
+      </if>
+      <if test="url3 != null">
+        #{url3,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -148,9 +162,6 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="url != null">
-        url = #{url,jdbcType=CHAR},
-      </if>
       <if test="manufacturer != null">
         manufacturer = #{manufacturer,jdbcType=CHAR},
       </if>
@@ -166,6 +177,15 @@
       <if test="buildrelease != null">
         buildrelease = #{buildrelease,jdbcType=CHAR},
       </if>
+      <if test="url1 != null">
+        url1 = #{url1,jdbcType=CHAR},
+      </if>
+      <if test="url2 != null">
+        url2 = #{url2,jdbcType=CHAR},
+      </if>
+      <if test="url3 != null">
+        url3 = #{url3,jdbcType=CHAR},
+      </if>
     </set>
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </update>
@@ -177,12 +197,14 @@
       context = #{context,jdbcType=CHAR},
       contact = #{contact,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      url = #{url,jdbcType=CHAR},
       manufacturer = #{manufacturer,jdbcType=CHAR},
       androidmodel = #{androidmodel,jdbcType=CHAR},
       buildversion = #{buildversion,jdbcType=TINYINT},
       versioncode = #{versioncode,jdbcType=INTEGER},
-      buildrelease = #{buildrelease,jdbcType=CHAR}
+      buildrelease = #{buildrelease,jdbcType=CHAR},
+      url1 = #{url1,jdbcType=CHAR},
+      url2 = #{url2,jdbcType=CHAR},
+      url3 = #{url3,jdbcType=CHAR}
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -341,13 +341,15 @@ CREATE TABLE t_feedback
 	context char(255),
 	contact char(32),
 	create_time datetime,
-	url char(255),
 	manufacturer char(128),
 	androidmodel char(64),
 	-- android系统的版本号
 	buildversion tinyint COMMENT 'android系统的版本号',
 	versioncode int,
 	buildrelease char(16),
+	url1 char(255),
+	url2 char(255),
+	url3 char(255),
 	PRIMARY KEY (feedback_id),
 	UNIQUE (feedback_id)
 );
@@ -628,8 +630,8 @@ CREATE TABLE t_user_activity
 	activity_id int NOT NULL,
 	user_id bigint NOT NULL,
 	time time,
-	-- 当活动存在多个执行状态时，默认为1     10 通过   20 驳回
-	status tinyint COMMENT '当活动存在多个执行状态时，默认为1     10 通过   20 驳回',
+	-- 当活动存在多个执行状态时，默认为1     10 通过  30 领取  20 驳回
+	status tinyint COMMENT '当活动存在多个执行状态时，默认为1     10 通过  30 领取  20 驳回',
 	create_time datetime,
 	update_time datetime,
 	user_device_id int,
