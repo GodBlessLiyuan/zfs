@@ -73,9 +73,9 @@ public class SessionFilter implements Filter {
      */
     public boolean isNeedFilter(String uri) {
 
-        for(String exclude :excludeList ){
-            if(uri.startsWith(exclude)){
-                return true;
+        for (String exclude : excludeList) {
+            if (uri.startsWith(exclude)) {
+                return false;
             }
         }
         for (String includeUrl : includeUrls) {
