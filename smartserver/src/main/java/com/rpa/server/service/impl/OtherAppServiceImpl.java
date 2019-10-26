@@ -6,6 +6,7 @@ import com.rpa.server.mapper.OtherAppMapper;
 import com.rpa.server.pojo.OtherAppPO;
 import com.rpa.server.service.IOtherAppService;
 import com.rpa.server.vo.OtherAppVO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +23,8 @@ import java.util.List;
 public class OtherAppServiceImpl implements IOtherAppService {
     @Resource
     private OtherAppMapper otherAppMapper;
+    @Value("${file.publicPath}")
+    private String filePublicPath;
 
     @Override
     public ResultVO query(OtherAppDTO dto) {
@@ -31,7 +34,7 @@ public class OtherAppServiceImpl implements IOtherAppService {
         for (OtherAppPO po : pos) {
             OtherAppVO vo = new OtherAppVO();
             vo.setName(po.getoName());
-            vo.setIconurl(po.getIconUrl());
+            vo.setIconurl(filePublicPath + po.getIconUrl());
             vo.setType(po.getDownloadType());
             vo.setAppurl(po.getAppUrl());
             vo.setExtra(po.getExtra());
