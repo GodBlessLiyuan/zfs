@@ -84,10 +84,6 @@ public class SessionFilter implements Filter {
             }
         }
 
-        if (uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png")) {
-            return false;
-        }
-
         return true;
     }
 
