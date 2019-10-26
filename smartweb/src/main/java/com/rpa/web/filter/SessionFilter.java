@@ -25,7 +25,7 @@ public class SessionFilter implements Filter {
     String[] includeUrls = new String[]{"/login", "/entry", "/login/get/checkcode", "/"};
     List<String> excludeList = new ArrayList<>();
 
-    SessionFilter() {
+    public SessionFilter() {
         excludeList.add("/css/");
         excludeList.add("/fonts/");
         excludeList.add("/icons/");
