@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: dangyi
@@ -21,6 +23,16 @@ public class SessionFilter implements Filter {
 
     // 不需要登录就可以访问的路径(比如:注册登录等)
     String[] includeUrls = new String[]{"/login", "/entry", "/login/get/checkcode", "/"};
+    List<String> excludeList = new ArrayList<>();
+
+    SessionFilter() {
+        excludeList.add("/css/");
+        excludeList.add("/fonts/");
+        excludeList.add("/icons/");
+        excludeList.add("/images/");
+        excludeList.add("/js/");
+        excludeList.add("/plugins/");
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -38,16 +50,16 @@ public class SessionFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             // session中包含user对象，则是登录状态，放行
-            if(session != null && session.getAttribute(Constant.ADMIN_USER) != null){
+            if (session != null && session.getAttribute(Constant.ADMIN_USER) != null) {
                 filterChain.doFilter(request, response);
-            }else{
+            } else {
                 String requestType = request.getHeader("X-Requested-With");
                 //判断是否是ajax请求
-                if(requestType != null && "XMLHttpRequest".equals(requestType)){
+                if (requestType != null && "XMLHttpRequest".equals(requestType)) {
                     response.getWriter().write(this.NO_LOGIN);
-                }else{
+                } else {
                     //重定向到登录页
-                    response.sendRedirect(request.getContextPath()+ "/login");
+                    response.sendRedirect(request.getContextPath() + "/login");
                 }
                 return;
             }
@@ -56,12 +68,18 @@ public class SessionFilter implements Filter {
 
     /**
      * 判断是否需要过滤
+     *
      * @param uri
      */
     public boolean isNeedFilter(String uri) {
 
+        for(String exclude :excludeList ){
+            if(uri.startsWith(exclude)){
+                return true;
+            }
+        }
         for (String includeUrl : includeUrls) {
-            if(includeUrl.equals(uri)) {
+            if (includeUrl.equals(uri)) {
                 return false;
             }
         }
