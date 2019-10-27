@@ -38,12 +38,13 @@ public class LoginController {
      */
     @PostMapping("entry")
     public String login(HttpSession session,
+                        HttpServletResponse response,
                         Map<String, Object> result,
                         @RequestParam(value = "username", required = false) String username,
                         @RequestParam(value = "password", required = false) String password,
                         @RequestParam(value = "checkcode",required = false) String checkcode
                         ) {
-      String res = this.loginService.login(session, result, username, password, checkcode);
+      String res = this.loginService.login(session, response, result, username, password, checkcode);
       return res;
     }
 
