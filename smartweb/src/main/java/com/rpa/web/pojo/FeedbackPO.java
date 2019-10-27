@@ -22,8 +22,6 @@ public class FeedbackPO implements Serializable {
 
     private Date createTime;
 
-    private String url;
-
     private String manufacturer;
 
     private String androidmodel;
@@ -36,6 +34,12 @@ public class FeedbackPO implements Serializable {
     private Integer versioncode;
 
     private String buildrelease;
+
+    private String url1;
+
+    private String url2;
+
+    private String url3;
 
     private static final long serialVersionUID = 1L;
 
@@ -95,14 +99,6 @@ public class FeedbackPO implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getManufacturer() {
         return manufacturer;
     }
@@ -143,6 +139,30 @@ public class FeedbackPO implements Serializable {
         this.buildrelease = buildrelease;
     }
 
+    public String getUrl1() {
+        return url1;
+    }
+
+    public void setUrl1(String url1) {
+        this.url1 = url1;
+    }
+
+    public String getUrl2() {
+        return url2;
+    }
+
+    public void setUrl2(String url2) {
+        this.url2 = url2;
+    }
+
+    public String getUrl3() {
+        return url3;
+    }
+
+    public void setUrl3(String url3) {
+        this.url3 = url3;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -162,12 +182,14 @@ public class FeedbackPO implements Serializable {
             && (this.getContext() == null ? other.getContext() == null : this.getContext().equals(other.getContext()))
             && (this.getContact() == null ? other.getContact() == null : this.getContact().equals(other.getContact()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
             && (this.getManufacturer() == null ? other.getManufacturer() == null : this.getManufacturer().equals(other.getManufacturer()))
             && (this.getAndroidmodel() == null ? other.getAndroidmodel() == null : this.getAndroidmodel().equals(other.getAndroidmodel()))
             && (this.getBuildversion() == null ? other.getBuildversion() == null : this.getBuildversion().equals(other.getBuildversion()))
             && (this.getVersioncode() == null ? other.getVersioncode() == null : this.getVersioncode().equals(other.getVersioncode()))
-            && (this.getBuildrelease() == null ? other.getBuildrelease() == null : this.getBuildrelease().equals(other.getBuildrelease()));
+            && (this.getBuildrelease() == null ? other.getBuildrelease() == null : this.getBuildrelease().equals(other.getBuildrelease()))
+            && (this.getUrl1() == null ? other.getUrl1() == null : this.getUrl1().equals(other.getUrl1()))
+            && (this.getUrl2() == null ? other.getUrl2() == null : this.getUrl2().equals(other.getUrl2()))
+            && (this.getUrl3() == null ? other.getUrl3() == null : this.getUrl3().equals(other.getUrl3()));
     }
 
     @Override
@@ -181,12 +203,14 @@ public class FeedbackPO implements Serializable {
         result = prime * result + ((getContext() == null) ? 0 : getContext().hashCode());
         result = prime * result + ((getContact() == null) ? 0 : getContact().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         result = prime * result + ((getManufacturer() == null) ? 0 : getManufacturer().hashCode());
         result = prime * result + ((getAndroidmodel() == null) ? 0 : getAndroidmodel().hashCode());
         result = prime * result + ((getBuildversion() == null) ? 0 : getBuildversion().hashCode());
         result = prime * result + ((getVersioncode() == null) ? 0 : getVersioncode().hashCode());
         result = prime * result + ((getBuildrelease() == null) ? 0 : getBuildrelease().hashCode());
+        result = prime * result + ((getUrl1() == null) ? 0 : getUrl1().hashCode());
+        result = prime * result + ((getUrl2() == null) ? 0 : getUrl2().hashCode());
+        result = prime * result + ((getUrl3() == null) ? 0 : getUrl3().hashCode());
         return result;
     }
 
@@ -203,12 +227,14 @@ public class FeedbackPO implements Serializable {
         sb.append(", context=").append(context);
         sb.append(", contact=").append(contact);
         sb.append(", createTime=").append(createTime);
-        sb.append(", url=").append(url);
         sb.append(", manufacturer=").append(manufacturer);
         sb.append(", androidmodel=").append(androidmodel);
         sb.append(", buildversion=").append(buildversion);
         sb.append(", versioncode=").append(versioncode);
         sb.append(", buildrelease=").append(buildrelease);
+        sb.append(", url1=").append(url1);
+        sb.append(", url2=").append(url2);
+        sb.append(", url3=").append(url3);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
