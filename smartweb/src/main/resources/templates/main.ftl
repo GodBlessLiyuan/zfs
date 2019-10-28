@@ -153,6 +153,28 @@
         </div>
 
 
+        <!--弹框：退出登录-->
+        <div class="modal fade" id="logoutModal" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="form-group">
+                        <button type="hidden" id="logout" style="display:none;"/>
+                    </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title">提示</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
+                    </div>
+                    <div class="modal-body">是否退出登录？
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:logoutClick()">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
     <!--**********************************
         Content body end
@@ -176,7 +198,9 @@
 ***********************************-->
 
 <script>
-    // 页面加载事件：向后台发起请求
+    /**
+     * 页面加载事件：向后台发起请求
+     */
     window.onload = function () {
 
         $.get("/homepage/query", function (result) {
@@ -197,10 +221,11 @@
 
         }, "json");
     }
-</script>
 
-<--!显示当前时间-->
-<script>
+
+    /**
+     * 显示当前时间
+     */
     function showtime() {
         var time = document.getElementById("time")
 
@@ -217,11 +242,11 @@
     }
 
     showtime();
-</script>
 
 
-<!--发送新旧密码到后台-->
-<script>
+    /**
+     * 发送新旧密码到后台
+     */
     function updatePassword() {
 
         var oldPassword = $('#oldPassword').val();
@@ -239,6 +264,14 @@
                 }
             }, "json");
         }
+    }
+
+
+    /**
+     * 退出登录
+     */
+    function logoutClick() {
+        window.location= "/logout";
     }
 </script>
 
