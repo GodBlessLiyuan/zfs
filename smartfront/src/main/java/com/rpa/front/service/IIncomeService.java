@@ -1,6 +1,7 @@
 package com.rpa.front.service;
 
 import com.rpa.front.dto.IncomeDTO;
+import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
 
 /**
@@ -12,8 +13,17 @@ import com.rpa.front.vo.IncomeVO;
 public interface IIncomeService {
     /**
      * 查询
+     *
      * @param dto
      * @return
      */
     IncomeVO query(IncomeDTO dto);
+
+    /**
+     * 邀请详情
+     *
+     * @param userId
+     * @return
+     */
+    DetailsVO queryDetails(long userId);
 }

@@ -4,6 +4,7 @@ import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.mapper.RevenueUserMapper;
 import com.rpa.front.pojo.RevenueUserPO;
 import com.rpa.front.service.IIncomeService;
+import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,19 @@ public class IncomeServiceImpl implements IIncomeService {
         RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(dto.getUd());
 
         IncomeVO vo = new IncomeVO();
+        vo.setBalance(po.getRemaining());
+        vo.setInvitenum(po.getInviteCount());
+        vo.setPaynum(po.getPayCount());
+        vo.setTotalmny(po.getTotalRevenue());
+
+        return vo;
+    }
+
+    @Override
+    public DetailsVO queryDetails(long userId) {
+        DetailsVO vo = new DetailsVO();
+
+        RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(userId);
         vo.setBalance(po.getRemaining());
         vo.setInvitenum(po.getInviteCount());
         vo.setPaynum(po.getPayCount());
