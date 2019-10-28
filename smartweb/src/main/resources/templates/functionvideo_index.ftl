@@ -175,16 +175,18 @@
     </div>
 
 
+
     <!--弹框：播放视频-->
     <div class="modal fade" id="videoModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
+            <div class="modal-header">
+                <h5 class="modal-title">播放视频</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
             <div class="modal-content">
-                <div class="form-group">
-                    <video src="" id="video"></video>
-                    <br>
-                    <button id="start">start</button>
-                    <button id="stop">stop</button>
-                </div>
+                <video src="" id="video"></video>
+                <button id="play" type="button" class="btn btn-primary" onclick="playClick()">play</button>
+                <button id="pause" type="button" class="btn btn-primary" onclick="pauseClick()">pause</button>
             </div>
         </div>
     </div>
@@ -288,18 +290,23 @@
      */
     function insertClick() {
 
-        var funName = $('#insert_name').val();
-        var url = $('#insert_video').val();
-        var extra = $('#insert_extra').val();
+        var reqData = new FormData();
+        reqData.append("funName", $('#insert_name').val());
+        reqData.append("url", $('#insert_video')[0].files[0]);
+        reqData.append("extra", $('#insert_extra').val());
 
-        $.post("/bannerconfig/insert", {funName:funName, url:url, extra:extra}, function (result) {
-            if (result.code === 0) {
+        $.ajax({
+            type: 'post',
+            url: '/functionvideo/insert',
+            dataType: 'json',
+            data: reqData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
                 alert("新增成功！")
                 $('#datatab').DataTable().draw(false);
-            } else {
-                alert("新增失败！")
             }
-        }, "json");
+        });
     }
 
 
@@ -336,7 +343,7 @@
                     "render": function (data, type, full) {
 
                         return  "<button type='button' data-toggle='modal' data-target='#videoModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:videoModal(" + data + ")'>查看</button>";
+                            "class='btn btn-primary' onclick='javascript:videoModal(\"" + data + "\")'>查看</button>";
                     }
                 },
                 {"data": "extra"},
@@ -380,6 +387,20 @@
         document.getElementById("video").src = url;
     }
 
+    /**
+     * 播放
+     */
+    function playClick() {
+        document.getElementById('video').play();
+    }
+
+    /**
+     * 暂停
+     */
+    function pauseClick() {
+        document.getElementById('video').pause();
+    }
+
 
     /**
      * 修改：在表格中点击修改按钮后，到后台查询数据，给弹出框填满值
@@ -395,7 +416,6 @@
             dataType: 'JSON',
             success: function (result) {
                 $('#up_name').val(result.data.funName);
-                $('#up_video').val(result.data.url);
                 $('#up_extra').val(result.data.extra);
             }
         })
@@ -406,20 +426,24 @@
      */
     function updateClick() {
 
-        var functionId = $('#update').val();
-        var funName = $('#up_name').val();
-        var url = $('#up_video').val();
-        var extra = $('#up_extra').val();
+        var reqData = new FormData();
+        reqData.append("functionId", $('#update').val());
+        reqData.append("funName", $('#up_name').val());
+        reqData.append("url", $('#up_video')[0].files[0]);
+        reqData.append("extra", $('#up_extra').val());
 
-        $.post("/functionvideo/update", {functionId:functionId, funName:funName, url:url, extra:extra},
-            function (result) {
-                if (result.code === 0) {
-                    alert("更新成功！")
-                    $('#datatab').DataTable().draw(false);
-                } else {
-                    alert("更新失败！")
-                }
-            }, "json");
+        $.ajax({
+            type: 'post',
+            url: '/functionvideo/update',
+            dataType: 'json',
+            data: reqData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                alert("更新成功！")
+                $('#datatab').DataTable().draw(false);
+            }
+        });
     }
 
     /**

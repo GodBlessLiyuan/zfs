@@ -6,6 +6,7 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -53,26 +54,39 @@ public class FunctionVideoController {
         return this.functionVideoService.queryById(functionId);
     }
 
+
     /**
      * 插入
-     * @param functionVideoDTO
      * @param httpSession
+     * @param funName
+     * @param url
+     * @param extra
      * @return
      */
     @PostMapping("insert")
-    public ResultVO insert(FunctionVideoDTO functionVideoDTO, HttpSession httpSession) {
-        return this.functionVideoService.insert(functionVideoDTO, httpSession);
+    public ResultVO insert(HttpSession httpSession,
+                           @RequestParam(value = "funName") String funName,
+                           @RequestParam(value = "url") MultipartFile url,
+                           @RequestParam(value = "extra", required = false) String extra) {
+        return this.functionVideoService.insert(httpSession, funName, url, extra);
     }
+
 
     /**
      * 修改
-     * @param functionVideoDTO
      * @param httpSession
+     * @param funName
+     * @param url
+     * @param extra
      * @return
      */
     @PostMapping("update")
-    public ResultVO update(FunctionVideoDTO functionVideoDTO, HttpSession httpSession) {
-        return this.functionVideoService.update(functionVideoDTO, httpSession);
+    public ResultVO update(HttpSession httpSession,
+                           @RequestParam(value = "functionId") Integer functionId,
+                           @RequestParam(value = "funName", required = false) String funName,
+                           @RequestParam(value = "url", required = false) MultipartFile url,
+                           @RequestParam(value = "extra", required = false) String extra) {
+        return this.functionVideoService.update(httpSession, functionId, funName, url, extra);
     }
 
     /**

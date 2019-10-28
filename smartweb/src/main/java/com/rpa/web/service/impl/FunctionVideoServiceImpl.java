@@ -11,10 +11,13 @@ import com.rpa.web.mapper.FunctionVideoMapper;
 import com.rpa.web.pojo.FunctionVideoPO;
 import com.rpa.web.service.FunctionVideoService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.FileUtil;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -33,6 +36,9 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
 
     @Autowired
     private AdminUserMapper adminUserMapper;
+
+    @Value("${file.videoDir}")
+    private String videoDir;
 
     /**
      * 查询
@@ -73,6 +79,11 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     }
 
 
+    /**
+     * 查询
+     * @param functionId
+     * @return
+     */
     @Override
     public ResultVO queryById(Integer functionId) {
 
@@ -83,7 +94,6 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
 
         FunctionVideoDTO dto = new FunctionVideoDTO();
         dto.setFunName(po.getFunName());
-        dto.setUrl(po.getUrl());
         dto.setExtra(po.getExtra());
 
         return ResultVOUtil.success(dto);
@@ -92,39 +102,48 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
 
     /**
      * 插入
-     * @param dto
      * @param httpSession
+     * @param funName
+     * @param url
+     * @param extra
      * @return
      */
     @Override
-    public ResultVO insert(FunctionVideoDTO dto, HttpSession httpSession) {
+    public ResultVO insert(HttpSession httpSession, String funName, MultipartFile url, String extra) {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
         AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
         int aId = adminUserDTO.getaId();
 
-        // 把 dto 转换为 po
         FunctionVideoPO po = new FunctionVideoPO();
-        po.setFunName(dto.getFunName());
-        po.setUrl(dto.getUrl());
-        po.setExtra(dto.getExtra());
+        po.setFunName(funName);
+        if (null == url) {
+            po.setUrl(null);
+        } else {
+            po.setUrl(FileUtil.uploadFile(url, videoDir, "functionvideo"));
+        }
+        po.setExtra(extra);
         po.setUpdateTime(new Date());
         po.setCreateTime(new Date());
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
 
         int count = this.functionVideoMapper.insert(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
     }
 
+
     /**
      * 修改
-     * @param dto
      * @param httpSession
+     * @param functionId
+     * @param funName
+     * @param url
+     * @param extra
      * @return
      */
     @Override
-    public ResultVO update(FunctionVideoDTO dto, HttpSession httpSession) {
+    public ResultVO update(HttpSession httpSession, Integer functionId, String funName, MultipartFile url, String extra) {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
@@ -132,17 +151,19 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         int aId = adminUserDTO.getaId();
 
         // 从数据库中查询出要修改的数据
-        FunctionVideoPO po = this.functionVideoMapper.selectByPrimaryKey(dto.getFunctionId());
+        FunctionVideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
 
         if (null == po) {
             return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
         }
 
-        po.setFunName(dto.getFunName());
-        po.setUrl(dto.getUrl());
-        po.setExtra(dto.getExtra());
+        po.setFunName(funName);
+        if (null != url) {
+            po.setUrl(FileUtil.uploadFile(url, videoDir, "functionvideo"));
+        }
+        po.setExtra(extra);
         po.setUpdateTime(new Date());
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
 
         int count = this.functionVideoMapper.updateByPrimaryKey(po);
 
