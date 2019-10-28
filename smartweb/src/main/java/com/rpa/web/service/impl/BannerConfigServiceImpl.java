@@ -98,7 +98,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
 
         BannerConfigPO po = new BannerConfigPO();
         po.setName(name);
-        po.setPicPath(FileUtil.uploadFile(picPath, iconDir));
+        po.setPicPath(FileUtil.uploadFile(picPath, iconDir, "banner"));
         po.setUrl(url);
         po.setCreateTime(new Date());
         po.setUpdateTime(new Date());

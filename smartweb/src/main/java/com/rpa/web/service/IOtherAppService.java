@@ -34,10 +34,11 @@ public interface IOtherAppService {
      * @param iconUrl      应用图标
      * @param downloadType 下载方式
      * @param appUrl       下载地址
+     * @param apkUrl
      * @param aId          管理员Id
      * @return
      */
-    ResultVO insert(String oName, String extra, MultipartFile iconUrl, byte downloadType, String appUrl, int aId);
+    ResultVO insert(String oName, String extra, MultipartFile iconUrl, byte downloadType, String appUrl, MultipartFile apkUrl, int aId);
 
     /**
      * 删除

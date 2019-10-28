@@ -154,14 +154,19 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">下载方式:</span>
-                                                    <select id="iDownloadType" class="form-control">
+                                                    <select id="iDownloadType" class="form-control"
+                                                            onchange="downloadTypeClick()">
                                                         <option value='1' selected='selected'>直接下载应用文件</option>
                                                         <option value='2'>跳转至应用市场</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">地址:</span>
+                                                <div id="iAppDiv" class="form-group" style="display: none;">
+                                                    <span for="message-text" class="col-form-label">应用地址:</span>
                                                     <input type="text" class="form-control" id="iAppUrl">
+                                                </div>
+                                                <div id="iApkDiv" class="form-group">
+                                                    <span for="message-text" class="col-form-label">应用程序:</span>
+                                                    <input id="iApkUrl" type="file"/>
                                                 </div>
                                             </form>
                                         </div>
@@ -245,6 +250,7 @@
         reqData.append("iconUrl", $('#iIconUrl')[0].files[0]);
         reqData.append("downloadType", $('#iDownloadType').val());
         reqData.append("appUrl", $('#iAppUrl').val());
+        reqData.append("apkUrl", $('#iApkUrl')[0].files[0]);
 
         $.ajax({
             type: 'post',
@@ -271,7 +277,7 @@
             type: 'GET',
             url: '/otherapp/delete?oId=' + oId,
             dataType: 'json',
-            success: function (data) {
+            success: function (res) {
                 $('#datatab').DataTable().draw(false);
             }
         })
@@ -372,6 +378,19 @@
         $('#iIconUrl').val(null);
         $('#iDownloadType option:first').prop('selected', 'selected');
         $('#iAppUrl').val(null);
+        $('#iApkUrl').val(null);
+        downloadTypeClick();
+    }
+
+    function downloadTypeClick() {
+        let type = $('#iDownloadType').val();
+        if (type === "1") {
+            $('#iAppDiv').hide();
+            $('#iApkDiv').show();
+        } else {
+            $('#iAppDiv').show();
+            $('#iApkDiv').hide();
+        }
     }
 </script>
 

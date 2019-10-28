@@ -36,7 +36,11 @@ public class OtherAppServiceImpl implements IOtherAppService {
             vo.setName(po.getoName());
             vo.setIconurl(filePublicPath + po.getIconUrl());
             vo.setType(po.getDownloadType());
-            vo.setAppurl(po.getAppUrl());
+            if (po.getDownloadType() == 1) {
+                vo.setAppurl(filePublicPath + po.getAppUrl());
+            } else {
+                vo.setAppurl(po.getAppUrl());
+            }
             vo.setExtra(po.getExtra());
             vos.add(vo);
         }

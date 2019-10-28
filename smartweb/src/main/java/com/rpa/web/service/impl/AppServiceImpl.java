@@ -65,7 +65,7 @@ public class AppServiceImpl implements IAppService {
     public ResultVO insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra,
                            int aId) {
         // 解析Apk
-        Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir);
+        Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir, "app");
         if (apkInfo.get("channel") == null || !"vbooster".equals(apkInfo.get("channel"))) {
             return ResultVOUtil.error(2000, "上传应用非官方渠道！");
         }
@@ -180,7 +180,7 @@ public class AppServiceImpl implements IAppService {
     }
 
     private void setAppPObyFile(MultipartFile file, AppPO appPO) {
-        Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir);
+        Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir, "app");
         appPO.setUrl((String) apkInfo.get("url"));
         appPO.setVersionname((String) apkInfo.get("versionname"));
         appPO.setVersioncode(Math.toIntExact((Long) apkInfo.get("versioncode")));

@@ -126,7 +126,7 @@ public class NoticeServiceImpl implements NoticeService {
         if (null == picurl) {
             po.setPicurl(null);
         } else {
-            po.setPicurl(FileUtil.uploadFile(picurl, iconDir));
+            po.setPicurl(FileUtil.uploadFile(picurl, iconDir, "notice"));
         }
         po.setTitle(title);
         po.setUrl(url);

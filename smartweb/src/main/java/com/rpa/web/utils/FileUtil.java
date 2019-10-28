@@ -35,8 +35,8 @@ public class FileUtil {
      * @return 文件路径
      * @throws IOException
      */
-    public static String uploadFile(MultipartFile file, String dir) {
-        String fileName = System.currentTimeMillis() + file.getOriginalFilename();
+    public static String uploadFile(MultipartFile file, String dir, String moduleName) {
+        String fileName = FileUtil.buildFileName(file, moduleName);
         File targetFile = new File(rootPath + projectDir + dir);
         if (!targetFile.exists()) {
             targetFile.mkdirs();
@@ -63,6 +63,18 @@ public class FileUtil {
         return projectDir + dir + fileName;
     }
 
+    /**
+     * 构建文件名
+     *
+     * @param file
+     * @param moduleName
+     * @return
+     */
+    private static String buildFileName(MultipartFile file, String moduleName) {
+        String ext = file.getOriginalFilename().split("\\.")[file.getOriginalFilename().split("\\.").length - 1];
+        return moduleName + System.currentTimeMillis() + "." + ext;
+    }
+
 
     /**
      * 解析apk信息
@@ -71,12 +83,12 @@ public class FileUtil {
      * @param apkDir
      * @return
      */
-    public static Map<String, Object> resolveApk(MultipartFile file, String apkDir) {
+    public static Map<String, Object> resolveApk(MultipartFile file, String apkDir, String moduleName) {
         Map<String, Object> apkInfo = new HashMap<>(8);
 
         try {
             // 上传apk文件
-            String filePath = FileUtil.uploadFile(file, apkDir);
+            String filePath = FileUtil.uploadFile(file, apkDir, moduleName);
             ApkFile apkFile = new ApkFile(rootPath + filePath);
             ApkMeta apkMeta = apkFile.getApkMeta();
             apkInfo.put("pkgname", apkMeta.getPackageName());
