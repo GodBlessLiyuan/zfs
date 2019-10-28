@@ -2,6 +2,7 @@ package com.rpa.front.vo;
 
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,9 +17,9 @@ public class DetailsVO extends IncomeVO {
     private List<Detail> details;
 
     @Data
-    class Detail {
+    public class Detail {
         private String ph;
-        private String ctime;
-        private Double gain;
+        private Date ctime;
+        private Long earnings;
     }
 }

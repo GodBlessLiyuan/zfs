@@ -1,11 +1,21 @@
 package com.rpa.front.mapper;
 
+import com.rpa.front.bo.InviteUserBO;
 import com.rpa.front.pojo.InviteUserPO;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * InviteUserMapper继承基类
  */
-@Repository
+@Mapper
 public interface InviteUserMapper extends BaseMapper<InviteUserPO, Integer> {
+    /**
+     * 查询用户邀请详情
+     *
+     * @param userId
+     * @return
+     */
+    List<InviteUserBO> queryByUserId(long userId);
 }
