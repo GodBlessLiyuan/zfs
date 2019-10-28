@@ -378,12 +378,14 @@ CREATE TABLE t_invite_detail
 	pay bigint,
 	earnings bigint,
 	proportion tinyint,
-	invite_id bigint NOT NULL,
+	user_id bigint NOT NULL,
 	invitee_id bigint NOT NULL,
 	viptype_id int DEFAULT 0,
 	pay_time datetime,
+	invite_id int NOT NULL,
 	PRIMARY KEY (inde_id),
-	UNIQUE (inde_id)
+	UNIQUE (inde_id),
+	UNIQUE (invite_id)
 );
 
 
@@ -503,14 +505,14 @@ CREATE TABLE t_other_app
 (
 	o_id int NOT NULL AUTO_INCREMENT,
 	o_name char(64),
-	icon_url char(128),
-	app_url char(128),
+	icon_url char(255),
+	app_url char(512),
 	-- 1 直接下载  2应用市场
 	download_type tinyint COMMENT '1 直接下载  2应用市场',
 	a_id int,
 	create_time datetime,
 	update_time datetime,
-	extra char(128),
+	extra char(255),
 	PRIMARY KEY (o_id),
 	UNIQUE (o_id)
 );
@@ -959,6 +961,14 @@ ALTER TABLE t_user_device
 ALTER TABLE t_white_device
 	ADD FOREIGN KEY (device_id)
 	REFERENCES t_device (device_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_invite_detail
+	ADD FOREIGN KEY (invite_id)
+	REFERENCES t_invite_user (invite_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;

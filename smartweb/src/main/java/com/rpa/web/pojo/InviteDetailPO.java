@@ -22,13 +22,15 @@ public class InviteDetailPO implements Serializable {
 
     private Byte proportion;
 
-    private Long inviteId;
+    private Long userId;
 
     private Long inviteeId;
 
     private Integer viptypeId;
 
     private Date payTime;
+
+    private Integer inviteId;
 
     private static final long serialVersionUID = 1L;
 
@@ -88,12 +90,12 @@ public class InviteDetailPO implements Serializable {
         this.proportion = proportion;
     }
 
-    public Long getInviteId() {
-        return inviteId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setInviteId(Long inviteId) {
-        this.inviteId = inviteId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getInviteeId() {
@@ -120,6 +122,14 @@ public class InviteDetailPO implements Serializable {
         this.payTime = payTime;
     }
 
+    public Integer getInviteId() {
+        return inviteId;
+    }
+
+    public void setInviteId(Integer inviteId) {
+        this.inviteId = inviteId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -139,10 +149,11 @@ public class InviteDetailPO implements Serializable {
             && (this.getPay() == null ? other.getPay() == null : this.getPay().equals(other.getPay()))
             && (this.getEarnings() == null ? other.getEarnings() == null : this.getEarnings().equals(other.getEarnings()))
             && (this.getProportion() == null ? other.getProportion() == null : this.getProportion().equals(other.getProportion()))
-            && (this.getInviteId() == null ? other.getInviteId() == null : this.getInviteId().equals(other.getInviteId()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getInviteeId() == null ? other.getInviteeId() == null : this.getInviteeId().equals(other.getInviteeId()))
             && (this.getViptypeId() == null ? other.getViptypeId() == null : this.getViptypeId().equals(other.getViptypeId()))
-            && (this.getPayTime() == null ? other.getPayTime() == null : this.getPayTime().equals(other.getPayTime()));
+            && (this.getPayTime() == null ? other.getPayTime() == null : this.getPayTime().equals(other.getPayTime()))
+            && (this.getInviteId() == null ? other.getInviteId() == null : this.getInviteId().equals(other.getInviteId()));
     }
 
     @Override
@@ -156,10 +167,11 @@ public class InviteDetailPO implements Serializable {
         result = prime * result + ((getPay() == null) ? 0 : getPay().hashCode());
         result = prime * result + ((getEarnings() == null) ? 0 : getEarnings().hashCode());
         result = prime * result + ((getProportion() == null) ? 0 : getProportion().hashCode());
-        result = prime * result + ((getInviteId() == null) ? 0 : getInviteId().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getInviteeId() == null) ? 0 : getInviteeId().hashCode());
         result = prime * result + ((getViptypeId() == null) ? 0 : getViptypeId().hashCode());
         result = prime * result + ((getPayTime() == null) ? 0 : getPayTime().hashCode());
+        result = prime * result + ((getInviteId() == null) ? 0 : getInviteId().hashCode());
         return result;
     }
 
@@ -176,10 +188,11 @@ public class InviteDetailPO implements Serializable {
         sb.append(", pay=").append(pay);
         sb.append(", earnings=").append(earnings);
         sb.append(", proportion=").append(proportion);
-        sb.append(", inviteId=").append(inviteId);
+        sb.append(", userId=").append(userId);
         sb.append(", inviteeId=").append(inviteeId);
         sb.append(", viptypeId=").append(viptypeId);
         sb.append(", payTime=").append(payTime);
+        sb.append(", inviteId=").append(inviteId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
