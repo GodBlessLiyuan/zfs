@@ -48,14 +48,16 @@ public class OtherAppController {
                            @RequestParam(value = "extra") String extra,
                            @RequestParam(value = "iconUrl") MultipartFile iconUrl,
                            @RequestParam(value = "downloadType") byte downloadType,
-                           @RequestParam(value = "appUrl") String appUrl, HttpServletRequest req) {
+                           @RequestParam(value = "appUrl") String appUrl,
+                           @RequestParam(value = "apkUrl", required = false) MultipartFile apkUrl,
+                           HttpServletRequest req) {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {
             throw new PromptException(ExceptionEnum.SESSION_ERROR);
         }
 
-        return service.insert(oName, extra, iconUrl, downloadType, appUrl, admin.getaId());
+        return service.insert(oName, extra, iconUrl, downloadType, appUrl, apkUrl, admin.getaId());
     }
 
     @RequestMapping("delete")

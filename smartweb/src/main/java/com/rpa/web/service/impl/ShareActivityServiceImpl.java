@@ -101,7 +101,7 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         if (type == 1) {
             po.setContent(contentText);
         } else {
-            po.setContent(FileUtil.uploadFile(contentImage, iconDir));
+            po.setContent(FileUtil.uploadFile(contentImage, iconDir, "share"));
         }
         po.setExtra(extra);
         po.setCreateTime(new Date());
@@ -135,7 +135,7 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         if (type == 1) {
             po.setContent(contentText);
         } else {
-            po.setContent(FileUtil.uploadFile(contentImage, iconDir));
+            po.setContent(FileUtil.uploadFile(contentImage, iconDir, "share"));
         }
         po.setExtra(extra);
         po.setUpdateTime(new Date());
