@@ -22,10 +22,10 @@
         <div class="header-right">
             <ul class="clearfix">
                 <li class="icons dropdown d-none d-md-flex">
-                    <button type="button" class="btn btn-primary">您的姓名</button>
+                    <button type="button" class="btn btn-primary">欢迎您，${username}！</button>
                 </li>
                 <li class="icons dropdown d-none d-md-flex">
-                    <button type="button" class="btn btn-primary" data-toggle='modal' data-target='#exitModal' onclick="logoutClick()">退出</button>
+                    <button type="button" class="btn btn-primary" data-toggle='modal' data-target='#logoutModal'>退出</button>
                 </li>
                 <li class="icons dropdown d-none d-md-flex">
                     <button type="button" class="btn btn-primary" data-toggle='modal' data-target='#updateModal'>修改密码</button>

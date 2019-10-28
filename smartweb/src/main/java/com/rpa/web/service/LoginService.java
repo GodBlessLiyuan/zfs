@@ -16,4 +16,6 @@ public interface LoginService {
     String login(HttpSession session, HttpServletResponse response, Map<String, Object> result, String username, String password, String checkcode);
 
     ResultVO updatePassword(HttpSession httpSession, String oldPassword, String newPassword);
+
+    String logout(HttpSession httpSession);
 }

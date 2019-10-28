@@ -4,10 +4,7 @@ import com.rpa.web.service.LoginService;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
@@ -130,4 +127,13 @@ public class LoginController {
                                     @RequestParam("newPassword") String newPassword){
         return this.loginService.updatePassword(httpSession, oldPassword, newPassword);
     }
+
+
+    @GetMapping("logout")
+    public String logout (HttpSession httpSession){
+        return this.loginService.logout(httpSession);
+    }
+
+
+
 }

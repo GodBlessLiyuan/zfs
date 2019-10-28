@@ -97,6 +97,11 @@ public class LoginServiceImpl implements LoginService {
             session.setAttribute(ADMIN_USER, dto);
             session.setMaxInactiveInterval(60 * 60 * 2);
 
+            // 供前端取用
+            session.setAttribute("username", username);
+
+
+
             /**
              * 获取服务器自动为session对象所生成的ID
              * 创建cookie对象，名为JSESSIONID，值为该ID
@@ -155,6 +160,20 @@ public class LoginServiceImpl implements LoginService {
             return ResultVOUtil.error(ExceptionEnum.PASSWORD_UPDATE_ERROR);
         }
         return ResultVOUtil.error(ExceptionEnum.PASSWORD_ERROR);
+    }
+
+
+    /**
+     * 退出登录
+     * @param httpSession
+     * @return
+     */
+    @Override
+    public String logout(HttpSession httpSession) {
+
+        httpSession.setAttribute(ADMIN_USER, null);
+
+        return "redirect:/login";
     }
 
 }
