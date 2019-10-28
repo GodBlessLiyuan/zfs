@@ -312,7 +312,7 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "oName"},
+                {"data": "name"},
                 {"data": "extra"},
                 {
                     "data": "iconUrl",
@@ -326,9 +326,14 @@
                         return data === 1 ? "直接下载应用文件" : "跳转至应用市场";
                     }
                 },
-                {"data": "appUrl"},
                 {
-                    "data": "oId",
+                    "data": "appUrl",
+                    "render": function (data, type, full) {
+                        return "<a href='" + data + "' download='50px'/>";
+                    }
+                },
+                {
+                    "data": "id",
                     "render": function (data, type, full) {
                         return "<a data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
                             "class='text-primary' onclick='javascript:deleteModal(" + data + ")'>删除</a>";

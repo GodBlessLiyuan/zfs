@@ -33,6 +33,21 @@ public class PageController {
         IncomeVO vo = service.query(dto);
         map.put("res", vo);
 
+        req.getSession().setAttribute("userId", dto.getUd());
+
+        return "income_index";
+    }
+
+    @PostMapping("withdraw")
+    public String withdraw(ModelMap map, HttpServletRequest req) {
+        long userId = (long) req.getSession().getAttribute("userId");
+
+        IncomeDTO dto = new IncomeDTO();
+        dto.setUd(userId);
+
+        IncomeVO vo = service.query(dto);
+        map.put("res", vo);
+
         return "income_index";
     }
 }

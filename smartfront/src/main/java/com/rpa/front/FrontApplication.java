@@ -2,6 +2,7 @@ package com.rpa.front;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 /**
  * @author: xiahui
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @description: 前端
  * @version: 1.0
  */
+@EnableCaching
 @SpringBootApplication
 public class FrontApplication {
 

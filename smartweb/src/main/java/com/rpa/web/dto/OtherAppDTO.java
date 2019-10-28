@@ -1,6 +1,9 @@
 package com.rpa.web.dto;
 
 import com.rpa.web.pojo.OtherAppPO;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,73 +15,19 @@ import java.util.List;
  * @description: 其他产品
  * @version: 1.0
  */
+@Data
+@Component
 public class OtherAppDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private Integer oId;
-    private String oName;
+    private Integer id;
+    private String name;
+    private static String publicPath;
     private String extra;
     private String iconUrl;
     private Byte downloadType;
     private String appUrl;
     private String username;
-
-    public Integer getoId() {
-        return oId;
-    }
-
-    public void setoId(Integer oId) {
-        this.oId = oId;
-    }
-
-    public String getoName() {
-        return oName;
-    }
-
-    public void setoName(String oName) {
-        this.oName = oName;
-    }
-
-    public String getExtra() {
-        return extra;
-    }
-
-    public void setExtra(String extra) {
-        this.extra = extra;
-    }
-
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
-    }
-
-    public Byte getDownloadType() {
-        return downloadType;
-    }
-
-    public void setDownloadType(Byte downloadType) {
-        this.downloadType = downloadType;
-    }
-
-    public String getAppUrl() {
-        return appUrl;
-    }
-
-    public void setAppUrl(String appUrl) {
-        this.appUrl = appUrl;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     /**
      * PO 转 DTO
@@ -89,12 +38,16 @@ public class OtherAppDTO implements Serializable {
     public static OtherAppDTO convert(OtherAppPO po) {
         OtherAppDTO dto = new OtherAppDTO();
 
-        dto.setoId(po.getoId());
-        dto.setoName(po.getoName());
+        dto.setId(po.getoId());
+        dto.setName(po.getoName());
         dto.setExtra(po.getExtra());
-        dto.setIconUrl(po.getIconUrl());
+        dto.setIconUrl(OtherAppDTO.publicPath + po.getIconUrl());
         dto.setDownloadType(po.getDownloadType());
-        dto.setAppUrl(po.getAppUrl());
+        if (po.getDownloadType() == 1) {
+            dto.setAppUrl(OtherAppDTO.publicPath + po.getAppUrl());
+        } else {
+            dto.setAppUrl(po.getAppUrl());
+        }
         dto.setUsername(po.getUsername());
 
         return dto;
@@ -114,5 +67,10 @@ public class OtherAppDTO implements Serializable {
         }
 
         return dtos;
+    }
+
+    @Value("${file.publicPath}")
+    private void setPublicPath(String publicPath) {
+        OtherAppDTO.publicPath = publicPath;
     }
 }
