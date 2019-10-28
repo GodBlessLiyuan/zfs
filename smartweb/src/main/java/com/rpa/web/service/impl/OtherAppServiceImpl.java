@@ -31,8 +31,8 @@ public class OtherAppServiceImpl implements IOtherAppService {
     @Resource
     private OtherAppMapper otherAppMapper;
 
-    @Value("${file.iconDir}")
-    private String iconDir;
+    @Value("${file.appDir}")
+    private String appDir;
 
     @Override
     public DTPageInfo<OtherAppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
@@ -48,7 +48,7 @@ public class OtherAppServiceImpl implements IOtherAppService {
         po.setaId(aId);
         po.setoName(oName);
         po.setExtra(extra);
-        po.setIconUrl(FileUtil.uploadFile(iconUrl, iconDir));
+        po.setIconUrl(FileUtil.uploadFile(iconUrl, appDir));
         po.setDownloadType(downloadType);
         po.setAppUrl(appUrl);
         po.setCreateTime(new Date());
