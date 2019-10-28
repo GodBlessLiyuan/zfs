@@ -83,6 +83,7 @@ public class SessionFilter implements Filter {
                 return false;
             }
         }
+
         return true;
     }
 

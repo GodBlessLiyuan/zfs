@@ -5,11 +5,14 @@ import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.service.LoginService;
+import com.rpa.web.utils.Md5Util;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -28,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
     private AdminUserMapper adminUserMapper;
 
     @Override
-    public String login(HttpSession session, Map<String, Object> result,
+    public String login(HttpSession session, HttpServletResponse response, Map<String, Object> result,
                         String username, String password, String checkcode) {
 
         // 先校验验证码，从session中获取服务器端生成并传递给前端的验证码
@@ -92,10 +95,38 @@ public class LoginServiceImpl implements LoginService {
             dto.setPhone(po.getPhone());
 
             session.setAttribute(ADMIN_USER, dto);
+            session.setMaxInactiveInterval(60 * 60 * 2);
+
+            /**
+             * 获取服务器自动为session对象所生成的ID
+             * 创建cookie对象，名为JSESSIONID，值为该ID
+             * 设置该cookie对象的有效时间，与session的有效时间保持一致
+             * 创建cookie对象，名为userInfo，值为用户名和密码的拼接值，并且进行MD5加密
+             * 将这这两个cookie对象发送给浏览器
+             */
+            String id = session.getId();
+            Cookie cookie = new Cookie("JSESSIONID", id);
+            cookie.setMaxAge(60 * 60 * 2);
+
+            String userInfo = "";
+            try {
+                userInfo = Md5Util.encodeByMd5(username + password);
+            } catch (Exception e) {
+                e.printStackTrace();
+                result.put("flag", false);
+                result.put("msg", "MD5异常");
+                return "forward:/login";
+            }
+            Cookie userInfoCookie = new Cookie("userInfo", userInfo);
+            userInfoCookie.setMaxAge(60 * 60 * 2);
+
+            response.addCookie(cookie);
+            response.addCookie(userInfoCookie);
 
             return "redirect:/main";
         }
     }
+
 
 
     /**
@@ -125,4 +156,5 @@ public class LoginServiceImpl implements LoginService {
         }
         return ResultVOUtil.error(ExceptionEnum.PASSWORD_ERROR);
     }
+
 }

@@ -68,7 +68,7 @@ public class FeedbackServiceImpl implements FeedbackService {
             dto.setCreateTime(po.getCreateTime());
             dto.setContact(po.getContact());
             dto.setContext(po.getContext());
-            dto.setUrl(po.getUrl());
+            dto.setUrl(po.getUrl1());
 
             lists_DTO.add(dto);
         }
