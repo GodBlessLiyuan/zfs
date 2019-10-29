@@ -24,9 +24,4 @@ public class CommonConstant {
      * 渠道默认ID
      */
     public static final int CHAN_DEF = 1;
-
-    public static final String BASE64_SUFFIX_JPG = "data:image/jpeg;";
-    public static final String BASE64_SUFFIX_ICO = "data:image/x-icon;";
-    public static final String BASE64_SUFFIX_GIF = "data:image/gif;";
-    public static final String BASE64_SUFFIX_PNG = "data:image/png;";
 }
