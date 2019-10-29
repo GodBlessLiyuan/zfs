@@ -19,6 +19,13 @@
     from t_share_activity
     where material_id = #{materialId,jdbcType=INTEGER}
   </select>
+
+  <select id="query" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_share_activity
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_share_activity
     where material_id = #{materialId,jdbcType=INTEGER}
