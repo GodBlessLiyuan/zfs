@@ -54,6 +54,7 @@
     </div>
 
     <div class="container">
+
         <table class="table table-hover" >
             <!--<caption>邀请详情</caption>-->
             <thead>
@@ -64,34 +65,28 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td data-field="phone">151****15141</td>
-                <td data-field="register_date">2019-6-4</td>
-                <td data-field="">暂无收益</td>
-            </tr>
-            <tr>
-                <td>151****15141</td>
-                <td>暂未注册</td>
-                <td>暂无收益</td>
-            </tr>
-            <tr>
-                <td>151****15141</td>
-                <td>2019-6-4</td>
-                <td>5.20</td>
-            </tr>
+            <#list res.details as detail>
+                <tr>
+                    <td id="ph">${detail.ph}</td>
 
+                    <#if (detail.ctime)??>
+                        <td >${detail.ctime?string("yyyy-MM-dd")}</td>
+                    <#else>
+                        <td >暂未注册</td>
+                    </#if>
+
+                    <#if (detail.earnings)?? >
+                        <td style="color: red">${detail.earnings}</td>
+                    <#else>
+                        <td >暂无收益</td>
+                    </#if>
+
+                </tr>
+            </#list>
             </tbody>
         </table>
     </div>
 
-<script>
-    $(function () {
-        /*将手机号中间四位变成星号 保护用户被邀请者隐私*/
-        var phone = $('#phone').text;
-        var myphone = phone.substr(0,3)+'****'+phone.substr(7);
-        $('#phone').text(myphone);
-    })
-</script>
 
 </body>
 </html>
