@@ -200,19 +200,23 @@
         let channelName = $('#iChannelName').val();
         let extra = $('#iExtra').val();
 
-        $.ajax({
-            type: 'GET',
-            url: "/softchannel/insert?channelName=" + channelName + "&extra=" + extra,
-            dataType: 'json',
-            success: function (res) {
-                if (res.code === 0) {
-                    $('#datatab').DataTable().draw(false);
-                    clearInsModal();
-                } else {
-                    alert(res.msg);
+        if (!channelName) {
+            alert("渠道名称不能为空!");
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: "/softchannel/insert?channelName=" + channelName + "&extra=" + extra,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code === 0) {
+                        $('#datatab').DataTable().draw(false);
+                        clearInsModal();
+                    } else {
+                        alert(res.msg);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     /**
