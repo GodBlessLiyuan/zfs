@@ -6,6 +6,7 @@ import com.rpa.server.mapper.BannerConfigMapper;
 import com.rpa.server.pojo.BannerConfigPO;
 import com.rpa.server.service.IBannerConfigService;
 import com.rpa.server.vo.BannerConfigVO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +23,8 @@ import java.util.List;
 public class BannerConfigServiceImpl implements IBannerConfigService {
     @Resource
     private BannerConfigMapper bannerConfigMapper;
+    @Value("${file.publicPath}")
+    private String publicPath;
 
     @Override
     public ResultVO queryBanConf(BannerConfigDTO dto) {
@@ -34,8 +37,12 @@ public class BannerConfigServiceImpl implements IBannerConfigService {
         for (BannerConfigPO po : bannerConfigPOs) {
             BannerConfigVO vo = new BannerConfigVO();
             vo.setAdid(po.getBannerId());
-            vo.setLink(po.getUrl());
-            vo.setPicpath(po.getPicPath());
+            if (po.getUrl() != null && !"".equals(po.getUrl())) {
+                vo.setLink(publicPath + po.getUrl());
+            }
+            if (po.getPicPath() != null && !"".equals(po.getPicPath())) {
+                vo.setPicpath(publicPath + po.getPicPath());
+            }
             vos.add(vo);
         }
         return new ResultVO<>(1000, vos);
