@@ -4,7 +4,9 @@ import com.rpa.front.bo.InviteUserBO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.mapper.InviteUserMapper;
 import com.rpa.front.mapper.RevenueUserMapper;
+import com.rpa.front.mapper.WithdrawUserMapper;
 import com.rpa.front.pojo.RevenueUserPO;
+import com.rpa.front.pojo.WithdrawUserPO;
 import com.rpa.front.service.IIncomeService;
 import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
@@ -27,6 +29,8 @@ public class IncomeServiceImpl implements IIncomeService {
     private RevenueUserMapper revenueUserMapper;
     @Resource
     private InviteUserMapper inviteUserMapper;
+    @Resource
+    private WithdrawUserMapper withdrawUserMapper;
 
     @Override
     public IncomeVO query(IncomeDTO dto) {
@@ -43,7 +47,22 @@ public class IncomeServiceImpl implements IIncomeService {
 
     @Override
     public List<RecordsVO> queryRecords(long userId) {
-        return null;
+        List<WithdrawUserPO> pos = withdrawUserMapper.queryByUserId(userId);
+        if (pos == null || pos.size() == 0) {
+            return null;
+        }
+
+        List<RecordsVO> vos = new ArrayList<>();
+        for (WithdrawUserPO po : pos) {
+            RecordsVO vo = new RecordsVO();
+            vo.setCTime(po.getCreateTime());
+            vo.setAccount(po.getAliAccount());
+            vo.setName(po.getAliName());
+            vo.setStatus(po.getStatus());
+            vos.add(vo);
+        }
+
+        return vos;
     }
 
     @Override
