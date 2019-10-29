@@ -7,6 +7,7 @@ import com.rpa.server.pojo.ShareActivityPO;
 import com.rpa.server.service.ShareactivityService;
 import com.rpa.server.vo.ShareactivityVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class ShareacticityServiceImpl implements ShareactivityService {
     @Autowired
     private ShareActivityMapper shareActivityMapper;
 
+    @Value("${file.publicPath}")
+    private String publicPath;
+
     @Override
     public ResultVO query(ShareactivityDTO dto) {
 
@@ -39,7 +43,11 @@ public class ShareacticityServiceImpl implements ShareactivityService {
             ShareactivityVO vo = new ShareactivityVO();
             vo.setMid(po.getMaterialId());
             vo.setType(po.getType().intValue());
-            vo.setContent(po.getContent());
+            if (po.getType() == 1) {
+                vo.setContent(po.getContent());
+            } else {
+                vo.setContent(publicPath + po.getContent());
+            }
 
             VOs.add(vo);
         }
