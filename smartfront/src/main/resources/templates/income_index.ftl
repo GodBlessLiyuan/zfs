@@ -37,7 +37,6 @@
                 <div style="width: 30%; height: 20px; float:right;margin-right: 15px">
                     <a class="btn btn-primary " href="withdraw.html" style="border-radius: 20px; width:100%;background-color:#3496E8; vertical-align: center">提现</a>
                 </div>
-                </div>
             </div>
         </div>
 

@@ -64,13 +64,14 @@ public class PageController {
         return "income_index";
     }
 
-    @PostMapping("details")
+    @PostMapping("invation_details")
     public String details(ModelMap map, HttpServletRequest req) {
         long userId = (long) req.getSession().getAttribute("userId");
 
         DetailsVO vo = service.queryDetails(userId);
         map.put("res", vo);
 
-        return "income_index";
+        return "invation_details_index";
     }
 }
+
