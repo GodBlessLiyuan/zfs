@@ -13,7 +13,7 @@
     invite_id, user_id, invite_phone, create_time, update_time, ip
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_invite_user
     where invite_id = #{inviteId,jdbcType=INTEGER}
@@ -103,4 +103,12 @@
       ip = #{ip,jdbcType=CHAR}
     where invite_id = #{inviteId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryByUserId" parameterType="java.lang.Long" resultType="com.rpa.front.bo.InviteUserBO">
+    select iu.invite_phone as invitePhone, iu.create_time as createTime, sum(id.earnings) as earnings
+    from t_invite_user iu
+    left join t_invite_detail id on iu.invite_id = id.invite_id
+    where iu.user_id = #{userId,jdbcType=BIGINT}
+    group by iu.invite_id
+  </select>
 </mapper>
