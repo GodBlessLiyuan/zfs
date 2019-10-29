@@ -1,5 +1,6 @@
 package com.rpa.server.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.rpa.server.constant.LoginConstant;
 import com.rpa.server.mapper.SoftChannelMapper;
 import com.rpa.server.mapper.WhiteDeviceMapper;
@@ -98,5 +99,25 @@ public class RedisCacheUtil {
         }
 
         return cacheDevIds.contains(String.valueOf(devId));
+    }
+
+    /**
+     * 从缓存中取数据
+     *
+     * @param key
+     * @return
+     */
+    public String getCacheByKey(Object key) {
+        return template.opsForValue().get(key);
+    }
+
+    /**
+     * 在缓存中设置数据
+     *
+     * @param key
+     * @param value
+     */
+    public void setCache(String key, Object value, long num, TimeUnit time) {
+        template.opsForValue().set(key, JSON.toJSONString(value), num, time);
     }
 }
