@@ -25,6 +25,14 @@
     from t_adconfig
     where ad_id = #{adId,jdbcType=INTEGER}
   </select>
+
+  <select id="query" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_adconfig
+    where status = 2
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_adconfig
     where ad_id = #{adId,jdbcType=INTEGER}
