@@ -51,7 +51,7 @@ public class PageController {
         IncomeVO vo = service.query(dto);
         map.put("res", vo);
 
-        return "income_index";
+        return "withdraw";
     }
 
     @PostMapping("records")

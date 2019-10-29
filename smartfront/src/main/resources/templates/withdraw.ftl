@@ -23,7 +23,7 @@
 
         <div class="">
             <div class="total" >
-                <span id="balance" class="tx_time" style="font-size: 18px">可提金额:￥10000.00</span>
+                <span id="balance" class="tx_time" style="font-size: 18px">可提金额:￥${res.balance}</span>
             </div>
         </div>
         <div>
@@ -40,7 +40,7 @@
     </div>
 
     <!--请输入支付宝信息-->
-    <div class="my_state2 bg_color"style="height: 160px" >
+    <div class="my_state2 bg_color" style="height: 160px" >
         <br>
         <p class="font_tishi" ><b>&nbsp;&nbsp;&nbsp;&nbsp;请输入支付宝信息</b></p>
 
@@ -54,7 +54,7 @@
     </div>
 
     <!--提示规则-->
-    <div class="my_state2 bg_color"style="height:210px" >
+    <div class="my_state2 bg_color" style="height:210px" >
         <p style="margin-left: 10px;margin-top: 10px"><b>提现规则:</b></p>
         <p  style="margin-left: 10px">
             1.最低提现1元<br>
