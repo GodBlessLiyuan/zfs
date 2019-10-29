@@ -18,6 +18,17 @@
     from t_wxsupport
     where w_id = #{wId,jdbcType=INTEGER}
   </select>
+
+  <select id="queryMaxId" resultType="java.lang.Integer">
+    select max(w_id)
+    from t_wxsupport
+  </select>
+
+  <select id="queryPkgs" resultType="java.lang.String">
+    select package_name
+    from t_wxsupport
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_wxsupport
     where w_id = #{wId,jdbcType=INTEGER}

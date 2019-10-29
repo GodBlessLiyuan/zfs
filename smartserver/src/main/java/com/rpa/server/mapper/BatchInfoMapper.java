@@ -17,4 +17,12 @@ public interface BatchInfoMapper extends BaseMapper<BatchInfoPO, Integer> {
      * @return
      */
     List<BatchInfoBO> queryByUserId(Long ud);
+
+    /**
+     * 根据userId和key查询卡密信息
+     * @param userId
+     * @param key
+     * @return
+     */
+    BatchInfoPO queryByUserIdAndKey(Long userId, String key);
 }
