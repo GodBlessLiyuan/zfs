@@ -9,6 +9,11 @@ package com.rpa.server.constant;
 public class ConfigConstant {
     public static final String REDIS_KEY = "config_redis_key";
 
+    /**
+     * 广告策略：广告的展现间隔
+     */
+    public static final int SHOW_INTERVAL = 1;
+
     public static final int INDEX = 10;
     public static final int TRAIN = 11;
     public static final int QQ = 12;
