@@ -1,11 +1,11 @@
 package com.rpa.front.mapper;
 
 import com.rpa.front.pojo.InviteDetailPO;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * InviteDetailMapper继承基类
  */
-@Repository
+@Mapper
 public interface InviteDetailMapper extends BaseMapper<InviteDetailPO, Long> {
 }

@@ -5,7 +5,7 @@ import com.rpa.front.service.IIncomeService;
 import com.rpa.front.utils.VerifyUtil;
 import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
-import com.rpa.front.vo.RecordsVO;
+import com.rpa.front.vo.RecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -58,7 +58,7 @@ public class PageController {
     public String records(ModelMap map, HttpServletRequest req){
         long userId = (long) req.getSession().getAttribute("userId");
 
-        List<RecordsVO> vos = service.queryRecords(userId);
+        List<RecordVO> vos = service.queryRecords(userId);
         map.put("res", vos);
 
         return "income_index";

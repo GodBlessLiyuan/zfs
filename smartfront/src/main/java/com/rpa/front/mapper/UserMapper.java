@@ -1,11 +1,11 @@
 package com.rpa.front.mapper;
 
 import com.rpa.front.pojo.UserPO;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * UserMapper继承基类
  */
-@Repository
+@Mapper
 public interface UserMapper extends BaseMapper<UserPO, Long> {
 }
