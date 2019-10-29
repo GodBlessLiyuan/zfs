@@ -3,6 +3,9 @@ package com.rpa.front.service;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
+import com.rpa.front.vo.RecordsVO;
+
+import java.util.List;
 
 /**
  * @author: xiahui
@@ -18,6 +21,14 @@ public interface IIncomeService {
      * @return
      */
     IncomeVO query(IncomeDTO dto);
+
+    /**
+     * 提现记录
+     *
+     * @param userId
+     * @return
+     */
+    List<RecordsVO> queryRecords(long userId);
 
     /**
      * 邀请详情

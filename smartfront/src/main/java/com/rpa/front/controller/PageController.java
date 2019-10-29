@@ -5,6 +5,7 @@ import com.rpa.front.service.IIncomeService;
 import com.rpa.front.utils.VerifyUtil;
 import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
+import com.rpa.front.vo.RecordsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author: xiahui
@@ -48,6 +50,16 @@ public class PageController {
 
         IncomeVO vo = service.query(dto);
         map.put("res", vo);
+
+        return "income_index";
+    }
+
+    @PostMapping("records")
+    public String records(ModelMap map, HttpServletRequest req){
+        long userId = (long) req.getSession().getAttribute("userId");
+
+        List<RecordsVO> vos = service.queryRecords(userId);
+        map.put("res", vos);
 
         return "income_index";
     }

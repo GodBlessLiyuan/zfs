@@ -8,6 +8,7 @@ import com.rpa.front.pojo.RevenueUserPO;
 import com.rpa.front.service.IIncomeService;
 import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
+import com.rpa.front.vo.RecordsVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,6 +39,11 @@ public class IncomeServiceImpl implements IIncomeService {
         vo.setTotalmny(po.getTotalRevenue());
 
         return vo;
+    }
+
+    @Override
+    public List<RecordsVO> queryRecords(long userId) {
+        return null;
     }
 
     @Override
