@@ -1,11 +1,11 @@
 package com.rpa.front.mapper;
 
 import com.rpa.front.pojo.DevicePO;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * DeviceMapper继承基类
  */
-@Repository
+@Mapper
 public interface DeviceMapper extends BaseMapper<DevicePO, Long> {
 }

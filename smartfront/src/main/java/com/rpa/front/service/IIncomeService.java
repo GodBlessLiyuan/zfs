@@ -3,7 +3,7 @@ package com.rpa.front.service;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
-import com.rpa.front.vo.RecordsVO;
+import com.rpa.front.vo.RecordVO;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public interface IIncomeService {
      * @param userId
      * @return
      */
-    List<RecordsVO> queryRecords(long userId);
+    List<RecordVO> queryRecords(long userId);
 
     /**
      * 邀请详情
