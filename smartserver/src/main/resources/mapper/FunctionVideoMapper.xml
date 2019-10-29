@@ -19,6 +19,13 @@
     from t_functionvideo
     where function_id = #{functionId,jdbcType=INTEGER}
   </select>
+
+  <select id="queryUrl" parameterType="java.lang.String" resultType="java.lang.String">
+    select url
+    from t_functionvideo
+    where fun_name = #{function}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_functionvideo
     where function_id = #{functionId,jdbcType=INTEGER}
