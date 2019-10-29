@@ -60,7 +60,9 @@ public class IncomeServiceImpl implements IIncomeService {
         List<DetailsVO.Detail> details = new ArrayList<>();
         for (InviteUserBO bo : bos) {
             DetailsVO.Detail detail = vo.new Detail();
-            detail.setPh(bo.getInvitePhone());
+            // 手机号中间四位以*代替
+            StringBuilder sb = new StringBuilder(bo.getInvitePhone());
+            detail.setPh(sb.replace(3, 7, "****").toString());
             detail.setCtime(bo.getCreateTime());
             detail.setEarnings(bo.getEarnings());
             details.add(detail);
