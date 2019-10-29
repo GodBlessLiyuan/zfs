@@ -12,11 +12,12 @@ import java.util.Date;
  * @version: 1.0
  */
 @Data
-public class RecordsVO implements Serializable {
+public class RecordVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Date cTime;
     private String account;
     private String name;
     private Byte status;
+    private Long money;
 }

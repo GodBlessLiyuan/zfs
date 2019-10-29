@@ -10,7 +10,7 @@ import com.rpa.front.pojo.WithdrawUserPO;
 import com.rpa.front.service.IIncomeService;
 import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
-import com.rpa.front.vo.RecordsVO;
+import com.rpa.front.vo.RecordVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -46,19 +46,20 @@ public class IncomeServiceImpl implements IIncomeService {
     }
 
     @Override
-    public List<RecordsVO> queryRecords(long userId) {
+    public List<RecordVO> queryRecords(long userId) {
         List<WithdrawUserPO> pos = withdrawUserMapper.queryByUserId(userId);
         if (pos == null || pos.size() == 0) {
             return null;
         }
 
-        List<RecordsVO> vos = new ArrayList<>();
+        List<RecordVO> vos = new ArrayList<>();
         for (WithdrawUserPO po : pos) {
-            RecordsVO vo = new RecordsVO();
+            RecordVO vo = new RecordVO();
             vo.setCTime(po.getCreateTime());
             vo.setAccount(po.getAliAccount());
             vo.setName(po.getAliName());
             vo.setStatus(po.getStatus());
+            vo.setMoney(po.getWithdraw());
             vos.add(vo);
         }
 
