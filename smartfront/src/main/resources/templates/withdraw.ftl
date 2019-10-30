@@ -5,11 +5,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>余额提现</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/generalize.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -23,7 +20,7 @@
 
         <div class="">
             <div class="total" >
-                <span id="balance" class="tx_time" style="font-size: 18px">可提金额:￥10000.00</span>
+                <span id="balance" class="tx_time" style="font-size: 18px">可提金额:￥${res.data.balance}</span>
             </div>
         </div>
         <div>
@@ -31,7 +28,7 @@
                 <div class="input-group" style="margin-left: 15px">
                     <span class="input-group-addon" style="border: none;font-size: 20px;background-color:#FFFFFF">￥</span>
                     <input id="importBalance" type="text" class="form-control" style="font-size: 20px;border: none" placeholder="请输入提现金额">
-                </div>
+                </div>wi
             </div>
             <div style="width: 20%; float:right;margin-right: 25px">
                 <button  type="button" class="btn btn-primary" style="text-align: center" onclick="drawTotal()">全部提现</button>
@@ -40,7 +37,7 @@
     </div>
 
     <!--请输入支付宝信息-->
-    <div class="my_state2 bg_color"style="height: 160px" >
+    <div class="my_state2 bg_color" style="height: 160px" >
         <br>
         <p class="font_tishi" ><b>&nbsp;&nbsp;&nbsp;&nbsp;请输入支付宝信息</b></p>
 
@@ -54,7 +51,7 @@
     </div>
 
     <!--提示规则-->
-    <div class="my_state2 bg_color"style="height:210px" >
+    <div class="my_state2 bg_color" style="height:210px" >
         <p style="margin-left: 10px;margin-top: 10px"><b>提现规则:</b></p>
         <p  style="margin-left: 10px">
             1.最低提现1元<br>

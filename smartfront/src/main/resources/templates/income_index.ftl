@@ -8,15 +8,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title> 爱收益 </title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/generalize.js" type="text/javascript"></script>
-
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
     <body >
+
         <!--顶部背景图片-->
         <div class="backimag" >
         </div>
@@ -31,7 +28,7 @@
             <div>
                 <div style="width: 60%; float: left">
                     <div class="input-group" style="margin-left: 10px">
-                        <p id="" class="balanceNum left font_money">￥${res.balance}</p>
+                        <p id="" class="balanceNum left font_money">￥${res.data.invitenum}</p>
                     </div>
                 </div>
                 <div style="width: 30%; height: 20px; float:right;margin-right: 15px">
@@ -55,15 +52,15 @@
             </div>
             <div class="rows state_bottom ">
                 <div class="flex1" catchtap="my_pickGoods">
-                    <p class="peopleNum">${res.invitenum}</p>
+                    <p class="peopleNum">${res.data.invitenum}</p>
                     <p class="peopleTitle font_inva">成功邀请</p>
                 </div>
                 <div class="flex1" catchtap="my_inventory">
-                    <p class="peopleNum">${res.paynum}</p>
+                    <p class="peopleNum">${res.data.paynum}</p>
                     <p class="peopleTitle font_inva">付款人数</p>
                 </div>
                 <div class="flex1" catchtap="no_payment">
-                    <p class="peopleNum" style="color:red">${res.totalmny}</p>
+                    <p class="peopleNum" style="color:red">${res.data.totalmny}</p>
                     <p class="peopleTitle font_inva">累计奖励</p>
                 </div>
             </div>

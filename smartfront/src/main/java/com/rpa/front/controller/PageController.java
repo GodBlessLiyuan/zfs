@@ -55,7 +55,7 @@ public class PageController {
         ResultVO vo = service.query(dto);
         map.put("res", vo);
 
-        return "income_index";
+        return "withdraw";
     }
 
     @PostMapping("determine")
@@ -65,7 +65,7 @@ public class PageController {
         ResultVO vo = service.determine(dto, userId);
         map.put("res", vo);
 
-        return "income_index";
+        return "withdraw";
     }
 
     @PostMapping("records")
@@ -75,7 +75,7 @@ public class PageController {
         ResultVO vo = service.queryRecords(userId);
         map.put("res", vo);
 
-        return "income_index";
+        return "tx_record_index";
     }
 
     @PostMapping("invation_details")
