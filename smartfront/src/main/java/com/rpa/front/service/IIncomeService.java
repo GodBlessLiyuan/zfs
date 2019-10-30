@@ -23,24 +23,24 @@ public interface IIncomeService {
      * 确认取款
      *
      * @param dto
-     * @param userId
+     * @param loginInfo
      * @return
      */
-    ResultVO determine(DetermineDTO dto, long userId);
+    ResultVO determine(DetermineDTO dto, IncomeDTO loginInfo);
 
     /**
      * 提现记录
      *
-     * @param userId
+     * @param loginInfo
      * @return
      */
-    ResultVO queryRecords(long userId);
+    ResultVO queryRecords(IncomeDTO loginInfo);
 
     /**
      * 邀请详情
      *
-     * @param userId
+     * @param loginInfo
      * @return
      */
-    ResultVO queryDetails(long userId);
+    ResultVO queryDetails(IncomeDTO loginInfo);
 }

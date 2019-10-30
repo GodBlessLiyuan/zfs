@@ -40,29 +40,16 @@ public class PageController {
         ResultVO vo = service.query(dto);
         map.put("res", vo);
 
-        req.getSession().setAttribute("userId", dto.getUd());
+        req.getSession().setAttribute("loginInfo", dto);
 
         return "income_index";
     }
 
     @PostMapping("withdraw")
     public String withdraw(ModelMap map, HttpServletRequest req) {
-        long userId = (long) req.getSession().getAttribute("userId");
+        IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute("loginInfo");
 
-        IncomeDTO dto = new IncomeDTO();
-        dto.setUd(userId);
-
-        ResultVO vo = service.query(dto);
-        map.put("res", vo);
-
-        return "withdraw";
-    }
-
-    @PostMapping("determine")
-    public String determine(@RequestBody DetermineDTO dto, ModelMap map, HttpServletRequest req) {
-        long userId = (long) req.getSession().getAttribute("userId");
-
-        ResultVO vo = service.determine(dto, userId);
+        ResultVO vo = service.query(loginInfo);
         map.put("res", vo);
 
         return "withdraw";
@@ -70,22 +57,22 @@ public class PageController {
 
     @PostMapping("records")
     public String records(ModelMap map, HttpServletRequest req) {
-        long userId = (long) req.getSession().getAttribute("userId");
+        IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute("loginInfo");
 
-        ResultVO vo = service.queryRecords(userId);
+        ResultVO vo = service.queryRecords(loginInfo);
         map.put("res", vo);
 
         return "tx_record_index";
     }
 
-    @PostMapping("invation_details")
+    @PostMapping("details")
     public String details(ModelMap map, HttpServletRequest req) {
-        long userId = (long) req.getSession().getAttribute("userId");
+        IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute("loginInfo");
 
-        ResultVO vo = service.queryDetails(userId);
+        ResultVO vo = service.queryDetails(loginInfo);
         map.put("res", vo);
 
-        return "invation_details_index";
+        return "invitation_details_index";
     }
 }
 

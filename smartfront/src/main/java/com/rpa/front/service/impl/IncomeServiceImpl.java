@@ -38,6 +38,9 @@ public class IncomeServiceImpl implements IIncomeService {
     @Override
     public ResultVO query(IncomeDTO dto) {
         RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(dto.getUd());
+        if(po == null) {
+            return new ResultVO<>(1000, new IncomeVO(0L,0,0,0L));
+        }
 
         IncomeVO vo = new IncomeVO();
         vo.setBalance(po.getRemaining());
@@ -49,8 +52,8 @@ public class IncomeServiceImpl implements IIncomeService {
     }
 
     @Override
-    public ResultVO determine(DetermineDTO dto, long userId) {
-        RevenueUserPO revenueUserPO = revenueUserMapper.selectByPrimaryKey(userId);
+    public ResultVO determine(DetermineDTO dto, IncomeDTO loginInfo) {
+        RevenueUserPO revenueUserPO = revenueUserMapper.selectByPrimaryKey(loginInfo.getUd());
         if(revenueUserPO.getRemaining() < dto.getMoney()) {
             // 余额不足
             return new ResultVO(2000);
@@ -60,7 +63,7 @@ public class IncomeServiceImpl implements IIncomeService {
 
         WithdrawUserPO withdrawUserPO = new WithdrawUserPO();
         withdrawUserPO.setCreateTime(new Date());
-        withdrawUserPO.setUserId(userId);
+        withdrawUserPO.setUserId(loginInfo.getUd());
         withdrawUserPO.setWithdraw(dto.getMoney());
         withdrawUserPO.setRemaining(revenueUserPO.getRemaining());
 
@@ -69,8 +72,8 @@ public class IncomeServiceImpl implements IIncomeService {
     }
 
     @Override
-    public ResultVO queryRecords(long userId) {
-        List<WithdrawUserPO> pos = withdrawUserMapper.queryByUserId(userId);
+    public ResultVO queryRecords(IncomeDTO loginInfo) {
+        List<WithdrawUserPO> pos = withdrawUserMapper.queryByUserId(loginInfo.getUd());
         if (pos == null || pos.size() == 0) {
             return null;
         }
@@ -90,16 +93,16 @@ public class IncomeServiceImpl implements IIncomeService {
     }
 
     @Override
-    public ResultVO queryDetails(long userId) {
+    public ResultVO queryDetails(IncomeDTO loginInfo) {
         DetailsVO vo = new DetailsVO();
 
-        RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(userId);
+        RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(loginInfo.getUd());
         vo.setBalance(po.getRemaining());
         vo.setInvitenum(po.getInviteCount());
         vo.setPaynum(po.getPayCount());
         vo.setTotalmny(po.getTotalRevenue());
 
-        List<InviteUserBO> bos = inviteUserMapper.queryByUserId(userId);
+        List<InviteUserBO> bos = inviteUserMapper.queryByUserId(loginInfo.getUd());
         List<DetailsVO.Detail> details = new ArrayList<>();
         for (InviteUserBO bo : bos) {
             DetailsVO.Detail detail = vo.new Detail();
