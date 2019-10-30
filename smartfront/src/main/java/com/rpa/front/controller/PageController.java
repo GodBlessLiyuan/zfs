@@ -1,11 +1,10 @@
 package com.rpa.front.controller;
 
+import com.rpa.front.common.ResultVO;
+import com.rpa.front.dto.DetermineDTO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.service.IIncomeService;
 import com.rpa.front.utils.VerifyUtil;
-import com.rpa.front.vo.DetailsVO;
-import com.rpa.front.vo.IncomeVO;
-import com.rpa.front.vo.RecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author: xiahui
@@ -33,7 +31,7 @@ public class PageController {
         if (!VerifyUtil.checkToken(dto, req)) {
             return null;
         }
-        IncomeVO vo = service.query(dto);
+        ResultVO vo = service.query(dto);
         map.put("res", vo);
 
         req.getSession().setAttribute("userId", dto.getUd());
@@ -48,25 +46,28 @@ public class PageController {
         IncomeDTO dto = new IncomeDTO();
         dto.setUd(userId);
 
-        IncomeVO vo = service.query(dto);
+        ResultVO vo = service.query(dto);
         map.put("res", vo);
 
         return "income_index";
     }
 
     @PostMapping("determine")
-    public String determine(ModelMap map, HttpServletRequest req) {
+    public String determine(@RequestBody DetermineDTO dto, ModelMap map, HttpServletRequest req) {
         long userId = (long) req.getSession().getAttribute("userId");
+
+        ResultVO vo = service.determine(dto, userId);
+        map.put("res", vo);
 
         return "income_index";
     }
 
     @PostMapping("records")
-    public String records(ModelMap map, HttpServletRequest req){
+    public String records(ModelMap map, HttpServletRequest req) {
         long userId = (long) req.getSession().getAttribute("userId");
 
-        List<RecordVO> vos = service.queryRecords(userId);
-        map.put("res", vos);
+        ResultVO vo = service.queryRecords(userId);
+        map.put("res", vo);
 
         return "income_index";
     }
@@ -75,7 +76,7 @@ public class PageController {
     public String details(ModelMap map, HttpServletRequest req) {
         long userId = (long) req.getSession().getAttribute("userId");
 
-        DetailsVO vo = service.queryDetails(userId);
+        ResultVO vo = service.queryDetails(userId);
         map.put("res", vo);
 
         return "invation_details_index";
