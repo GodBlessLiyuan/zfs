@@ -54,6 +54,13 @@ public class PageController {
         return "income_index";
     }
 
+    @PostMapping("determine")
+    public String determine(ModelMap map, HttpServletRequest req) {
+        long userId = (long) req.getSession().getAttribute("userId");
+
+        return "income_index";
+    }
+
     @PostMapping("records")
     public String records(ModelMap map, HttpServletRequest req){
         long userId = (long) req.getSession().getAttribute("userId");
