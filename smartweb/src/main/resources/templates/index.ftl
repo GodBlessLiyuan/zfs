@@ -43,13 +43,13 @@
 
                             <form class="mt-8 mb-8 login-input" method="post" action="/entry">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Username" name="username">
+                                    <input type="text" class="form-control" placeholder="Username" name="username" required="required">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Password" name="password">
+                                    <input type="password" class="form-control" placeholder="Password" name="password" required="required">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="checkcode" placeholder="Checkcode" name="checkcode">
+                                    <input type="text" class="form-control" id="checkcode" placeholder="Checkcode" name="checkcode" required="required">
                                     <img id="img" src="/login/get/checkcode" />
                                     <a onclick="javascript:changeImg()" style="color:blue;">看不清？</a>
                                     <span id="msg"></span>
@@ -72,9 +72,10 @@
 <!--**********************************
     Scripts
 ***********************************-->
-
-<--!更换验证码内容-->
 <script>
+    /**
+     * 更换验证码内容
+     */
     function changeImg(){
         var img = document.getElementById("img");
         img.src = "/login/get/checkcode?date=" + new Date();
