@@ -15,7 +15,7 @@ import java.util.Date;
 public class RecordVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Date cTime;
+    private Date ctime;
     private String account;
     private String name;
     private Byte status;
