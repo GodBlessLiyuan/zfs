@@ -4,8 +4,10 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.LoginDTO;
+import com.rpa.server.mapper.NewUserRecordMapper;
 import com.rpa.server.mapper.UserDeviceMapper;
 import com.rpa.server.mapper.UserMapper;
+import com.rpa.server.pojo.NewUserRecordPO;
 import com.rpa.server.pojo.UserDevicePO;
 import com.rpa.server.pojo.UserPO;
 import com.rpa.server.service.ILoginService;
@@ -38,6 +40,8 @@ public class LoginServiceImpl implements ILoginService {
     private UserMapper userMapper;
     @Resource
     private UserDeviceMapper userDeviceMapper;
+    @Resource
+    private NewUserRecordMapper newUserRecordMapper;
 
     @Transactional(rollbackFor = {})
     @Override
@@ -64,6 +68,16 @@ public class LoginServiceImpl implements ILoginService {
             userDevPO.setStatus((byte) 1);
             userDevPO.setCreateTime(new Date());
             userDeviceMapper.insert(userDevPO);
+
+            // 新用户送会员
+            NewUserRecordPO newUserRecordPO = new NewUserRecordPO();
+            newUserRecordPO.setUserId(po.getUserId());
+            newUserRecordPO.setDeviceId(dto.getId());
+            newUserRecordPO.setUserDeviceId(userDevPO.getUserDeviceId());
+            // t_user_gifts 只有一条数据，其ID为1
+            newUserRecordPO.setNugId(1);
+            newUserRecordPO.setCreateTime(new Date());
+            newUserRecordMapper.insert(newUserRecordPO);
 
             return this.buildResultVO(userDevPO);
         }
