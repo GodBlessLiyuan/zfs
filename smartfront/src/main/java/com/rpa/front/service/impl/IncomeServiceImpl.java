@@ -1,6 +1,8 @@
 package com.rpa.front.service.impl;
 
 import com.rpa.front.bo.InviteUserBO;
+import com.rpa.front.common.ResultVO;
+import com.rpa.front.dto.DetermineDTO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.mapper.InviteUserMapper;
 import com.rpa.front.mapper.RevenueUserMapper;
@@ -33,7 +35,7 @@ public class IncomeServiceImpl implements IIncomeService {
     private WithdrawUserMapper withdrawUserMapper;
 
     @Override
-    public IncomeVO query(IncomeDTO dto) {
+    public ResultVO query(IncomeDTO dto) {
         RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(dto.getUd());
 
         IncomeVO vo = new IncomeVO();
@@ -42,11 +44,16 @@ public class IncomeServiceImpl implements IIncomeService {
         vo.setPaynum(po.getPayCount());
         vo.setTotalmny(po.getTotalRevenue());
 
-        return vo;
+        return new ResultVO<>(1000, vo);
     }
 
     @Override
-    public List<RecordVO> queryRecords(long userId) {
+    public ResultVO determine(DetermineDTO dto, long userId) {
+        return new ResultVO<>(1000, null);
+    }
+
+    @Override
+    public ResultVO queryRecords(long userId) {
         List<WithdrawUserPO> pos = withdrawUserMapper.queryByUserId(userId);
         if (pos == null || pos.size() == 0) {
             return null;
@@ -63,11 +70,11 @@ public class IncomeServiceImpl implements IIncomeService {
             vos.add(vo);
         }
 
-        return vos;
+        return new ResultVO<>(1000, vos);
     }
 
     @Override
-    public DetailsVO queryDetails(long userId) {
+    public ResultVO queryDetails(long userId) {
         DetailsVO vo = new DetailsVO();
 
         RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(userId);
@@ -89,6 +96,6 @@ public class IncomeServiceImpl implements IIncomeService {
         }
         vo.setDetails(details);
 
-        return vo;
+        return new ResultVO<>(1000, vo);
     }
 }
