@@ -5,6 +5,7 @@ import com.rpa.front.dto.DetermineDTO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.service.IIncomeService;
 import com.rpa.front.utils.VerifyUtil;
+import com.rpa.front.vo.IncomeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +29,11 @@ public class PageController {
 
     @PostMapping("income")
     public String income(@RequestBody IncomeDTO dto, ModelMap map, HttpServletRequest req) {
+        if (null == req.getHeader("token") || "".equals(req.getHeader("token"))) {
+            map.put("res", new ResultVO<>(1000, new IncomeVO()));
+            return "income_index";
+        }
+
         if (!VerifyUtil.checkToken(dto, req)) {
             return null;
         }

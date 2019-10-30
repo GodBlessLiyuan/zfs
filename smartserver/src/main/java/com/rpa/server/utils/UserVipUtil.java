@@ -51,26 +51,39 @@ public class UserVipUtil {
         }
 
         // 更新
-        if(curDate.compareTo(userVipPO.getEndTime()) >= 0) {
+        userVipPO.setStatus((byte) 1);
+        userVipPO.setUpdateTime(curDate);
+
+        if (curDate.compareTo(userVipPO.getEndTime()) > 0) {
+            // 会员过期
+            userVipPO.setViptypeId(vipType);
             userVipPO.setStartTime(curDate);
             userVipPO.setEndTime(endDate);
-        }else {
+        } else {
             calendar.setTime(userVipPO.getEndTime());
             calendar.add(Calendar.DATE, days);
             userVipPO.setEndTime(calendar.getTime());
         }
-        userVipPO.setStatus((byte) 1);
-        userVipPO.setUpdateTime(curDate);
-        if(curDate.compareTo(userVipPO.getVendTime()) < 0) {
-            userVipPO.setVcreateTime(curDate);
-            userVipPO.setVendTime(endDate);
-        }else {
-            calendar.setTime(userVipPO.getVendTime());
-            calendar.add(Calendar.DATE, days);
-            userVipPO.setVendTime(calendar.getTime());
+
+        if (UserVipConstant.YEAR_VIP == vipType) {
+            userVipPO.setViptypeId(UserVipConstant.YEAR_VIP);
+            if (null == userVipPO.getVendTime() || curDate.compareTo(userVipPO.getVendTime()) > 0) {
+                // 年费会员过期
+                userVipPO.setVcreateTime(curDate);
+                userVipPO.setVendTime(endDate);
+            } else {
+                calendar.setTime(userVipPO.getVendTime());
+                calendar.add(Calendar.DATE, days);
+                userVipPO.setVendTime(calendar.getTime());
+            }
+        } else {
+            if (null != userVipPO.getVendTime() && curDate.compareTo(userVipPO.getVendTime()) > 0) {
+                userVipPO.setViptypeId(UserVipConstant.COMM_VIP);
+            }
         }
-        if(isBuy) {
-            if(null == userVipPO.getFirstTime()) {
+
+        if (isBuy) {
+            if (null == userVipPO.getFirstTime()) {
                 userVipPO.setFirstTime(curDate);
             }
             userVipPO.setLastTime(curDate);

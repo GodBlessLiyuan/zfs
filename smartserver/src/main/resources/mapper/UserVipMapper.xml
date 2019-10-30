@@ -101,6 +101,20 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.server.pojo.UserVipPO">
+    update t_user_vip
+    set user_id =  #{userId,jdbcType=BIGINT},
+      viptype_id = #{viptypeId,jdbcType=INTEGER},
+      start_time =#{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      vcreate_time = #{vcreateTime,jdbcType=TIMESTAMP},
+      vend_time = #{vendTime,jdbcType=TIMESTAMP},
+      first_time = #{firstTime,jdbcType=TIMESTAMP},
+      last_time = #{lastTime,jdbcType=TIMESTAMP}
+  </update>
 
   <select id="queryByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select

@@ -78,7 +78,7 @@ public class IncomeServiceImpl implements IIncomeService {
         List<RecordVO> vos = new ArrayList<>();
         for (WithdrawUserPO po : pos) {
             RecordVO vo = new RecordVO();
-            vo.setCTime(po.getCreateTime());
+            vo.setCtime(po.getCreateTime());
             vo.setAccount(po.getAliAccount());
             vo.setName(po.getAliName());
             vo.setStatus(po.getStatus());
