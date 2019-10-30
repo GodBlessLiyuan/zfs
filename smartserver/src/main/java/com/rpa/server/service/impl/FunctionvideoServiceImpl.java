@@ -6,6 +6,7 @@ import com.rpa.server.mapper.FunctionVideoMapper;
 import com.rpa.server.service.FunctionvideoService;
 import com.rpa.server.vo.FunctionvideoVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,12 +21,15 @@ public class FunctionvideoServiceImpl implements FunctionvideoService {
     @Autowired
     private FunctionVideoMapper functionVideoMapper;
 
+    @Value("${file.publicPath}")
+    private String publicPath;
+
     @Override
     public ResultVO query(FunctionvideoDTO dto) {
 
         String url = this.functionVideoMapper.queryUrl(dto.getFunction());
         FunctionvideoVO vo = new FunctionvideoVO();
-        vo.setUrl(url);
+        vo.setUrl(publicPath + url);
 
         return new ResultVO(1000, vo);
     }
