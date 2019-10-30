@@ -18,8 +18,9 @@
     <link href="css/style.css" rel="stylesheet">
 
 
-    <link href="./plugins/datatables/jquery.dataTables.min.css">
 
+    <link href="./plugins/datatables/jquery.dataTables.min.css">
+    <link href="./css/bootstrap.css"/>
 
 
 </head>
@@ -102,15 +103,15 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>广告商</label>
                                             <input id="name" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>广告ID</label>
                                             <input id="adNumber" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>状态</label>
                                             <select id="status" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
@@ -177,33 +178,36 @@
                             <button type="hidden" id="insert" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">广告ID:</span>
-                            <input id="insert_adNumber" class="form-control" type="text" required="required"/>
+                            <span for="message-text" class="col-form-label">广告ID：<span style="color: red"> *</span></span>
+                            <input id="insert_adNumber" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">广告商名称:</span>
-                            <input id="insert_name" class="form-control" type="text" required="required"/>
+                            <span for="recipient-name" class="col-form-label">广告商名称：<span style="color: red"> *</span></span>
+                            <input id="insert_name" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">接入人:</span>
-                            <input id="insert_contacts" class="form-control" type="text" required="required"/>
+                            <span for="recipient-name" class="col-form-label">接入人：<span style="color: red"> *</span></span>
+                            <input id="insert_contacts" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">联系方式:</span>
-                            <input id="insert_phone" class="form-control" type="text" required="required"/>
+                            <span for="message-text" class="col-form-label">联系方式：<span style="color: red"> *</span></span>
+                            <input id="insert_phone" class="form-control" type="text"
+                                   onblur="insert_checkPhone()"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">展示优先级:</span>
-                            <input id="insert_priority" class="form-control" type="text" required="required"/>
+                            <span for="message-text" class="col-form-label">展示优先级：<span style="color: red"> *</span></span>
+                            <input id="insert_priority" class="form-control" type="number"
+                                   min="1" max="100"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">展示次数:</span>
-                            <input id="insert_total" class="form-control" type="text" required="required"/>
+                            <span for="message-text" class="col-form-label">展示次数：<span style="color: red"> *</span></span>
+                            <input id="insert_total" class="form-control" type="number"
+                                   min="1" max="10"/>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定上架</button>
+                    <button type="button" class="btn btn-primary" onclick="insertClick()">确定上架</button>
                 </div>
             </div>
         </div>
@@ -278,33 +282,36 @@
                             <button type="hidden" id="update" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">广告ID:</span>
+                            <span for="message-text" class="col-form-label">广告ID：<span style="color: red"> *</span></span>
                             <input id="up_adNumber" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">广告商名称:</span>
+                            <span for="recipient-name" class="col-form-label">广告商名称：<span style="color: red"> *</span></span>
                             <input id="up_name" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">接入人:</span>
+                            <span for="recipient-name" class="col-form-label">接入人：<span style="color: red"> *</span></span>
                             <input id="up_contacts" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">联系方式:</span>
-                            <input id="up_phone" class="form-control" type="text">
+                            <span for="message-text" class="col-form-label">联系方式：<span style="color: red"> *</span></span>
+                            <input id="up_phone" class="form-control" type="text"
+                                   onblur="up_checkPhone()">
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">展示优先级:</span>
-                            <input id="up_priority" class="form-control" type="text">
+                            <span for="message-text" class="col-form-label">展示优先级：<span style="color: red"> *</span></span>
+                            <input id="up_priority" class="form-control" type="number"
+                                   min="1" max="10">
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">展示次数:</span>
-                            <input id="up_total" class="form-control" type="text">
+                            <span for="message-text" class="col-form-label">展示次数：<span style="color: red"> *</span></span>
+                            <input id="up_total" class="form-control" type="number"
+                                   min="1" max="10">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateClick()">确认修改</button>
+                    <button type="button" class="btn btn-primary" onclick="updateClick()">确认修改</button>
                 </div>
             </div>
         </div>
@@ -362,7 +369,7 @@
 
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
-
+<script src="./js/bootstrap.js"></script>
 
 
 <script>
@@ -378,15 +385,31 @@
         var priority = $('#insert_priority').val();
         var total = $('#insert_total').val();
 
-        $.post("/adconfig/insert", {adNumber:adNumber, name:name, contacts:contacts, phone:phone,
-            priority:priority, total:total}, function (result) {
-            if (result.code === 0) {
-                alert("新增成功！")
-                $('#datatab').DataTable().draw(false);
-            } else {
-                alert("新增失败！")
-            }
-        }, "json");
+        if (adNumber == null || adNumber.trim() == "") {
+            alert("广告ID不能为空！")
+        }else if (name == null || name.trim() == "") {
+            alert("广告商名称不能为空！")
+        }else if (contacts == null || contacts.trim() == "") {
+            alert("接入人不能为空！")
+        }else if (phone == null || phone.trim() == "") {
+            alert("联系人不能为空！")
+        }else if (priority == null || priority.trim() == "") {
+            alert("展示优先级不能为空！")
+        }else if (total == null || total.trim() == "") {
+            alert("展示次数不能为空！");
+        } else {
+            $.post("/adconfig/insert", {adNumber:adNumber, name:name, contacts:contacts, phone:phone,
+                priority:priority, total:total}, function (result) {
+                if (result.code === 0) {
+                    alert("新增成功！")
+                    $('#datatab').DataTable().draw(false);
+                } else {
+                    alert("新增失败！")
+                }
+                $('#insertModal').modal('hide');
+                $('.modal-backdrop').remove();
+            }, "json");
+        }
     }
 
 
@@ -590,15 +613,31 @@
         var priority = $('#up_priority').val();
         var total = $('#up_total').val();
 
-        $.post("/adconfig/update", {adId:adId, adNumber:adNumber, name:name, contacts:contacts, phone:phone,
-            priority:priority, total:total}, function (result) {
-            if (result.code === 0) {
-                alert("更新成功！")
-                $('#datatab').DataTable().draw(false);
-            } else {
-                alert("更新失败！")
-            }
-        }, "json");
+        if (adNumber == null || adNumber.trim() == "") {
+            alert("广告ID不能为空！")
+        }else if (name == null || name.trim() == "") {
+            alert("广告商名称不能为空！")
+        }else if (contacts == null || contacts.trim() == "") {
+            alert("接入人不能为空！")
+        }else if (phone == null || phone.trim() == "") {
+            alert("联系人不能为空！")
+        }else if (priority == null || priority.trim() == "") {
+            alert("展示优先级不能为空！")
+        }else if (total == null || total.trim() == "") {
+            alert("展示次数不能为空！");
+        } else {
+            $.post("/adconfig/update", {adId:adId, adNumber:adNumber, name:name, contacts:contacts, phone:phone,
+                priority:priority, total:total}, function (result) {
+                if (result.code === 0) {
+                    alert("更新成功！")
+                    $('#datatab').DataTable().draw(false);
+                } else {
+                    alert("更新失败！")
+                }
+                $('#updateModal').modal('hide');
+                $('.modal-backdrop').remove();
+            }, "json");
+        }
     }
 
     /**
@@ -622,6 +661,26 @@
                 alert("删除失败！")
             }
         }, "json");
+    }
+
+
+    /**
+     * 输入框限制：手机号码
+     */
+    function insert_checkPhone() {
+        var phone = document.getElementById('insert_phone').value;
+        checkPhone(phone);
+    }
+
+    function up_checkPhone() {
+        var phone = document.getElementById('up_phone').value;
+        checkPhone(phone);
+    }
+
+    function checkPhone(phone){
+        if(!(/^1[3456789]\d{9}$/.test(phone))){
+            alert("手机号码有误，请重填！");
+        }
     }
 </script>
 

@@ -167,10 +167,14 @@ public class AdconfigServiceImpl implements AdconfigService {
      *
      * @param adconfigDTO
      * @param httpSession
-     * @TODO 还需要修改操作人，即管理员a_id字段，需从session中获取
      */
     @Override
     public ResultVO update(AdconfigDTO adconfigDTO, HttpSession httpSession) {
+
+        // 从session中获取当前用户的a_id
+        // 能从session中获取用户的信息，说明当前用户是登录状态
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        int aId = adminUserDTO.getaId();
 
         // 根据 ad_id，从数据库获取要修改的数据对象
         AdconfigPO adconfigPO = this.adconfigMapper.selectByPrimaryKey(adconfigDTO.getAdId());
@@ -183,6 +187,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         adconfigPO.setPriority(adconfigDTO.getPriority());
         adconfigPO.setTotal(adconfigDTO.getTotal());
         adconfigPO.setUpdateTime(new Date());
+        adconfigPO.setaId(aId);
 
         int count = adconfigMapper.updateByPrimaryKey(adconfigPO);
 
@@ -221,7 +226,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         }
 
         po.setUpdateTime(new Date());
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
 
         int count = this.adconfigMapper.updateByPrimaryKey(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
