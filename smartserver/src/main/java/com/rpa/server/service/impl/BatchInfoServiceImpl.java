@@ -28,7 +28,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     @Resource
     private UserVipMapper userVipMapper;
 
-    @Transactional(rollbackFor = {})
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO activate(BatchInfoDTO dto) {
         BatchInfoPO po = batchInfoMapper.queryByUserIdAndKey(0L, dto.getKey());
@@ -51,7 +51,6 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         }else {
             userVipMapper.updateByPrimaryKey(newUserVipPO);
         }
-
         return new ResultVO(1000);
     }
 }
