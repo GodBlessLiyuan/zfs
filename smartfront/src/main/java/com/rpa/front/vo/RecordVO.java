@@ -1,6 +1,7 @@
 package com.rpa.front.vo;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,12 +13,14 @@ import java.util.Date;
  * @version: 1.0
  */
 @Data
+@ToString
 public class RecordVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Date cTime;
+    private Date ctime;
     private String account;
     private String name;
     private Byte status;
     private Long money;
+
 }

@@ -20,9 +20,9 @@
 
 <!--提现记录详情-->
 <div class="container">
+
     <table class="table table-striped" >
         <tbody>
-
         <#list res as record>
             <tr>
                 <td>
@@ -30,11 +30,19 @@
 
                     <div class="name"> ${record.name} </div>
 
-                    <div> <span class="tx_time">${record.cTime?string('yyyy-MM-dd hh:mm:ss')}</span>  <span class="tx_state"> 审核中</span> </div>
+                    <div>
+                        <span class="tx_time"> ${record.ctime?string("yyyy-MM-dd hh:mm:ss")}</span>
+                        <#if record.status==1 || record.status==3>
+                            <span class="tx_state"> 审核中</span>
+                        <#elseif record.status==2 || record.status==4 >
+                            <span class="tx_state"> 提现失败</span>
+                        <#else>
+                            <span class="tx_state"> 提现完成</span>
+                        </#if>
+                     </div>
                 </td>
             </tr>
         </#list>
-
         </tbody>
     </table>
 </div>
