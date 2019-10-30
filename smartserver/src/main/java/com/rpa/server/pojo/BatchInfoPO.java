@@ -15,7 +15,7 @@ public class BatchInfoPO implements Serializable {
     private Integer batchId;
 
     /**
-     * 1 激活  2 未激活 3 冻结  4 失效
+     * 1 未激活  2 已激活 3 冻结  4 失效
      */
     private Byte status;
 

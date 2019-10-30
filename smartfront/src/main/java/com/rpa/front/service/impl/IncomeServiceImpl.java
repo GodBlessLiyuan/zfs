@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,6 +50,21 @@ public class IncomeServiceImpl implements IIncomeService {
 
     @Override
     public ResultVO determine(DetermineDTO dto, long userId) {
+        RevenueUserPO revenueUserPO = revenueUserMapper.selectByPrimaryKey(userId);
+        if(revenueUserPO.getRemaining() < dto.getMoney()) {
+            // 余额不足
+            return new ResultVO(2000);
+        }
+
+        // TODO: 打款
+
+        WithdrawUserPO withdrawUserPO = new WithdrawUserPO();
+        withdrawUserPO.setCreateTime(new Date());
+        withdrawUserPO.setUserId(userId);
+        withdrawUserPO.setWithdraw(dto.getMoney());
+        withdrawUserPO.setRemaining(revenueUserPO.getRemaining());
+
+
         return new ResultVO<>(1000, null);
     }
 
