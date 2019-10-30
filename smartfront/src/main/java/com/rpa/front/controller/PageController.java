@@ -61,7 +61,7 @@ public class PageController {
         List<RecordVO> vos = service.queryRecords(userId);
         map.put("res", vos);
 
-        return "income_index";
+        return "tx_record_index";
     }
 
     @PostMapping("invation_details")

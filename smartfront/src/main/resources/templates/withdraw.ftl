@@ -31,7 +31,7 @@
                 <div class="input-group" style="margin-left: 15px">
                     <span class="input-group-addon" style="border: none;font-size: 20px;background-color:#FFFFFF">￥</span>
                     <input id="importBalance" type="text" class="form-control" style="font-size: 20px;border: none" placeholder="请输入提现金额">
-                </div>
+                </div>wi
             </div>
             <div style="width: 20%; float:right;margin-right: 25px">
                 <button  type="button" class="btn btn-primary" style="text-align: center" onclick="drawTotal()">全部提现</button>
