@@ -6,10 +6,10 @@
     <meta name="format-detection" content="telephone=no">
     <title>余额提现</title>
 
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/generalize.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/generalize.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
 <body>
