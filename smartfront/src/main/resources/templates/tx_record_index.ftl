@@ -12,7 +12,6 @@
 </head>
 <body>
 
-
 <!--顶部信息-->
 <div class="container">
   <span class="tx_title" >提现记录</span>
@@ -23,7 +22,7 @@
 
     <table class="table table-striped" >
         <tbody>
-        <#list res as record>
+        <#list res.data as record>
             <tr>
                 <td>
                     <div> <span class="account">${record.account} </span>  <span class="tx_money"> -${record.money}  </span>   </div>

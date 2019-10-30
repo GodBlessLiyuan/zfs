@@ -5,11 +5,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>余额提现</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/generalize.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -23,7 +20,7 @@
 
         <div class="">
             <div class="total" >
-                <span id="balance" class="tx_time" style="font-size: 18px">可提金额:￥${res.balance}</span>
+                <span id="balance" class="tx_time" style="font-size: 18px">可提金额:￥${res.data.balance}</span>
             </div>
         </div>
         <div>
