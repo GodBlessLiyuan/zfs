@@ -1,11 +1,8 @@
 package com.rpa.front.service;
 
+import com.rpa.front.common.ResultVO;
+import com.rpa.front.dto.DetermineDTO;
 import com.rpa.front.dto.IncomeDTO;
-import com.rpa.front.vo.DetailsVO;
-import com.rpa.front.vo.IncomeVO;
-import com.rpa.front.vo.RecordVO;
-
-import java.util.List;
 
 /**
  * @author: xiahui
@@ -20,7 +17,16 @@ public interface IIncomeService {
      * @param dto
      * @return
      */
-    IncomeVO query(IncomeDTO dto);
+    ResultVO query(IncomeDTO dto);
+
+    /**
+     * 确认取款
+     *
+     * @param dto
+     * @param userId
+     * @return
+     */
+    ResultVO determine(DetermineDTO dto, long userId);
 
     /**
      * 提现记录
@@ -28,7 +34,7 @@ public interface IIncomeService {
      * @param userId
      * @return
      */
-    List<RecordVO> queryRecords(long userId);
+    ResultVO queryRecords(long userId);
 
     /**
      * 邀请详情
@@ -36,5 +42,5 @@ public interface IIncomeService {
      * @param userId
      * @return
      */
-    DetailsVO queryDetails(long userId);
+    ResultVO queryDetails(long userId);
 }
