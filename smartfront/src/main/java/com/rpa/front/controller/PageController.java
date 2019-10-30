@@ -30,7 +30,7 @@ public class PageController {
     @PostMapping("income")
     public String income(@RequestBody IncomeDTO dto, ModelMap map, HttpServletRequest req) {
         if (null == req.getHeader("token") || "".equals(req.getHeader("token"))) {
-            map.put("res", new ResultVO<>(1000, new IncomeVO()));
+            map.put("res", new ResultVO<>(1000, new IncomeVO(0L,0,0,0L)));
             return "income_index";
         }
 
