@@ -40,4 +40,6 @@ public class NoticeVO implements Serializable {
      */
     private String url;
 
+    private String picurl;
+
 }
