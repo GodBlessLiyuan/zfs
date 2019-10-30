@@ -43,7 +43,7 @@ public class LoginServiceImpl implements ILoginService {
     @Resource
     private NewUserRecordMapper newUserRecordMapper;
 
-    @Transactional(rollbackFor = {})
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO register(LoginDTO dto, HttpServletRequest req) {
         UserPO userPO = userMapper.queryByPhone(dto.getPh());
