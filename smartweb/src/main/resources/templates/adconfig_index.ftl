@@ -178,27 +178,27 @@
                         </div>
                         <div class="form-group">
                             <span for="message-text" class="col-form-label">广告ID:</span>
-                            <input id="insert_adNumber" class="form-control" type="text"/>
+                            <input id="insert_adNumber" class="form-control" type="text" required="required"/>
                         </div>
                         <div class="form-group">
                             <span for="recipient-name" class="col-form-label">广告商名称:</span>
-                            <input id="insert_name" class="form-control" type="text"/>
+                            <input id="insert_name" class="form-control" type="text" required="required"/>
                         </div>
                         <div class="form-group">
                             <span for="recipient-name" class="col-form-label">接入人:</span>
-                            <input id="insert_contacts" class="form-control" type="text"/>
+                            <input id="insert_contacts" class="form-control" type="text" required="required"/>
                         </div>
                         <div class="form-group">
                             <span for="message-text" class="col-form-label">联系方式:</span>
-                            <input id="insert_phone" class="form-control" type="text">
+                            <input id="insert_phone" class="form-control" type="text" required="required"/>
                         </div>
                         <div class="form-group">
                             <span for="message-text" class="col-form-label">展示优先级:</span>
-                            <input id="insert_priority" class="form-control" type="text">
+                            <input id="insert_priority" class="form-control" type="text" required="required"/>
                         </div>
                         <div class="form-group">
                             <span for="message-text" class="col-form-label">展示次数:</span>
-                            <input id="insert_total" class="form-control" type="text">
+                            <input id="insert_total" class="form-control" type="text" required="required"/>
                         </div>
                     </form>
                 </div>
@@ -388,6 +388,16 @@
             }
         }, "json");
     }
+
+
+    /**
+     * 每个必填输入框后，加上 * 号
+     */
+    $("form :input.required").each(function(){
+        var $required = $("<strong class='high'> *</strong>");
+        $(this).parent().append($required);
+    })
+
 
     /**
      * 导出
