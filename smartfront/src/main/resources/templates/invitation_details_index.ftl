@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <base href="${basePath}"/>
     <meta charset="UTF-8">
     <title>我的邀请详情</title>
 
@@ -10,8 +11,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/generalize.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
 <body>
