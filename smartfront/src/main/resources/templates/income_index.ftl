@@ -8,8 +8,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title> 爱收益 </title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/generalize.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
     <body >
@@ -28,7 +31,7 @@
             <div>
                 <div style="width: 60%; float: left">
                     <div class="input-group" style="margin-left: 10px">
-                        <p id="" class="balanceNum left font_money">￥${res.data.invitenum}</p>
+                        <p id="" class="balanceNum left font_money">￥${res.data.balance}</p>
                     </div>
                 </div>
                 <div style="width: 30%; height: 20px; float:right;margin-right: 15px">
