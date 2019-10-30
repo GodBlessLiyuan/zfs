@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <base href="${basePath}"/>
     <meta charset="UTF-8">
     <title>我的邀请详情</title>
 
