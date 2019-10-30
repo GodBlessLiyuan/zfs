@@ -38,7 +38,7 @@
 
 <!--**********************************
                     弹框
-        ***********************************-->
+ ***********************************-->
 <!--弹框：修改密码-->
 <div class="modal fade" id="updatePwdModal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
@@ -67,7 +67,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="updatePassword()" data-dismiss="modal">
+                <button type="button" class="btn btn-primary" onclick="updatePassword()">
                     确认修改
                 </button>
             </div>
@@ -112,9 +112,9 @@
         var newPassword = $('#newPassword').val();
         var confirm = $('#confirm').val();
 
-        if (oldPassword == null || oldPassword == "") {
+        if (oldPassword == null || oldPassword.trim() == "") {
             alert("请输入旧密码！")
-        } else if (newPassword == null || newPassword == "") {
+        } else if (newPassword == null || newPassword.trim() == "") {
             alert("请输入新密码！")
         } else if (newPassword != confirm) {
             alert("输入密码不一致，请重新输入！");
@@ -125,6 +125,8 @@
                 } else {
                     alert("密码修改失败！")
                 }
+                $('#updatePwdModal').modal('hide');
+                $('.modal-backdrop').remove();
             }, "json");
         }
     }
@@ -147,3 +149,4 @@
 
 
 <script src="./js/dashboard/dashboard-1.js"></script>
+<script src="./js/bootstrap.js"></script>
