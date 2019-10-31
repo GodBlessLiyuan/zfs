@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div style="width: 30%; height: 20px; float:right;margin-right: 15px">
-                    <a class="btn btn-primary " href="withdraw.html" style="border-radius: 20px; width:100%;background-color:#3496E8; vertical-align: center">提现</a>
+                    <a class="btn btn-primary " href="${basePath}/withdraw.ftl" style="border-radius: 20px; width:100%;background-color:#3496E8; vertical-align: center">提现</a>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
         <!--帮你一步做推广，快速赚钱 -->
         <div class="my_state2">
             <div class="rows">
-                <img class="bg_tuiguang" src="${basePath}/images/banner_extension@3x.png" onclick="location.href='#';">
+                <img class="bg_tuiguang" src="${basePath}/images/banner_extension.png" onclick="location.href='#';">
             </div>
         </div>
 
@@ -51,7 +51,7 @@
        <div class="my_state">
             <div class="invation_top">
                 <span class="font_inva">我的邀请</span>
-                <span class="span_right "><a href="${basePath}/invation_details.html" class="font_inva" style="text-decoration:none">详情></a></span>
+                <span class="span_right "><a href="${basePath}/invation_details.ftl" class="font_inva" style="text-decoration:none">详情></a></span>
             </div>
             <div class="rows state_bottom ">
                 <div class="flex1" catchtap="my_pickGoods">

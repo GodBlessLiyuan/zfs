@@ -6,10 +6,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>余额提现</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/generalize.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="${basePath}/css/style.css">
+    <script src="${basePath}/js/generalize.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
+    <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -112,7 +112,7 @@
 </div>
 
 <script>
-    // 打开“提现确认”弹框---并验证信息
+    // 打开 提现确认 弹框---并验证信息
     function showBox(){
         if($("#importBalance").val()==""||$("#importBalance").val()==undefined){
             $(".errorMsg").text("提现金额不能为空")
@@ -150,8 +150,8 @@
         $("html,body").css({"height":"auto","overflow":"auto"});
         // location.reload();//刷新页面
     }
-    //打开提现成功弹框
-    function successBox(godin_id){
+    // 打开提现成功弹框
+    function successBox(){
         // 提现金额、账号、姓名
         var money = $("#importBalance").val();
         var zfb_account = $("#accountNum").val();
@@ -164,7 +164,6 @@
                 "money": money,
                 "zfb_account": zfb_account,
                 "name": name,
-                "godin_id": godin_id
             },
             type: "POST",
             async: false,
