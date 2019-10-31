@@ -53,15 +53,15 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <span for="message-text" class="col-form-label">旧密码:</span>
+                        <span for="message-text" class="col-form-label">旧密码：<span style="color: red"> *</span></span>
                         <input type="text" class="form-control" id="oldPassword">
                     </div>
                     <div class="form-group">
-                        <span for="message-text" class="col-form-label">新密码:</span>
+                        <span for="message-text" class="col-form-label">新密码：<span style="color: red"> *</span></span>
                         <input type="password" class="form-control" id="newPassword">
                     </div>
                     <div class="form-group">
-                        <span for="message-text" class="col-form-label">确认新密码:</span>
+                        <span for="message-text" class="col-form-label">确认新密码：<span style="color: red"> *</span></span>
                         <input type="password" class="form-control" id="confirm">
                     </div>
                 </form>

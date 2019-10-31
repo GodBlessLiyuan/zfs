@@ -96,11 +96,11 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>名称</label>
                                             <input id="name" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>状态</label>
                                             <select id="status" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
@@ -164,15 +164,15 @@
                             <button type="hidden" id="insert" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">名称:</span>
+                            <span for="message-text" class="col-form-label">名称：<span style="color: red"> *</span></span>
                             <input id="insert_name" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">banner图:</span>
+                            <span for="message-text" class="col-form-label">banner图：<span style="color: red"> *</span></span>
                             <input id="insert_banner_pic" class="form-control" type="file"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">跳转:</span>
+                            <span for="recipient-name" class="col-form-label">跳转：<span style="color: red"> *</span></span>
                             <input id="insert_url" class="form-control" type="text"/>
                         </div>
                     </form>
@@ -272,18 +272,38 @@
         reqData.append("picPath", $('#insert_banner_pic')[0].files[0]);
         reqData.append("url", $('#insert_url').val());
 
-        $.ajax({
-            type: 'post',
-            url: '/bannerconfig/insert',
-            dataType: 'json',
-            data: reqData,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                alert("新增成功！")
-                $('#datatab').DataTable().draw(false);
-            }
-        });
+        var name = $('#insert_name').val();
+        var picPath = $('#insert_banner_pic')[0].files[0];
+        var url = $('#insert_url').val();
+
+        if (name == null || name.trim() == "") {
+            alert("名称不能为空！")
+        }else if (picPath == null || picPath.trim() == "") {
+            alert("banner图不能为空！")
+        }else if (url == null || url.trim() == "") {
+            alert("跳转不能为空！");
+        } else {
+
+            $.ajax({
+                type: 'post',
+                url: '/bannerconfig/insert',
+                dataType: 'json',
+                data: reqData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.code == 0) {
+                        alert("新增成功！");
+                    } else {
+                        alert("新增失败！");
+                    }
+                    $('#datatab').DataTable().draw(false);
+                    $('#insertModal').modal('hide');
+                    $('.modal-backdrop').remove();
+                }
+            });
+
+        }
     }
 
 
