@@ -96,12 +96,12 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>时间</label>
                                             <input id="startTime" type="date" class="form-control"> 至
                                             <input id="endTime" type="date" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>状态</label>
                                             <select id="status" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
@@ -109,7 +109,7 @@
                                                 <option value='2'>开启</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>通知类型</label>
                                             <select id="notice_type" class="form-control">
                                                 <option value='0' selected='selected'>全部</option>
@@ -118,7 +118,7 @@
                                                 <option value='3'>图文</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>通知名称</label>
                                             <input id="title" type="text" class="form-control">
                                         </div>
@@ -182,30 +182,30 @@
                             <button type="hidden" id="insert" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">通知类型:</span>
+                            <span for="message-text" class="col-form-label">通知类型：<span style="color: red"> *</span></span>
                             <label><input type="radio" name="insert_notice_type" value="1" onclick="insertTypeClick()"/>文本</label>
                             <label><input type="radio" name="insert_notice_type" value="2" onclick="insertTypeClick()"/>图片</label>
                             <label><input type="radio" name="insert_notice_type" value="3" onclick="insertTypeClick()"/>图文</label>
                         </div>
                         <div class="form-group" id="picModal">
-                            <span for="message-text" class="col-form-label">图片:</span>
+                            <span for="message-text" class="col-form-label">图片：<span style="color: red"> *</span></span>
                             <input id="insert_pic" class="form-control" type="file"/>
                         </div>
                         <div class="form-group" id="textModal">
-                            <span for="recipient-name" class="col-form-label">文字:</span>
+                            <span for="recipient-name" class="col-form-label">文字：<span style="color: red"> *</span></span>
                             <input id="insert_text" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">通知名称:</span>
+                            <span for="recipient-name" class="col-form-label">通知名称：<span style="color: red"> *</span></span>
                             <input id="insert_title" class="form-control" type="text"/>
                         </div><div class="form-group">
-                            <span for="recipient-name" class="col-form-label">跳转地址:</span>
+                            <span for="recipient-name" class="col-form-label">跳转地址：<span style="color: red"> *</span></span>
                             <input id="insert_url" class="form-control" type="text"/>
                         </div><div class="form-group">
-                            <span for="recipient-name" class="col-form-label">提示时间:</span>
+                            <span for="recipient-name" class="col-form-label">提示时间：<span style="color: red"> *</span></span>
                             <input id="insert_showTime" class="form-control" type="time"/>
                         </div><div class="form-group">
-                            <span for="recipient-name" class="col-form-label">有效时间:</span>
+                            <span for="recipient-name" class="col-form-label">有效时间：<span style="color: red"> *</span></span>
                             <input id="insert_startTime" type="date" class="form-control"> 至
                             <input id="insert_endTime" type="date" class="form-control">
                         </div>
@@ -429,7 +429,7 @@
                     "data": "status",
                     "render": function (data, type, full) {
 
-                        var sta_str = data == 1 ? "关闭" : "开启"
+                        var sta_str = data == 1 ? "开启" : "关闭"
                         var sta_num = data == 1 ? 2 : 1
                         return "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
                             "class='btn btn-primary' onclick='javascript:statusModal(" + full.noticeId +","+ sta_num +")'>"+ sta_str +"</button>";
