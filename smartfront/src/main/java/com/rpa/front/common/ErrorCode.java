@@ -15,4 +15,8 @@ public class ErrorCode {
      * 余额不足
      */
     public static final int INSUFFICIENT_BALANCE = 1002;
+    /**
+     * Session 超时
+     */
+    public static final int SESSION_TIMEOUT = 1003;
 }
