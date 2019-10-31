@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="${basePath}"/>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -9,10 +9,10 @@
     <meta name="format-detection" content="telephone=no">
     <title> 爱收益 </title>
 
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/generalize.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="${basePath}/css/style.css">
+    <script src="${basePath}/js/generalize.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
+    <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
     <body >
@@ -43,7 +43,7 @@
         <!--帮你一步做推广，快速赚钱 -->
         <div class="my_state2">
             <div class="rows">
-                <img class="bg_tuiguang" src="images/banner_extension@3x.png" onclick="location.href='#';">
+                <img class="bg_tuiguang" src="${basePath}/images/banner_extension@3x.png" onclick="location.href='#';">
             </div>
         </div>
 
@@ -51,7 +51,7 @@
        <div class="my_state">
             <div class="invation_top">
                 <span class="font_inva">我的邀请</span>
-                <span class="span_right "><a href="invation_details.html" class="font_inva" style="text-decoration:none">详情></a></span>
+                <span class="span_right "><a href="${basePath}/invation_details.html" class="font_inva" style="text-decoration:none">详情></a></span>
             </div>
             <div class="rows state_bottom ">
                 <div class="flex1" catchtap="my_pickGoods">
