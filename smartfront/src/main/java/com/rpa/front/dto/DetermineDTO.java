@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class DetermineDTO implements Serializable {
     private static final long SerialVersionUID = 1L;
 
-    private String aliAccount;
-    private String aliName;
+    private String account;
+    private String name;
     private Long money;
 }

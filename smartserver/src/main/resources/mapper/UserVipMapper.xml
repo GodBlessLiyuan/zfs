@@ -114,7 +114,7 @@
       vend_time = #{vendTime,jdbcType=TIMESTAMP},
       first_time = #{firstTime,jdbcType=TIMESTAMP},
       last_time = #{lastTime,jdbcType=TIMESTAMP}
-      where user_id =  #{userId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=BIGINT}
   </update>
 
   <select id="queryByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
