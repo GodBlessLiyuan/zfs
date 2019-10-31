@@ -87,7 +87,7 @@
                         <div class="card-body">
 
                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#insertModal" data-whatever="@getbootstrap">新建
+                                    data-target="#iModal" data-whatever="@getbootstrap">新建
                             </button>
 
                             <hr>
@@ -132,14 +132,15 @@
                                 </table>
                             </div>
 
-                            <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                            <div class="modal fade" id="iModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="iModalLabel" style="display: none;" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">新增商品</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
+                                            <h5 class="modal-title" id="iModalLabel">新增商品</h5>
+                                            <button id="iModalX" type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close" onclick="clearInsModal()">
+                                                <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -152,37 +153,28 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
-                                                    data-dismiss="modal"
-                                            >确认上架
+                                            <button type="button" class="btn btn-primary" onclick="insertClick()">
+                                                确认上架
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal fade" id="deleteModal" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="form-group">
-                                            <button type="hidden" id="dNugId" style="display:none;"/>
-                                        </div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">提示</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">是否删除此商品</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
-                                            </button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="javascript:deleteClick()">确认删除
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </div>
+                            <#assign modalId = "openModal">
+                            <#assign moduleTitle = "是否开启该商品？">
+                            <#assign moduleClick = "statusClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
+
+                            <#assign modalId = "closeModal">
+                            <#assign moduleTitle = "是否关闭该商品？">
+                            <#assign moduleClick = "statusClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
+
+                            <#assign modalId = "deleteModal">
+                            <#assign moduleTitle = "是否删除该商品？">
+                            <#assign moduleClick = "deleteClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
                         </div>
                     </div>
                 </div>
@@ -222,6 +214,8 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
+    let moduleData = new Map();
+
     $(document).ready(function () {
         // 下拉框请求后端并赋值
         $.ajax({
@@ -253,7 +247,7 @@
                 if (res.code !== 0) {
                     alert(res.msg);
                 } else {
-                    clearInsModal();
+                    document.getElementById("iModalX").click();
                     $('#datatab').DataTable().draw(false);
                 }
             }
@@ -286,13 +280,17 @@
                 {
                     "data": "status",
                     "render": function (data, type, full) {
-                        if (data == 1) {
-                            return "<button class='badge badge-dark' type='button' " +
-                                "onclick='javascript:statusClick(" + full.nugId + "," + data + ")'>未开启</button>";
-                        } else {
-                            return "<button class='badge badge-primary' type='button' " +
-                                "onclick='javascript:statusClick(" + full.nugId + "," + data + ")'>已开启</button>";
+                        let title = "未开启";
+                        let style = "class='badge badge-dark'";
+                        let modalId = "data-target='#openModal'";
+                        if (data === 2) {
+                            title = "已开启";
+                            style = "class='badge badge-primary'";
+                            modalId = "data-target='#closeModal'";
                         }
+                        return "<button type='button' data-toggle='modal' data-whatever='@getbootstrap' " + modalId +
+                            style + "onclick='statusModal(" + full.nugId + "," + data + ")'>" + title +
+                            "</button>";
                     }
                 },
                 {"data": "createTime"},
@@ -300,7 +298,7 @@
                     "data": "nugId",
                     "render": function (data, type, full) {
                         return "<a data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:deleteModal(" + data + ")'>删除</a>";
+                            "class='text-primary' onclick='deleteModal(" + data + ")'>删除</a>";
                     }
                 },
                 {"data": "username"}
@@ -328,20 +326,23 @@
      * 是否上架点击事件
      * @param status 状态
      */
-    function statusClick(nugId, status) {
+    function statusClick() {
+        let nugId = moduleData.get("id");
+        let status = moduleData.get("status");
+
         status = status === 1 ? 2 : 1;
         $.ajax({
             type: 'GET',
             url: '/newusergifts/updateStatus?nugId=' + nugId + '&status=' + status,
             dataType: 'JSON',
-            success: function (data) {
+            success: function (res) {
                 $('#datatab').DataTable().draw(false);
             }
         })
     }
 
     function deleteClick() {
-        let nugId = $('#dNugId').val();
+        let nugId = moduleData.get("id");
 
         $.ajax({
             type: 'GET',
@@ -354,13 +355,20 @@
 
     }
 
+    /**
+     * 开启/关闭弹框设置
+     */
+    function statusModal(nugId, status) {
+        moduleData.set("id", nugId);
+        moduleData.set("status", status);
+    }
 
     /**
      * 删除弹框界面设值
      * @param data cmdyId
      */
     function deleteModal(nugId) {
-        $('#dNugId').val(nugId);
+        moduleData.set("id", nugId);
     }
 
     /**

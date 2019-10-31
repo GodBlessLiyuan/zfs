@@ -155,8 +155,8 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增商品</h5>
                                             <button id="iModalX" type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
+                                                    aria-label="Close" onclick="clearInsModal()">
+                                                <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -490,7 +490,6 @@
                         alert(res.msg);
                     } else {
                         document.getElementById("iModalX").click();
-                        clearInsModal();
                         $('#datatab').DataTable().draw(false);
                     }
                 }

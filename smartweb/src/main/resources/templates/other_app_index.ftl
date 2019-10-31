@@ -133,7 +133,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增产品</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
+                                            <button id="iModalX" type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close" onclick="clearInsModal()">
                                                 <span aria-hidden="true">×</span>
                                             </button>
@@ -141,15 +141,18 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">应用名称:</span>
+                                                    <span for="message-text" class="col-form-label">应用名称<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="text" class="form-control" id="iOName">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">应用简介:</span>
+                                                    <span for="message-text" class="col-form-label">应用简介<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="text" class="form-control" id="iExtra">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">应用图标:</span>
+                                                    <span for="message-text" class="col-form-label">应用图标<span
+                                                                style="color: red">*</span>:</span>
                                                     <input id="iIconUrl" type="file"/>
                                                 </div>
                                                 <div class="form-group">
@@ -165,43 +168,25 @@
                                                     <input type="text" class="form-control" id="iAppUrl">
                                                 </div>
                                                 <div id="iApkDiv" class="form-group">
-                                                    <span for="message-text" class="col-form-label">应用程序:</span>
+                                                    <span for="message-text" class="col-form-label">应用程序<span
+                                                                style="color: red">*</span>:</span>
                                                     <input id="iApkUrl" type="file"/>
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
-                                                    data-dismiss="modal">确认上架
+                                            <button type="button" class="btn btn-primary" onclick="insertClick()">
+                                                确认上架
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="modal fade" id="deleteModal" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="form-group">
-                                            <button type="hidden" id="dOid" style="display:none;"/>
-                                        </div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">提示</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">是否删除此信息</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
-                                            </button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="deleteClick()">确认删除
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            <#assign modalId = "deleteModal">
+                            <#assign moduleTitle = "是否删除此信息？">
+                            <#assign moduleClick = "deleteClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
                         </div>
                     </div>
                 </div>
@@ -240,6 +225,8 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
+    let moduleData = new Map();
+
     /**
      * 确认上架点击事件
      */
@@ -252,26 +239,36 @@
         reqData.append("appUrl", $('#iAppUrl').val());
         reqData.append("apkUrl", $('#iApkUrl')[0].files[0]);
 
-        $.ajax({
-            type: 'post',
-            url: '/otherapp/insert',
-            dataType: 'json',
-            data: reqData,
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                if (res.code === 0) {
-                    $('#datatab').DataTable().draw(false);
-                    clearInsModal();
-                } else {
-                    alert(res.msg);
+        if (!$('#iOName').val()) {
+            alert("应用名称不能为空！");
+        } else if (!$('#iExtra').val()) {
+            alert("应用简介不能为空！");
+        } else if (reqData.get("iconUrl") === "undefined") {
+            alert("请上传应用图标！");
+        } else if ($('#iDownloadType').val() === "1" && reqData.get("apkUrl") === "undefined") {
+            alert("请上传应用程序！");
+        } else {
+            $.ajax({
+                type: 'post',
+                url: '/otherapp/insert',
+                dataType: 'json',
+                data: reqData,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    if (res.code === 0) {
+                        $('#datatab').DataTable().draw(false);
+                        clearInsModal();
+                    } else {
+                        alert(res.msg);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     function deleteClick() {
-        let oId = $('#dOid').val();
+        let oId = moduleData.get("id");
 
         $.ajax({
             type: 'GET',
@@ -364,7 +361,7 @@
      * @param data cmdyId
      */
     function deleteModal(oId) {
-        $('#dOid').val(oId);
+        moduleData.set("id", oId);
     }
 
     /**
