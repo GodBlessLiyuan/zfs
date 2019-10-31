@@ -46,7 +46,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">修改密码</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="xModal">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -125,8 +125,7 @@
                 } else {
                     alert("密码修改失败！")
                 }
-                $('#updatePwdModal').modal('hide');
-                $('.modal-backdrop').remove();
+                document.getElementById("xModal").click();
             }, "json");
         }
     }

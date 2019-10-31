@@ -172,7 +172,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -345,18 +345,59 @@
         reqData.append("startTime", $('#insert_startTime').val());
         reqData.append("endTime", $('#insert_endTime').val());
 
-        $.ajax({
-            type: 'post',
-            url: '/notice/insert',
-            dataType: 'json',
-            data: reqData,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                alert("新增成功！")
-                $('#datatab').DataTable().draw(false);
+        var text = $('#insert_text').val();
+        var picurl = $('#insert_pic')[0].files[0];
+        var title = $('#insert_title').val();
+        var url = $('#insert_url').val();
+        var showTime = $('#insert_showTime').val();
+        var startTime = $('#insert_startTime').val();
+        var endTime = $('#insert_endTime').val();
+
+        if (type == 1) {
+            if (text == null || text.trim() == "") {
+                alert("文字不能为空！")
             }
-        });
+        }else if (type == 2) {
+            if (picurl == null) {
+                alert("图片不能为空！")
+            }
+        }else if (type == 3) {
+            if (text == null || text.trim() == "") {
+                alert("文字不能为空！")
+            }
+            if (picurl == null) {
+                alert("图片不能为空！")
+            }
+        }else if (title == null || title.trim() == "") {
+            alert("通知名称不能为空！")
+        }else if (url == null || url.trim() == "") {
+            alert("跳转地址不能为空！")
+        }else if (showTime == null) {
+            alert("提示时间不能为空！")
+        }else if (startTime == null) {
+            alert("有效时间不能为空！")
+        }else if (endTime == null) {
+            alert("有效时间不能为空！");
+        } else {
+
+            $.ajax({
+                type: 'post',
+                url: '/notice/insert',
+                dataType: 'json',
+                data: reqData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.code == 0) {
+                        alert("新增成功！");
+                    } else {
+                        alert("新增失败！");
+                    }
+                    $('#datatab').DataTable().draw(false);
+                    document.getElementById("xModal").click();
+                }
+            });
+        }
     }
 
 
