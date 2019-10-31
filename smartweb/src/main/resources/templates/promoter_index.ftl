@@ -96,11 +96,11 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>负责人：</label>
                                             <input id="proName" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>联系电话：</label>
                                             <input id="phone" type="text" class="form-control">
                                         </div>
@@ -149,7 +149,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="insert_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -159,21 +159,22 @@
                             <button type="hidden" id="insert" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">负责人:</span>
+                            <span for="message-text" class="col-form-label">负责人：<span style="color: red"> *</span></span>
                             <input id="insert_proName" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">联系电话:</span>
-                            <input id="insert_phone" class="form-control" type="text"/>
+                            <span for="recipient-name" class="col-form-label">联系电话：<span style="color: red"> *</span></span>
+                            <input id="insert_phone" class="form-control" type="text"
+                                   onblur="insert_checkPhone()"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">备注:</span>
+                            <span for="recipient-name" class="col-form-label">备注：<span style="color: red"> *</span></span>
                             <input id="insert_extra" class="form-control" type="text"/>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定创建</button>
+                    <button type="button" class="btn btn-primary" onclick="insertClick()">确定创建</button>
                 </div>
             </div>
         </div>
@@ -187,7 +188,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">修改</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="update_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -197,21 +198,22 @@
                             <button type="hidden" id="update" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">负责人:</span>
+                            <span for="message-text" class="col-form-label">负责人：<span style="color: red"> *</span></span>
                             <input id="up_proName" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">联系电话:</span>
-                            <input id="up_phone" class="form-control" type="text"/>
+                            <span for="recipient-name" class="col-form-label">联系电话：<span style="color: red"> *</span></span>
+                            <input id="up_phone" class="form-control" type="text"
+                                   onblur="up_checkPhone()/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">备注:</span>
+                            <span for="recipient-name" class="col-form-label">备注：<span style="color: red"> *</span></span>
                             <input id="up_extra" class="form-control" type="text"/>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateClick()">确认修改</button>
+                    <button type="button" class="btn btn-primary" onclick="updateClick()">确认修改</button>
                 </div>
             </div>
         </div>
@@ -261,14 +263,23 @@
         var phone = $('#insert_phone').val();
         var extra = $('#insert_extra').val();
 
-        $.post("/promoter/insert", {proName:proName, phone:phone, extra:extra}, function (result) {
-            if (result.code === 0) {
-                alert("新增成功！")
-                $('#datatab').DataTable().draw(false);
-            } else {
-                alert("新增失败！")
-            }
-        }, "json");
+        if (proName == null || proName.trim() == "") {
+            alert("负责人不能为空！")
+        }else if (phone == null || phone.trim() == "") {
+            alert("联系电话不能为空！")
+        }else if (extra == null || extra.trim() == "") {
+            alert("备注不能为空！");
+        } else {
+            $.post("/promoter/insert", {proName:proName, phone:phone, extra:extra}, function (result) {
+                if (result.code === 0) {
+                    alert("新增成功！")
+                    $('#datatab').DataTable().draw(false);
+                } else {
+                    alert("新增失败！")
+                }
+                document.getElementById("insert_xModal").click();
+            }, "json");
+        }
     }
 
 
@@ -363,14 +374,44 @@
         var phone = $('#up_phone').val();
         var extra = $('#up_extra').val();
 
-        $.post("/promoter/update", {proId:proId, proName:proName, phone:phone, extra:extra}, function (result) {
-            if (result.code === 0) {
-                alert("更新成功！")
-                $('#datatab').DataTable().draw(false);
-            } else {
-                alert("更新失败！")
-            }
-        }, "json");
+        if (proName == null || proName.trim() == "") {
+            alert("负责人不能为空！")
+        }else if (phone == null || phone.trim() == "") {
+            alert("联系电话不能为空！")
+        }else if (extra == null || extra.trim() == "") {
+            alert("备注不能为空！");
+        } else {
+
+            $.post("/promoter/update", {proId:proId, proName:proName, phone:phone, extra:extra}, function (result) {
+                if (result.code === 0) {
+                    alert("更新成功！")
+                    $('#datatab').DataTable().draw(false);
+                } else {
+                    alert("更新失败！")
+                }
+                document.getElementById("update_xModal").click();
+            }, "json");
+        }
+    }
+
+
+    /**
+     * 输入框限制：手机号码
+     */
+    function insert_checkPhone() {
+        var phone = document.getElementById('insert_phone').value;
+        checkPhone(phone);
+    }
+
+    function up_checkPhone() {
+        var phone = document.getElementById('up_phone').value;
+        checkPhone(phone);
+    }
+
+    function checkPhone(phone){
+        if(!(/^1[3456789]\d{9}$/.test(phone))){
+            alert("手机号码有误，请重填！");
+        }
     }
 </script>
 

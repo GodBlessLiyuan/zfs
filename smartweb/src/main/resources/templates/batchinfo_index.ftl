@@ -91,7 +91,7 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-4">
                                             <label>会员卡ID：</label>
                                             <input id="vipkey" type="text" class="form-control">
                                         </div>

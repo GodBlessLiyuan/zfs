@@ -96,11 +96,11 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>渠道标识：</label>
                                             <input id="chanNickname" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>负责人：</label>
                                             <select id="proId" class="form-control">
                                                 <option value='0' selected='selected'>全部</option>
@@ -152,7 +152,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="insert_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -162,15 +162,15 @@
                             <button type="hidden" id="insert" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">渠道标识:</span>
+                            <span for="message-text" class="col-form-label">渠道标识：<span style="color: red"> *</span></span>
                             <input id="insert_chanName" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">渠道名称:</span>
+                            <span for="message-text" class="col-form-label">渠道名称：<span style="color: red"> *</span></span>
                             <input id="insert_chanNickname" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">负责人:</span>
+                            <span for="recipient-name" class="col-form-label">负责人：<span style="color: red"> *</span></span>
                             <select id="insert_proId" class="form-control">
                             </select>
                         </div>
@@ -181,7 +181,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定创建</button>
+                    <button type="button" class="btn btn-primary" onclick="insertClick()">确定创建</button>
                 </div>
             </div>
         </div>
@@ -324,15 +324,23 @@
         var proId = $('#insert_proId').val();
         var extra = $('#insert_extra').val();
 
-        $.post("/channel/insert", {chanName:chanName, chanNickname:chanNickname, proId:proId, extra:extra},
-            function (result) {
-                if (result.code === 0) {
-                    alert("新增成功！")
-                    $('#datatab').DataTable().draw(false);
-                } else {
-                    alert("新增失败！")
-                }
-            }, "json");
+        if (chanName == null || chanName.trim() == "") {
+            alert("渠道标识不能为空！")
+        }else if (chanNickname == null || chanNickname.trim() == "") {
+            alert("渠道名称不能为空！");
+        } else {
+
+            $.post("/channel/insert", {chanName:chanName, chanNickname:chanNickname, proId:proId, extra:extra},
+                function (result) {
+                    if (result.code === 0) {
+                        alert("新增成功！")
+                        $('#datatab').DataTable().draw(false);
+                    } else {
+                        alert("新增失败！")
+                    }
+                    document.getElementById("insert_xModal").click();
+                }, "json");
+        }
     }
 
 </script>
