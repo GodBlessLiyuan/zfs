@@ -429,18 +429,21 @@
                     "data": "status",
                     "render": function (data, type, full) {
 
-                        var sta_str = data == 1 ? "开启" : "关闭"
-                        var sta_num = data == 1 ? 2 : 1
-                        return "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:statusModal(" + full.noticeId +","+ sta_num +")'>"+ sta_str +"</button>";
+                        var sta_str = data == 1 ? "已关闭" : "已开启"
+                        return "<button type='button' data-whatever='@getbootstrap' class='btn btn-primary'>"+ sta_str +"</button>";
                     }
                 },
                 {
                     "data": "noticeId",
                     "render": function (data, type, full) {
 
-                        return "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
+                        // 要修改成的状态值：如果当前状态值为1，就修改成2，反之亦然
+                        var status = full.status == 1 ? 2 : 1;
+                        var statusButton = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ status +")'>开/关</button>";
+                        var deleteButton = "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
                             "class='btn btn-primary' onclick='javascript:deleteModal(" + data + ")'>删除</button>";
+                        return statusButton + deleteButton;
                     }
                 },
                 {"data": "operator"}
@@ -492,7 +495,7 @@
         $('#statusChange_1').val(noticeId);
         $('#statusChange_2').val(status);
 
-        var tip = status == 1 ? "确认开启？" : "确认关闭？"
+        var tip = status == 1 ? "确认关闭？" : "确认开启？"
         document.getElementById("statusChange_3").innerText = tip;
     }
 
