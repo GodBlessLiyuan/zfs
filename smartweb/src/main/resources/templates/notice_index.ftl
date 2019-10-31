@@ -345,8 +345,6 @@
         reqData.append("startTime", $('#insert_startTime').val());
         reqData.append("endTime", $('#insert_endTime').val());
 
-        var text = $('#insert_text').val();
-        var picurl = $('#insert_pic')[0].files[0];
         var title = $('#insert_title').val();
         var url = $('#insert_url').val();
         var showTime = $('#insert_showTime').val();
@@ -354,21 +352,31 @@
         var endTime = $('#insert_endTime').val();
 
         if (type == 1) {
+            var text = $('#insert_text').val();
             if (text == null || text.trim() == "") {
-                alert("文字不能为空！")
+                alert("文字不能为空！");
+                return;
             }
         }else if (type == 2) {
+            var picurl = $('#insert_pic')[0].files[0];
             if (picurl == null) {
-                alert("图片不能为空！")
+                alert("图片不能为空！");
+                return;
             }
         }else if (type == 3) {
+            var text = $('#insert_text').val();
+            var picurl = $('#insert_pic')[0].files[0];
             if (text == null || text.trim() == "") {
-                alert("文字不能为空！")
+                alert("文字不能为空！");
+                return;
             }
             if (picurl == null) {
-                alert("图片不能为空！")
+                alert("图片不能为空！");
+                return;
             }
-        }else if (title == null || title.trim() == "") {
+        }
+
+        if (title == null || title.trim() == "") {
             alert("通知名称不能为空！")
         }else if (url == null || url.trim() == "") {
             alert("跳转地址不能为空！")

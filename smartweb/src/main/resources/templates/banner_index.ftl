@@ -178,7 +178,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定上架</button>
+                    <button type="button" class="btn btn-primary" onclick="insertClick()">确定上架</button>
                 </div>
             </div>
         </div>

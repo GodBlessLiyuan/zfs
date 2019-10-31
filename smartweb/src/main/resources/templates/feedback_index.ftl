@@ -91,16 +91,16 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>时间</label>
                                             <input id="startTime" type="date" class="form-control"> 至
                                             <input id="endTime" type="date" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>用户账号</label>
                                             <input id="userId" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>联系方式</label>
                                             <input id="contact" type="text" class="form-control">
                                         </div>

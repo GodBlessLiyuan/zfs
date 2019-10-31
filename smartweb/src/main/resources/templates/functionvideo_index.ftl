@@ -96,7 +96,7 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>功能名称</label>
                                             <input id="fun_name" type="text" class="form-control">
                                         </div>
@@ -144,7 +144,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="insert_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -154,21 +154,21 @@
                             <button type="hidden" id="insert" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">功能名称:</span>
+                            <span for="message-text" class="col-form-label">功能名称：<span style="color: red"> *</span></span>
                             <input id="insert_name" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">视频:</span>
+                            <span for="message-text" class="col-form-label">视频：<span style="color: red"> *</span></span>
                             <input id="insert_video" class="form-control" type="file"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">备注信息:</span>
+                            <span for="recipient-name" class="col-form-label">备注信息：</span>
                             <input id="insert_extra" class="form-control" type="text"/>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定上架</button>
+                    <button type="button" class="btn btn-primary" onclick="insertClick()">确定上架</button>
                 </div>
             </div>
         </div>
@@ -199,7 +199,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">修改</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="update_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -209,11 +209,11 @@
                             <button type="hidden" id="update" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">功能名称:</span>
+                            <span for="message-text" class="col-form-label">功能名称：<span style="color: red"> *</span></span>
                             <input id="up_name" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">视频:</span>
+                            <span for="recipient-name" class="col-form-label">视频：<span style="color: red"> *</span></span>
                             <input id="up_video" class="form-control" type="file"/>
                         </div>
                         <div class="form-group">
@@ -223,7 +223,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateClick()">确认修改</button>
+                    <button type="button" class="btn btn-primary" onclick="updateClick()">确认修改</button>
                 </div>
             </div>
         </div>
@@ -295,18 +295,33 @@
         reqData.append("url", $('#insert_video')[0].files[0]);
         reqData.append("extra", $('#insert_extra').val());
 
-        $.ajax({
-            type: 'post',
-            url: '/functionvideo/insert',
-            dataType: 'json',
-            data: reqData,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                alert("新增成功！")
-                $('#datatab').DataTable().draw(false);
-            }
-        });
+        var funName = $('#insert_name').val();
+        var url = $('#insert_video')[0].files[0];
+
+        if (funName == null || funName.trim() == "") {
+            alert("功能名称不能为空！")
+        }else if (url == null) {
+            alert("视频不能为空！")
+        }else {
+
+            $.ajax({
+                type: 'post',
+                url: '/functionvideo/insert',
+                dataType: 'json',
+                data: reqData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.code == 0) {
+                        alert("新增成功！");
+                        $('#datatab').DataTable().draw(false);
+                    } else {
+                        alert("新增失败！");
+                    }
+                    document.getElementById("insert_xModal").click();
+                }
+            });
+        }
     }
 
 
@@ -432,18 +447,33 @@
         reqData.append("url", $('#up_video')[0].files[0]);
         reqData.append("extra", $('#up_extra').val());
 
-        $.ajax({
-            type: 'post',
-            url: '/functionvideo/update',
-            dataType: 'json',
-            data: reqData,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                alert("更新成功！")
-                $('#datatab').DataTable().draw(false);
-            }
-        });
+        var funName = $('#up_name').val();
+        var url = $('#up_video')[0].files[0];
+
+        if (funName == null || funName.trim() == "") {
+            alert("功能名称不能为空！")
+        }else if (url == null) {
+            alert("视频不能为空！")
+        }else {
+
+            $.ajax({
+                type: 'post',
+                url: '/functionvideo/update',
+                dataType: 'json',
+                data: reqData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.code == 0) {
+                        alert("更新成功！");
+                        $('#datatab').DataTable().draw(false);
+                    } else {
+                        alert("更新失败！");
+                    }
+                    document.getElementById("update_xModal").click();
+                }
+            });
+        }
     }
 
     /**
