@@ -87,7 +87,7 @@
                         <div class="card-body">
 
                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#insertModal" data-whatever="@getbootstrap">新增商品
+                                    data-target="#iModal" data-whatever="@getbootstrap">新增商品
                             </button>
                             <button type="button" class="btn btn-primary" id="export"
                                     onclick="exportClick();">导出
@@ -148,13 +148,14 @@
                                 </table>
                             </div>
 
-                            <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="iModal" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增商品</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button id="iModalX" type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
                                                 <span aria-hidden="true" onclick="clearInsModal()">×</span>
                                             </button>
                                         </div>
@@ -171,45 +172,51 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">商品名称:</span>
-                                                    <input type="text" class="form-control" id="comName">
+                                                    <span for="message-text" class="col-form-label">
+                                                        商品名称<span style="color: red">*</span>:</span>
+                                                    <input type="text" class="form-control" id="comName" maxlength="10">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">商品描述:</span>
-                                                    <input type="text" class="form-control" id="description">
+                                                    <span for="message-text" class="col-form-label">商品描述<span
+                                                                style="color: red">*</span>:</span>
+                                                    <input type="text" class="form-control" id="description"
+                                                           maxlength="20">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">原价:</span>
+                                                    <span for="message-text" class="col-form-label">原价<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="number" class="form-control" id="price"
                                                            onkeyup="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">折扣:</span>
+                                                    <span for="message-text" class="col-form-label">折扣<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="text" class="form-control" id="showDiscount">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">售价:</span>
+                                                    <span for="message-text" class="col-form-label">售价<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="number" class="form-control" id="discount"
                                                            onkeyup="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
-                                                    data-dismiss="modal"
-                                            >确认上架
+                                            <button type="button" class="btn btn-primary" onclick="insertClick()">
+                                                确认上架
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="uModal" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">修改商品</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button id="uModalX" type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
@@ -228,33 +235,39 @@
                                                     <label id="uComTypeId">XXX</label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">商品名称:</span>
-                                                    <input type="text" class="form-control" id="uComName">
+                                                    <span for="message-text" class="col-form-label">商品名称<span
+                                                                style="color: red">*</span>:</span>
+                                                    <input type="text" class="form-control" id="uComName"
+                                                           maxlength="10">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">商品描述:</span>
-                                                    <input type="text" class="form-control" id="uDescription">
+                                                    <span for="message-text" class="col-form-label">商品描述<span
+                                                                style="color: red">*</span>:</span>
+                                                    <input type="text" class="form-control" id="uDescription"
+                                                           maxlength="20">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">原价:</span>
+                                                    <span for="message-text" class="col-form-label">原价<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="number" class="form-control" id="uPrice"
                                                            onkeyup="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">折扣:</span>
+                                                    <span for="message-text" class="col-form-label">折扣<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="text" class="form-control" id="uShowDiscount">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">售价:</span>
+                                                    <span for="message-text" class="col-form-label">售价<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="number" class="form-control" id="uDiscount"
                                                            onkeyup="value=value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')">
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="updateClick()"
-                                                    data-dismiss="modal"
-                                            >确认修改
+                                            <button type="button" class="btn btn-primary" onclick="updateClick()">
+                                                确认修改
                                             </button>
                                         </div>
                                     </div>
@@ -419,8 +432,8 @@
                 {
                     "data": "cmdyId",
                     "render": function (data, type, full) {
-                        return "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='updateModal(" + data + ")'>修改</a>";
+                        return "<a data-toggle='modal' data-target='#uModal' data-whatever='@getbootstrap' " +
+                            "class='text-primary' onclick='uModal(" + data + ")'>修改</a>";
                     }
                 },
                 {"data": "username"}
@@ -455,21 +468,34 @@
         let showDiscount = $('#showDiscount').val();
         let discount = $('#discount').val();
 
-        $.ajax({
-            type: 'GET',
-            url: "/vipcommodity/insert?channelId=" + channelId + "&comTypeId=" + comTypeId + "&comName=" + comName +
-                "&description=" + description + "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" +
-                discount,
-            dataType: 'json',
-            success: function (res) {
-                if (res.code !== 0) {
-                    alert(res.msg);
-                } else {
-                    clearInsModal();
-                    $('#datatab').DataTable().draw(false);
+        if (!comName) {
+            alert("商品名称不能为空！");
+        } else if (!description) {
+            alert("商品描述不能为空！");
+        } else if (!price) {
+            alert("原价不能为空！");
+        } else if (!showDiscount) {
+            alert("折扣不能为空！");
+        } else if (!discount) {
+            alert("售价不能为空！");
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: "/vipcommodity/insert?channelId=" + channelId + "&comTypeId=" + comTypeId + "&comName=" + comName +
+                    "&description=" + description + "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" +
+                    discount,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code !== 0) {
+                        alert(res.msg);
+                    } else {
+                        document.getElementById("iModalX").click();
+                        clearInsModal();
+                        $('#datatab').DataTable().draw(false);
+                    }
                 }
-            }
-        })
+            });
+        }
     }
 
     function updateClick() {
@@ -480,15 +506,28 @@
         let showDiscount = $('#uShowDiscount').val();
         let discount = $('#uDiscount').val();
 
-        $.ajax({
-            type: 'GET',
-            url: '/vipcommodity/update?cmdyId=' + cmdyId + "&comName=" + comName + "&description=" + description +
-                "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" + discount,
-            dataType: 'json',
-            success: function (data) {
-                $('#datatab').DataTable().draw(false);
-            }
-        })
+        if (!comName) {
+            alert("商品名称不能为空！");
+        } else if (!description) {
+            alert("商品描述不能为空！");
+        } else if (!price) {
+            alert("原价不能为空！");
+        } else if (!showDiscount) {
+            alert("折扣不能为空！");
+        } else if (!discount) {
+            alert("售价不能为空！");
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: '/vipcommodity/update?cmdyId=' + cmdyId + "&comName=" + comName + "&description=" + description +
+                    "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" + discount,
+                dataType: 'json',
+                success: function (res) {
+                    document.getElementById("uModalX").click();
+                    $('#datatab').DataTable().draw(false);
+                }
+            });
+        }
 
     }
 
@@ -496,7 +535,7 @@
      * 更新弹框界面设值
      * @param data cmdyId
      */
-    function updateModal(cmdyId) {
+    function uModal(cmdyId) {
         $.ajax({
             type: 'GET',
             url: '/vipcommodity/queryById?cmdyId=' + cmdyId,

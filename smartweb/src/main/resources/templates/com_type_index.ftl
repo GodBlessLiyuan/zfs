@@ -87,7 +87,7 @@
                         <div class="card-body">
 
                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#insertModal" data-whatever="@getbootstrap">新增产品
+                                    data-target="#iModal" data-whatever="@getbootstrap">新增产品
                             </button>
 
                             <hr>
@@ -125,14 +125,15 @@
                                 </table>
                             </div>
 
-                            <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
-                                 aria-labelledby="insertModalLabel" style="display: none;" aria-hidden="true">
+                            <div class="modal fade" id="iModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="iModalLabel" style="display: none;" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="insertModalLabel">新增产品</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span id="modal-x" aria-hidden="true" onclick="clearInsModal()">×</span>
+                                            <h5 class="modal-title" id="iModalLabel">新增产品</h5>
+                                            <button id="iModalX" type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close" onclick="clearInsModal()">
+                                                <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -270,7 +271,7 @@
                 dataType: 'JSON',
                 success: function (res) {
                     if (res.code === 0) {
-                        document.getElementById("modal-x").click();
+                        document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
                     } else {
                         alert(res.msg);
