@@ -87,7 +87,7 @@
                         <div class="card-body">
 
                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#exampleModal" data-whatever="@getbootstrap">新增产品
+                                    data-target="#insertModal" data-whatever="@getbootstrap">新增产品
                             </button>
 
                             <hr>
@@ -125,36 +125,41 @@
                                 </table>
                             </div>
 
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                            <div class="modal fade" id="insertModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="insertModalLabel" style="display: none;" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">新增产品</h5>
+                                            <h5 class="modal-title" id="insertModalLabel">新增产品</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
+                                                <span id="modal-x" aria-hidden="true" onclick="clearInsModal()">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <span for="recipient-name" class="col-form-label">产品类型:</span>
+                                                    <span for="recipient-name" class="col-form-label">
+                                                        产品类型<span style="color: red">*</span>:
+                                                    </span>
                                                     <input type="text" class="form-control" id="iName">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">产品天数:</span>
+                                                    <span for="message-text" class="col-form-label">
+                                                        产品天数<span style="color: red">*</span>:
+                                                    </span>
                                                     <input type="number" class="form-control" id="iDays">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">备注信息:</span>
+                                                    <span for="message-text" class="col-form-label">
+                                                        备注信息<span style="color: red">*</span>:
+                                                    </span>
                                                     <input type="text" class="form-control" id="iExtra">
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
-                                                    data-dismiss="modal"
-                                            >确认上架
+                                            <button id="confirm" type="button" class="btn btn-primary"
+                                                    onclick="insertClick() ">确认上架
                                             </button>
                                         </div>
                                     </div>
@@ -249,20 +254,30 @@
      * 确认上架点击事件
      */
     function insertClick() {
-        $.ajax({
-            type: 'GET',
-            url: "/comtype/insert?name=" + $('#iName').val() + "&days=" + parseInt($('#iDays').val()) + "&extra=" + $
-            ('#iExtra').val(),
-            dataType: 'JSON',
-            success: function (res) {
-                if(res.code === 0) {
-                    clearInsModal();
-                    $('#datatab').DataTable().draw(false);
-                }else {
-                    alert(res.msg);
+        let name = $('#iName').val();
+        let days = $('#iDays').val();
+        let extra = $('#iExtra').val();
+        if (!name) {
+            alert("产品类型不能为空！");
+        } else if (!days) {
+            alert("产品天数不能为空！");
+        } else if (!extra) {
+            alert("备注信息不能为空！");
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: "/comtype/insert?name=" + name + "&days=" + days + "&extra=" + extra,
+                dataType: 'JSON',
+                success: function (res) {
+                    if (res.code === 0) {
+                        document.getElementById("modal-x").click();
+                        $('#datatab').DataTable().draw(false);
+                    } else {
+                        alert(res.msg);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     /**

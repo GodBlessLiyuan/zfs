@@ -6,6 +6,7 @@ import com.rpa.server.mapper.NoticeMapper;
 import com.rpa.server.pojo.NoticePO;
 import com.rpa.server.service.INoticeService;
 import com.rpa.server.vo.NoticeVO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +23,8 @@ import java.util.List;
 public class NoticeServiceImpl implements INoticeService {
     @Resource
     private NoticeMapper noticeMapper;
+    @Value("${file.publicPath}")
+    private String filePublicPath;
 
     @Override
     public ResultVO queryNotice(NoticeDTO dto) {
@@ -36,9 +39,10 @@ public class NoticeServiceImpl implements INoticeService {
             vo.setNoticeid(po.getNoticeId());
             vo.setType(po.getType());
             vo.setTitle(po.getTitle());
+            vo.setText(po.getText());
             vo.setShowtime(po.getShowTime());
             vo.setUrl(po.getUrl());
-            vo.setPicurl(po.getPicurl());
+            vo.setPicurl(filePublicPath + po.getPicurl());
             vos.add(vo);
         }
 
