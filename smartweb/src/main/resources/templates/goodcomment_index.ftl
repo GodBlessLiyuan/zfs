@@ -92,7 +92,7 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>手机号</label>
                                             <input id="phone" type="text" class="form-control">
                                         </div>
