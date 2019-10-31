@@ -154,7 +154,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="insert_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -278,7 +278,7 @@
 
         if (name == null || name.trim() == "") {
             alert("名称不能为空！")
-        }else if (picPath == null || picPath.trim() == "") {
+        }else if (picPath == null) {
             alert("banner图不能为空！")
         }else if (url == null || url.trim() == "") {
             alert("跳转不能为空！");
@@ -298,8 +298,7 @@
                         alert("新增失败！");
                     }
                     $('#datatab').DataTable().draw(false);
-                    $('#insertModal').modal('hide');
-                    $('.modal-backdrop').remove();
+                    document.getElementById("insert_xModal").click();
                 }
             });
 

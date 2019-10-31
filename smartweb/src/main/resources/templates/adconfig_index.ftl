@@ -168,7 +168,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="insert_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -272,7 +272,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">修改</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="update_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -369,7 +369,6 @@
 
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
-<script src="./js/bootstrap.js"></script>
 
 
 <script>
@@ -406,8 +405,7 @@
                 } else {
                     alert("新增失败！")
                 }
-                $('#insertModal').modal('hide');
-                $('.modal-backdrop').remove();
+               document.getElementById("insert_xModal").click();
             }, "json");
         }
     }
@@ -634,8 +632,7 @@
                 } else {
                     alert("更新失败！")
                 }
-                $('#updateModal').modal('hide');
-                $('.modal-backdrop').remove();
+                document.getElementById("update_xModal").click();
             }, "json");
         }
     }
