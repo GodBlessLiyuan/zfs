@@ -135,8 +135,9 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增插件</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
+                                            <button id="iModalX" type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close" onclick="clearInsModal()">
+                                                <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -157,8 +158,10 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">更新内容:</span>
-                                                    <input type="text" class="form-control" id="iContext">
+                                                    <span for="message-text" class="col-form-label">更新内容<span
+                                                                style="color: red">*</span>:</span>
+                                                    <input type="text" class="form-control" id="iContext"
+                                                           maxlength="100">
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">备注:</span>
@@ -167,8 +170,8 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
-                                                    data-dismiss="modal">确认发布
+                                            <button type="button" class="btn btn-primary" onclick="insertClick()">
+                                                确认发布
                                             </button>
                                         </div>
                                     </div>
@@ -180,7 +183,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">修改插件</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button id="uModal" type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
@@ -204,8 +208,10 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">更新内容:</span>
-                                                    <input type="text" class="form-control" id="uContext">
+                                                    <span for="message-text" class="col-form-label">更新内容<span
+                                                                style="color: red">*</span>:</span>
+                                                    <input type="text" class="form-control" id="uContext"
+                                                           maxlength="100">
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">备注:</span>
@@ -220,72 +226,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal fade" id="deleteModal" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="form-group">
-                                            <button type="hidden" id="dPluginId" style="display:none;"/>
-                                        </div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">提示</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">是否删除此信息</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
-                                            </button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="javascript:deleteClick()">确认删除
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="publishModal" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="form-group">
-                                            <button type="hidden" id="pPluginId" style="display:none;"/>
-                                        </div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">提示</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">是否发布新版本？</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
-                                            </button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="javascript:publishClick()">确认发布
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="unPublishModal" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="form-group">IP
-                                            <button type="hidden" id="upPluginId" style="display:none;"/>
-                                        </div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">提示</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">是否取消发布此版本？</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
-                                            </button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="javascript:unPublishClick()">确认取消
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+                            <#assign modalId = "publishModal">
+                            <#assign moduleTitle = "是否发布新插件？">
+                            <#assign moduleClick = "statusClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
+
+                            <#assign modalId = "unPublishModal">
+                            <#assign moduleTitle = "是否取消发布此插件？">
+                            <#assign moduleClick = "statusClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
+
+                            <#assign modalId = "deleteModal">
+                            <#assign moduleTitle = "是否删除此信息？">
+                            <#assign moduleClick = "deleteClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
 
                         </div>
                     </div>
@@ -326,6 +281,7 @@
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script src="./plugins/jquery-multi-select/jquery.multi-select.js"></script>
 <script>
+    let moduleData = new Map();
 
     $(document).ready(function () {
         // 下拉框请求后端并赋值
@@ -377,22 +333,26 @@
         reqData.append("context", $('#iContext').val());
         reqData.append("extra", $('#iExtra').val());
 
-        $.ajax({
-            type: 'post',
-            url: '/plugin/insert',
-            dataType: 'json',
-            data: reqData,
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                if(res.code === 0) {
-                    $('#datatab').DataTable().draw(false);
-                    clearInsModal();
-                }else {
-                    alert(res.msg);
+        if (!$('#iContext').val()) {
+            alert("更新内容不能为空！");
+        } else {
+            $.ajax({
+                type: 'post',
+                url: '/plugin/insert',
+                dataType: 'json',
+                data: reqData,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    if (res.code === 0) {
+                        document.getElementById("iModalX").click();
+                        $('#datatab').DataTable().draw(false);
+                    } else {
+                        alert(res.msg);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -407,21 +367,26 @@
         reqData.append("context", $('#uContext').val());
         reqData.append("extra", $('#uExtra').val());
 
-        $.ajax({
-            type: 'post',
-            url: '/plugin/update',
-            dataType: 'json',
-            data: reqData,
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                $('#datatab').DataTable().draw(false);
-            }
-        });
+        if (!$('#uContext').val()) {
+            alert("更新内容不能为空！");
+        } else {
+            $.ajax({
+                type: 'post',
+                url: '/plugin/update',
+                dataType: 'json',
+                data: reqData,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    document.getElementById("uModalX").click();
+                    $('#datatab').DataTable().draw(false);
+                }
+            });
+        }
     }
 
     function deleteClick() {
-        let pluginId = $('#dPluginId').val();
+        let pluginId = moduleData.get("id");
 
         $.ajax({
             type: 'GET',
@@ -433,27 +398,17 @@
         })
     }
 
-    function publishClick() {
-        let pluginId = $('#pPluginId').val();
+    function statusClick() {
+        let pluginId = moduleData.get("id");
+        let status = moduleData.get("status");
+
+        status = status === 1 ? 2 : 1;
 
         $.ajax({
             type: 'GET',
-            url: '/plugin/updateStatus?pluginId=' + pluginId + "&status=2",
+            url: '/plugin/updateStatus?pluginId=' + pluginId + "&status=" + status,
             dataType: 'json',
-            success: function (data) {
-                $('#datatab').DataTable().draw(false);
-            }
-        })
-    }
-
-    function unPublishClick() {
-        let pluginId = $('#upPluginId').val();
-
-        $.ajax({
-            type: 'GET',
-            url: '/plugin/updateStatus?pluginId=' + pluginId + "&status=1",
-            dataType: 'json',
-            success: function (data) {
+            success: function (res) {
                 $('#datatab').DataTable().draw(false);
             }
         })
@@ -562,7 +517,7 @@
     }
 
     /**
-     * 新增时，切换版本事件
+     * 跟新时，切换版本事件
      */
     function uAppIdClick() {
         let appId = $('#uAppId').val();
@@ -609,8 +564,6 @@
                 $('#uContext').val(data.context);
                 $('#uExtra').val(data.extra);
 
-                // $('#uAppId').empty();
-                // $('#uSoftChannel').empty();
                 $.each(data.ids.split(","), function (i, ids) {
                     ids = ids.split('|');
                     $('#uAppId').find("option[value='" + ids[0] + "']").attr("selected", true);
@@ -626,8 +579,8 @@
      * 删除弹框界面设值
      * @param data cmdyId
      */
-    function deleteModal(appId) {
-        $('#dPluginId').val(appId);
+    function deleteModal(pluginId) {
+        moduleData.set("id", pluginId);
     }
 
     /**
@@ -636,7 +589,8 @@
      * @param status
      */
     function publishModal(pluginId, status) {
-        status === 1 ? $('#pPluginId').val(pluginId) : $('#upPluginId').val(pluginId);
+        moduleData.set("id", pluginId);
+        moduleData.set("status", status);
     }
 
     /**
@@ -651,7 +605,6 @@
      */
     function clearInsModal() {
         $('#iFile').val(null);
-        // $('#iUpdateType option:first').prop('selected', 'selected');
         $('#iSoftChannel').multiSelect('deselect_all');
         $('#iContext').val(null);
         $('#iExtra').val(null);

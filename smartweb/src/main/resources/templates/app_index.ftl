@@ -141,8 +141,9 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增版本</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true" onclick="clearInsModal()">×</span>
+                                            <button id="iModalX" type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close" onclick="clearInsModal()">
+                                                <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -164,8 +165,10 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">更新内容:</span>
-                                                    <input type="text" class="form-control" id="iContext">
+                                                    <span for="message-text" class="col-form-label">更新内容<span
+                                                                style="color: red">*</span>:</span>
+                                                    <input type="text" class="form-control" id="iContext"
+                                                           maxlength="100">
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">备注:</span>
@@ -174,8 +177,8 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
-                                                    data-dismiss="modal">确认发布
+                                            <button type="button" class="btn btn-primary" onclick="insertClick()">
+                                                确认发布
                                             </button>
                                         </div>
                                     </div>
@@ -187,7 +190,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">修改版本</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button id="uModal" type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
@@ -213,7 +217,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">更新内容:</span>
+                                                    <span for="message-text" class="col-form-label">更新内容<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="text" class="form-control" id="uContext">
                                                 </div>
                                                 <div class="form-group">
@@ -223,80 +228,28 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="updateClick()"
-                                                    data-dismiss="modal">确认修改
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="deleteModal" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="form-group">
-                                            <button type="hidden" id="dAppId" style="display:none;"/>
-                                        </div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">提示</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">是否删除此信息</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
-                                            </button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="deleteClick()">确认删除
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="publishModal" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="form-group">
-                                            <button type="hidden" id="pAppId" style="display:none;"/>
-                                        </div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">提示</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">是否发布新版本？</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
-                                            </button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="publishClick()">确认发布
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="unPublishModal" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="form-group">IP
-                                            <button type="hidden" id="upAppId" style="display:none;"/>
-                                        </div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">提示</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">是否取消发布此版本？</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
-                                            </button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="unPublishClick()">确认取消
+                                            <button type="button" class="btn btn-primary" onclick="updateClick()">
+                                                确认修改
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+                            <#assign modalId = "publishModal">
+                            <#assign moduleTitle = "是否发布新版本？">
+                            <#assign moduleClick = "statusClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
+
+                            <#assign modalId = "unPublishModal">
+                            <#assign moduleTitle = "是否取消发布此版本？">
+                            <#assign moduleClick = "statusClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
+
+                            <#assign modalId = "deleteModal">
+                            <#assign moduleTitle = "是否删除此信息？">
+                            <#assign moduleClick = "deleteClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
                         </div>
                     </div>
                 </div>
@@ -336,6 +289,7 @@
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script src="./plugins/jquery-multi-select/jquery.multi-select.js"></script>
 <script>
+    let moduleData = new Map();
 
     $(document).ready(function () {
         // 下拉框请求后端并赋值
@@ -458,22 +412,26 @@
         reqData.append("context", $('#iContext').val());
         reqData.append("extra", $('#iExtra').val());
 
-        $.ajax({
-            type: 'post',
-            url: '/appversion/insert',
-            dataType: 'json',
-            data: reqData,
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                if (res.code !== 0) {
-                    alert(res.msg);
-                } else {
-                    clearInsModal()
-                    $('#datatab').DataTable().draw(false);
+        if (!$('#iContext').val()) {
+            alert("更新内容不能为空！");
+        } else {
+            $.ajax({
+                type: 'post',
+                url: '/appversion/insert',
+                dataType: 'json',
+                data: reqData,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    if (res.code !== 0) {
+                        alert(res.msg);
+                    } else {
+                        document.getElementById("iModalX").click();
+                        $('#datatab').DataTable().draw(false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -488,21 +446,26 @@
         reqData.append("context", $('#uContext').val());
         reqData.append("extra", $('#uExtra').val());
 
-        $.ajax({
-            type: 'post',
-            url: '/appversion/update',
-            dataType: 'json',
-            data: reqData,
-            contentType: false,
-            processData: false,
-            success: function (res) {
-                $('#datatab').DataTable().draw(false);
-            }
-        });
+        if (!$('#uContext').val()) {
+            alert("更新内容不能为空！");
+        } else {
+            $.ajax({
+                type: 'post',
+                url: '/appversion/update',
+                dataType: 'json',
+                data: reqData,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    document.getElementById("uModalX").click();
+                    $('#datatab').DataTable().draw(false);
+                }
+            });
+        }
     }
 
     function deleteClick() {
-        let appId = $('#dAppId').val();
+        let appId = moduleData.get("id");
 
         $.ajax({
             type: 'GET',
@@ -514,25 +477,15 @@
         })
     }
 
-    function publishClick() {
-        let appId = $('#pAppId').val();
+    function statusClick() {
+        let appId = moduleData.get("id");
+        let status = moduleData.get("status");
+
+        status = status === 1 ? 2 : 1;
 
         $.ajax({
             type: 'GET',
-            url: '/appversion/updateStatus?appId=' + appId + "&status=2",
-            dataType: 'json',
-            success: function (data) {
-                $('#datatab').DataTable().draw(false);
-            }
-        })
-    }
-
-    function unPublishClick() {
-        let appId = $('#upAppId').val();
-
-        $.ajax({
-            type: 'GET',
-            url: '/appversion/updateStatus?appId=' + appId + "&status=1",
+            url: '/appversion/updateStatus?appId=' + appId + "&status=" + status,
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -581,7 +534,7 @@
      * @param data cmdyId
      */
     function deleteModal(appId) {
-        $('#dAppId').val(appId);
+        moduleData.set("id", appId);
     }
 
     /**
@@ -590,7 +543,8 @@
      * @param status
      */
     function publishModal(appId, status) {
-        status === 1 ? $('#pAppId').val(appId) : $('#upAppId').val(appId);
+        moduleData.set("id", appId);
+        moduleData.set("status", status);
     }
 
     /**

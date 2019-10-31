@@ -128,7 +128,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增渠道</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
+                                            <button id="iModalX" type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close" onclick="clearInsModal()">
                                                 <span aria-hidden="true">×</span>
                                             </button>
@@ -136,19 +136,20 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">渠道名称:</span>
+                                                    <span for="message-text" class="col-form-label">渠道名称<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="text" class="form-control" id="iChannelName">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">备注:</span>
+                                                    <span for="message-text" class="col-form-label">备注<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="text" class="form-control" id="iExtra">
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
-                                                    data-dismiss="modal"
-                                            >确认添加
+                                            <button type="button" class="btn btn-primary" onclick="insertClick()">
+                                                确认添加
                                             </button>
                                         </div>
                                     </div>
@@ -202,6 +203,8 @@
 
         if (!channelName) {
             alert("渠道名称不能为空!");
+        } else if (!extra) {
+            alert("备注不能为空!");
         } else {
             $.ajax({
                 type: 'GET',
@@ -209,8 +212,8 @@
                 dataType: 'json',
                 success: function (res) {
                     if (res.code === 0) {
+                        document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
-                        clearInsModal();
                     } else {
                         alert(res.msg);
                     }

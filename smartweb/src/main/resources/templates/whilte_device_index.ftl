@@ -130,7 +130,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">新增白名单</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
+                                            <button id="iModalX" type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close" onclick="clearInsModal()">
                                                 <span aria-hidden="true">×</span>
                                             </button>
@@ -138,45 +138,30 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">imei:</span>
+                                                    <span for="message-text" class="col-form-label">imei<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="text" class="form-control" id="iImei">
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">备注:</span>
+                                                    <span for="message-text" class="col-form-label">备注<span
+                                                                style="color: red">*</span>:</span>
                                                     <input type="text" class="form-control" id="iExtra">
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onclick="insertClick()"
-                                                    data-dismiss="modal">确认添加
+                                            <button type="button" class="btn btn-primary" onclick="insertClick()">
+                                                确认添加
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal fade" id="deleteModal" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="form-group">
-                                            <button type="hidden" id="dDeviceId" style="display:none;"/>
-                                        </div>
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">提示</h5>
-                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">是否删除此信息</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消
-                                            </button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    onclick="javascript:deleteClick()">确认删除
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+                            <#assign modalId = "deleteModal">
+                            <#assign moduleTitle = "是否删除此信息？">
+                            <#assign moduleClick = "deleteClick()">
+                            <#include "/freemarker/base/dialog.ftl"/>
                         </div>
                     </div>
                 </div>
@@ -215,6 +200,8 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
+    let moduleData = new Map();
+
     /**
      * 确认上架点击事件
      */
@@ -222,29 +209,35 @@
         let imei = $('#iImei').val();
         let extra = $('#iExtra').val();
 
-        $.ajax({
-            type: 'GET',
-            url: "/whiltedevice/insert?imei=" + imei + "&extra=" + extra,
-            dataType: 'json',
-            success: function (data) {
-                if (data.code === 0) {
-                    $('#datatab').DataTable().draw(false);
-                    clearInsModal();
-                } else {
-                    alert(data.msg);
+        if (!imei) {
+            alert("imei不能为空！");
+        } else if (!extra) {
+            alert("备注不能为空！");
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: "/whiltedevice/insert?imei=" + imei + "&extra=" + extra,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code === 0) {
+                        document.getElementById("iModalX").click();
+                        $('#datatab').DataTable().draw(false);
+                    } else {
+                        alert(data.msg);
+                    }
                 }
-            }
-        })
+            });
+        }
     }
 
     function deleteClick() {
-        let deviceId = $('#dDeviceId').val();
+        let deviceId = moduleData.get("id");
 
         $.ajax({
             type: 'GET',
             url: '/whiltedevice/delete?deviceId=' + deviceId,
             dataType: 'json',
-            success: function (data) {
+            success: function (res) {
                 $('#datatab').DataTable().draw(false);
             }
         })
@@ -313,7 +306,7 @@
      * @param data cmdyId
      */
     function deleteModal(deviceId) {
-        $('#dDeviceId').val(deviceId);
+        moduleData.set("id", deviceId);
     }
 
     /**
