@@ -42,7 +42,9 @@ public class NoticeServiceImpl implements INoticeService {
             vo.setText(po.getText());
             vo.setShowtime(po.getShowTime());
             vo.setUrl(po.getUrl());
-            vo.setPicurl(filePublicPath + po.getPicurl());
+            if (null != po.getPicurl()) {
+                vo.setPicurl(filePublicPath + po.getPicurl());
+            }
             vos.add(vo);
         }
 
