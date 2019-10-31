@@ -7,14 +7,16 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class PathInterceptor implements HandlerInterceptor {
+
+    private String projectBaseUrl;
+
+    public PathInterceptor(String projectBaseUrl){
+        this.projectBaseUrl = projectBaseUrl;
+    }
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String path = request.getContextPath();
-        String scheme = request.getScheme();
-        String serverName = request.getServerName();
-        int port = request.getServerPort();
-        String basePath = scheme + "://" + serverName + ":" + port + path;
-        request.setAttribute("basePath",basePath);
+        request.setAttribute("basePath", projectBaseUrl);
         return true;
     }
 }
