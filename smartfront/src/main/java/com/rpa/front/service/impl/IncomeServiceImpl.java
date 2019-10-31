@@ -1,6 +1,7 @@
 package com.rpa.front.service.impl;
 
 import com.rpa.front.bo.InviteUserBO;
+import com.rpa.front.common.ErrorCode;
 import com.rpa.front.common.ResultVO;
 import com.rpa.front.dto.DetermineDTO;
 import com.rpa.front.dto.IncomeDTO;
@@ -14,6 +15,8 @@ import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
 import com.rpa.front.vo.RecordVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import java.util.List;
  * @description: 爱收益
  * @version: 1.0
  */
+@EnableTransactionManagement
 @Service
 public class IncomeServiceImpl implements IIncomeService {
     @Resource
@@ -38,8 +42,8 @@ public class IncomeServiceImpl implements IIncomeService {
     @Override
     public ResultVO query(IncomeDTO dto) {
         RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(dto.getUd());
-        if(po == null) {
-            return new ResultVO<>(1000, new IncomeVO(0L,0,0,0L));
+        if (po == null) {
+            return new ResultVO<>(1000, new IncomeVO(0L, 0, 0, 0L));
         }
 
         IncomeVO vo = new IncomeVO();
@@ -51,24 +55,42 @@ public class IncomeServiceImpl implements IIncomeService {
         return new ResultVO<>(1000, vo);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO determine(DetermineDTO dto, IncomeDTO loginInfo) {
-        RevenueUserPO revenueUserPO = revenueUserMapper.selectByPrimaryKey(loginInfo.getUd());
-        if(revenueUserPO.getRemaining() < dto.getMoney()) {
-            // 余额不足
-            return new ResultVO(2000);
+        List<WithdrawUserPO> pos = withdrawUserMapper.queryByUserId(loginInfo.getUd());
+        for (WithdrawUserPO po : pos) {
+            if (1 == po.getStatus() || 3 == po.getStatus()) {
+                // 当前存在尚未结束的提款申请
+                return new ResultVO(ErrorCode.WITHDRAW_UNFINISHED);
+            }
         }
 
-        // TODO: 打款
+        RevenueUserPO revenueUserPO = revenueUserMapper.selectByPrimaryKey(loginInfo.getUd());
+        if (revenueUserPO.getRemaining() < dto.getMoney()) {
+            // 余额不足
+            return new ResultVO(ErrorCode.INSUFFICIENT_BALANCE);
+        }
 
         WithdrawUserPO withdrawUserPO = new WithdrawUserPO();
         withdrawUserPO.setCreateTime(new Date());
         withdrawUserPO.setUserId(loginInfo.getUd());
+        withdrawUserPO.setDeviceId(loginInfo.getId());
+        withdrawUserPO.setUserDeviceId(loginInfo.getUdd());
         withdrawUserPO.setWithdraw(dto.getMoney());
-        withdrawUserPO.setRemaining(revenueUserPO.getRemaining());
+        withdrawUserPO.setRemaining(revenueUserPO.getRemaining() - dto.getMoney());
+        withdrawUserPO.setAliAccount(dto.getAccount());
+        withdrawUserPO.setAliName(dto.getName());
+        withdrawUserPO.setWithdrawTime(revenueUserPO.getWithdrawTime() + 1);
+        withdrawUserPO.setStatus((byte) 1);
+        withdrawUserMapper.insert(withdrawUserPO);
 
+        revenueUserPO.setWithdraw(revenueUserPO.getWithdraw() + dto.getMoney());
+        revenueUserPO.setWithdrawTime(revenueUserPO.getWithdrawTime() + 1);
+        revenueUserPO.setRemaining(revenueUserPO.getRemaining() - dto.getMoney());
+        revenueUserMapper.updateByPrimaryKey(revenueUserPO);
 
-        return new ResultVO<>(1000, null);
+        return new ResultVO<>(1000, revenueUserPO.getRemaining());
     }
 
     @Override
