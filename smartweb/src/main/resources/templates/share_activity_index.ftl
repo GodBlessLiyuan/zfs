@@ -88,7 +88,7 @@
                         <div class="card-body">
 
                             <button type="button" class="btn btn-primary" data-toggle='modal'
-                                    data-target='#insertModal'>
+                                    data-target='#insertModal' onclick="insert_button()">
                                 新增
                             </button>
 
@@ -96,7 +96,7 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>素材类型</label>
                                             <select id="type" class="form-control">
                                                 <option value='0' selected='selected'>全部</option>
@@ -148,7 +148,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="insert_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -158,25 +158,25 @@
                             <button type="hidden" id="insert" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">素材类型:</span>
-                            <label><input type="radio" name="insert_type" value="1"
+                            <span for="message-text" class="col-form-label">素材类型：</span>
+                            <label><input type="radio" name="insert_type" value="1" checked
                                           onclick="insertTypeClick()"/>文字</label>
                             <label><input type="radio" name="insert_type" value="2"
                                           onclick="insertTypeClick()"/>图片</label>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">内容:</span>
+                            <span for="message-text" class="col-form-label">内容：<span style="color: red"> *</span></span>
                             <div id="insert_content_type">
                             </div>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">备注:</span>
+                            <span for="recipient-name" class="col-form-label">备注：</span>
                             <input id="insert_extra" class="form-control" type="text"/>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定上架
+                    <button type="button" class="btn btn-primary" onclick="insertClick()">确定上架
                     </button>
                 </div>
             </div>
@@ -191,7 +191,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">修改</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="update_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -201,25 +201,25 @@
                             <button type="hidden" id="update" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">素材类型:</span>
+                            <span for="message-text" class="col-form-label">素材类型：</span>
                             <label><input type="radio" name="update_type" value="1"
                                           onclick="updateTextClick()"/>文字</label>
                             <label><input type="radio" name="update_type" value="2"
                                           onclick="updateImageClick()"/>图片</label>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">内容:</span>
+                            <span for="message-text" class="col-form-label">内容：<span style="color: red"> *</span></span>
                             <div id="update_content_type">
                             </div>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">备注:</span>
+                            <span for="recipient-name" class="col-form-label">备注：</span>
                             <input id="update_extra" class="form-control" type="text"/>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="updateClick()" data-dismiss="modal">确定上架
+                    <button type="button" class="btn btn-primary" onclick="updateClick()">确定上架
                     </button>
                 </div>
             </div>
@@ -285,6 +285,13 @@
 
 <script>
     /**
+     * 新增：点击新增按钮时
+     */
+    function insert_button() {
+        insertTypeClick();
+    }
+
+    /**
      * 新增：选好素材类型时，弹出相对应的内容框
      */
     function insertTypeClick() {
@@ -312,6 +319,19 @@
         }
         reqData.append("extra", $('#insert_extra').val());
 
+        if (type == 1) {
+            var contentText = $('#insert_content').val();
+            if (contentText == null || contentText.trim() == "") {
+                alert("内容不能为空！");
+                return;
+            }
+        } else if (type == 2) {
+            var contentImage = $('#insert_content')[0].files[0];
+            if (contentImage == null) {
+                alert("内容不能为空！");
+                return;
+            }
+        }
         $.ajax({
             type: 'post',
             url: '/shareactivity/insert',
@@ -320,8 +340,13 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                alert("新增成功！")
-                $('#datatab').DataTable().draw(false);
+                if (result.code == 0) {
+                    alert("新增成功！");
+                    $('#datatab').DataTable().draw(false);
+                } else {
+                    alert("新增失败！");
+                }
+                document.getElementById("insert_xModal").click();
             }
         });
     }
@@ -477,6 +502,19 @@
         }
         reqData.append("extra", $('#update_extra').val());
 
+        if (type == 1) {
+            var contentText = $('#update_content').val();
+            if (contentText == null || contentText.trim() == "") {
+                alert("内容不能为空！");
+                return;
+            }
+        } else {
+            var contentImage = $('#update_content')[0].files[0];
+            if (contentImage == null) {
+                alert("内容不能为空！");
+                return;
+            }
+        }
         $.ajax({
             type: 'post',
             url: '/shareactivity/update',
@@ -485,8 +523,13 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                alert("修改成功！")
-                $('#datatab').DataTable().draw(false);
+                if (result.code == 0) {
+                    alert("修改成功！");
+                    $('#datatab').DataTable().draw(false);
+                } else {
+                    alert("修改失败！");
+                }
+                document.getElementById("update_xModal").click();
             }
         });
     }
