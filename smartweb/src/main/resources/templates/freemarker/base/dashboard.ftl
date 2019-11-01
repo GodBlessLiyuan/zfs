@@ -50,17 +50,19 @@
                         </ul>
                     </li>
 
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">应用管理</a>
-                        <ul aria-expanded="false">
-                            <li><a href="/appversion">版本更新</a></li>
-                            <li><a href="/plugin">插件更新</a></li>
-                            <li><a href="/whiltedevice">测试白名单</a></li>
-                            <li><a href="/wxsupport">微信白名单</a></li>
-                            <li><a href="/softchannel">渠道信息</a></li>
-                            <li><a href="/otherapp">其他产品</a></li>
-                            <li><a href="/otherapp">异常渠道</a></li>
-                        </ul>
-                    </li>
+                    <#if roleId == 1 || roleId == 2 || roleId == 3>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">应用管理</a>
+                            <ul aria-expanded="false">
+                                <li><a href="/appversion">版本更新</a></li>
+                                <li><a href="/plugin">插件更新</a></li>
+                                <li><a href="/whiltedevice">测试白名单</a></li>
+                                <li><a href="/wxsupport">微信白名单</a></li>
+                                <li><a href="/softchannel">渠道信息</a></li>
+                                <li><a href="/otherapp">其他产品</a></li>
+                                <li><a href="/otherapp">异常渠道</a></li>
+                            </ul>
+                        </li>
+                    </#if>
 
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">用户管理</a>
                         <ul aria-expanded="false">
@@ -70,12 +72,14 @@
                         </ul>
                     </li>
 
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">系统管理</a>
-                        <ul aria-expanded="false">
-                            <li><a href="/role">权限管理</a></li>
-                            <li><a href="/admin">账号管理</a></li>
-                        </ul>
-                    </li>
+                    <#if roleId == 1 || roleId == 2>
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">系统管理</a>
+                            <ul aria-expanded="false">
+                                <li><a href="/role">权限管理</a></li>
+                                <li><a href="/admin">账号管理</a></li>
+                            </ul>
+                        </li>
+                    </#if>
 
         </ul>
     </div>
