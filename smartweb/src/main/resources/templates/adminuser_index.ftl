@@ -96,11 +96,11 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>手机号：</label>
                                             <input id="phone" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-4">
                                             <label>备注信息：</label>
                                             <input id="extra" type="text" class="form-control">
                                         </div>
@@ -151,7 +151,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="insert_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -161,29 +161,30 @@
                             <button type="hidden" id="insert" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">角色:</span>
+                            <span for="message-text" class="col-form-label">角色：<span style="color: red"> *</span></span>
                             <select id="insert_roleId" class="form-control">
                             </select>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">账号:</span>
+                            <span for="recipient-name" class="col-form-label">账号：<span style="color: red"> *</span></span>
                             <input id="insert_username" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">密码:</span>
+                            <span for="recipient-name" class="col-form-label">密码：<span style="color: red"> *</span></span>
                             <input id="insert_password" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">姓名:</span>
+                            <span for="message-text" class="col-form-label">姓名：<span style="color: red"> *</span></span>
                             <input id="insert_name" class="form-control" type="text">
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">手机号:</span>
-                            <input id="insert_phone" class="form-control" type="text">
+                            <span for="message-text" class="col-form-label">手机号：<span style="color: red"> *</span></span>
+                            <input id="insert_phone" class="form-control" type="text"
+                                   onblur="insert_checkPhone()">
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">邮箱:</span>
-                            <input id="insert_email" class="form-control" type="text">
+                            <span for="message-text" class="col-form-label">邮箱：<span style="color: red"> *</span></span>
+                            <input id="insert_email" class="form-control" type="email">
                         </div>
                         <div class="form-group">
                             <span for="message-text" class="col-form-label">备注:</span>
@@ -192,7 +193,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定创建</button>
+                    <button type="button" class="btn btn-primary" onclick="insertClick()">确定创建</button>
                 </div>
             </div>
         </div>
@@ -206,7 +207,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">修改</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="update_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -216,38 +217,39 @@
                             <button type="hidden" id="update" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">角色:</span>
+                            <span for="message-text" class="col-form-label">角色：<span style="color: red"> *</span></span>
                             <select id="up_roleId" class="form-control">
                             </select>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">账号:</span>
+                            <span for="recipient-name" class="col-form-label">账号：<span style="color: red"> *</span></span>
                             <input id="up_username" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">密码:</span>
+                            <span for="recipient-name" class="col-form-label">密码：<span style="color: red"> *</span></span>
                             <input id="up_password" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">姓名:</span>
+                            <span for="recipient-name" class="col-form-label">姓名：<span style="color: red"> *</span></span>
                             <input id="up_name" class="form-control" type="text"/>
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">手机号:</span>
-                            <input id="up_phone" class="form-control" type="text">
+                            <span for="message-text" class="col-form-label">手机号：<span style="color: red"> *</span></span>
+                            <input id="up_phone" class="form-control" type="text"
+                                   onblur="up_checkPhone()">
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">邮箱:</span>
-                            <input id="up_email" class="form-control" type="text">
+                            <span for="message-text" class="col-form-label">邮箱：<span style="color: red"> *</span></span>
+                            <input id="up_email" class="form-control" type="email">
                         </div>
                         <div class="form-group">
-                            <span for="message-text" class="col-form-label">备注:</span>
+                            <span for="message-text" class="col-form-label">备注：</span>
                             <input id="up_extra" class="form-control" type="text">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateClick()">确认修改</button>
+                    <button type="button" class="btn btn-primary" onclick="updateClick()">确认修改</button>
                 </div>
             </div>
         </div>
@@ -343,15 +345,29 @@
         var email = $('#insert_email').val();
         var extra = $('#insert_extra').val();
 
-        $.post("/admin/insert", {roleId:roleId, username:username, password:password, name:name, phone:phone,
-            email:email, extra:extra}, function (result) {
-            if (result.code === 0) {
-                alert("新增成功！")
-                $('#datatab').DataTable().draw(false);
-            } else {
-                alert("新增失败！")
-            }
-        }, "json");
+        if (username == null || username.trim() == "") {
+            alert("账号不能为空！")
+        }else if (password == null || password.trim() == "") {
+            alert("密码不能为空！")
+        }else if (name == null || name.trim() == "") {
+            alert("姓名不能为空！")
+        }else if (phone == null || phone.trim() == "") {
+            alert("手机号不能为空！")
+        }else if (email == null || email.trim() == "") {
+            alert("邮箱不能为空！")
+        }else{
+
+            $.post("/admin/insert", {roleId:roleId, username:username, password:password, name:name, phone:phone,
+                email:email, extra:extra}, function (result) {
+                if (result.code === 0) {
+                    alert("新增成功！")
+                    $('#datatab').DataTable().draw(false);
+                } else {
+                    alert("新增失败！")
+                }
+            }, "json");
+            document.getElementById("insert_xModal").click();
+        }
     }
 
 
@@ -474,15 +490,29 @@
         var email = $('#up_email').val();
         var extra = $('#up_extra').val();
 
-        $.post("/admin/update", {aId:aId, roleId:roleId, username:username, password:password, name:name,
-            phone:phone, email:email, extra:extra}, function (result) {
-            if (result.code === 0) {
-                alert("更新成功！")
-                $('#datatab').DataTable().draw(false);
-            } else {
-                alert("更新失败！")
-            }
-        }, "json");
+        if (username == null || username.trim() == "") {
+            alert("账号不能为空！")
+        }else if (password == null || password.trim() == "") {
+            alert("密码不能为空！")
+        }else if (name == null || name.trim() == "") {
+            alert("姓名不能为空！")
+        }else if (phone == null || phone.trim() == "") {
+            alert("手机号不能为空！")
+        }else if (email == null || email.trim() == "") {
+            alert("邮箱不能为空！")
+        }else{
+
+            $.post("/admin/update", {aId:aId, roleId:roleId, username:username, password:password, name:name,
+                phone:phone, email:email, extra:extra}, function (result) {
+                if (result.code === 0) {
+                    alert("更新成功！")
+                    $('#datatab').DataTable().draw(false);
+                } else {
+                    alert("更新失败！")
+                }
+            }, "json");
+            document.getElementById("update_xModal").click();
+        }
     }
 
     /**
@@ -506,6 +536,26 @@
                 alert("删除失败！")
             }
         }, "json");
+    }
+
+
+    /**
+     * 输入框限制：手机号码
+     */
+    function insert_checkPhone() {
+        var phone = document.getElementById('insert_phone').value;
+        checkPhone(phone);
+    }
+
+    function up_checkPhone() {
+        var phone = document.getElementById('up_phone').value;
+        checkPhone(phone);
+    }
+
+    function checkPhone(phone){
+        if(!(/^1[3456789]\d{9}$/.test(phone))){
+            alert("手机号码有误，请重填！");
+        }
     }
 </script>
 

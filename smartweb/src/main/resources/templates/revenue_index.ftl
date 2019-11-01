@@ -96,11 +96,11 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>邀请人账号：</label>
                                             <input id="phone" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>排序：</label>
                                             <select id="orderby" class="form-control">
                                                 <option value='1'>按邀请人数</option>
