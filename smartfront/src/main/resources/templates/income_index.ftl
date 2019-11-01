@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div style="width: 30%; height: 20px; float:right;margin-right: 15px">
-                    <a class="btn btn-primary " href="${basePath}/withdraw.ftl" style="border-radius: 20px; width:100%;background-color:#3496E8; vertical-align: center">提现</a>
+                    <a class="btn btn-primary " href="${basePath}/withdraw" style="border-radius: 20px; width:100%;background-color:#3496E8; vertical-align: center">提现</a>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
        <div class="my_state">
             <div class="invation_top">
                 <span class="font_inva">我的邀请</span>
-                <span class="span_right "><a href="${basePath}/invation_details.ftl" class="font_inva" style="text-decoration:none">详情></a></span>
+                <span class="span_right "><a href="${basePath}/invation_details" class="font_inva" style="text-decoration:none">详情></a></span>
             </div>
             <div class="rows state_bottom ">
                 <div class="flex1" catchtap="my_pickGoods">
@@ -114,7 +114,6 @@
                         2.VIP会员邀请后，如好友支付时你已不是会员，这时将无法获得邀请奖励哦。
                     </p>
                 </div>
-
         </div>
 
 
