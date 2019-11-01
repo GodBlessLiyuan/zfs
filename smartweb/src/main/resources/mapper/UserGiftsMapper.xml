@@ -10,9 +10,11 @@
     <result column="a_id" jdbcType="INTEGER" property="aId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
   </resultMap>
   <sql id="Base_Column_List">
-    nug_id, com_type_id, com_type_name, `days`, `status`, a_id, create_time, update_time
+    nug_id, com_type_id, com_type_name, `days`, `status`, a_id, create_time, update_time, 
+    dr
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,10 +29,12 @@
   <insert id="insert" parameterType="com.rpa.web.pojo.UserGiftsPO">
     insert into t_user_gifts (nug_id, com_type_id, com_type_name, 
       `days`, `status`, a_id, 
-      create_time, update_time)
+      create_time, update_time, dr
+      )
     values (#{nugId,jdbcType=INTEGER}, #{comTypeId,jdbcType=INTEGER}, #{comTypeName,jdbcType=CHAR}, 
       #{days,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{aId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.UserGiftsPO">
     insert into t_user_gifts
@@ -59,6 +63,9 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="dr != null">
+        dr,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="nugId != null">
@@ -84,6 +91,9 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -111,6 +121,9 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
     </set>
     where nug_id = #{nugId,jdbcType=INTEGER}
   </update>
@@ -122,7 +135,8 @@
       `status` = #{status,jdbcType=TINYINT},
       a_id = #{aId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=TINYINT}
     where nug_id = #{nugId,jdbcType=INTEGER}
   </update>
 

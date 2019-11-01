@@ -425,7 +425,7 @@ CREATE TABLE t_new_user_record
 	user_id bigint,
 	user_device_id int,
 	device_id bigint,
-	nug_id int NOT NULL,
+	nug_id int,
 	create_time datetime,
 	PRIMARY KEY (nur_id),
 	UNIQUE (nur_id)
@@ -564,7 +564,7 @@ CREATE TABLE t_revenue_user
 	withdraw bigint,
 	withdraw_time int,
 	remaining bigint,
-	sharecode char(16),
+	sharecode char(32),
 	PRIMARY KEY (user_id),
 	UNIQUE (user_id)
 );
@@ -669,6 +669,8 @@ CREATE TABLE t_user_gifts
 	a_id int,
 	create_time datetime,
 	update_time datetime,
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
 	PRIMARY KEY (nug_id),
 	UNIQUE (nug_id)
 );
