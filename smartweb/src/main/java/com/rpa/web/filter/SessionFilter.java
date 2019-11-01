@@ -18,9 +18,6 @@ import java.util.List;
  */
 public class SessionFilter implements Filter {
 
-    // 标示符：表示当前用户未登录
-    String NO_LOGIN = "您还未登录！";
-
     // 不需要登录就可以访问的路径(比如:注册登录等)
     String[] includeUrls = new String[]{"/login", "/entry", "/login/get/checkcode", "/"};
     List<String> excludeList = new ArrayList<>();
@@ -56,7 +53,8 @@ public class SessionFilter implements Filter {
                 String requestType = request.getHeader("X-Requested-With");
                 //判断是否是ajax请求
                 if (requestType != null && "XMLHttpRequest".equals(requestType)) {
-                    response.getWriter().write(this.NO_LOGIN);
+                    response.setContentType("application/json; charset=utf-8");
+                    response.getWriter().write("{\"code\": 1008}");
                 } else {
                     //重定向到登录页
                     response.sendRedirect(request.getContextPath() + "/login");
