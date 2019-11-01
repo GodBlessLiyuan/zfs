@@ -99,6 +99,7 @@ public class LoginServiceImpl implements LoginService {
 
             // 供前端取用
             session.setAttribute("username", username);
+            session.setAttribute("roleId", po.getRoleId());
 
 
 
