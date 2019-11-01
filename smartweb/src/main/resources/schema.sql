@@ -384,8 +384,7 @@ CREATE TABLE t_invite_detail
 	pay_time datetime,
 	invite_id int NOT NULL,
 	PRIMARY KEY (inde_id),
-	UNIQUE (inde_id),
-	UNIQUE (invite_id)
+	UNIQUE (inde_id)
 );
 
 
@@ -413,10 +412,10 @@ CREATE TABLE t_key_text
 
 CREATE TABLE t_key_value
 (
-    key_name int NOT NULL,
-    value varchar(256),
-    PRIMARY KEY (key_name),
-    UNIQUE (key_name)
+	key_name int NOT NULL,
+	value char(255),
+	PRIMARY KEY (key_name),
+	UNIQUE (key_name)
 );
 
 
@@ -565,6 +564,7 @@ CREATE TABLE t_revenue_user
 	withdraw bigint,
 	withdraw_time int,
 	remaining bigint,
+	sharecode char(16),
 	PRIMARY KEY (user_id),
 	UNIQUE (user_id)
 );

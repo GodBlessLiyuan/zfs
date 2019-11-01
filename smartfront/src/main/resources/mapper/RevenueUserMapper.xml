@@ -10,10 +10,11 @@
     <result column="withdraw" jdbcType="BIGINT" property="withdraw" />
     <result column="withdraw_time" jdbcType="INTEGER" property="withdrawTime" />
     <result column="remaining" jdbcType="BIGINT" property="remaining" />
+    <result column="sharecode" jdbcType="CHAR" property="sharecode" />
   </resultMap>
   <sql id="Base_Column_List">
     user_id, invite_count, pay_count, register_count, total_revenue, withdraw, withdraw_time, 
-    remaining
+    remaining, sharecode
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -28,10 +29,12 @@
   <insert id="insert" parameterType="com.rpa.front.pojo.RevenueUserPO">
     insert into t_revenue_user (user_id, invite_count, pay_count, 
       register_count, total_revenue, withdraw, 
-      withdraw_time, remaining)
+      withdraw_time, remaining, sharecode
+      )
     values (#{userId,jdbcType=BIGINT}, #{inviteCount,jdbcType=INTEGER}, #{payCount,jdbcType=INTEGER}, 
       #{registerCount,jdbcType=BIGINT}, #{totalRevenue,jdbcType=BIGINT}, #{withdraw,jdbcType=BIGINT}, 
-      #{withdrawTime,jdbcType=INTEGER}, #{remaining,jdbcType=BIGINT})
+      #{withdrawTime,jdbcType=INTEGER}, #{remaining,jdbcType=BIGINT}, #{sharecode,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.front.pojo.RevenueUserPO">
     insert into t_revenue_user
@@ -60,6 +63,9 @@
       <if test="remaining != null">
         remaining,
       </if>
+      <if test="sharecode != null">
+        sharecode,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -85,6 +91,9 @@
       </if>
       <if test="remaining != null">
         #{remaining,jdbcType=BIGINT},
+      </if>
+      <if test="sharecode != null">
+        #{sharecode,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -112,6 +121,9 @@
       <if test="remaining != null">
         remaining = #{remaining,jdbcType=BIGINT},
       </if>
+      <if test="sharecode != null">
+        sharecode = #{sharecode,jdbcType=CHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
@@ -123,7 +135,8 @@
       total_revenue = #{totalRevenue,jdbcType=BIGINT},
       withdraw = #{withdraw,jdbcType=BIGINT},
       withdraw_time = #{withdrawTime,jdbcType=INTEGER},
-      remaining = #{remaining,jdbcType=BIGINT}
+      remaining = #{remaining,jdbcType=BIGINT},
+      sharecode = #{sharecode,jdbcType=CHAR}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
 </mapper>
