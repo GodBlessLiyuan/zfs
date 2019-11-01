@@ -22,4 +22,5 @@ public class ConfigConstant {
     public static final int PROBLEM_URL = 15;
     public static final int FREE_VIP = 16;
     public static final int PROTOCOL = 17;
+    public static final int JOIN_QQ_CODE = 18;
 }

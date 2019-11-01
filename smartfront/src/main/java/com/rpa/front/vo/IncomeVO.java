@@ -13,25 +13,23 @@ import java.io.Serializable;
  * @version: 1.0
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class IncomeVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
      * 余额
      */
-    private Long balance;
+    private long balance;
     /**
      * 成功邀请
      */
-    private Integer invitenum;
+    private int invitenum;
     /**
      * 付款人数
      */
-    private Integer paynum;
+    private int paynum;
     /**
      * 累计奖励
      */
-    private Long totalmny;
+    private long totalmny;
 }
