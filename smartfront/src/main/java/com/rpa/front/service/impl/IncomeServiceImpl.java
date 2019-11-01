@@ -43,7 +43,18 @@ public class IncomeServiceImpl implements IIncomeService {
     public ResultVO query(IncomeDTO dto) {
         RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(dto.getUd());
         if (po == null) {
-            return new ResultVO<>(1000, new IncomeVO());
+            // 初始化
+            po = new RevenueUserPO();
+            po.setUserId(dto.getUd());
+            po.setInviteCount(0);
+            po.setPayCount(0);
+            po.setRegisterCount(0L);
+            po.setTotalRevenue(0L);
+            po.setWithdraw(0L);
+            po.setWithdrawTime(0);
+            po.setRemaining(0L);
+
+            revenueUserMapper.insert(po);
         }
 
         IncomeVO vo = new IncomeVO();
