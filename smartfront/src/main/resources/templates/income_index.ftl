@@ -85,23 +85,23 @@
 
                 <hr class="width_dotline" style="border-top:1px #000000 dashed">
 
+                <div><span class="font_reward padding_left"  style="font-size: 15px;font-weight: bolder">会员奖金比例是多少？</span></div>
                 <div class="div_spacing">
                     <table class="table table-bordered table-hover table-condensed reward_details" style="width:90%" >
-                        <caption class="font_reward" style="font-size: 15px;font-weight: bolder">会员奖金比例是多少？</caption>
                         <thead>
-                        <tr style="text-align: center">
-                            <td></td>
-                            <td>非会员</td>
-                            <td>VIP普通会员</td>
-                            <td>VIP年会员</td>
-                        </tr>
+                            <tr>
+                                <td></td>
+                                <td style="vertical-align: middle;text-align: center">非会员</td>
+                                <td style="vertical-align: middle;text-align: center">VIP普通会员</td>
+                                <td style="vertical-align: middle;text-align: center">VIP年会员</td>
+                            </tr>
                         </thead>
                         <tbody>
-                            <tr style="text-align: center">
-                                <td>奖金比例</td>
-                                <td>5%</td>
-                                <td>15%</td>
-                                <td>30%</td>
+                            <tr >
+                                <td style="vertical-align: middle;text-align: center">奖金比例</td>
+                                <td style="vertical-align: middle;text-align: center">5%</td>
+                                <td style="vertical-align: middle; text-align: center">15%</td>
+                                <td style="vertical-align: middle; text-align: center">30%</td>
                             </tr>
                         </tbody>
                     </table>

@@ -1,5 +1,5 @@
 <html lang="en"><head>
-    <base href="${basePath}"/>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -21,26 +21,26 @@
     <!--余额及提现 -->
     <div class="my_state1 bg_color" >
 
-        <div class="">
+        <div >
             <div class="total" >
                 <span  class="tx_time" style="font-size: 18px">可提金额:￥</span><span id="balance" class="tx_time" style="font-size: 18px">${res.data.balance}</span>
             </div>
         </div>
         <div>
-            <div style="width: 70%; float: left">
-                <div class="input-group" style="margin-left: 15px">
+            <div style="width: 60%; float: left">
+                <div class="input-group" style="margin-left: 10px">
                     <span class="input-group-addon" style="border: none;font-size: 20px;background-color:#FFFFFF">￥</span>
                     <input id="importBalance" type="text" class="form-control" style="font-size: 20px;border: none" placeholder="请输入提现金额">
                 </div>
             </div>
-            <div style="width: 20%; float:right;margin-right: 25px">
-                <button  type="button" class="btn btn-primary" style="text-align: center" onclick="drawTotal()">全部提现</button>
+            <div style=" float:right;margin-right: 25px">
+                <button  type="button" class="btn btn-primary" style="text-align: center;vertical-align: middle" onclick="drawTotal()">全部提现</button>
             </div>
         </div>
     </div>
 
     <!--请输入支付宝信息-->
-    <div class="my_state2 bg_color" style="height: 160px" >
+    <div class="my_state2 bg_color" style="height: 170px" >
         <br>
         <p class="font_tishi" ><b>&nbsp;&nbsp;&nbsp;&nbsp;请输入支付宝信息</b></p>
 
@@ -54,7 +54,7 @@
     </div>
 
     <!--提示规则-->
-    <div class="my_state2 bg_color" style="height:210px" >
+    <div class="my_state2 bg_color" style="height:225px" >
         <p style="margin-left: 10px;margin-top: 10px"><b>提现规则:</b></p>
         <p  style="margin-left: 10px">
             1.最低提现1元<br>
@@ -86,7 +86,7 @@
     </div>
     <div class="rows">
         <div class="box-btnL lineL" onclick="closeBox()"><b>取消</b></div>
-        <div class="box-btnR" onclick="successBox('f70d81abc1b2df6fe22e876e43030a89')"><b>确认提现</b></div>
+        <div class="box-btnR" onclick="successBox()"><b>确认提现</b></div>
     </div>
 </div>
 
