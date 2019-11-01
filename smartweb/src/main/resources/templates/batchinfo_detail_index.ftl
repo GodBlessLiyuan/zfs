@@ -109,6 +109,9 @@
                             <button type="button" class="btn btn-primary " id="query"
                                     onclick="javascript:queryClick();">查询
                             </button>
+                            <button type="button" class="btn btn-primary " id="query"
+                                    onclick="javascript:backClick();">返回
+                            </button>
 
                             <hr>
                             <div class="table-responsive">
@@ -231,6 +234,13 @@
         });
     }
 
+
+    /**
+     * 返回
+     */
+    function backClick() {
+        window.location.href = 'chbatch';
+    }
 </script>
 
 </body>
