@@ -10,6 +10,7 @@ import com.rpa.front.vo.IncomeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +47,7 @@ public class PageController {
         return "income_index";
     }
 
-    @PostMapping("withdraw")
+    @GetMapping("withdraw")
     public String withdraw(ModelMap map, HttpServletRequest req) {
         IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(IncomeConstant.INCOME_SESSION);
         if (null == loginInfo) {
@@ -60,7 +61,7 @@ public class PageController {
         return "withdraw";
     }
 
-    @PostMapping("records")
+    @GetMapping("records")
     public String records(ModelMap map, HttpServletRequest req) {
         IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(IncomeConstant.INCOME_SESSION);
         if (null == loginInfo) {
@@ -73,7 +74,7 @@ public class PageController {
         return "tx_record_index";
     }
 
-    @PostMapping("details")
+    @GetMapping("details")
     public String details(ModelMap map, HttpServletRequest req) {
         IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(IncomeConstant.INCOME_SESSION);
         if (null == loginInfo) {
