@@ -90,7 +90,7 @@
 
                             <div class="basic-form">
                                 <form>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-2">
                                         <label>状态</label>
                                         <select id="status" class="form-control">
                                             <option value='0' selected='selected'>全部</option>

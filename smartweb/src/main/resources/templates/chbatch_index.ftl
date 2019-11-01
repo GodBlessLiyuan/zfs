@@ -99,17 +99,17 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>渠道标识：</label>
                                             <input id="chanNickname" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>产品类型：</label>
                                             <select id="comTypeId" class="form-control">
                                                 <option value='0' selected='selected'>全部</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>状态：</label>
                                             <select id="status" class="form-control">
                                                 <option value='0' selected='selected'>全部</option>
@@ -119,7 +119,7 @@
                                                 <option value='5'>已结束</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>操作人：</label>
                                             <input id="operator" type="text" class="form-control">
                                         </div>
@@ -175,7 +175,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="insert_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -185,16 +185,17 @@
                             <button type="hidden" id="insert" style="display:none;"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">渠道标识:</span>
+                            <span for="recipient-name" class="col-form-label">渠道标识：<span style="color: red"> *</span></span>
                             <select id="insert_chanId" class="form-control">
                             </select>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">创建数量:</span>
-                            <input id="insert_num" class="form-control" type="text"/>
+                            <span for="recipient-name" class="col-form-label">创建数量：<span style="color: red"> *</span></span>
+                            <input id="insert_num" class="form-control" type="number"
+                                   min="1"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">产品类型:</span>
+                            <span for="recipient-name" class="col-form-label">产品类型：<span style="color: red"> *</span></span>
                             <select id="insert_comTypeId" class="form-control">
                             </select>
                         </div>
@@ -205,7 +206,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定创建</button>
+                    <button type="button" class="btn btn-primary" onclick="insertClick()">确定创建</button>
                 </div>
             </div>
         </div>
@@ -330,14 +331,20 @@
         var comTypeId = $('#insert_comTypeId').val();
         var extra = $('#insert_extra').val();
 
-        $.post("/chbatch/insert", {chanId:chanId, num:num, comTypeId:comTypeId, extra:extra}, function (result) {
-            if (result.code === 0) {
-                alert("新增成功！")
-                $('#datatab').DataTable().draw(false);
-            } else {
-                alert("新增失败！")
-            }
-        }, "json");
+        if (num == null) {
+            alert("创建数量不能为空！");
+        } else {
+
+            $.post("/chbatch/insert", {chanId:chanId, num:num, comTypeId:comTypeId, extra:extra}, function (result) {
+                if (result.code === 0) {
+                    alert("新增成功！")
+                    $('#datatab').DataTable().draw(false);
+                } else {
+                    alert("新增失败！")
+                }
+                document.getElementById("insert_xModal").click();
+            }, "json");
+        }
     }
 
     /**
