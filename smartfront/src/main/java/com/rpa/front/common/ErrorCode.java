@@ -19,4 +19,8 @@ public class ErrorCode {
      * Session 超时
      */
     public static final int SESSION_TIMEOUT = 1003;
+    /**
+     * 用户未登录
+     */
+    public static final int USER_NOT_LOGIN = 1004;
 }

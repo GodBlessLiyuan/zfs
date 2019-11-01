@@ -2,8 +2,7 @@ package com.rpa.front.controller;
 
 import com.rpa.front.common.ErrorCode;
 import com.rpa.front.common.ResultVO;
-import com.rpa.front.constant.SessionConstant;
-import com.rpa.front.dto.DetermineDTO;
+import com.rpa.front.constant.IncomeConstant;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.service.IIncomeService;
 import com.rpa.front.utils.VerifyUtil;
@@ -31,8 +30,8 @@ public class PageController {
 
     @PostMapping("income")
     public String income(@RequestBody IncomeDTO dto, ModelMap map, HttpServletRequest req) {
-        if (null == req.getHeader("token") || "".equals(req.getHeader("token"))) {
-            map.put("res", new ResultVO<>(1000, new IncomeVO()));
+        if (null == req.getHeader(IncomeConstant.INCOME_TOKEN) || "".equals(req.getHeader(IncomeConstant.INCOME_TOKEN))) {
+            map.put(IncomeConstant.INCOME_RESULT, new ResultVO<>(ErrorCode.USER_NOT_LOGIN, new IncomeVO()));
             return "income_index";
         }
 
@@ -40,18 +39,18 @@ public class PageController {
             return null;
         }
         ResultVO vo = service.query(dto);
-        map.put("res", vo);
+        map.put(IncomeConstant.INCOME_RESULT, vo);
 
-        req.getSession().setAttribute(SessionConstant.INCOME_LOGIN_INFO, dto);
+        req.getSession().setAttribute(IncomeConstant.INCOME_SESSION, dto);
 
         return "income_index";
     }
 
     @PostMapping("withdraw")
     public String withdraw(ModelMap map, HttpServletRequest req) {
-        IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(SessionConstant.INCOME_LOGIN_INFO);
-        if(null == loginInfo) {
-            map.put("res", new ResultVO<>(ErrorCode.SESSION_TIMEOUT));
+        IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(IncomeConstant.INCOME_SESSION);
+        if (null == loginInfo) {
+            map.put(IncomeConstant.INCOME_RESULT, new ResultVO<>(ErrorCode.SESSION_TIMEOUT));
             return "withdraw";
         }
 
@@ -63,9 +62,9 @@ public class PageController {
 
     @PostMapping("records")
     public String records(ModelMap map, HttpServletRequest req) {
-        IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(SessionConstant.INCOME_LOGIN_INFO);
-        if(null == loginInfo) {
-            map.put("res", new ResultVO<>(ErrorCode.SESSION_TIMEOUT));
+        IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(IncomeConstant.INCOME_SESSION);
+        if (null == loginInfo) {
+            map.put(IncomeConstant.INCOME_RESULT, new ResultVO<>(ErrorCode.SESSION_TIMEOUT));
             return "tx_record_index";
         }
         ResultVO vo = service.queryRecords(loginInfo);
@@ -76,14 +75,14 @@ public class PageController {
 
     @PostMapping("details")
     public String details(ModelMap map, HttpServletRequest req) {
-        IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(SessionConstant.INCOME_LOGIN_INFO);
-        if(null == loginInfo) {
-            map.put("res", new ResultVO<>(ErrorCode.SESSION_TIMEOUT));
+        IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(IncomeConstant.INCOME_SESSION);
+        if (null == loginInfo) {
+            map.put(IncomeConstant.INCOME_RESULT, new ResultVO<>(ErrorCode.SESSION_TIMEOUT));
             return "invitation_details_index";
         }
 
         ResultVO vo = service.queryDetails(loginInfo);
-        map.put("res", vo);
+        map.put(IncomeConstant.INCOME_RESULT, vo);
 
         return "invitation_details_index";
     }
