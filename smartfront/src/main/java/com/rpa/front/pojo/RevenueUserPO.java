@@ -23,6 +23,8 @@ public class RevenueUserPO implements Serializable {
 
     private Long remaining;
 
+    private String sharecode;
+
     private static final long serialVersionUID = 1L;
 
     public Long getUserId() {
@@ -89,6 +91,14 @@ public class RevenueUserPO implements Serializable {
         this.remaining = remaining;
     }
 
+    public String getSharecode() {
+        return sharecode;
+    }
+
+    public void setSharecode(String sharecode) {
+        this.sharecode = sharecode;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -108,7 +118,8 @@ public class RevenueUserPO implements Serializable {
             && (this.getTotalRevenue() == null ? other.getTotalRevenue() == null : this.getTotalRevenue().equals(other.getTotalRevenue()))
             && (this.getWithdraw() == null ? other.getWithdraw() == null : this.getWithdraw().equals(other.getWithdraw()))
             && (this.getWithdrawTime() == null ? other.getWithdrawTime() == null : this.getWithdrawTime().equals(other.getWithdrawTime()))
-            && (this.getRemaining() == null ? other.getRemaining() == null : this.getRemaining().equals(other.getRemaining()));
+            && (this.getRemaining() == null ? other.getRemaining() == null : this.getRemaining().equals(other.getRemaining()))
+            && (this.getSharecode() == null ? other.getSharecode() == null : this.getSharecode().equals(other.getSharecode()));
     }
 
     @Override
@@ -123,6 +134,7 @@ public class RevenueUserPO implements Serializable {
         result = prime * result + ((getWithdraw() == null) ? 0 : getWithdraw().hashCode());
         result = prime * result + ((getWithdrawTime() == null) ? 0 : getWithdrawTime().hashCode());
         result = prime * result + ((getRemaining() == null) ? 0 : getRemaining().hashCode());
+        result = prime * result + ((getSharecode() == null) ? 0 : getSharecode().hashCode());
         return result;
     }
 
@@ -140,6 +152,7 @@ public class RevenueUserPO implements Serializable {
         sb.append(", withdraw=").append(withdraw);
         sb.append(", withdrawTime=").append(withdrawTime);
         sb.append(", remaining=").append(remaining);
+        sb.append(", sharecode=").append(sharecode);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
