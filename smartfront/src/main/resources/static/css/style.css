@@ -2,26 +2,27 @@ body{
   font-family: "微软雅黑";
   background: #F8F8F8;
 }
-
 *{
-padding-bottom: 5px;
-margin-bottom: 5px;
-box-sizing:border-box;
--webkit-box-sizing:border-box;   /* Safari 和 Chrome */
--moz-box-sizing:border-box;      /* Firefox */
+  /*padding: 0px;*/
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  box-sizing:border-box;
+  -webkit-box-sizing:border-box;   /* Safari 和 Chrome */
+  -moz-box-sizing:border-box;      /* Firefox */
 }
 
 .container {
   width: 100%;
 }
 .user {
-
+  /* background-image: linear-gradient(-190deg, #FFC5A1 0%, #FD6D57 100%);*/
+  /*  padding:25px 30px 50px 30px;*/
   padding:10px 20px 10px 20px;
   text-align: center;
 }
 .user1{
   background-color: #3496E8;
-
+  /* padding:25px 30px 50px 30px;*/
   padding:10px 20px 10px 20px;
 }
 
@@ -82,7 +83,7 @@ box-sizing:border-box;
 
 }
 
- .reward{
+.reward{
   width: 90%;
   border: 1px solid;
   margin:10px auto;
@@ -143,15 +144,15 @@ box-sizing:border-box;
   height:25px;
 }
 .state_bottom {
-text-align:center;
-background:white;
-font-size: 13px;
-color: #353535;
-/*padding-bottom:28px;
-margin-top:26px;*/
+  text-align:center;
+  background:white;
+  font-size: 13px;
+  color: #353535;
+  /*padding-bottom:28px;
+  margin-top:26px;*/
 
-padding-bottom:0px;
-margin-top:26px;
+  padding-bottom:0px;
+  margin-top:26px;
 }
 .my_text{
   font-size: 12px;
@@ -168,7 +169,7 @@ margin-top:26px;
   margin-bottom:10px;
 }
 .my_manage{
-  overflow: hidden;  
+  overflow: hidden;
   background-color: #ffffff;
   padding:17px 15px;
   vertical-align: middle;
@@ -186,7 +187,7 @@ margin-top:26px;
   padding:3px;
   background: none !important;
   text-align:left !important;
-  line-height: 1.4 !important;  
+  line-height: 1.4 !important;
   align-self:center;
 }
 button::after{
@@ -209,9 +210,9 @@ button::after{
 
 /* 推广图片属性*/
 .bg_tuiguang{
-    width: 100%;
-    height: 100px;
-    align-content: center;
+  width: 100%;
+  height: 100px;
+  align-content: center;
 }
 
 .balanceNum{
@@ -236,6 +237,9 @@ button::after{
   font-weight: bold;
   margin: 10px 0px;
   outline: none;
+  /*  -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+    -moz-tap-highlight-color: transparent;*/
   display: block;
   text-decoration: none;
 }
@@ -277,6 +281,7 @@ button::after{
   font-size: 13px;
   color: #AAAAAA;
   line-height: 20px;
+  /*white-space: pre-wrap;*/
   white-space:pre-line;
   text-align: justify;
 }
@@ -485,6 +490,21 @@ button::after{
   margin-top: -80px;
   text-align: center;
 }
+
+.loginTimeoutInfoBox{
+  background: #ffffff;
+  border-radius: 12px;
+  width: 300px;
+  display: none;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  margin-left:-150px;
+  margin-top: -80px;
+  text-align: center;
+}
+
 .box-text2{
   font-size: 15px;
   line-height: 21px;
@@ -515,6 +535,7 @@ button::after{
   padding-bottom: 12px;
 }
 .box-top{
+  /* padding: 20px 24px 10px 24px;*/
   padding: 10px 24px 0px 24px;
 }
 .box-btnL{
@@ -621,7 +642,7 @@ button::after{
 .backimag{
   width: 100%;
   height: 100px;
-  background: url("../images/bg_profit.png") no-repeat;
+  background: url("../images/bg_profit@2x.png") no-repeat;
   background-size:100% 100%;
   -moz-background-size:100% 100%;
 }
@@ -710,7 +731,7 @@ button::after{
 
 
 .bg_image_beijing{
-  background-image: url("../images/bg_profit.png");
+  background-image: url("../images/bg_profit@3x.png");
   background-repeat:repeat-x;
 }
 
