@@ -23,13 +23,13 @@
 
         <div >
             <div class="total" >
-                <span  class="tx_time" style="font-size: 18px">可提金额:￥</span><span id="balance" class="tx_time" style="font-size: 18px">${res.data.balance}</span>
+                <span class="tx_time" style="font-size: 18px">可提金额:￥</span><span id="balance" class="tx_time" style="font-size: 18px">${res.data.balance}</span>
             </div>
         </div>
         <div>
             <div style="width: 60%; float: left">
                 <div class="input-group" style="margin-left: 10px">
-                    <span class="input-group-addon" style="border: none;font-size: 20px;background-color:#FFFFFF">￥</span>
+                    <span class="input-group-addon" style="border: none; font-size: 20px;background-color:#FFFFFF">￥</span>
                     <input id="importBalance" type="text" class="form-control" style="font-size: 20px;border: none" placeholder="请输入提现金额">
                 </div>
             </div>

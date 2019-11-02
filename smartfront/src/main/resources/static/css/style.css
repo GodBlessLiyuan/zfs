@@ -72,7 +72,7 @@ body{
   background-color: #ffffff;
   overflow: hidden;
   border-radius: 6px;
-  box-shadow: 0px 4px 4px #eeeeee;
+  /* box-shadow: 0px 4px 4px #eeeeee;*/
   margin:10px 15px 10px 15px;
 }
 
@@ -429,6 +429,18 @@ button::after{
   background-image: linear-gradient(90deg, #5AAEF5 0%, #3496E8 100%);
 
 }
+.drawSubmit1{
+  width: 80%;
+  margin-left: 10%;
+  padding:10px 0px;
+  border-radius:20px;
+  border-color: red;
+  font-size: 16px;
+  letter-spacing:1.6px;
+  text-align: center;
+  font-weight: bold;
+
+}
 
 .betweenLR{
   margin:0px 15px;
@@ -616,7 +628,7 @@ button::after{
 
 .tx_time{
   font-family: PingFang-SC-Medium;
-  font-size: 12px;
+  font-size: 18px;
   color: #999999;
 }
 .tx_title{
@@ -730,8 +742,10 @@ button::after{
 }
 
 
+
+
 .bg_image_beijing{
-  background-image: url("../images/bg_profit.png");
+  background-image: url("../images/bg_profit@3x.png");
   background-repeat:repeat-x;
 }
 
@@ -777,10 +791,14 @@ button::after{
   color: #999999;
   padding-top: 10px;
   padding-left: 10px;
-
 }
 
 .padding_left{
   padding-left: 15px;
 }
 
+/*推广页面*/
+.promote_state{
+  width: 100%;
+  margin-top: 0px;
+}
