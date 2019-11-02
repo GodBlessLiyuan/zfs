@@ -22,10 +22,10 @@
     from t_user_gifts
     where nug_id = #{nugId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_user_gifts
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    update t_user_gifts set dr = 2
     where nug_id = #{nugId,jdbcType=INTEGER}
-  </delete>
+  </update>
   <insert id="insert" parameterType="com.rpa.web.pojo.UserGiftsPO">
     insert into t_user_gifts (nug_id, com_type_id, com_type_name, 
       `days`, `status`, a_id, 
@@ -145,13 +145,18 @@
     ug.create_time as createTime, ug.update_time as updateTime, ug.a_id as aId, u.username
     from t_user_gifts ug
     left join t_admin_user u on ug.a_id = u.a_id
-    <where>
-      <if test="comTypeId != null and comTypeId != 0">
-        and ug.com_type_id = #{comTypeId}
-      </if>
-      <if test="username != null and username != ''">
-        and u.username like '%' #{username} '%'
-      </if>
-    </where>
+    where ug.dr = 1
+    <if test="comTypeId != null and comTypeId != 0">
+      and ug.com_type_id = #{comTypeId}
+    </if>
+    <if test="username != null and username != ''">
+      and u.username like '%' #{username} '%'
+    </if>
+  </select>
+
+  <select id="queryByStatus" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_user_gifts
+    where `status` = #{status,jdbcType=TINYINT} and dr = 1
   </select>
 </mapper>

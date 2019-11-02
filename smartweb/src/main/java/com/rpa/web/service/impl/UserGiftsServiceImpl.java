@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * @author: xiahui
  * @date: Created in 2019/10/3 16:53
- * @description: TODO
+ * @description: 新用户送会员
  * @version: 1.0
  */
 @Service
@@ -53,6 +53,7 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
         userGiftsPO.setStatus((byte) 1);
         userGiftsPO.setCreateTime(new Date());
         userGiftsPO.setaId(aId);
+        userGiftsPO.setDr((byte) 1);
 
         userGiftsMapper.insert(userGiftsPO);
 
@@ -60,16 +61,26 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
     }
 
     @Override
-    public int updateStatus(int nugId, byte status) {
+    public ResultVO updateStatus(int nugId, byte status) {
+        if (2 == status) {
+            // 开启
+            // 不能同时开启多个
+            List<UserGiftsPO> pos = userGiftsMapper.queryByStatus((byte) 2);
+            if (pos != null && pos.size() > 0) {
+                return new ResultVO(2000, "不能同时开启多个！");
+            }
+        }
+
         UserGiftsPO po = userGiftsMapper.selectByPrimaryKey(nugId);
-
         po.setStatus(status);
+        userGiftsMapper.updateByPrimaryKey(po);
 
-        return userGiftsMapper.updateByPrimaryKey(po);
+        return ResultVOUtil.success();
     }
 
     @Override
-    public int delete(int nugId) {
-        return userGiftsMapper.deleteByPrimaryKey(nugId);
+    public ResultVO delete(int nugId) {
+        userGiftsMapper.deleteByPrimaryKey(nugId);
+        return ResultVOUtil.success();
     }
 }

@@ -54,13 +54,13 @@ public class UserGiftsController {
     }
 
     @RequestMapping("updateStatus")
-    public int updateStatus(@RequestParam(value = "nugId") int nugId,
+    public ResultVO updateStatus(@RequestParam(value = "nugId") int nugId,
                             @RequestParam(value = "status") byte status) {
         return sercive.updateStatus(nugId, status);
     }
 
     @RequestMapping("delete")
-    public int delete(@RequestParam(value = "nugId") int nugId) {
+    public ResultVO delete(@RequestParam(value = "nugId") int nugId) {
         return sercive.delete(nugId);
     }
 }

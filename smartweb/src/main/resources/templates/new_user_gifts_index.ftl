@@ -336,7 +336,11 @@
             url: '/newusergifts/updateStatus?nugId=' + nugId + '&status=' + status,
             dataType: 'JSON',
             success: function (res) {
-                $('#datatab').DataTable().draw(false);
+                if(res.code === 0) {
+                    $('#datatab').DataTable().draw(false);
+                }else {
+                    alert(res.msg);
+                }
             }
         })
     }
