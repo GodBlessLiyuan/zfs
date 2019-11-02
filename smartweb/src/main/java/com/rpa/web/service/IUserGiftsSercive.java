@@ -40,7 +40,7 @@ public interface IUserGiftsSercive {
      * @param status
      * @return
      */
-    int updateStatus(int nugId, byte status);
+    ResultVO updateStatus(int nugId, byte status);
 
     /**
      * 删除
@@ -48,5 +48,5 @@ public interface IUserGiftsSercive {
      * @param nugId
      * @return
      */
-    int delete(int nugId);
+    ResultVO delete(int nugId);
 }
