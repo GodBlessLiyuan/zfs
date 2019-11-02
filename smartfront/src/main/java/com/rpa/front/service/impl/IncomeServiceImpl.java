@@ -5,6 +5,7 @@ import com.rpa.front.common.ErrorCode;
 import com.rpa.front.common.ResultVO;
 import com.rpa.front.dto.DetermineDTO;
 import com.rpa.front.dto.IncomeDTO;
+import com.rpa.front.dto.base.TokenDTO;
 import com.rpa.front.mapper.InviteUserMapper;
 import com.rpa.front.mapper.RevenueUserMapper;
 import com.rpa.front.mapper.WithdrawUserMapper;
@@ -14,6 +15,8 @@ import com.rpa.front.service.IIncomeService;
 import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
 import com.rpa.front.vo.RecordVO;
+import com.rpa.front.vo.ShareCodeVO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author: xiahui
@@ -38,6 +42,8 @@ public class IncomeServiceImpl implements IIncomeService {
     private InviteUserMapper inviteUserMapper;
     @Resource
     private WithdrawUserMapper withdrawUserMapper;
+    @Value("${project.shareurl}")
+    private String shareUrl;
 
     @Override
     public ResultVO query(IncomeDTO dto) {
@@ -147,6 +153,24 @@ public class IncomeServiceImpl implements IIncomeService {
             details.add(detail);
         }
         vo.setDetails(details);
+
+        return new ResultVO<>(1000, vo);
+    }
+
+    @Override
+    public ResultVO getShareUrl(TokenDTO dto) {
+        RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(dto.getUd());
+        if (po == null) {
+            return new ResultVO(2000);
+        }
+
+        if (po.getSharecode() == null) {
+            po.setSharecode(UUID.randomUUID().toString().replace("-", ""));
+            revenueUserMapper.updateByPrimaryKey(po);
+        }
+
+        ShareCodeVO vo = new ShareCodeVO();
+        vo.setUrl(shareUrl + po.getSharecode());
 
         return new ResultVO<>(1000, vo);
     }

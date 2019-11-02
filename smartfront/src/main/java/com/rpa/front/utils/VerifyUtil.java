@@ -1,6 +1,7 @@
 package com.rpa.front.utils;
 
 import com.auth0.jwt.JWT;
+import com.rpa.front.constant.IncomeConstant;
 import com.rpa.front.dto.base.TokenDTO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class VerifyUtil {
      * @return
      */
     public static boolean checkToken(TokenDTO dto, HttpServletRequest req) {
-        String token = req.getHeader("token");
+        String token = req.getHeader(IncomeConstant.INCOME_TOKEN);
         if (token == null) {
             return false;
         }

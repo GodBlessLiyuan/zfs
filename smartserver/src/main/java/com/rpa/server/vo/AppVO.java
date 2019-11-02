@@ -26,4 +26,8 @@ public class AppVO implements Serializable {
      * 跟新类型
      */
     private Byte type;
+    /**
+     * 跟新内容
+     */
+    private String context;
 }
