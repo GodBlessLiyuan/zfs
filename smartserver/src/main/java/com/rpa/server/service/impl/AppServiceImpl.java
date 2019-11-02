@@ -6,7 +6,6 @@ import com.rpa.server.mapper.AppMapper;
 import com.rpa.server.pojo.AppPO;
 import com.rpa.server.service.IAppService;
 import com.rpa.server.utils.RedisCacheUtil;
-import com.rpa.server.utils.RequestUtil;
 import com.rpa.server.vo.AppVO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -44,6 +43,7 @@ public class AppServiceImpl implements IAppService {
         vo.setUrl(filePublicPath + appPO.getUrl());
         vo.setMd5(appPO.getMd5());
         vo.setType(appPO.getUpdateType());
+        vo.setContext(appPO.getContext());
         return new ResultVO<>(1009, vo);
     }
 }

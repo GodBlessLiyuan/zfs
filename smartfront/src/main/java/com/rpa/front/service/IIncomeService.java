@@ -3,6 +3,7 @@ package com.rpa.front.service;
 import com.rpa.front.common.ResultVO;
 import com.rpa.front.dto.DetermineDTO;
 import com.rpa.front.dto.IncomeDTO;
+import com.rpa.front.dto.base.TokenDTO;
 
 /**
  * @author: xiahui
@@ -43,4 +44,12 @@ public interface IIncomeService {
      * @return
      */
     ResultVO queryDetails(IncomeDTO loginInfo);
+
+    /**
+     * 爱收益推广链接
+     *
+     * @param dto
+     * @return
+     */
+    ResultVO getShareUrl(TokenDTO dto);
 }
