@@ -3,12 +3,16 @@ package com.rpa.front.controller;
 import com.rpa.front.common.ResultVO;
 import com.rpa.front.constant.IncomeConstant;
 import com.rpa.front.dto.DetermineDTO;
+import com.rpa.front.dto.DownLoadDTO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.dto.base.TokenDTO;
 import com.rpa.front.service.IIncomeService;
 import com.rpa.front.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,5 +42,10 @@ public class IncomeController {
         }
 
         return service.getShareUrl(dto);
+    }
+
+    @PostMapping("download")
+    public ResultVO download(@RequestBody DownLoadDTO dto) {
+        return null;
     }
 }

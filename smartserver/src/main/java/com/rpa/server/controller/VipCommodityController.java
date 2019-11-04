@@ -5,7 +5,14 @@ import com.rpa.server.dto.VipCommodityDTO;
 import com.rpa.server.service.IVipCommodityService;
 import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author: xiahui
@@ -27,5 +34,10 @@ public class VipCommodityController {
         }
 
         return vipCommodityService.getCommodity(dto);
+    }
+
+    @PostMapping("buycommodity")
+    public ResultVO buyCommodity() {
+        return null;
     }
 }
