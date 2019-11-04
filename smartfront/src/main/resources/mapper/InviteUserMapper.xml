@@ -111,4 +111,10 @@
     where iu.user_id = #{userId,jdbcType=BIGINT}
     group by iu.invite_id
   </select>
+  <select id="queryByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_invite_user
+    where invite_phone = #{phone,jdbcType=CHAR}
+  </select>
 </mapper>

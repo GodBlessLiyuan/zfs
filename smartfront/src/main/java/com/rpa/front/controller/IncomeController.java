@@ -45,7 +45,7 @@ public class IncomeController {
     }
 
     @PostMapping("download")
-    public ResultVO download(@RequestBody DownLoadDTO dto) {
-        return service.getDownloadURL(dto);
+    public ResultVO download(@RequestBody DownLoadDTO dto, HttpServletRequest req) {
+        return service.getDownloadURL(dto, req);
     }
 }

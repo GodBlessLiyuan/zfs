@@ -18,4 +18,12 @@ public interface InviteUserMapper extends BaseMapper<InviteUserPO, Integer> {
      * @return
      */
     List<InviteUserBO> queryByUserId(long userId);
+
+    /**
+     * 根据手机号查询
+     *
+     * @param phone
+     * @return
+     */
+    InviteUserPO queryByPhone(String phone);
 }

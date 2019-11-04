@@ -6,6 +6,8 @@ import com.rpa.front.dto.DownLoadDTO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.dto.base.TokenDTO;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author: xiahui
  * @date: Created in 2019/10/25 19:03
@@ -58,7 +60,8 @@ public interface IIncomeService {
      * 获取应用下载连接
      *
      * @param dto
+     * @param req
      * @return
      */
-    ResultVO getDownloadURL(DownLoadDTO dto);
+    ResultVO getDownloadURL(DownLoadDTO dto, HttpServletRequest req);
 }

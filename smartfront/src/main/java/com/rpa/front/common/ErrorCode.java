@@ -23,4 +23,16 @@ public class ErrorCode {
      * 用户未登录
      */
     public static final int USER_NOT_LOGIN = 1004;
+    /**
+     * 邀请链接有误，注册失败
+     */
+    public static final int SHARE_CODE_ERROR = 1005;
+    /**
+     * 手机号已注册
+     */
+    public static final int PHONE_REGISTERED = 1006;
+    /**
+     * 手机号已被邀请
+     */
+    public static final int PHONE_INVITED = 1007;
 }
