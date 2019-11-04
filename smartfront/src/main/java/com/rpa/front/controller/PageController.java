@@ -10,10 +10,7 @@ import com.rpa.front.vo.IncomeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -87,5 +84,13 @@ public class PageController {
 
         return "invitation_details_index";
     }
+
+    @GetMapping(value = "share/{shareCode}")
+    public String shareClick(@PathVariable String shareCode, ModelMap map) {
+        ResultVO vo = new ResultVO<>(1000, shareCode);
+        map.put("res", vo);
+        return "income_index";
+    }
+
 }
 

@@ -39,10 +39,4 @@ public class IncomeController {
 
         return service.getShareUrl(dto);
     }
-
-    @GetMapping(value = "share/{shareCode}")
-    public ResultVO shareClick(@PathVariable String shareCode) {
-        return new ResultVO(1000);
-    }
-
 }
