@@ -43,7 +43,7 @@
         <!--帮你一步做推广，快速赚钱 -->
         <div class="my_state2">
             <div class="rows">
-                <img class="bg_tuiguang" src="${basePath}/images/banner_extension.png" onclick="location.href='#';">
+                <img class="bg_tuiguang" src="${basePath}/images/banner_extension.png" onclick="promotePage()">
             </div>
         </div>
 
@@ -51,7 +51,7 @@
        <div class="my_state">
             <div class="invation_top">
                 <span class="font_inva">我的邀请</span>
-                <span class="span_right "><a href="${basePath}/v1.0/invation_details" class="font_inva" style="text-decoration:none">详情></a></span>
+                <span class="span_right "><a href="${basePath}/v1.0/details" class="font_inva" style="text-decoration:none">详情></a></span>
             </div>
             <div class="rows state_bottom ">
                 <div class="flex1" catchtap="my_pickGoods">
@@ -68,7 +68,6 @@
                 </div>
             </div>
         </div>
-
 
         <!--奖励相关  -->
         <div class="my_state">
@@ -115,6 +114,13 @@
                     </p>
                 </div>
         </div>
+
+        <script>
+            // 调用Share.startShareActivity 跳转到立即推广详情页
+            function promotePage(){
+                Share.startShareActivity();
+            }
+        </script>
 
 
     </body>

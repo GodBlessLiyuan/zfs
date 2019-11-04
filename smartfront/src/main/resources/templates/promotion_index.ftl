@@ -17,7 +17,7 @@
 </head>
     <body >
         <div class="promote_state" style="height:100%;width:100%; ">
-            <img src="images/bg_extension.png" width="100%" height="100%" >
+            <img src="${basePath}/images/bg_extension.png" width="100%" height="100%" >
             <div class="betweenLR" style="margin-top: -120px">
                 <button type="button" class="drawSubmit" onclick="">下载APP</button>
             </div>
