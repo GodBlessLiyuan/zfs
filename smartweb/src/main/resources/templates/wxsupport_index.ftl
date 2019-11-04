@@ -203,6 +203,11 @@
 <script>
     let moduleData = new Map();
 
+    $(document).ready(function () {
+        // 自动查询
+        queryClick();
+    });
+
     /**
      * 确认上架点击事件
      */

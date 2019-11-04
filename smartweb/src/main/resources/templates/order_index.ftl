@@ -138,7 +138,8 @@
                             </div>
 
                             <button type="button" class="btn btn-primary " id="reset"
-                                    onclick="javascript:resetClick()">重置</button>
+                                    onclick="javascript:resetClick()">重置
+                            </button>
                             <button type="button" class="btn btn-primary " id="query"
                                     onclick="javascript:queryClick();">查询
                             </button>
@@ -205,6 +206,9 @@
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
+        // 自动查询
+        queryClick();
+
         // 产品列表
         $.ajax({
             type: 'GET',

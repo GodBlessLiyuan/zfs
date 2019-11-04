@@ -334,6 +334,11 @@
     let moduleData = new Map();
 
     $(document).ready(function () {
+        // 自动查询
+        queryClick();
+    });
+
+    $(document).ready(function () {
         // 产品列表
         $.ajax({
             type: 'GET',

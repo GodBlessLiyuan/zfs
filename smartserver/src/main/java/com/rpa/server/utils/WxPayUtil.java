@@ -24,14 +24,14 @@ public class WxPayUtil {
      * @param xml
      * @return
      */
-    public static Map<String, Object> parseXML(String xml) {
+    public static Map<String, String> parseXML(String xml) {
         if (null == xml || "".equals(xml)) {
             return null;
         }
 
-        xml = xml.replaceFirst("encoding=\".*\"", "encoding=\"UTF-8\"");
+        Map<String, String> res = new HashMap<>(16);
 
-        Map<String, Object> res = new HashMap<>(16);
+        xml = xml.replaceFirst("encoding=\".*\"", "encoding=\"UTF-8\"");
         try {
             Document doc = new SAXReader().read(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
             Element root = doc.getRootElement();
@@ -44,18 +44,6 @@ public class WxPayUtil {
         }
 
         return res;
-    }
-
-    /**
-     * Map 转 PO
-     *
-     * @param clazz
-     * @param map
-     * @param <T>
-     * @return
-     */
-    public static <T> T convertMap2PO(Class<T> clazz, Map<String, Object> map) {
-        return null;
     }
 
     /**
