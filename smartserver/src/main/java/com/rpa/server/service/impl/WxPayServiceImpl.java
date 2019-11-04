@@ -27,7 +27,8 @@ public class WxPayServiceImpl implements IWxPayService {
 
     @Override
     public String wxPayNotice(HttpServletRequest req) {
-        Map<String, Object> info = null;
+        Map<String, String> info = null;
+
         try {
             InputStream is = req.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
@@ -49,20 +50,41 @@ public class WxPayServiceImpl implements IWxPayService {
         }
 
         OrderFeedbackPO po = new OrderFeedbackPO();
-        po.setAppid((String) info.get("appid"));
-        po.setMchId((String) info.get("mch_id"));
-        po.setNonceStr((String) info.get("nonce_str"));
-        po.setSigin((String) info.get("info"));
-        po.setResultCode((String) info.get("result_code"));
-        po.setErrCode((String) info.get("err_code"));
-        po.setErrCodeDes((String) info.get("err_code_des"));
-        po.setOpenid((String) info.get("openid"));
-        po.setIsSubscribe((String) info.get("is_subscribe"));
-        po.setTradeType((String) info.get("trade_type"));
-        po.setBankType((String) info.get("bank_type"));
-        po.setTotalFee((Integer) info.get("total_fee"));
-        po.setFeeType((String) info.get("fee_type"));
-
+        String returnCode = info.get("return_code");
+        po.setReturnCode(returnCode);
+        po.setReturnMsg(info.get("return_msg"));
+        if ("SUCCESS".equals(returnCode)) {
+            po.setAppid(info.get("appid"));
+            po.setMchId(info.get("mch_id"));
+            po.setDeviceInfo(info.get("device_info"));
+            po.setNonceStr(info.get("nonce_str"));
+            po.setSigin(info.get("sigin"));
+            po.setResultCode(info.get("return_code"));
+            po.setErrCode(info.get("err_code"));
+            po.setErrCodeDes(info.get("err_code_des"));
+            po.setOpenid(info.get("openid"));
+            po.setIsSubscribe(info.get("is_subscribe"));
+            po.setTradeType(info.get("trade_type"));
+            po.setBankType(info.get("bank_type"));
+            if (null != info.get("total_fee")) {
+                po.setTotalFee(Integer.parseInt(info.get("total_fee")));
+            }
+            po.setFeeType(info.get("fee_type"));
+            if (null != info.get("cash_fee")) {
+                po.setCashFee(Integer.parseInt(info.get("cash_fee")));
+            }
+            po.setCashFeeType(info.get("cash_fee_type"));
+            if (null != info.get("coupon_fee")) {
+                po.setCouponFee(Integer.parseInt(info.get("coupon_fee")));
+            }
+            if (null != info.get("coupon_count")) {
+                po.setCouponCount(Integer.parseInt(info.get("coupon_count")));
+            }
+            po.setTransactionId(info.get("transaction_id"));
+            po.setOutTradeNo(info.get("out_trade_no"));
+            po.setAttach(info.get("attch"));
+            po.setTimeEnd(info.get("time_end"));
+        }
 
         orderFeedbackMapper.insert(po);
 
