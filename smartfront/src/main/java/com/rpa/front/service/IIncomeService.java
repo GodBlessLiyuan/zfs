@@ -2,6 +2,7 @@ package com.rpa.front.service;
 
 import com.rpa.front.common.ResultVO;
 import com.rpa.front.dto.DetermineDTO;
+import com.rpa.front.dto.DownLoadDTO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.dto.base.TokenDTO;
 
@@ -52,4 +53,12 @@ public interface IIncomeService {
      * @return
      */
     ResultVO getShareUrl(TokenDTO dto);
+
+    /**
+     * 获取应用下载连接
+     *
+     * @param dto
+     * @return
+     */
+    ResultVO getDownloadURL(DownLoadDTO dto);
 }
