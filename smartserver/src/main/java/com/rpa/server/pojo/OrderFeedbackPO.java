@@ -9,9 +9,15 @@ import java.io.Serializable;
 public class OrderFeedbackPO implements Serializable {
     private Long wxpayid;
 
+    private String returnCode;
+
+    private String returnMsg;
+
     private String appid;
 
     private String mchId;
+
+    private String deviceInfo;
 
     private String nonceStr;
 
@@ -61,6 +67,22 @@ public class OrderFeedbackPO implements Serializable {
         this.wxpayid = wxpayid;
     }
 
+    public String getReturnCode() {
+        return returnCode;
+    }
+
+    public void setReturnCode(String returnCode) {
+        this.returnCode = returnCode;
+    }
+
+    public String getReturnMsg() {
+        return returnMsg;
+    }
+
+    public void setReturnMsg(String returnMsg) {
+        this.returnMsg = returnMsg;
+    }
+
     public String getAppid() {
         return appid;
     }
@@ -75,6 +97,14 @@ public class OrderFeedbackPO implements Serializable {
 
     public void setMchId(String mchId) {
         this.mchId = mchId;
+    }
+
+    public String getDeviceInfo() {
+        return deviceInfo;
+    }
+
+    public void setDeviceInfo(String deviceInfo) {
+        this.deviceInfo = deviceInfo;
     }
 
     public String getNonceStr() {
@@ -242,8 +272,11 @@ public class OrderFeedbackPO implements Serializable {
         }
         OrderFeedbackPO other = (OrderFeedbackPO) that;
         return (this.getWxpayid() == null ? other.getWxpayid() == null : this.getWxpayid().equals(other.getWxpayid()))
+            && (this.getReturnCode() == null ? other.getReturnCode() == null : this.getReturnCode().equals(other.getReturnCode()))
+            && (this.getReturnMsg() == null ? other.getReturnMsg() == null : this.getReturnMsg().equals(other.getReturnMsg()))
             && (this.getAppid() == null ? other.getAppid() == null : this.getAppid().equals(other.getAppid()))
             && (this.getMchId() == null ? other.getMchId() == null : this.getMchId().equals(other.getMchId()))
+            && (this.getDeviceInfo() == null ? other.getDeviceInfo() == null : this.getDeviceInfo().equals(other.getDeviceInfo()))
             && (this.getNonceStr() == null ? other.getNonceStr() == null : this.getNonceStr().equals(other.getNonceStr()))
             && (this.getSigin() == null ? other.getSigin() == null : this.getSigin().equals(other.getSigin()))
             && (this.getResultCode() == null ? other.getResultCode() == null : this.getResultCode().equals(other.getResultCode()))
@@ -270,8 +303,11 @@ public class OrderFeedbackPO implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getWxpayid() == null) ? 0 : getWxpayid().hashCode());
+        result = prime * result + ((getReturnCode() == null) ? 0 : getReturnCode().hashCode());
+        result = prime * result + ((getReturnMsg() == null) ? 0 : getReturnMsg().hashCode());
         result = prime * result + ((getAppid() == null) ? 0 : getAppid().hashCode());
         result = prime * result + ((getMchId() == null) ? 0 : getMchId().hashCode());
+        result = prime * result + ((getDeviceInfo() == null) ? 0 : getDeviceInfo().hashCode());
         result = prime * result + ((getNonceStr() == null) ? 0 : getNonceStr().hashCode());
         result = prime * result + ((getSigin() == null) ? 0 : getSigin().hashCode());
         result = prime * result + ((getResultCode() == null) ? 0 : getResultCode().hashCode());
@@ -301,8 +337,11 @@ public class OrderFeedbackPO implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", wxpayid=").append(wxpayid);
+        sb.append(", returnCode=").append(returnCode);
+        sb.append(", returnMsg=").append(returnMsg);
         sb.append(", appid=").append(appid);
         sb.append(", mchId=").append(mchId);
+        sb.append(", deviceInfo=").append(deviceInfo);
         sb.append(", nonceStr=").append(nonceStr);
         sb.append(", sigin=").append(sigin);
         sb.append(", resultCode=").append(resultCode);

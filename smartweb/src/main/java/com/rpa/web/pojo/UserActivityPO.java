@@ -17,7 +17,7 @@ public class UserActivityPO implements Serializable {
     private Date time;
 
     /**
-     * 当活动存在多个执行状态时，默认为1     10 通过   20 驳回
+     * 当活动存在多个执行状态时，默认为1     10 通过  30 领取  20 驳回
      */
     private Byte status;
 
