@@ -8,4 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RevenueUserMapper extends BaseMapper<RevenueUserPO, Long> {
+    /**
+     * 根据分享码查询数据
+     *
+     * @param sharecode
+     * @return
+     */
+    RevenueUserPO queryByShareCode(String sharecode);
 }

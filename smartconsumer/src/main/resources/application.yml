@@ -10,3 +10,8 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  rabbitmq:
+    host: 192.168.10.3
+    port: 5672
+    username: root
+    password: 123456

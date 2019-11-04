@@ -46,6 +46,6 @@ public class IncomeController {
 
     @PostMapping("download")
     public ResultVO download(@RequestBody DownLoadDTO dto) {
-        return null;
+        return service.getDownloadURL(dto);
     }
 }

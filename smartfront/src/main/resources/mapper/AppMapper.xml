@@ -207,4 +207,12 @@
       md5 = #{md5,jdbcType=CHAR}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryLatestRelease" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_app
+    where dr = 1 and `status` = 2
+    order by versioncode desc
+    limit 1
+  </select>
 </mapper>

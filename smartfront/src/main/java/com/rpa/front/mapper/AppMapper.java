@@ -8,4 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AppMapper extends BaseMapper<AppPO, Integer> {
+    /**
+     * 查询最新发布应用版本
+     *
+     * @return
+     */
+    AppPO queryLatestRelease();
 }
