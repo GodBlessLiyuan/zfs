@@ -217,6 +217,9 @@
     let moduleData = new Map();
 
     $(document).ready(function () {
+        // 自动查询
+        queryClick();
+
         // 下拉框请求后端并赋值
         $.ajax({
             type: 'GET',
@@ -336,9 +339,9 @@
             url: '/newusergifts/updateStatus?nugId=' + nugId + '&status=' + status,
             dataType: 'JSON',
             success: function (res) {
-                if(res.code === 0) {
+                if (res.code === 0) {
                     $('#datatab').DataTable().draw(false);
-                }else {
+                } else {
                     alert(res.msg);
                 }
             }

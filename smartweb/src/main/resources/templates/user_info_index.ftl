@@ -165,6 +165,12 @@
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
 <script>
+
+    $(document).ready(function () {
+        // 自动查询
+        queryClick();
+    });
+
     /**
      * 导出点击事件
      */
