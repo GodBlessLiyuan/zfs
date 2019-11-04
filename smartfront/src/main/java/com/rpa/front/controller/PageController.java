@@ -4,7 +4,9 @@ import com.rpa.front.common.ErrorCode;
 import com.rpa.front.common.ResultVO;
 import com.rpa.front.constant.IncomeConstant;
 import com.rpa.front.dto.IncomeDTO;
+import com.rpa.front.dto.UserActivityDTO;
 import com.rpa.front.service.IIncomeService;
+import com.rpa.front.service.UserActivityService;
 import com.rpa.front.utils.VerifyUtil;
 import com.rpa.front.vo.IncomeVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 public class PageController {
     @Autowired
     private IIncomeService service;
+
+    @Autowired
+    private UserActivityService userActivityService;
 
     @PostMapping("income")
     public String income(@RequestBody IncomeDTO dto, ModelMap map, HttpServletRequest req) {
@@ -92,5 +97,38 @@ public class PageController {
         return "income_index";
     }
 
+
+    /**
+     * @author: dangyi
+     * @param dto
+     * @param map
+     * @param req
+     * @description：免费领取会员：根据两个ID查询状态
+     */
+    @PostMapping("freemember")
+    public String freemember(@RequestBody UserActivityDTO dto, ModelMap map, HttpServletRequest req) {
+        if (null == req.getHeader(IncomeConstant.INCOME_TOKEN) || "".equals(req.getHeader(IncomeConstant.INCOME_TOKEN))) {
+            map.put(IncomeConstant.INCOME_RESULT, new ResultVO<>(ErrorCode.USER_NOT_LOGIN, new IncomeVO()));
+            return "freemember_index";
+        }
+
+        if (!VerifyUtil.checkToken(dto, req)) {
+            return null;
+        }
+
+        Integer status = this.userActivityService.query(dto);
+        map.put("status", status);
+        if (null == status) {
+            map.put("msg", "期待您的参与！");
+        } else if (status == 1) {
+            map.put("msg", "参与成功，正在审核中！");
+        }else if (status == 10 || status == 30) {
+            map.put("msg", "参与成功，奖励已发放！");
+        }else if (status == 20) {
+            map.put("msg", "您上传的图片不符合标准，请重新上传！");
+        }
+
+        return "freemember_index";
+    }
 }
 
