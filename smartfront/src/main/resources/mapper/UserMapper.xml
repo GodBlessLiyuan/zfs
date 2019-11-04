@@ -125,4 +125,10 @@
       soft_channel_id = #{softChannelId,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
+
+  <select id="queryByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_user
+    where phone = #{phone,jdbcType=CHAR}
+  </select>
 </mapper>
