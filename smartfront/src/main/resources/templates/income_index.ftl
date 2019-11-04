@@ -118,7 +118,7 @@
         <script>
             // 调用Share.startShareActivity 跳转到立即推广详情页
             function promotePage(){
-                Share.startShareActivity();
+                window.Share.startShareActivity();
             }
         </script>
 
