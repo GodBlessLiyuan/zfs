@@ -12,7 +12,7 @@ public class OrderPO extends OrderPOKey implements Serializable {
 
     private Integer cmdyId;
 
-    private Integer userId;
+    private Long userId;
 
     private Long deviceId;
 
@@ -28,6 +28,10 @@ public class OrderPO extends OrderPOKey implements Serializable {
      * 1 微信 2支付宝
      */
     private Integer type;
+
+    private Integer days;
+
+    private Long pay;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,11 +51,11 @@ public class OrderPO extends OrderPOKey implements Serializable {
         this.cmdyId = cmdyId;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -103,6 +107,22 @@ public class OrderPO extends OrderPOKey implements Serializable {
         this.type = type;
     }
 
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
+    }
+
+    public Long getPay() {
+        return pay;
+    }
+
+    public void setPay(Long pay) {
+        this.pay = pay;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -125,7 +145,9 @@ public class OrderPO extends OrderPOKey implements Serializable {
             && (this.getStarttime() == null ? other.getStarttime() == null : this.getStarttime().equals(other.getStarttime()))
             && (this.getEndtime() == null ? other.getEndtime() == null : this.getEndtime().equals(other.getEndtime()))
             && (this.getPayTime() == null ? other.getPayTime() == null : this.getPayTime().equals(other.getPayTime()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()));
+            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+            && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
+            && (this.getPay() == null ? other.getPay() == null : this.getPay().equals(other.getPay()));
     }
 
     @Override
@@ -143,6 +165,8 @@ public class OrderPO extends OrderPOKey implements Serializable {
         result = prime * result + ((getEndtime() == null) ? 0 : getEndtime().hashCode());
         result = prime * result + ((getPayTime() == null) ? 0 : getPayTime().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + ((getDays() == null) ? 0 : getDays().hashCode());
+        result = prime * result + ((getPay() == null) ? 0 : getPay().hashCode());
         return result;
     }
 
@@ -161,6 +185,8 @@ public class OrderPO extends OrderPOKey implements Serializable {
         sb.append(", endtime=").append(endtime);
         sb.append(", payTime=").append(payTime);
         sb.append(", type=").append(type);
+        sb.append(", days=").append(days);
+        sb.append(", pay=").append(pay);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
