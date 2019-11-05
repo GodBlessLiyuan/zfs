@@ -1,5 +1,6 @@
 package com.rpa.producer.controller;
 
+import com.rpa.producer.common.ResultVO;
 import com.rpa.producer.dto.ProducerDTO;
 import com.rpa.producer.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ProducerController {
     private ProducerService service;
 
     @PostMapping("s_data")
-    public void send(@RequestBody ProducerDTO dto, HttpServletRequest req) {
-        service.sendMsg(dto.getData(), req);
+    public ResultVO send(@RequestBody ProducerDTO dto, HttpServletRequest req) {
+        return service.sendMsg(dto.getData(), req);
     }
 }
