@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author: xiahui
@@ -41,14 +42,15 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
 
         po.setUserId(dto.getUd());
         po.setStatus((byte) 2);
+        po.setUpdateTime(new Date());
         batchInfoMapper.updateByPrimaryKey(po);
 
         // 更新用户会员数据
         UserVipPO userVipPO = userVipMapper.queryByUserId(dto.getUd());
         UserVipPO newUserVipPO = UserVipUtil.buildUserVipVO(userVipPO, dto.getUd(), po.getDays(), false);
-        if(userVipPO == null) {
+        if (userVipPO == null) {
             userVipMapper.insert(newUserVipPO);
-        }else {
+        } else {
             userVipMapper.updateByPrimaryKey(newUserVipPO);
         }
         return new ResultVO(1000);
