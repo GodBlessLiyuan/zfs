@@ -4,15 +4,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.LoginDTO;
-import com.rpa.server.mapper.NewUserRecordMapper;
-import com.rpa.server.mapper.UserDeviceMapper;
-import com.rpa.server.mapper.UserMapper;
-import com.rpa.server.pojo.NewUserRecordPO;
-import com.rpa.server.pojo.UserDevicePO;
-import com.rpa.server.pojo.UserPO;
+import com.rpa.server.mapper.*;
+import com.rpa.server.pojo.*;
 import com.rpa.server.service.ILoginService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.utils.RequestUtil;
+import com.rpa.server.utils.UserVipUtil;
 import com.rpa.server.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +20,7 @@ import org.springframework.util.DigestUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: xiahui
@@ -41,13 +39,17 @@ public class LoginServiceImpl implements ILoginService {
     @Resource
     private UserDeviceMapper userDeviceMapper;
     @Resource
+    private UserGiftsMapper userGiftsMapper;
+    @Resource
     private NewUserRecordMapper newUserRecordMapper;
+    @Resource
+    private UserVipMapper userVipMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO register(LoginDTO dto, HttpServletRequest req) {
         UserPO userPO = userMapper.queryByPhone(dto.getPh());
-        if (userPO == null) {
+        if (null == userPO) {
             // 注册
             // 新增用户
             UserPO po = new UserPO();
@@ -69,15 +71,23 @@ public class LoginServiceImpl implements ILoginService {
             userDevPO.setCreateTime(new Date());
             userDeviceMapper.insert(userDevPO);
 
-            // 新用户送会员
-            NewUserRecordPO newUserRecordPO = new NewUserRecordPO();
-            newUserRecordPO.setUserId(po.getUserId());
-            newUserRecordPO.setDeviceId(dto.getId());
-            newUserRecordPO.setUserDeviceId(userDevPO.getUserDeviceId());
-            // t_user_gifts 只有一条数据，其ID为1
-            newUserRecordPO.setNugId(1);
-            newUserRecordPO.setCreateTime(new Date());
-            newUserRecordMapper.insert(newUserRecordPO);
+            // 新用户是否送会员
+            List<UserGiftsPO> userGiftsPOs = userGiftsMapper.queryOpenGift();
+            if (null != userGiftsPOs && userGiftsPOs.size() == 1) {
+                // 新用户送会员
+                UserGiftsPO userGiftsPO = userGiftsPOs.get(0);
+
+                NewUserRecordPO newUserRecordPO = new NewUserRecordPO();
+                newUserRecordPO.setUserId(po.getUserId());
+                newUserRecordPO.setDeviceId(dto.getId());
+                newUserRecordPO.setUserDeviceId(userDevPO.getUserDeviceId());
+                newUserRecordPO.setNugId(userGiftsPO.getNugId());
+                newUserRecordPO.setCreateTime(new Date());
+                newUserRecordMapper.insert(newUserRecordPO);
+
+                UserVipPO userVipPO = UserVipUtil.buildUserVipVO(null, po.getUserId(), userGiftsPO.getDays(), false);
+                userVipMapper.insert(userVipPO);
+            }
 
             return this.buildResultVO(userDevPO);
         }

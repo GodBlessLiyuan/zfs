@@ -1,7 +1,11 @@
 package com.rpa.consumer.service;
 
+import com.rpa.consumer.mapper.OrderMapper;
+import com.rpa.consumer.pojo.OrderPO;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author: xiahui
@@ -12,6 +16,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class RabbitmqService {
 
+    @Resource
+    private OrderMapper orderMapper;
+
     /**
      * 微信支付确认通知
      *
@@ -19,6 +26,7 @@ public class RabbitmqService {
      */
     @RabbitListener(queues = "wx-pay-notice")
     public void wxPayNotice(String orderNumber) {
-        System.out.println(orderNumber);
+//        OrderPO orderPO = orderMapper.queryByOrderNumber(orderNumber);
+
     }
 }
