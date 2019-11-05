@@ -57,7 +57,7 @@ public class WxPayServiceImpl implements IWxPayService {
 
         orderFeedbackMapper.insert(po);
 
-        this.template.convertAndSend("smart-server", "hello");
+        this.template.convertAndSend("wx-pay-notice", "hello");
 
         return WxPayUtil.successWxPay();
     }

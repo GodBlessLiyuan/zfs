@@ -11,10 +11,10 @@ import org.springframework.amqp.core.Queue;
  * @version: 1.0
  */
 @Configuration
-public class RabbitConfig {
+public class RabbitmqConfig {
 
     @Bean
     public Queue smartServerQueue() {
-        return new Queue("smartserver");
+        return new Queue("wx-pay-notice");
     }
 }
