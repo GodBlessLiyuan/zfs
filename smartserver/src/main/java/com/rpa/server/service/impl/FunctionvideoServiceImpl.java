@@ -29,7 +29,11 @@ public class FunctionvideoServiceImpl implements FunctionvideoService {
 
         String url = this.functionVideoMapper.queryUrl(dto.getFunction());
         FunctionvideoVO vo = new FunctionvideoVO();
-        vo.setUrl(publicPath + url);
+        if (null == url) {
+            vo.setUrl(url);
+        } else {
+            vo.setUrl(publicPath + url);
+        }
 
         return new ResultVO(1000, vo);
     }
