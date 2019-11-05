@@ -139,4 +139,10 @@
       dr = #{dr,jdbcType=TINYINT}
     where nug_id = #{nugId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryOpenGift" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_user_gifts
+    where dr = 1 and `status` = 2
+  </select>
 </mapper>
