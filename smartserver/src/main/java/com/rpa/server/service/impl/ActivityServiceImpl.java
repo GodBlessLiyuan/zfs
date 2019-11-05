@@ -23,7 +23,7 @@ public class ActivityServiceImpl implements IActivityService {
 
     @Override
     public ResultVO check(ActivityDTO dto) {
-        List<UserActivityPO> pos = userActivityMapper.queryPassedByUserId(dto.getUd());
+        List<UserActivityPO> pos = userActivityMapper.queryByUserIdAndStatus(dto.getUd(), (byte) 10);
         if (pos == null || pos.size() == 0) {
             return new ResultVO(1015);
         }
@@ -33,7 +33,7 @@ public class ActivityServiceImpl implements IActivityService {
 
     @Override
     public ResultVO activate(ActivityDTO dto) {
-        List<UserActivityPO> pos = userActivityMapper.queryPassedByUserId(dto.getUd());
+        List<UserActivityPO> pos = userActivityMapper.queryByUserIdAndStatus(dto.getUd(), (byte) 10);
         if (pos == null || pos.size() == 0) {
             return new ResultVO(1015);
         }

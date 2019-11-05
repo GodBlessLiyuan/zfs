@@ -167,10 +167,13 @@
     from t_user_activity ua left join t_activity a on ua.activity_id = a.activity_id
     where ua.user_id = #{userId} and ua.`status` = 30
   </select>
-  <select id="queryPassedByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="queryByUserIdAndStatus" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from t_user_activity
-    where user_id = #{userId} and `status` = 10
+    where user_id = #{userId}
+    <if test="status != null and status != 0">
+      and `status` = #{status,jdbcType=TINYINT}
+    </if>
   </select>
   <update id="activate" parameterType="java.lang.Long">
     update t_user_activity set `status` = 30 where user_id = #{userId} and `status` = 10;
