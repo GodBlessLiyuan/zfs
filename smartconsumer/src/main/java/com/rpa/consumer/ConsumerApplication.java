@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author: xiahui
  * @date: Created in 2019/10/21 20:22
- * @description: Kafka consumer
+ * @description: 消费微服务
  * @version: 1.0
  */
 @SpringBootApplication
