@@ -205,13 +205,13 @@
                 {
                     "data": "source",
                     "render": function (data, type, full) {
-                        return data == 1 ? "好评活动" : "其他";
+                        return data === 1 ? "好评活动" : "其他";
                     }
                 },
                 {
                     "data": "status",
                     "render": function (data, type, full) {
-                        return data == 1 ? "未激活" : "激活";
+                        return data === 10 ? "未激活" : "激活";
                     }
                 }
             ],
