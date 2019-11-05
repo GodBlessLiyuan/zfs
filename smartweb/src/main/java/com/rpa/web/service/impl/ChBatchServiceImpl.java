@@ -95,7 +95,7 @@ public class ChBatchServiceImpl implements ChBatchService {
             dto.setNonActivity(queryStatusById(po.getBatchId(),1));
             dto.setExtra(po.getExtra());
             dto.setStatus(po.getStatus());
-            dto.setUpdateTime(new Date());
+            dto.setUpdateTime(po.getUpdateTime());
             dto.setOperator(queryUsernameByAid(po.getaId()));
 
             DTOs.add(dto);
