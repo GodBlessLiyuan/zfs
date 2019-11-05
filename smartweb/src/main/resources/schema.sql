@@ -397,7 +397,8 @@ CREATE TABLE t_invite_user
 	update_time datetime,
 	ip char(64),
 	PRIMARY KEY (invite_id),
-	UNIQUE (invite_id)
+	UNIQUE (invite_id),
+	UNIQUE (invite_phone)
 );
 
 
@@ -457,10 +458,10 @@ CREATE TABLE t_notice
 CREATE TABLE t_order
 (
 	order_id int NOT NULL AUTO_INCREMENT,
-	order_number varchar(32) NOT NULL,
+	order_number char(32) NOT NULL,
 	user_device_id int NOT NULL,
 	cmdy_id int NOT NULL,
-	user_id int,
+	user_id bigint,
 	device_id bigint,
 	create_time datetime,
 	starttime datetime,
@@ -468,8 +469,11 @@ CREATE TABLE t_order
 	pay_time datetime,
 	-- 1 微信 2支付宝
 	type int COMMENT '1 微信 2支付宝',
+	days int,
+	pay bigint,
 	PRIMARY KEY (order_id, order_number),
-	UNIQUE (order_id)
+	UNIQUE (order_id),
+	UNIQUE (order_number)
 );
 
 
@@ -673,7 +677,7 @@ CREATE TABLE t_user_gifts
 	create_time datetime,
 	update_time datetime,
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	PRIMARY KEY (nug_id),
 	UNIQUE (nug_id)
 );
