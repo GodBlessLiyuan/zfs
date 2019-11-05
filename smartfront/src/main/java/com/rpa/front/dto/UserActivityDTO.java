@@ -1,4 +1,6 @@
-package com.rpa.server.pojo;
+package com.rpa.front.dto;
+
+import com.rpa.front.dto.base.TokenDTO;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.Date;
  * t_user_activity
  * @author 
  */
-public class UserActivityPO implements Serializable {
+public class UserActivityDTO  extends TokenDTO implements Serializable {
     private Integer uAId;
 
     private Integer activityId;
@@ -17,7 +19,7 @@ public class UserActivityPO implements Serializable {
     private Date time;
 
     /**
-     * 当活动存在多个执行状态时，默认为1     10 通过   20 驳回   30 领取
+     * 当活动存在多个执行状态时，默认为1     10 通过  30 领取  20 驳回
      */
     private Byte status;
 
@@ -134,7 +136,7 @@ public class UserActivityPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        UserActivityPO other = (UserActivityPO) that;
+        UserActivityDTO other = (UserActivityDTO) that;
         return (this.getuAId() == null ? other.getuAId() == null : this.getuAId().equals(other.getuAId()))
             && (this.getActivityId() == null ? other.getActivityId() == null : this.getActivityId().equals(other.getActivityId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))

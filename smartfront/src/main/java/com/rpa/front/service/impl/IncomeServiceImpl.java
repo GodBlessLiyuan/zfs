@@ -4,14 +4,13 @@ import com.rpa.front.bo.InviteUserBO;
 import com.rpa.front.common.ErrorCode;
 import com.rpa.front.common.ResultVO;
 import com.rpa.front.dto.DetermineDTO;
+import com.rpa.front.dto.DownLoadDTO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.dto.base.TokenDTO;
-import com.rpa.front.mapper.InviteUserMapper;
-import com.rpa.front.mapper.RevenueUserMapper;
-import com.rpa.front.mapper.WithdrawUserMapper;
-import com.rpa.front.pojo.RevenueUserPO;
-import com.rpa.front.pojo.WithdrawUserPO;
+import com.rpa.front.mapper.*;
+import com.rpa.front.pojo.*;
 import com.rpa.front.service.IIncomeService;
+import com.rpa.front.utils.RequestUtil;
 import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
 import com.rpa.front.vo.RecordVO;
@@ -22,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,8 +42,15 @@ public class IncomeServiceImpl implements IIncomeService {
     private InviteUserMapper inviteUserMapper;
     @Resource
     private WithdrawUserMapper withdrawUserMapper;
+    @Resource
+    private AppMapper appMapper;
+    @Resource
+    private UserMapper userMapper;
+
     @Value("${project.shareurl}")
     private String shareUrl;
+    @Value("${file.publicPath}")
+    private String publicPath;
 
     @Override
     public ResultVO query(IncomeDTO dto) {
@@ -173,5 +180,48 @@ public class IncomeServiceImpl implements IIncomeService {
         vo.setUrl(shareUrl + po.getSharecode());
 
         return new ResultVO<>(1000, vo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ResultVO getDownloadURL(DownLoadDTO dto, HttpServletRequest req) {
+        // 获取最新发布应用
+        AppPO appPO = appMapper.queryLatestRelease();
+        String appUrl = publicPath + appPO.getUrl();
+        // 根据shareCode获取userId
+        RevenueUserPO revenueUserPO = revenueUserMapper.queryByShareCode(dto.getCode());
+        if (null == revenueUserPO) {
+            return new ResultVO<>(ErrorCode.SHARE_CODE_ERROR, appUrl);
+        }
+        // 当前手机是否注册
+        UserPO userPO = userMapper.queryByPhone(dto.getPhone());
+        if (null != userPO) {
+            return new ResultVO<>(ErrorCode.PHONE_REGISTERED, appUrl);
+        }
+        // 当前手机是否被其他用户邀请
+        InviteUserPO inviteUserPO = inviteUserMapper.queryByPhone(dto.getPhone());
+        if (null != inviteUserPO && !revenueUserPO.getUserId().equals(inviteUserPO.getUserId())) {
+            return new ResultVO<>(ErrorCode.PHONE_INVITED, appUrl);
+        }
+
+        if (null == inviteUserPO) {
+            // 更新用户邀请收入表
+            revenueUserPO.setInviteCount(revenueUserPO.getInviteCount() + 1);
+            revenueUserMapper.updateByPrimaryKey(revenueUserPO);
+            // 新增用户邀请人详情表
+            inviteUserPO = new InviteUserPO();
+            inviteUserPO.setUserId(revenueUserPO.getUserId());
+            inviteUserPO.setInvitePhone(dto.getPhone());
+            inviteUserPO.setCreateTime(new Date());
+            inviteUserPO.setIp(RequestUtil.getIpAddr(req));
+            inviteUserMapper.insert(inviteUserPO);
+        } else {
+            // 更新用户邀请人详情表
+            inviteUserPO.setIp(RequestUtil.getIpAddr(req));
+            inviteUserPO.setUpdateTime(new Date());
+            inviteUserMapper.updateByPrimaryKey(inviteUserPO);
+        }
+
+        return new ResultVO<>(1000, appUrl);
     }
 }

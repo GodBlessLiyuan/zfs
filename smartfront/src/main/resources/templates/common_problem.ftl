@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
-    <title> 测试下拉显示文字 </title>
+    <title> 常见问题 </title>
     <link rel="stylesheet" href="${basePath}/css/common_problem.css">
     <script src="js/generalize.js" type="text/javascript"></script>
 

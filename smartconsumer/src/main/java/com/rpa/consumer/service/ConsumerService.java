@@ -1,8 +1,5 @@
 package com.rpa.consumer.service;
 
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConsumerService {
 
-    @KafkaListener(topics = {"smart"} )
+    @KafkaListener(topics = {"smart"})
     public void consume(Object payload) {
         System.out.println(payload);
     }
