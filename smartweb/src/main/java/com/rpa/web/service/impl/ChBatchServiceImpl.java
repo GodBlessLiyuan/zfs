@@ -205,7 +205,6 @@ public class ChBatchServiceImpl implements ChBatchService {
             batchInfoPO.setBatchId(po.getBatchId());
             batchInfoPO.setStatus((byte)1);
             batchInfoPO.setDays(queryDaysByBatchId(po.getBatchId()));
-            batchInfoPO.setUpdateTime(new Date());
             batchInfoPO.setUserId((long)0);
 
             batchInfoPOs.add(batchInfoPO);
