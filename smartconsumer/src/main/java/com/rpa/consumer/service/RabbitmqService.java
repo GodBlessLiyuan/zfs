@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RabbitmqService {
+
     /**
      * 微信支付确认通知
-     * @param msg
+     *
+     * @param orderNumber 订单号
      */
     @RabbitListener(queues = "wx-pay-notice")
-    public void wxPayNotice(String msg) {
-        System.out.println(msg);
+    public void wxPayNotice(String orderNumber) {
+        System.out.println(orderNumber);
     }
 }

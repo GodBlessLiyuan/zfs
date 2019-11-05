@@ -14,8 +14,17 @@ import java.util.List;
 public interface OrderMapper extends BaseMapper<OrderPO, OrderPOKey> {
     /**
      * 查询UserId的购买信息
+     *
      * @param userId
      * @return
      */
     List<OrderBO> queryByUserId(Long userId);
+
+    /**
+     * 根据 订单编号查询
+     *
+     * @param orderNumber
+     * @return
+     */
+    OrderPO queryByOrderNumber(String orderNumber);
 }

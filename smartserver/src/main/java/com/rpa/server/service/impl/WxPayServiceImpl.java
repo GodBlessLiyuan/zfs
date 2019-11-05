@@ -1,12 +1,19 @@
 package com.rpa.server.service.impl;
 
 import com.rpa.server.mapper.OrderFeedbackMapper;
+import com.rpa.server.mapper.OrderMapper;
+import com.rpa.server.mapper.UserVipMapper;
 import com.rpa.server.pojo.OrderFeedbackPO;
+import com.rpa.server.pojo.OrderPO;
+import com.rpa.server.pojo.UserVipPO;
 import com.rpa.server.service.IWxPayService;
+import com.rpa.server.utils.UserVipUtil;
 import com.rpa.server.utils.WxPayUtil;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -22,13 +30,20 @@ import java.util.Map;
  * @description: 微信支付
  * @version: 1.0
  */
+@EnableTransactionManagement
 @Service
 public class WxPayServiceImpl implements IWxPayService {
     @Resource
     private OrderFeedbackMapper orderFeedbackMapper;
+    @Resource
+    private OrderMapper orderMapper;
+    @Resource
+    private UserVipMapper userVipMapper;
+
     @Autowired
     private AmqpTemplate template;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String wxPayNotice(HttpServletRequest req) {
         Map<String, String> info = null;
@@ -53,10 +68,28 @@ public class WxPayServiceImpl implements IWxPayService {
             return WxPayUtil.failWxPay();
         }
 
-        OrderFeedbackPO po = this.convertMap2PO(info);
+        OrderPO orderPO = orderMapper.queryByOrderNumber(info.get("nonce_str"));
+        if (null != orderPO.getPayTime()) {
+            // 当前订单已完成
+            return WxPayUtil.successWxPay();
+        }
+        orderPO.setPayTime(new Date());
+        orderMapper.updateByPrimaryKey(orderPO);
 
+        // 更新用户会员时间
+        UserVipPO userVipPO = userVipMapper.queryByUserId(orderPO.getUserId());
+        UserVipPO newUserVipVO = UserVipUtil.buildUserVipVO(userVipPO, orderPO.getUserId(), orderPO.getDays(), true);
+        if (null == userVipPO) {
+            userVipMapper.insert(newUserVipVO);
+        } else {
+            userVipMapper.updateByPrimaryKey(newUserVipVO);
+        }
+
+        // 新增微信支付反馈信息
+        OrderFeedbackPO po = this.convertMap2PO(info);
         orderFeedbackMapper.insert(po);
 
+        // RabbitMQ
         this.template.convertAndSend("wx-pay-notice", po.getNonceStr());
 
         return WxPayUtil.successWxPay();
