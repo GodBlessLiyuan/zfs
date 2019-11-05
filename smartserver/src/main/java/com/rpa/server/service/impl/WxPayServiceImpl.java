@@ -57,7 +57,7 @@ public class WxPayServiceImpl implements IWxPayService {
 
         orderFeedbackMapper.insert(po);
 
-        this.template.convertAndSend("wx-pay-notice", "hello");
+        this.template.convertAndSend("wx-pay-notice", po.getNonceStr());
 
         return WxPayUtil.successWxPay();
     }
