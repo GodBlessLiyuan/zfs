@@ -223,6 +223,14 @@
 
 <script>
     /**
+     * 页面加载事件：一进入页面就进行一次查询
+     */
+    window.onload = function () {
+        queryClick();
+    }
+
+
+    /**
      * 页面加载事件：往t_channel表中查询所有的负责人
      */
     $(document).ready(function () {
