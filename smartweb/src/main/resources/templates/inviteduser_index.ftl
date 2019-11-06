@@ -247,7 +247,6 @@
         if (null === userId) {
             alert("出了些问题，无法跳转，请联系工程师！");
         }else {
-
             window.location.href = '/inviteduser/detail?userId='+ userId;
         }
     }

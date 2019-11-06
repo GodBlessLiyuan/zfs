@@ -278,8 +278,13 @@
             url: '/chbatch/queryComTypes',
             dataType: 'JSON',
             success: function (result) {
-                for (var i = 0; i < result.data.length; i++) {
-                    $('#comTypeId').append("<option value='" + result.data[i].comTypeId + "'>" + result.data[i].name + "</option>");
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                } else {
+                    for (var i = 0; i < result.data.length; i++) {
+                        $('#comTypeId').append("<option value='" + result.data[i].comTypeId + "'>" + result.data[i].name + "</option>");
+                    }
                 }
             }
         });
@@ -299,8 +304,13 @@
             url: '/chbatch/queryChanNicknames',
             dataType: 'JSON',
             success: function (result) {
-                for (var i = 0; i < result.data.length; i++) {
-                    $('#insert_chanId').append("<option value='" + result.data[i].chanId + "'>" + result.data[i].chanNickname + "</option>");
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                } else {
+                    for (var i = 0; i < result.data.length; i++) {
+                        $('#insert_chanId').append("<option value='" + result.data[i].chanId + "'>" + result.data[i].chanNickname + "</option>");
+                    }
                 }
             }
         });
@@ -313,8 +323,13 @@
             url: '/chbatch/queryComTypes',
             dataType: 'JSON',
             success: function (result) {
-                for (var i = 0; i < result.data.length; i++) {
-                    $('#insert_comTypeId').append("<option value='" + result.data[i].comTypeId + "'>" + result.data[i].name + "</option>");
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                } else {
+                    for (var i = 0; i < result.data.length; i++) {
+                        $('#insert_comTypeId').append("<option value='" + result.data[i].comTypeId + "'>" + result.data[i].name + "</option>");
+                    }
                 }
             }
         });
@@ -336,7 +351,10 @@
         } else {
 
             $.post("/chbatch/insert", {chanId:chanId, num:num, comTypeId:comTypeId, extra:extra}, function (result) {
-                if (result.code === 0) {
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                }else if (result.code === 0) {
                     alert("新增成功！")
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -483,7 +501,10 @@
         var status = $('#statusChange_2').val();
 
         $.post("/chbatch/update/status", {batchId:batchId, status:status}, function (result) {
-            if (result.code === 0) {
+            if (result.code === 1008) {
+                alert("登录超时，请重新登录！");
+                window.location.href = '/login';
+            }else if (result.code === 0) {
                 alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
             } else {

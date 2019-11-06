@@ -271,7 +271,10 @@
             alert("备注不能为空！");
         } else {
             $.post("/promoter/insert", {proName:proName, phone:phone, extra:extra}, function (result) {
-                if (result.code === 0) {
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                }else if (result.code === 0) {
                     alert("新增成功！")
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -357,9 +360,14 @@
             url: '/adconfig/queryById?proId=' + proId,
             dataType: 'JSON',
             success: function (result) {
-                $('#up_proName').val(result.data.proName);
-                $('#up_phone').val(result.data.phone);
-                $('#up_extra').val(result.data.extra);
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                } else {
+                    $('#up_proName').val(result.data.proName);
+                    $('#up_phone').val(result.data.phone);
+                    $('#up_extra').val(result.data.extra);
+                }
             }
         })
     }
@@ -383,7 +391,10 @@
         } else {
 
             $.post("/promoter/update", {proId:proId, proName:proName, phone:phone, extra:extra}, function (result) {
-                if (result.code === 0) {
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                }else if (result.code === 0) {
                     alert("更新成功！")
                     $('#datatab').DataTable().draw(false);
                 } else {
