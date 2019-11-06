@@ -146,7 +146,27 @@
     <!--**********************************
         弹框
     ***********************************-->
-
+    <!--弹框：查看图片-->
+    <div class="modal fade" id="url1Modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="form-group">
+                    <button type="hidden" id="" style="display:none;"/>
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title">查看图片</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
+                </div>
+                <div class="modal-body">
+                    <img src='' id="url1_pic" height='50px' width='50px'/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--**********************************
         Content body end
     ***********************************-->
@@ -219,7 +239,7 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "userId"},
+                {"data": "phone"},
                 {"data": "deviceId"},
                 {"data": "manufacturer"},
                 {"data": "androidmodel"},
@@ -229,9 +249,14 @@
                 {"data": "contact"},
                 {"data": "context"},
                 {
-                    "data": "url",
+                    "data": "url1",
                     "render": function (data, type, full) {
-                        return "<img src='" + data + "' height='50px' width='50px'/>";
+                        if (null == data) {
+                            return "";
+                        } else {
+                            return "<button type='button'  data-toggle='modal' data-target='#url1Modal' data-whatever='@getbootstrap' " +
+                                "class='btn btn-primary' onclick='viewClick(\""+ data +"\")'>查看</button>";
+                        }
                     }
                 }
             ],
@@ -251,6 +276,14 @@
                 }
             }
         });
+    }
+
+
+    /**
+     * 查看图片
+     */
+    function viewClick(url1) {
+        document.getElementById("url1_pic").src = url1;
     }
 </script>
 

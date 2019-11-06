@@ -24,4 +24,6 @@ public interface AdminUserMapper extends BaseDAO<AdminUserPO, Integer> {
     AdminUserDO queryById(Integer aId);
 
     List<AdminUserDO> queryBy(Map<String, Object> map);
+
+    String queryPhoneByAid(Long aId);
 }
