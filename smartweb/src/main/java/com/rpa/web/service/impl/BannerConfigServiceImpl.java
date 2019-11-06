@@ -40,6 +40,9 @@ public class BannerConfigServiceImpl implements BannerConfigService {
     @Value("${file.iconDir}")
     private String iconDir;
 
+    @Value("${file.publicPath}")
+    private String publicPath;
+
     /**
      * 查询
      * @param draw
@@ -70,7 +73,11 @@ public class BannerConfigServiceImpl implements BannerConfigService {
             dto.setBannerId(po.getBannerId());
             dto.setName(po.getName());
             dto.setStartTime(po.getStartTime());
-            dto.setPicPath(po.getPicPath());
+            if (null == po.getPicPath()) {
+                dto.setPicPath(po.getPicPath());
+            } else {
+                dto.setPicPath(publicPath + po.getPicPath());
+            }
             dto.setUrl(po.getUrl());
             dto.setStatus(po.getStatus());
             dto.setOperator(queryUsernameByAid(po.getaId()));
