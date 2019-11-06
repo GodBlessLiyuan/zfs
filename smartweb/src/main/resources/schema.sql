@@ -512,7 +512,7 @@ CREATE TABLE t_other_app
 	o_id int NOT NULL AUTO_INCREMENT,
 	o_name char(64),
 	icon_url char(255),
-	app_url char(512),
+	app_url char(255),
 	-- 1 直接下载  2应用市场
 	download_type tinyint COMMENT '1 直接下载  2应用市场',
 	a_id int,
@@ -731,9 +731,9 @@ CREATE TABLE t_vipcommodity
 	cmdy_id int NOT NULL AUTO_INCREMENT,
 	viptype_id int NOT NULL,
 	com_type_id int NOT NULL,
-	com_name varchar(64),
-	price int,
-	discount float,
+	com_name char(64),
+	price char(16),
+	discount bigint,
 	-- 1 会员中心 
 	position tinyint COMMENT '1 会员中心 ',
 	create_time datetime,

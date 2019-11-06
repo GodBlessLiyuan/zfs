@@ -16,9 +16,9 @@ public class VipCommodityPO implements Serializable {
 
     private String comName;
 
-    private Integer price;
+    private String price;
 
-    private Float discount;
+    private Long discount;
 
     /**
      * 1 会员中心 
@@ -87,19 +87,19 @@ public class VipCommodityPO implements Serializable {
         this.comName = comName;
     }
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public Float getDiscount() {
+    public Long getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Float discount) {
+    public void setDiscount(Long discount) {
         this.discount = discount;
     }
 

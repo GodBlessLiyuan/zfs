@@ -5,9 +5,9 @@
     <id column="cmdy_id" jdbcType="INTEGER" property="cmdyId" />
     <result column="viptype_id" jdbcType="INTEGER" property="viptypeId" />
     <result column="com_type_id" jdbcType="INTEGER" property="comTypeId" />
-    <result column="com_name" jdbcType="VARCHAR" property="comName" />
-    <result column="price" jdbcType="INTEGER" property="price" />
-    <result column="discount" jdbcType="REAL" property="discount" />
+    <result column="com_name" jdbcType="CHAR" property="comName" />
+    <result column="price" jdbcType="CHAR" property="price" />
+    <result column="discount" jdbcType="BIGINT" property="discount" />
     <result column="position" jdbcType="TINYINT" property="position" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="soft_channel_id" jdbcType="INTEGER" property="softChannelId" />
@@ -60,8 +60,8 @@
       `status`, com_type_name, istop
       )
     values (#{cmdyId,jdbcType=INTEGER}, #{viptypeId,jdbcType=INTEGER}, #{comTypeId,jdbcType=INTEGER}, 
-      #{comName,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{discount,jdbcType=REAL}, 
-      #{position,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{softChannelId,jdbcType=INTEGER},
+      #{comName,jdbcType=CHAR}, #{price,jdbcType=CHAR}, #{discount,jdbcType=BIGINT}, 
+      #{position,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{softChannelId,jdbcType=INTEGER}, 
       #{name,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{days,jdbcType=INTEGER}, 
       #{aId,jdbcType=INTEGER}, #{description,jdbcType=CHAR}, #{showDiscount,jdbcType=CHAR}, 
       #{status,jdbcType=TINYINT}, #{comTypeName,jdbcType=CHAR}, #{istop,jdbcType=TINYINT}
@@ -136,13 +136,13 @@
         #{comTypeId,jdbcType=INTEGER},
       </if>
       <if test="comName != null">
-        #{comName,jdbcType=VARCHAR},
+        #{comName,jdbcType=CHAR},
       </if>
       <if test="price != null">
-        #{price,jdbcType=INTEGER},
+        #{price,jdbcType=CHAR},
       </if>
       <if test="discount != null">
-        #{discount,jdbcType=REAL},
+        #{discount,jdbcType=BIGINT},
       </if>
       <if test="position != null">
         #{position,jdbcType=TINYINT},
@@ -192,13 +192,13 @@
         com_type_id = #{comTypeId,jdbcType=INTEGER},
       </if>
       <if test="comName != null">
-        com_name = #{comName,jdbcType=VARCHAR},
+        com_name = #{comName,jdbcType=CHAR},
       </if>
       <if test="price != null">
-        price = #{price,jdbcType=INTEGER},
+        price = #{price,jdbcType=CHAR},
       </if>
       <if test="discount != null">
-        discount = #{discount,jdbcType=REAL},
+        discount = #{discount,jdbcType=BIGINT},
       </if>
       <if test="position != null">
         `position` = #{position,jdbcType=TINYINT},
@@ -243,9 +243,9 @@
     update t_vipcommodity
     set viptype_id = #{viptypeId,jdbcType=INTEGER},
       com_type_id = #{comTypeId,jdbcType=INTEGER},
-      com_name = #{comName,jdbcType=VARCHAR},
-      price = #{price,jdbcType=INTEGER},
-      discount = #{discount,jdbcType=REAL},
+      com_name = #{comName,jdbcType=CHAR},
+      price = #{price,jdbcType=CHAR},
+      discount = #{discount,jdbcType=BIGINT},
       `position` = #{position,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       soft_channel_id = #{softChannelId,jdbcType=INTEGER},
