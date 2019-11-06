@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class WebExceptionHandler {
 
-    @ExceptionHandler(value = PromptException.class)
-    public ResultVO handlerPromptException(PromptException e) {
-        return ResultVOUtil.error(e.getCode(), e.getMessage());
+    @ExceptionHandler(value = Exception.class)
+    public ResultVO handlerPromptException(Exception e) {
+        if (e instanceof PromptException) {
+            return ResultVOUtil.error(((PromptException) e).getCode(), e.getMessage());
+        }
+
+        return new ResultVO(2000, "服务器内部错误!");
     }
 }
