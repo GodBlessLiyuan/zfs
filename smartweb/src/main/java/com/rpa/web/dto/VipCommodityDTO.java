@@ -1,6 +1,7 @@
 package com.rpa.web.dto;
 
 import com.rpa.web.pojo.VipCommodityPO;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
  * @description: 商品列表
  * @version: 1.0
  */
+@Data
 public class VipCommodityDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,7 +25,7 @@ public class VipCommodityDTO implements Serializable {
     private Integer days;
     private String comName;
     private String description;
-    private Integer price;
+    private String price;
     private String showDiscount;
     private Float discount;
     private Byte status;
@@ -48,7 +50,7 @@ public class VipCommodityDTO implements Serializable {
         dto.setDescription(po.getDescription());
         dto.setPrice(po.getPrice());
         dto.setShowDiscount(po.getShowDiscount());
-        dto.setDiscount(po.getDiscount());
+        dto.setDiscount(po.getDiscount() / 100F);
         dto.setStatus(po.getStatus());
         dto.setIstop(po.getIstop());
         dto.setCreateTime(po.getCreateTime());
@@ -71,109 +73,5 @@ public class VipCommodityDTO implements Serializable {
         }
 
         return dtos;
-    }
-
-    public Integer getCmdyId() {
-        return cmdyId;
-    }
-
-    public void setCmdyId(Integer cmdyId) {
-        this.cmdyId = cmdyId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getComTypeName() {
-        return comTypeName;
-    }
-
-    public void setComTypeName(String comTypeName) {
-        this.comTypeName = comTypeName;
-    }
-
-    public Integer getDays() {
-        return days;
-    }
-
-    public void setDays(Integer days) {
-        this.days = days;
-    }
-
-    public String getComName() {
-        return comName;
-    }
-
-    public void setComName(String comName) {
-        this.comName = comName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public String getShowDiscount() {
-        return showDiscount;
-    }
-
-    public void setShowDiscount(String showDiscount) {
-        this.showDiscount = showDiscount;
-    }
-
-    public Float getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Float discount) {
-        this.discount = discount;
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
-    public Byte getIstop() {
-        return istop;
-    }
-
-    public void setIstop(Byte istop) {
-        this.istop = istop;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 }

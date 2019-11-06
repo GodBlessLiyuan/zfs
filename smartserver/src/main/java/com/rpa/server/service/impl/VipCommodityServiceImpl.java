@@ -52,7 +52,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
             vo.setCmdid(po.getCmdyId());
             vo.setDescription(po.getDescription());
             vo.setPrice(po.getPrice());
-            vo.setDiscount(po.getDiscount());
+            vo.setDiscount(po.getDiscount() / 100F);
             vo.setShowdiscount(po.getShowDiscount());
             vo.setTypename(po.getComTypeName());
             vo.setDays(po.getDays());

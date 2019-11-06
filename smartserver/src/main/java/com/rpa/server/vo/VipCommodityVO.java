@@ -25,7 +25,7 @@ public class VipCommodityVO implements Serializable {
     /**
      * 原价
      */
-    private Integer price;
+    private String price;
     /**
      * 显示折扣
      */

@@ -46,7 +46,7 @@ public interface IVipCommodityService {
      * @param aId          管理员Id
      * @return
      */
-    ResultVO insert(int channelId, int comTypeId, String comName, String description, int price, String showDiscount, float discount, int aId);
+    ResultVO insert(int channelId, int comTypeId, String comName, String description, String price, String showDiscount, float discount, int aId);
 
     /**
      * 更新
@@ -59,7 +59,7 @@ public interface IVipCommodityService {
      * @param discount     售价
      * @return
      */
-    int update(int cmdyId, String comName, String description, int price, String showDiscount, float discount);
+    int update(int cmdyId, String comName, String description, String price, String showDiscount, float discount);
 
     /**
      * 更新是否上架

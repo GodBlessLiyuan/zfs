@@ -56,7 +56,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     }
 
     @Override
-    public ResultVO insert(int channelId, int comTypeId, String comName, String description, int price, String showDiscount,
+    public ResultVO insert(int channelId, int comTypeId, String comName, String description, String price, String showDiscount,
                            float discount, int aId) {
         VipCommodityPO po = vipCommodityMapper.queryByChanIdAndComTypeId(channelId, comTypeId);
         if (po != null) {
@@ -70,7 +70,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         vipCommodityPO.setDescription(description);
         vipCommodityPO.setPrice(price);
         vipCommodityPO.setShowDiscount(showDiscount);
-        vipCommodityPO.setDiscount(discount);
+        vipCommodityPO.setDiscount((long) (100 * discount));
         vipCommodityPO.setaId(aId);
 
         // 查询产品信息数据
@@ -98,14 +98,14 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     }
 
     @Override
-    public int update(int cmdyId, String comName, String description, int price, String showDiscount, float discount) {
+    public int update(int cmdyId, String comName, String description, String price, String showDiscount, float discount) {
         VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(cmdyId);
 
         vipCommodityPO.setComName(comName);
         vipCommodityPO.setDescription(description);
         vipCommodityPO.setPrice(price);
         vipCommodityPO.setShowDiscount(showDiscount);
-        vipCommodityPO.setDiscount(discount);
+        vipCommodityPO.setDiscount((long) (100 * discount));
         vipCommodityPO.setUpdateTime(new Date());
 
         return vipCommodityMapper.updateByPrimaryKey(vipCommodityPO);
