@@ -32,8 +32,8 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO activate(BatchInfoDTO dto) {
-        BatchInfoPO po = batchInfoMapper.queryByUserIdAndKey(0L, dto.getKey());
-        if (po == null) {
+        BatchInfoPO po = batchInfoMapper.queryByKey(dto.getKey());
+        if (null == po) {
             return new ResultVO(1016);
         }
         if (po.getStatus() != 1) {

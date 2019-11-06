@@ -16,9 +16,6 @@ import javax.annotation.Resource;
 @Service
 public class RabbitmqService {
 
-    @Resource
-    private OrderMapper orderMapper;
-
     /**
      * 微信支付确认通知
      *
@@ -26,7 +23,5 @@ public class RabbitmqService {
      */
     @RabbitListener(queues = "wx-pay-notice")
     public void wxPayNotice(String orderNumber) {
-//        OrderPO orderPO = orderMapper.queryByOrderNumber(orderNumber);
-
     }
 }
