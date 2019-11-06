@@ -47,8 +47,8 @@ public class NoticeServiceImpl implements NoticeService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param startTime
      * @param endTime
      * @param status
@@ -57,10 +57,10 @@ public class NoticeServiceImpl implements NoticeService {
      * @return
      */
     @Override
-    public DTPageInfo<NoticeDTO> query(int draw, int pageNum, int pageSize, String startTime, String endTime, Integer status, Byte type, String title) {
+    public DTPageInfo<NoticeDTO> query(int draw, int start, int length, String startTime, String endTime, Integer status, Byte type, String title) {
 
         // 分页
-        Page<NoticeDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<NoticeDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(5);

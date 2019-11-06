@@ -26,19 +26,19 @@ public class BatchInfoController {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param vipkey
      * @return
      */
     @GetMapping("query")
     public DTPageInfo<BatchInfoDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                          @RequestParam(value = "start", defaultValue = "1") int start,
+                                          @RequestParam(value = "length", defaultValue = "10") int length,
                                           @RequestParam(value = "vipkey", required = false) String vipkey
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<BatchInfoDTO> dTPageInfo = batchInfoService.query(draw, pageNum, pageSize, vipkey);
+        DTPageInfo<BatchInfoDTO> dTPageInfo = batchInfoService.query(draw, start, length, vipkey);
         return dTPageInfo;
     }
 
@@ -46,19 +46,19 @@ public class BatchInfoController {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param batchId
      * @return
      */
     @GetMapping("queryByBatchid")
     public DTPageInfo<BatchInfoDTO> queryByBatchid(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                                   @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                                   @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                                   @RequestParam(value = "start", defaultValue = "1") int start,
+                                                   @RequestParam(value = "length", defaultValue = "10") int length,
                                                    @RequestParam(value = "batchId") Integer batchId
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<BatchInfoDTO> dTPageInfo = batchInfoService.queryByBatchid(draw, pageNum, pageSize, batchId);
+        DTPageInfo<BatchInfoDTO> dTPageInfo = batchInfoService.queryByBatchid(draw, start, length, batchId);
         return dTPageInfo;
     }
 

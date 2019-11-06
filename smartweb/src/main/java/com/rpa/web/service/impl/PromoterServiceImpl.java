@@ -37,17 +37,17 @@ public class PromoterServiceImpl implements PromoterService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param proName
      * @param phone
      * @return
      */
     @Override
-    public DTPageInfo<PromoterDTO> query(int draw, int pageNum, int pageSize, String proName, String phone) {
+    public DTPageInfo<PromoterDTO> query(int draw, int start, int length, String proName, String phone) {
 
         // 分页
-        Page<PromoterDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<PromoterDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);

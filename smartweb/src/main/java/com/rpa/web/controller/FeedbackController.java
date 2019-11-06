@@ -25,8 +25,8 @@ public class FeedbackController {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param startTime
      * @param endTime
      * @param userId
@@ -35,8 +35,8 @@ public class FeedbackController {
      */
     @GetMapping("query")
     public DTPageInfo<FeedbackDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                         @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                         @RequestParam(value = "start", defaultValue = "1") int start,
+                                         @RequestParam(value = "length", defaultValue = "10") int length,
                                          @RequestParam(value = "startTime", required = false) String startTime,
                                          @RequestParam(value = "endTime", required = false) String endTime,
                                          @RequestParam(value = "userId", required = false) String userId,
@@ -44,7 +44,7 @@ public class FeedbackController {
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<FeedbackDTO> dTPageInfo = feedbackService.query(draw, pageNum, pageSize, startTime, endTime, userId, contact);
+        DTPageInfo<FeedbackDTO> dTPageInfo = feedbackService.query(draw, start, length, startTime, endTime, userId, contact);
         return dTPageInfo;
     }
 }

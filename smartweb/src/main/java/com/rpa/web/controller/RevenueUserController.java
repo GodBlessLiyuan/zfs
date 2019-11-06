@@ -29,22 +29,22 @@ public class RevenueUserController {
     /**
      * 查询：查询邀请人的收益信息
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param phone
      * @param orderby
      * @return
      */
     @GetMapping("query")
     public DTPageInfo<RevenueUserDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                            @RequestParam(value = "start", defaultValue = "1") int start,
+                                            @RequestParam(value = "length", defaultValue = "10") int length,
                                             @RequestParam(value = "phone", required = false) String phone,
                                             @RequestParam(value = "orderby", required = false) int orderby
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<RevenueUserDTO> dTPageInfo = revenueUserService.query(draw, pageNum, pageSize, phone, orderby);
+        DTPageInfo<RevenueUserDTO> dTPageInfo = revenueUserService.query(draw, start, length, phone, orderby);
         return dTPageInfo;
     }
 
@@ -52,22 +52,22 @@ public class RevenueUserController {
     /**
      * 查询：根据邀请人的userId，查询该邀请人名下的所有被邀请人大概信息
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param userId
      * @param invitePhone
      * @return
      */
     @GetMapping("/query/inviteduser")
     public DTPageInfo<InviteUserDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                           @RequestParam(value = "start", defaultValue = "1") int start,
+                                           @RequestParam(value = "length", defaultValue = "10") int length,
                                            @RequestParam(value = "userId") Integer userId,
                                            @RequestParam(value = "invitePhone", required = false) String invitePhone
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<InviteUserDTO> dTPageInfo = revenueUserService.queryInviteduser(draw, pageNum, pageSize, userId, invitePhone);
+        DTPageInfo<InviteUserDTO> dTPageInfo = revenueUserService.queryInviteduser(draw, start, length, userId, invitePhone);
         return dTPageInfo;
     }
 
@@ -85,8 +85,8 @@ public class RevenueUserController {
      */
     @GetMapping("/query/inviteduser/detail")
     public DTPageInfo<InviteDetailDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                             @RequestParam(value = "start", defaultValue = "1") int start,
+                                             @RequestParam(value = "length", defaultValue = "10") int length,
                                              @RequestParam(value = "userId") Integer userId,
                                              @RequestParam(value = "viptypeId", required = false) Integer viptypeId,
                                              @RequestParam(value = "startTime", required = false) Date startTime,
@@ -94,7 +94,7 @@ public class RevenueUserController {
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<InviteDetailDTO> dTPageInfo = revenueUserService.queryInviteduserDetail(draw, pageNum, pageSize, userId, viptypeId, startTime, endTime);
+        DTPageInfo<InviteDetailDTO> dTPageInfo = revenueUserService.queryInviteduserDetail(draw, start, length, userId, viptypeId, startTime, endTime);
         return dTPageInfo;
     }
 

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface PromoterService {
-    DTPageInfo<PromoterDTO> query(int draw, int pageNum, int pageSize, String proName, String phone);
+    DTPageInfo<PromoterDTO> query(int draw, int start, int length, String proName, String phone);
 
     ResultVO insert(PromoterDTO promoterDTO, HttpSession httpSession);
 

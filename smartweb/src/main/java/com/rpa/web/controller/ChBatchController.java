@@ -26,8 +26,8 @@ public class ChBatchController {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param chanNickname
      * @param comTypeId
      * @param status
@@ -36,15 +36,15 @@ public class ChBatchController {
      */
     @GetMapping("query")
     public DTPageInfo<ChBatchDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                        @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                        @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                        @RequestParam(value = "start", defaultValue = "1") int start,
+                                        @RequestParam(value = "length", defaultValue = "10") int length,
                                         @RequestParam(value = "chanNickname", required = false) String chanNickname,
                                         @RequestParam(value = "comTypeId", required = false) Integer comTypeId,
                                         @RequestParam(value = "status", required = false) Byte status,
                                         @RequestParam(value = "operator", required = false) String operator
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<ChBatchDTO> dTPageInfo = chBatchService.query(draw, pageNum, pageSize, chanNickname, comTypeId, status, operator);
+        DTPageInfo<ChBatchDTO> dTPageInfo = chBatchService.query(draw, start, length, chanNickname, comTypeId, status, operator);
         return dTPageInfo;
     }
 

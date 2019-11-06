@@ -41,17 +41,17 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param phone
      * @param status
      * @return
      */
     @Override
-    public DTPageInfo<WithdrawUserDTO> query(int draw, int pageNum, int pageSize, String phone, Byte status) {
+    public DTPageInfo<WithdrawUserDTO> query(int draw, int start, int length, String phone, Byte status) {
 
         // 分页
-        Page<WithdrawUserDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<WithdrawUserDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);

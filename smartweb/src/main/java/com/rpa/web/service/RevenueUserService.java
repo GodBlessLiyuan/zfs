@@ -14,9 +14,9 @@ import java.util.Date;
  * @description:
  */
 public interface RevenueUserService {
-    DTPageInfo<RevenueUserDTO> query(int draw, int pageNum, int pageSize, String phone, int orderby);
+    DTPageInfo<RevenueUserDTO> query(int draw, int start, int length, String phone, int orderby);
 
-    DTPageInfo<InviteUserDTO> queryInviteduser(int draw, int pageNum, int pageSize, Integer userId, String invitePhone);
+    DTPageInfo<InviteUserDTO> queryInviteduser(int draw, int start, int length, Integer userId, String invitePhone);
 
-    DTPageInfo<InviteDetailDTO> queryInviteduserDetail(int draw, int pageNum, int pageSize, Integer userId, Integer viptypeId, Date startTime, Date endTime);
+    DTPageInfo<InviteDetailDTO> queryInviteduserDetail(int draw, int start, int length, Integer userId, Integer viptypeId, Date startTime, Date endTime);
 }

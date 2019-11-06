@@ -29,8 +29,8 @@ public class AdconfigController {
 
     /**
      * 查询
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param name
      * @param adNumber
      * @param status
@@ -38,15 +38,15 @@ public class AdconfigController {
      */
     @GetMapping("query")
     public DTPageInfo<AdconfigDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                         @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                         @RequestParam(value = "start", defaultValue = "1") int start,
+                                         @RequestParam(value = "length", defaultValue = "10") int length,
                                          @RequestParam(value = "name", required = false) String name,
                                          @RequestParam(value = "adNumber", required = false) String adNumber,
                                          @RequestParam(value = "status", required = false) Byte status
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<AdconfigDTO> dTPageInfo = adconfigService.query(draw, pageNum, pageSize, name, adNumber, status);
+        DTPageInfo<AdconfigDTO> dTPageInfo = adconfigService.query(draw, start, length, name, adNumber, status);
         return dTPageInfo;
     }
 

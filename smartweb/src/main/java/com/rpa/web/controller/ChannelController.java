@@ -26,21 +26,21 @@ public class ChannelController {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param chanNickname
      * @param proId
      * @return
      */
     @GetMapping("query")
     public DTPageInfo<ChannelDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                        @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                        @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                        @RequestParam(value = "start", defaultValue = "1") int start,
+                                        @RequestParam(value = "length", defaultValue = "10") int length,
                                         @RequestParam(value = "chanNickname", required = false) String chanNickname,
                                         @RequestParam(value = "proId", required = false) Integer proId
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<ChannelDTO> dTPageInfo = channelService.query(draw, pageNum, pageSize, chanNickname, proId);
+        DTPageInfo<ChannelDTO> dTPageInfo = channelService.query(draw, start, length, chanNickname, proId);
         return dTPageInfo;
     }
 

@@ -43,16 +43,16 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param funName
      * @return
      */
     @Override
-    public DTPageInfo<FunctionVideoDTO> query(int draw, int pageNum, int pageSize, String funName) {
+    public DTPageInfo<FunctionVideoDTO> query(int draw, int start, int length, String funName) {
 
         // 分页
-        Page<FunctionVideoDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<FunctionVideoDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(1);

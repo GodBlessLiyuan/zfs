@@ -43,17 +43,17 @@ public class BannerConfigServiceImpl implements BannerConfigService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param name
      * @param status
      * @return
      */
     @Override
-    public DTPageInfo<BannerConfigDTO> query(int draw, int pageNum, int pageSize, String name, Byte status) {
+    public DTPageInfo<BannerConfigDTO> query(int draw, int start, int length, String name, Byte status) {
 
         // 分页
-        Page<BannerConfigDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<BannerConfigDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);

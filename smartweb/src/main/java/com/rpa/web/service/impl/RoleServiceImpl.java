@@ -29,15 +29,15 @@ public class RoleServiceImpl implements RoleService {
      * 查询
      *
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @return
      */
     @Override
-    public DTPageInfo<RoleDTO> query(int draw, int pageNum, int pageSize) {
+    public DTPageInfo<RoleDTO> query(int draw, int start, int length) {
 
         // 分页
-        Page<RoleDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<RoleDTO> page = PageHelper.startPage(start, length);
 
         // 按照条件查询数据
         List<RolePO> lists_PO = roleMapper.query();

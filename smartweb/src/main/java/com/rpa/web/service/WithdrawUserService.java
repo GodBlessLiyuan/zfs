@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface WithdrawUserService {
-    DTPageInfo<WithdrawUserDTO> query(int draw, int pageNum, int pageSize, String phone, Byte status);
+    DTPageInfo<WithdrawUserDTO> query(int draw, int start, int length, String phone, Byte status);
 
     ResultVO update(Integer withdrawId, Byte status, HttpSession httpSession);
 }

@@ -10,7 +10,7 @@ import com.rpa.web.utils.DTPageInfo;
  * @description: TODO
  */
 public interface BatchInfoService {
-    DTPageInfo<BatchInfoDTO> query(int draw, int pageNum, int pageSize, String vipkey);
+    DTPageInfo<BatchInfoDTO> query(int draw, int start, int length, String vipkey);
 
-    DTPageInfo<BatchInfoDTO> queryByBatchid(int draw, int pageNum, int pageSize, Integer batchId);
+    DTPageInfo<BatchInfoDTO> queryByBatchid(int draw, int start, int length, Integer batchId);
 }

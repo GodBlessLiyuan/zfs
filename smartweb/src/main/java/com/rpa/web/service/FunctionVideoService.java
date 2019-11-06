@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface FunctionVideoService {
-    DTPageInfo<FunctionVideoDTO> query(int draw, int pageNum, int pageSize, String funName);
+    DTPageInfo<FunctionVideoDTO> query(int draw, int start, int length, String funName);
 
     ResultVO queryById(Integer functionId);
 

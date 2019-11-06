@@ -26,20 +26,20 @@ public class ShareActivityController {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param type
      * @return
      */
     @GetMapping("query")
     public DTPageInfo<ShareActivityDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                              @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                              @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                              @RequestParam(value = "start", defaultValue = "1") int start,
+                                              @RequestParam(value = "length", defaultValue = "10") int length,
                                               @RequestParam(value = "type", required = false) Byte type
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<ShareActivityDTO> dTPageInfo = shareActivityService.query(draw, pageNum, pageSize, type);
+        DTPageInfo<ShareActivityDTO> dTPageInfo = shareActivityService.query(draw, start, length, type);
         return dTPageInfo;
     }
 

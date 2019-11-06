@@ -43,16 +43,16 @@ public class ShareActivityServiceImpl implements ShareActivityService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param type
      * @return
      */
     @Override
-    public DTPageInfo<ShareActivityDTO> query(int draw, int pageNum, int pageSize, Byte type) {
+    public DTPageInfo<ShareActivityDTO> query(int draw, int start, int length, Byte type) {
 
         // 分页
-        Page<ShareActivityDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<ShareActivityDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(1);

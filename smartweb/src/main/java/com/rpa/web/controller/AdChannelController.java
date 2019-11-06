@@ -29,15 +29,15 @@ public class AdChannelController {
      */
     @GetMapping("query")
     public DTPageInfo<AdChannelDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                          @RequestParam(value = "start", defaultValue = "1") int start,
+                                          @RequestParam(value = "length", defaultValue = "10") int length,
                                           @RequestParam(value = "adId", required = false) int adId,
                                           @RequestParam(value = "name", required = false) String name,
                                           @RequestParam(value = "appId", required = false) int appId
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<AdChannelDTO> dTPageInfo = adChannelService.query(draw, pageNum, pageSize, adId, name, appId);
+        DTPageInfo<AdChannelDTO> dTPageInfo = adChannelService.query(draw, start, length, adId, name, appId);
         return dTPageInfo;
     }
 

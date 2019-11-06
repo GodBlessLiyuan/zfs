@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 public interface AdminUserService {
 
-    DTPageInfo<AdminUserDTO> query(int draw, int pageNum, int pageSize, String phone, String extra);
+    DTPageInfo<AdminUserDTO> query(int draw, int start, int length, String phone, String extra);
 
     ResultVO insert(AdminUserDTO adminUserDTO, HttpSession httpSession);
 

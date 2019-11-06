@@ -12,5 +12,5 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface RoleService {
-    DTPageInfo<RoleDTO> query(int draw, int pageNum, int pageSize);
+    DTPageInfo<RoleDTO> query(int draw, int start, int length);
 }

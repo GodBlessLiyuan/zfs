@@ -208,7 +208,7 @@
                         }else if(data === 3){
                             sta = "<div>已冻结</div>";
                         }else if(data === 4){
-                            sta = "<div>未失效</div>";
+                            sta = "<div>已失效</div>";
                         }
                         return sta;
                     }

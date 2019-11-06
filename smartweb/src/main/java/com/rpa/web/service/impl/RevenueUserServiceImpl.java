@@ -43,17 +43,17 @@ public class RevenueUserServiceImpl implements RevenueUserService {
     /**
      * 查询：查询邀请人的收益信息
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param phone
      * @param orderby
      * @return
      */
     @Override
-    public DTPageInfo<RevenueUserDTO> query(int draw, int pageNum, int pageSize, String phone, int orderby) {
+    public DTPageInfo<RevenueUserDTO> query(int draw, int start, int length, String phone, int orderby) {
 
         // 分页
-        Page<RevenueUserDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<RevenueUserDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
@@ -87,17 +87,17 @@ public class RevenueUserServiceImpl implements RevenueUserService {
     /**
      * 查询：根据邀请人的userId，查询该邀请人名下的所有被邀请人大概信息
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param userId
      * @param invitePhone
      * @return
      */
     @Override
-    public DTPageInfo<InviteUserDTO> queryInviteduser(int draw, int pageNum, int pageSize, Integer userId, String invitePhone) {
+    public DTPageInfo<InviteUserDTO> queryInviteduser(int draw, int start, int length, Integer userId, String invitePhone) {
 
         // 分页
-        Page<InviteUserDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<InviteUserDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
@@ -133,8 +133,8 @@ public class RevenueUserServiceImpl implements RevenueUserService {
     /**
      * 查询：根据被邀请人的userId，查询其购买商品的详细信息
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param userId
      * @param viptypeId
      * @param startTime
@@ -142,10 +142,10 @@ public class RevenueUserServiceImpl implements RevenueUserService {
      * @return
      */
     @Override
-    public DTPageInfo<InviteDetailDTO> queryInviteduserDetail(int draw, int pageNum, int pageSize, Integer userId, Integer viptypeId, Date startTime, Date endTime) {
+    public DTPageInfo<InviteDetailDTO> queryInviteduserDetail(int draw, int start, int length, Integer userId, Integer viptypeId, Date startTime, Date endTime) {
 
         // 分页
-        Page<InviteDetailDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<InviteDetailDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);

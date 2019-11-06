@@ -34,17 +34,17 @@ public class AdminUserServiceImpl implements AdminUserService {
     /**
      * 账号管理——查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param phone
      * @param extra
      * @return
      */
     @Override
-    public DTPageInfo<AdminUserDTO> query(int draw, int pageNum, int pageSize, String phone, String extra) {
+    public DTPageInfo<AdminUserDTO> query(int draw, int start, int length, String phone, String extra) {
 
         // 分页
-        Page<AdminUserDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<AdminUserDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
@@ -77,7 +77,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     /**
      * 账号管理——插入
-     * @param adminUserDTO
+     * @param dto
      * @param httpSession
      * @return
      */

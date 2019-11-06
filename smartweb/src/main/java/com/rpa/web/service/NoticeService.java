@@ -15,7 +15,7 @@ import java.util.Date;
  * @description: TODO
  */
 public interface NoticeService {
-    DTPageInfo<NoticeDTO> query(int draw, int pageNum, int pageSize, String startTime, String endTime, Integer status, Byte type, String title);
+    DTPageInfo<NoticeDTO> query(int draw, int start, int length, String startTime, String endTime, Integer status, Byte type, String title);
 
 
     ResultVO delete(Integer noticeId);

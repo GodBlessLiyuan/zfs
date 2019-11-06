@@ -5,7 +5,6 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.ResultVO;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author: dangyi
@@ -14,9 +13,8 @@ import java.util.Map;
  * @description:
  */
 public interface AdChannelService {
-    DTPageInfo<AdChannelDTO> query(int draw, int pageNum, int pageSize, int adId, String name, int appId);
+    DTPageInfo<AdChannelDTO> query(int draw, int start, int length, int adId, String name, int appId);
 
-    //ResultVO update(List<AdChannelDTO> adChannelDTOs);
     ResultVO update(List<AdChannelDTO> list);
 
     ResultVO queryVersionname();

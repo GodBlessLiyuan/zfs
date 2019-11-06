@@ -47,18 +47,18 @@ public class AdconfigServiceImpl implements AdconfigService {
      * 查询
      *
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param name
      * @param adNumber
      * @param status
      * @return
      */
     @Override
-    public DTPageInfo<AdconfigDTO> query(int draw, int pageNum, int pageSize, String name, String adNumber, Byte status) {
+    public DTPageInfo<AdconfigDTO> query(int draw, int start, int length, String name, String adNumber, Byte status) {
 
         // 分页
-        Page<AdconfigDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<AdconfigDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(3);

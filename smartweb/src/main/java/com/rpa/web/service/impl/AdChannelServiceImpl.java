@@ -43,18 +43,18 @@ public class AdChannelServiceImpl implements AdChannelService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param adId
      * @param name
      * @param appId
      * @return
      */
     @Override
-    public DTPageInfo<AdChannelDTO> query(int draw, int pageNum, int pageSize, int adId, String name, int appId) {
+    public DTPageInfo<AdChannelDTO> query(int draw, int start, int length, int adId, String name, int appId) {
 
         // 分页
-        Page<AdChannelDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<AdChannelDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(3);

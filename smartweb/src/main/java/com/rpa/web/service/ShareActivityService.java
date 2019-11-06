@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface ShareActivityService {
-    DTPageInfo<ShareActivityDTO> query(int draw, int pageNum, int pageSize, Byte type);
+    DTPageInfo<ShareActivityDTO> query(int draw, int start, int length, Byte type);
     
     ResultVO delete(int materialId);
 

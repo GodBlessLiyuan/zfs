@@ -25,22 +25,22 @@ public class WithdrawUserController {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param phone
      * @param status
      * @return
      */
     @GetMapping("query")
     public DTPageInfo<WithdrawUserDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                             @RequestParam(value = "start", defaultValue = "1") int start,
+                                             @RequestParam(value = "length", defaultValue = "10") int length,
                                              @RequestParam(value = "phone", required = false) String phone,
                                              @RequestParam(value = "status", required = false) Byte status
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<WithdrawUserDTO> dTPageInfo = withdrawUserService.query(draw, pageNum, pageSize, phone, status);
+        DTPageInfo<WithdrawUserDTO> dTPageInfo = withdrawUserService.query(draw, start, length, phone, status);
         return dTPageInfo;
     }
 
