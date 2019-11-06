@@ -14,10 +14,10 @@
                             <li><a href="/notice">通知管理</a></li>
                             <li><a href="/functionvideo">功能视频</a></li>
                             <li><a href="/feedback">问题反馈</a></li>
-                            <li><a href="">联系客服</a></li>
-                            <li><a href="">协议管理</a></li>
+                            <#--<li><a href="">联系客服</a></li>-->
+                            <#--<li><a href="">协议管理</a></li>-->
                             <li><a href="/shareactivity">分享素材</a></li>
-                            <li><a href="">常见问题</a></li>
+                            <#--<li><a href="">常见问题</a></li>-->
                             <li><a href="/goodcomment">好评活动</a></li>
                             <li><a href="/accounttutorial">养号教程</a></li>
                         </ul>
