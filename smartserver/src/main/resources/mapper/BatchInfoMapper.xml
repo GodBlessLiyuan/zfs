@@ -120,9 +120,9 @@
     from t_batch_info bi left join t_ch_batch cb on bi.batch_id = cb.batch_id
     where bi.user_id = #{userId} and bi.`status` = 2
   </select>
-  <select id="queryByUserIdAndKey" resultMap="BaseResultMap">
+  <select id="queryByKey" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from t_batch_info
-    where user_id = #{userId,jdbcType=BIGINT} and  vipkey = #{key,jdbcType=CHAR}
+    where vipkey = #{key,jdbcType=CHAR}
   </select>
 </mapper>

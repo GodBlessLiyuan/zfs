@@ -1,11 +1,11 @@
 package com.rpa.consumer.mapper;
 
 import com.rpa.consumer.pojo.WithdrawUserPO;
-import org.springframework.web.bind.annotation.Mapping;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * WithdrawUserMapper继承基类
  */
-@Mapping
+@Mapper
 public interface WithdrawUserMapper extends BaseMapper<WithdrawUserPO, Integer> {
 }
