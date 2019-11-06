@@ -418,6 +418,7 @@
         if (!$('#iContext').val()) {
             alert("更新内容不能为空！");
         } else {
+            $('#preloader').fadeTo('fast', 0.5);
             $.ajax({
                 type: 'post',
                 url: '/appversion/insert',
@@ -426,6 +427,7 @@
                 contentType: false,
                 processData: false,
                 success: function (res) {
+                    $('#preloader').hide();
                     if (res.code !== 0) {
                         alert(res.msg);
                     } else {

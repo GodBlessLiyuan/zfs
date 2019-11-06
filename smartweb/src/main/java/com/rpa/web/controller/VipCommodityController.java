@@ -5,7 +5,6 @@ import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.VipCommodityDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.exception.PromptException;
-import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.ResultVO;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +56,7 @@ public class VipCommodityController {
                            @RequestParam(value = "comTypeId") int comTypeId,
                            @RequestParam(value = "comName") String comName,
                            @RequestParam(value = "description") String description,
-                           @RequestParam(value = "price") int price,
+                           @RequestParam(value = "price") String price,
                            @RequestParam(value = "showDiscount") String showDiscount,
                            @RequestParam(value = "discount") float discount, HttpServletRequest req) {
 
@@ -69,7 +67,7 @@ public class VipCommodityController {
         }
 
         return service.insert(channelId, comTypeId, comName, description, price, showDiscount,
-                discount, 1);
+                discount, admin.getaId());
 
     }
 
@@ -77,7 +75,7 @@ public class VipCommodityController {
     public int update(@RequestParam(value = "cmdyId") int cmdyId,
                       @RequestParam(value = "comName") String comName,
                       @RequestParam(value = "description") String description,
-                      @RequestParam(value = "price") int price,
+                      @RequestParam(value = "price") String price,
                       @RequestParam(value = "showDiscount") String showDiscount,
                       @RequestParam(value = "discount") float discount) {
 
