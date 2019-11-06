@@ -96,7 +96,7 @@ public class UserVipServiceImpl implements IUserVipService {
             dto.setVipType(UserVipConstant.USER_VIP_BATCH);
             dto.setUserChanName(batchInfoDO.getUserChanName());
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
-            dto.setCreateTime(batchInfoDO.getCreateTime());
+            dto.setCreateTime(batchInfoDO.getUpdateTime());
             dto.setComTypeName(batchInfoDO.getComTypeName());
             dto.setDays(batchInfoDO.getDays());
             userVipDetailsDTOs.add(dto);
