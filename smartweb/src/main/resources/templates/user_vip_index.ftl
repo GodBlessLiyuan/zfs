@@ -285,6 +285,8 @@
         $('#details-tab').DataTable({
             "processing": true,
             "serverSide": true,
+            "paging": false,
+            "searching": false,
             "ajax": "/uservip/queryDetails?userId=" + userId,
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
