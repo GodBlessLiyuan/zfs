@@ -46,18 +46,6 @@ public class ConfigController {
         return "member_service_protocol";
     }
 
-    @GetMapping(value = "share/{shareCode}")
-    public String shareClick(@PathVariable String shareCode, ModelMap map) {
-        ResultVO vo = new ResultVO<>(1000, shareCode);
-        map.put("res", vo);
-        return "income_index";
-    }
-
-
-    /**
-     * @author: dangyi
-     * @description：免费领取会员：根据两个ID查询状态
-     */
     @GetMapping("viprights")
     public String freemember(@RequestBody UserActivityDTO dto, ModelMap map, HttpServletRequest req) {
         return "settings_member_service_protocol";
