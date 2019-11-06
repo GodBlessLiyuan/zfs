@@ -334,7 +334,10 @@
     function passClick() {
         var uAId = $('#pass').val();
         $.post("/goodcomment/update/status", {uAId:uAId, status:2}, function (result) {
-            if (result.code === 0) {
+            if (result.code === 1008) {
+                alert("登录超时，请重新登录！");
+                window.location.href = '/login';
+            }else if (result.code === 0) {
                 alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
             } else {
@@ -356,7 +359,10 @@
     function rejectClick() {
         var uAId = $('#reject').val();
         $.post("/goodcomment/update/status", {uAId:uAId, status:3}, function (result) {
-            if (result.code === 0) {
+            if (result.code === 1008) {
+                alert("登录超时，请重新登录！");
+                window.location.href = '/login';
+            }else if (result.code === 0) {
                 alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
             } else {

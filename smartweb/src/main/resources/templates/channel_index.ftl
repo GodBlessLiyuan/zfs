@@ -231,8 +231,13 @@
             url: '/channel/queryProNames',
             dataType: 'JSON',
             success: function (result) {
-                for (var i = 0; i < result.data.length; i++) {
-                    $('#proId').append("<option value='" + result.data[i].proId + "'>" + result.data[i].proName + "</option>");
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                } else {
+                    for (var i = 0; i < result.data.length; i++) {
+                        $('#proId').append("<option value='" + result.data[i].proId + "'>" + result.data[i].proName + "</option>");
+                    }
                 }
             }
         });
@@ -307,8 +312,13 @@
             url: '/channel/queryAllProNames',
             dataType: 'JSON',
             success: function (result) {
-                for (var i = 0; i < result.data.length; i++) {
-                    $('#insert_proId').append("<option value='" + result.data[i].proId + "'>" + result.data[i].proName + "</option>");
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                } else {
+                    for (var i = 0; i < result.data.length; i++) {
+                        $('#insert_proId').append("<option value='" + result.data[i].proId + "'>" + result.data[i].proName + "</option>");
+                    }
                 }
             }
         });
@@ -332,7 +342,10 @@
 
             $.post("/channel/insert", {chanName:chanName, chanNickname:chanNickname, proId:proId, extra:extra},
                 function (result) {
-                    if (result.code === 0) {
+                    if (result.code === 1008) {
+                        alert("登录超时，请重新登录！");
+                        window.location.href = '/login';
+                    }else if (result.code === 0) {
                         alert("新增成功！")
                         $('#datatab').DataTable().draw(false);
                     } else {

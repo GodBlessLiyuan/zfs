@@ -340,7 +340,10 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                if (result.code == 0) {
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                }else if (result.code == 0) {
                     alert("新增成功！");
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -441,18 +444,25 @@
             dataType: 'JSON',
             success: function (result) {
 
-                TYPE = result.data.type;
-                CONTENT = result.data.content;
-
-                $('input[type="radio"][name="update_type"][value="' + TYPE + '"]').attr("checked", true)
-                if (TYPE === 1) {
-                    document.getElementById("update_content_type").innerHTML = "<input id='update_content' class='form-control' " +
-                        "type='text' value='" + CONTENT + "'/>";
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
                 } else {
-                    document.getElementById("update_content_type").innerHTML = "<input id='update_content' class='form-control' type='file'/>" +
-                        "<img src='" + CONTENT + "' height='50px' width='50px'/>";
+
+                    TYPE = result.data.type;
+                    CONTENT = result.data.content;
+
+                    $('input[type="radio"][name="update_type"][value="' + TYPE + '"]').attr("checked", true)
+                    if (TYPE === 1) {
+                        document.getElementById("update_content_type").innerHTML = "<input id='update_content' class='form-control' " +
+                            "type='text' value='" + CONTENT + "'/>";
+                    } else {
+                        document.getElementById("update_content_type").innerHTML = "<input id='update_content' class='form-control' type='file'/>" +
+                            "<img src='" + CONTENT + "' height='50px' width='50px'/>";
+                    }
+                    $('#update_extra').val(result.data.extra);
+
                 }
-                $('#update_extra').val(result.data.extra);
             }
         })
     }
@@ -523,7 +533,10 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                if (result.code == 0) {
+                if (result.code === 1008) {
+                    alert("登录超时，请重新登录！");
+                    window.location.href = '/login';
+                }else if (result.code == 0) {
                     alert("修改成功！");
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -549,7 +562,10 @@
     function deleteClick() {
         var materialId = $('#delete').val();
         $.post("/shareactivity/delete", {materialId: materialId}, function (result) {
-            if (result.code === 0) {
+            if (result.code === 1008) {
+                alert("登录超时，请重新登录！");
+                window.location.href = '/login';
+            }else if (result.code === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);
             } else {
