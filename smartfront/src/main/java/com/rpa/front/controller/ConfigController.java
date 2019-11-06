@@ -1,20 +1,8 @@
 package com.rpa.front.controller;
 
-import com.rpa.front.common.ErrorCode;
-import com.rpa.front.common.ResultVO;
-import com.rpa.front.constant.IncomeConstant;
-import com.rpa.front.dto.IncomeDTO;
-import com.rpa.front.dto.UserActivityDTO;
-import com.rpa.front.service.IIncomeService;
-import com.rpa.front.service.UserActivityService;
-import com.rpa.front.utils.VerifyUtil;
-import com.rpa.front.vo.IncomeVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author: CHL
@@ -27,27 +15,27 @@ import javax.servlet.http.HttpServletRequest;
 public class ConfigController {
 
     @GetMapping("problem")
-    public String problem(@RequestBody IncomeDTO dto, ModelMap map, HttpServletRequest req) {
+    public String problem() {
         return "common_problem";
     }
 
     @GetMapping("freevip")
-    public String freevip(ModelMap map, HttpServletRequest req) {
+    public String freevip() {
         return "freemember_index";
     }
 
     @GetMapping("memberrights")
-    public String viprights(ModelMap map, HttpServletRequest req) {
+    public String viprights() {
         return "member_rights";
     }
 
     @GetMapping("protocol")
-    public String serviceprotocol(ModelMap map, HttpServletRequest req) {
+    public String serviceprotocol() {
         return "member_service_protocol";
     }
 
     @GetMapping("viprights")
-    public String freemember(@RequestBody UserActivityDTO dto, ModelMap map, HttpServletRequest req) {
+    public String freemember() {
         return "settings_member_service_protocol";
     }
 }
