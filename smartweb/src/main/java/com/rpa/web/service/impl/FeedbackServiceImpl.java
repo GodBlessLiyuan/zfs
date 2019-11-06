@@ -30,8 +30,8 @@ public class FeedbackServiceImpl implements FeedbackService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param startTime
      * @param endTime
      * @param userId
@@ -39,10 +39,10 @@ public class FeedbackServiceImpl implements FeedbackService {
      * @return
      */
     @Override
-    public DTPageInfo<FeedbackDTO> query(int draw, int pageNum, int pageSize, String startTime, String endTime, String userId, String contact) {
+    public DTPageInfo<FeedbackDTO> query(int draw, int start, int length, String startTime, String endTime, String userId, String contact) {
 
         // 分页
-        Page<FeedbackDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<FeedbackDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(4);

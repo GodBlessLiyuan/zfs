@@ -31,16 +31,16 @@ public class BatchInfoServiceImpl implements BatchInfoService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param vipkey
      * @return
      */
     @Override
-    public DTPageInfo<BatchInfoDTO> query(int draw, int pageNum, int pageSize, String vipkey) {
+    public DTPageInfo<BatchInfoDTO> query(int draw, int start, int length, String vipkey) {
 
         // 分页
-        Page<BatchInfoDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<BatchInfoDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(1);
@@ -71,16 +71,16 @@ public class BatchInfoServiceImpl implements BatchInfoService {
     /**
      * 根据batchId，查询详情
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param batchId
      * @return
      */
     @Override
-    public DTPageInfo<BatchInfoDTO> queryByBatchid(int draw, int pageNum, int pageSize, Integer batchId) {
+    public DTPageInfo<BatchInfoDTO> queryByBatchid(int draw, int start, int length, Integer batchId) {
 
         // 分页
-        Page<BatchInfoDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<BatchInfoDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(1);

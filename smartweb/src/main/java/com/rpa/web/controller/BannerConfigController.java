@@ -26,22 +26,22 @@ public class BannerConfigController {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param name
      * @param status
      * @return
      */
     @GetMapping("query")
     public DTPageInfo<BannerConfigDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                             @RequestParam(value = "start", defaultValue = "1") int start,
+                                             @RequestParam(value = "length", defaultValue = "10") int length,
                                              @RequestParam(value = "name", required = false) String name,
                                              @RequestParam(value = "status", required = false) Byte status
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<BannerConfigDTO> dTPageInfo = bannerConfigService.query(draw, pageNum, pageSize, name, status);
+        DTPageInfo<BannerConfigDTO> dTPageInfo = bannerConfigService.query(draw, start, length, name, status);
         return dTPageInfo;
     }
 

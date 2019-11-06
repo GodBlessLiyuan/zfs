@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  */
 public interface ChBatchService {
 
-    DTPageInfo<ChBatchDTO> query(int draw, int pageNum, int pageSize, String chanNickname, Integer comTypeId, Byte status, String operator);
+    DTPageInfo<ChBatchDTO> query(int draw, int start, int length, String chanNickname, Integer comTypeId, Byte status, String operator);
 
     ResultVO insert(ChBatchDTO chBatchDTO, HttpSession httpSession);
 

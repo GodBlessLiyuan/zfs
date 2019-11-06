@@ -27,20 +27,20 @@ public class FunctionVideoController {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param funName
      * @return
      */
     @GetMapping("query")
     public DTPageInfo<FunctionVideoDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                              @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                              @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                              @RequestParam(value = "start", defaultValue = "1") int start,
+                                              @RequestParam(value = "length", defaultValue = "10") int length,
                                               @RequestParam(value = "funName", required = false) String funName
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<FunctionVideoDTO> dTPageInfo = this.functionVideoService.query(draw, pageNum, pageSize, funName);
+        DTPageInfo<FunctionVideoDTO> dTPageInfo = this.functionVideoService.query(draw, start, length, funName);
         return dTPageInfo;
     }
 

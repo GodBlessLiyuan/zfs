@@ -29,8 +29,8 @@ public class NoticeController {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param startTime
      * @param endTime
      * @param status
@@ -40,8 +40,8 @@ public class NoticeController {
      */
     @GetMapping("query")
     public DTPageInfo<NoticeDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                       @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                       @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                       @RequestParam(value = "start", defaultValue = "1") int start,
+                                       @RequestParam(value = "length", defaultValue = "10") int length,
                                        @RequestParam(value = "startTime", required = false) String startTime,
                                        @RequestParam(value = "endTime", required = false) String endTime,
                                        @RequestParam(value = "status", required = false) Integer status,
@@ -49,7 +49,7 @@ public class NoticeController {
                                        @RequestParam(value = "title", required = false) String title
     ) {
         // 调用业务层，返回页面结果
-        DTPageInfo<NoticeDTO> dTPageInfo = noticeService.query(draw, pageNum, pageSize, startTime, endTime, status, type, title);
+        DTPageInfo<NoticeDTO> dTPageInfo = noticeService.query(draw, start, length, startTime, endTime, status, type, title);
         return dTPageInfo;
     }
 

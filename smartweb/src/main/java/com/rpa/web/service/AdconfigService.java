@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * @description: 开屏广告
  */
 public interface AdconfigService {
-    public DTPageInfo<AdconfigDTO> query(int draw, int pageNum, int pageSize, String name, String adNumber, Byte status);
+    public DTPageInfo<AdconfigDTO> query(int draw, int start, int length, String name, String adNumber, Byte status);
 
     ResultVO insert(AdconfigDTO adconfigDTO, HttpSession httpSession);
 

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  */
 public interface ChannelService {
 
-    DTPageInfo<ChannelDTO> query(int draw, int pageNum, int pageSize, String chanNickname, Integer proId);
+    DTPageInfo<ChannelDTO> query(int draw, int start, int length, String chanNickname, Integer proId);
 
     ResultVO insert(ChannelDTO channelDTO, HttpSession httpSession);
 

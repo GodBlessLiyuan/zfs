@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface BannerConfigService {
-    DTPageInfo<BannerConfigDTO> query(int draw, int pageNum, int pageSize, String name, Byte status);
+    DTPageInfo<BannerConfigDTO> query(int draw, int start, int length, String name, Byte status);
 
     ResultVO update(BannerConfigDTO bannerConfigDTO, HttpSession httpSession);
 

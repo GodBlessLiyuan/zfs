@@ -25,17 +25,17 @@ public class RoleController {
      * 查询
      *
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @return
      */
     @GetMapping("query")
     public DTPageInfo<RoleDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                     @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                     @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
+                                     @RequestParam(value = "start", defaultValue = "1") int start,
+                                     @RequestParam(value = "length", defaultValue = "10") int length
     ) {
         // 调用业务层，返回页面结果
-        DTPageInfo<RoleDTO> dTPageInfo = roleService.query(draw, pageNum, pageSize);
+        DTPageInfo<RoleDTO> dTPageInfo = roleService.query(draw, start, length);
         return dTPageInfo;
     }
 }

@@ -10,5 +10,5 @@ import com.rpa.web.utils.DTPageInfo;
  * @description:
  */
 public interface FeedbackService {
-    DTPageInfo<FeedbackDTO> query(int draw, int pageNum, int pageSize, String startTime, String endTime, String userId, String contact);
+    DTPageInfo<FeedbackDTO> query(int draw, int start, int length, String startTime, String endTime, String userId, String contact);
 }

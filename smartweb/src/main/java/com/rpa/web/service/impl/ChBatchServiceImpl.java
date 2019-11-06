@@ -55,8 +55,8 @@ public class ChBatchServiceImpl implements ChBatchService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param chanNickname
      * @param comTypeId
      * @param status
@@ -64,10 +64,10 @@ public class ChBatchServiceImpl implements ChBatchService {
      * @return
      */
     @Override
-    public DTPageInfo<ChBatchDTO> query(int draw, int pageNum, int pageSize, String chanNickname, Integer comTypeId, Byte status, String operator) {
+    public DTPageInfo<ChBatchDTO> query(int draw, int start, int length, String chanNickname, Integer comTypeId, Byte status, String operator) {
 
         // 分页
-        Page<ChBatchDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<ChBatchDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(4);
@@ -96,7 +96,7 @@ public class ChBatchServiceImpl implements ChBatchService {
             dto.setExtra(po.getExtra());
             dto.setStatus(po.getStatus());
             dto.setUpdateTime(po.getUpdateTime());
-            dto.setOperator(queryUsernameByAid(po.getaId()));
+            dto.setOperator(queryUsernameByAid(po.getUpdateAId()));
 
             DTOs.add(dto);
         }

@@ -43,17 +43,17 @@ public class ChannelServceiImpl implements ChannelService {
     /**
      * 查询
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param chanNickname
      * @param proId
      * @return
      */
     @Override
-    public DTPageInfo<ChannelDTO> query(int draw, int pageNum, int pageSize, String chanNickname, Integer proId) {
+    public DTPageInfo<ChannelDTO> query(int draw, int start, int length, String chanNickname, Integer proId) {
 
         // 分页
-        Page<ChannelDTO> page = PageHelper.startPage(pageNum, pageSize);
+        Page<ChannelDTO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);

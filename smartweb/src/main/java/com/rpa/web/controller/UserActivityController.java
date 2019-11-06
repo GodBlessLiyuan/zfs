@@ -25,32 +25,32 @@ public class UserActivityController {
 
     @RequestMapping("/useractivity/query")
     public DTPageInfo<UserActivityDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                             @RequestParam(value = "start", defaultValue = "1") int start,
+                                             @RequestParam(value = "length", defaultValue = "10") int length,
                                              @RequestParam(value = "phone", required = false) String phone) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("phone", phone);
 
-        return service.query(draw, pageNum, pageSize, reqData);
+        return service.query(draw, start, length, reqData);
     }
 
     /**
      * 好评活动查询
      * @author: dangyi
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param phone
      * @return
      */
     @GetMapping("/goodcomment/query")
     public DTPageInfo<UserActivityDTO> goodCommentQuery(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                         @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                         @RequestParam(value = "start", defaultValue = "1") int start,
+                                         @RequestParam(value = "length", defaultValue = "10") int length,
                                          @RequestParam(value = "phone", required = false) String phone
     ) {
         // 调用业务层，返回页面结果
-        DTPageInfo<UserActivityDTO> dTPageInfo = this.service.goodCommentQuery(draw, pageNum, pageSize, phone);
+        DTPageInfo<UserActivityDTO> dTPageInfo = this.service.goodCommentQuery(draw, start, length, phone);
         return dTPageInfo;
     }
 
