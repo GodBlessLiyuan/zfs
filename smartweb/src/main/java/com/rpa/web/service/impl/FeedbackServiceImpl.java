@@ -3,11 +3,13 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.FeedbackDTO;
+import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.mapper.FeedbackMapper;
 import com.rpa.web.pojo.FeedbackPO;
 import com.rpa.web.service.FeedbackService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +28,13 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Autowired
     private FeedbackMapper feedbackMapper;
+
+    @Autowired
+    private AdminUserMapper adminUserMapper;
+
+    @Value("${file.publicPath}")
+    private String publicPath;
+
 
     /**
      * 查询
@@ -59,7 +68,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         for(FeedbackPO po: lists_PO) {
             FeedbackDTO dto = new FeedbackDTO();
             dto.setFeedbackId(po.getFeedbackId());
-            dto.setUserId(po.getUserId());
+            dto.setPhone(queryPhoneByAid(po.getUserId()));
             dto.setDeviceId(po.getDeviceId());
             dto.setManufacturer(po.getManufacturer());
             dto.setAndroidmodel(po.getAndroidmodel());
@@ -68,12 +77,26 @@ public class FeedbackServiceImpl implements FeedbackService {
             dto.setCreateTime(po.getCreateTime());
             dto.setContact(po.getContact());
             dto.setContext(po.getContext());
-            dto.setUrl(po.getUrl1());
+            if (null == po.getUrl1()) {
+                dto.setUrl1(po.getUrl1());
+            } else {
+                dto.setUrl1(publicPath + po.getUrl1());
+            }
 
             lists_DTO.add(dto);
         }
 
         //根据分页查询的结果，封装最终的返回结果
         return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+    }
+
+
+    /**
+     * 根据ID，从t_admin_user表中查询出手机号码（账号）
+     * @param aId
+     * @return
+     */
+    public String queryPhoneByAid(Long aId) {
+        return this.adminUserMapper.queryPhoneByAid(aId);
     }
 }

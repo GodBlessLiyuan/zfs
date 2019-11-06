@@ -22,7 +22,11 @@ public class FeedbackDTO implements Serializable {
 
     private Date createTime;
 
-    private String url;
+    private String url1;
+
+    private String url2;
+
+    private String url3;
 
     private String manufacturer;
 
@@ -34,6 +38,8 @@ public class FeedbackDTO implements Serializable {
     private Byte buildversion;
 
     private Integer versioncode;
+
+    private String phone;
 
     private static final long serialVersionUID = 1L;
 
@@ -93,12 +99,28 @@ public class FeedbackDTO implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getUrl() {
-        return url;
+    public String getUrl1() {
+        return url1;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUrl1(String url1) {
+        this.url1 = url1;
+    }
+
+    public String getUrl2() {
+        return url2;
+    }
+
+    public void setUrl2(String url2) {
+        this.url2 = url2;
+    }
+
+    public String getUrl3() {
+        return url3;
+    }
+
+    public void setUrl3(String url3) {
+        this.url3 = url3;
     }
 
     public String getManufacturer() {
@@ -133,6 +155,14 @@ public class FeedbackDTO implements Serializable {
         this.versioncode = versioncode;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -152,7 +182,7 @@ public class FeedbackDTO implements Serializable {
             && (this.getContext() == null ? other.getContext() == null : this.getContext().equals(other.getContext()))
             && (this.getContact() == null ? other.getContact() == null : this.getContact().equals(other.getContact()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
+            && (this.getUrl1() == null ? other.getUrl1() == null : this.getUrl1().equals(other.getUrl1()))
             && (this.getManufacturer() == null ? other.getManufacturer() == null : this.getManufacturer().equals(other.getManufacturer()))
             && (this.getAndroidmodel() == null ? other.getAndroidmodel() == null : this.getAndroidmodel().equals(other.getAndroidmodel()))
             && (this.getBuildversion() == null ? other.getBuildversion() == null : this.getBuildversion().equals(other.getBuildversion()))
@@ -170,7 +200,7 @@ public class FeedbackDTO implements Serializable {
         result = prime * result + ((getContext() == null) ? 0 : getContext().hashCode());
         result = prime * result + ((getContact() == null) ? 0 : getContact().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
+        result = prime * result + ((getUrl1() == null) ? 0 : getUrl1().hashCode());
         result = prime * result + ((getManufacturer() == null) ? 0 : getManufacturer().hashCode());
         result = prime * result + ((getAndroidmodel() == null) ? 0 : getAndroidmodel().hashCode());
         result = prime * result + ((getBuildversion() == null) ? 0 : getBuildversion().hashCode());
@@ -191,7 +221,7 @@ public class FeedbackDTO implements Serializable {
         sb.append(", context=").append(context);
         sb.append(", contact=").append(contact);
         sb.append(", createTime=").append(createTime);
-        sb.append(", url=").append(url);
+        sb.append(", url=").append(url1);
         sb.append(", manufacturer=").append(manufacturer);
         sb.append(", androidmodel=").append(androidmodel);
         sb.append(", buildversion=").append(buildversion);
