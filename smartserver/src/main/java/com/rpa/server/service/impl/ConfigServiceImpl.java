@@ -31,8 +31,11 @@ public class ConfigServiceImpl implements IConfigService {
     @Override
     public ResultVO queryConfigInfo(ConfigDTO dto) {
         ConfigVO vo = JSON.parseObject(cacheUtil.getCacheByKey(ConfigConstant.REDIS_KEY), ConfigVO.class);
-        if (vo != null && dto.getIndex().toString().equals(vo.getIndex())) {
-            return new ResultVO(1019);
+        if (null != vo && dto.getIndex().toString().equals(vo.getIndex())) {
+            return new ResultVO<>(1019);
+        }
+        if (null != vo) {
+            return new ResultVO<>(1000, vo);
         }
 
         vo = new ConfigVO();
@@ -73,7 +76,7 @@ public class ConfigServiceImpl implements IConfigService {
             vo.setJoinqqcode(po.getValue());
         }
 
-        cacheUtil.setCache(ConfigConstant.REDIS_KEY, vo, 1, TimeUnit.DAYS);
+        cacheUtil.setCache(ConfigConstant.REDIS_KEY, vo, 1, TimeUnit.HOURS);
 
         return new ResultVO<>(1000, vo);
     }

@@ -157,6 +157,8 @@
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">更新渠道<span
                                                                 style="color: red">*</span>:</span>
+                                                    <button id='insert-select-all'>全选</button>
+                                                    <button id='insert-deselect-all'>全不选</button>
                                                     <select id="iSoftChannel" multiple="multiple">
                                                     </select>
                                                 </div>
@@ -209,6 +211,8 @@
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">更新渠道<span
                                                                 style="color: red">*</span>:</span>
+                                                    <button id='update-select-all'>全选</button>
+                                                    <button id='update-deselect-all'>全不选</button>
                                                     <select id="uSoftChannel" multiple="multiple">
                                                     </select>
                                                 </div>
@@ -287,6 +291,24 @@
 <script src="./plugins/jquery-multi-select/jquery.multi-select.js"></script>
 <script>
     let moduleData = new Map();
+
+    $('#insert-select-all').click(function(){
+        $('#iSoftChannel').multiSelect('select_all');
+        return false;
+    });
+    $('#insert-deselect-all').click(function(){
+        $('#iSoftChannel').multiSelect('deselect_all');
+        return false;
+    });
+    $('#update-select-all').click(function(){
+        $('#uSoftChannel').multiSelect('select_all');
+        return false;
+    });
+    $('#update-deselect-all').click(function(){
+        $('#uSoftChannel').multiSelect('deselect_all');
+        return false;
+    });
+
 
     $(document).ready(function () {
         // 自动查询
