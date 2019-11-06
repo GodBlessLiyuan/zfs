@@ -270,6 +270,14 @@
 
 <script>
     /**
+     * 页面加载事件：一进入页面就进行一次查询
+     */
+    window.onload = function () {
+        queryClick();
+    }
+
+
+    /**
      * 页面加载事件：往t_com_type表中查询所有的产品类型
      */
     $(document).ready(function () {

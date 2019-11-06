@@ -322,6 +322,14 @@
 
 <script>
     /**
+     * 页面加载事件：一进入页面就进行一次查询
+     */
+    window.onload = function () {
+        queryClick();
+    }
+
+
+    /**
      * 新增：在弹框中点击确定按钮后，将数据发送给后台
      */
     function insertClick() {

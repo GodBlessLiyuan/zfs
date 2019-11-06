@@ -185,6 +185,14 @@
 
 <script>
     /**
+     * 页面加载事件：一进入页面就进行一次查询
+     */
+    window.onload = function () {
+        queryClick();
+    }
+
+
+    /**
      * 导出
      */
     function exportClick() {

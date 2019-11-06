@@ -312,6 +312,14 @@
 
 <script>
     /**
+     * 页面加载事件：一进入页面就进行一次查询
+     */
+    window.onload = function () {
+        queryClick();
+    }
+
+
+    /**
      * 新增：点击新增账号时，往t_role表中查询所有的角色
      */
     function insertModal() {

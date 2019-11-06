@@ -116,17 +116,19 @@
 ***********************************-->
 
 <script>
-    // 页面加载事件：已进入页面就先进行一次查询
+    /**
+     * 页面加载事件：一进入页面就先进行一次查询
+     */
     window.onload = function () {
         $.get("/tutorial/query", function (result) {
             $('#url').val(result.data.value)
         }, "json");
     }
-</script>
 
 
-<!--发送新旧密码到后台-->
-<script>
+    /**
+     * 发送新旧密码到后台
+     */
     function storeClick() {
 
         var url = $('#url').val();
