@@ -254,8 +254,8 @@
                 {
                     "data": "userId",
                     "render": function (data, type, full) {
-                        return "<a data-toggle='modal' data-target='#detailsModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:detailsModal(" + data + ")'>查看详情</a>";
+                        return "<button data-toggle='modal' data-target='#detailsModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='detailsModal(" + data + ")'>查看详情</button>";
                     }
                 }
             ],

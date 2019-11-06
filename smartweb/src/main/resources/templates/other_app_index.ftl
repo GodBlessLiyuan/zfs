@@ -337,8 +337,8 @@
                 {
                     "data": "id",
                     "render": function (data, type, full) {
-                        return "<a data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:deleteModal(" + data + ")'>删除</a>";
+                        return "<button data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='deleteModal(" + data + ")'>删除</button>";
                     }
                 },
                 {"data": "username"}

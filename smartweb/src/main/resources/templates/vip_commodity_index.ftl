@@ -437,8 +437,8 @@
                 {
                     "data": "cmdyId",
                     "render": function (data, type, full) {
-                        return "<a data-toggle='modal' data-target='#uModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='uModal(" + data + ")'>修改</a>";
+                        return "<button data-toggle='modal' data-target='#uModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='uModal(" + data + ")'>修改</button>";
                     }
                 },
                 {"data": "username"}
