@@ -1,12 +1,11 @@
 package com.rpa.consumer.mapper;
 
 import com.rpa.consumer.pojo.InviteUserPO;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.Mapping;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * InviteUserMapper继承基类
  */
-@Mapping
+@Mapper
 public interface InviteUserMapper extends BaseMapper<InviteUserPO, Integer> {
 }
