@@ -4,6 +4,7 @@ import com.rpa.front.dto.UserActivityDTO;
 import com.rpa.front.mapper.UserActivityMapper;
 import com.rpa.front.service.UserActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author: dangyi
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version: 1.0.0
  * @description:免费领取会员，根据两个ID查询状态
  */
+@Service
 public class UserActivityServiceImpl implements UserActivityService {
 
     @Autowired
