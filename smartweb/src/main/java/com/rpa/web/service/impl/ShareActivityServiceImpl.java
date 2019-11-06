@@ -40,6 +40,9 @@ public class ShareActivityServiceImpl implements ShareActivityService {
     @Value("${file.iconDir}")
     private String iconDir;
 
+    @Value("${file.publicPath}")
+    private String publicPath;
+
     /**
      * 查询
      * @param draw
@@ -67,7 +70,11 @@ public class ShareActivityServiceImpl implements ShareActivityService {
             ShareActivityDTO dto = new ShareActivityDTO();
             dto.setMaterialId(po.getMaterialId());
             dto.setType(po.getType());
-            dto.setContent(po.getContent());
+            if (po.getType() == 1) {
+                dto.setContent(po.getContent());
+            } else {
+                dto.setContent(publicPath + po.getContent());
+            }
             dto.setExtra(po.getExtra());
             dto.setOperator(queryUsernameByAid(po.getaId()));
 

@@ -27,6 +27,7 @@
         <module>smartproducer</module>
         <module>smartconsumer</module>
         <module>smartfront</module>
+        <module>smartpay</module>
     </modules>
 
     <dependencyManagement>
