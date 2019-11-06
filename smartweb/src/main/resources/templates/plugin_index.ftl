@@ -188,7 +188,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">修改插件</h5>
-                                            <button id="uModal" type="button" class="close" data-dismiss="modal"
+                                            <button id="uModalX" type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
