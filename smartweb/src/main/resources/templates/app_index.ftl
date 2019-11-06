@@ -149,18 +149,21 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">应用:</span>
+                                                    <span for="message-text" class="col-form-label">应用程序<span
+                                                                style="color: red">*</span>:</span>
                                                     <input id="iFile" type="file"/>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="recipient-name" class="col-form-label">更新方式:</span>
+                                                    <span for="recipient-name" class="col-form-label">更新方式<span
+                                                                style="color: red">*</span>:</span>
                                                     <select id="iUpdateType" class="form-control">
                                                         <option value='1' selected='selected'>普通更新</option>
                                                         <option value='2'>强制更新</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="recipient-name" class="col-form-label">更新渠道:</span>
+                                                    <span for="recipient-name" class="col-form-label">更新渠道<span
+                                                                style="color: red">*</span>:</span>
                                                     <select id="iSoftChannel" multiple="multiple">
                                                     </select>
                                                 </div>
@@ -201,18 +204,20 @@
                                                     <button type="hidden" id="uAppId" style="display:none;"/>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="message-text" class="col-form-label">应用:</span>
+                                                    <span for="message-text" class="col-form-label">应用程序:</span>
                                                     <input id="uFile" type="file"/>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="recipient-name" class="col-form-label">更新方式:</span>
+                                                    <span for="recipient-name" class="col-form-label">更新方式<span
+                                                                style="color: red">*</span>:</span>
                                                     <select id="uUpdateType" class="form-control">
                                                         <option value='1'>普通更新</option>
                                                         <option value='2'>强制更新</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <span for="recipient-name" class="col-form-label">更新渠道:</span>
+                                                    <span for="recipient-name" class="col-form-label">更新渠道<span
+                                                                style="color: red">*</span>:</span>
                                                     <select id="uSoftChannel" multiple="multiple">
                                                     </select>
                                                 </div>
@@ -415,10 +420,14 @@
         reqData.append("context", $('#iContext').val());
         reqData.append("extra", $('#iExtra').val());
 
-        if (!$('#iContext').val()) {
+        if ($('#iFile')[0].files[0] === undefined) {
+            alert("请选择应用程序！");
+        } else if ($('#iSoftChannel').val().length === 0) {
+            alert("更新渠道不能为空！");
+        } else if (!$('#iContext').val()) {
             alert("更新内容不能为空！");
         } else {
-            $('#preloader').fadeTo('fast', 0.5);
+            $('#preloader').fadeTo('fast', 0.4);
             $.ajax({
                 type: 'post',
                 url: '/appversion/insert',
@@ -451,7 +460,9 @@
         reqData.append("context", $('#uContext').val());
         reqData.append("extra", $('#uExtra').val());
 
-        if (!$('#uContext').val()) {
+        if ($('#uSoftChannel').val().length === 0) {
+            alert("更新渠道不能为空！");
+        } else if (!$('#uContext').val()) {
             alert("更新内容不能为空！");
         } else {
             $.ajax({
