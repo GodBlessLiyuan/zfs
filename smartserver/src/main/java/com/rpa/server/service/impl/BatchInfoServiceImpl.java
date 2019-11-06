@@ -1,6 +1,7 @@
 package com.rpa.server.service.impl;
 
 import com.rpa.server.common.ResultVO;
+import com.rpa.server.constant.BatchInfoConstant;
 import com.rpa.server.dto.BatchInfoDTO;
 import com.rpa.server.mapper.BatchInfoMapper;
 import com.rpa.server.mapper.UserVipMapper;
@@ -36,8 +37,13 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         if (null == po) {
             return new ResultVO(1016);
         }
-        if (po.getStatus() != 1) {
+
+        if (BatchInfoConstant.FROZEN == po.getStatus()) {
             return new ResultVO(1017);
+        } else if (BatchInfoConstant.ACTIVATED == po.getStatus()) {
+            return new ResultVO(1020);
+        } else if (BatchInfoConstant.EXPIRED == po.getStatus()) {
+            return new ResultVO(1021);
         }
 
         po.setUserId(dto.getUd());

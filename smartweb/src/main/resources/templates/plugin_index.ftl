@@ -456,14 +456,14 @@
                             modal = "data-target='#unPublishModal'";
                         }
 
-                        let dA = full.status === 1 ? "<a data-toggle='modal' data-target='#deleteModal' " +
-                            "data-whatever='@getbootstrap' class='text-primary' onclick='javascript:deleteModal(" +
-                            data + ")'>删除</a>   " : "";
-                        let pA = "<a data-toggle='modal' " + modal + " data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:publishModal(" + data + "," + full.status + ")" +
-                            "'>" + title + "</a>  ";
-                        let uA = "<a data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
-                            "class='text-primary' onclick='javascript:updateModal(" + data + ")'>修改</a>";
+                        let dA = full.status === 1 ? "<button data-toggle='modal' data-target='#deleteModal' " +
+                            "data-whatever='@getbootstrap' class='btn btn-primary' onclick='javascript:deleteModal(" +
+                            data + ")'>删除</button>   " : "";
+                        let pA = "<button data-toggle='modal' " + modal + " data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:publishModal(" + data + "," + full.status + ")" +
+                            "'>" + title + "</button>  ";
+                        let uA = "<button data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:updateModal(" + data + ")'>修改</button>";
                         return dA + pA + uA;
 
                     }
