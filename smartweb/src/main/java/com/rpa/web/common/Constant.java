@@ -7,6 +7,10 @@ package com.rpa.web.common;
  * @description: 常量类
  */
 public class Constant {
+    /**
+     * 基础信息Redis Key
+     */
+    public static final String REDIS_KEY = "config_redis_key";
 
     /**
      * 广告策略：广告的展现间隔

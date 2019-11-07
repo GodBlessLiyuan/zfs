@@ -8,8 +8,10 @@ import com.rpa.web.service.AccountTutorialService;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import static com.rpa.web.common.Constant.REDIS_KEY;
 import static com.rpa.web.common.Constant.TUTORIAL_URL;
 
 /**
@@ -23,6 +25,8 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
 
     @Autowired
     private KeyValueMapper keyValueMapper;
+    @Autowired
+    private StringRedisTemplate template;
 
     /**
      * 查询
@@ -68,6 +72,13 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
         } else {
             count = this.keyValueMapper.updateByPrimaryKey(po);
         }
+
+        /**
+         * @author: xiahui
+         * @description: 清除基础信息Redis缓存
+         */
+        template.delete(REDIS_KEY);
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
 
