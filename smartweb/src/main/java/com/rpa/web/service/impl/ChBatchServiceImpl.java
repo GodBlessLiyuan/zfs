@@ -183,6 +183,7 @@ public class ChBatchServiceImpl implements ChBatchService {
         po.setDr((byte)1);
         po.setCreateTime(new Date());
         po.setUpdateTime(new Date());
+        po.setDays(chBatchMapper.queryDaysByTypeId(dto.getComTypeId()));
 
         // 创建时，创建人和更操作新人一样，此后创建人ID便不再改变
         po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId

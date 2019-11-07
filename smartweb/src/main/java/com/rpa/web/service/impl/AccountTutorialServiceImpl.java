@@ -1,5 +1,6 @@
 package com.rpa.web.service.impl;
 
+import com.rpa.web.common.Constant;
 import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.KeyValueMapper;
@@ -59,18 +60,24 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
     @Override
     public ResultVO insert(String url) {
 
-        KeyValuePO po = new KeyValuePO();
-        po.setKeyName(TUTORIAL_URL);
-        po.setValue(url);
+        // 先准备好养好教程数据对象
+        KeyValuePO tutorial_po = new KeyValuePO();
+        tutorial_po.setKeyName(Constant.TUTORIAL_URL);
+        tutorial_po.setValue(url);
 
-        // 从t_key_value表中查出数据
-        KeyValuePO keyValuePO = this.keyValueMapper.selectByPrimaryKey(TUTORIAL_URL);
+        // 尝试着从t_key_value表中查出养号教程数据：无则插入，有则修改
+        KeyValuePO po = this.keyValueMapper.selectByPrimaryKey(TUTORIAL_URL);
 
         int count = 0;
-        if (keyValuePO == null) {
-            count = this.keyValueMapper.insert(po);
+        if (po == null) {
+            count = this.keyValueMapper.insert(tutorial_po);
         } else {
-            count = this.keyValueMapper.updateByPrimaryKey(po);
+            count = this.keyValueMapper.updateByPrimaryKey(tutorial_po);
+
+            // 从t_key_value表中查出INDEX数据，值加1
+            KeyValuePO index_po = this.keyValueMapper.selectByPrimaryKey(Constant.INDEX);
+            index_po.setValue(index_po.getValue() + 1);
+            this.keyValueMapper.updateByPrimaryKey(index_po);
         }
 
         /**
