@@ -1,5 +1,8 @@
 package com.rpa.pay.service;
 
+import com.rpa.pay.common.ResultVO;
+import com.rpa.pay.dto.WxPayDTO;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -9,6 +12,16 @@ import javax.servlet.http.HttpServletRequest;
  * @version: 1.0
  */
 public interface IWxPayService {
+
+    /**
+     * 微信支付下单
+     *
+     * @param dto
+     * @param req
+     * @return
+     */
+    ResultVO wxPayOrder(WxPayDTO dto, HttpServletRequest req);
+
     /**
      * 微信支付结果通知
      *

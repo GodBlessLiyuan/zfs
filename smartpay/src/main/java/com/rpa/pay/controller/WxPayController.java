@@ -1,10 +1,11 @@
 package com.rpa.pay.controller;
 
+import com.rpa.pay.common.ResultVO;
+import com.rpa.pay.dto.WxPayDTO;
 import com.rpa.pay.service.IWxPayService;
+import com.rpa.pay.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,8 +22,17 @@ public class WxPayController {
     @Autowired
     private IWxPayService service;
 
+    @PostMapping("wxpayorder")
+    public ResultVO wxPayOrder(@RequestBody WxPayDTO dto, HttpServletRequest req) {
+        if (!VerifyUtil.checkToken(dto, req)) {
+            return new ResultVO(2000);
+        }
+
+        return service.wxPayOrder(dto, req);
+    }
+
     @PostMapping("wxpaynotify")
-    public String wxPayNotice(HttpServletRequest req) {
+    public String wxPayNotify(HttpServletRequest req) {
 
         return service.wxPayNotify(req);
     }
