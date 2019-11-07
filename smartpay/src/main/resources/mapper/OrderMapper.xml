@@ -185,4 +185,11 @@
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=CHAR}
   </update>
+
+  <select id="queryByOrderNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_number = #{orderNumber,jdbcType=CHAR}
+  </select>
 </mapper>
