@@ -1,11 +1,11 @@
 package com.rpa.pay.service.impl;
 
-import com.rpa.pay.mapper.WxFeedbackMapper;
 import com.rpa.pay.mapper.OrderMapper;
 import com.rpa.pay.mapper.UserVipMapper;
-import com.rpa.pay.pojo.WxFeedbackPO;
+import com.rpa.pay.mapper.WxFeedbackMapper;
 import com.rpa.pay.pojo.OrderPO;
 import com.rpa.pay.pojo.UserVipPO;
+import com.rpa.pay.pojo.WxFeedbackPO;
 import com.rpa.pay.service.IWxPayService;
 import com.rpa.pay.utils.UserVipUtil;
 import com.rpa.pay.utils.WxPayUtil;
@@ -45,7 +45,7 @@ public class WxPayServiceImpl implements IWxPayService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String wxPayNotice(HttpServletRequest req) {
+    public String wxPayNotify(HttpServletRequest req) {
         Map<String, String> info = null;
 
         try {

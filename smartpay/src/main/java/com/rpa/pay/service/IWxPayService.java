@@ -15,5 +15,5 @@ public interface IWxPayService {
      * @param req
      * @return
      */
-    String wxPayNotice(HttpServletRequest req);
+    String wxPayNotify(HttpServletRequest req);
 }

@@ -21,9 +21,9 @@ public class WxPayController {
     @Autowired
     private IWxPayService service;
 
-    @PostMapping("wxpaynotice")
+    @PostMapping("wxpaynotify")
     public String wxPayNotice(HttpServletRequest req) {
 
-        return service.wxPayNotice(req);
+        return service.wxPayNotify(req);
     }
 }
