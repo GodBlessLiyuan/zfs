@@ -15,6 +15,7 @@ import com.rpa.pay.pojo.WxFeedbackPO;
 import com.rpa.pay.service.IWxPayService;
 import com.rpa.pay.utils.UserVipUtil;
 import com.rpa.pay.utils.WxPayUtil;
+import com.rpa.pay.vo.WxPayVO;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,8 +87,27 @@ public class WxPayServiceImpl implements IWxPayService {
 
         // 调用微信支付下单请求
         String wxPayRes = WxPayUtil.httpsRequest(wxPayConfig.getOrder_url(), wxPayParam);
+        Map<String, String> wxPayMap = WxPayUtil.parseXML(wxPayRes);
+        if (null == wxPayMap || 0 == wxPayMap.size()) {
+            return new ResultVO(2000);
+        }
 
-        return null;
+        if (!WxPayConstant.SUCCESS.equals(wxPayMap.get(WxPayConstant.RETURN_CODE))) {
+            return new ResultVO<>(2000, wxPayMap.get(WxPayConstant.RETURN_MSG));
+        }
+
+        WxPayVO vo = new WxPayVO();
+        vo.setAppid(wxPayMap.get(WxPayConstant.APPID));
+        vo.setNoncestr(wxPayMap.get(WxPayConstant.NONCE_STR));
+        vo.setOrder_number(orderPO.getOrderNumber());
+        vo.setPkg(wxPayConfig.getWx_package());
+        vo.setPartnerid(wxPayMap.get(WxPayConstant.MCH_ID));
+        vo.setPrepayid(wxPayMap.get(WxPayConstant.PREPAY_ID));
+        vo.setPrice(orderPO.getPay());
+        vo.setSign(wxPayMap.get(WxPayConstant.SIGN));
+        vo.setTimestamp(System.currentTimeMillis());
+
+        return new ResultVO<>(1000, vo);
     }
 
     @Transactional(rollbackFor = Exception.class)

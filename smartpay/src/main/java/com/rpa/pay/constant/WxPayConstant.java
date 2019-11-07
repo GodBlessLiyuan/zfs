@@ -44,4 +44,7 @@ public class WxPayConstant {
     public static final String BODY = "body";
     public static final String NOTIFY_URL = "notify_url";
     public static final String SPBILL_CREATE_IP = "spbill_create_ip";
+
+    /** 微信支付下单返回参数 */
+    public static final String PREPAY_ID = "prepay_id";
 }
