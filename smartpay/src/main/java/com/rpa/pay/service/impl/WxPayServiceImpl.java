@@ -1,14 +1,14 @@
-package com.rpa.server.service.impl;
+package com.rpa.pay.service.impl;
 
-import com.rpa.server.mapper.OrderFeedbackMapper;
-import com.rpa.server.mapper.OrderMapper;
-import com.rpa.server.mapper.UserVipMapper;
-import com.rpa.server.pojo.OrderFeedbackPO;
-import com.rpa.server.pojo.OrderPO;
-import com.rpa.server.pojo.UserVipPO;
-import com.rpa.server.service.IWxPayService;
-import com.rpa.server.utils.UserVipUtil;
-import com.rpa.server.utils.WxPayUtil;
+import com.rpa.pay.mapper.OrderFeedbackMapper;
+import com.rpa.pay.mapper.OrderMapper;
+import com.rpa.pay.mapper.UserVipMapper;
+import com.rpa.pay.pojo.OrderFeedbackPO;
+import com.rpa.pay.pojo.OrderPO;
+import com.rpa.pay.pojo.UserVipPO;
+import com.rpa.pay.service.IWxPayService;
+import com.rpa.pay.utils.UserVipUtil;
+import com.rpa.pay.utils.WxPayUtil;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
