@@ -31,6 +31,7 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
 
     /**
      * 查询
+     *
      * @param tutorial_url
      * @return
      */
@@ -54,6 +55,7 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
 
     /**
      * 插入或修改
+     *
      * @param url
      * @return
      */
@@ -76,7 +78,7 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
 
             // 从t_key_value表中查出INDEX数据，值加1
             KeyValuePO index_po = this.keyValueMapper.selectByPrimaryKey(Constant.INDEX);
-            index_po.setValue(index_po.getValue() + 1);
+            index_po.setValue(String.valueOf(Integer.parseInt(index_po.getValue()) + 1));
             this.keyValueMapper.updateByPrimaryKey(index_po);
         }
 
