@@ -21,9 +21,12 @@ import static com.alipay.api.AlipayConstants.CHARSET;
 @RestController
 public class AlipayController {
 
+    private String APP_ID;
+    private String APP_PRIVATE_KEY;
+    private String ALIPAY_PUBLIC_KEY;
+
     @PostMapping("alipay")
     public ResultVO alipay() {
-
 
         // 实例化客户端
         AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do",
@@ -40,5 +43,7 @@ public class AlipayController {
         model.setProductCode("QUICK_MSECURITY_PAY");
         request.setBizModel(model);
         request.setNotifyUrl("商户外网可以访问的异步地址");
+
+        return new ResultVO(null);
     }
 }
