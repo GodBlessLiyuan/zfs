@@ -82,7 +82,10 @@ public class WxPayServiceImpl implements IWxPayService {
         orderMapper.insert(orderPO);
 
         // 微信支付请求参数
+        String wxPayParam = WxPayUtil.createReqParam(orderPO, wxPayConfig, req);
 
+        // 调用微信支付下单请求
+        String wxPayRes = WxPayUtil.httpsRequest(wxPayConfig.getOrder_url(), wxPayParam);
 
         return null;
     }
