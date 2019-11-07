@@ -21,7 +21,7 @@ public class WxFeedbackPO implements Serializable {
 
     private String nonceStr;
 
-    private String sigin;
+    private String sign;
 
     private String resultCode;
 
@@ -115,12 +115,12 @@ public class WxFeedbackPO implements Serializable {
         this.nonceStr = nonceStr;
     }
 
-    public String getSigin() {
-        return sigin;
+    public String getSign() {
+        return sign;
     }
 
-    public void setSigin(String sigin) {
-        this.sigin = sigin;
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 
     public String getResultCode() {
@@ -278,7 +278,7 @@ public class WxFeedbackPO implements Serializable {
             && (this.getMchId() == null ? other.getMchId() == null : this.getMchId().equals(other.getMchId()))
             && (this.getDeviceInfo() == null ? other.getDeviceInfo() == null : this.getDeviceInfo().equals(other.getDeviceInfo()))
             && (this.getNonceStr() == null ? other.getNonceStr() == null : this.getNonceStr().equals(other.getNonceStr()))
-            && (this.getSigin() == null ? other.getSigin() == null : this.getSigin().equals(other.getSigin()))
+            && (this.getSign() == null ? other.getSign() == null : this.getSign().equals(other.getSign()))
             && (this.getResultCode() == null ? other.getResultCode() == null : this.getResultCode().equals(other.getResultCode()))
             && (this.getErrCode() == null ? other.getErrCode() == null : this.getErrCode().equals(other.getErrCode()))
             && (this.getErrCodeDes() == null ? other.getErrCodeDes() == null : this.getErrCodeDes().equals(other.getErrCodeDes()))
@@ -309,7 +309,7 @@ public class WxFeedbackPO implements Serializable {
         result = prime * result + ((getMchId() == null) ? 0 : getMchId().hashCode());
         result = prime * result + ((getDeviceInfo() == null) ? 0 : getDeviceInfo().hashCode());
         result = prime * result + ((getNonceStr() == null) ? 0 : getNonceStr().hashCode());
-        result = prime * result + ((getSigin() == null) ? 0 : getSigin().hashCode());
+        result = prime * result + ((getSign() == null) ? 0 : getSign().hashCode());
         result = prime * result + ((getResultCode() == null) ? 0 : getResultCode().hashCode());
         result = prime * result + ((getErrCode() == null) ? 0 : getErrCode().hashCode());
         result = prime * result + ((getErrCodeDes() == null) ? 0 : getErrCodeDes().hashCode());
@@ -343,7 +343,7 @@ public class WxFeedbackPO implements Serializable {
         sb.append(", mchId=").append(mchId);
         sb.append(", deviceInfo=").append(deviceInfo);
         sb.append(", nonceStr=").append(nonceStr);
-        sb.append(", sigin=").append(sigin);
+        sb.append(", sign=").append(sign);
         sb.append(", resultCode=").append(resultCode);
         sb.append(", errCode=").append(errCode);
         sb.append(", errCodeDes=").append(errCodeDes);

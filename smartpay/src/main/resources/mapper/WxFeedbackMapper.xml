@@ -9,7 +9,7 @@
     <result column="mch_id" jdbcType="CHAR" property="mchId" />
     <result column="device_info" jdbcType="CHAR" property="deviceInfo" />
     <result column="nonce_str" jdbcType="CHAR" property="nonceStr" />
-    <result column="sigin" jdbcType="CHAR" property="sigin" />
+    <result column="sign" jdbcType="CHAR" property="sign" />
     <result column="result_code" jdbcType="CHAR" property="resultCode" />
     <result column="err_code" jdbcType="CHAR" property="errCode" />
     <result column="err_code_des" jdbcType="CHAR" property="errCodeDes" />
@@ -29,7 +29,7 @@
     <result column="time_end" jdbcType="CHAR" property="timeEnd" />
   </resultMap>
   <sql id="Base_Column_List">
-    wxpayid, return_code, return_msg, appid, mch_id, device_info, nonce_str, sigin, result_code, 
+    wxpayid, return_code, return_msg, appid, mch_id, device_info, nonce_str, sign, result_code, 
     err_code, err_code_des, openid, is_subscribe, trade_type, bank_type, total_fee, fee_type, 
     cash_fee, cash_fee_type, coupon_fee, coupon_count, transaction_id, out_trade_no, 
     attach, time_end
@@ -47,20 +47,20 @@
   <insert id="insert" parameterType="com.rpa.pay.pojo.WxFeedbackPO">
     insert into t_wx_feedback (wxpayid, return_code, return_msg, 
       appid, mch_id, device_info, nonce_str, 
-      sigin, result_code, err_code, 
-      err_code_des, openid, is_subscribe, 
-      trade_type, bank_type, total_fee, 
-      fee_type, cash_fee, cash_fee_type, 
-      coupon_fee, coupon_count, transaction_id, 
-      out_trade_no, attach, time_end)
+      sign, result_code, err_code, err_code_des, 
+      openid, is_subscribe, trade_type, 
+      bank_type, total_fee, fee_type, 
+      cash_fee, cash_fee_type, coupon_fee, 
+      coupon_count, transaction_id, out_trade_no, 
+      attach, time_end)
     values (#{wxpayid,jdbcType=BIGINT}, #{returnCode,jdbcType=CHAR}, #{returnMsg,jdbcType=CHAR}, 
       #{appid,jdbcType=CHAR}, #{mchId,jdbcType=CHAR}, #{deviceInfo,jdbcType=CHAR}, #{nonceStr,jdbcType=CHAR}, 
-      #{sigin,jdbcType=CHAR}, #{resultCode,jdbcType=CHAR}, #{errCode,jdbcType=CHAR}, 
-      #{errCodeDes,jdbcType=CHAR}, #{openid,jdbcType=CHAR}, #{isSubscribe,jdbcType=CHAR}, 
-      #{tradeType,jdbcType=CHAR}, #{bankType,jdbcType=CHAR}, #{totalFee,jdbcType=INTEGER}, 
-      #{feeType,jdbcType=CHAR}, #{cashFee,jdbcType=INTEGER}, #{cashFeeType,jdbcType=CHAR}, 
-      #{couponFee,jdbcType=INTEGER}, #{couponCount,jdbcType=INTEGER}, #{transactionId,jdbcType=CHAR}, 
-      #{outTradeNo,jdbcType=CHAR}, #{attach,jdbcType=CHAR}, #{timeEnd,jdbcType=CHAR})
+      #{sign,jdbcType=CHAR}, #{resultCode,jdbcType=CHAR}, #{errCode,jdbcType=CHAR}, #{errCodeDes,jdbcType=CHAR}, 
+      #{openid,jdbcType=CHAR}, #{isSubscribe,jdbcType=CHAR}, #{tradeType,jdbcType=CHAR}, 
+      #{bankType,jdbcType=CHAR}, #{totalFee,jdbcType=INTEGER}, #{feeType,jdbcType=CHAR}, 
+      #{cashFee,jdbcType=INTEGER}, #{cashFeeType,jdbcType=CHAR}, #{couponFee,jdbcType=INTEGER}, 
+      #{couponCount,jdbcType=INTEGER}, #{transactionId,jdbcType=CHAR}, #{outTradeNo,jdbcType=CHAR}, 
+      #{attach,jdbcType=CHAR}, #{timeEnd,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.pay.pojo.WxFeedbackPO">
     insert into t_wx_feedback
@@ -86,8 +86,8 @@
       <if test="nonceStr != null">
         nonce_str,
       </if>
-      <if test="sigin != null">
-        sigin,
+      <if test="sign != null">
+        sign,
       </if>
       <if test="resultCode != null">
         result_code,
@@ -163,8 +163,8 @@
       <if test="nonceStr != null">
         #{nonceStr,jdbcType=CHAR},
       </if>
-      <if test="sigin != null">
-        #{sigin,jdbcType=CHAR},
+      <if test="sign != null">
+        #{sign,jdbcType=CHAR},
       </if>
       <if test="resultCode != null">
         #{resultCode,jdbcType=CHAR},
@@ -240,8 +240,8 @@
       <if test="nonceStr != null">
         nonce_str = #{nonceStr,jdbcType=CHAR},
       </if>
-      <if test="sigin != null">
-        sigin = #{sigin,jdbcType=CHAR},
+      <if test="sign != null">
+        sign = #{sign,jdbcType=CHAR},
       </if>
       <if test="resultCode != null">
         result_code = #{resultCode,jdbcType=CHAR},
@@ -305,7 +305,7 @@
       mch_id = #{mchId,jdbcType=CHAR},
       device_info = #{deviceInfo,jdbcType=CHAR},
       nonce_str = #{nonceStr,jdbcType=CHAR},
-      sigin = #{sigin,jdbcType=CHAR},
+      sign = #{sign,jdbcType=CHAR},
       result_code = #{resultCode,jdbcType=CHAR},
       err_code = #{errCode,jdbcType=CHAR},
       err_code_des = #{errCodeDes,jdbcType=CHAR},

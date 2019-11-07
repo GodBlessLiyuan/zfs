@@ -799,7 +799,7 @@ CREATE TABLE t_wx_feedback
 	mch_id char(32),
 	device_info char(32),
 	nonce_str char(32),
-	sigin char(32),
+	sign char(32),
 	result_code char(16),
 	err_code char(32),
 	err_code_des char(128),
