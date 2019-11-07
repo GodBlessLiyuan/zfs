@@ -405,6 +405,7 @@ button::after{
 }
 .drawTip{
   font-size: 13px;
+  line-height: 21px;
   color: #AAAAAA;
   letter-spacing: 1px;
   text-align: left;
@@ -654,7 +655,7 @@ button::after{
 .backimag{
   width: 100%;
   height: 100px;
-  background: url("../images/bg_profit@2x.png") no-repeat;
+  background: url("../images/bg_profit.png") no-repeat;
   background-size:100% 100%;
   -moz-background-size:100% 100%;
 }
@@ -745,7 +746,7 @@ button::after{
 
 
 .bg_image_beijing{
-  background-image: url("../images/bg_profit@3x.png");
+  background-image: url("../images/bg_profit.png");
   background-repeat:repeat-x;
 }
 
@@ -788,6 +789,7 @@ button::after{
   font-weight: bold;
   font-family: PingFang-SC-Medium;
   font-size: 15px;
+
   color: #999999;
   padding-top: 10px;
   padding-left: 10px;
@@ -801,4 +803,17 @@ button::after{
 .promote_state{
   width: 100%;
   margin-top: 0px;
+}
+
+
+.icon-rmb{
+  position: absolute;
+  left: 30px;
+  z-index:5;
+  margin-top: 10px;
+  background-image: url("../images/rmb.png"); /*引入图片图片*/
+  background-repeat: no-repeat; /*设置图片不重复*/
+  background-position: 0px 0px; /*图片显示的位置*/
+  width: 20px; /*设置图片显示的宽*/
+  height: 20px; /*图片显示的高*/
 }
