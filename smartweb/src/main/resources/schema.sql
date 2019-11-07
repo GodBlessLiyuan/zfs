@@ -34,7 +34,6 @@ DROP TABLE IF EXISTS t_invite_user;
 DROP TABLE IF EXISTS t_key_text;
 DROP TABLE IF EXISTS t_key_value;
 DROP TABLE IF EXISTS t_notice;
-DROP TABLE IF EXISTS t_order_feedback;
 DROP TABLE IF EXISTS t_other_app;
 DROP TABLE IF EXISTS t_plugin;
 DROP TABLE IF EXISTS t_promoter;
@@ -49,6 +48,7 @@ DROP TABLE IF EXISTS t_user_history;
 DROP TABLE IF EXISTS t_viptype;
 DROP TABLE IF EXISTS t_withdraw_user;
 DROP TABLE IF EXISTS t_wxsupport;
+DROP TABLE IF EXISTS t_wx_feedback;
 
 
 
@@ -477,36 +477,6 @@ CREATE TABLE t_order
 );
 
 
-CREATE TABLE t_order_feedback
-(
-	wxpayid bigint NOT NULL AUTO_INCREMENT,
-	return_code char(16),
-	return_msg char(128),
-	appid char(32),
-	mch_id char(32),
-	device_info char(32),
-	nonce_str char(32),
-	sigin char(32),
-	result_code char(16),
-	err_code char(32),
-	err_code_des char(128),
-	openid char(128),
-	is_subscribe char,
-	trade_type char(16),
-	bank_type char(16),
-	total_fee int,
-	fee_type char(8),
-	cash_fee int,
-	cash_fee_type char(16),
-	coupon_fee int,
-	coupon_count int,
-	transaction_id char(32),
-	out_trade_no char(32),
-	attach char(128),
-	time_end char(14),
-	PRIMARY KEY (wxpayid),
-	UNIQUE (wxpayid)
-);
 CREATE TABLE t_other_app
 (
 	o_id int NOT NULL AUTO_INCREMENT,
@@ -817,6 +787,38 @@ CREATE TABLE t_wxsupport
 	extra char(255),
 	PRIMARY KEY (w_id),
 	UNIQUE (w_id)
+);
+
+
+CREATE TABLE t_wx_feedback
+(
+	wxpayid bigint NOT NULL AUTO_INCREMENT,
+	return_code char(16),
+	return_msg char(128),
+	appid char(32),
+	mch_id char(32),
+	device_info char(32),
+	nonce_str char(32),
+	sigin char(32),
+	result_code char(16),
+	err_code char(32),
+	err_code_des char(128),
+	openid char(128),
+	is_subscribe char,
+	trade_type char(16),
+	bank_type char(16),
+	total_fee int,
+	fee_type char(8),
+	cash_fee int,
+	cash_fee_type char(16),
+	coupon_fee int,
+	coupon_count int,
+	transaction_id char(32),
+	out_trade_no char(32),
+	attach char(128),
+	time_end char(14),
+	PRIMARY KEY (wxpayid),
+	UNIQUE (wxpayid)
 );
 
 
