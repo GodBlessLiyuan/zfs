@@ -98,7 +98,7 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKey" parameterType="com.rpa.server.pojo.UserVipPO">
+  <update id="updateByPrimaryKey" parameterType="com.rpa.pay.pojo.UserVipPO">
     update t_user_vip
     set
       viptype_id = #{viptypeId,jdbcType=INTEGER},
