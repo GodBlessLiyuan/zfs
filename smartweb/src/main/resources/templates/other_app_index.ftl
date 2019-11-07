@@ -331,7 +331,7 @@
                 {
                     "data": "appUrl",
                     "render": function (data, type, full) {
-                        return "<a href='" + data + "' download='50px'/>";
+                        return "<a class='text-primary' href='" + data + "' download='50px'>" + data+ "</a>";
                     }
                 },
                 {

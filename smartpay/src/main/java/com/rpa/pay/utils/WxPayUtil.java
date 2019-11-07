@@ -111,19 +111,10 @@ public class WxPayUtil {
             }
 
             // 返回结果
-            InputStream is = connection.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            StringBuffer sb = new StringBuffer();
-            String s;
-            while (null != (s = reader.readLine())) {
-                sb.append(s);
-            }
-
-            reader.close();
-            is.close();
+            String res = WxPayUtil.readInputStream(connection.getInputStream());
             connection.disconnect();
 
-            return sb.toString();
+            return res;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,17 +131,7 @@ public class WxPayUtil {
     public static Map<String, String> parseReq(HttpServletRequest req) {
         Map<String, String> info = null;
         try {
-            InputStream is = req.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            StringBuffer sb = new StringBuffer();
-            String s;
-            while ((s = reader.readLine()) != null) {
-                sb.append(s);
-            }
-            reader.close();
-            is.close();
-
-            info = WxPayUtil.parseXML(sb.toString());
+            info = WxPayUtil.parseXML(WxPayUtil.readInputStream(req.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -264,5 +245,21 @@ public class WxPayUtil {
         }
 
         return po;
+    }
+
+    /**
+     * 读取 InputStream 数据
+     */
+    public static String readInputStream(InputStream is) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+        StringBuffer sb = new StringBuffer();
+        String s;
+        while ((s = reader.readLine()) != null) {
+            sb.append(s);
+        }
+        reader.close();
+        is.close();
+
+        return sb.toString();
     }
 }

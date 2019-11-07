@@ -38,7 +38,7 @@ public class BannerConfigServiceImpl implements IBannerConfigService {
             BannerConfigVO vo = new BannerConfigVO();
             vo.setAdid(po.getBannerId());
             if (po.getUrl() != null && !"".equals(po.getUrl())) {
-                vo.setLink(publicPath + po.getUrl());
+                vo.setLink(po.getUrl());
             }
             if (po.getPicPath() != null && !"".equals(po.getPicPath())) {
                 vo.setPicpath(publicPath + po.getPicPath());
