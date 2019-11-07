@@ -79,7 +79,7 @@
                     <p class="font_reward padding_left" style="font-size: 13px">
                         2.邀请奖励 = 好友支付金额 x 会员奖金比例。
                     </p>
-                    <p class="drawTip padding_left" style="font-size: 12px">注：好友必须为新用户，从未注册过XXX。</p>
+                    <p class="drawTip padding_left" style="font-size: 12px">注：好友必须为新用户：从未注册过砖助智能助手的用户</p>
                 </div>
 
                 <hr class="width_dotline" style="border-top:1px #000000 dashed">
