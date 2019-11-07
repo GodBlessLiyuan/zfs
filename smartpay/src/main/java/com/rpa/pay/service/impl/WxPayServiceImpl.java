@@ -61,12 +61,6 @@ public class WxPayServiceImpl implements IWxPayService {
             return new ResultVO(2000);
         }
 
-        Date curDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(curDate);
-        calendar.add(Calendar.DATE, vipCommodityPO.getDays());
-        Date endDate = calendar.getTime();
-
         // 创建订单
         OrderPO orderPO = new OrderPO();
         orderPO.setOrderNumber(UUID.randomUUID().toString().replace("-", ""));
@@ -74,9 +68,7 @@ public class WxPayServiceImpl implements IWxPayService {
         orderPO.setCmdyId(dto.getCmdyid());
         orderPO.setUserId(dto.getUd());
         orderPO.setDeviceId(dto.getId());
-        orderPO.setCreateTime(curDate);
-        orderPO.setStarttime(curDate);
-        orderPO.setEndtime(endDate);
+        orderPO.setCreateTime(new Date());
         orderPO.setType(1);
         orderPO.setDays(vipCommodityPO.getDays());
         orderPO.setPay(vipCommodityPO.getDiscount());
@@ -127,10 +119,6 @@ public class WxPayServiceImpl implements IWxPayService {
             return WxPayUtil.successWxPay();
         }
 
-        // 更新支付时间
-        orderPO.setPayTime(new Date());
-        orderMapper.updateByPrimaryKey(orderPO);
-
         // 更新用户会员时间
         UserVipPO userVipPO = userVipMapper.queryByUserId(orderPO.getUserId());
         UserVipPO newUserVipVO = UserVipUtil.buildUserVipVO(userVipPO, orderPO.getUserId(), orderPO.getDays(), true);
@@ -139,6 +127,12 @@ public class WxPayServiceImpl implements IWxPayService {
         } else {
             userVipMapper.updateByPrimaryKey(newUserVipVO);
         }
+
+        // 更新支付时间、开始时间、结束时间
+        orderPO.setPayTime(new Date());
+        orderPO.setEndtime(newUserVipVO.getEndTime());
+
+        orderMapper.updateByPrimaryKey(orderPO);
 
         // 新增微信支付反馈信息
         WxFeedbackPO po = WxPayUtil.convertMap2PO(info);
