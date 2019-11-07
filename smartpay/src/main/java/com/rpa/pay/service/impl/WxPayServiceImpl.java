@@ -1,14 +1,14 @@
-package com.rpa.server.service.impl;
+package com.rpa.pay.service.impl;
 
-import com.rpa.server.mapper.OrderFeedbackMapper;
-import com.rpa.server.mapper.OrderMapper;
-import com.rpa.server.mapper.UserVipMapper;
-import com.rpa.server.pojo.OrderFeedbackPO;
-import com.rpa.server.pojo.OrderPO;
-import com.rpa.server.pojo.UserVipPO;
-import com.rpa.server.service.IWxPayService;
-import com.rpa.server.utils.UserVipUtil;
-import com.rpa.server.utils.WxPayUtil;
+import com.rpa.pay.mapper.OrderMapper;
+import com.rpa.pay.mapper.UserVipMapper;
+import com.rpa.pay.mapper.WxFeedbackMapper;
+import com.rpa.pay.pojo.OrderPO;
+import com.rpa.pay.pojo.UserVipPO;
+import com.rpa.pay.pojo.WxFeedbackPO;
+import com.rpa.pay.service.IWxPayService;
+import com.rpa.pay.utils.UserVipUtil;
+import com.rpa.pay.utils.WxPayUtil;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ import java.util.Map;
 @Service
 public class WxPayServiceImpl implements IWxPayService {
     @Resource
-    private OrderFeedbackMapper orderFeedbackMapper;
+    private WxFeedbackMapper wxFeedbackMapper;
     @Resource
     private OrderMapper orderMapper;
     @Resource
@@ -45,7 +45,7 @@ public class WxPayServiceImpl implements IWxPayService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String wxPayNotice(HttpServletRequest req) {
+    public String wxPayNotify(HttpServletRequest req) {
         Map<String, String> info = null;
 
         try {
@@ -86,8 +86,8 @@ public class WxPayServiceImpl implements IWxPayService {
         }
 
         // 新增微信支付反馈信息
-        OrderFeedbackPO po = this.convertMap2PO(info);
-        orderFeedbackMapper.insert(po);
+        WxFeedbackPO po = this.convertMap2PO(info);
+        wxFeedbackMapper.insert(po);
 
         // RabbitMQ
         this.template.convertAndSend("wx-pay-notice", po.getNonceStr());
@@ -100,8 +100,8 @@ public class WxPayServiceImpl implements IWxPayService {
      *
      * @return
      */
-    private OrderFeedbackPO convertMap2PO(Map<String, String> map) {
-        OrderFeedbackPO po = new OrderFeedbackPO();
+    private WxFeedbackPO convertMap2PO(Map<String, String> map) {
+        WxFeedbackPO po = new WxFeedbackPO();
 
         String returnCode = map.get("return_code");
         po.setReturnCode(returnCode);

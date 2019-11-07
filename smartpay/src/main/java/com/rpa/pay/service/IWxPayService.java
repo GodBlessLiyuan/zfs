@@ -1,4 +1,4 @@
-package com.rpa.server.service;
+package com.rpa.pay.service;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,5 +15,5 @@ public interface IWxPayService {
      * @param req
      * @return
      */
-    String wxPayNotice(HttpServletRequest req);
+    String wxPayNotify(HttpServletRequest req);
 }
