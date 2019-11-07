@@ -55,9 +55,8 @@
                 }
                 // 手机号
                 var phone = $("#phone").val();
-
                 $.ajax({
-                    url: "",
+                    url: "${basePath}/v1.0/download",
                     data: {
                         "phone": phone,
                         "code": code,
@@ -65,7 +64,7 @@
                     type: "POST",
                     async: false,
                     success: function() {
-                        window.location.href="";
+                        window.location.href="#";
                     },
                     cache: false,
                     fail: function() {

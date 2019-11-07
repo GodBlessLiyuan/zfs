@@ -29,7 +29,7 @@
         <div>
             <div style="width: 60%; float: left">
                 <div class="input-group" style="margin-left: 10px">
-                    <span class="input-group-addon" style="border: none; font-size: 20px;background-color:#FFFFFF">￥</span>
+                    <span class="input-group-addon" style="border: none; font-size: 20px;background-color:#FFFFFF;padding-top: 10px;">￥</span>
                     <input id="importBalance" type="text" class="form-control" style="font-size: 20px;border: none" placeholder="请输入提现金额">
                 </div>
             </div>
