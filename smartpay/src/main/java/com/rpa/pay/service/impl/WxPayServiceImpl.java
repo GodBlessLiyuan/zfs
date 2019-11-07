@@ -105,12 +105,15 @@ public class WxPayServiceImpl implements IWxPayService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String wxPayNotify(HttpServletRequest req) {
-        Map<String, String> info = WxPayUtil.parseReq(req);
-        if (info == null || info.size() == 0) {
+        Map<String, String> wxPayMap = WxPayUtil.parseReq(req);
+        if (null == wxPayMap || 0 == wxPayMap.size()) {
+            return WxPayUtil.failWxPay();
+        }
+        if (!WxPayConstant.SUCCESS.equals(wxPayMap.get(WxPayConstant.RETURN_CODE))) {
             return WxPayUtil.failWxPay();
         }
 
-        OrderPO orderPO = orderMapper.queryByOrderNumber(info.get(WxPayConstant.OUT_TRADE_NO));
+        OrderPO orderPO = orderMapper.queryByOrderNumber(wxPayMap.get(WxPayConstant.OUT_TRADE_NO));
         if (null == orderPO) {
             return WxPayUtil.failWxPay();
         }
@@ -128,14 +131,20 @@ public class WxPayServiceImpl implements IWxPayService {
             userVipMapper.updateByPrimaryKey(newUserVipVO);
         }
 
+        Date endDate = newUserVipVO.getEndTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(endDate);
+        calendar.add(Calendar.DATE, -orderPO.getDays());
+        Date startDate = calendar.getTime();
+
         // 更新支付时间、开始时间、结束时间
         orderPO.setPayTime(new Date());
-        orderPO.setEndtime(newUserVipVO.getEndTime());
-
+        orderPO.setStarttime(startDate);
+        orderPO.setEndtime(endDate);
         orderMapper.updateByPrimaryKey(orderPO);
 
         // 新增微信支付反馈信息
-        WxFeedbackPO po = WxPayUtil.convertMap2PO(info);
+        WxFeedbackPO po = WxPayUtil.convertMap2PO(wxPayMap);
         wxFeedbackMapper.insert(po);
 
         // RabbitMQ
