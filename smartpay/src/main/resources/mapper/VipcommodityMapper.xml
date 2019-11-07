@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.pay.mapper.VipCommodityMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.pay.pojo.VipCommodityPO">
+    <id column="cmdy_id" jdbcType="INTEGER" property="cmdyId" />
+    <result column="viptype_id" jdbcType="INTEGER" property="viptypeId" />
+    <result column="com_type_id" jdbcType="INTEGER" property="comTypeId" />
+    <result column="com_name" jdbcType="CHAR" property="comName" />
+    <result column="price" jdbcType="CHAR" property="price" />
+    <result column="discount" jdbcType="BIGINT" property="discount" />
+    <result column="position" jdbcType="TINYINT" property="position" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="soft_channel_id" jdbcType="INTEGER" property="softChannelId" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="days" jdbcType="INTEGER" property="days" />
+    <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="description" jdbcType="CHAR" property="description" />
+    <result column="show_discount" jdbcType="CHAR" property="showDiscount" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="com_type_name" jdbcType="CHAR" property="comTypeName" />
+    <result column="istop" jdbcType="TINYINT" property="istop" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cmdy_id, viptype_id, com_type_id, com_name, price, discount, `position`, create_time, 
+    soft_channel_id, `name`, update_time, `days`, a_id, description, show_discount, `status`, 
+    com_type_name, istop
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_vipcommodity
+    where cmdy_id = #{cmdyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_vipcommodity
+    where cmdy_id = #{cmdyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.pay.pojo.VipCommodityPO">
+    insert into t_vipcommodity (cmdy_id, viptype_id, com_type_id, 
+      com_name, price, discount, 
+      `position`, create_time, soft_channel_id, 
+      `name`, update_time, `days`, 
+      a_id, description, show_discount, 
+      `status`, com_type_name, istop
+      )
+    values (#{cmdyId,jdbcType=INTEGER}, #{viptypeId,jdbcType=INTEGER}, #{comTypeId,jdbcType=INTEGER}, 
+      #{comName,jdbcType=CHAR}, #{price,jdbcType=CHAR}, #{discount,jdbcType=BIGINT}, 
+      #{position,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{softChannelId,jdbcType=INTEGER}, 
+      #{name,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{days,jdbcType=INTEGER}, 
+      #{aId,jdbcType=INTEGER}, #{description,jdbcType=CHAR}, #{showDiscount,jdbcType=CHAR}, 
+      #{status,jdbcType=TINYINT}, #{comTypeName,jdbcType=CHAR}, #{istop,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.pay.pojo.VipCommodityPO">
+    insert into t_vipcommodity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cmdyId != null">
+        cmdy_id,
+      </if>
+      <if test="viptypeId != null">
+        viptype_id,
+      </if>
+      <if test="comTypeId != null">
+        com_type_id,
+      </if>
+      <if test="comName != null">
+        com_name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="position != null">
+        `position`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="softChannelId != null">
+        soft_channel_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="days != null">
+        `days`,
+      </if>
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="showDiscount != null">
+        show_discount,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="comTypeName != null">
+        com_type_name,
+      </if>
+      <if test="istop != null">
+        istop,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cmdyId != null">
+        #{cmdyId,jdbcType=INTEGER},
+      </if>
+      <if test="viptypeId != null">
+        #{viptypeId,jdbcType=INTEGER},
+      </if>
+      <if test="comTypeId != null">
+        #{comTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="comName != null">
+        #{comName,jdbcType=CHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=CHAR},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=BIGINT},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="softChannelId != null">
+        #{softChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="days != null">
+        #{days,jdbcType=INTEGER},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=CHAR},
+      </if>
+      <if test="showDiscount != null">
+        #{showDiscount,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="comTypeName != null">
+        #{comTypeName,jdbcType=CHAR},
+      </if>
+      <if test="istop != null">
+        #{istop,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.pay.pojo.VipCommodityPO">
+    update t_vipcommodity
+    <set>
+      <if test="viptypeId != null">
+        viptype_id = #{viptypeId,jdbcType=INTEGER},
+      </if>
+      <if test="comTypeId != null">
+        com_type_id = #{comTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="comName != null">
+        com_name = #{comName,jdbcType=CHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=CHAR},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=BIGINT},
+      </if>
+      <if test="position != null">
+        `position` = #{position,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="softChannelId != null">
+        soft_channel_id = #{softChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="days != null">
+        `days` = #{days,jdbcType=INTEGER},
+      </if>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=CHAR},
+      </if>
+      <if test="showDiscount != null">
+        show_discount = #{showDiscount,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="comTypeName != null">
+        com_type_name = #{comTypeName,jdbcType=CHAR},
+      </if>
+      <if test="istop != null">
+        istop = #{istop,jdbcType=TINYINT},
+      </if>
+    </set>
+    where cmdy_id = #{cmdyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.pay.pojo.VipCommodityPO">
+    update t_vipcommodity
+    set viptype_id = #{viptypeId,jdbcType=INTEGER},
+      com_type_id = #{comTypeId,jdbcType=INTEGER},
+      com_name = #{comName,jdbcType=CHAR},
+      price = #{price,jdbcType=CHAR},
+      discount = #{discount,jdbcType=BIGINT},
+      `position` = #{position,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      soft_channel_id = #{softChannelId,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `days` = #{days,jdbcType=INTEGER},
+      a_id = #{aId,jdbcType=INTEGER},
+      description = #{description,jdbcType=CHAR},
+      show_discount = #{showDiscount,jdbcType=CHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      com_type_name = #{comTypeName,jdbcType=CHAR},
+      istop = #{istop,jdbcType=TINYINT}
+    where cmdy_id = #{cmdyId,jdbcType=INTEGER}
+  </update>
+</mapper>
