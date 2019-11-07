@@ -1,17 +1,20 @@
 package com.rpa.pay.utils;
 
+import com.rpa.pay.config.WxPayConfig;
 import com.rpa.pay.constant.WxPayConstant;
+import com.rpa.pay.pojo.OrderPO;
 import com.rpa.pay.pojo.WxFeedbackPO;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.springframework.util.DigestUtils;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: xiahui
@@ -20,6 +23,113 @@ import java.util.Map;
  * @version: 1.0
  */
 public class WxPayUtil {
+
+    /**
+     * 创建微信下单请求参数
+     *
+     * @param orderPO
+     * @param wxPayConfig
+     * @param req
+     * @return
+     */
+    public static String createReqParam(OrderPO orderPO, WxPayConfig wxPayConfig, HttpServletRequest req) {
+        SortedMap<String, Object> wxPayParam = new TreeMap<>();
+        wxPayParam.put(WxPayConstant.APPID, wxPayConfig.getAppid());
+        wxPayParam.put(WxPayConstant.BODY, "砖助智能助手-商品充值");
+        wxPayParam.put(WxPayConstant.MCH_ID, wxPayConfig.getMch_id());
+        wxPayParam.put(WxPayConstant.NONCE_STR, UUID.randomUUID().toString().replace("-", ""));
+        wxPayParam.put(WxPayConstant.NOTIFY_URL, wxPayConfig.getNotify_url());
+        wxPayParam.put(WxPayConstant.OUT_TRADE_NO, orderPO.getOrderNumber());
+        wxPayParam.put(WxPayConstant.SPBILL_CREATE_IP, RequestUtil.getIpAddr(req));
+        wxPayParam.put(WxPayConstant.TOTAL_FEE, orderPO.getPay());
+        wxPayParam.put(WxPayConstant.TRADE_TYPE, "APP");
+        wxPayParam.put(WxPayConstant.SIGN, WxPayUtil.sign(wxPayParam, wxPayConfig.getKey()));
+
+        return WxPayUtil.convertMap2Xml(wxPayParam);
+    }
+
+    /**
+     * 微信请求参数签名
+     *
+     * @param wxPayParam
+     * @param key        商户密钥
+     * @return
+     */
+    private static String sign(SortedMap<String, Object> wxPayParam, String key) {
+        StringBuffer sb = new StringBuffer();
+        for (Map.Entry<String, Object> entry : wxPayParam.entrySet()) {
+            String k = entry.getKey();
+            Object v = entry.getValue();
+            if (null != v && !"".equals(v) && !"key".equals(k) && !"sign".equals(k)) {
+                sb.append(k).append("=").append(v).append("&");
+            }
+        }
+        sb.append("key=").append(key);
+
+        return DigestUtils.md5DigestAsHex(sb.toString().getBytes()).toUpperCase();
+    }
+
+    /**
+     * 转换 Map 为 XML
+     *
+     * @param map
+     * @return
+     */
+    private static String convertMap2Xml(SortedMap<String, Object> map) {
+        StringBuffer sb = new StringBuffer();
+
+        sb.append("<xml>\n");
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            sb.append("<").append(entry.getKey()).append(">");
+            sb.append("<![CDATA[").append(entry.getValue()).append("]]>");
+            sb.append("</").append(entry.getKey()).append(">\n");
+        }
+        sb.append("</xml>");
+
+        return sb.toString();
+    }
+
+    /**
+     * 发送微信支付下单请求
+     *
+     * @param reqUrl 请求地址
+     * @param output 请求参数
+     * @return
+     */
+    public static String httpsRequest(String reqUrl, String output) {
+        try {
+            URL url = new URL(reqUrl);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setUseCaches(false);
+            connection.setRequestMethod("POST");
+            if (null != output) {
+                OutputStream os = connection.getOutputStream();
+                os.write(output.getBytes(StandardCharsets.UTF_8));
+                os.close();
+            }
+
+            // 返回结果
+            InputStream is = connection.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            StringBuffer sb = new StringBuffer();
+            String s;
+            while (null != (s = reader.readLine())) {
+                sb.append(s);
+            }
+
+            reader.close();
+            is.close();
+            connection.disconnect();
+
+            return sb.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 
     /**
      * 解析Request
@@ -125,7 +235,7 @@ public class WxPayUtil {
             po.setMchId(map.get(WxPayConstant.MCH_ID));
             po.setDeviceInfo(map.get(WxPayConstant.DEVICE_INFO));
             po.setNonceStr(map.get(WxPayConstant.NONCE_STR));
-            po.setSigin(map.get(WxPayConstant.SIGN));
+            po.setSign(map.get(WxPayConstant.SIGN));
             po.setResultCode(map.get(WxPayConstant.RESULT_CODE));
             po.setErrCode(map.get(WxPayConstant.ERR_CODE));
             po.setErrCodeDes(map.get(WxPayConstant.ERR_CODE_DES));

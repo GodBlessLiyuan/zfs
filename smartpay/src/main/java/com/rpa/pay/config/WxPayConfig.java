@@ -28,10 +28,6 @@ public class WxPayConfig {
      */
     private String device_info;
     /**
-     * 签名类型
-     */
-    private String sign_type;
-    /**
      * 商户密匙
      */
     private String key;
