@@ -9,8 +9,10 @@ import com.rpa.web.service.AccountTutorialService;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import static com.rpa.web.common.Constant.REDIS_KEY;
 import static com.rpa.web.common.Constant.TUTORIAL_URL;
 
 /**
@@ -24,9 +26,12 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
 
     @Autowired
     private KeyValueMapper keyValueMapper;
+    @Autowired
+    private StringRedisTemplate template;
 
     /**
      * 查询
+     *
      * @param tutorial_url
      * @return
      */
@@ -50,6 +55,7 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
 
     /**
      * 插入或修改
+     *
      * @param url
      * @return
      */
@@ -72,9 +78,16 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
 
             // 从t_key_value表中查出INDEX数据，值加1
             KeyValuePO index_po = this.keyValueMapper.selectByPrimaryKey(Constant.INDEX);
-            index_po.setValue(index_po.getValue() + 1);
+            index_po.setValue(String.valueOf(Integer.parseInt(index_po.getValue()) + 1));
             this.keyValueMapper.updateByPrimaryKey(index_po);
         }
+
+        /**
+         * @author: xiahui
+         * @description: 清除基础信息Redis缓存
+         */
+        template.delete(REDIS_KEY);
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
 

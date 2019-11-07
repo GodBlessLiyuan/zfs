@@ -1,6 +1,6 @@
-package com.rpa.server.controller;
+package com.rpa.pay.controller;
 
-import com.rpa.server.service.IWxPayService;
+import com.rpa.pay.service.IWxPayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
