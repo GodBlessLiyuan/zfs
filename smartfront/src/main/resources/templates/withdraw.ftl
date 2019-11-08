@@ -20,7 +20,6 @@
 
     <!--余额及提现 -->
     <div class="my_state1 bg_color" >
-
         <div >
             <div class="total" >
                 <span class="tx_time" style="font-size: 18px">可提金额:￥</span><span id="balance" class="tx_time" style="font-size: 18px">${res.data.balance}</span>
@@ -31,10 +30,10 @@
             <div style="width: 60%; float: left;padding-left: 30px;">
                 <div  style="margin-left: 5px">
                     <i class="icon-rmb"></i>
-                    <input class="input_money" id="importBalance" type="text"  style="font-size: 15px;padding-top:5px;padding-left: 10px;width:150px;"; placeholder="请输入提现金额">
+                    <input class="input_money" id="importBalance" type="text"  style="font-size: 15px;padding-top:5px;padding-left: 10px;width:130px;"; placeholder="请输入提现金额">
                 </div>
             </div>
-            <div style="float:left;padding-left:20px;margin-right: 25px">
+            <div style="float:left;padding-left:20px;margin-right: 10px">
                 <button type="button" class="btn" style="text-align: center;vertical-align: middle" onclick="drawTotal()">全部提现</button>
             </div>
         </div>
@@ -73,7 +72,6 @@
             <button type="button" class="drawSubmit" onclick="showBox()">提现</button>
         </div>
     </form>
-
 
 <!-- 遮罩层 -->
 <div id="zhezhaoa"></div>
