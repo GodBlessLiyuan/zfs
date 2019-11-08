@@ -187,9 +187,10 @@
   </update>
 
   <select id="queryByOrderNumber" parameterType="java.lang.String" resultType="com.rpa.consumer.bo.OrderBO">
-    select o.order_id as orderId, v.com_type_id ad comTypeId, v.com_name as comTypeName, o.pay, o.pay_time as payTime
+    select o.order_id as orderId, v.com_type_id as comTypeId, v.com_name as comTypeName, o.pay, o.pay_time as
+    payTime, o.user_id as userId
     from t_order o
     left join t_vipcommodity v on o.cmdy_id = v.cmdy_id
-    where order_number = #{orderNumber,jdbcType=CHAR}
+    where o.order_number = #{orderNumber,jdbcType=CHAR}
   </select>
 </mapper>

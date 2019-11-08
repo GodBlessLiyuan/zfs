@@ -94,7 +94,7 @@ public class PageController {
     public String shareClick(@PathVariable String shareCode, ModelMap map) {
         ResultVO vo = new ResultVO<>(1000, shareCode);
         map.put("res", vo);
-        return "income_index";
+        return "promotion_index";
     }
 
 

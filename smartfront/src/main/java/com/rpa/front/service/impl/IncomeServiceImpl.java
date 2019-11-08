@@ -259,7 +259,6 @@ public class IncomeServiceImpl implements IIncomeService {
      * @return
      */
     private ShortUrlEntity longUrl2ShortUrl(String longUrl) {
-        longUrl = "https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1";
         // 请求参数
         String params = "{\"Url\":\"" + longUrl + "\",\"TermOfValidity\":\"" + shortUrlConfig.getValidity() + "\"}";
 
