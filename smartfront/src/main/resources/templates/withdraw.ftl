@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div style="float:left;padding-left:20px;margin-right: 10px">
-                <button type="button" class="btn" style="text-align: center;vertical-align: middle" onclick="drawTotal()">全部提现</button>
+                <button type="button" class="btn btn-primary" style="text-align: center;vertical-align: middle" onclick="drawTotal()">全部提现</button>
             </div>
         </div>
 

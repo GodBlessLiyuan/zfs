@@ -737,6 +737,12 @@ button::after{
   margin:auto;
 }
 
+.reward_details td {
+  vertical-align: middle;
+  text-align: center
+
+}
+
 /* 奖励相关div间距*/
 .div_spacing{
   margin-bottom: 5px;
