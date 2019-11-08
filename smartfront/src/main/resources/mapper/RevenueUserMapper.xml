@@ -11,10 +11,12 @@
     <result column="withdraw_time" jdbcType="INTEGER" property="withdrawTime" />
     <result column="remaining" jdbcType="BIGINT" property="remaining" />
     <result column="sharecode" jdbcType="CHAR" property="sharecode" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="shorturl" jdbcType="CHAR" property="shorturl" />
   </resultMap>
   <sql id="Base_Column_List">
     user_id, invite_count, pay_count, register_count, total_revenue, withdraw, withdraw_time, 
-    remaining, sharecode
+    remaining, sharecode, end_time, shorturl
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -29,12 +31,12 @@
   <insert id="insert" parameterType="com.rpa.front.pojo.RevenueUserPO">
     insert into t_revenue_user (user_id, invite_count, pay_count, 
       register_count, total_revenue, withdraw, 
-      withdraw_time, remaining, sharecode
-      )
+      withdraw_time, remaining, sharecode, 
+      end_time, shorturl)
     values (#{userId,jdbcType=BIGINT}, #{inviteCount,jdbcType=INTEGER}, #{payCount,jdbcType=INTEGER}, 
       #{registerCount,jdbcType=BIGINT}, #{totalRevenue,jdbcType=BIGINT}, #{withdraw,jdbcType=BIGINT}, 
-      #{withdrawTime,jdbcType=INTEGER}, #{remaining,jdbcType=BIGINT}, #{sharecode,jdbcType=CHAR}
-      )
+      #{withdrawTime,jdbcType=INTEGER}, #{remaining,jdbcType=BIGINT}, #{sharecode,jdbcType=CHAR}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{shorturl,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.front.pojo.RevenueUserPO">
     insert into t_revenue_user
@@ -66,6 +68,12 @@
       <if test="sharecode != null">
         sharecode,
       </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="shorturl != null">
+        shorturl,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -94,6 +102,12 @@
       </if>
       <if test="sharecode != null">
         #{sharecode,jdbcType=CHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shorturl != null">
+        #{shorturl,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -124,6 +138,12 @@
       <if test="sharecode != null">
         sharecode = #{sharecode,jdbcType=CHAR},
       </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shorturl != null">
+        shorturl = #{shorturl,jdbcType=CHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
@@ -136,7 +156,9 @@
       withdraw = #{withdraw,jdbcType=BIGINT},
       withdraw_time = #{withdrawTime,jdbcType=INTEGER},
       remaining = #{remaining,jdbcType=BIGINT},
-      sharecode = #{sharecode,jdbcType=CHAR}
+      sharecode = #{sharecode,jdbcType=CHAR},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      shorturl = #{shorturl,jdbcType=CHAR}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
 

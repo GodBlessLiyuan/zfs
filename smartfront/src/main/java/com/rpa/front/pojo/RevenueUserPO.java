@@ -1,6 +1,7 @@
 package com.rpa.front.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * t_revenue_user
@@ -24,6 +25,10 @@ public class RevenueUserPO implements Serializable {
     private Long remaining;
 
     private String sharecode;
+
+    private Date endTime;
+
+    private String shorturl;
 
     private static final long serialVersionUID = 1L;
 
@@ -99,6 +104,22 @@ public class RevenueUserPO implements Serializable {
         this.sharecode = sharecode;
     }
 
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getShorturl() {
+        return shorturl;
+    }
+
+    public void setShorturl(String shorturl) {
+        this.shorturl = shorturl;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -119,7 +140,9 @@ public class RevenueUserPO implements Serializable {
             && (this.getWithdraw() == null ? other.getWithdraw() == null : this.getWithdraw().equals(other.getWithdraw()))
             && (this.getWithdrawTime() == null ? other.getWithdrawTime() == null : this.getWithdrawTime().equals(other.getWithdrawTime()))
             && (this.getRemaining() == null ? other.getRemaining() == null : this.getRemaining().equals(other.getRemaining()))
-            && (this.getSharecode() == null ? other.getSharecode() == null : this.getSharecode().equals(other.getSharecode()));
+            && (this.getSharecode() == null ? other.getSharecode() == null : this.getSharecode().equals(other.getSharecode()))
+            && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
+            && (this.getShorturl() == null ? other.getShorturl() == null : this.getShorturl().equals(other.getShorturl()));
     }
 
     @Override
@@ -135,6 +158,8 @@ public class RevenueUserPO implements Serializable {
         result = prime * result + ((getWithdrawTime() == null) ? 0 : getWithdrawTime().hashCode());
         result = prime * result + ((getRemaining() == null) ? 0 : getRemaining().hashCode());
         result = prime * result + ((getSharecode() == null) ? 0 : getSharecode().hashCode());
+        result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
+        result = prime * result + ((getShorturl() == null) ? 0 : getShorturl().hashCode());
         return result;
     }
 
@@ -153,6 +178,8 @@ public class RevenueUserPO implements Serializable {
         sb.append(", withdrawTime=").append(withdrawTime);
         sb.append(", remaining=").append(remaining);
         sb.append(", sharecode=").append(sharecode);
+        sb.append(", endTime=").append(endTime);
+        sb.append(", shorturl=").append(shorturl);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

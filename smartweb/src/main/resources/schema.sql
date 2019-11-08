@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS t_order;
 DROP TABLE IF EXISTS t_vipcommodity;
 DROP TABLE IF EXISTS t_com_type;
 DROP TABLE IF EXISTS t_admin_user;
+DROP TABLE IF EXISTS t_ali_feedback;
 DROP TABLE IF EXISTS t_app_ch;
 DROP TABLE IF EXISTS t_app_plu_ch;
 DROP TABLE IF EXISTS t_app;
@@ -142,6 +143,12 @@ CREATE TABLE t_ad_channel
 	app_id int NOT NULL,
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除'
+);
+
+
+CREATE TABLE t_ali_feedback
+(
+
 );
 
 
@@ -542,8 +549,11 @@ CREATE TABLE t_revenue_user
 	withdraw_time int,
 	remaining bigint,
 	sharecode char(32),
+	end_time datetime,
+	shorturl char(125),
 	PRIMARY KEY (user_id),
-	UNIQUE (user_id)
+	UNIQUE (user_id),
+	UNIQUE (sharecode)
 );
 
 
