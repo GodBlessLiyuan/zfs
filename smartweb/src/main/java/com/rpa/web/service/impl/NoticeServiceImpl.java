@@ -44,6 +44,9 @@ public class NoticeServiceImpl implements NoticeService {
     @Value("${file.iconDir}")
     private String iconDir;
 
+    @Value("${file.publicPath}")
+    private String publicPath;
+
     /**
      * 查询
      * @param draw
@@ -86,7 +89,11 @@ public class NoticeServiceImpl implements NoticeService {
             dto.setEndTime(po.getEndTime());
             dto.setUrl(po.getUrl());
             dto.setText(po.getText());
-            dto.setPicurl(po.getPicurl());
+            if (null == po.getPicurl()) {
+                dto.setPicurl(po.getPicurl());
+            } else {
+                dto.setPicurl(publicPath + po.getPicurl());
+            }
             dto.setStatus(po.getStatus());
             dto.setOperator(queryUsernameByAid(po.getaId()));
 
@@ -135,6 +142,7 @@ public class NoticeServiceImpl implements NoticeService {
         po.setEndTime(strToDate(endTime));
         po.setUpdateTime(new Date());
         po.setaId(aId);
+        po.setStatus(1);
 
         int count = this.noticeMapper.insert(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
