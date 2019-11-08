@@ -62,7 +62,7 @@ public class AliFeedbackPO implements Serializable {
 
     private Date gmtClose;
 
-    private Date fundBillList;
+    private String fundBillList;
 
     private static final long serialVersionUID = 1L;
 
@@ -282,11 +282,11 @@ public class AliFeedbackPO implements Serializable {
         this.gmtClose = gmtClose;
     }
 
-    public Date getFundBillList() {
+    public String getFundBillList() {
         return fundBillList;
     }
 
-    public void setFundBillList(Date fundBillList) {
+    public void setFundBillList(String fundBillList) {
         this.fundBillList = fundBillList;
     }
 

@@ -29,7 +29,7 @@
     <result column="gmt_payment" jdbcType="TIMESTAMP" property="gmtPayment" />
     <result column="gmt_refund" jdbcType="TIMESTAMP" property="gmtRefund" />
     <result column="gmt_close" jdbcType="TIMESTAMP" property="gmtClose" />
-    <result column="fund_bill_list" jdbcType="TIMESTAMP" property="fundBillList" />
+    <result column="fund_bill_list" jdbcType="CHAR" property="fundBillList" />
   </resultMap>
   <insert id="insert" parameterType="com.rpa.pay.pojo.AliFeedbackPO">
     insert into t_ali_feedback (notify_time, notify_type, notify_id, 
@@ -50,7 +50,7 @@
       #{receiptAmount,jdbcType=REAL}, #{invoiceAmount,jdbcType=REAL}, #{buyerPayAmount,jdbcType=REAL}, 
       #{pointAmount,jdbcType=REAL}, #{refundFee,jdbcType=REAL}, #{subject,jdbcType=CHAR}, 
       #{body,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtPayment,jdbcType=TIMESTAMP}, 
-      #{gmtRefund,jdbcType=TIMESTAMP}, #{gmtClose,jdbcType=TIMESTAMP}, #{fundBillList,jdbcType=TIMESTAMP}
+      #{gmtRefund,jdbcType=TIMESTAMP}, #{gmtClose,jdbcType=TIMESTAMP}, #{fundBillList,jdbcType=CHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.pay.pojo.AliFeedbackPO">
@@ -224,7 +224,7 @@
         #{gmtClose,jdbcType=TIMESTAMP},
       </if>
       <if test="fundBillList != null">
-        #{fundBillList,jdbcType=TIMESTAMP},
+        #{fundBillList,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
