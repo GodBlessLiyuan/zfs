@@ -172,7 +172,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="xModal">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="insert_xModal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -198,13 +198,16 @@
                         <div class="form-group">
                             <span for="recipient-name" class="col-form-label">通知名称：<span style="color: red"> *</span></span>
                             <input id="insert_title" class="form-control" type="text"/>
-                        </div><div class="form-group">
+                        </div>
+                        <div class="form-group" id="urlModal">
                             <span for="recipient-name" class="col-form-label">跳转地址：<span style="color: red"> *</span></span>
                             <input id="insert_url" class="form-control" type="text"/>
-                        </div><div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <span for="recipient-name" class="col-form-label">提示时间：<span style="color: red"> *</span></span>
                             <input id="insert_showTime" class="form-control" type="time"/>
-                        </div><div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <span for="recipient-name" class="col-form-label">有效时间：<span style="color: red"> *</span></span>
                             <input id="insert_startTime" type="date" class="form-control"> 至
                             <input id="insert_endTime" type="date" class="form-control">
@@ -212,7 +215,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="insertClick()" data-dismiss="modal">确定上架</button>
+                    <button type="button" class="btn btn-primary" onclick="insertClick()">确定上架</button>
                 </div>
             </div>
         </div>
@@ -386,13 +389,13 @@
 
         if (title == null || title.trim() == "") {
             alert("通知名称不能为空！")
-        }else if (url == null || url.trim() == "") {
+        }else if (type != 1 && (url == null || url.trim() == "")) {
             alert("跳转地址不能为空！")
-        }else if (showTime == null) {
+        }else if (showTime == null || showTime.trim() == "") {
             alert("提示时间不能为空！")
-        }else if (startTime == null) {
+        }else if (startTime == null || startTime.trim() == "") {
             alert("有效时间不能为空！")
-        }else if (endTime == null) {
+        }else if (endTime == null || endTime.trim() == "") {
             alert("有效时间不能为空！");
         } else {
 
@@ -413,7 +416,7 @@
                         alert("新增失败！");
                     }
                     $('#datatab').DataTable().draw(false);
-                    document.getElementById("xModal").click();
+                    document.getElementById("insert_xModal").click();
                 }
             });
         }
@@ -428,6 +431,7 @@
         if (type == 1) {
             document.getElementById("picModal").style.display = "none";
             document.getElementById("textModal").style.display = "block";
+            document.getElementById("urlModal").style.display = "none";
         } else if (type == 2) {
             document.getElementById("picModal").style.display = "block";
             document.getElementById("textModal").style.display = "none";
@@ -470,7 +474,18 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "type"},
+                {
+                    "data": "type",
+                    "render": function (data, type, full) {
+                        if (data == 1) {
+                            return "<span>文本</span>";
+                        }else if (data == 2) {
+                            return "<span>图片</span>";
+                        }else {
+                            return "<span>图文</span>";
+                        }
+                    }
+                },
                 {"data": "title"},
                 {"data": "createTime"},
                 {"data": "showTime"},
