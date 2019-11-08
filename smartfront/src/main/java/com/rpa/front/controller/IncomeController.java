@@ -31,7 +31,6 @@ public class IncomeController {
     @PostMapping("determine")
     public ResultVO determine(@RequestBody DetermineDTO dto, HttpServletRequest req) {
         IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(IncomeConstant.INCOME_SESSION);
-
         return service.determine(dto, loginInfo);
     }
 
