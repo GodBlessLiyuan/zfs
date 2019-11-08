@@ -11,4 +11,6 @@ import lombok.Data;
  */
 @Data
 public class OrderBO extends OrderPO {
+    private Integer comTypeId;
+    private String comTypeName;
 }

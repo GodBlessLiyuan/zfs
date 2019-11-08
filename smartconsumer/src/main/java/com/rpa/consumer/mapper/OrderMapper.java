@@ -1,5 +1,6 @@
 package com.rpa.consumer.mapper;
 
+import com.rpa.consumer.bo.OrderBO;
 import com.rpa.consumer.pojo.OrderPO;
 import com.rpa.consumer.pojo.OrderPOKey;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,5 +16,5 @@ public interface OrderMapper extends BaseMapper<OrderPO, OrderPOKey> {
      * @param orderNumber
      * @return
      */
-    OrderPO queryByOrderNumber(String orderNumber);
+    OrderBO queryByOrderNumber(String orderNumber);
 }
