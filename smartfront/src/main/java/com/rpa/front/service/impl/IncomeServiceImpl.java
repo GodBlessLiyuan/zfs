@@ -1,12 +1,15 @@
 package com.rpa.front.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.rpa.front.bo.InviteUserBO;
 import com.rpa.front.common.ErrorCode;
 import com.rpa.front.common.ResultVO;
+import com.rpa.front.config.ShortUrlConfig;
 import com.rpa.front.dto.DetermineDTO;
 import com.rpa.front.dto.DownLoadDTO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.dto.base.TokenDTO;
+import com.rpa.front.entity.ShortUrlEntity;
 import com.rpa.front.mapper.*;
 import com.rpa.front.pojo.*;
 import com.rpa.front.service.IIncomeService;
@@ -15,6 +18,7 @@ import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
 import com.rpa.front.vo.RecordVO;
 import com.rpa.front.vo.ShareCodeVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -22,10 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 /**
  * @author: xiahui
@@ -46,6 +54,8 @@ public class IncomeServiceImpl implements IIncomeService {
     private AppMapper appMapper;
     @Resource
     private UserMapper userMapper;
+    @Autowired
+    private ShortUrlConfig shortUrlConfig;
 
     @Value("${project.shareurl}")
     private String shareUrl;
@@ -167,17 +177,33 @@ public class IncomeServiceImpl implements IIncomeService {
     @Override
     public ResultVO getShareUrl(TokenDTO dto) {
         RevenueUserPO po = revenueUserMapper.selectByPrimaryKey(dto.getUd());
-        if (po == null) {
+        if (null == po) {
             return new ResultVO(2000);
         }
 
-        if (po.getSharecode() == null) {
+        if (null == po.getSharecode()) {
             po.setSharecode(UUID.randomUUID().toString().replace("-", ""));
+        }
+
+        if (null == po.getShorturl() || null == po.getEndTime() || new Date().compareTo(po.getEndTime()) > 0) {
+            ShortUrlEntity entity = this.longUrl2ShortUrl(shareUrl + po.getSharecode());
+            if (null == entity) {
+                return new ResultVO(2000);
+            }
+            if (0 != entity.getCode()) {
+                return new ResultVO<>(2000, entity.getErrMsg());
+            }
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.YEAR, "1-year".equals(shortUrlConfig.getValidity()) ? 1 : 100);
+
+            po.setShorturl(entity.getShortUrl());
+            po.setEndTime(calendar.getTime());
             revenueUserMapper.updateByPrimaryKey(po);
         }
 
         ShareCodeVO vo = new ShareCodeVO();
-        vo.setUrl(shareUrl + po.getSharecode());
+        vo.setUrl(po.getShorturl());
 
         return new ResultVO<>(1000, vo);
     }
@@ -223,5 +249,53 @@ public class IncomeServiceImpl implements IIncomeService {
         }
 
         return new ResultVO<>(1000, appUrl);
+    }
+
+
+    /**
+     * 长链接 转 短链接
+     *
+     * @param longUrl
+     * @return
+     */
+    private ShortUrlEntity longUrl2ShortUrl(String longUrl) {
+        longUrl = "https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1";
+        // 请求参数
+        String params = "{\"Url\":\"" + longUrl + "\",\"TermOfValidity\":\"" + shortUrlConfig.getValidity() + "\"}";
+
+        try {
+            URL url = new URL(shortUrlConfig.getUrl());
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            connection.setUseCaches(false);
+            connection.setInstanceFollowRedirects(true);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Token", shortUrlConfig.getKey());
+
+            // 发起请求
+            connection.connect();
+            OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream(), StandardCharsets.UTF_8);
+            out.append(params);
+            out.flush();
+            out.close();
+
+            // 读取响应
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+            StringBuffer sb = new StringBuffer();
+            String s;
+            while ((s = reader.readLine()) != null) {
+                sb.append(s);
+            }
+            reader.close();
+            connection.disconnect();
+
+            return JSON.parseObject(sb.toString(), ShortUrlEntity.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
