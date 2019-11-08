@@ -15,6 +15,6 @@ public class RabbitmqConfig {
 
     @Bean
     public Queue smartServerQueue() {
-        return new Queue("wx-pay-notify");
+        return new Queue("pay-notify");
     }
 }
