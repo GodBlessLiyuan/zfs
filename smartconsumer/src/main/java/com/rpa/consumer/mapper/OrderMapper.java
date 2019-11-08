@@ -9,4 +9,11 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface OrderMapper extends BaseMapper<OrderPO, OrderPOKey> {
+    /**
+     * 根据 订单编号查询
+     *
+     * @param orderNumber
+     * @return
+     */
+    OrderPO queryByOrderNumber(String orderNumber);
 }

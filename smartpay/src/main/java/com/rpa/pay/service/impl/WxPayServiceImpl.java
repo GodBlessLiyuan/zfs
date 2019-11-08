@@ -148,7 +148,7 @@ public class WxPayServiceImpl implements IWxPayService {
         wxFeedbackMapper.insert(po);
 
         // RabbitMQ
-        this.template.convertAndSend("wx-pay-notice", po.getOutTradeNo());
+        this.template.convertAndSend("pay-notify", po.getOutTradeNo());
 
         return WxPayUtil.successWxPay();
     }
