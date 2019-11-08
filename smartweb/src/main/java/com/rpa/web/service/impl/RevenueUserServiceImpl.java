@@ -66,18 +66,20 @@ public class RevenueUserServiceImpl implements RevenueUserService {
         // 将查询到的 PO 数据转换为 DTO
         List<RevenueUserDTO> lists_DTO = new ArrayList<>();
         for (RevenueUserPO po : lists_PO) {
-            RevenueUserDTO dto = new RevenueUserDTO();
-            dto.setUserId(po.getUserId());
-            dto.setPhone(queryPhoneByUserId(po.getUserId()));
-            dto.setInviteCount(po.getInviteCount());
-            dto.setRegisterCount(po.getRegisterCount());
-            dto.setPayCount(po.getPayCount());
-            dto.setTotalRevenue(po.getTotalRevenue());
-            dto.setRemaining(po.getRemaining());
-            dto.setWithdraw(po.getWithdraw());
-            dto.setWithdrawTime(po.getWithdrawTime());
+            if (po.getInviteCount() != 0) {
+                RevenueUserDTO dto = new RevenueUserDTO();
+                dto.setUserId(po.getUserId());
+                dto.setPhone(queryPhoneByUserId(po.getUserId()));
+                dto.setInviteCount(po.getInviteCount());
+                dto.setRegisterCount(po.getRegisterCount());
+                dto.setPayCount(po.getPayCount());
+                dto.setTotalRevenue(po.getTotalRevenue());
+                dto.setRemaining(po.getRemaining());
+                dto.setWithdraw(po.getWithdraw());
+                dto.setWithdrawTime(po.getWithdrawTime());
 
-            lists_DTO.add(dto);
+                lists_DTO.add(dto);
+            }
         }
 
         //根据分页查询的结果，封装最终的返回结果
