@@ -35,7 +35,6 @@
                     </div>
                 </div>
                 <div style="width: 30%; height: 20px; float:right;margin-right: 15px">
-                  <#--  <a class="btn btn-primary " href="${basePath}/v1.0/withdraw" style="border-radius: 20px; width:100%;background-color:#3496E8; vertical-align: center">提现</a>-->
                     <a class="btn btn-primary " onclick="withdrawmoney()" style="border-radius: 20px; width:100%;background-color:#3496E8; vertical-align: center">提现</a>
                 </div>
             </div>
@@ -53,7 +52,7 @@
             <div class="invation_top">
                 <span class="font_inva">我的邀请</span>
                <#-- <span class="span_right "><a href="${basePath}/v1.0/details" class="font_inva" style="text-decoration:none" onclick="">详情></a></span>-->
-                <span class="span_right "><a href="${basePath}/v1.0/details" class="font_inva" style="text-decoration:none" onclick="details()">详情></a></span>
+                <span class="span_right "><a  class="font_inva" style="text-decoration:none" onclick="details()">详情></a></span>
 
 
             </div>
@@ -139,9 +138,9 @@
 
         <script>
 
-
            /* 调用Share.startShareActivity 跳转到立即推广详情页*/
-            var isLogin =  window.Share.isLogin;
+            var isLogin =  window.Share.isLogin();
+
             function promotePage(){
                 if(isLogin){
                     window.Share.startShareActivity();
