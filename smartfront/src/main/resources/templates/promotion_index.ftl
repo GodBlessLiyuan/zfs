@@ -68,7 +68,7 @@
                     url: "${basePath}/v1.0/download",
                     data: {
                         "phone": phone,
-                        "code": code,
+                        "code": code
                     },
                     type: "POST",
                     async: false,
