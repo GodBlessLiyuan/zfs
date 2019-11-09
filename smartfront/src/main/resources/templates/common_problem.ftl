@@ -11,9 +11,11 @@
     <link rel="stylesheet" href="${basePath}/css/common_problem.css">
     <script src="js/generalize.js" type="text/javascript"></script>
 
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${basePath}/css/style.css">
+    <script src="${basePath}/js/generalize.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
+    <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 
 </head>
 

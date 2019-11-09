@@ -35,7 +35,6 @@
                     </div>
                 </div>
                 <div style="width: 30%; height: 20px; float:right;margin-right: 15px">
-                  <#--  <a class="btn btn-primary " href="${basePath}/v1.0/withdraw" style="border-radius: 20px; width:100%;background-color:#3496E8; vertical-align: center">提现</a>-->
                     <a class="btn btn-primary " onclick="withdrawmoney()" style="border-radius: 20px; width:100%;background-color:#3496E8; vertical-align: center">提现</a>
                 </div>
             </div>
@@ -52,8 +51,7 @@
        <div class="my_state">
             <div class="invation_top">
                 <span class="font_inva">我的邀请</span>
-               <#-- <span class="span_right "><a href="${basePath}/v1.0/details" class="font_inva" style="text-decoration:none" onclick="">详情></a></span>-->
-                <span class="span_right "><a href="${basePath}/v1.0/details" class="font_inva" style="text-decoration:none" onclick="details()">详情></a></span>
+                <span class="span_right "><a  class="font_inva" style="text-decoration:none" onclick="details()">详情></a></span>
 
 
             </div>
@@ -119,7 +117,6 @@
                 </div>
         </div>
 
-
        <#-- 修改处-->
         <!-- 遮罩层 -->
         <div id="zhezhaoa"></div>
@@ -127,8 +124,9 @@
         <!-- 提现确认弹框 -->
         <div class="explain-box">
             <div class="box-top">
-                <div class="box-title" style="color: red">提示</div>
-                <p class="box-text">您未登录，请重新登录 </p>
+                <div class="box-title" style="padding-top: 0px;font-weight: bolder;font-size: 20px;">提示：</div>
+                <p>您未登录，请先登录!</p>
+            </div>
             </div>
             <div class="rows">
                 <div class="box-btnL lineL" onclick="closeBox()"><b>取消</b></div>
@@ -136,12 +134,11 @@
             </div>
         </div>
 
-
         <script>
 
-
            /* 调用Share.startShareActivity 跳转到立即推广详情页*/
-            var isLogin =  window.Share.isLogin;
+            var isLogin =  window.Share.isLogin();
+
             function promotePage(){
                 if(isLogin){
                     window.Share.startShareActivity();

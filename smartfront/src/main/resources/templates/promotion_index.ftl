@@ -13,6 +13,7 @@
     <script src="${basePath}/js/generalize.js" type="text/javascript"></script>
     <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
     <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 
 </head>
 
