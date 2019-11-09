@@ -551,6 +551,13 @@ button::after{
   /* padding: 20px 24px 10px 24px;*/
   padding: 10px 24px 0px 24px;
 }
+
+.box-top p {
+  color: red;
+  font-size: 18px;
+  font-weight: bolder
+}
+
 .box-btnL{
   width: 100%;
   font-size: 16px;
