@@ -117,7 +117,6 @@
                 </div>
         </div>
 
-
        <#-- 修改处-->
         <!-- 遮罩层 -->
         <div id="zhezhaoa"></div>
@@ -125,15 +124,15 @@
         <!-- 提现确认弹框 -->
         <div class="explain-box">
             <div class="box-top">
-                <div class="box-title" style="color: red">提示</div>
-                <p class="box-text">您未登录，请重新登录 </p>
+                <div class="box-title" style="padding-top: 0px;font-weight: bolder;font-size: 20px;">提示：</div>
+                <p>您未登录，请先登录!</p>
+            </div>
             </div>
             <div class="rows">
                 <div class="box-btnL lineL" onclick="closeBox()"><b>取消</b></div>
                 <div class="box-btnR" onclick="successBox()"><b>重新登录</b></div>
             </div>
         </div>
-
 
         <script>
 
