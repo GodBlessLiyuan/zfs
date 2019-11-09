@@ -51,7 +51,6 @@
        <div class="my_state">
             <div class="invation_top">
                 <span class="font_inva">我的邀请</span>
-               <#-- <span class="span_right "><a href="${basePath}/v1.0/details" class="font_inva" style="text-decoration:none" onclick="">详情></a></span>-->
                 <span class="span_right "><a  class="font_inva" style="text-decoration:none" onclick="details()">详情></a></span>
 
 
