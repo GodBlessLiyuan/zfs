@@ -13,6 +13,10 @@ public class CommonConstant {
      */
     public static final int SIGN_OUT = 2;
     /**
+     * 非会员类型
+     */
+    public static final int NONE_VIP = 1;
+    /**
      * 普通会员类型
      */
     public static final int COMM_VIP = 10;
