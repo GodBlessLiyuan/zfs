@@ -16,14 +16,7 @@
 
 </head>
 
-<style>
-    body {
-        background-image: url("${basePath}/images/bg_extension.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center 0px;
-    }
-</style>
+
     <body >
         <div class="promote_state" style="height:100%;width:100%; ">
             <div class="betweenLR" style="margin-top: 120%">
@@ -35,26 +28,42 @@
             </div>
         </div>
 
+        <style>
+            body {
+                background-image: url("${basePath}/images/bg_extension.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center 0px;
+            }
+        </style>
+
         <script>
             function phoneCheck(input){
+                var b=true;
                 if(input!=""){
                     var p1=/^((13[0-9])|(14[5,7,9])|(15[^4])|(18[0-9])|(17[0,1,3,5,6,7,8]))[0-9]{8}$/;
-                    var b=false;
-                    if(p1.test(input)==b){
+                    if(!p1.test(input)){
                         document.getElementById("phone-err").innerHTML="号码错误，请输入正确手机号码。";
+                        b = false;
+                    }else {
+                        document.getElementById("phone-err").innerHTML="";
                     }
+                }else {
+                    return false;
                 }
+                return b;
             }
 
+            /*  定义一个全局变量 如果运营想从应用市场下载
+                    * 判断一下， 变量为空 则从 后台数据库下载*/
             // 下载APP
             function download(){
-                /*   如果手机号码为空*/
-                var input = document.getElementById("phone").innerText;
-                if(input==""){
-                    document.getElementById("phone-err").innerHTML="请先输入手机号";
-                }
                 // 手机号
                 var phone = $("#phone").val();
+                if(!phoneCheck(phone)){
+                    return;
+                }
+
                 $.ajax({
                     url: "${basePath}/v1.0/download",
                     data: {
@@ -63,8 +72,8 @@
                     },
                     type: "POST",
                     async: false,
-                    success: function() {
-                        window.location.href="#";
+                    success: function(res) {
+                        window.location.href=res.data;
                     },
                     cache: false,
                     fail: function() {
@@ -72,7 +81,6 @@
                 })
             }
         </script>
-
     </body>
 
 </html>

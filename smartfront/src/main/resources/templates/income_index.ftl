@@ -176,7 +176,6 @@
                 $("html,body").css({"height":"100%","overflow":"hidden"});
             }
 
-
             /*关闭“提示”弹框*/
             function closeBox(){
                 $(".explain-box").hide();
@@ -188,8 +187,6 @@
             function successBox(){
                 window.Share.login();
             }
-
-
         </script>
     </body>
 </html>
