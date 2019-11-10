@@ -435,9 +435,11 @@
         } else if (type == 2) {
             document.getElementById("picModal").style.display = "block";
             document.getElementById("textModal").style.display = "none";
+            document.getElementById("urlModal").style.display = "block";
         } else {
             document.getElementById("picModal").style.display = "block";
             document.getElementById("textModal").style.display = "block";
+            document.getElementById("urlModal").style.display = "block";
         }
     }
 
