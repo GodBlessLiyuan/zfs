@@ -14699,3 +14699,31 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       color: #fff; }
 
 /*# sourceMappingURL=style.css.map */
+
+/*# 主页装饰 */
+.div_big{
+  margin-top: 20px;
+  width:100%;
+}
+
+.div_main{
+  background-color: #ffffff;
+  overflow: hidden;
+ /* height: 150px;
+  width:20%;*/
+  border-radius: 5px;
+  padding-top: 40px;
+  padding-right: 40px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+}
+
+.p_first{
+  margin-top: 40px;
+  padding-left:40px ;
+  font-weight: bolder;
+}
+.p_left{
+  padding-left: 40px;
+  font-weight: bolder;
+}
