@@ -117,7 +117,6 @@
                 </div>
         </div>
 
-       <#-- 修改处-->
         <!-- 遮罩层 -->
         <div id="zhezhaoa"></div>
 
@@ -127,18 +126,15 @@
                 <div class="box-title" style="padding-top: 0px;font-weight: bolder;font-size: 20px;">提示：</div>
                 <p>您未登录，请先登录!</p>
             </div>
-            </div>
             <div class="rows">
                 <div class="box-btnL lineL" onclick="closeBox()"><b>取消</b></div>
-                <div class="box-btnR" onclick="successBox()"><b>重新登录</b></div>
+                <div class="box-btnR" onclick="successBox()"><b>确认登录</b></div>
             </div>
         </div>
 
         <script>
-
            /* 调用Share.startShareActivity 跳转到立即推广详情页*/
             var isLogin =  window.Share.isLogin();
-
             function promotePage(){
                 if(isLogin){
                     window.Share.startShareActivity();
