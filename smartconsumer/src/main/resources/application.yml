@@ -1,26 +1,3 @@
-server:
-  port: 9001
 spring:
-  application:
-    name: smartconsumer
-  kafka:
-    consumer:
-      bootstrap-servers: 192.168.10.3:9092
-      group-id: group_id
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-  rabbitmq:
-    host: 192.168.10.3
-    port: 5672
-    username: root
-    password: 123456
-  datasource:
-    url: jdbc:mysql://192.168.10.3:3306/smarthelper?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-logging:
-  level: debug
+  profiles:
+    active: test
