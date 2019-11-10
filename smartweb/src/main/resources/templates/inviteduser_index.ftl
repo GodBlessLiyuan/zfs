@@ -242,12 +242,14 @@
 
     /**
      * 查看详情：页面跳转
+     * 携带两个参数：邀请人的userId（用于返回本页面）和被邀请人的userId（用于页面详情查询）
      */
-    function detailModal(userId) {
-        if (null === userId) {
+    function detailModal(invitedUserId) {
+        var inviteUserId = ${userId}
+        if (null === inviteUserId || null === invitedUserId) {
             alert("出了些问题，无法跳转，请联系工程师！");
         }else {
-            window.location.href = '/inviteduser/detail?userId='+ userId;
+            window.location.href = '/inviteduser/detail?inviteUserId='+ inviteUserId +'&invitedUserId='+ invitedUserId;
         }
     }
 </script>

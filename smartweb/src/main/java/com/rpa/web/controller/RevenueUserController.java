@@ -75,8 +75,8 @@ public class RevenueUserController {
     /**
      * 查询：根据被邀请人的userId，查询其购买商品的详细信息
      * @param draw
-     * @param pageNum
-     * @param pageSize
+     * @param start
+     * @param length
      * @param userId
      * @param viptypeId
      * @param startTime
