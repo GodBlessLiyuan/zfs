@@ -148,7 +148,34 @@ CREATE TABLE t_ad_channel
 
 CREATE TABLE t_ali_feedback
 (
-
+	notify_time datetime,
+	notify_type char(64),
+	notify_id char(128),
+	app_id char(32),
+	version char(3),
+	sign_type char(10),
+	sign char(255),
+	trade_no char(64),
+	out_trade_no char(64),
+	out_biz_no char(64),
+	buyer_id char(16),
+	buyer_logon_id char(100),
+	seller_id char(30),
+	seller_email char(100),
+	trade_status char(32),
+	total_amount float(9,2),
+	receipt_amount float(9,2),
+	invoice_amount float(9,2),
+	buyer_pay_amount float(9,2),
+	point_amount float(9,2),
+	refund_fee float(9,2),
+	subject char(255),
+	body char(255),
+	gmt_create datetime,
+	gmt_payment datetime,
+	gmt_refund datetime,
+	gmt_close datetime,
+	fund_bill_list datetime
 );
 
 

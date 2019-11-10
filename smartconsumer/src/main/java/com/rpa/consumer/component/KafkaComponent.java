@@ -1,4 +1,4 @@
-package com.rpa.consumer.service;
+package com.rpa.consumer.component;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @version: 1.0
  */
 @Service
-public class KafkaService {
+public class KafkaComponent {
 
     @KafkaListener(topics = {"smart"})
     public void kafkaConsume(Object payload) {

@@ -1,49 +1,92 @@
 package com.rpa.pay.controller;
 
-import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.domain.AlipayTradeAppPayModel;
-import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.rpa.pay.common.ResultVO;
+import com.rpa.pay.dto.AlipayDTO;
+import com.rpa.pay.service.AlipayService;
+import com.rpa.pay.utils.VerifyUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.alipay.api.AlipayConstants.CHARSET;
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author: dangyi
  * @date: Created in 17:34 2019/11/6
  * @version: 1.0.0
- * @description:
+ * @description: 支付宝下单
  */
 @RequestMapping("v1.0")
 @RestController
 public class AlipayController {
 
-    private String APP_ID;
-    private String APP_PRIVATE_KEY;
-    private String ALIPAY_PUBLIC_KEY;
+    @Autowired
+    private AlipayService alipayService;
 
-    @PostMapping("alipay")
-    public ResultVO alipay() {
+    /**
+     * 客户端携带商品ID访问服务端，生成订单信息，并加签返回给客户端
+     * @param dto
+     * @param req
+     * @return
+     */
+    @PostMapping("alipayorder")
+    public ResultVO alipayOrder(@RequestBody AlipayDTO dto, HttpServletRequest req) {
+        if (!VerifyUtil.checkToken(dto, req)) {
+            return new ResultVO(2000);
+        }
 
-        // 实例化客户端
-        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do",
-                APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY, "RSA2");
-        // 实例化具体API对应的request类
-        AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
-        // 传入业务参数
-        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-        model.setBody("我是测试数据");
-        model.setSubject("App支付测试Java");
-        model.setOutTradeNo("0001");
-        model.setTimeoutExpress("30m");
-        model.setTotalAmount("0.01");
-        model.setProductCode("QUICK_MSECURITY_PAY");
-        request.setBizModel(model);
-        request.setNotifyUrl("商户外网可以访问的异步地址");
+        return this.alipayService.alipayOrder(dto, req);
+    }
 
-        return new ResultVO(null);
+
+    /**
+     * 获取支付宝服务器发送来的支付完成通知（异步）
+     * @return
+     */
+    @PostMapping("alinotify")
+    public String alinotify(HttpServletRequest request) {
+
+        // 存放转化后的参数集合
+        Map<String,String> params = new HashMap<String,String>();
+
+        Map requestParams = request.getParameterMap();
+        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+            String name = (String) iter.next();
+            String[] values = (String[]) requestParams.get(name);
+            String valueStr = "";
+            for (int i = 0; i < values.length; i++) {
+                valueStr = (i == values.length - 1) ? valueStr + values[i]
+                        : valueStr + values[i] + ",";
+            }
+            //乱码解决，这段代码在出现乱码时使用
+            //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+            params.put(name, valueStr);
+        }
+
+        //验签，并且如若支付成功，更新相关信息
+        String status= this.alipayService.aliNotify(params);
+        return status;
+    }
+
+
+    /**
+     * 返回订单状态：是否完成
+     * @param dto
+     * @param req
+     * @return
+     */
+    @PostMapping("paystatus")
+    public ResultVO paystatus(@RequestBody AlipayDTO dto, HttpServletRequest req) {
+        if (!VerifyUtil.checkToken(dto, req)) {
+            return new ResultVO(2000);
+        }
+
+        return this.alipayService.paystatus(dto);
     }
 }

@@ -12,6 +12,7 @@ import com.rpa.server.vo.UserVipVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author: xiahui
@@ -40,24 +41,40 @@ public class UserVipServiceImpl implements IUserVipService {
         }
 
         UserVipPO userVipPO = userVipMapper.queryByUserId(dto.getUd());
-        if (userVipPO == null) {
+        if (null == userVipPO || CommonConstant.NONE_VIP == userVipPO.getViptypeId()) {
             // 非会员
             return new ResultVO(1005);
         }
-        if (userVipPO.getViptypeId() == CommonConstant.COMM_VIP) {
-            // 普通会员
-            UserVipVO vo = new UserVipVO();
-            vo.setVip(userVipPO.getEndTime());
-            return new ResultVO<>(1006, vo);
-        }
-        if (userVipPO.getViptypeId() == CommonConstant.YEAR_VIP) {
-            // 年会员
-            UserVipVO vo = new UserVipVO();
-            vo.setVip(userVipPO.getEndTime());
-            vo.setAdvanced(userVipPO.getVendTime());
-            return new ResultVO<>(1007, vo);
+
+        Date date = new Date();
+        if (CommonConstant.YEAR_VIP == userVipPO.getViptypeId()) {
+            // 判断时间
+            if (date.compareTo(userVipPO.getVendTime()) > 0) {
+                userVipPO.setViptypeId(CommonConstant.COMM_VIP);
+            } else {
+                // 年会员
+                UserVipVO vo = new UserVipVO();
+                vo.setVip(userVipPO.getEndTime());
+                vo.setAdvanced(userVipPO.getVendTime());
+                return new ResultVO<>(1007, vo);
+            }
         }
 
-        return new ResultVO(2000);
+        if (CommonConstant.COMM_VIP == userVipPO.getViptypeId()) {
+            // 判断时间
+            if (date.compareTo(userVipPO.getEndTime()) > 0) {
+                userVipPO.setViptypeId(CommonConstant.NONE_VIP);
+            } else {
+                // 普通会员
+                UserVipVO vo = new UserVipVO();
+                vo.setVip(userVipPO.getEndTime());
+                return new ResultVO<>(1006, vo);
+            }
+        }
+
+        // 更新
+        userVipMapper.updateByPrimaryKey(userVipPO);
+
+        return new ResultVO(1005);
     }
 }

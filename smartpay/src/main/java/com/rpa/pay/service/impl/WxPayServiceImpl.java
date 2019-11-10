@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationAdapter;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -147,8 +149,15 @@ public class WxPayServiceImpl implements IWxPayService {
         WxFeedbackPO po = WxPayUtil.convertMap2PO(wxPayMap);
         wxFeedbackMapper.insert(po);
 
-        // RabbitMQ
-        this.template.convertAndSend("wx-pay-notice", po.getOutTradeNo());
+        // 事务提交完成后，发送消息
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+                                                                      @Override
+                                                                      public void afterCommit() {
+                                                                          // RabbitMQ
+                                                                          template.convertAndSend("pay-notify", po.getOutTradeNo());
+                                                                      }
+                                                                  }
+        );
 
         return WxPayUtil.successWxPay();
     }

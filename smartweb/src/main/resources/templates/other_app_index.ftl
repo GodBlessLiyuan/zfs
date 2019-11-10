@@ -262,8 +262,8 @@
                 processData: false,
                 success: function (res) {
                     if (res.code === 0) {
+                        document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
-                        clearInsModal();
                     } else {
                         alert(res.msg);
                     }

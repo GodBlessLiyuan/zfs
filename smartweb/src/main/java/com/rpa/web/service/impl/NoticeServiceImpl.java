@@ -44,8 +44,12 @@ public class NoticeServiceImpl implements NoticeService {
     @Value("${file.iconDir}")
     private String iconDir;
 
+    @Value("${file.publicPath}")
+    private String publicPath;
+
     /**
      * 查询
+     *
      * @param draw
      * @param start
      * @param length
@@ -75,7 +79,7 @@ public class NoticeServiceImpl implements NoticeService {
 
         // 将查询到的 AdconfigPO 数据转换为 AdconfigDTO
         List<NoticeDTO> lists_DTO = new ArrayList<>();
-        for(NoticePO po: lists_PO) {
+        for (NoticePO po : lists_PO) {
             NoticeDTO dto = new NoticeDTO();
             dto.setNoticeId(po.getNoticeId());
             dto.setType(po.getType());
@@ -86,7 +90,11 @@ public class NoticeServiceImpl implements NoticeService {
             dto.setEndTime(po.getEndTime());
             dto.setUrl(po.getUrl());
             dto.setText(po.getText());
-            dto.setPicurl(po.getPicurl());
+            if (null == po.getPicurl()) {
+                dto.setPicurl(po.getPicurl());
+            } else {
+                dto.setPicurl(publicPath + po.getPicurl());
+            }
             dto.setStatus(po.getStatus());
             dto.setOperator(queryUsernameByAid(po.getaId()));
 
@@ -99,6 +107,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     /**
      * 插入
+     *
      * @param type
      * @param text
      * @param picurl
@@ -135,6 +144,7 @@ public class NoticeServiceImpl implements NoticeService {
         po.setEndTime(strToDate(endTime));
         po.setUpdateTime(new Date());
         po.setaId(aId);
+        po.setStatus(1);
 
         int count = this.noticeMapper.insert(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
@@ -143,6 +153,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     /**
      * 修改状态
+     *
      * @param noticeId
      * @param status
      * @param httpSession
@@ -169,6 +180,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     /**
      * 删除
+     *
      * @param noticeId
      * @return
      */
@@ -179,10 +191,9 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
 
-
-
     /**
      * 根据aId，从t_admin_user表中查询username
+     *
      * @param aId
      * @return
      */
@@ -193,10 +204,15 @@ public class NoticeServiceImpl implements NoticeService {
 
     /**
      * 类型转换：将字符串类型的时间，转换为日期类型
+     *
      * @param strDate
      * @return
      */
     private Date strToDate(String strDate) {
+        if (null == strDate || strDate.length() < 1) {
+            return null;
+        }
+
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
 
@@ -211,10 +227,15 @@ public class NoticeServiceImpl implements NoticeService {
 
     /**
      * 类型转换：将字符串类型的时间，转换为时间类型
+     *
      * @param strTime
      * @return
      */
     private Date strToTime(String strTime) {
+        if (null == strTime || strTime.length() < 1) {
+            return null;
+        }
+
         DateFormat format = new SimpleDateFormat("HH:mm");
         Date date = null;
 

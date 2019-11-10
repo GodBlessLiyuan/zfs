@@ -181,7 +181,11 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         // 将查询到的 po 转换为 dto
         ShareActivityDTO dto = new ShareActivityDTO();
         dto.setType(po.getType());
-        dto.setContent(po.getContent());
+        if (po.getType() == 1) {
+            dto.setContent(po.getContent());
+        } else {
+            dto.setContent(publicPath + po.getContent());
+        }
         dto.setExtra(po.getExtra());
 
         return ResultVOUtil.success(dto);

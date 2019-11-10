@@ -64,15 +64,18 @@
                     return;
                 }
                 $.ajax({
-                    url: "${basePath}/v1.0/download",
-                    data: {
+                    type: "post",
+                    url: "/share/v1.0/download",
+                    data: JSON.stringify({
                         "phone": phone,
                         "code": '${res.data}'
-                    },
-                    type: "POST",
-                    async: false,
+                    }),
+                    dataType : "json",
+                    contentType: "application/json; charset=utf-8",
                     success: function(res) {
-                        window.location.href=res.data;
+                        if(res!=null){
+                            window.location.href=res.data;
+                        }
                     },
                     cache: false,
                     fail: function() {
