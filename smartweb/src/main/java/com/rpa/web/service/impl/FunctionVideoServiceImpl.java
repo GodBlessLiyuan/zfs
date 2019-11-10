@@ -40,6 +40,10 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     @Value("${file.videoDir}")
     private String videoDir;
 
+    @Value("${file.publicPath}")
+    private String publicPath;
+
+
     /**
      * 查询
      * @param draw
@@ -67,7 +71,11 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
             FunctionVideoDTO dto = new FunctionVideoDTO();
             dto.setFunctionId(po.getFunctionId());
             dto.setFunName(po.getFunName());
-            dto.setUrl(po.getUrl());
+            if (null == po.getUrl()) {
+                dto.setUrl(po.getUrl());
+            } else {
+                dto.setUrl(publicPath + po.getUrl());
+            }
             dto.setExtra(po.getExtra());
             dto.setOperator(queryUsernameByAid(po.getaId()));
 

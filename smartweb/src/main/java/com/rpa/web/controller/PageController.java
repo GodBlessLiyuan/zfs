@@ -351,11 +351,6 @@ public class PageController {
     @RequestMapping("/inviteduser")
     public String inviteduser(@RequestParam(value = "userId") Integer userId, Map<String, Integer> map) {
 
-        /**
-         * 逻辑判断：session是否存在，以确认是已登录的用户跳转到该页面
-         * 如果不是的话，跳转到错误页面  return "error_404_index"
-         */
-
         map.put("userId", userId);
         return "inviteduser_index";
     }
@@ -366,14 +361,12 @@ public class PageController {
      * @return
      */
     @RequestMapping("/inviteduser/detail")
-    public String inviteduserDetail(@RequestParam(value = "userId") Integer userId, Map<String, Integer> map) {
+    public String inviteduserDetail(@RequestParam(value = "inviteUserId") Integer inviteUserId,
+                                    @RequestParam(value = "invitedUserId") Integer invitedUserId,
+                                    Map<String, Integer> map) {
 
-        /**
-         * 逻辑判断：session是否存在，以确认是已登录的用户跳转到该页面
-         * 如果不是的话，跳转到错误页面  return "error_404_index"
-         */
-
-        map.put("userId", userId);
+        map.put("inviteUserId", inviteUserId);
+        map.put("invitedUserId", invitedUserId);
         return "inviteduser_detail_index";
     }
 
