@@ -172,7 +172,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/batchinfo/query?vipkey=" + $('#vipkey').val(),
+            "ajax": "batchinfo/query?vipkey=" + $('#vipkey').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

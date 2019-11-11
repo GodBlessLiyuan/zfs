@@ -203,7 +203,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/comtype/query?username=" + $('#username').val(),
+            "ajax": "comtype/query?username=" + $('#username').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -251,7 +251,7 @@
         } else {
             $.ajax({
                 type: 'GET',
-                url: "/comtype/insert?name=" + name + "&days=" + days + "&extra=" + extra,
+                url: "comtype/insert?name=" + name + "&days=" + days + "&extra=" + extra,
                 dataType: 'JSON',
                 success: function (res) {
                     if (res.code === 0) {

@@ -192,7 +192,7 @@
         } else {
             $.ajax({
                 type: 'GET',
-                url: "/softchannel/insert?channelName=" + channelName + "&extra=" + extra,
+                url: "softchannel/insert?channelName=" + channelName + "&extra=" + extra,
                 dataType: 'json',
                 success: function (res) {
                     if (res.code === 0) {
@@ -219,7 +219,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/softchannel/query?channelName=" + $('#channelName').val(),
+            "ajax": "softchannel/query?channelName=" + $('#channelName').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

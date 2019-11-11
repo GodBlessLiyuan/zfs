@@ -110,7 +110,7 @@
      * 页面加载事件：一进入页面就先进行一次查询
      */
     window.onload = function () {
-        $.get("/tutorial/query", function (result) {
+        $.get("tutorial/query", function (result) {
             $('#url').val(result.data.value)
         }, "json");
     }
@@ -123,7 +123,7 @@
 
         var url = $('#url').val();
 
-        $.post("/tutorial/insert", {url: url}, function (result) {
+        $.post("tutorial/insert", {url: url}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';

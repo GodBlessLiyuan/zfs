@@ -183,7 +183,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/revenue/query/inviteduser/detail?userId=" + ${invitedUserId} + "&viptypeId=" + $('#status').val() +
+            "ajax": "revenue/query/inviteduser/detail?userId=" + ${invitedUserId} + "&viptypeId=" + $('#status').val() +
                 "&startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {

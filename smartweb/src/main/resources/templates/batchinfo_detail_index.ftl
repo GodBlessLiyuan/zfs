@@ -176,7 +176,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/batchinfo/queryByBatchid?batchId=" + ${batchId},
+            "ajax": "batchinfo/queryByBatchid?batchId=" + ${batchId},
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

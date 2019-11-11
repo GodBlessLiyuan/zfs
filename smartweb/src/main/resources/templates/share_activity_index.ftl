@@ -322,7 +322,7 @@
         }
         $.ajax({
             type: 'post',
-            url: '/shareactivity/insert',
+            url: 'shareactivity/insert',
             dataType: 'json',
             data: reqData,
             contentType: false,
@@ -362,7 +362,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/shareactivity/query?type=" + $('#type').val(),
+            "ajax": "shareactivity/query?type=" + $('#type').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -428,7 +428,7 @@
 
         $.ajax({
             type: 'post',
-            url: '/shareactivity/queryById?materialId=' + materialId,
+            url: 'shareactivity/queryById?materialId=' + materialId,
             dataType: 'JSON',
             success: function (result) {
 
@@ -515,7 +515,7 @@
         }
         $.ajax({
             type: 'post',
-            url: '/shareactivity/update',
+            url: 'shareactivity/update',
             dataType: 'json',
             data: reqData,
             contentType: false,
@@ -549,7 +549,7 @@
      */
     function deleteClick() {
         var materialId = $('#delete').val();
-        $.post("/shareactivity/delete", {materialId: materialId}, function (result) {
+        $.post("shareactivity/delete", {materialId: materialId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';

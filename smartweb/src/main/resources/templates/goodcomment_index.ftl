@@ -230,7 +230,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/goodcomment/query?phone=" + $('#phone').val(),
+            "ajax": "goodcomment/query?phone=" + $('#phone').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -320,7 +320,7 @@
      */
     function passClick() {
         var uAId = $('#pass').val();
-        $.post("/goodcomment/update/status", {uAId:uAId, status:2}, function (result) {
+        $.post("goodcomment/update/status", {uAId:uAId, status:2}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';
@@ -345,7 +345,7 @@
      */
     function rejectClick() {
         var uAId = $('#reject').val();
-        $.post("/goodcomment/update/status", {uAId:uAId, status:3}, function (result) {
+        $.post("goodcomment/update/status", {uAId:uAId, status:3}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';

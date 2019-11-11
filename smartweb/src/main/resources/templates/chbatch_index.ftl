@@ -263,7 +263,7 @@
     $(document).ready(function () {
         $.ajax({
             type: 'GET',
-            url: '/chbatch/queryComTypes',
+            url: 'chbatch/queryComTypes',
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -289,7 +289,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/chbatch/queryChanNicknames',
+            url: 'chbatch/queryChanNicknames',
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -308,7 +308,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/chbatch/queryComTypes',
+            url: 'chbatch/queryComTypes',
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -338,7 +338,7 @@
             alert("创建数量不能为空！");
         } else {
 
-            $.post("/chbatch/insert", {chanId:chanId, num:num, comTypeId:comTypeId, extra:extra}, function (result) {
+            $.post("chbatch/insert", {chanId:chanId, num:num, comTypeId:comTypeId, extra:extra}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = '/login';
@@ -383,7 +383,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/chbatch/query?chanNickname=" + $('#chanNickname').val() + "&comTypeId=" + $('#comTypeId').val()
+            "ajax": "chbatch/query?chanNickname=" + $('#chanNickname').val() + "&comTypeId=" + $('#comTypeId').val()
                 + "&status=" + $('#status').val() + "&operator=" + $('#operator').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
@@ -488,7 +488,7 @@
         var batchId = $('#statusChange_1').val();
         var status = $('#statusChange_2').val();
 
-        $.post("/chbatch/update/status", {batchId:batchId, status:status}, function (result) {
+        $.post("chbatch/update/status", {batchId:batchId, status:status}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';

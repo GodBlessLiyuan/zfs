@@ -211,7 +211,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/uservip/query?phone=" + $('#phone').val() + "&isPay=" + $('#isPay').val(),
+            "ajax": "uservip/query?phone=" + $('#phone').val() + "&isPay=" + $('#isPay').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -267,7 +267,7 @@
             "serverSide": true,
             "paging": false,
             "searching": false,
-            "ajax": "/uservip/queryDetails?userId=" + userId,
+            "ajax": "uservip/queryDetails?userId=" + userId,
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

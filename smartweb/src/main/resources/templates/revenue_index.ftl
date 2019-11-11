@@ -199,7 +199,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/revenue/query?phone=" + $('#phone').val() + "&orderby=" + $('#orderby').val(),
+            "ajax": "revenue/query?phone=" + $('#phone').val() + "&orderby=" + $('#orderby').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

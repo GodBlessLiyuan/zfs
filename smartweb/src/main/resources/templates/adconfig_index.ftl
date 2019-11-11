@@ -385,7 +385,7 @@
         }else if (total == null || total.trim() == "") {
             alert("展示次数不能为空！");
         } else {
-            $.post("/adconfig/insert", {adNumber:adNumber, name:name, contacts:contacts, phone:phone,
+            $.post("adconfig/insert", {adNumber:adNumber, name:name, contacts:contacts, phone:phone,
                 priority:priority, total:total}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
@@ -424,7 +424,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/adconfig/query/strategy',
+            url: 'adconfig/query/strategy',
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -442,7 +442,7 @@
      */
     function setAdClick() {
         var show_interval = $('#show_interval').val();
-        $.post("/adconfig/update/strategy", {show_interval:show_interval}, function (result) {
+        $.post("adconfig/update/strategy", {show_interval:show_interval}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';
@@ -475,7 +475,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/adconfig/query?name=" + $('#name').val() + "&adNumber=" + $('#adNumber').val()
+            "ajax": "adconfig/query?name=" + $('#name').val() + "&adNumber=" + $('#adNumber').val()
                 + "&status=" + $('#status').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
@@ -546,7 +546,7 @@
      */
     function statusClick() {
         var adId = $('#statusExchange').val();
-        $.post("/adconfig/update/status", {adId:adId}, function (result) {
+        $.post("adconfig/update/status", {adId:adId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';
@@ -566,7 +566,7 @@
         if (null === adId) {
             alert("出了些问题，无法跳转，请联系工程师！");
         } else {
-            window.location.href = '/adchannel?adId='+ adId;
+            window.location.href = 'adchannel?adId='+ adId;
         }
     }
 
@@ -580,7 +580,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/adconfig/queryById?adId=' + adId,
+            url: 'adconfig/queryById?adId=' + adId,
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -624,7 +624,7 @@
         }else if (total == null || total.trim() == "") {
             alert("展示次数不能为空！");
         } else {
-            $.post("/adconfig/update", {adId:adId, adNumber:adNumber, name:name, contacts:contacts, phone:phone,
+            $.post("adconfig/update", {adId:adId, adNumber:adNumber, name:name, contacts:contacts, phone:phone,
                 priority:priority, total:total}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
@@ -653,7 +653,7 @@
      */
     function deleteClick() {
         var adId = $('#delete').val();
-        $.post("/adconfig/delete", {adId:adId}, function (result) {
+        $.post("adconfig/delete", {adId:adId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';

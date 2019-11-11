@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">\
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>智能移动社交营销平台管理系统</title>
     <!-- Favicon icon -->
 
@@ -40,7 +40,7 @@
                         <div class="card-body pt-5">
                             <a class="text-center" href="index.html"> <h4>砖助智能助手业务后台</h4></a>
 
-                            <form class="mt-8 mb-8 login-input" method="post" action="/entry">
+                            <form class="mt-8 mb-8 login-input" method="post" action="entry">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Username" name="username" required="required">
                                 </div>
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="checkcode" placeholder="Checkcode" name="checkcode" required="required">
-                                    <img id="img" src="/login/get/checkcode" />
+                                    <img id="img" src="login/get/checkcode" />
                                     <a onclick="javascript:changeImg()" style="color:blue;">看不清？</a>
                                     <span id="msg"></span>
                                 </div>

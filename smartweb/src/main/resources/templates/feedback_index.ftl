@@ -210,7 +210,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/feedback/query?startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val() +
+            "ajax": "feedback/query?startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val() +
                 "&userId=" + $('#userId').val() + "&contact=" + $('#contact').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {

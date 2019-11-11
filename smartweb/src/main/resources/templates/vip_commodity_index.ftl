@@ -322,7 +322,7 @@
         // 产品列表
         $.ajax({
             type: 'GET',
-            url: '/comtype/queryAll',
+            url: 'comtype/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
@@ -337,7 +337,7 @@
         // 渠道信息
         $.ajax({
             type: 'GET',
-            url: '/softchannel/queryAll',
+            url: 'softchannel/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
@@ -363,7 +363,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/vipcommodity/query?username=" + $('#username').val() + "&comTypeId=" + $('#comTypeId').val() +
+            "ajax": "vipcommodity/query?username=" + $('#username').val() + "&comTypeId=" + $('#comTypeId').val() +
                 "&channelId=" + $('#channelId').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
@@ -466,7 +466,7 @@
         } else {
             $.ajax({
                 type: 'GET',
-                url: "/vipcommodity/insert?channelId=" + channelId + "&comTypeId=" + comTypeId + "&comName=" + comName +
+                url: "vipcommodity/insert?channelId=" + channelId + "&comTypeId=" + comTypeId + "&comName=" + comName +
                     "&description=" + description + "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" +
                     discount,
                 dataType: 'json',
@@ -503,7 +503,7 @@
         } else {
             $.ajax({
                 type: 'GET',
-                url: '/vipcommodity/update?cmdyId=' + cmdyId + "&comName=" + comName + "&description=" + description +
+                url: 'vipcommodity/update?cmdyId=' + cmdyId + "&comName=" + comName + "&description=" + description +
                     "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" + discount,
                 dataType: 'json',
                 success: function (res) {
@@ -522,7 +522,7 @@
     function uModal(cmdyId) {
         $.ajax({
             type: 'GET',
-            url: '/vipcommodity/queryById?cmdyId=' + cmdyId,
+            url: 'vipcommodity/queryById?cmdyId=' + cmdyId,
             dataType: 'JSON',
             success: function (data) {
                 $('#uCmdyId').val(data.cmdyId);

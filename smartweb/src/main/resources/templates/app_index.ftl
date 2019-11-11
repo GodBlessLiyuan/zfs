@@ -305,7 +305,7 @@
         // 下拉框请求后端并赋值
         $.ajax({
             type: 'GET',
-            url: '/softchannel/queryAll',
+            url: 'softchannel/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
@@ -337,7 +337,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/appversion/query?updateType=" + $('#updateType').val(),
+            "ajax": "appversion/query?updateType=" + $('#updateType').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -432,7 +432,7 @@
             $('#preloader').fadeTo('fast', 0.4);
             $.ajax({
                 type: 'post',
-                url: '/appversion/insert',
+                url: 'appversion/insert',
                 dataType: 'json',
                 data: reqData,
                 contentType: false,
@@ -469,7 +469,7 @@
         } else {
             $.ajax({
                 type: 'post',
-                url: '/appversion/update',
+                url: 'appversion/update',
                 dataType: 'json',
                 data: reqData,
                 contentType: false,
@@ -487,7 +487,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/appversion/delete?appId=' + appId,
+            url: 'appversion/delete?appId=' + appId,
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -503,7 +503,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/appversion/updateStatus?appId=' + appId + "&status=" + status,
+            url: 'appversion/updateStatus?appId=' + appId + "&status=" + status,
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -530,7 +530,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/appversion/queryById?appId=' + appId,
+                    url: 'appversion/queryById?appId=' + appId,
                     dataType: 'JSON',
                     success: function (data) {
                         $('#uAppId').val(data.appId);

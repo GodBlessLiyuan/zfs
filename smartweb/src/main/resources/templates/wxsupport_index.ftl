@@ -201,7 +201,7 @@
         } else {
             $.ajax({
                 type: 'GET',
-                url: "/wxsupport/insert?packageName=" + packageName + "&extra=" + extra,
+                url: "wxsupport/insert?packageName=" + packageName + "&extra=" + extra,
                 dataType: 'json',
                 success: function (data) {
                     if (data.code === 0) {
@@ -220,7 +220,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/wxsupport/delete?wId=' + wId,
+            url: 'wxsupport/delete?wId=' + wId,
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -249,7 +249,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/wxsupport/query?packageName=" + $('#packageName').val(),
+            "ajax": "wxsupport/query?packageName=" + $('#packageName').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

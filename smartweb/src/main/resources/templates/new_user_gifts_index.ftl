@@ -203,7 +203,7 @@
         // 下拉框请求后端并赋值
         $.ajax({
             type: 'GET',
-            url: '/comtype/queryAll',
+            url: 'comtype/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
@@ -224,7 +224,7 @@
 
         $.ajax({
             type: 'GET',
-            url: "/newusergifts/insert?comTypeId=" + comTypeId,
+            url: "newusergifts/insert?comTypeId=" + comTypeId,
             dataType: 'json',
             success: function (res) {
                 if (res.code !== 0) {
@@ -250,7 +250,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/newusergifts/query?username=" + $('#username').val() + "&comTypeId=" + $('#comType').val(),
+            "ajax": "newusergifts/query?username=" + $('#username').val() + "&comTypeId=" + $('#comType').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -316,7 +316,7 @@
         status = status === 1 ? 2 : 1;
         $.ajax({
             type: 'GET',
-            url: '/newusergifts/updateStatus?nugId=' + nugId + '&status=' + status,
+            url: 'newusergifts/updateStatus?nugId=' + nugId + '&status=' + status,
             dataType: 'JSON',
             success: function (res) {
                 if (res.code === 0) {
@@ -333,7 +333,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/newusergifts/delete?nugId=' + nugId,
+            url: 'newusergifts/delete?nugId=' + nugId,
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);

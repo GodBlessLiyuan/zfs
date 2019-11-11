@@ -153,7 +153,7 @@
         // 下拉框请求后端并赋值
         $.ajax({
             type: 'GET',
-            url: '/softchannel/queryAll',
+            url: 'softchannel/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
@@ -184,7 +184,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/unregistered/query?channelId=" + $('#channelName').val(),
+            "ajax": "unregistered/query?channelId=" + $('#channelName').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

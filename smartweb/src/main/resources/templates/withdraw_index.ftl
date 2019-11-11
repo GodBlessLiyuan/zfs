@@ -227,7 +227,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/withdraw/query?phone=" + $('#phone').val() + "&status=" + $('#status').val(),
+            "ajax": "withdraw/query?phone=" + $('#phone').val() + "&status=" + $('#status').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -323,7 +323,7 @@
         var withdrawId = $('#statusChange_1').val();
         var status = $('#statusChange_2').val();
 
-        $.post("/withdraw/update", {withdrawId:withdrawId, status:status}, function (result) {
+        $.post("withdraw/update", {withdrawId:withdrawId, status:status}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';

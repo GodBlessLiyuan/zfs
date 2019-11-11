@@ -296,7 +296,7 @@
         // 下拉框请求后端并赋值
         $.ajax({
             type: 'GET',
-            url: '/appversion/queryAll',
+            url: 'appversion/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
@@ -309,7 +309,7 @@
                 let appId = $('#iAppId').val();
                 $.ajax({
                     type: 'GET',
-                    url: '/appversion/queryById?appId=' + appId,
+                    url: 'appversion/queryById?appId=' + appId,
                     dataType: 'JSON',
                     success: function (data) {
                         let chanNames = data.chanName.split(',');
@@ -352,7 +352,7 @@
             $('#preloader').fadeTo('fast', 0.4);
             $.ajax({
                 type: 'post',
-                url: '/plugin/insert',
+                url: 'plugin/insert',
                 dataType: 'json',
                 data: reqData,
                 contentType: false,
@@ -389,7 +389,7 @@
         } else {
             $.ajax({
                 type: 'post',
-                url: '/plugin/update',
+                url: 'plugin/update',
                 dataType: 'json',
                 data: reqData,
                 contentType: false,
@@ -407,7 +407,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/plugin/delete?pluginId=' + pluginId,
+            url: 'plugin/delete?pluginId=' + pluginId,
             dataType: 'json',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
@@ -423,7 +423,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/plugin/updateStatus?pluginId=' + pluginId + "&status=" + status,
+            url: 'plugin/updateStatus?pluginId=' + pluginId + "&status=" + status,
             dataType: 'json',
             success: function (res) {
                 $('#datatab').DataTable().draw(false);
@@ -444,7 +444,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/plugin/query?username=" + $('#username').val(),
+            "ajax": "plugin/query?username=" + $('#username').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -517,7 +517,7 @@
         let appId = $('#iAppId').val();
         $.ajax({
             type: 'GET',
-            url: '/appversion/queryById?appId=' + appId,
+            url: 'appversion/queryById?appId=' + appId,
             dataType: 'JSON',
             success: function (data) {
                 let chanNames = data.chanName.split(',');
@@ -540,7 +540,7 @@
         let appId = $('#uAppId').val();
         $.ajax({
             type: 'GET',
-            url: '/appversion/queryById?appId=' + appId,
+            url: 'appversion/queryById?appId=' + appId,
             dataType: 'JSON',
             success: function (data) {
                 let chanNames = data.chanName.split(',');
@@ -574,7 +574,7 @@
     function updateModal(pluginId) {
         $.ajax({
             type: 'GET',
-            url: '/plugin/queryById?pluginId=' + pluginId,
+            url: 'plugin/queryById?pluginId=' + pluginId,
             dataType: 'JSON',
             success: function (data) {
                 $('#uPluginId').val(data.pluginId);
