@@ -103,7 +103,7 @@ public class PageController {
      * @param dto
      * @param map
      * @param req
-     * @description：免费领取会员：根据两个ID查询状态
+     * @description：免费领取会员：根据两个ID查询状态 个人中心-免费领会员-webview的url
      */
     @PostMapping("freemember")
     public String freemember(@RequestBody UserActivityDTO dto, ModelMap map, HttpServletRequest req) {
