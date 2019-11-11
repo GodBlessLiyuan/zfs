@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <title>智能移动社交营销平台管理系统</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+
     <!-- Pignose Calender -->
     <link href="./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
     <!-- Chartist -->
@@ -60,7 +60,7 @@
 
         <div class="div_big" style="margin-top: 100px;margin-bottom: 50px">
             <div style="text-align: center">
-                <span style="text-align: center;font-size:24px;font-weight: bolder"><label id="time"></span>
+                <span style="text-align: center;font-size:24px;font-weight: bolder"><label id="time"></label></span>
             </div>
         </div>
 
@@ -68,7 +68,7 @@
             <div class="div_main" style="float: left;margin-left: 15%; background: white">
                 <p class="p_first" ><span>今日新增注册数：<label id="register"/></span></p>
                 <p class="p_left"><span>今日新增用户数：<label id="user"/></span></p>
-                <p class="p_left"><span>注册转化率：<label id="ratio"></span></p>
+                <p class="p_left"><span>注册转化率：<label id="ratio"></label></span></p>
             </div>
 
             <div class="div_main" style="float: left;margin-left: 15%; background: white">
@@ -77,9 +77,9 @@
             </div>
 
             <div class="div_main" style="float: left;margin-left: 15%; background: white">
-                <p class="p_first"><span>今日收入：<label id="dayRevenue"></span></p>
-                <p class="p_left"><span>今日支付笔数：<label id="payCount"></span></p>
-                <p class="p_left"><span>本月收入：<label id="monthRevenue"></span></p>
+                <p class="p_first"><span>今日收入：<label id="dayRevenue"></label></span></p>
+                <p class="p_left"><span>今日支付笔数：<label id="payCount"></label></span></p>
+                <p class="p_left"><span>本月收入：<label id="monthRevenue"></label></span></p>
             </div>
         </div>
         <#--<div>

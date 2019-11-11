@@ -15,10 +15,11 @@
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="days" jdbcType="INTEGER" property="days" />
     <result column="pay" jdbcType="BIGINT" property="pay" />
+    <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
     order_id, order_number, user_device_id, cmdy_id, user_id, device_id, create_time, 
-    starttime, endtime, pay_time, `type`, `days`, pay
+    starttime, endtime, pay_time, `type`, `days`, pay, `status`
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.rpa.web.pojo.OrderPOKey" resultMap="BaseResultMap">
     select 
@@ -44,12 +45,12 @@
       cmdy_id, user_id, device_id, 
       create_time, starttime, endtime, 
       pay_time, `type`, `days`, 
-      pay)
+      pay, `status`)
     values (#{orderId,jdbcType=INTEGER}, #{orderNumber,jdbcType=CHAR}, #{userDeviceId,jdbcType=INTEGER}, 
       #{cmdyId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
       #{payTime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, #{days,jdbcType=INTEGER}, 
-      #{pay,jdbcType=BIGINT})
+      #{pay,jdbcType=BIGINT}, #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.OrderPO">
     insert into t_order
@@ -93,6 +94,9 @@
       <if test="pay != null">
         pay,
       </if>
+      <if test="status != null">
+        `status`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
@@ -134,6 +138,9 @@
       <if test="pay != null">
         #{pay,jdbcType=BIGINT},
       </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.OrderPO">
@@ -172,6 +179,9 @@
       <if test="pay != null">
         pay = #{pay,jdbcType=BIGINT},
       </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
     </set>
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=CHAR}
@@ -188,7 +198,8 @@
       pay_time = #{payTime,jdbcType=TIMESTAMP},
       `type` = #{type,jdbcType=INTEGER},
       `days` = #{days,jdbcType=INTEGER},
-      pay = #{pay,jdbcType=BIGINT}
+      pay = #{pay,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=TINYINT}
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=CHAR}
   </update>

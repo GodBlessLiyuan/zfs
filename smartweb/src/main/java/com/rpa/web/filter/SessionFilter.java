@@ -19,7 +19,7 @@ import java.util.List;
 public class SessionFilter implements Filter {
 
     // 不需要登录就可以访问的路径(比如:注册登录等)
-    String[] includeUrls = new String[]{"/login", "/entry", "/login/get/checkcode", "/"};
+    String[] includeUrls = new String[]{"/login", "/entry", "/login/get/checkcode", "/","/favicon.ico"};
     List<String> excludeList = new ArrayList<>();
 
     public SessionFilter() {

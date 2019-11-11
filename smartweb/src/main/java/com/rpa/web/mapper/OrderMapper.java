@@ -1,7 +1,6 @@
 package com.rpa.web.mapper;
 
 import com.rpa.web.domain.OrderDO;
-import com.rpa.web.pojo.OrderPO;
 import com.rpa.web.pojo.OrderPOKey;
 import org.apache.ibatis.annotations.Mapper;
 

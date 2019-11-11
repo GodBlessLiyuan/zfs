@@ -1,6 +1,12 @@
 use smarthelper;
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
+/* Drop Indexes */
+
+DROP INDEX ix_invite_detail_userid ON t_invite_detail;
+
+
+
 /* Drop Tables */
 
 DROP TABLE IF EXISTS t_user_activity;
@@ -505,6 +511,8 @@ CREATE TABLE t_order
 	type int COMMENT '1 微信 2支付宝',
 	days int,
 	pay bigint,
+	-- 1 未支付  2 支付成功
+	status tinyint DEFAULT 1 COMMENT '1 未支付  2 支付成功',
 	PRIMARY KEY (order_id, order_number),
 	UNIQUE (order_id),
 	UNIQUE (order_number)
