@@ -46,7 +46,7 @@
     /**
      * 页面加载事件：一进入该页面，即判断是否该显示“立即参与”按钮
      */
-    /*var status = ${status}
+    /*var status =
     window.onload = function () {
         if (null == status || status == 20) {
             document.getElementById("participate").style.visibility = "visible";

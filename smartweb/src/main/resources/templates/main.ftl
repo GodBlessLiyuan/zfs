@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>智能移动社交营销平台管理系统</title>
+    <title>首页</title>
     <!-- Favicon icon -->
 
     <!-- Pignose Calender -->
@@ -16,19 +16,7 @@
     <link rel="stylesheet" href="./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
     <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-
-
 </head>
-
-<style>
-    .coo_contaier {
-        display:-webkit-flex;
-        display: flex;
-        justify-content: space-around;
-
-    }
-</style>
-
 <body>
 
 <!--*******************
@@ -69,97 +57,44 @@
 
         <div class="div_big" style="margin-top: 100px;margin-bottom: 50px">
             <div style="text-align: center">
-                <span style="text-align: center;font-size:24px;font-weight: bolder"><label id="time"></label></span>
+                <span style="text-align: center; font-size: 30px; font-weight: bolder"><label id="time"></label></span>
             </div>
         </div>
 
-        <#--<div class="container-fluid mt-3">
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card gradient-1">
-                        <div class="card-body">
-                            <h3 class="card-title text-white">今日新增注册：</h3>
-                            <div class="d-inline-block">
-                                <h2 class="text-white" id="newRegist"></h2>
-                                <p class="text-white mb-0" id="newUsers"></p>
-                                <p class="text-white mb-0" id="registTranRate"></p>
-                            </div>
-                            <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card gradient-2">
-                        <div class="card-body">
-                            <h3 class="card-title text-white">今日活跃用户：</h3>
-                            <div class="d-inline-block">
-                                <h2 class="text-white" id="activeUsers"></h2>
-                                <p class="text-white mb-0" id="activeMonthUsers"></p>
-                            </div>
-                            <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card gradient-3">
-                        <div class="card-body">
-                            <h3 class="card-title text-white">今日收入：</h3>
-                            <div class="d-inline-block">
-                                <h2 class="text-white" id="dailyIncome"></h2>
-                                <p class="text-white mb-0" id="dailyPayNum"></p>
-                                <p class="text-white mb-0" id="monthIncome"></p>
-                            </div>
-                            <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-
-
         <div class="div_big">
-            <div class="container-fluid">
+            <div class="container-fluid mt-3">
                 <div class="row" style="-webkit-display: flex; display: flex; -webkit-justify-content: center;
                     justify-content: center; -webkit-align-items: center; align-items: center;">
 
                     <div class="col-3 col-sm-3">
-                        <div class="card">
+                        <div class="card gradient-1">
                             <div class="card-body">
                                 <div class="div_main">
-                                    <p class="p_first"><span>今日新增注册数：<label id="register"/></span></p>
-                                    <p class="p_left"><span>今日新增用户数：<label id="user"/></span></p>
-                                    <p class="p_left"><span>注册转化率：<label id="ratio"></span></p>
+                                    <p class="" style="font-size: 20px">今日新增注册数：<span id="register"></span></p>
+                                    <p class="" style="font-size: 20px">今日新增用户数：<span id="user"></span></p>
+                                    <p class="" style="font-size: 20px">注册转化率：<span id="ratio"></span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <#--</div>
-            </div>
-
-            <div class="container-fluid">
-                <div class="row">-->
                     <div class="col-3 col-sm-3">
-                        <div class="card">
+                        <div class="card gradient-1">
                             <div class="card-body">
                                 <div class="div_main">
-                                    <p class="p_left"><span>今日活跃用户：</span></p>
-                                    <p class="p_left"><span>本月活跃用户：</span></p>
+                                    <p class="" style="font-size: 20px">今日活跃用户：<span></span></p>
+                                    <p class="" style="font-size: 20px">本月活跃用户：<span></span></p>
+                                    <p class="" style="font-size: 20px">&nbsp;<span></span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-               <#-- </div>
-            </div>
-
-            <div class="container-fluid">
-                <div class="row">-->
                     <div class="col-3 col-sm-3">
-                        <div class="card">
+                        <div class="card gradient-1">
                             <div class="card-body">
                                 <div class="div_main">
-                                    <p class="p_first"><span>今日收入：<label id="dayRevenue"></span></p>
-                                    <p class="p_left"><span>今日支付笔数：<label id="payCount"></span></p>
-                                    <p class="p_left"><span>本月收入：<label id="monthRevenue"></span></p>
+                                    <p class="" style="font-size: 20px">今日收入：<span id="dayRevenue"></span></p>
+                                    <p class="" style="font-size: 20px">今日支付笔数：<span id="payCount"></span></p>
+                                    <p class="" style="font-size: 20px">本月收入：<span id="monthRevenue"></span></p>
                                 </div>
                             </div>
                         </div>

@@ -70,11 +70,11 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>渠道</label>
                                             <input id="channel" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>版本</label>
                                             <select id="version" class="form-control">
                                                 <option value='0' selected='selected'>全部</option>

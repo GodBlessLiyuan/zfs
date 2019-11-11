@@ -112,7 +112,8 @@
 
                             <hr>
                             <div class="table-responsive">
-                                <table id="datatab" class="table table-striped table-bordered zero-configuration">
+                                <table id="datatab" class="table table-striped table-bordered zero-configuration"
+                                       style="table-layout: fixed; text-align: center; vertical-align: middle">
                                     <thead>
                                     <tr>
                                         <th>序号</th>
@@ -124,7 +125,7 @@
                                         <th>展示优先级</th>
                                         <th>展示次数</th>
                                         <th>状态</th>
-                                        <th>操作</th>
+                                        <th width="250px">操作</th>
                                         <th>操作人</th>
                                     </tr>
                                     </thead>
@@ -475,6 +476,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "ordering": false,
             "ajax": "/adconfig/query?name=" + $('#name').val() + "&adNumber=" + $('#adNumber').val()
                 + "&status=" + $('#status').val(),
             "fnDrawCallback": function () {
@@ -503,10 +505,10 @@
                     "data": "adId",
                     "render": function (data, type, full) {
 
-                        var channel_button = "<button type='button'  data-whatever='@getbootstrap'" +
+                        var channel_button = "<button type='button' data-whatever='@getbootstrap'" +
                             "class='btn btn-primary' onclick='javascript:channelModal(" + data + ")'>设置开放渠道</button> ";
                         var update_button = "<button type='button' data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:updateModal(" + data + ")'>修改</button>";
+                            "class='btn btn-primary' onclick='javascript:updateModal(" + data + ")'>修改</button> ";
                         var delete_button = "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
                             "class='btn btn-primary' onclick='javascript:deleteModal(" + data + ")'>删除</button>";
 

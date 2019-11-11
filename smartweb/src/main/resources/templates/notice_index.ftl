@@ -497,7 +497,7 @@
                         // 要修改成的状态值：如果当前状态值为1，就修改成2，反之亦然
                         var status = full.status == 1 ? 2 : 1;
                         var statusButton = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ status +")'>开/关</button>";
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ status +")'>开/关</button> ";
                         var deleteButton = "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
                             "class='btn btn-primary' onclick='javascript:deleteModal(" + data + ")'>删除</button>";
                         return statusButton + deleteButton;
