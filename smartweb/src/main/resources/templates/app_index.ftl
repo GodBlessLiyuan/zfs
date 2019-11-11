@@ -96,7 +96,8 @@
 
                             <hr>
                             <div class="table-responsive">
-                                <table id="datatab" class="table table-striped table-bordered zero-configuration">
+                                <table id="datatab" class="table table-striped table-bordered zero-configuration"
+                                       style="table-layout: fixed; text-align: center; vertical-align: middle">
                                     <thead>
                                     <tr>
                                         <th>序号</th>
@@ -280,19 +281,19 @@
 <script>
     let moduleData = new Map();
 
-    $('#insert-select-all').click(function(){
+    $('#insert-select-all').click(function () {
         $('#iSoftChannel').multiSelect('select_all');
         return false;
     });
-    $('#insert-deselect-all').click(function(){
+    $('#insert-deselect-all').click(function () {
         $('#iSoftChannel').multiSelect('deselect_all');
         return false;
     });
-    $('#update-select-all').click(function(){
+    $('#update-select-all').click(function () {
         $('#uSoftChannel').multiSelect('select_all');
         return false;
     });
-    $('#update-deselect-all').click(function(){
+    $('#update-deselect-all').click(function () {
         $('#uSoftChannel').multiSelect('deselect_all');
         return false;
     });
