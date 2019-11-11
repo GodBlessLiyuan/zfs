@@ -69,7 +69,7 @@ public class NoticeServiceImpl implements NoticeService {
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(5);
         map.put("startTime", startTime);
-        map.put("endTime", endTime);
+        map.put("endTime", strToDate3(endTime));
         map.put("status", status);
         map.put("type", type);
         map.put("title", title);
@@ -140,8 +140,8 @@ public class NoticeServiceImpl implements NoticeService {
         po.setTitle(title);
         po.setUrl(url);
         po.setShowTime(strToTime(showTime));
-        po.setStartTime(strToDate(startTime));
-        po.setEndTime(strToDate(endTime));
+        po.setStartTime(strToDate1(startTime));
+        po.setEndTime(strToDate2(endTime));
         po.setUpdateTime(new Date());
         po.setaId(aId);
         po.setStatus(1);
@@ -208,7 +208,7 @@ public class NoticeServiceImpl implements NoticeService {
      * @param strDate
      * @return
      */
-    private Date strToDate(String strDate) {
+    private Date strToDate1(String strDate) {
         if (null == strDate || strDate.length() < 1) {
             return null;
         }
@@ -224,6 +224,53 @@ public class NoticeServiceImpl implements NoticeService {
 
         return date;
     }
+
+
+    /**
+     * 类型转换：将字符串类型的时间，转换为日期类型，并加一天
+     *
+     * @param strDate
+     * @return
+     */
+    private Date strToDate2(String strDate) {
+
+        if (null == strDate || strDate.length() < 1) {
+            return null;
+        }
+
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+
+        try {
+            date = format.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 1);
+        date = calendar.getTime();
+
+        return date;
+    }
+
+
+    /**
+     * 类型转换：将字符串类型的时间，转换为日期类型，加一天后再转回字符串
+     * @param strDate
+     * @return
+     */
+    private String strToDate3(String strDate) {
+        if (null == strDate || "".equals(strDate)) {
+            return null;
+        } else {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            return format.format(this.strToDate2(strDate));
+        }
+
+
+    }
+
 
     /**
      * 类型转换：将字符串类型的时间，转换为时间类型

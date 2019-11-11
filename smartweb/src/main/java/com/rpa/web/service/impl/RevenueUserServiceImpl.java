@@ -144,7 +144,7 @@ public class RevenueUserServiceImpl implements RevenueUserService {
      * @return
      */
     @Override
-    public DTPageInfo<InviteDetailDTO> queryInviteduserDetail(int draw, int start, int length, Integer userId, Integer viptypeId, Date startTime, Date endTime) {
+    public DTPageInfo<InviteDetailDTO> queryInviteduserDetail(int draw, int start, int length, Integer userId, Integer viptypeId, String startTime, String endTime) {
 
         // 分页
         Page<InviteDetailDTO> page = PageHelper.startPage(start, length);

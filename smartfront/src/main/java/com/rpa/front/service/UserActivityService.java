@@ -1,6 +1,5 @@
 package com.rpa.front.service;
 
-import com.rpa.front.common.ResultVO;
 import com.rpa.front.dto.UserActivityDTO;
 
 /**

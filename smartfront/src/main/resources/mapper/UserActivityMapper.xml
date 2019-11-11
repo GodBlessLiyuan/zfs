@@ -28,7 +28,7 @@
   <select id="query" resultType="java.lang.Integer">
     select status
     from t_user_activity
-    where activity_id = #{activityId} and user_id = #{userId}
+    where activity_id = 1 and user_id = #{ud}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

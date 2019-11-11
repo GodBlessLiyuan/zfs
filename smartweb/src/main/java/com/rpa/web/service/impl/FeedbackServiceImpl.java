@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author: dangyi
@@ -56,7 +56,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(4);
         map.put("startTime", startTime);
-        map.put("endTime", endTime);
+        map.put("endTime", endDatePlusOne(endTime));
         map.put("userId", userId);
         map.put("contact", contact);
 
@@ -98,5 +98,34 @@ public class FeedbackServiceImpl implements FeedbackService {
      */
     public String queryPhoneByAid(Long aId) {
         return this.adminUserMapper.queryPhoneByAid(aId);
+    }
+
+
+
+    /**
+     * 类型转换：将字符串类型的时间，转换为日期类型，加一天后再转回字符串
+     * @param strDate
+     * @return
+     */
+    private String endDatePlusOne(String strDate) {
+        if (null == strDate || "".equals(strDate)) {
+            return null;
+        } else {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = null;
+            try {
+                date = format.parse(strDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DATE, 1);
+            date = calendar.getTime();
+
+            return format.format(date);
+        }
+
+
     }
 }
