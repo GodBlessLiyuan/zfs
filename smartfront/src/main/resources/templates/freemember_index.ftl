@@ -21,7 +21,9 @@
         </div>
         <div style="margin-top: 40%">
             <div class="betweenLR">
+                <#if null == status || status == 20>
                 <button type="button" class="drawSubmit" id="participate" onclick="freememberClick()">立即参与</button>
+                </#if>
             </div>
         </div>
         <div style="margin-left: 15%;margin-right: 15%">
@@ -44,14 +46,14 @@
     /**
      * 页面加载事件：一进入该页面，即判断是否该显示“立即参与”按钮
      */
-    var status = ${status}
+    /*var status = ${status}
     window.onload = function () {
         if (null == status || status == 20) {
             document.getElementById("participate").style.visibility = "visible";
         } else {
             document.getElementById("participate").style.visibility = "hidden";
         }
-    }
+    }*/
 
 
     /**
