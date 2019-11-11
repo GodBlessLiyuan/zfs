@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -260,6 +261,20 @@ public class WxPayUtil {
         reader.close();
         is.close();
 
+        return sb.toString();
+    }
+
+    /**
+     * 生成订单编号
+     *
+     * @return
+     */
+    public static String genOrderNumber() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("vip");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssS");
+        sb.append(sdf.format(new Date()));
+        sb.append(UUID.randomUUID().toString().replace("-", "").substring(0, 8));
         return sb.toString();
     }
 }

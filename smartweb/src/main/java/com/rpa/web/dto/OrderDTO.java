@@ -50,7 +50,7 @@ public class OrderDTO implements Serializable {
         dto.setDays(d.getDays());
         dto.setPrice(d.getPrice());
         dto.setShowDiscount(d.getShowDiscount());
-        dto.setDiscount(d.getDiscount());
+        dto.setDiscount(d.getDiscount() / 100);
 
         return dto;
     }
