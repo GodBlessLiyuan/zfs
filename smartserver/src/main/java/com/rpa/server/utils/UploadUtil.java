@@ -19,6 +19,7 @@ import java.util.UUID;
 @Component
 public class UploadUtil {
     private static String rootPath;
+    private static String projectDir;
     private static String imageDir;
 
     /**
@@ -32,7 +33,7 @@ public class UploadUtil {
             return null;
         }
 
-        File targetFile = new File(rootPath + imageDir);
+        File targetFile = new File(rootPath + projectDir + imageDir);
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
@@ -40,7 +41,7 @@ public class UploadUtil {
         String imgFileName = UUID.randomUUID() + ".jpg";
         BufferedOutputStream stream = null;
         try {
-            stream = new BufferedOutputStream(new FileOutputStream(rootPath + imageDir + imgFileName));
+            stream = new BufferedOutputStream(new FileOutputStream(rootPath + projectDir + imageDir + imgFileName));
             stream.write(Base64Utils.decodeFromString(base64Img));
             stream.flush();
         } catch (IOException e) {
@@ -55,12 +56,17 @@ public class UploadUtil {
             }
         }
 
-        return imageDir + imgFileName;
+        return projectDir + imageDir + imgFileName;
     }
 
     @Value("${file.uploadFolder}")
     public void setPROFILE(String rootPath) {
         UploadUtil.rootPath = rootPath;
+    }
+
+    @Value("${file.projectDir}")
+    public void setProjectDir(String projectDir) {
+        UploadUtil.projectDir = projectDir;
     }
 
     @Value("${file.imageDir}")
