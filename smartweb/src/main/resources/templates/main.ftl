@@ -17,6 +17,7 @@
     <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 </head>
+
 <body>
 
 <!--*******************
@@ -61,6 +62,7 @@
             </div>
         </div>
 
+
         <div class="div_big">
             <div class="container-fluid mt-3">
                 <div class="row" style="-webkit-display: flex; display: flex; -webkit-justify-content: center;
@@ -102,7 +104,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <!--**********************************
         Content body end
