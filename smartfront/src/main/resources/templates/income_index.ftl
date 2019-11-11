@@ -121,9 +121,9 @@
 
         <script>
            /* 调用Share.startShareActivity 跳转到立即推广详情页*/
-            var isLogin =  window.Share.isLogin();
+          /*  var isLogin =  window.Share.isLogin();*/
             function promotePage(){
-                if(isLogin){
+                if(window.Share.isLogin()){
                     window.Share.startShareActivity();
                 }else{
                     window.Share.showDialog();
@@ -131,7 +131,7 @@
             }
 
             function withdrawmoney(){
-                if(isLogin){
+                if(window.Share.isLogin()){
                     window.location.href="${basePath}/v1.0/withdraw";
                 }else {
                     window.Share.showDialog();
@@ -140,7 +140,7 @@
 
             /* 详情标签跳转函数*/
             function details() {
-                if(isLogin){
+                if(window.Share.isLogin()){
                     window.location.href="${basePath}/v1.0/details";
                 }else{
                     window.Share.showDialog();

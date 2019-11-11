@@ -91,8 +91,8 @@
 
                             <hr>
                             <div class="table-responsive">
-                                <table id="datatab" class="table table-striped table-bordered zero-configuration">
-                                    <thead>
+                                   <table id="datatab" class="table table-striped table-bordered zero-configuration"
+                                       style="table-layout: fixed; text-align: center; vertical-align: middle"><thead>
                                     <tr>
                                         <th>序号</th>
                                         <th>imei</th>

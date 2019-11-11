@@ -112,9 +112,14 @@
 
                             <hr>
                             <div class="table-responsive">
+<<<<<<< HEAD
                                 <table id="datatab" class="table table-striped table-bordered zero-configuration"
                                        style="table-layout: fixed; text-align: center; vertical-align: middle">
                                     <thead>
+=======
+                                   <table id="datatab" class="table table-striped table-bordered zero-configuration"
+                                       style="table-layout: fixed; text-align: center; vertical-align: middle"><thead>
+>>>>>>> c7b7308f503c323ffefb1449cbcb13e969a642c2
                                     <tr>
                                         <th>序号</th>
                                         <th>广告ID</th>
