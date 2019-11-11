@@ -585,9 +585,7 @@ button::after{
   color: #333333;
   letter-spacing: 0;
   text-align: center;
-
   padding-top: 10px;
-
   padding-bottom:15px;
   font-weight:bold;
 }
@@ -747,16 +745,12 @@ button::after{
 .reward_details td {
   vertical-align: middle;
   text-align: center
-
 }
 
 /* 奖励相关div间距*/
 .div_spacing{
   margin-bottom: 5px;
 }
-
-
-
 
 .bg_image_beijing{
   background-image: url("../images/bg_profit.png");
@@ -818,6 +812,9 @@ button::after{
   margin-top: 0px;
 }
 
+.span-err {
+  color: red;
+}
 
 .icon-rmb{
   position: absolute;

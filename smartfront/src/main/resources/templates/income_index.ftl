@@ -13,6 +13,7 @@
     <script src="${basePath}/js/generalize.js" type="text/javascript"></script>
     <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
     <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 
 </head>
     <body >
@@ -117,20 +118,6 @@
                 </div>
         </div>
 
-        <!-- 遮罩层 -->
-        <div id="zhezhaoa"></div>
-
-        <!-- 提现确认弹框 -->
-        <div class="explain-box">
-            <div class="box-top">
-                <div class="box-title" style="padding-top: 0px;font-weight: bolder;font-size: 20px;">提示：</div>
-                <p>您未登录，请先登录!</p>
-            </div>
-            <div class="rows">
-                <div class="box-btnL lineL" onclick="closeBox()"><b>取消</b></div>
-                <div class="box-btnR" onclick="successBox()"><b>确认登录</b></div>
-            </div>
-        </div>
 
         <script>
            /* 调用Share.startShareActivity 跳转到立即推广详情页*/
@@ -139,7 +126,7 @@
                 if(isLogin){
                     window.Share.startShareActivity();
                 }else{
-                    showBox();
+                    window.Share.showDialog();
                 }
             }
 
@@ -147,7 +134,7 @@
                 if(isLogin){
                     window.location.href="${basePath}/v1.0/withdraw";
                 }else {
-                    showBox();
+                    window.Share.showDialog();
                 }
             }
 
@@ -156,30 +143,12 @@
                 if(isLogin){
                     window.location.href="${basePath}/v1.0/details";
                 }else{
-                    showBox();
+                    window.Share.showDialog();
                 }
             }
 
-            /* 打开“提示”弹框---并验证信息*/
-            function showBox(){
-                $(".explain-box").show();
-                $("#zhezhaoa").css({
-                    "display":"block"
-                });
-                $("html,body").css({"height":"100%","overflow":"hidden"});
-            }
 
-            /*关闭“提示”弹框*/
-            function closeBox(){
-                $(".explain-box").hide();
-                $("#zhezhaoa").css({"display":"none"});
-                $("html,body").css({"height":"auto","overflow":"auto"});
-            }
-
-            /* 点击确认重新登录按钮*/
-            function successBox(){
-                window.Share.login();
-            }
         </script>
+
     </body>
 </html>
