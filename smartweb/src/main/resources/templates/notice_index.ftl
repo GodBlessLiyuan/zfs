@@ -116,21 +116,22 @@
                             <hr>
                             <div class="table-responsive">
                                    <table id="datatab" class="table table-striped table-bordered zero-configuration"
-                                       style="table-layout: fixed; text-align: center; vertical-align: middle"><thead>
-                                    <tr>
-                                        <th>序号</th>
-                                        <th>通知类型</th>
-                                        <th>通知名称</th>
-                                        <th>创建时间</th>
-                                        <th>提示时间</th>
-                                        <th>开始时间</th>
-                                        <th>结束时间</th>
-                                        <th>跳转地址</th>
-                                        <th>通知详情</th>
-                                        <th>状态</th>
-                                        <th>操作</th>
-                                        <th>操作人</th>
-                                    </tr>
+                                       style="table-layout: fixed; text-align: center; vertical-align: middle">
+                                       <thead>
+                                            <tr>
+                                                <th>序号</th>
+                                                <th>通知类型</th>
+                                                <th>通知名称</th>
+                                                <th>创建时间</th>
+                                                <th>提示时间</th>
+                                                <th>开始时间</th>
+                                                <th>结束时间</th>
+                                                <th>跳转地址</th>
+                                                <th>通知详情</th>
+                                                <th>状态</th>
+                                                <th width="160px">操作</th>
+                                                <th>操作人</th>
+                                            </tr>
                                     </thead>
                                 </table>
                             </div>
@@ -497,7 +498,7 @@
                         // 要修改成的状态值：如果当前状态值为1，就修改成2，反之亦然
                         var status = full.status == 1 ? 2 : 1;
                         var statusButton = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ status +")'>开/关</button>";
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ status +")'>开/关</button> ";
                         var deleteButton = "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
                             "class='btn btn-primary' onclick='javascript:deleteModal(" + data + ")'>删除</button>";
                         return statusButton + deleteButton;

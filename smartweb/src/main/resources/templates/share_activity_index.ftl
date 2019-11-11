@@ -104,7 +104,7 @@
                                         <th>素材类型</th>
                                         <th>内容</th>
                                         <th>备注</th>
-                                        <th>操作</th>
+                                        <th width="170px">操作</th>
                                         <th>操作人</th>
                                     </tr>
                                     </thead>
@@ -386,7 +386,7 @@
                     "render": function (data, type, full) {
 
                         var update_button = "<button type='button' data-toggle='modal' data-target='#updateModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:updateModal(" + data + ")'>修改</button>";
+                            "class='btn btn-primary' onclick='javascript:updateModal(" + data + ")'>修改</button> ";
                         var delete_button = "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
                             "class='btn btn-primary' onclick='javascript:deleteModal(" + data + ")'>删除</button>";
 

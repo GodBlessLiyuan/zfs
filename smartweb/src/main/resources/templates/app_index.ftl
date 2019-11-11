@@ -110,7 +110,7 @@
                                         <th>更新渠道</th>
                                         <th>状态</th>
                                         <th>备注</th>
-                                        <th>操作</th>
+                                        <th width="180px">操作</th>
                                     </tr>
                                     </thead>
                                 </table>
