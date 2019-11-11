@@ -25,7 +25,7 @@ public class SessionFilter implements Filter {
     String[] includeUrls = new String[]{"/login", "/entry", "/login/get/checkcode", "/","/favicon.ico"};
     List<String> excludeList = new ArrayList<>();
 
-    private static String contextPath = "/manager";
+    private static final String CONTEXT_PATH = "/manager";
 
     public SessionFilter() {
         excludeList.add("/css/");
@@ -77,13 +77,13 @@ public class SessionFilter implements Filter {
     public boolean isNeedFilter(String uri) {
 
         for (String exclude : excludeList) {
-            exclude = contextPath + exclude;
+            exclude = CONTEXT_PATH + exclude;
             if (uri.startsWith(exclude)) {
                 return false;
             }
         }
         for (String includeUrl : includeUrls) {
-            includeUrl = contextPath + includeUrl;
+            includeUrl = CONTEXT_PATH + includeUrl;
             if (includeUrl.equals(uri)) {
                 return false;
             }
