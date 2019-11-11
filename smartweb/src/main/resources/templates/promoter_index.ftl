@@ -295,7 +295,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/promoter/query?proName=" + $('#proName').val() + "&phone=" + $('#phone').val(),
+            "ajax": "promoter/query?proName=" + $('#proName').val() + "&phone=" + $('#phone').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -379,7 +379,7 @@
             alert("备注不能为空！");
         } else {
 
-            $.post("/promoter/update", {proId:proId, proName:proName, phone:phone, extra:extra}, function (result) {
+            $.post("promoter/update", {proId:proId, proName:proName, phone:phone, extra:extra}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = '/login';

@@ -309,7 +309,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/admin/queryAllRoles',
+            url: 'admin/queryAllRoles',
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -350,7 +350,7 @@
             alert("邮箱不能为空！")
         }else{
 
-            $.post("/admin/insert", {roleId:roleId, username:username, password:password, name:name, phone:phone,
+            $.post("admin/insert", {roleId:roleId, username:username, password:password, name:name, phone:phone,
                 email:email, extra:extra}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
@@ -387,7 +387,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/admin/query?phone=" + $('#phone').val() + "&extra=" + $('#extra').val(),
+            "ajax": "admin/query?phone=" + $('#phone').val() + "&extra=" + $('#extra').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -446,7 +446,7 @@
         $('#up_roleId').empty();
         $.ajax({
             type: 'GET',
-            url: '/admin/queryAllRoles',
+            url: 'admin/queryAllRoles',
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -462,7 +462,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/admin/queryById?aId=' + aId,
+            url: 'admin/queryById?aId=' + aId,
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -508,7 +508,7 @@
             alert("邮箱不能为空！")
         }else{
 
-            $.post("/admin/update", {aId:aId, roleId:roleId, username:username, password:password, name:name,
+            $.post("admin/update", {aId:aId, roleId:roleId, username:username, password:password, name:name,
                 phone:phone, email:email, extra:extra}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
@@ -537,7 +537,7 @@
      */
     function deleteClick() {
         var aId = $('#delete').val();
-        $.post("/admin/delete", {aId:aId}, function (result) {
+        $.post("admin/delete", {aId:aId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';

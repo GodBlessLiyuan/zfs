@@ -132,10 +132,10 @@
      */
     window.onload = function () {
 
-        $.get("/homepage/query", function (result) {
+        $.get("homepage/query", function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
-                window.location.href = '/login';
+                window.location.href = 'login';
             } else if (result.code === 0) {
                 if (result.data) {
                     $('#register').text(result.data.newRegister);

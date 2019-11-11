@@ -235,7 +235,7 @@
         } else {
             $.ajax({
                 type: 'post',
-                url: '/otherapp/insert',
+                url: 'otherapp/insert',
                 dataType: 'json',
                 data: reqData,
                 contentType: false,
@@ -257,7 +257,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/otherapp/delete?oId=' + oId,
+            url: 'otherapp/delete?oId=' + oId,
             dataType: 'json',
             success: function (res) {
                 $('#datatab').DataTable().draw(false);
@@ -286,7 +286,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/otherapp/query?name=" + $('#name').val(),
+            "ajax": "otherapp/query?name=" + $('#name').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

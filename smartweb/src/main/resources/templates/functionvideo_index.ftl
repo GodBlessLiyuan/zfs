@@ -294,7 +294,7 @@
 
             $.ajax({
                 type: 'post',
-                url: '/functionvideo/insert',
+                url: 'functionvideo/insert',
                 dataType: 'json',
                 data: reqData,
                 contentType: false,
@@ -335,7 +335,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/functionvideo/query?name=" + $('#fun_name').val(),
+            "ajax": "functionvideo/query?name=" + $('#fun_name').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -418,7 +418,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/functionvideo/queryById?functionId=' + functionId,
+            url: 'functionvideo/queryById?functionId=' + functionId,
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -454,7 +454,7 @@
 
             $.ajax({
                 type: 'post',
-                url: '/functionvideo/update',
+                url: 'functionvideo/update',
                 dataType: 'json',
                 data: reqData,
                 contentType: false,
@@ -488,7 +488,7 @@
      */
     function deleteClick() {
         var functionId = $('#delete').val();
-        $.post("/functionvideo/delete", {functionId:functionId}, function (result) {
+        $.post("functionvideo/delete", {functionId:functionId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';

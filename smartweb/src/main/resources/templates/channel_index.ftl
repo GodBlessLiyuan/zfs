@@ -216,7 +216,7 @@
     $(document).ready(function () {
         $.ajax({
             type: 'GET',
-            url: '/channel/queryProNames',
+            url: 'channel/queryProNames',
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -253,7 +253,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/channel/query?chanNickname=" + $('#chanNickname').val() + "&proId=" + $('#proId').val(),
+            "ajax": "channel/query?chanNickname=" + $('#chanNickname').val() + "&proId=" + $('#proId').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -297,7 +297,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/channel/queryAllProNames',
+            url: 'channel/queryAllProNames',
             dataType: 'JSON',
             success: function (result) {
                 if (result.code === 1008) {
@@ -328,7 +328,7 @@
             alert("渠道名称不能为空！");
         } else {
 
-            $.post("/channel/insert", {chanName:chanName, chanNickname:chanNickname, proId:proId, extra:extra},
+            $.post("channel/insert", {chanName:chanName, chanNickname:chanNickname, proId:proId, extra:extra},
                 function (result) {
                     if (result.code === 1008) {
                         alert("登录超时，请重新登录！");

@@ -274,7 +274,7 @@
 
             $.ajax({
                 type: 'post',
-                url: '/bannerconfig/insert',
+                url: 'bannerconfig/insert',
                 dataType: 'json',
                 data: reqData,
                 contentType: false,
@@ -317,7 +317,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/bannerconfig/query?name=" + $('#name').val() + "&status=" + $('#status').val(),
+            "ajax": "bannerconfig/query?name=" + $('#name').val() + "&status=" + $('#status').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -396,7 +396,7 @@
      */
     function statusClick() {
         var bannerId = $('#statusExchange').val();
-        $.post("/bannerconfig/update/status", {bannerId:bannerId}, function (result) {
+        $.post("bannerconfig/update/status", {bannerId:bannerId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';
@@ -422,7 +422,7 @@
      */
     function deleteClick() {
         var bannerId = $('#delete').val();
-        $.post("/bannerconfig/delete", {bannerId:bannerId}, function (result) {
+        $.post("bannerconfig/delete", {bannerId:bannerId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';

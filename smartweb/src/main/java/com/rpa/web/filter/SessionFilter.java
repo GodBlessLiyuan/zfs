@@ -1,6 +1,8 @@
 package com.rpa.web.filter;
 
 import com.rpa.web.common.Constant;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +18,14 @@ import java.util.List;
  * @version: 1.0.0
  * @description:
  */
+@Component
 public class SessionFilter implements Filter {
 
     // 不需要登录就可以访问的路径(比如:注册登录等)
     String[] includeUrls = new String[]{"/login", "/entry", "/login/get/checkcode", "/","/favicon.ico"};
     List<String> excludeList = new ArrayList<>();
+
+    private static String contextPath = "/manager";
 
     public SessionFilter() {
         excludeList.add("/css/");
@@ -72,11 +77,13 @@ public class SessionFilter implements Filter {
     public boolean isNeedFilter(String uri) {
 
         for (String exclude : excludeList) {
+            exclude = contextPath + exclude;
             if (uri.startsWith(exclude)) {
                 return false;
             }
         }
         for (String includeUrl : includeUrls) {
+            includeUrl = contextPath + includeUrl;
             if (includeUrl.equals(uri)) {
                 return false;
             }

@@ -201,7 +201,7 @@
         } else {
             $.ajax({
                 type: 'GET',
-                url: "/whiltedevice/insert?imei=" + imei + "&extra=" + extra,
+                url: "whiltedevice/insert?imei=" + imei + "&extra=" + extra,
                 dataType: 'json',
                 success: function (data) {
                     if (data.code === 0) {
@@ -220,7 +220,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/whiltedevice/delete?deviceId=' + deviceId,
+            url: 'whiltedevice/delete?deviceId=' + deviceId,
             dataType: 'json',
             success: function (res) {
                 $('#datatab').DataTable().draw(false);
@@ -249,7 +249,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/whiltedevice/query?imei=" + $('#imei').val(),
+            "ajax": "whiltedevice/query?imei=" + $('#imei').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

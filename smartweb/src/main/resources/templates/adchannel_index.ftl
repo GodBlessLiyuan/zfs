@@ -165,7 +165,7 @@
         // 产品列表
         $.ajax({
             type: 'GET',
-            url: '/adchannel/queryVersionname',
+            url: 'adchannel/queryVersionname',
             dataType: 'JSON',
             success: function (result) {
                 for (var i = 0; i < result.data.length; i++) {
@@ -204,7 +204,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/adchannel/query?adId=" + ${adId} + "&name=" + $('#channel').val() + "&appId=" + $('#version').val(),
+            "ajax": "adchannel/query?adId=" + ${adId} + "&name=" + $('#channel').val() + "&appId=" + $('#version').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -302,7 +302,7 @@
 
         $.ajax({
             type: 'post',
-            url: '/adchannel/update',
+            url: 'adchannel/update',
             dataType: 'json',
             data: JSON.stringify(arr),
             contentType: "application/json",

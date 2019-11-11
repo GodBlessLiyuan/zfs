@@ -172,7 +172,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/revenue/query/inviteduser?userId=" + ${userId} + "&invitePhone=" + $('#invitePhone').val(),
+            "ajax": "revenue/query/inviteduser?userId=" + ${userId} + "&invitePhone=" + $('#invitePhone').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;

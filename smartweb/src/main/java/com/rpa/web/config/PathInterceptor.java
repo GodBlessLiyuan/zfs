@@ -13,7 +13,7 @@ public class PathInterceptor implements HandlerInterceptor {
         String scheme = request.getScheme();
         String serverName = request.getServerName();
         int port = request.getServerPort();
-        String basePath = scheme + "://" + serverName + ":" + port + path;
+        String basePath = scheme + "://" + serverName + ":" + port + path +"/manager";
         request.setAttribute("basePath",basePath);
         return true;
     }

@@ -192,7 +192,7 @@
         // 产品列表
         $.ajax({
             type: 'GET',
-            url: '/comtype/queryAll',
+            url: 'comtype/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
@@ -205,7 +205,7 @@
         // 渠道信息
         $.ajax({
             type: 'GET',
-            url: '/softchannel/queryAll',
+            url: 'softchannel/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
@@ -240,7 +240,7 @@
             "processing": true,
             "serverSide": true,
             "ordering": false, // 禁用排序
-            "ajax": "/order/query?startDate=" + startDate + "&endDate=" + endDate + "&comTypeId=" + comTypeId +
+            "ajax": "order/query?startDate=" + startDate + "&endDate=" + endDate + "&comTypeId=" + comTypeId +
                 "&type=" + type + "&uChanId=" + uChanId + "&sChanId=" + sChanId + "&phone=" + phone + "&number=" +
                 number,
             "fnDrawCallback": function () {

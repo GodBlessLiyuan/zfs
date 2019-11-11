@@ -382,7 +382,7 @@
 
             $.ajax({
                 type: 'post',
-                url: '/notice/insert',
+                url: 'notice/insert',
                 dataType: 'json',
                 data: reqData,
                 contentType: false,
@@ -448,7 +448,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/notice/query?startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val() +
+            "ajax": "notice/query?startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val() +
                 "&status=" + $('#status').val() + "&type=" + $('#notice_type').val() + "&title=" + $('#title').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
@@ -564,7 +564,7 @@
         var noticeId = $('#statusChange_1').val();
         var status = $('#statusChange_2').val();
 
-        $.post("/notice/update/status", {noticeId:noticeId, status:status}, function (result) {
+        $.post("notice/update/status", {noticeId:noticeId, status:status}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';
@@ -590,7 +590,7 @@
      */
     function deleteClick() {
         var noticeId = $('#delete').val();
-        $.post("/notice/delete", {noticeId:noticeId}, function (result) {
+        $.post("notice/delete", {noticeId:noticeId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';
