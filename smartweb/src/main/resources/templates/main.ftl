@@ -39,17 +39,7 @@
     <!--**********************************
         Nav header start
     ***********************************-->
-    <div class="nav-header">
-        <div class="brand-logo">
-            <a href="index.html">
-                <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
-                <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
-                <span class="brand-title">
-                        <img src="images/logo-text.png" alt="">
-                    </span>
-            </a>
-        </div>
-    </div>
+    <#include "freemarker/base/nav_header.ftl"/>
     <!--**********************************
         Nav header end
     ***********************************-->
@@ -68,7 +58,31 @@
     ***********************************-->
     <div class="content-body">
 
-        <div>
+        <div class="div_big" style="margin-top: 100px;margin-bottom: 50px">
+            <div style="text-align: center">
+                <span style="text-align: center;font-size:24px;font-weight: bolder"><label id="time"></span>
+            </div>
+        </div>
+
+        <div class="div_big" style="margin：auto">
+            <div class="div_main" style="float: left;margin-left: 15%; background: white">
+                <p class="p_first" ><span>今日新增注册数：<label id="register"/></span></p>
+                <p class="p_left"><span>今日新增用户数：<label id="user"/></span></p>
+                <p class="p_left"><span>注册转化率：<label id="ratio"></span></p>
+            </div>
+
+            <div class="div_main" style="float: left;margin-left: 15%; background: white">
+                <p class="p_left" ><span>今日活跃用户：</span></p>
+                <p class="p_left" ><span>本月活跃用户：</span></p>
+            </div>
+
+            <div class="div_main" style="float: left;margin-left: 15%; background: white">
+                <p class="p_first"><span>今日收入：<label id="dayRevenue"></span></p>
+                <p class="p_left"><span>今日支付笔数：<label id="payCount"></span></p>
+                <p class="p_left"><span>本月收入：<label id="monthRevenue"></span></p>
+            </div>
+        </div>
+        <#--<div>
             <p><span><label id="time"></span></p>
         </div>
 
@@ -103,7 +117,7 @@
         </div>
         <div>
             <p><span>本月收入：<label id="monthRevenue"></span></p>
-        </div>
+        </div>-->
 
     </div>
     <!--**********************************
@@ -188,8 +202,6 @@
     }
 
 </script>
-
-
 <script src="plugins/common/common.min.js"></script>
 <script src="js/custom.min.js"></script>
 <script src="js/settings.js"></script>

@@ -175,7 +175,7 @@ CREATE TABLE t_ali_feedback
 	gmt_payment datetime,
 	gmt_refund datetime,
 	gmt_close datetime,
-	fund_bill_list datetime
+	fund_bill_list char(255)
 );
 
 
@@ -1163,6 +1163,12 @@ ALTER TABLE t_vipcommodity
         ON UPDATE RESTRICT
         ON DELETE RESTRICT
 ;
+
+
+
+/* Create Indexes */
+
+CREATE INDEX ix_invite_detail_userid USING BTREE ON t_invite_detail (user_id DESC);
 
 
 

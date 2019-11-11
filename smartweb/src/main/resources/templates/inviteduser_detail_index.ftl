@@ -43,17 +43,7 @@
     <!--**********************************
         Nav header start
     ***********************************-->
-    <div class="nav-header">
-        <div class="brand-logo">
-            <a href="index.html">
-                <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
-                <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
-                <span class="brand-title">
-                        <img src="images/logo-text.png" alt="">
-                    </span>
-            </a>
-        </div>
-    </div>
+    <#include "freemarker/base/nav_header.ftl"/>
     <!--**********************************
         Nav header end
     ***********************************-->
@@ -90,7 +80,7 @@
 
                             <div class="basic-form">
                                 <form>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-2">
                                         <label>邀请人状态：</label>
                                         <select id="status" class="form-control">
                                             <option value='0' selected='selected'>全选</option>
@@ -99,7 +89,7 @@
                                             <option value='20'>年费会员</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-2">
                                         <label>支付时间：</label>
                                         <input id="startTime" type="date" class="form-control"> 至
                                         <input id="endTime" type="date" class="form-control">
@@ -112,6 +102,9 @@
                             </button>
                             <button type="button" class="btn btn-primary " id="query"
                                     onclick="javascript:queryClick();">查询
+                            </button>
+                            <button type="button" class="btn btn-primary " id="query"
+                                    onclick="javascript:backClick();">返回
                             </button>
 
                             <hr>
@@ -200,7 +193,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "/revenue/inviteduser/detail?userId=" + ${userId} + "&viptypeId=" + $('#status').val() +
+            "ajax": "/revenue/query/inviteduser/detail?userId=" + ${invitedUserId} + "&viptypeId=" + $('#status').val() +
                 "&startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
@@ -232,6 +225,14 @@
                 }
             }
         });
+    }
+
+
+    /**
+     * 返回
+     */
+    function backClick() {
+        window.location.href = '/inviteduser?userId='+ ${inviteUserId};
     }
 </script>
 

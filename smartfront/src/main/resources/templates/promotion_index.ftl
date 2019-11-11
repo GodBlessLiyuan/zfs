@@ -17,7 +17,6 @@
 
 </head>
 
-
     <body >
         <div class="promote_state" style="height:100%;width:100%; ">
             <div class="betweenLR" style="margin-top: 120%">
@@ -64,7 +63,6 @@
                 if(!phoneCheck(phone)){
                     return;
                 }
-
                 $.ajax({
                     type: "post",
                     url: "/share/v1.0/download",
@@ -86,5 +84,4 @@
             }
         </script>
     </body>
-
 </html>

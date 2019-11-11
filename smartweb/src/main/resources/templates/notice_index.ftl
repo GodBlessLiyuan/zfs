@@ -43,17 +43,7 @@
     <!--**********************************
         Nav header start
     ***********************************-->
-    <div class="nav-header">
-        <div class="brand-logo">
-            <a href="index.html">
-                <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
-                <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
-                <span class="brand-title">
-                        <img src="images/logo-text.png" alt="">
-                    </span>
-            </a>
-        </div>
-    </div>
+    <#include "freemarker/base/nav_header.ftl"/>
     <!--**********************************
         Nav header end
     ***********************************-->
@@ -435,9 +425,11 @@
         } else if (type == 2) {
             document.getElementById("picModal").style.display = "block";
             document.getElementById("textModal").style.display = "none";
+            document.getElementById("urlModal").style.display = "block";
         } else {
             document.getElementById("picModal").style.display = "block";
             document.getElementById("textModal").style.display = "block";
+            document.getElementById("urlModal").style.display = "block";
         }
     }
 

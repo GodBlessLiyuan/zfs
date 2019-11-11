@@ -62,7 +62,7 @@ public class UserVipServiceImpl implements IUserVipService {
 
         if (CommonConstant.COMM_VIP == userVipPO.getViptypeId()) {
             // 判断时间
-            if (date.compareTo(userVipPO.getVendTime()) > 0) {
+            if (date.compareTo(userVipPO.getEndTime()) > 0) {
                 userVipPO.setViptypeId(CommonConstant.NONE_VIP);
             } else {
                 // 普通会员
