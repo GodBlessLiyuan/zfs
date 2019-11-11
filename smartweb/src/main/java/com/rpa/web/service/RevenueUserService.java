@@ -18,5 +18,5 @@ public interface RevenueUserService {
 
     DTPageInfo<InviteUserDTO> queryInviteduser(int draw, int start, int length, Integer userId, String invitePhone);
 
-    DTPageInfo<InviteDetailDTO> queryInviteduserDetail(int draw, int start, int length, Integer userId, Integer viptypeId, Date startTime, Date endTime);
+    DTPageInfo<InviteDetailDTO> queryInviteduserDetail(int draw, int start, int length, Integer userId, Integer viptypeId, String startTime, String endTime);
 }

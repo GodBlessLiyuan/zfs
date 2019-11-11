@@ -21,7 +21,7 @@ public class UserActivityServiceImpl implements UserActivityService {
     @Override
     public Integer query(UserActivityDTO dto) {
 
-        Integer status = this.userActivityMapper.query(dto.getActivityId(), dto.getUserId());
+        Integer status = this.userActivityMapper.query(dto.getUd());
         return status;
     }
 }

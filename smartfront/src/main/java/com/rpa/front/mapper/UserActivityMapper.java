@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserActivityMapper extends BaseMapper<UserActivityPO, Integer> {
-    Integer query(Integer activityId, Long userId);
+    Integer query(Long ud);
 }

@@ -89,8 +89,8 @@ public class RevenueUserController {
                                              @RequestParam(value = "length", defaultValue = "10") int length,
                                              @RequestParam(value = "userId") Integer userId,
                                              @RequestParam(value = "viptypeId", required = false) Integer viptypeId,
-                                             @RequestParam(value = "startTime", required = false) Date startTime,
-                                             @RequestParam(value = "endTime", required = false) Date endTime
+                                             @RequestParam(value = "startTime", required = false) String startTime,
+                                             @RequestParam(value = "endTime", required = false) String endTime
     ) {
 
         // 调用业务层，返回页面结果

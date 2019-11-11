@@ -276,42 +276,49 @@
     /**
      * 新增：在弹框中点击确定按钮后，将数据发送给后台
      */
+    var isclick = true;
     function insertClick() {
+        if (isclick) {
+            isclick = false;
 
-        var reqData = new FormData();
-        reqData.append("funName", $('#insert_name').val());
-        reqData.append("url", $('#insert_video')[0].files[0]);
-        reqData.append("extra", $('#insert_extra').val());
+            var reqData = new FormData();
+            reqData.append("funName", $('#insert_name').val());
+            reqData.append("url", $('#insert_video')[0].files[0]);
+            reqData.append("extra", $('#insert_extra').val());
 
-        var funName = $('#insert_name').val();
-        var url = $('#insert_video')[0].files[0];
+            var funName = $('#insert_name').val();
+            var url = $('#insert_video')[0].files[0];
 
-        if (funName == null || funName.trim() == "") {
-            alert("功能名称不能为空！")
-        }else if (url == null) {
-            alert("视频不能为空！")
-        }else {
+            if (funName == null || funName.trim() == "") {
+                alert("功能名称不能为空！")
+                isclick = true;
+            }else if (url == null) {
+                alert("视频不能为空！")
+                isclick = true;
+            }else {
 
-            $.ajax({
-                type: 'post',
-                url: 'functionvideo/insert',
-                dataType: 'json',
-                data: reqData,
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    if (result.code === 1008) {
-                        alert("登录超时，请重新登录！");
-                        window.location.href = '/login';
-                    }else if (result.code == 0) {
-                        alert("新增成功！");
-                        $('#datatab').DataTable().draw(false);
-                    } else {
-                        alert("新增失败！");
+                $.ajax({
+                    type: 'post',
+                    url: 'functionvideo/insert',
+                    dataType: 'json',
+                    data: reqData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result.code === 1008) {
+                            alert("登录超时，请重新登录！");
+                            window.location.href = '/login';
+                        }else if (result.code == 0) {
+                            alert("新增成功！");
+                            $('#datatab').DataTable().draw(false);
+                        } else {
+                            alert("新增失败！");
+                        }
+                        document.getElementById("insert_xModal").click();
                     }
-                    document.getElementById("insert_xModal").click();
-                }
-            });
+                });
+                isclick = true;
+            }
         }
     }
 
