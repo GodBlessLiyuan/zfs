@@ -28,7 +28,7 @@ public class UserActivityServiceImpl implements IUserActivityService {
         List<UserActivityPO> userActivityPOs = userActivityMapper.queryByUserIdAndStatus(dto.getUd(), (byte) 0);
         for (UserActivityPO po : userActivityPOs) {
             if (20 != po.getStatus()) {
-                return new ResultVO(2000);
+                return new ResultVO(1024);
             }
         }
 

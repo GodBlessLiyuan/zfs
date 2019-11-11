@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,9 +56,16 @@ public class OrderController {
                                       @RequestParam(value = "uChanId") int uChanId,
                                       @RequestParam(value = "sChanId") int sChanId,
                                       @RequestParam(value = "phone") String phone,
-                                      @RequestParam(value = "number") String number) {
+                                      @RequestParam(value = "number") String number) throws ParseException {
         Map<String, Object> reqData = new HashMap<>(8);
         reqData.put("startDate", startDate);
+        if(null != endDate && !"".equals(endDate)) {
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            calendar.setTime(df.parse(endDate));
+            calendar.add(Calendar.DATE, 1);
+            endDate = df.format(calendar.getTime());
+        }
         reqData.put("endDate", endDate);
         reqData.put("comTypeId", comTypeId);
         reqData.put("type", type);
