@@ -104,7 +104,7 @@
                                         <th>素材类型</th>
                                         <th>内容</th>
                                         <th>备注</th>
-                                        <th>操作</th>
+                                        <th width="170px">操作</th>
                                         <th>操作人</th>
                                     </tr>
                                     </thead>

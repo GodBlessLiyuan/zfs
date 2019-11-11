@@ -116,24 +116,25 @@
 
                             <hr>
                             <div class="table-responsive">
-                                <table id="datatab" class="display" style="width:100%">
+                                <table id="datatab" class="table table-striped table-bordered zero-configuration"
+                                       style="table-layout: fixed; text-align: center; vertical-align: middle">
                                     <thead>
-                                    <tr>
-                                        <th>序号</th>
-                                        <th>渠道标识</th>
-                                        <th>渠道名称</th>
-                                        <th>创建时间</th>
-                                        <th>创建人</th>
-                                        <th>产品类型</th>
-                                        <th>创建数量</th>
-                                        <th>已激活</th>
-                                        <th>未激活</th>
-                                        <th>备注</th>
-                                        <th>状态</th>
-                                        <th>操作时间</th>
-                                        <th>操作</th>
-                                        <th>操作人</th>
-                                    </tr>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>渠道标识</th>
+                                            <th>渠道名称</th>
+                                            <th>创建时间</th>
+                                            <th>创建人</th>
+                                            <th>产品类型</th>
+                                            <th>创建数量</th>
+                                            <th>已激活</th>
+                                            <th>未激活</th>
+                                            <th>备注</th>
+                                            <th>状态</th>
+                                            <th>操作时间</th>
+                                            <th width="190px">操作</th>
+                                            <th>操作人</th>
+                                        </tr>
                                     </thead>
                                 </table>
                             </div>
@@ -406,17 +407,13 @@
                     "render": function (data, type, full) {
                         var sta;
                         if (data === 1) {
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary'>正常</button>";
+                            sta = "正常";
                         }else if(data === 3){
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary'>已冻结</button>";
+                            sta = "已冻结";
                         }else if(data === 4){
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary'>已失效</button>";
+                            sta = "已失效";
                         }else if(data === 5){
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary'>已结束</button>";
+                            sta = "已结束";
                         }
                         return sta;
                     }
@@ -429,11 +426,11 @@
                         var detail_link = "<button type='button'  data-whatever='@getbootstrap'" +
                             "class='btn btn-primary' onclick='javascript:detailModal(" + data + ")'>详情</button> ";
                         var freeze_button = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ 3 +")'>冻结</button>";
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ 3 +")'>冻结</button> ";
                         var unfreeze_button = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ 1 +")'>解冻</button>";
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ 1 +")'>解冻</button> ";
                         var invalid_button = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ 4 +")'>失效</button>";
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ 4 +")'>失效</button> ";
 
                         if (full.status === 1) {
                             return detail_link + freeze_button + invalid_button;

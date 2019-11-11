@@ -100,7 +100,7 @@
                                         <th>功能名称</th>
                                         <th>视频</th>
                                         <th>备注</th>
-                                        <th>操作</th>
+                                        <th width="170px">操作</th>
                                         <th>操作人</th>
                                     </tr>
                                     </thead>
