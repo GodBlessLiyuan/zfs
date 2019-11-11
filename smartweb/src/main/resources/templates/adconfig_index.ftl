@@ -112,27 +112,22 @@
 
                             <hr>
                             <div class="table-responsive">
-<<<<<<< HEAD
                                 <table id="datatab" class="table table-striped table-bordered zero-configuration"
                                        style="table-layout: fixed; text-align: center; vertical-align: middle">
                                     <thead>
-=======
-                                   <table id="datatab" class="table table-striped table-bordered zero-configuration"
-                                       style="table-layout: fixed; text-align: center; vertical-align: middle"><thead>
->>>>>>> c7b7308f503c323ffefb1449cbcb13e969a642c2
-                                    <tr>
-                                        <th>序号</th>
-                                        <th>广告ID</th>
-                                        <th>广告商名称</th>
-                                        <th>上线时间</th>
-                                        <th>接入人</th>
-                                        <th>联系方式</th>
-                                        <th>展示优先级</th>
-                                        <th>展示次数</th>
-                                        <th>状态</th>
-                                        <th width="250px">操作</th>
-                                        <th>操作人</th>
-                                    </tr>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>广告ID</th>
+                                            <th>广告商名称</th>
+                                            <th>上线时间</th>
+                                            <th>接入人</th>
+                                            <th>联系方式</th>
+                                            <th>展示优先级</th>
+                                            <th>展示次数</th>
+                                            <th>状态</th>
+                                            <th width="250px">操作</th>
+                                            <th>操作人</th>
+                                        </tr>
                                     </thead>
                                 </table>
                             </div>
