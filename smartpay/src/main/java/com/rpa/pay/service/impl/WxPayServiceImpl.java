@@ -65,7 +65,8 @@ public class WxPayServiceImpl implements IWxPayService {
 
         // 创建订单
         OrderPO orderPO = new OrderPO();
-        orderPO.setOrderNumber(UUID.randomUUID().toString().replace("-", ""));
+
+        orderPO.setOrderNumber(WxPayUtil.genOrderNumber());
         orderPO.setUserDeviceId(dto.getUdd());
         orderPO.setCmdyId(dto.getCmdyid());
         orderPO.setUserId(dto.getUd());
