@@ -29,6 +29,13 @@ public class Constant {
 
 
     /**
+     * 加密用的盐
+     */
+    public static final String SALT = "frank";
+
+
+
+    /**
      * 养号教程
      */
     public static final int TRAIN = 2;
