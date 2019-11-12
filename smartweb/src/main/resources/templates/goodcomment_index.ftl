@@ -244,8 +244,12 @@
                     "data": "url",
                     "render": function (data, type, full) {
 
-                        return  "<button type='button' data-toggle='modal' data-target='#imageModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:imageModal(" + data + ")'>查看</button>";
+                        if (null == data) {
+                            return "";
+                        } else {
+                            return  "<button type='button' data-toggle='modal' data-target='#imageModal' data-whatever='@getbootstrap' " +
+                                "class='btn btn-primary' onclick='javascript:imageModal(\"" + data + "\")'>查看</button>";
+                        }
                     }
                 },
                 {"data": "comTypeName"},
@@ -260,7 +264,7 @@
                         } else {
                             sta = "已驳回"
                         }
-                        return "<p  data-whatever='@getbootstrap'>" + sta + "</p>";
+                        return sta;
                     }
                 },
                 {
@@ -303,8 +307,7 @@
      * 查看图片：把图片地址传递给弹框
      */
     function imageModal(url) {
-        //document.getElementById("image").src = url;
-        $('#image').attr("src", url)
+        document.getElementById("image").src = url;
     }
 
 
