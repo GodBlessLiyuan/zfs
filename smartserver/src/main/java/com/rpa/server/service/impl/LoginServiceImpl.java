@@ -49,6 +49,8 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public ResultVO register(LoginDTO dto, HttpServletRequest req) {
         UserPO userPO = userMapper.queryByPhone(dto.getPh());
+        // 前端是否出弹框
+        byte gift = 0;
         if (null == userPO) {
             // 注册
             // 新增用户
@@ -87,9 +89,11 @@ public class LoginServiceImpl implements ILoginService {
 
                 UserVipPO userVipPO = UserVipUtil.buildUserVipVO(null, po.getUserId(), userGiftsPO.getDays(), false);
                 userVipMapper.insert(userVipPO);
+
+                gift = 1;
             }
 
-            return this.buildResultVO(userDevPO);
+            return this.buildResultVO(userDevPO, gift);
         }
 
         // 登录
@@ -117,22 +121,24 @@ public class LoginServiceImpl implements ILoginService {
             userDeviceMapper.updateByPrimaryKey(userDevicePO);
         }
 
-        return this.buildResultVO(userDevicePO);
+        return this.buildResultVO(userDevicePO, gift);
     }
 
     /**
      * 根据用户信息和用户设备信息，返回结果
      *
      * @param userDevPO
+     * @param gift
      * @return
      */
-    private ResultVO buildResultVO(UserDevicePO userDevPO) {
+    private ResultVO buildResultVO(UserDevicePO userDevPO, byte gift) {
         LoginVO loginVO = new LoginVO();
         loginVO.setUd(userDevPO.getUserId());
         loginVO.setUm(DigestUtils.md5DigestAsHex(userDevPO.getUserId().toString().getBytes()));
         loginVO.setUdd(userDevPO.getUserDeviceId());
         loginVO.setToken(JWT.create().withAudience(userDevPO.getUserId().toString(), userDevPO.getDeviceId().toString(),
                 userDevPO.getUserDeviceId().toString()).sign(Algorithm.HMAC256(userDevPO.getUserId().toString())));
+        loginVO.setGift(gift);
 
         return new ResultVO<>(1000, loginVO);
     }

@@ -30,4 +30,8 @@ public class LoginVO implements Serializable {
      * 用户签名验证
      */
     private String token;
+    /**
+     * 是否出现赠送弹框：0 不弹框； 1 弹框
+     */
+    private Byte gift;
 }
