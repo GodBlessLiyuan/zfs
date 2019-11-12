@@ -26,4 +26,7 @@ nohup mvn spring-boot:run -Dspring-boot.run.profiles=dev &
 /usr/local/nginx/nginx -c /data/nginx-1.16.1/conf/nginx.conf
 /usr/local/bin/redis-server /etc/redis/6379.conf
 
+./bin/zookeeper-server-start.sh -daemon config/zookeeper.properties
+./bin/kafka-server-start.sh -daemon config/server.properties
+
 

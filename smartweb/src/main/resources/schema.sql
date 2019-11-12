@@ -73,7 +73,7 @@ CREATE TABLE t_activity
 	create_time datetime,
 	update_time datetime,
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	com_type_id int NOT NULL,
 	days int,
 	-- 日卡，周卡，月卡，年卡
@@ -127,7 +127,7 @@ CREATE TABLE t_admin_user
 	create_time datetime,
 	last_time datetime,
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	role_id int NOT NULL,
 	relation_a_id int,
 	name char(64),
@@ -203,7 +203,7 @@ CREATE TABLE t_app
 	context char(255),
 	publish_time datetime,
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	md5 char(32),
 	PRIMARY KEY (app_id),
 	UNIQUE (app_id)
@@ -405,7 +405,8 @@ CREATE TABLE t_functionvideo
 	create_time datetime,
 	update_time datetime,
 	PRIMARY KEY (function_id),
-	UNIQUE (function_id)
+	UNIQUE (function_id),
+	UNIQUE (fun_name)
 );
 
 
