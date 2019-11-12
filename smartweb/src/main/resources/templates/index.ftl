@@ -39,7 +39,7 @@
                 <div class="form-input-content">
                     <div class="card login-form mb-0">
                         <div class="card-body pt-5">
-                            <a class="text-center" href="index.html"> <h4>砖助智能助手业务后台</h4></a>
+                            <a class="text-center" href="index.html"> <h4>智能移动社交营销平台管理系统</h4></a>
 
                             <form class="mt-8 mb-8 login-input" method="post" action="entry">
                                 <div class="form-group">
