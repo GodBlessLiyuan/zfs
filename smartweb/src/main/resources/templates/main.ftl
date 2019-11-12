@@ -141,7 +141,7 @@
                     $('#register').text(result.data.newRegister);
                     $('#user').text(result.data.newUser);
                     if (result.data.newUser != 0) {
-                        $('#ratio').text(result.data.newRegister / result.data.newUser);
+                        $('#ratio').text(Math.round(result.data.newRegister / result.data.newUser * 10000) / 100.00 + "%");
                     }
                     $('#dayRevenue').text(result.data.dayRevenue);
                     $('#payCount').text(result.data.payCount);
