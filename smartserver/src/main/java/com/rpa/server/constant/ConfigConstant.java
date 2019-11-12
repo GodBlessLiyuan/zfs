@@ -54,5 +54,12 @@ public class ConfigConstant {
      * 个人中心-设置-用户服务协议-webview的url
      */
     public static final int PROTOCOL = 17;
-
+    /**
+     * 会员中心-会员权益
+     */
+    public static final int VIP_PROTOCOL = 18;
+    /**
+     * 会员中心-用户服务协议
+     */
+    public static final int MEMBER_RIGHTS = 19;
 }
