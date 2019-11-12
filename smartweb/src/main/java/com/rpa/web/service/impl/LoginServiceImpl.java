@@ -1,5 +1,6 @@
 package com.rpa.web.service.impl;
 
+import com.rpa.web.common.Constant;
 import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdminUserMapper;
@@ -39,15 +40,15 @@ public class LoginServiceImpl implements LoginService {
 
         AdminUserPO po = adminUserMapper.queryUserByUsername(username);
 
-        /*try {
+        try {
             // 对密码加密，之后再去数据库对比
-            password = Md5Util.encodeByMd5(password);
+            password = Md5Util.encodeByMd5(Constant.SALT + password);
         } catch (Exception e) {
             e.printStackTrace();
             result.put("flag", false);
             result.put("msg", "MD5异常");
             return "forward:login";
-        }*/
+        }
 
         // 将用户输入的验证码与服务器生成的进行比对
         if (serverCheckcode == null) {
@@ -153,6 +154,14 @@ public class LoginServiceImpl implements LoginService {
 
         // 对输入的旧密码进行校验，以确保的确是用户本人在进行修改密码操作
         String password = this.adminUserMapper.queryPassword(aId);
+
+        try {
+            oldPassword = Md5Util.encodeByMd5(Constant.SALT + oldPassword);
+            newPassword = Md5Util.encodeByMd5(Constant.SALT + newPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (oldPassword.equals(password)) {
             int count = this.adminUserMapper.updatePassword(aId, newPassword);
             if (count == 1) {

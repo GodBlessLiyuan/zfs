@@ -40,40 +40,48 @@ public class ConfigServiceImpl implements IConfigService {
 
         vo = new ConfigVO();
         KeyValuePO po = keyValueMapper.selectByPrimaryKey(ConfigConstant.INDEX);
-        if (po != null) {
+        if (null != po) {
             vo.setIndex(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.TRAIN);
-        if (po != null) {
+        if (null != po) {
             vo.setTrain(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.QQ);
-        if (po != null) {
+        if (null != po) {
             vo.setQq(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.WX);
-        if (po != null) {
+        if (null != po) {
             vo.setWx(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.SHARE_URL);
-        if (po != null) {
+        if (null != po) {
             vo.setShareurl(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.PROBLEM_URL);
-        if (po != null) {
+        if (null != po) {
             vo.setProblemurl(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.FREE_VIP);
-        if (po != null) {
+        if (null != po) {
             vo.setFreevip(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.PROTOCOL);
-        if (po != null) {
+        if (null != po) {
             vo.setProtocol(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.JOIN_QQ_CODE);
-        if (po != null) {
+        if (null != po) {
             vo.setJoinqqcode(po.getValue());
+        }
+        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.VIP_PROTOCOL);
+        if (null != po) {
+            vo.setVipprotocol(po.getValue());
+        }
+        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.MEMBER_RIGHTS);
+        if (null != po) {
+            vo.setMemberrights(po.getValue());
         }
 
         cacheUtil.setCache(ConfigConstant.REDIS_KEY, vo, 1, TimeUnit.HOURS);

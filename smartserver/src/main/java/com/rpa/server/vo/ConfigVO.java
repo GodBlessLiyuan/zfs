@@ -16,11 +16,13 @@ public class ConfigVO implements Serializable {
 
     private String index;
     private String train;
+    private String joinqqcode;
     private String qq;
     private String wx;
     private String shareurl;
     private String problemurl;
     private String freevip;
     private String protocol;
-    private String joinqqcode;
+    private String vipprotocol;
+    private String memberrights;
 }

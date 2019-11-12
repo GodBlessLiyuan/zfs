@@ -106,7 +106,7 @@
         } else if (newPassword != confirm) {
             alert("输入密码不一致，请重新输入！");
         }else {
-            $.post("/updatePassword", {oldPassword: oldPassword, newPassword: newPassword}, function (result) {
+            $.post("updatePassword", {oldPassword: oldPassword, newPassword: newPassword}, function (result) {
                 if (result.code === 0) {
                     alert("密码修改成功！")
                 } else {
@@ -122,6 +122,6 @@
      * 退出登录
      */
     function logoutClick() {
-        window.location= "/logout";
+        window.location= "logout";
     }
 </script>

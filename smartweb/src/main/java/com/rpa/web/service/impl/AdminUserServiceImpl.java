@@ -12,6 +12,7 @@ import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.pojo.RolePO;
 import com.rpa.web.service.AdminUserService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.Md5Util;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,13 +94,21 @@ public class AdminUserServiceImpl implements AdminUserService {
         AdminUserPO po = new AdminUserPO();
         po.setRoleId(dto.getRoleId());
         po.setUsername(dto.getUsername());
-        po.setPassword(dto.getPassword());
+
+        String password = null;
+        try {
+            password = Md5Util.encodeByMd5(Constant.SALT + dto.getPassword());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        po.setPassword(password);
+
         po.setName(dto.getName());
         po.setPhone(dto.getPhone());
         po.setEmail(dto.getEmail());
         po.setExtra(dto.getExtra());
         po.setCreateTime(new Date());
-        po.setRelationAId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setRelationAId(aId);
 
         int count = this.adminUserMapper.insert(po);
         if (count == 1) {
@@ -185,12 +194,20 @@ public class AdminUserServiceImpl implements AdminUserService {
         // 把 DTO 转换为 PO
         po.setRoleId(dto.getRoleId());
         po.setUsername(dto.getUsername());
-        po.setPassword(dto.getPassword());
+
+        String password = null;
+        try {
+            password = Md5Util.encodeByMd5(Constant.SALT + dto.getPassword());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        po.setPassword(password);
+
         po.setName(dto.getName());
         po.setPhone(dto.getPhone());
         po.setEmail(dto.getEmail());
         po.setExtra(dto.getExtra());
-        po.setRelationAId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setRelationAId(aId);
 
         int count = adminUserMapper.updateByPrimaryKey(po);
         if (count == 1) {
