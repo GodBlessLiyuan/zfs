@@ -125,7 +125,15 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         int aId = adminUserDTO.getaId();
 
         FunctionVideoPO po = new FunctionVideoPO();
-        po.setFunName(funName);
+
+        // 对funname进行唯一性校验，如果有重名，不给插入
+        int funname_count = this.functionVideoMapper.queryFunname(funName);
+        if (funname_count == 0) {
+            po.setFunName(funName);
+        }else {
+            return ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+        }
+
         if (null == url) {
             po.setUrl(null);
         } else {
