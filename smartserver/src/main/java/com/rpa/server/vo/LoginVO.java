@@ -34,4 +34,8 @@ public class LoginVO implements Serializable {
      * 是否出现赠送弹框：0 不弹框； 1 弹框
      */
     private Byte gift;
+    /**
+     * 赠送天数
+     */
+    private Integer days;
 }
