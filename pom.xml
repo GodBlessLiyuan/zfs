@@ -28,6 +28,7 @@
         <module>smartconsumer</module>
         <module>smartfront</module>
         <module>smartpay</module>
+        <module>smartcache</module>
     </modules>
 
     <dependencyManagement>

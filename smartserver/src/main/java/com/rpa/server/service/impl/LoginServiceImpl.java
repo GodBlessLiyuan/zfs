@@ -51,6 +51,8 @@ public class LoginServiceImpl implements ILoginService {
         UserPO userPO = userMapper.queryByPhone(dto.getPh());
         // 前端是否出弹框
         byte gift = 0;
+        // 赠送天数
+        int days = 0;
         if (null == userPO) {
             // 注册
             // 新增用户
@@ -91,9 +93,10 @@ public class LoginServiceImpl implements ILoginService {
                 userVipMapper.insert(userVipPO);
 
                 gift = 1;
+                days = userGiftsPO.getDays();
             }
 
-            return this.buildResultVO(userDevPO, gift);
+            return this.buildResultVO(userDevPO, gift, days);
         }
 
         // 登录
@@ -121,7 +124,7 @@ public class LoginServiceImpl implements ILoginService {
             userDeviceMapper.updateByPrimaryKey(userDevicePO);
         }
 
-        return this.buildResultVO(userDevicePO, gift);
+        return this.buildResultVO(userDevicePO, gift, days);
     }
 
     /**
@@ -131,7 +134,7 @@ public class LoginServiceImpl implements ILoginService {
      * @param gift
      * @return
      */
-    private ResultVO buildResultVO(UserDevicePO userDevPO, byte gift) {
+    private ResultVO buildResultVO(UserDevicePO userDevPO, byte gift, int days) {
         LoginVO loginVO = new LoginVO();
         loginVO.setUd(userDevPO.getUserId());
         loginVO.setUm(DigestUtils.md5DigestAsHex(userDevPO.getUserId().toString().getBytes()));
@@ -139,6 +142,7 @@ public class LoginServiceImpl implements ILoginService {
         loginVO.setToken(JWT.create().withAudience(userDevPO.getUserId().toString(), userDevPO.getDeviceId().toString(),
                 userDevPO.getUserDeviceId().toString()).sign(Algorithm.HMAC256(userDevPO.getUserId().toString())));
         loginVO.setGift(gift);
+        loginVO.setDays(days);
 
         return new ResultVO<>(1000, loginVO);
     }
