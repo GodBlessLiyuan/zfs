@@ -32,7 +32,7 @@
   </select>
 
   <select id="queryFunname" resultType="java.lang.Integer">
-    select count(*)
+    select count(function_id)
     from t_functionvideo
     where fun_name = #{funName}
   </select>
