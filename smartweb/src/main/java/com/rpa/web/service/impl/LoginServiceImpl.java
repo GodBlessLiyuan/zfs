@@ -154,6 +154,14 @@ public class LoginServiceImpl implements LoginService {
 
         // 对输入的旧密码进行校验，以确保的确是用户本人在进行修改密码操作
         String password = this.adminUserMapper.queryPassword(aId);
+
+        try {
+            oldPassword = Md5Util.encodeByMd5(Constant.SALT + oldPassword);
+            newPassword = Md5Util.encodeByMd5(Constant.SALT + newPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (oldPassword.equals(password)) {
             int count = this.adminUserMapper.updatePassword(aId, newPassword);
             if (count == 1) {
