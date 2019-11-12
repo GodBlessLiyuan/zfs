@@ -5,7 +5,7 @@
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
 
-                    <li><a href="">首页</a></li>
+                    <li><a href="./">首页</a></li>
 
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">运营中心</a>
                         <ul aria-expanded="false">
