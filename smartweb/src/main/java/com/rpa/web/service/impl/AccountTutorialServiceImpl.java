@@ -3,13 +3,13 @@ package com.rpa.web.service.impl;
 import com.rpa.web.common.Constant;
 import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.web.feign.CacheFeignClient;
 import com.rpa.web.mapper.KeyValueMapper;
 import com.rpa.web.pojo.KeyValuePO;
 import com.rpa.web.service.AccountTutorialService;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import static com.rpa.web.common.Constant.REDIS_KEY;
@@ -27,7 +27,7 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
     @Autowired
     private KeyValueMapper keyValueMapper;
     @Autowired
-    private StringRedisTemplate template;
+    private CacheFeignClient cacheFeignClient;
 
     /**
      * 查询
@@ -86,7 +86,7 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
          * @author: xiahui
          * @description: 清除基础信息Redis缓存
          */
-        template.delete(REDIS_KEY);
+        cacheFeignClient.delete(REDIS_KEY);
 
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
