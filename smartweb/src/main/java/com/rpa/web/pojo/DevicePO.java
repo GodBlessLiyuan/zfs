@@ -37,6 +37,8 @@ public class DevicePO implements Serializable {
 
     private String buildrelease;
 
+    private String versionname;
+
     private static final long serialVersionUID = 1L;
 
     public Long getDeviceId() {
@@ -143,6 +145,14 @@ public class DevicePO implements Serializable {
         this.buildrelease = buildrelease;
     }
 
+    public String getVersionname() {
+        return versionname;
+    }
+
+    public void setVersionname(String versionname) {
+        this.versionname = versionname;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -167,7 +177,8 @@ public class DevicePO implements Serializable {
             && (this.getManufacturer() == null ? other.getManufacturer() == null : this.getManufacturer().equals(other.getManufacturer()))
             && (this.getAndroidmodel() == null ? other.getAndroidmodel() == null : this.getAndroidmodel().equals(other.getAndroidmodel()))
             && (this.getUuid() == null ? other.getUuid() == null : this.getUuid().equals(other.getUuid()))
-            && (this.getBuildrelease() == null ? other.getBuildrelease() == null : this.getBuildrelease().equals(other.getBuildrelease()));
+            && (this.getBuildrelease() == null ? other.getBuildrelease() == null : this.getBuildrelease().equals(other.getBuildrelease()))
+            && (this.getVersionname() == null ? other.getVersionname() == null : this.getVersionname().equals(other.getVersionname()));
     }
 
     @Override
@@ -187,6 +198,7 @@ public class DevicePO implements Serializable {
         result = prime * result + ((getAndroidmodel() == null) ? 0 : getAndroidmodel().hashCode());
         result = prime * result + ((getUuid() == null) ? 0 : getUuid().hashCode());
         result = prime * result + ((getBuildrelease() == null) ? 0 : getBuildrelease().hashCode());
+        result = prime * result + ((getVersionname() == null) ? 0 : getVersionname().hashCode());
         return result;
     }
 
@@ -209,6 +221,7 @@ public class DevicePO implements Serializable {
         sb.append(", androidmodel=").append(androidmodel);
         sb.append(", uuid=").append(uuid);
         sb.append(", buildrelease=").append(buildrelease);
+        sb.append(", versionname=").append(versionname);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
