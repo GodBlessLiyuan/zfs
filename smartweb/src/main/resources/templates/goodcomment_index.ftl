@@ -98,7 +98,7 @@
                                         <th>截图</th>
                                         <th>产品类型</th>
                                         <th>审核状态</th>
-                                        <th>操作</th>
+                                        <th width="160px">操作</th>
                                         <th>操作人</th>
                                     </tr>
                                     </thead>
@@ -268,7 +268,7 @@
                     "render": function (data, type, full) {
 
                         var pass_button = "<button type='button' data-toggle='modal' data-target='#passModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:passModal(" + data + ")'>通过</button>";
+                            "class='btn btn-primary' onclick='javascript:passModal(" + data + ")'>通过</button> ";
                         var reject_button = "<button type='button' data-toggle='modal' data-target='#rejectModal' data-whatever='@getbootstrap' " +
                             "class='btn btn-primary' onclick='javascript:rejectModal(" + data + ")'>驳回</button>";
 
