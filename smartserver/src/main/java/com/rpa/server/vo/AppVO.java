@@ -30,4 +30,12 @@ public class AppVO implements Serializable {
      * 跟新内容
      */
     private String context;
+    /**
+     * 应用的版本号versioncode
+     */
+    private Integer code;
+    /**
+     * 应用的版本名称
+     */
+    private String versionname;
 }

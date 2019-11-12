@@ -44,6 +44,9 @@ public class AppServiceImpl implements IAppService {
         vo.setMd5(appPO.getMd5());
         vo.setType(appPO.getUpdateType());
         vo.setContext(appPO.getContext());
+        vo.setCode(appPO.getVersioncode());
+        vo.setVersionname(appPO.getVersionname());
+
         return new ResultVO<>(1009, vo);
     }
 }
