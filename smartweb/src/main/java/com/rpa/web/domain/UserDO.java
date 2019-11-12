@@ -12,9 +12,9 @@ import lombok.Data;
 @Data
 public class UserDO extends UserPO {
     /**
-     * 应用版本
+     * 应用版本名称
      */
-    private Integer versionCode;
+    private String versionName;
     /**
      * android系统版本
      */

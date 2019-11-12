@@ -44,9 +44,13 @@ public class DeviceDTO implements Serializable {
      */
     private String model;
     /**
-     * 应用版本号
+     * 应用版本号versioncode
      */
     private Integer softv;
+    /**
+     * 应用名称versionname
+     */
+    private String softn;
     /**
      * 手机编译版本号
      */
