@@ -23,4 +23,5 @@ public class ConfigVO implements Serializable {
     private String freevip;
     private String protocol;
     private String joinqqcode;
+    private String memberrights;
 }

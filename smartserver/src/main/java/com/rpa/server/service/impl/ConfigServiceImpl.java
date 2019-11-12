@@ -40,19 +40,19 @@ public class ConfigServiceImpl implements IConfigService {
 
         vo = new ConfigVO();
         KeyValuePO po = keyValueMapper.selectByPrimaryKey(ConfigConstant.INDEX);
-        if (po != null) {
+        if (null != po) {
             vo.setIndex(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.TRAIN);
-        if (po != null) {
+        if (null  != po) {
             vo.setTrain(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.QQ);
-        if (po != null) {
+        if (null  != po) {
             vo.setQq(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.WX);
-        if (po != null) {
+        if (null  != po) {
             vo.setWx(po.getValue());
         }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.SHARE_URL);
