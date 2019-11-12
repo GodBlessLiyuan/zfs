@@ -31,7 +31,7 @@
     delete from t_device
     where device_id = #{deviceId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.server.pojo.DevicePO">
+  <insert id="insert" parameterType="com.rpa.server.pojo.DevicePO" useGeneratedKeys="true" keyProperty="deviceId">
     insert into t_device (device_id, utdid, androidid, 
       buildversion, soft_channel_id, chan_name, 
       create_time, update_time, versioncode, 

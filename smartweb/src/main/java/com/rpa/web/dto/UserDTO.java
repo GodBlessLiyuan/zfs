@@ -25,7 +25,7 @@ public class UserDTO implements Serializable {
     private Date createTime;
 
     private String chanName;
-    private Integer versionCode;
+    private String versionName;
     private String buildRelease;
     private String manufacturer;
     private String androidModel;
@@ -42,7 +42,7 @@ public class UserDTO implements Serializable {
         dto.setPhone(d.getPhone());
         dto.setCreateTime(d.getCreateTime());
         dto.setChanName(d.getChanName());
-        dto.setVersionCode(d.getVersionCode());
+        dto.setVersionName(d.getVersionName());
         dto.setBuildRelease(d.getBuildRelease());
         dto.setManufacturer(d.getManufacturer());
         dto.setAndroidModel(d.getAndroidModel());

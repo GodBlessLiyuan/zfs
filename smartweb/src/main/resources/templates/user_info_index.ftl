@@ -183,7 +183,7 @@
                 {"data": "phone"},
                 {"data": "createTime"},
                 {"data": "chanName"},
-                {"data": "versionCode"},
+                {"data": "versionName"},
                 {"data": "buildRelease"},
                 {"data": "manufacturer"},
                 {"data": "androidModel"}
