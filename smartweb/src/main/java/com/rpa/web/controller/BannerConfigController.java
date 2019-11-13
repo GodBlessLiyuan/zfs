@@ -63,13 +63,16 @@ public class BannerConfigController {
 
     /**
      * 修改状态
-     * @param bannerConfigDTO
+     * @param bannerId
+     * @param status
      * @param httpSession
      * @return
      */
     @PostMapping("/update/status")
-    public ResultVO update(BannerConfigDTO bannerConfigDTO, HttpSession httpSession) {
-        return this.bannerConfigService.update(bannerConfigDTO, httpSession);
+    public ResultVO update(@RequestParam(value = "bannerId")Integer bannerId,
+                           @RequestParam(value = "status")Byte status,
+                           HttpSession httpSession) {
+        return this.bannerConfigService.update(bannerId, status, httpSession);
     }
 
     /**

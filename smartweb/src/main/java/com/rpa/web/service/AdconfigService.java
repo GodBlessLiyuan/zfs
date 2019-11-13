@@ -22,7 +22,7 @@ public interface AdconfigService {
 
     ResultVO delete(int adId);
 
-    ResultVO updateStatus(Integer adId, HttpSession httpSession);
+    ResultVO updateStatus(Integer adId, Byte status, HttpSession httpSession);
 
     ResultVO updateStrategy(String show_interval);
 

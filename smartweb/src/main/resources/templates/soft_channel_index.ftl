@@ -75,7 +75,7 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>渠道名称</label>
                                             <input id="channelName" type="text" class="form-control">
                                         </div>

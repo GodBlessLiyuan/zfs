@@ -91,8 +91,10 @@ public class AdconfigController {
     }
 
     @PostMapping("/update/status")
-    public ResultVO updateStatus(@RequestParam(value = "adId")Integer adId, HttpSession httpSession) {
-        return this.adconfigService.updateStatus(adId, httpSession);
+    public ResultVO updateStatus(@RequestParam(value = "adId")Integer adId,
+                                 @RequestParam(value = "status")Byte status,
+                                 HttpSession httpSession) {
+        return this.adconfigService.updateStatus(adId, status, httpSession);
     }
 
     @PostMapping("/update/strategy")

@@ -327,7 +327,7 @@
      * 返回：跳转回原来的页面
      */
     function backClick() {
-        window.location.href = '/adconfig';
+        window.location.href = 'adconfig';
     }
 </script>
 

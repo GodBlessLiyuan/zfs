@@ -75,11 +75,11 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>操作人</label>
                                             <input id="username" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>产品类型</label>
                                             <select id="comType" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>

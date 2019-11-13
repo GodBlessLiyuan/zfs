@@ -75,12 +75,12 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label>手机号</label>
+                                        <div class="form-group col-md-2">
+                                            <span>手机号</span>
                                             <input id="phone" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label>是否付费用户</label>
+                                        <div class="form-group col-md-2">
+                                            <span>是否付费用户</span>
                                             <select id="isPay" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
                                                 <option value='1'>是</option>

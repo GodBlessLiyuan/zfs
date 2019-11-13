@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public interface BannerConfigService {
     DTPageInfo<BannerConfigDTO> query(int draw, int start, int length, String name, Byte status);
 
-    ResultVO update(BannerConfigDTO bannerConfigDTO, HttpSession httpSession);
+    ResultVO update(Integer bannerId, Byte status, HttpSession httpSession);
 
     ResultVO delete(int bannerId);
 
