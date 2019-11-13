@@ -18,7 +18,7 @@ public class ServerExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public ResultVO handlerPromptException(Exception e) {
-        logger.info("ServerExceptionHandler: ", e);
+        logger.error("ServerExceptionHandler: ", e);
         return new ResultVO(2000);
     }
 }

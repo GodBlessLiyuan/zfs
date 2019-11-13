@@ -21,5 +21,9 @@ eureka:
     service-url:
       default-zone: http://localhost:8761/eureka/
 
+logging:
+  path: /data/ftp/smartftp/log
+  file: ${logging.path}smartproducer
+
 
 

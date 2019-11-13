@@ -20,7 +20,7 @@ public class WebExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public ResultVO handlerPromptException(Exception e) {
-        logger.info("WebExceptionHandler: ", e);
+        logger.error("WebExceptionHandler: ", e);
         if (e instanceof PromptException) {
             return ResultVOUtil.error(((PromptException) e).getCode(), e.getMessage());
         }
