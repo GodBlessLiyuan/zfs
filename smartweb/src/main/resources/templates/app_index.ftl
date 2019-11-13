@@ -75,7 +75,7 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-2">
                                             <label>更新方式</label>
                                             <select id="updateType" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>

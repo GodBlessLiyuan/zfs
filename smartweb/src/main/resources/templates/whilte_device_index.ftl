@@ -74,7 +74,7 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <label>imei:</label>
                                             <input id="imei" type="text" class="form-control">
                                         </div>

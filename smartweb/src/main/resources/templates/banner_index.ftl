@@ -110,7 +110,7 @@
                                         <th>banner图</th>
                                         <th>跳转</th>
                                         <th>状态</th>
-                                        <th>操作</th>
+                                        <th width="170px">操作</th>
                                         <th>操作人</th>
                                     </tr>
                                     </thead>
@@ -170,13 +170,14 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="form-group">
-                    <button type="hidden" id="statusExchange" style="display:none;"/>
+                    <button type="hidden" id="statusChange_1" style="display:none;"/>
+                    <button type="hidden" id="statusChange_2" style="display:none;"/>
                 </div>
                 <div class="modal-header">
                     <h5 class="modal-title">提示</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
                 </div>
-                <div class="modal-body">是否切换状态？
+                <div class="modal-body" id="statusChange_3">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -342,25 +343,21 @@
                 {
                     "data": "status",
                     "render": function (data, type, full) {
-                        var sta;
-                        if (data === 1) {
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary' onclick='javascript:statusModal(" + full.bannerId + ")'>关闭</button>";
-                        }else{
-                            sta = "<button type='button'  data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary' onclick='javascript:statusModal(" + full.bannerId + ")'>开启</button>";
-                        }
-                        return sta;
+                        return data == 1 ? "已关闭" : "已开启";
                     }
                 },
                 {
                     "data": "bannerId",
                     "render": function (data, type, full) {
 
+                        // 要修改成的状态值：如果当前状态值为1，就修改成2，反之亦然
+                        var status = full.status == 1 ? 2 : 1;
+                        var statusButton = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ status +")'>开/关</button> ";
                         var delete_button = "<button type='button' data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
                             "class='btn btn-primary' onclick='javascript:deleteModal(" + data + ")'>删除</button>";
 
-                        return delete_button;
+                        return statusButton + delete_button;
                     }
                 },
                 {"data": "operator"}
@@ -387,16 +384,21 @@
     /**
      * 修改状态：将要修改数据的ID存到提示框里
      */
-    function statusModal(bannerId) {
-        $('#statusExchange').val(bannerId);
+    function statusModal(bannerId, status) {
+        $('#statusChange_1').val(bannerId);
+        $('#statusChange_2').val(status);
+
+        var tip = status == 1 ? "确认关闭？" : "确认开启？"
+        document.getElementById("statusChange_3").innerText = tip;
     }
 
     /**
      * 修改状态：从提示框里取出ID，发送给后台
      */
     function statusClick() {
-        var bannerId = $('#statusExchange').val();
-        $.post("bannerconfig/update/status", {bannerId:bannerId}, function (result) {
+        var bannerId = $('#statusChange_1').val();
+        var status = $('#statusChange_2').val();
+        $.post("bannerconfig/update/status", {bannerId:bannerId, status:status}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';

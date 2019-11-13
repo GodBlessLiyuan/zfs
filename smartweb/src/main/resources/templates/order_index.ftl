@@ -19,6 +19,8 @@
 
 
     <link href="./plugins/datatables/jquery.dataTables.min.css">
+    <!--jedate-->
+    <link rel="stylesheet" type="text/css" href="./plugins/jedate-6.5.0/skin/jedate.css"/>
 
 </head>
 
@@ -74,18 +76,18 @@
                             <div class="basic-form">
                                 <form>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <span for="recipient-name" class="col-form-label">支付时间：</span>
-                                            <input id="startDate" type="date" class="form-control"> 至 <input
-                                                    id="endDate" type="date" class="form-control">
+                                            <input id="startDate" type="text" class="form-control" placeholder="开始时间"> 至 <input
+                                                    id="endDate" type="text" class="form-control" placeholder="结束时间">
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <span for="recipient-name" class="col-form-label">产品类型：</span>
                                             <select id="comTypeId" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <span for="recipient-name" class="col-form-label">支付方式：</span>
                                             <select id="type" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
@@ -93,24 +95,24 @@
                                                 <option value='2'>支付宝</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <span for="recipient-name" class="col-form-label">用户渠道：</span>
                                             <select id="uChanId" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-2">
                                             <span for="recipient-name" class="col-form-label">销售渠道：</span>
                                             <select id="sChanId" class="form-control">
                                                 <option value='0' selected='selected'>全选</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label>支付账号：</label>
+                                        <div class="form-group col-md-2">
+                                            <span>支付账号：</span>
                                             <input id="phone" type="text" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label>订单编号：</label>
+                                        <div class="form-group col-md-2">
+                                            <span>订单编号：</span>
                                             <input id="number" type="text" class="form-control">
                                         </div>
                                     </div>
@@ -184,6 +186,8 @@
 
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="./plugins/jedate-6.5.0/dist/jedate.min.js"></script>
+
 <script>
     $(document).ready(function () {
         // 自动查询
@@ -306,6 +310,27 @@
         $('#phone').val(null);
         $('#number').val(null);
     }
+
+
+    /**
+     * 日期控件
+     */
+    document.getElementById("startDate").addEventListener("focus",function () {
+        jeDate(this, {
+            theme: {bgcolor: "#f60", color: "#fff", pnColor: "#f60"},   //设置颜色
+            format: "YYYY-MM-DD",                                       //设置时间格式
+            minDate: "1995-01-01 00:00:00",                             //设置最小日期
+            maxDate: "2099-12-31 23:59:59"                              //设置最大日期
+        });
+    });
+    document.getElementById("endDate").addEventListener("focus",function () {
+        jeDate(this, {
+            theme: {bgcolor: "#f60", color: "#fff", pnColor: "#f60"},   //设置颜色
+            format: "YYYY-MM-DD",                                       //设置时间格式
+            minDate: "1995-01-01 00:00:00",                             //设置最小日期
+            maxDate: "2099-12-31 23:59:59"                              //设置最大日期
+        });
+    });
 
 </script>
 

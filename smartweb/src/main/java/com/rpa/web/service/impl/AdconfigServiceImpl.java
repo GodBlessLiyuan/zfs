@@ -201,11 +201,12 @@ public class AdconfigServiceImpl implements AdconfigService {
      * 修改状态
      *
      * @param adId
+     * @param status
      * @param httpSession
      * @return
      */
     @Override
-    public ResultVO updateStatus(Integer adId, HttpSession httpSession) {
+    public ResultVO updateStatus(Integer adId, Byte status, HttpSession httpSession) {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
@@ -219,12 +220,7 @@ public class AdconfigServiceImpl implements AdconfigService {
             return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
         }
 
-        if (po.getStatus() == 1) {
-            po.setStatus((byte) 2);
-        } else {
-            po.setStatus((byte)1);
-        }
-
+        po.setStatus(status);
         po.setUpdateTime(new Date());
         po.setaId(aId);
 

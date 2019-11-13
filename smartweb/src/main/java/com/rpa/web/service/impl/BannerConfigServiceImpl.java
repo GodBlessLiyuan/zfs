@@ -111,7 +111,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         po.setUpdateTime(new Date());
         po.setStatus((byte)1);
         po.setDr((byte)1);
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
 
         int count = this.bannerConfigMapper.insert(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
@@ -119,12 +119,13 @@ public class BannerConfigServiceImpl implements BannerConfigService {
 
     /**
      * 修改状态
-     * @param dto
+     * @param bannerId
+     * @param status
      * @param httpSession
      * @return
      */
     @Override
-    public ResultVO update(BannerConfigDTO dto, HttpSession httpSession) {
+    public ResultVO update(Integer bannerId, Byte status, HttpSession httpSession) {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
@@ -132,19 +133,17 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         int aId = adminUserDTO.getaId();
 
         // 先查出要修改的数据
-        BannerConfigPO po = this.bannerConfigMapper.selectByPrimaryKey(dto.getBannerId());
+        BannerConfigPO po = this.bannerConfigMapper.selectByPrimaryKey(bannerId);
         if (null == po) {
             return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
         }
 
-        if (po.getStatus() == 1) {
-            po.setStatus((byte) 2);
+        po.setStatus(status);
+        if (status == 2 && po.getStartTime() == null) {
             po.setStartTime(new Date());
-        } else {
-            po.setStatus((byte)1);
         }
         po.setUpdateTime(new Date());
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
 
         int count = this.bannerConfigMapper.updateByPrimaryKey(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);

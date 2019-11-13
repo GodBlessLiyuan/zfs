@@ -17,9 +17,9 @@
     <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-
     <link href="./plugins/datatables/jquery.dataTables.min.css">
-
+    <!--jedate-->
+    <link rel="stylesheet" type="text/css" href="./plugins/jedate-6.5.0/skin/jedate.css"/>
 
 
 </head>
@@ -73,8 +73,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-2">
                                             <label>时间</label>
-                                            <input id="startTime" type="date" class="form-control"> 至
-                                            <input id="endTime" type="date" class="form-control">
+                                            <input id="startTime" type="text" class="form-control" placeholder="开始时间"> 至
+                                            <input id="endTime" type="text" class="form-control" placeholder="结束时间">
                                         </div>
                                         <div class="form-group col-md-2">
                                             <label>用户账号</label>
@@ -178,6 +178,7 @@
 
 <script src="./plugins/jquery/jquery.min.js"></script>
 <script src="./plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="./plugins/jedate-6.5.0/dist/jedate.min.js"></script>
 
 <script>
     /**
@@ -265,6 +266,27 @@
     function viewClick(url1) {
         document.getElementById("url1_pic").src = url1;
     }
+
+
+    /**
+     * 日期控件
+     */
+    document.getElementById("startTime").addEventListener("focus",function () {
+        jeDate(this, {
+            theme: {bgcolor: "#f60", color: "#fff", pnColor: "#f60"},   //设置颜色
+            format: "YYYY-MM-DD",                                       //设置时间格式
+            minDate: "1995-01-01 00:00:00",                             //设置最小日期
+            maxDate: "2099-12-31 23:59:59"                              //设置最大日期
+        });
+    });
+    document.getElementById("endTime").addEventListener("focus",function () {
+        jeDate(this, {
+            theme: {bgcolor: "#f60", color: "#fff", pnColor: "#f60"},   //设置颜色
+            format: "YYYY-MM-DD",                                       //设置时间格式
+            minDate: "1995-01-01 00:00:00",                             //设置最小日期
+            maxDate: "2099-12-31 23:59:59"                              //设置最大日期
+        });
+    });
 </script>
 
 </body>
