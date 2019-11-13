@@ -126,18 +126,19 @@
         </div>
     </div>
 
-    <!--弹框：修改状态，提示是否真的要通过-->
-    <div class="modal fade" id="passModal" style="display: none;" aria-hidden="true">
+    <!--弹框：修改状态，提示是否真的要通过/驳回-->
+    <div class="modal fade" id="statusModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="form-group">
-                    <button type="hidden" id="pass" style="display:none;"/>
+                    <button type="hidden" id="statusChange_1" style="display:none;"/>
+                    <button type="hidden" id="statusChange_2" style="display:none;"/>
                 </div>
                 <div class="modal-header">
                     <h5 class="modal-title">提示</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
                 </div>
-                <div class="modal-body">是否确认通过审核，赠送奖励？
+                <div class="modal-body" id="statusChange_3">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -146,30 +147,6 @@
             </div>
         </div>
     </div>
-
-
-    <!--弹框：修改状态，提示是否真的要驳回-->
-    <div class="modal fade" id="rejectModal" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="form-group">
-                    <button type="hidden" id="reject" style="display:none;"/>
-                </div>
-                <div class="modal-header">
-                    <h5 class="modal-title">提示</h5>
-                    <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
-                </div>
-                <div class="modal-body">是否确认驳回？
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:rejectClick()">确认</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <!--**********************************
         Content body end
     ***********************************-->
@@ -259,10 +236,12 @@
                         var sta;
                         if (data === 1) {
                             sta = "待审核"
-                        }else if (data === 2) {
+                        }else if (data === 10) {
                             sta = "已通过";
+                        }else if (data === 20) {
+                            sta = "已驳回";
                         } else {
-                            sta = "已驳回"
+                            sta = "已领取";
                         }
                         return sta;
                     }
@@ -271,15 +250,16 @@
                     "data": "uAId",
                     "render": function (data, type, full) {
 
-                        var pass_button = "<button type='button' data-toggle='modal' data-target='#passModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:passModal(" + data + ")'>通过</button> ";
-                        var reject_button = "<button type='button' data-toggle='modal' data-target='#rejectModal' data-whatever='@getbootstrap' " +
-                            "class='btn btn-primary' onclick='javascript:rejectModal(" + data + ")'>驳回</button>";
+                        var pass_button = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ 10 + ")'>通过</button> ";
+                        var reject_button = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +
+                            "class='btn btn-primary' onclick='javascript:statusModal(" + data +","+ 20 + ")'>驳回</button>";
 
                         if (full.status == 1) {
                             return pass_button + reject_button;
+                        } else {
+                            return "";
                         }
-                        return "";
                     }
                 },
                 {"data": "operator"}
@@ -312,43 +292,24 @@
 
 
     /**
-     * 修改状态：通过，将要修改数据的ID存到提示框里
+     * 修改状态：将要修改数据的ID存到提示框里
      */
-    function passModal(uAId) {
-        $('#pass').val(uAId);
+    function statusModal(uAId, status) {
+        $('#statusChange_1').val(uAId);
+        $('#statusChange_2').val(status);
+
+        var tip = status == 10 ? "确认通过？" : "确认驳回？"
+        document.getElementById("statusChange_3").innerText = tip;
     }
 
     /**
-     * 修改状态：通过，从提示框里取出ID，发送给后台
+     * 修改状态：从提示框里取出ID和状态码，发送给后台
      */
     function passClick() {
-        var uAId = $('#pass').val();
-        $.post("goodcomment/update/status", {uAId:uAId, status:2}, function (result) {
-            if (result.code === 1008) {
-                alert("登录超时，请重新登录！");
-                window.location.href = '/login';
-            }else if (result.code === 0) {
-                alert("状态修改成功！")
-                $('#datatab').DataTable().draw(false);
-            } else {
-                alert("状态修改失败！")
-            }
-        }, "json");
-    }
+        var uAId = $('#statusChange_1').val();
+        var status = $('#statusChange_2').val();
 
-    /**
-    * 修改状态：驳回，将要修改数据的ID存到提示框里
-    */
-    function rejectModal(uAId) {
-        $('#reject').val(uAId);
-    }
-
-    /**
-     * 修改状态：驳回，从提示框里取出ID，发送给后台
-     */
-    function rejectClick() {
-        var uAId = $('#reject').val();
-        $.post("goodcomment/update/status", {uAId:uAId, status:3}, function (result) {
+        $.post("goodcomment/update/status", {uAId:uAId, status:status}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = '/login';
