@@ -195,7 +195,7 @@
                 {"data": null, "targets": 0},
                 {"data": "createTime"},
                 {"data": "chanName"},
-                {"data": "versionCode"},
+                {"data": "versionName"},
                 {"data": "buildVersion"},
                 {"data": "manufacturer"},
                 {"data": "androidModel"}
