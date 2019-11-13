@@ -60,7 +60,7 @@ public class SessionFilter implements Filter {
                     response.getWriter().write("{\"code\": 1008}");
                 } else {
                     //重定向到登录页
-                    response.sendRedirect(request.getContextPath() + CONTEXT_PATH + "/login");
+                    response.sendRedirect(request.getContextPath() + "/login");
                 }
                 return;
             }
