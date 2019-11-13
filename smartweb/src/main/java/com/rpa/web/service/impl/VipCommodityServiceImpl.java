@@ -19,6 +19,7 @@ import com.rpa.web.vo.ResultVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,8 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         vipCommodityPO.setDescription(description);
         vipCommodityPO.setPrice(price);
         vipCommodityPO.setShowDiscount(showDiscount);
-        vipCommodityPO.setDiscount((long) (100 * discount));
+        BigDecimal bd = new BigDecimal(Float.toString(discount));
+        vipCommodityPO.setDiscount(bd.multiply(new BigDecimal("100")).longValue());
         vipCommodityPO.setUpdateTime(new Date());
 
         return vipCommodityMapper.updateByPrimaryKey(vipCommodityPO);
