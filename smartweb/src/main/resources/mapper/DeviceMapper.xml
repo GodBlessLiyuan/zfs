@@ -200,7 +200,7 @@
     <select id="query" resultType="com.rpa.web.pojo.DevicePO">
         select
         d.device_id as deviceId, d.utdid, d.androidid, d.buildversion, d.soft_channel_id as softChannelId, d.chan_name
-        as chanName, d.create_time as createTime, d.update_time as updateTime, d.versioncode, d.manufacturer,
+        as chanName, d.create_time as createTime, d.update_time as updateTime, d.versionname, d.manufacturer,
         d.androidmodel, d.buildrelease
         from t_device d
         left join t_user_device u on d.device_id = u.device_id where u.user_id is null

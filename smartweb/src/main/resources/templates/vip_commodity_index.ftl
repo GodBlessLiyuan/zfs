@@ -558,7 +558,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/vipcommodity/' + type + status + '&cmdyId=' + cmdyId,
+            url: 'vipcommodity/' + type + status + '&cmdyId=' + cmdyId,
             dataType: 'JSON',
             success: function (data) {
                 $('#datatab').DataTable().draw(false);
