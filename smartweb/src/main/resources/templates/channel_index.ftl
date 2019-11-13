@@ -222,7 +222,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 } else {
                     for (var i = 0; i < result.data.length; i++) {
                         $('#proId').append("<option value='" + result.data[i].proId + "'>" + result.data[i].proName + "</option>");
@@ -303,7 +303,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 } else {
                     for (var i = 0; i < result.data.length; i++) {
                         $('#insert_proId').append("<option value='" + result.data[i].proId + "'>" + result.data[i].proName + "</option>");
@@ -333,7 +333,7 @@
                 function (result) {
                     if (result.code === 1008) {
                         alert("登录超时，请重新登录！");
-                        window.location.href = '/login';
+                        window.location.href = 'login';
                     }else if (result.code === 0) {
                         alert("新增成功！")
                         $('#datatab').DataTable().draw(false);
