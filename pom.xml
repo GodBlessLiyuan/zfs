@@ -29,6 +29,7 @@
         <module>smartfront</module>
         <module>smartpay</module>
         <module>smartcache</module>
+        <module>smartzipkin</module>
     </modules>
 
     <dependencyManagement>
@@ -49,7 +50,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
             <!-- Swagger -->
             <dependency>
                 <groupId>io.springfox</groupId>
