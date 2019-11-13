@@ -1,0 +1,15 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: smartcache
+  redis:
+    database: 0
+    host: 192.168.10.3
+    port: 6379
+    password: 123456
+    timeout: 1000
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/

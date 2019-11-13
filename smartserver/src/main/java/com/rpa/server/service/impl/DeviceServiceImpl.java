@@ -10,6 +10,8 @@ import com.rpa.server.service.IDeviceService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.DeviceVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
@@ -22,6 +24,7 @@ import java.util.List;
  * @description: 设备接口实现
  * @version: 1.0
  */
+@EnableTransactionManagement
 @Service
 public class DeviceServiceImpl implements IDeviceService {
 
@@ -32,6 +35,7 @@ public class DeviceServiceImpl implements IDeviceService {
     @Resource
     private RedisCacheUtil cache;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO queryDevice(DeviceDTO dto) {
         List<String> imei = dto.getImei();
@@ -129,6 +133,9 @@ public class DeviceServiceImpl implements IDeviceService {
         }
         if (dto.getSoftv() != null) {
             po.setVersioncode(dto.getSoftv());
+        }
+        if (dto.getSoftn() != null) {
+            po.setVersionname(dto.getSoftn());
         }
         if (dto.getUuid() != null) {
             po.setUuid(dto.getUuid());

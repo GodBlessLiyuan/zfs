@@ -1,6 +1,7 @@
 package com.rpa.web.dto;
 
 import com.rpa.web.pojo.DevicePO;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
  * @description: 设备DTO
  * @version: 1.0
  */
+@Data
 public class DeviceDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,74 +23,10 @@ public class DeviceDTO implements Serializable {
     private Date updateTime;
     private Integer softChannelId;
     private String chanName;
-    private Integer versionCode;
+    private String versionName;
     private Byte buildVersion;
     private String manufacturer;
     private String androidModel;
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getSoftChannelId() {
-        return softChannelId;
-    }
-
-    public void setSoftChannelId(Integer softChannelId) {
-        this.softChannelId = softChannelId;
-    }
-
-    public String getChanName() {
-        return chanName;
-    }
-
-    public void setChanName(String chanName) {
-        this.chanName = chanName;
-    }
-
-    public Integer getVersionCode() {
-        return versionCode;
-    }
-
-    public void setVersionCode(Integer versionCode) {
-        this.versionCode = versionCode;
-    }
-
-    public Byte getBuildVersion() {
-        return buildVersion;
-    }
-
-    public void setBuildVersion(Byte buildVersion) {
-        this.buildVersion = buildVersion;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getAndroidModel() {
-        return androidModel;
-    }
-
-    public void setAndroidModel(String androidModel) {
-        this.androidModel = androidModel;
-    }
 
     /**
      * PO 转 DTO
@@ -105,7 +43,7 @@ public class DeviceDTO implements Serializable {
         dto.setUpdateTime(po.getUpdateTime());
         dto.setAndroidModel(po.getAndroidmodel());
         dto.setBuildVersion(po.getBuildversion());
-        dto.setVersionCode(po.getVersioncode());
+        dto.setVersionName(po.getVersionname());
         dto.setManufacturer(po.getManufacturer());
 
         return dto;

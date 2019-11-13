@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="./images/logo.png"  />
     <title>智能移动社交营销平台管理系统</title>
     <!-- Favicon icon -->
 
@@ -182,7 +183,7 @@
                 {"data": "phone"},
                 {"data": "createTime"},
                 {"data": "chanName"},
-                {"data": "versionCode"},
+                {"data": "versionName"},
                 {"data": "buildRelease"},
                 {"data": "manufacturer"},
                 {"data": "androidModel"}

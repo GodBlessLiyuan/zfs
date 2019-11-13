@@ -34,6 +34,7 @@ DROP TABLE IF EXISTS t_user_notice;
 DROP TABLE IF EXISTS t_user_device;
 DROP TABLE IF EXISTS t_white_device;
 DROP TABLE IF EXISTS t_device;
+DROP TABLE IF EXISTS t_device_statistics;
 DROP TABLE IF EXISTS t_feedback;
 DROP TABLE IF EXISTS t_functionvideo;
 DROP TABLE IF EXISTS t_invite_detail;
@@ -73,7 +74,7 @@ CREATE TABLE t_activity
 	create_time datetime,
 	update_time datetime,
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	com_type_id int NOT NULL,
 	days int,
 	-- 日卡，周卡，月卡，年卡
@@ -127,7 +128,7 @@ CREATE TABLE t_admin_user
 	create_time datetime,
 	last_time datetime,
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	role_id int NOT NULL,
 	relation_a_id int,
 	name char(64),
@@ -203,7 +204,7 @@ CREATE TABLE t_app
 	context char(255),
 	publish_time datetime,
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	md5 char(32),
 	PRIMARY KEY (app_id),
 	UNIQUE (app_id)
@@ -282,7 +283,7 @@ CREATE TABLE t_channel
 	update_time datetime,
 	extra char(255),
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	PRIMARY KEY (chan_id),
 	UNIQUE (chan_id)
 );
@@ -342,6 +343,7 @@ CREATE TABLE t_device
 	androidmodel char(64),
 	uuid char(32),
 	buildrelease char(16),
+	versionname char(16),
 	PRIMARY KEY (device_id),
 	UNIQUE (device_id),
 	UNIQUE (uuid)
@@ -353,6 +355,16 @@ CREATE TABLE t_device_imei
 	device_id bigint NOT NULL,
 	imei char(32) NOT NULL,
 	PRIMARY KEY (imei)
+);
+
+
+CREATE TABLE t_device_statistics
+(
+	sid int NOT NULL AUTO_INCREMENT,
+	device_id bigint,
+	visit_time datetime,
+	PRIMARY KEY (sid),
+	UNIQUE (sid)
 );
 
 
@@ -405,7 +417,8 @@ CREATE TABLE t_functionvideo
 	create_time datetime,
 	update_time datetime,
 	PRIMARY KEY (function_id),
-	UNIQUE (function_id)
+	UNIQUE (function_id),
+	UNIQUE (fun_name)
 );
 
 
@@ -550,7 +563,7 @@ CREATE TABLE t_plugin
 	size int,
 	md5 char(32),
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	url char(255),
 	PRIMARY KEY (plugin_id),
 	UNIQUE (plugin_id)
@@ -567,7 +580,7 @@ CREATE TABLE t_promoter
 	create_time datetime,
 	update_time datetime,
 	-- 1 未删除  2删除
-	dr tinyint COMMENT '1 未删除  2删除',
+	dr tinyint DEFAULT 1 COMMENT '1 未删除  2删除',
 	PRIMARY KEY (pro_id),
 	UNIQUE (pro_id)
 );

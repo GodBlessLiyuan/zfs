@@ -75,6 +75,7 @@ public class WxPayServiceImpl implements IWxPayService {
         orderPO.setType(1);
         orderPO.setDays(vipCommodityPO.getDays());
         orderPO.setPay(vipCommodityPO.getDiscount());
+        orderPO.setStatus((byte) 1);
         orderMapper.insert(orderPO);
 
         // 微信支付请求参数

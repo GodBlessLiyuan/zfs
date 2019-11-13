@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="./images/logo.png"  />
     <title>智能移动社交营销平台管理系统</title>
     <!-- Favicon icon -->
 
@@ -38,7 +39,7 @@
                 <div class="form-input-content">
                     <div class="card login-form mb-0">
                         <div class="card-body pt-5">
-                            <a class="text-center" href="index.html"> <h4>砖助智能助手业务后台</h4></a>
+                            <a class="text-center" href="index.html"> <h4>智能移动社交营销平台管理系统</h4></a>
 
                             <form class="mt-8 mb-8 login-input" method="post" action="entry">
                                 <div class="form-group">

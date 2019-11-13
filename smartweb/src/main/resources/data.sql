@@ -10,16 +10,16 @@ INSERT INTO smarthelper.t_role (role_id, role_name, create_time, update_time, a_
 
 
 
-insert into t_admin_user(username, password,role_id) values('xinyue','123456',1);
+insert into t_admin_user(username, password,role_id) values('admin','b34232933f4816d8415b8d66379e28a4',1);
 
 INSERT INTO smarthelper.t_com_type (com_type_id, name, days, extra, a_id, create_time, update_time) VALUES (1, '年卡', 380, null, 1, '2019-11-06 12:30:02', '2019-11-06 12:30:04');
 INSERT INTO smarthelper.t_activity (activity_id, activityname, position, status, a_id, create_time, update_time, dr, com_type_id, days, com_type_name, source) VALUES (1, null, null, 1, 1, null, null, null, 1, 380, '年卡', 1);
 
 
-INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (1, 'vbooster', '扩展', null, null);
-INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (2, 'huawei', 'huawei', null, null);
-INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (3, '应用宝', 'yingyongbao', '2019-10-24 10:15:57', null);
-INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (4, 'vivo', 'vivo', '2019-10-24 10:16:33', null);
+INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (2, 'vbooster', '官网', null, null);
+INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (3, 'huawei', 'huawei', null, null);
+INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (4, 'yingyongbao', 'yingyongbao', '2019-10-24 10:15:57', null);
+INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (5, 'vivo', 'vivo', '2019-10-24 10:16:33', null);
 INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (6, 'OPPO', 'OPPO', '2019-10-24 11:27:47', null);
 INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (7, 'xxx', 'xxxxxxxx', '2019-10-31 16:06:17', null);
 
