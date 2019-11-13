@@ -313,7 +313,7 @@
         $.post("goodcomment/update/status", {uAId:uAId, status:status}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
-                window.location.href = '/login';
+                window.location.href = 'login';
             }else if (result.code === 0) {
                 alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);

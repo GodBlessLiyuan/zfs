@@ -284,7 +284,7 @@
                 success: function (result) {
                     if (result.code === 1008) {
                         alert("登录超时，请重新登录！");
-                        window.location.href = '/login';
+                        window.location.href = 'login';
                     }else if (result.code == 0) {
                         alert("新增成功！");
                     } else {
@@ -402,7 +402,7 @@
         $.post("bannerconfig/update/status", {bannerId:bannerId, status:status}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
-                window.location.href = '/login';
+                window.location.href = 'login';
             }else if (result.code === 0) {
                 alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
@@ -428,7 +428,7 @@
         $.post("bannerconfig/delete", {bannerId:bannerId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
-                window.location.href = '/login';
+                window.location.href = 'login';
             }else if (result.code === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);
