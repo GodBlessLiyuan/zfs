@@ -18,7 +18,7 @@ public class ProducerExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public ResultVO handlerPromptException(Exception e) {
-        logger.info("ProducerExceptionHandler: ", e);
+        logger.error("ProducerExceptionHandler: ", e);
         return new ResultVO(2000);
     }
 }
