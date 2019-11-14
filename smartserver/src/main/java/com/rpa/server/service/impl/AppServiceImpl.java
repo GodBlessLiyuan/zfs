@@ -6,12 +6,18 @@ import com.rpa.server.mapper.AppMapper;
 import com.rpa.server.pojo.AppPO;
 import com.rpa.server.service.IAppService;
 import com.rpa.server.utils.RedisCacheUtil;
+import com.rpa.server.utils.RequestUtil;
 import com.rpa.server.vo.AppVO;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: xiahui
@@ -27,6 +33,8 @@ public class AppServiceImpl implements IAppService {
     private RedisCacheUtil cache;
     @Value("${file.publicPath}")
     private String filePublicPath;
+    @Autowired
+    private AmqpTemplate template;
 
     @Override
     public ResultVO check(AppDTO dto, HttpServletRequest req) {
@@ -46,6 +54,19 @@ public class AppServiceImpl implements IAppService {
         vo.setContext(appPO.getContext());
         vo.setCode(appPO.getVersioncode());
         vo.setVersionname(appPO.getVersionname());
+
+
+        /**
+         * @author: dangyi
+         * @date: Created in 2019/11/14 15:35
+         * @description: 将用户设备访问信息转发给RabbitMQ
+         */
+        // 创建map集合，封装用户设备访问信息
+        Map<String, Object> deviceInfo = new HashMap<>();
+        deviceInfo.put("deviceId", dto.getId());
+        deviceInfo.put("visitTime", new Date());
+        deviceInfo.put("ip", RequestUtil.getIpAddr(req));
+        this.template.convertAndSend("device_statistics", deviceInfo);
 
         return new ResultVO<>(1009, vo);
     }

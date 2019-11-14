@@ -1,5 +1,7 @@
 package com.rpa.rabbit.service;
 
+import java.util.Map;
+
 /**
  * @author: xiahui
  * @date: Created in 2019/11/8 18:22

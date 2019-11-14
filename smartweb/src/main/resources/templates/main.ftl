@@ -84,8 +84,8 @@
                         <div class="card gradient-1">
                             <div class="card-body">
                                 <div class="div_main">
-                                    <p class="" style="font-size: 20px">今日活跃用户：<span></span></p>
-                                    <p class="" style="font-size: 20px">本月活跃用户：<span></span></p>
+                                    <p class="" style="font-size: 20px">今日活跃用户：<span id="dayActiveUser"></span></p>
+                                    <p class="" style="font-size: 20px">本月活跃用户：<span id="monthActiveUser"></span></p>
                                     <p class="" style="font-size: 20px">&nbsp;<span></span></p>
                                 </div>
                             </div>
@@ -144,6 +144,8 @@
                     if (result.data.newUser != 0) {
                         $('#ratio').text(Math.round(result.data.newRegister / result.data.newUser * 10000) / 100.00 + "%");
                     }
+                    $('#dayActiveUser').text(result.data.dayActiveUser);
+                    $('#monthActiveUser').text(result.data.monthActiveUser);
                     $('#dayRevenue').text(result.data.dayRevenue);
                     $('#payCount').text(result.data.payCount);
                     $('#monthRevenue').text(result.data.monthRevenue);
@@ -157,10 +159,12 @@
 
 
     /**
-     * 显示当前时间
+     * 动态显示当前时间
      */
+    var t = null;
     function showtime() {
-        var time = document.getElementById("time")
+        //清除定时器
+        clearTimeout(t);
 
         var date = new Date();
         var year = date.getFullYear();
@@ -170,8 +174,13 @@
         var minutes = extra(date.getMinutes());
         var seconds = extra(date.getSeconds());
 
-        var show = year + '-' + month + '-' + day + '&ensp;' + hours + ':' + minutes + ':' + seconds;
-        time.innerHTML = show;
+        var num = date.getDay();
+        var weekday = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+
+        var show = year + '-' + month + '-' + day + '&ensp;' + hours + ':' + minutes + ':' + seconds + '&ensp;' + weekday[num];
+        document.getElementById("time").innerHTML = show;
+
+        t = setTimeout(showtime, 1000); //设定定时器，循环运行
     }
 
     showtime();

@@ -21,7 +21,7 @@ public class HomepageController {
     private HomepageService homepageService;
 
     /**
-     * 主页查询
+     * 主页查询：先去Redis中查询，无果，再去数据库查询
      * @return
      */
     @GetMapping("query")

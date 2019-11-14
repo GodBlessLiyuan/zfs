@@ -17,4 +17,16 @@ public class RabbitConfig {
     public Queue smartServerQueue() {
         return new Queue("pay-notify");
     }
+
+
+    /**
+     * @author: dangyi
+     * @date: Created in 2019/11/14
+     * @description: 用户设备统计的消息队列
+     * @return
+     */
+    @Bean
+    public Queue queueForDeviceStatistics() {
+        return new Queue("device_statistics");
+    }
 }

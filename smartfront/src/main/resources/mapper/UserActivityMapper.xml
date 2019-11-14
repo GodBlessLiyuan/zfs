@@ -29,6 +29,7 @@
     select status
     from t_user_activity
     where activity_id = 1 and user_id = #{ud}
+    order by u_a_id desc limit 1
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

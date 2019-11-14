@@ -230,7 +230,7 @@
         if (null === inviteUserId || null === invitedUserId) {
             alert("出了些问题，无法跳转，请联系工程师！");
         }else {
-            window.location.href = '/inviteduser/detail?inviteUserId='+ inviteUserId +'&invitedUserId='+ invitedUserId;
+            window.location.href = 'inviteduser/detail?inviteUserId='+ inviteUserId +'&invitedUserId='+ invitedUserId;
         }
     }
 </script>
