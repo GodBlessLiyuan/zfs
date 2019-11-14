@@ -515,7 +515,7 @@
     function updateModal(appId) {
         $.ajax({
             type: 'GET',
-            url: '/softchannel/queryAll',
+            url: 'softchannel/queryAll',
             dataType: 'JSON',
             success: function (data) {
                 $('#uSoftChannel').empty();

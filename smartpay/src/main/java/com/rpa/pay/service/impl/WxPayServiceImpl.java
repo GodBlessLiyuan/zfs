@@ -100,8 +100,8 @@ public class WxPayServiceImpl implements IWxPayService {
         vo.setPartnerid(wxPayMap.get(WxPayConstant.MCH_ID));
         vo.setPrepayid(wxPayMap.get(WxPayConstant.PREPAY_ID));
         vo.setPrice(orderPO.getPay());
-        vo.setSign(wxPayMap.get(WxPayConstant.SIGN));
         vo.setTimestamp(System.currentTimeMillis());
+        vo.setSign(WxPayUtil.signRes(vo, wxPayConfig));
 
         return new ResultVO<>(1000, vo);
     }
@@ -145,6 +145,7 @@ public class WxPayServiceImpl implements IWxPayService {
         orderPO.setPayTime(new Date());
         orderPO.setStarttime(startDate);
         orderPO.setEndtime(endDate);
+        orderPO.setStatus((byte) 2);
         orderMapper.updateByPrimaryKey(orderPO);
 
         // 新增微信支付反馈信息
