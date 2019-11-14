@@ -8,3 +8,10 @@ management:
     web:
       server:
         auto-time-requests: false
+zipkin:
+  collector:
+    rabbitmq:
+      addresses: 192.168.10.3:5672
+      username: root
+      password: 123456
+      queue: smartzipkin

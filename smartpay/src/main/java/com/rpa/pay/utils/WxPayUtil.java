@@ -4,6 +4,7 @@ import com.rpa.pay.config.WxPayConfig;
 import com.rpa.pay.constant.WxPayConstant;
 import com.rpa.pay.pojo.OrderPO;
 import com.rpa.pay.pojo.WxFeedbackPO;
+import com.rpa.pay.vo.WxPayVO;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -276,5 +277,25 @@ public class WxPayUtil {
         sb.append(sdf.format(new Date()));
         sb.append(UUID.randomUUID().toString().replace("-", "").substring(0, 8));
         return sb.toString();
+    }
+
+    /**
+     * 对返回结果签名
+     *
+     * @param vo
+     * @param wxPayConfig
+     * @return
+     */
+    public static String signRes(WxPayVO vo, WxPayConfig wxPayConfig) {
+        // 签名参数
+        SortedMap<String, Object> signParam = new TreeMap<>();
+        signParam.put("appid", vo.getAppid());
+        signParam.put("partnerid", vo.getPartnerid());
+        signParam.put("prepayid", vo.getPrepayid());
+        signParam.put("noncestr", vo.getNoncestr());
+        signParam.put("timestamp", vo.getTimestamp());
+        signParam.put("package", vo.getPkg());
+
+        return WxPayUtil.sign(signParam, wxPayConfig.getKey());
     }
 }
