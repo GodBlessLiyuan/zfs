@@ -28,3 +28,5 @@ config/*.yml
 ### Docker Test Credentials ###
 .env
 
+.LOG_FILE_IS_UNDEFINED.*
+
