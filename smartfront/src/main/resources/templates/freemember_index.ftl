@@ -19,15 +19,15 @@
             <h2>应用市场五星好评</h2>
             <h2>会员免费领</h2>
         </div>
-        <div style="margin-top: 40%">
+        <div style="margin-top: 40%;margin-left: 15%;margin-right: 15%;">
             <div class="betweenLR">
                 <#if null == status || status == 20>
-                <button type="button" class="drawSubmit" id="participate" onclick="freememberClick()">立即参与</button>
+                <button type="button" class="drawSubmit" style="border-radius: 5px;outline: none;" id="participate" onclick="freememberClick()">立即参与</button>
                 </#if>
             </div>
         </div>
-        <div style="margin-left: 15%;margin-right: 15%">
-            <p style="text-align: center;vertical-align: middle; border:2px solid darkgray;border-radius: 5px;">${msg}</p>
+        <div style="margin-left: 20%;margin-right: 20%">
+            <p style="text-align: center;vertical-align: middle; border:2px solid darkgray;border-radius: 5px;padding-top: 5px;">${msg}</p>
         </div>
         <div style="margin-top: 10%">
             <P style="margin-left: 10%;margin-right: 5%">
