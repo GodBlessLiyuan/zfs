@@ -742,6 +742,10 @@ button::after{
   margin:auto;
 }
 
+.table_freemember tr td:nth-child(3){
+  background-color: #FFF4E0;
+}
+
 .reward_details td {
   vertical-align: middle;
   text-align: center
