@@ -1,8 +1,8 @@
 package com.rpa.zipkin;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import zipkin2.server.internal.EnableZipkinServer;
 
 /**
@@ -11,7 +11,7 @@ import zipkin2.server.internal.EnableZipkinServer;
  * @description: Zipkin
  * @version: 1.0
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableZipkinServer
 public class ZipkinApplication {
 
