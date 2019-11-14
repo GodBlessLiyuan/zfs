@@ -1,8 +1,8 @@
-package com.rpa.producer.controller;
+package com.rpa.kafka.controller;
 
-import com.rpa.producer.common.ResultVO;
-import com.rpa.producer.dto.ProducerDTO;
-import com.rpa.producer.service.ProducerService;
+import com.rpa.kafka.common.ResultVO;
+import com.rpa.kafka.dto.KafkaDTO;
+import com.rpa.kafka.service.KafkaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,12 +19,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RequestMapping("v1.0")
 @RestController
-public class ProducerController {
+public class KafkaController {
     @Autowired
-    private ProducerService service;
+    private KafkaService service;
 
     @PostMapping("s_data")
-    public ResultVO send(@RequestBody ProducerDTO dto, HttpServletRequest req) {
+    public ResultVO send(@RequestBody KafkaDTO dto, HttpServletRequest req) {
         return service.sendMsg(dto.getData(), req);
     }
 }

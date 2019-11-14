@@ -24,8 +24,7 @@
         <module>smartserver</module>
         <module>smarteureka</module>
         <module>smartzuul</module>
-        <module>smartproducer</module>
-        <module>smartconsumer</module>
+        <module>smartkafka</module>
         <module>smartfront</module>
         <module>smartpay</module>
         <module>smartcache</module>

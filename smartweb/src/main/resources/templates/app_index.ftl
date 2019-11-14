@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="./images/logo.png"  />
+    <link rel="icon" type="image/x-icon" href="./images/logo.png"/>
     <title>智能移动社交营销平台管理系统</title>
     <!-- Favicon icon -->
 
@@ -154,12 +154,12 @@
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">更新内容<span
                                                                 style="color: red">*</span>:</span>
-                                                    <input type="text" class="form-control" id="iContext"
-                                                           maxlength="100">
+                                                    <textarea class="form-control" id="iContext"
+                                                              maxlength="100"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">备注:</span>
-                                                    <input type="text" class="form-control" id="iExtra">
+                                                    <textarea class="form-control" id="iExtra"></textarea>
                                                 </div>
                                             </form>
                                         </div>
@@ -210,11 +210,11 @@
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">更新内容<span
                                                                 style="color: red">*</span>:</span>
-                                                    <input type="text" class="form-control" id="uContext">
+                                                    <textarea class="form-control" id="uContext"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">备注:</span>
-                                                    <input type="text" class="form-control" id="uExtra">
+                                                    <textarea class="form-control" id="uExtra"></textarea>
                                                 </div>
                                             </form>
                                         </div>

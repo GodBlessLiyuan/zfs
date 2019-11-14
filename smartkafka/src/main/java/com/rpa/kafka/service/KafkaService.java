@@ -1,11 +1,12 @@
-package com.rpa.producer.service;
+package com.rpa.kafka.service;
 
 import com.alibaba.fastjson.JSON;
-import com.rpa.producer.common.ResultVO;
+import com.rpa.kafka.common.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +18,9 @@ import java.util.Map;
  * @version: 1.0
  */
 @Service
-public class ProducerService {
+public class KafkaService {
 
-    @Autowired
+    @Resource
     private KafkaTemplate<String, String> kafkaTemplate;
 
     public ResultVO sendMsg(Object data, HttpServletRequest req) {

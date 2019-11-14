@@ -1,4 +1,4 @@
-package com.rpa.producer.dto;
+package com.rpa.kafka.dto;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @version: 1.0
  */
 @Data
-public class ProducerDTO implements Serializable {
+public class KafkaDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
