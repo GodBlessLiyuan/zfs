@@ -8,4 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface DeviceStatisticsMapper extends BaseDAO<DeviceStatisticsPO, Integer> {
+    int queryDayActiveUser();
+
+    int queryMonthActiveUser();
 }

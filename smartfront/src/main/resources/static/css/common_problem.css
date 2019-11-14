@@ -30,6 +30,6 @@
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg)
 }
-input[type=checkbox]:checked~.content{
+input[type=checkbox]:checked.content{
     display: none;
 }
