@@ -30,6 +30,7 @@
         <module>smartpay</module>
         <module>smartcache</module>
         <module>smartzipkin</module>
+        <module>smartrabbit</module>
     </modules>
 
     <dependencyManagement>
