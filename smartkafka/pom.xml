@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>smartproducer</artifactId>
-
+    <artifactId>smartkafka</artifactId>
 
     <build>
         <plugins>
@@ -38,7 +37,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.rpa.producer.ProducerApplication</mainClass>
+                    <mainClass>com.rpa.kafka.KafkaApplication</mainClass>
                     <layout>ZIP</layout>
                     <includes>
                         <include>

@@ -1,4 +1,4 @@
-package com.rpa.producer;
+package com.rpa.kafka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,9 +11,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @version: 1.0
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-public class ProducerApplication {
+public class KafkaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProducerApplication.class, args);
+        SpringApplication.run(KafkaApplication.class, args);
     }
 }

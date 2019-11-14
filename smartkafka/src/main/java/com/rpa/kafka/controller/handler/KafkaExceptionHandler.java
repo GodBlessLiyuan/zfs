@@ -1,6 +1,6 @@
-package com.rpa.producer.controller.handler;
+package com.rpa.kafka.controller.handler;
 
-import com.rpa.producer.common.ResultVO;
+import com.rpa.kafka.common.ResultVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @version: 1.0
  */
 @RestControllerAdvice
-public class ProducerExceptionHandler {
-    private final static Logger logger = LoggerFactory.getLogger(ProducerExceptionHandler.class);
+public class KafkaExceptionHandler {
+    private final static Logger logger = LoggerFactory.getLogger(KafkaExceptionHandler.class);
 
     @ExceptionHandler(value = Exception.class)
     public ResultVO handlerPromptException(Exception e) {

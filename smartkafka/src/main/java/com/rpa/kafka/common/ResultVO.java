@@ -1,4 +1,4 @@
-package com.rpa.producer.common;
+package com.rpa.kafka.common;
 
 import lombok.Data;
 
