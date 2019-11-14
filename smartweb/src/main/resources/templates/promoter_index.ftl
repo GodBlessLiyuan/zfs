@@ -263,7 +263,7 @@
             $.post("/promoter/insert", {proName:proName, phone:phone, extra:extra}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 }else if (result.code === 0) {
                     alert("新增成功！")
                     $('#datatab').DataTable().draw(false);
@@ -352,7 +352,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 } else {
                     $('#up_proName').val(result.data.proName);
                     $('#up_phone').val(result.data.phone);
@@ -383,7 +383,7 @@
             $.post("promoter/update", {proId:proId, proName:proName, phone:phone, extra:extra}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 }else if (result.code === 0) {
                     alert("更新成功！")
                     $('#datatab').DataTable().draw(false);

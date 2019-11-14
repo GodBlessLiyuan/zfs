@@ -175,7 +175,7 @@
     ,
     <include refid="Blob_Column_List" />
     from t_notice
-    where status = 2
+    where status = 2 and end_time > now()
     order by notice_id desc
   </select>
 </mapper>

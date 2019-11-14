@@ -315,7 +315,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 } else {
                     for (var i = 0; i < result.data.length; i++) {
                         $('#insert_roleId').append("<option value='" + result.data[i].roleId + "'>" + result.data[i].roleName + "</option>");
@@ -355,7 +355,7 @@
                 email:email, extra:extra}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 }else if (result.code === 0) {
                     alert("新增成功！")
                     $('#datatab').DataTable().draw(false);
@@ -452,7 +452,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 } else {
                     for (var i = 0; i < result.data.length; i++) {
                         $('#up_roleId').append("<option value='" + result.data[i].roleId + "'>" + result.data[i].roleName + "</option>");
@@ -468,7 +468,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 } else {
                     $('#up_roleId').val(result.data.roleId);
                     $('#up_username').val(result.data.username);
@@ -513,7 +513,7 @@
                 phone:phone, email:email, extra:extra}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 }else if (result.code === 0) {
                     alert("更新成功！")
                     $('#datatab').DataTable().draw(false);
@@ -541,7 +541,7 @@
         $.post("admin/delete", {aId:aId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
-                window.location.href = '/login';
+                window.location.href = 'login';
             }else if (result.code === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);

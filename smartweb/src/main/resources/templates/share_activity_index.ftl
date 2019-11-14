@@ -331,7 +331,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 }else if (result.code == 0) {
                     alert("新增成功！");
                     $('#datatab').DataTable().draw(false);
@@ -435,7 +435,7 @@
 
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 } else {
 
                     TYPE = result.data.type;
@@ -524,7 +524,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 }else if (result.code == 0) {
                     alert("修改成功！");
                     $('#datatab').DataTable().draw(false);
@@ -553,7 +553,7 @@
         $.post("shareactivity/delete", {materialId: materialId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
-                window.location.href = '/login';
+                window.location.href = 'login';
             }else if (result.code === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);

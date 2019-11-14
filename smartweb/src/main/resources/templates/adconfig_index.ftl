@@ -392,7 +392,7 @@
                 priority:priority, total:total}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 }else if (result.code === 0) {
                     alert("新增成功！")
                     $('#datatab').DataTable().draw(false);
@@ -432,7 +432,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 } else {
                     $('#show_interval').val(result.data.value);
                 }
@@ -448,7 +448,7 @@
         $.post("adconfig/update/strategy", {show_interval:show_interval}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
-                window.location.href = '/login';
+                window.location.href = 'login';
             }else if (result.code === 0) {
                 alert("设置成功！")
             } else {
@@ -561,7 +561,7 @@
         $.post("adconfig/update/status", {adId:adId, status:status}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
-                window.location.href = '/login';
+                window.location.href = 'login';
             }else if (result.code === 0) {
                 alert("状态修改成功！");
                 $('#datatab').DataTable().draw(false);
@@ -597,7 +597,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 } else {
                     $('#up_adNumber').val(result.data.adNumber);
                     $('#up_name').val(result.data.name);
@@ -640,7 +640,7 @@
                 priority:priority, total:total}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 }else if (result.code === 0) {
                     alert("更新成功！")
                     $('#datatab').DataTable().draw(false);
@@ -668,7 +668,7 @@
         $.post("adconfig/delete", {adId:adId}, function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
-                window.location.href = '/login';
+                window.location.href = 'login';
             }else if (result.code === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);

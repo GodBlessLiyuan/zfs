@@ -311,7 +311,7 @@
             success: function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
-                    window.location.href = '/login';
+                    window.location.href = 'login';
                 }else if (result.code == 0) {
                     alert("更改成功！");
                 } else {
