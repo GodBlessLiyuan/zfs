@@ -145,6 +145,7 @@ public class WxPayServiceImpl implements IWxPayService {
         orderPO.setPayTime(new Date());
         orderPO.setStarttime(startDate);
         orderPO.setEndtime(endDate);
+        orderPO.setStatus((byte) 2);
         orderMapper.updateByPrimaryKey(orderPO);
 
         // 新增微信支付反馈信息

@@ -200,6 +200,6 @@
   <select id="queryByUserId" parameterType="java.lang.Long" resultType="com.rpa.server.bo.OrderBO">
     select o.type, v.com_name as comName, o.order_number as orderNumber, o.pay_time as payTime, v.price
     from t_order o left join t_vipcommodity v on o.cmdy_id = v.cmdy_id
-    where o.user_id = #{userId}
+    where o.user_id = #{userId} and o.`status` = 2
   </select>
 </mapper>
