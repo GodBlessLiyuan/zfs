@@ -740,6 +740,7 @@ button::after{
   text-align: -moz-center;
   width: 90%;
   margin:auto;
+  font-size: 15px;
 }
 
 .table_freemember tr td:nth-child(3){
