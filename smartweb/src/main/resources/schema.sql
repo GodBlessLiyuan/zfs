@@ -363,6 +363,7 @@ CREATE TABLE t_device_statistics
 	sid int NOT NULL AUTO_INCREMENT,
 	device_id bigint,
 	visit_time datetime,
+	ip char(128),
 	PRIMARY KEY (sid),
 	UNIQUE (sid)
 );
