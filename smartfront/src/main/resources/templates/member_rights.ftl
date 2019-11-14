@@ -17,10 +17,10 @@
     <body >
         <#--<img src="${basePath}/images/member_rights.png" width="100"/>-->
         <!--奖励相关  -->
+        <div class="font_reward" style="font-size: 15px;font-weight: bolder;margin-left: 35px">会员规则如下，未勾选表示无权使用：</div>
         <div class="my_state">
             <div class="div_spacing">
                 <table class="table table-bordered table-hover table-condensed reward_details" style="width:90%">
-                    <caption class="font_reward" style="font-size: 15px;font-weight: bolder">会员规则如下，未勾选表示无权使用：</caption>
                     <thead>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">会员权益</td>
@@ -60,84 +60,84 @@
                     <tr>
                         <td style="vertical-align: middle;text-align: center">通讯录加人</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">群聊加人</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">自动打招呼</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">群发微信群</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">好友群发</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">收藏群发</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">图文转发</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">一键评论</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">朋友圈转发</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">未读消息清理</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">好友清理</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;text-align: center">勿打扰清理</td>
                         <td style="vertical-align: middle; text-align: center"><img
-                                    src="${basePath}/images/ico_delete_youshang_20.png"/></td>
+                                    src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
