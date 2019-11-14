@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="./images/logo.png"  />
+    <link rel="icon" type="image/x-icon" href="./images/logo.png"/>
     <title>智能移动社交营销平台管理系统</title>
     <!-- Favicon icon -->
 
@@ -93,8 +93,9 @@
 
                             <hr>
                             <div class="table-responsive">
-                                   <table id="datatab" class="table table-striped table-bordered zero-configuration"
-                                       style="table-layout: fixed; text-align: center; vertical-align: middle"><thead>
+                                <table id="datatab" class="table table-striped table-bordered zero-configuration"
+                                       style="table-layout: fixed; text-align: center; vertical-align: middle">
+                                    <thead>
                                     <tr>
                                         <th>序号</th>
                                         <th>发布时间</th>
@@ -146,12 +147,12 @@
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">更新内容<span
                                                                 style="color: red">*</span>:</span>
-                                                    <input type="text" class="form-control" id="iContext"
-                                                           maxlength="100">
+                                                    <textarea class="form-control" id="iContext"
+                                                              maxlength="100"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">备注:</span>
-                                                    <input type="text" class="form-control" id="iExtra">
+                                                    <textarea class="form-control" id="iExtra"></textarea>
                                                 </div>
                                             </form>
                                         </div>
@@ -200,12 +201,12 @@
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">更新内容<span
                                                                 style="color: red">*</span>:</span>
-                                                    <input type="text" class="form-control" id="uContext"
-                                                           maxlength="100">
+                                                    <textarea class="form-control" id="uContext"
+                                                              maxlength="100"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <span for="message-text" class="col-form-label">备注:</span>
-                                                    <input type="text" class="form-control" id="uExtra">
+                                                    <textarea class="form-control" id="uExtra"></textarea>
                                                 </div>
                                             </form>
                                         </div>
@@ -273,19 +274,19 @@
 <script>
     let moduleData = new Map();
 
-    $('#insert-select-all').click(function(){
+    $('#insert-select-all').click(function () {
         $('#iSoftChannel').multiSelect('select_all');
         return false;
     });
-    $('#insert-deselect-all').click(function(){
+    $('#insert-deselect-all').click(function () {
         $('#iSoftChannel').multiSelect('deselect_all');
         return false;
     });
-    $('#update-select-all').click(function(){
+    $('#update-select-all').click(function () {
         $('#uSoftChannel').multiSelect('select_all');
         return false;
     });
-    $('#update-deselect-all').click(function(){
+    $('#update-deselect-all').click(function () {
         $('#uSoftChannel').multiSelect('deselect_all');
         return false;
     });
