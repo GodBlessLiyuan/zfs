@@ -11,17 +11,10 @@ management:
 zipkin:
   collector:
     rabbitmq:
-<<<<<<< HEAD
-      addresses: 192.168.10.3:5672
+      addresses: 127.0.0.1:5672
       username: root
       password: 123456
       queue: smartzipkin
 logging:
   path: /data/ftp/smartftp/log/
   file: ${logging.path}smartzipkin
-=======
-      addresses: 127.0.0.1:5672
-      username: root
-      password: 123456
-      queue: smartzipkin
->>>>>>> ba60f1d4377e6a43e478b94705e9be25099fa174
