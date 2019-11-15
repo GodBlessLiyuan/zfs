@@ -140,7 +140,7 @@
                         </div>
                         <div class="form-group">
                             <span for="message-text" class="col-form-label">视频：<span style="color: red"> *</span></span>
-                            <input id="insert_video" class="form-control" type="file"/>
+                            <input id="insert_video" class="form-control" type="file" accept="video/*"/>
                         </div>
                         <div class="form-group">
                             <span for="recipient-name" class="col-form-label">备注信息：</span>
@@ -195,7 +195,7 @@
                         </div>
                         <div class="form-group">
                             <span for="recipient-name" class="col-form-label">视频：<span style="color: red"> *</span></span>
-                            <input id="up_video" class="form-control" type="file"/>
+                            <input id="up_video" class="form-control" type="file" accept="video/*"/>
                         </div>
                         <div class="form-group">
                             <span for="recipient-name" class="col-form-label">备注信息:</span>

@@ -20,4 +20,6 @@ public interface UserMapper extends BaseDAO<UserPO, Long> {
     int queryNewRegister();
 
     String queryPhoneByUserId(Long userId);
+
+    String queryPhoneByUserid(Long aId);
 }
