@@ -24,10 +24,7 @@ public class HomepageServiceImpl implements HomepageService {
     private UserMapper userMapper;
 
     @Autowired
-    private UserDeviceMapper userDeviceMapper;
-
-    @Autowired
-    private VipCommodityMapper vipCommodityMapper;
+    private DeviceMapper deviceMapper;
 
     @Autowired
     private OrderMapper orderMapper;
@@ -45,13 +42,48 @@ public class HomepageServiceImpl implements HomepageService {
     @Override
     public ResultVO query() {
 
-        int newRegister = this.userMapper.queryNewRegister();
-        int newUser = this.userDeviceMapper.queryNewUser();
-        int dayActiveUser = this.deviceStatisticsMapper.queryDayActiveUser();
-        int monthActiveUser = this.deviceStatisticsMapper.queryMonthActiveUser();
-        Float dayRevenue = this.vipCommodityMapper.queryRevenue();
-        int payCount = this.orderMapper.queryPayCount();
-        Float monthRevenue = this.vipCommodityMapper.queryMonthRevenue();
+        String newRegister = null;
+        String newUser = null;
+        String dayActiveUser = null;
+        String monthActiveUser = null;
+        String dayRevenue = null;
+        String payCount = null;
+        String monthRevenue = null;
+
+        newRegister = this.template.opsForValue().get("newRegister");
+        if (null == newRegister) {
+            newRegister = String.valueOf(this.userMapper.queryTodayNewRegister());
+        }
+
+        newUser = this.template.opsForValue().get("newUser");
+        if (null == newUser) {
+            newUser = String.valueOf(this.deviceMapper.queryTodayNewUser());
+        }
+
+        dayActiveUser = this.template.opsForList().range("deviceStatistics", 0, -1).get(0);
+        if (dayActiveUser == null) {
+            dayActiveUser = String.valueOf(this.deviceStatisticsMapper.queryDayActiveUser());
+        }
+
+        monthActiveUser = this.template.opsForList().range("deviceStatistics", 0, -1).get(1);
+        if (null == monthActiveUser) {
+            monthActiveUser = String.valueOf(this.deviceStatisticsMapper.queryMonthActiveUser());
+        }
+
+        dayRevenue = this.template.opsForList().range("revenue", 0, -1).get(0);
+        if (null == dayRevenue) {
+            dayRevenue = String.valueOf(this.orderMapper.queryDayRevenue());
+        }
+
+        payCount = this.template.opsForList().range("revenue", 0, -1).get(1);
+        if (null == payCount) {
+            payCount = String.valueOf(this.orderMapper.queryPayCount());
+        }
+
+        monthRevenue = this.template.opsForList().range("revenue", 0, -1).get(2);
+        if (null == monthRevenue) {
+            monthRevenue = String.valueOf(this.orderMapper.queryMonthRevenue());
+        }
 
         // 创建一个map，存放返回给前端的结果
         Map<String, Object> result = new HashMap<>();

@@ -20,4 +20,8 @@ public interface OrderMapper extends BaseDAO<OrderDO, OrderPOKey> {
     List<OrderDO> queryByUserId(int userId);
 
     int queryPayCount();
+
+    Float queryDayRevenue();
+
+    Float queryMonthRevenue();
 }

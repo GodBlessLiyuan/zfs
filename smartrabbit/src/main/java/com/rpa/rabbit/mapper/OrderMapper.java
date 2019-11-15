@@ -17,4 +17,10 @@ public interface OrderMapper extends BaseMapper<OrderPO, OrderPOKey> {
      * @return
      */
     OrderBO queryByOrderNumber(String orderNumber);
+
+    Float queryDayRevenue();
+
+    int queryPayCount();
+
+    Float queryMonthRevenue();
 }

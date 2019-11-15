@@ -30,4 +30,6 @@ public interface UserDeviceMapper extends BaseMapper<UserDevicePO, Integer> {
      * @return
      */
     UserDevicePO queryByDevIdAndUserId(Long deviceId, Long userId);
+
+    int queryTodayNewUser();
 }

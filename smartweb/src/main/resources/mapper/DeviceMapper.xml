@@ -206,4 +206,10 @@
         left join t_user_device u on d.device_id = u.device_id where u.user_id is null
         <if test="channelId!=null and channelId!=''">AND soft_channel_id = #{channelId}</if>
     </select>
+
+  <select id="queryTodayNewUser" resultType="java.lang.Integer">
+    select  count(device_id)
+    from t_device
+    where create_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
+  </select>
 </mapper>
