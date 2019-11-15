@@ -29,12 +29,12 @@ DROP TABLE IF EXISTS t_batch_info;
 DROP TABLE IF EXISTS t_ch_batch;
 DROP TABLE IF EXISTS t_channel;
 DROP TABLE IF EXISTS t_device_imei;
+DROP TABLE IF EXISTS t_device_statistics;
 DROP TABLE IF EXISTS t_exception;
 DROP TABLE IF EXISTS t_user_notice;
 DROP TABLE IF EXISTS t_user_device;
 DROP TABLE IF EXISTS t_white_device;
 DROP TABLE IF EXISTS t_device;
-DROP TABLE IF EXISTS t_device_statistics;
 DROP TABLE IF EXISTS t_feedback;
 DROP TABLE IF EXISTS t_functionvideo;
 DROP TABLE IF EXISTS t_invite_detail;
@@ -361,7 +361,7 @@ CREATE TABLE t_device_imei
 CREATE TABLE t_device_statistics
 (
 	sid int NOT NULL AUTO_INCREMENT,
-	device_id bigint,
+	device_id bigint NOT NULL,
 	visit_time datetime,
 	ip char(128),
 	PRIMARY KEY (sid),
@@ -1009,6 +1009,14 @@ ALTER TABLE t_device_imei
         REFERENCES t_device (device_id)
         ON UPDATE RESTRICT
         ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_device_statistics
+	ADD FOREIGN KEY (device_id)
+	REFERENCES t_device (device_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 
