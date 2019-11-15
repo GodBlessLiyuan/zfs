@@ -5,6 +5,7 @@ import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.FeedbackDTO;
 import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.mapper.FeedbackMapper;
+import com.rpa.web.mapper.UserMapper;
 import com.rpa.web.pojo.FeedbackPO;
 import com.rpa.web.service.FeedbackService;
 import com.rpa.web.utils.DTPageInfo;
@@ -30,7 +31,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     private FeedbackMapper feedbackMapper;
 
     @Autowired
-    private AdminUserMapper adminUserMapper;
+    private UserMapper userMapper;
 
     @Value("${file.publicPath}")
     private String publicPath;
@@ -68,7 +69,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         for(FeedbackPO po: lists_PO) {
             FeedbackDTO dto = new FeedbackDTO();
             dto.setFeedbackId(po.getFeedbackId());
-            dto.setPhone(queryPhoneByAid(po.getUserId()));
+            dto.setPhone(queryPhoneByUserId(po.getUserId()));
             dto.setDeviceId(po.getDeviceId());
             dto.setManufacturer(po.getManufacturer());
             dto.setAndroidmodel(po.getAndroidmodel());
@@ -92,15 +93,13 @@ public class FeedbackServiceImpl implements FeedbackService {
 
 
     /**
-     * 根据ID，从t_admin_user表中查询出手机号码（账号）
-     * @param aId
+     * 根据ID，从t_user表中查询出手机号码（账号）
+     * @param userId
      * @return
      */
-    public String queryPhoneByAid(Long aId) {
-        return this.adminUserMapper.queryPhoneByAid(aId);
+    public String queryPhoneByUserId(Long userId) {
+        return this.userMapper.queryPhoneByUserId(userId);
     }
-
-
 
     /**
      * 类型转换：将字符串类型的时间，转换为日期类型，加一天后再转回字符串

@@ -27,4 +27,4 @@ eureka:
 
 logging:
   path: E://log/
-  file: ${logging.path}smartproducer
+  file: ${logging.path}smartkafka
