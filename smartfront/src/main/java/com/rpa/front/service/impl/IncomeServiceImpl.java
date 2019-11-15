@@ -214,6 +214,10 @@ public class IncomeServiceImpl implements IIncomeService {
         // 获取最新发布应用
         AppPO appPO = appMapper.queryLatestRelease();
         String appUrl = publicPath + appPO.getUrl();
+
+        if (dto == null) {
+            return new ResultVO<>(ErrorCode.SHARE_CODE_ERROR, appUrl);
+        }
         // 根据shareCode获取userId
         RevenueUserPO revenueUserPO = revenueUserMapper.queryByShareCode(dto.getCode());
         if (null == revenueUserPO) {
