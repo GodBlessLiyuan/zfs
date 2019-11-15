@@ -21,7 +21,7 @@
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
 
-  <select id="queryNewRegister" resultType="java.lang.Integer">
+  <select id="queryTodayNewRegister" resultType="java.lang.Integer">
     select  count(user_id)
     from t_user
     where create_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))

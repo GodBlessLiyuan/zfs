@@ -8,10 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface VipCommodityMapper extends BaseDAO<VipCommodityPO, Integer> {
-    Float queryRevenue();
-
-    Float queryMonthRevenue();
-
     /**
      * 根据渠道Id和产品Id查询数据
      *

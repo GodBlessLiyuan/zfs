@@ -14,4 +14,6 @@ public interface UserMapper extends BaseMapper<UserPO, Long> {
      * @return
      */
     UserPO queryByPhone(String ph);
+
+    int queryTodayNewRegister();
 }

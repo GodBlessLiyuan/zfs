@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,6 +48,7 @@ public class DeviceStatisticsServiceImpl implements DeviceStatisticsService {
         int monthActiveUser = this.deviceStatisticsMapper.queryMonthActiveUser();
 
         // 将统计结果存入Redis缓存
-        template.opsForList().rightPushAll("deviceStatistics", String.valueOf(dayActiveUser), String.valueOf(monthActiveUser));
+        String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        this.template.opsForList().rightPushAll("deviceStatistics" + current_date, String.valueOf(dayActiveUser), String.valueOf(monthActiveUser));
     }
 }

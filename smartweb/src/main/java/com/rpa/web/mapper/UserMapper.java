@@ -17,9 +17,9 @@ public interface UserMapper extends BaseDAO<UserPO, Long> {
      */
     List<UserPO> list();
 
-    int queryNewRegister();
-
     String queryPhoneByUserId(Long userId);
 
     String queryPhoneByUserid(Long aId);
+
+    int queryTodayNewRegister();
 }

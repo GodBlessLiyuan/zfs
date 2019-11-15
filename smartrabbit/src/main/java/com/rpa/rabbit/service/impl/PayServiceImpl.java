@@ -10,13 +10,18 @@ import com.rpa.rabbit.mapper.RevenueUserMapper;
 import com.rpa.rabbit.pojo.InviteDetailPO;
 import com.rpa.rabbit.pojo.RevenueUserPO;
 import com.rpa.rabbit.service.IPayService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: xiahui
@@ -35,10 +40,14 @@ public class PayServiceImpl implements IPayService {
     private InviteUserMapper inviteUserMapper;
     @Resource
     private InviteDetailMapper inviteDetailMapper;
+    @Autowired
+    private StringRedisTemplate template;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void payNotify(String orderNumber) {
+        // 调用方法，更新redis信息
+        this.redisForRevenue();
         // 订单信息
         OrderBO orderBO = orderMapper.queryByOrderNumber(orderNumber);
         // 用户邀请人详情信息
@@ -78,5 +87,26 @@ public class PayServiceImpl implements IPayService {
         revenueUserPO.setRemaining(revenueUserPO.getRemaining() + earnings);
         revenueUserPO.setRegisterCount(inviteDetailMapper.queryCountByUserId(inviteUserBO.getUserId()));
         revenueUserMapper.updateByPrimaryKey(revenueUserPO);
+    }
+
+
+    /**
+     * @author: dangyi
+     * @date: 2019.11.15
+     * @description: 这是支付成功的通知消息，籍此，查询收入，更新Redis
+     */
+    private void redisForRevenue() {
+        String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+        Float dayRevenue = this.orderMapper.queryDayRevenue();
+        int payCount = this.orderMapper.queryPayCount();
+        Float monthRevenue = this.orderMapper.queryMonthRevenue();
+
+        List<String> revenue = new ArrayList<>();
+        revenue.add(String.valueOf(dayRevenue));
+        revenue.add(String.valueOf(payCount));
+        revenue.add(String.valueOf(monthRevenue));
+        this.template.opsForList().rightPushAll("revenue" + current_date, revenue);
+        this.template.expire("revenue" + current_date, 25, TimeUnit.HOURS);
     }
 }

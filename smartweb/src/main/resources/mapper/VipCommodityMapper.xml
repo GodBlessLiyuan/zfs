@@ -33,7 +33,7 @@
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}
   </select>
 
-  <select id="queryRevenue" resultType="java.lang.Float">
+  <select id="queryDayRevenue" resultType="java.lang.Float">
     select sum(v.discount)
     from t_vipcommodity v
     left join t_order o on v.cmdy_id = o.cmdy_id

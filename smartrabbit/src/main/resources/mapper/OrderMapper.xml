@@ -28,6 +28,25 @@
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=CHAR}
   </select>
+
+  <select id="queryDayRevenue" resultType="java.lang.Float">
+    select sum(pay)
+    from t_order
+    where pay_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
+  </select>
+
+  <select id="queryMonthRevenue" resultType="java.lang.Float">
+    select sum(pay)
+    from t_order
+    where pay_time >= (select timestamp(date_add(curdate(), interval - day(curdate()) + 1 day)))
+  </select>
+
+  <select id="queryPayCount" resultType="java.lang.Integer">
+    select count(order_id)
+    from t_order
+    where pay_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="com.rpa.rabbit.pojo.OrderPOKey">
     delete from t_order
     where order_id = #{orderId,jdbcType=INTEGER}

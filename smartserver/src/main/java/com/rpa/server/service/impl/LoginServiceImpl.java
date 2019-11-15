@@ -11,7 +11,9 @@ import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.utils.RequestUtil;
 import com.rpa.server.utils.UserVipUtil;
 import com.rpa.server.vo.LoginVO;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: xiahui
@@ -45,6 +48,9 @@ public class LoginServiceImpl implements ILoginService {
     @Resource
     private UserVipMapper userVipMapper;
 
+    @Autowired
+    private AmqpTemplate template;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO register(LoginDTO dto, HttpServletRequest req) {
@@ -64,6 +70,14 @@ public class LoginServiceImpl implements ILoginService {
             po.setIp(RequestUtil.getIpAddr(req));
             userMapper.insert(po);
 
+            /**
+             * @author: dangyi
+             * @date: 2019/11/15
+             * @description: 插入成功后，发送消息给RabbitMQ
+             */
+            this.template.convertAndSend("new_register");
+
+
             // 登出当前设备所有在线用户
             userDeviceMapper.signOutByDevId(dto.getId());
 
@@ -74,6 +88,14 @@ public class LoginServiceImpl implements ILoginService {
             userDevPO.setStatus((byte) 1);
             userDevPO.setCreateTime(new Date());
             userDeviceMapper.insert(userDevPO);
+
+            /**
+             * @author: dangyi
+             * @date: 2019/11/15
+             * @description: 插入成功后，发送消息给RabbitMQ
+             */
+            this.template.convertAndSend("new_user");
+
 
             // 新用户是否送会员
             List<UserGiftsPO> userGiftsPOs = userGiftsMapper.queryOpenGift();

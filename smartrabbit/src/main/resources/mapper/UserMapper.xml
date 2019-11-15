@@ -20,6 +20,13 @@
     from t_user
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
+
+  <select id="queryTodayNewRegister" resultType="java.lang.Integer">
+    select  count(user_id)
+    from t_user
+    where create_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_user
     where user_id = #{userId,jdbcType=BIGINT}
