@@ -1,6 +1,6 @@
 package com.rpa.rabbit.service.impl;
 
-import com.rpa.rabbit.service.DeviceMapper;
+import com.rpa.rabbit.mapper.DeviceMapper;
 import com.rpa.rabbit.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
