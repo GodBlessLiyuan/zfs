@@ -4,8 +4,13 @@ import com.rpa.pay.common.ResultVO;
 import com.rpa.pay.dto.WxPayDTO;
 import com.rpa.pay.service.IWxPayService;
 import com.rpa.pay.utils.VerifyUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("v1.0")
 @RestController
 public class WxPayController {
+    private final static Logger logger = LoggerFactory.getLogger(WxPayController.class);
 
     @Autowired
     private IWxPayService service;
@@ -33,7 +39,7 @@ public class WxPayController {
 
     @PostMapping("wxpaynotify")
     public String wxPayNotify(HttpServletRequest req) {
-
+        logger.info("WxPay-Rabbit-req: ", req);
         return service.wxPayNotify(req);
     }
 }
