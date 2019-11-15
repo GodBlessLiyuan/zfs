@@ -260,7 +260,7 @@
         }else if (extra == null || extra.trim() == "") {
             alert("备注不能为空！");
         } else {
-            $.post("/promoter/insert", {proName:proName, phone:phone, extra:extra}, function (result) {
+            $.post("promoter/insert", {proName:proName, phone:phone, extra:extra}, function (result) {
                 if (result.code === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
