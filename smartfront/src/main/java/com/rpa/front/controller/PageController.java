@@ -3,6 +3,7 @@ package com.rpa.front.controller;
 import com.rpa.front.common.ErrorCode;
 import com.rpa.front.common.ResultVO;
 import com.rpa.front.constant.IncomeConstant;
+import com.rpa.front.dto.DownLoadDTO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.dto.UserActivityDTO;
 import com.rpa.front.service.IIncomeService;
@@ -130,5 +131,16 @@ public class PageController {
 
         return "freemember_index";
     }
+
+    @GetMapping("downloadApk")
+    public String downloadApk( ModelMap map) {
+
+        ResultVO resultVO = service.getDownloadURL(null,null);
+        if(resultVO!=null) {
+            map.put("url", resultVO.getData());
+        }
+        return "download_apk";
+    }
+
 }
 
