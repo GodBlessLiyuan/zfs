@@ -2,10 +2,10 @@ package com.rpa.rabbit.service;
 
 /**
  * @author: dangyi
- * @date: Created in 16:15 2019/11/15
+ * @date: Created in 19:26 2019/11/15
  * @version: 1.0.0
  * @description:
  */
-public interface UserDeviceService {
-    void newUser();
+public interface DeviceService {
+    public void newUser();
 }

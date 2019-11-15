@@ -1,7 +1,7 @@
 package com.rpa.rabbit.service.impl;
 
 import com.rpa.rabbit.service.DeviceMapper;
-import com.rpa.rabbit.service.UserDeviceService;
+import com.rpa.rabbit.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -12,12 +12,12 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author: dangyi
- * @date: Created in 16:16 2019/11/15
+ * @date: Created in 19:27 2019/11/15
  * @version: 1.0.0
  * @description:
  */
 @Service
-public class UserDeviceServiceImpl implements UserDeviceService {
+public class DeviceServiceImpl implements DeviceService {
 
     @Autowired
     private DeviceMapper deviceMapper;

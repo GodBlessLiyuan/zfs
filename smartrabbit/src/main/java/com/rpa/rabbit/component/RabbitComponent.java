@@ -1,9 +1,6 @@
 package com.rpa.rabbit.component;
 
-import com.rpa.rabbit.service.DeviceStatisticsService;
-import com.rpa.rabbit.service.IPayService;
-import com.rpa.rabbit.service.UserDeviceService;
-import com.rpa.rabbit.service.UserService;
+import com.rpa.rabbit.service.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,7 +26,7 @@ public class RabbitComponent {
     private UserService userService;
 
     @Autowired
-    private UserDeviceService userDeviceService;
+    private DeviceService deviceService;
 
     /**
      * 微信支付确认通知
@@ -73,6 +70,6 @@ public class RabbitComponent {
      */
     @RabbitListener(queues = "new_user")
     public void newUser( ) {
-        userDeviceService.newUser();
+        deviceService.newUser();
     }
 }
