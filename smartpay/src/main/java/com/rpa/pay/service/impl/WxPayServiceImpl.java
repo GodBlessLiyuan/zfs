@@ -16,6 +16,8 @@ import com.rpa.pay.service.IWxPayService;
 import com.rpa.pay.utils.UserVipUtil;
 import com.rpa.pay.utils.WxPayUtil;
 import com.rpa.pay.vo.WxPayVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * @author: xiahui
@@ -40,6 +41,7 @@ import java.util.UUID;
 @EnableTransactionManagement
 @Service
 public class WxPayServiceImpl implements IWxPayService {
+    private final static Logger logger = LoggerFactory.getLogger(WxPayServiceImpl.class);
     @Resource
     private VipCommodityMapper vipCommodityMapper;
     @Resource
@@ -109,6 +111,7 @@ public class WxPayServiceImpl implements IWxPayService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String wxPayNotify(HttpServletRequest req) {
+        logger.info("WxPay-Notify-req: ", req);
         Map<String, String> wxPayMap = WxPayUtil.parseReq(req);
         if (null == wxPayMap || 0 == wxPayMap.size()) {
             return WxPayUtil.failWxPay();
@@ -126,6 +129,7 @@ public class WxPayServiceImpl implements IWxPayService {
             return WxPayUtil.successWxPay();
         }
 
+        logger.info("WxPay-notify-userId: " + orderPO.getUserId());
         // 更新用户会员时间
         UserVipPO userVipPO = userVipMapper.queryByUserId(orderPO.getUserId());
         UserVipPO newUserVipVO = UserVipUtil.buildUserVipVO(userVipPO, orderPO.getUserId(), orderPO.getDays(), true);
@@ -152,6 +156,7 @@ public class WxPayServiceImpl implements IWxPayService {
         WxFeedbackPO po = WxPayUtil.convertMap2PO(wxPayMap);
         wxFeedbackMapper.insert(po);
 
+        logger.info("WxPay-notify-outTradeNo: " + po.getOutTradeNo());
         // 事务提交完成后，发送消息
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
                                                                       @Override
