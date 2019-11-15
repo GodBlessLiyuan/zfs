@@ -7,7 +7,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
   application:
-    name: smartproducer
+    name: smartkafka
   jackson:
     serialization:
       indent-output: true
