@@ -16,6 +16,7 @@ import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +43,7 @@ public class DeviceServiceImpl implements IDeviceService {
         if (imei == null || imei.size() == 0) {
             // 新增设备信息
             DevicePO devicePO = new DevicePO();
+            devicePO.setCreateTime(new Date());
             this.updatePObyDTO(devicePO, dto);
             deviceMapper.insert(devicePO);
             return this.buildResultVO(devicePO.getDeviceId());
@@ -52,6 +54,7 @@ public class DeviceServiceImpl implements IDeviceService {
             // 没有查询到相关设备信息
             // 新增设备信息
             DevicePO devicePO = new DevicePO();
+            devicePO.setCreateTime(new Date());
             this.updatePObyDTO(devicePO, dto);
             deviceMapper.insert(devicePO);
             // 新增设备imei号
