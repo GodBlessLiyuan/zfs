@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: dangyi
@@ -47,8 +49,14 @@ public class DeviceStatisticsServiceImpl implements DeviceStatisticsService {
         int dayActiveUser = this.deviceStatisticsMapper.queryDayActiveUser();
         int monthActiveUser = this.deviceStatisticsMapper.queryMonthActiveUser();
 
-        // 将统计结果存入Redis缓存
+        // 将统计结果封装成map
+        Map<String, String> deviceStatistics = new HashMap();
+        deviceStatistics.put("dayActiveUser", String.valueOf(dayActiveUser));
+        deviceStatistics.put("monthActiveUser", String.valueOf(monthActiveUser));
+
+        // 再存入Redis缓存
         String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        this.template.opsForList().rightPushAll("deviceStatistics" + current_date, String.valueOf(dayActiveUser), String.valueOf(monthActiveUser));
+        this.template.opsForHash().putAll("deviceStatistics" + current_date, deviceStatistics);
+        this.template.expire("deviceStatistics" + current_date, 25, TimeUnit.HOURS);
     }
 }

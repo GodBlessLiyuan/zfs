@@ -58,7 +58,7 @@ public class RabbitComponent {
      * @description: 新注册用户
      */
     @RabbitListener(queues = "new_register")
-    public void newRegister( ) {
+    public void newRegister(String msg) {
         userService.newRegister();
     }
 
@@ -69,7 +69,7 @@ public class RabbitComponent {
      * @description: 新增用户
      */
     @RabbitListener(queues = "new_user")
-    public void newUser( ) {
+    public void newUser(String msg) {
         deviceService.newUser();
     }
 }

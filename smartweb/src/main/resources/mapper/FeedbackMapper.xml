@@ -47,6 +47,7 @@
         AND fun_name like '%' #{funName} '%'
       </if>
     </where>
+    order by create_time desc
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

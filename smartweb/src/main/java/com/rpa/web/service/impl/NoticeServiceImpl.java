@@ -227,7 +227,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 
     /**
-     * 类型转换：将字符串类型的时间，转换为日期类型，并加一天
+     * 类型转换：将字符串类型的时间，转换为日期类型，并设置为当天最后一刻
      *
      * @param strDate
      * @return
@@ -248,7 +248,9 @@ public class NoticeServiceImpl implements NoticeService {
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.add(Calendar.DATE, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
         date = calendar.getTime();
 
         return date;
@@ -256,7 +258,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 
     /**
-     * 类型转换：将字符串类型的时间，转换为日期类型，加一天后再转回字符串
+     * 类型转换：将字符串类型的时间，转换为日期类型，设置为当天最后一刻后，再转回字符串
      * @param strDate
      * @return
      */
@@ -264,7 +266,7 @@ public class NoticeServiceImpl implements NoticeService {
         if (null == strDate || "".equals(strDate)) {
             return null;
         } else {
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             return format.format(this.strToDate2(strDate));
         }
 

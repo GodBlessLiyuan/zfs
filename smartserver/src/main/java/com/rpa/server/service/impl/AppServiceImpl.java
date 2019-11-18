@@ -55,19 +55,22 @@ public class AppServiceImpl implements IAppService {
         vo.setCode(appPO.getVersioncode());
         vo.setVersionname(appPO.getVersionname());
 
+        mqForDeviceInfo(dto, req);
 
-        /**
-         * @author: dangyi
-         * @date: Created in 2019/11/14 15:35
-         * @description: 将用户设备访问信息转发给RabbitMQ
-         */
+        return new ResultVO<>(1009, vo);
+    }
+
+    /**
+     * @author: dangyi
+     * @date: Created in 2019/11/14 15:35
+     * @description: 将用户设备访问信息转发给RabbitMQ
+     */
+    private void mqForDeviceInfo(AppDTO dto, HttpServletRequest req) {
         // 创建map集合，封装用户设备访问信息
         Map<String, Object> deviceInfo = new HashMap<>();
         deviceInfo.put("deviceId", dto.getId());
         deviceInfo.put("visitTime", new Date());
         deviceInfo.put("ip", RequestUtil.getIpAddr(req));
         this.template.convertAndSend("device_statistics", deviceInfo);
-
-        return new ResultVO<>(1009, vo);
     }
 }
