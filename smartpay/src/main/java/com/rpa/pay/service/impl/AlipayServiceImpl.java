@@ -134,7 +134,8 @@ public class AlipayServiceImpl implements AlipayService {
         // 封装参数
         request.setBizModel(model);
         // 支付结果异步通知
-        request.setNotifyUrl("外网可以访问的异步地址，供支付宝服务器访问");
+        //request.setNotifyUrl("外网可以访问的异步地址，供支付宝服务器访问");
+        request.setNotifyUrl("https://39.97.253.38/pay/v1.0/alinotify");
 
         try {
             // 执行加签操作
