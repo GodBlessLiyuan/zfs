@@ -137,8 +137,12 @@
                     <h5 class="modal-title">查看图片</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>×</span> </button>
                 </div>
-                <div class="modal-body">
-                    <img src='' id="url1_pic" height='50px' width='50px'/>
+                <div class="container-fluid">
+                    <div class="row">
+                        <img src='' id="url1_pic" height='50px' width='50px'/>
+                        <img src='' id="url2_pic" height='50px' width='50px'/>
+                        <img src='' id="url3_pic" height='50px' width='50px'/>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -229,13 +233,13 @@
                 {"data": "contact"},
                 {"data": "context"},
                 {
-                    "data": "url1",
+                    "data": "feedbackId",
                     "render": function (data, type, full) {
-                        if (null == data) {
+                        if (null == full.url1 && null == full.url2 && null == full.url3) {
                             return "";
                         } else {
                             return "<button type='button'  data-toggle='modal' data-target='#url1Modal' data-whatever='@getbootstrap' " +
-                                "class='btn btn-primary' onclick='viewClick(\""+ data +"\")'>查看</button>";
+                                "class='btn btn-primary' onclick='viewClick(\""+ full.url1 +"\",\""+ full.url2 +"\",\""+ full.url3 +"\")'>查看</button>";
                         }
                     }
                 }
@@ -262,8 +266,25 @@
     /**
      * 查看图片
      */
-    function viewClick(url1) {
-        document.getElementById("url1_pic").src = url1;
+    function viewClick(url1, url2, url3) {
+        if ("null" == url1) {
+            document.getElementById("url1_pic").style.display = "none";
+        } else {
+            document.getElementById("url1_pic").style.display = "block";
+            document.getElementById("url1_pic").src = url1;
+        }
+        if ("null" == url2) {
+            document.getElementById("url2_pic").style.display = "none";
+        } else {
+            document.getElementById("url2_pic").style.display = "block";
+            document.getElementById("url2_pic").src = url2;
+        }
+        if ("null" == url3) {
+            document.getElementById("url3_pic").style.display = "none";
+        } else {
+            document.getElementById("url3_pic").style.display = "block";
+            document.getElementById("url3_pic").src = url3;
+        }
     }
 
 
