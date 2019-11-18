@@ -83,6 +83,16 @@ public class FeedbackServiceImpl implements FeedbackService {
             } else {
                 dto.setUrl1(publicPath + po.getUrl1());
             }
+            if (null == po.getUrl2()) {
+                dto.setUrl2(po.getUrl2());
+            } else {
+                dto.setUrl2(publicPath + po.getUrl2());
+            }
+            if (null == po.getUrl3()) {
+                dto.setUrl3(po.getUrl3());
+            } else {
+                dto.setUrl3(publicPath + po.getUrl3());
+            }
 
             lists_DTO.add(dto);
         }
