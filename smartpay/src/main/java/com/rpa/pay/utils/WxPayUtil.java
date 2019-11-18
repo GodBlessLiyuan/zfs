@@ -301,11 +301,21 @@ public class WxPayUtil {
 
     /**
      * 签名验证
+     *
      * @param map
      * @param key
      * @return
      */
     public static boolean checkSign(Map<String, String> map, String key) {
-        return true;
+        SortedMap<String, Object> sm = new TreeMap<>();
+        for (Map.Entry<String, String> e : map.entrySet()) {
+            String k = e.getKey();
+            if (null == k || "".equals(k) || WxPayConstant.SIGN.equals(e.getKey())) {
+                continue;
+            }
+            sm.put(k, e.getValue());
+        }
+
+        return map.get(WxPayConstant.SIGN).equals(WxPayUtil.sign(sm, key));
     }
 }
