@@ -259,6 +259,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     /**
      * 类型转换：将字符串类型的时间，转换为日期类型，设置为当天最后一刻后，再转回字符串
+     *
      * @param strDate
      * @return
      */

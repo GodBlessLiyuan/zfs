@@ -472,7 +472,13 @@
                 },
                 {"data": "title"},
                 {"data": "createTime"},
-                {"data": "showTime"},
+                {
+                    "data": "showTime",
+                    "render": function (data, type, full) {
+                        var time = "";
+                        return  time = getTime(data);
+                    }
+                },
                 {"data": "startTime"},
                 {"data": "endTime"},
                 {"data": "url"},
@@ -600,6 +606,28 @@
                 alert("删除失败！")
             }
         }, "json");
+    }
+
+
+    /**
+     * 解析日期，获取时间
+     */
+    function getTime(strDate) {
+        var date = new Date(strDate);
+        var hours = extra(date.getHours());
+        var minutes = extra(date.getMinutes());
+        var time = hours + ':' + minutes;
+        return time;
+    }
+
+    //如果传入数字小于10，数字前补一位0
+    function extra(x) {
+        if (x < 10) {
+            return "0" + x;
+        }
+        else {
+            return x;
+        }
     }
 
 
