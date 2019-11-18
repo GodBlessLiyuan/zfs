@@ -75,7 +75,7 @@ public class LoginServiceImpl implements ILoginService {
              * @date: 2019/11/15
              * @description: 插入成功后，发送消息给RabbitMQ
              */
-            this.template.convertAndSend("new_register");
+            this.template.convertAndSend("new_register", "null");
 
 
             // 登出当前设备所有在线用户
@@ -94,7 +94,7 @@ public class LoginServiceImpl implements ILoginService {
              * @date: 2019/11/15
              * @description: 插入成功后，发送消息给RabbitMQ
              */
-            this.template.convertAndSend("new_user");
+            this.template.convertAndSend("new_user", "null");
 
 
             // 新用户是否送会员

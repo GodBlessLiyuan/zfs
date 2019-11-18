@@ -103,7 +103,6 @@
                                     <tr>
                                         <th>序号</th>
                                         <th>用户账号</th>
-                                        <th>标识</th>
                                         <th>厂商</th>
                                         <th>型号</th>
                                         <th>系统版本</th>
@@ -222,7 +221,6 @@
             "columns": [
                 {"data": null, "targets": 0},
                 {"data": "phone"},
-                {"data": "deviceId"},
                 {"data": "manufacturer"},
                 {"data": "androidmodel"},
                 {"data": "buildversion"},

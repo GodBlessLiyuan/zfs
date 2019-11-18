@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,37 +52,39 @@ public class HomepageServiceImpl implements HomepageService {
         String payCount = null;
         String monthRevenue = null;
 
-        newRegister = this.template.opsForValue().get("newRegister");
+        String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+        newRegister = this.template.opsForValue().get("newRegister" + current_date);
         if (null == newRegister) {
             newRegister = String.valueOf(this.userMapper.queryTodayNewRegister());
         }
 
-        newUser = this.template.opsForValue().get("newUser");
+        newUser = this.template.opsForValue().get("newUser" + current_date);
         if (null == newUser) {
             newUser = String.valueOf(this.deviceMapper.queryTodayNewUser());
         }
 
-        dayActiveUser = this.template.opsForList().range("deviceStatistics", 0, -1).get(0);
+        dayActiveUser = (String) this.template.opsForHash().get("deviceStatistics" +current_date, "dayActiveUser");
         if (dayActiveUser == null) {
             dayActiveUser = String.valueOf(this.deviceStatisticsMapper.queryDayActiveUser());
         }
 
-        monthActiveUser = this.template.opsForList().range("deviceStatistics", 0, -1).get(1);
+        monthActiveUser = (String)this.template.opsForHash().get("deviceStatistics" + current_date, "monthActiveUser");
         if (null == monthActiveUser) {
             monthActiveUser = String.valueOf(this.deviceStatisticsMapper.queryMonthActiveUser());
         }
 
-        dayRevenue = this.template.opsForList().range("revenue", 0, -1).get(0);
+        dayRevenue = (String) this.template.opsForHash().get("revenue" + current_date, "dayRevenue");
         if (null == dayRevenue) {
             dayRevenue = String.valueOf(this.orderMapper.queryDayRevenue());
         }
 
-        payCount = this.template.opsForList().range("revenue", 0, -1).get(1);
+        payCount = (String)this.template.opsForHash().get("revenue" + current_date, "payCount");
         if (null == payCount) {
             payCount = String.valueOf(this.orderMapper.queryPayCount());
         }
 
-        monthRevenue = this.template.opsForList().range("revenue", 0, -1).get(2);
+        monthRevenue = (String) this.template.opsForHash().get("revenue" + current_date, "monthRevenue");
         if (null == monthRevenue) {
             monthRevenue = String.valueOf(this.orderMapper.queryMonthRevenue());
         }

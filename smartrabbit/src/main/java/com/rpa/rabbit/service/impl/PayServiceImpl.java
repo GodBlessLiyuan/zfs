@@ -18,9 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -102,11 +100,12 @@ public class PayServiceImpl implements IPayService {
         int payCount = this.orderMapper.queryPayCount();
         Float monthRevenue = this.orderMapper.queryMonthRevenue();
 
-        List<String> revenue = new ArrayList<>();
-        revenue.add(String.valueOf(dayRevenue));
-        revenue.add(String.valueOf(payCount));
-        revenue.add(String.valueOf(monthRevenue));
-        this.template.opsForList().rightPushAll("revenue" + current_date, revenue);
+        // 将统计结果封装成map
+        Map<String, String> revenue = new HashMap();
+        revenue.put("dayRevenue", String.valueOf(dayRevenue));
+        revenue.put("payCount", String.valueOf(payCount));
+        revenue.put("monthRevenue", String.valueOf(monthRevenue));
+        this.template.opsForHash().putAll("revenue" + current_date, revenue);
         this.template.expire("revenue" + current_date, 25, TimeUnit.HOURS);
     }
 }
