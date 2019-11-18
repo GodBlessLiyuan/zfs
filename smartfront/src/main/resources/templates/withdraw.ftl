@@ -30,7 +30,7 @@
             <div style="width: 60%; float: left;padding-left: 30px;">
                 <div  style="margin-left: 5px">
                     <i class="icon-rmb"></i>
-                    <input class="input_money" id="importBalance" type="text"  style="font-size: 15px;padding-top:5px;padding-left: 10px;width:130px;"; placeholder="请输入提现金额">
+                    <input class="input_money" id="importBalance" type="number"  style="font-size: 15px;padding-top:5px;padding-left: 10px;width:130px;"; placeholder="请输入提现金额">
                 </div>
             </div>
             <div style="float:left;padding-left:20px;margin-right: 10px">
