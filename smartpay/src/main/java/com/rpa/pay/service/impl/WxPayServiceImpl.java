@@ -111,7 +111,6 @@ public class WxPayServiceImpl implements IWxPayService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String wxPayNotify(HttpServletRequest req) {
-        logger.info("WxPay-Notify-req: ", req);
         Map<String, String> wxPayMap = WxPayUtil.parseReq(req);
         if (null == wxPayMap || 0 == wxPayMap.size()) {
             return WxPayUtil.failWxPay();
@@ -119,9 +118,14 @@ public class WxPayServiceImpl implements IWxPayService {
         if (!WxPayConstant.SUCCESS.equals(wxPayMap.get(WxPayConstant.RETURN_CODE))) {
             return WxPayUtil.failWxPay();
         }
+        logger.info("WxPayNotify: " + wxPayMap.toString());
+        // 签名验证
+        if (!WxPayUtil.checkSign(wxPayMap, wxPayConfig.getKey())) {
+            return WxPayUtil.failWxPay();
+        }
 
         OrderPO orderPO = orderMapper.queryByOrderNumber(wxPayMap.get(WxPayConstant.OUT_TRADE_NO));
-        if (null == orderPO) {
+        if (null == orderPO || orderPO.getPay() != Long.parseLong(wxPayMap.get(WxPayConstant.TOTAL_FEE))) {
             return WxPayUtil.failWxPay();
         }
         if (null != orderPO.getPayTime()) {
@@ -129,7 +133,6 @@ public class WxPayServiceImpl implements IWxPayService {
             return WxPayUtil.successWxPay();
         }
 
-        logger.info("WxPay-notify-userId: " + orderPO.getUserId());
         // 更新用户会员时间
         UserVipPO userVipPO = userVipMapper.queryByUserId(orderPO.getUserId());
         UserVipPO newUserVipVO = UserVipUtil.buildUserVipVO(userVipPO, orderPO.getUserId(), orderPO.getDays(), true);
@@ -155,8 +158,6 @@ public class WxPayServiceImpl implements IWxPayService {
         // 新增微信支付反馈信息
         WxFeedbackPO po = WxPayUtil.convertMap2PO(wxPayMap);
         wxFeedbackMapper.insert(po);
-
-        logger.info("WxPay-notify-outTradeNo: " + po.getOutTradeNo());
         // 事务提交完成后，发送消息
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
                                                                       @Override

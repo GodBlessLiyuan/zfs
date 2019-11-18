@@ -78,7 +78,7 @@
      */
     function changeImg(){
         var img = document.getElementById("img");
-        img.src = "/login/get/checkcode?date=" + new Date();
+        img.src = "login/get/checkcode?date=" + new Date();
     }
 </script>
 

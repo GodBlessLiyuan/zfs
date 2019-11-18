@@ -64,6 +64,11 @@ public class PayServiceImpl implements IPayService {
         }
         long earnings = orderBO.getPay() * proportion / 100;
 
+        if(earnings == 0) {
+            // 无收益
+            return;
+        }
+
         // 新增被邀请人详细分成
         InviteDetailPO inviteDetailPO = new InviteDetailPO();
         inviteDetailPO.setOrderId(orderBO.getOrderId());
