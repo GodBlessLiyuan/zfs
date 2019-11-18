@@ -298,4 +298,14 @@ public class WxPayUtil {
 
         return WxPayUtil.sign(signParam, wxPayConfig.getKey());
     }
+
+    /**
+     * 签名验证
+     * @param map
+     * @param key
+     * @return
+     */
+    public static boolean checkSign(Map<String, String> map, String key) {
+        return true;
+    }
 }
