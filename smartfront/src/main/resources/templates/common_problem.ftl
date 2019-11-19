@@ -8,7 +8,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title> 常见问题 </title>
-    <link rel="stylesheet" href="${basePath}/css/common_problem.css">
     <script src="js/generalize.js" type="text/javascript"></script>
 
     <link rel="stylesheet" href="${basePath}/css/style.css">
@@ -18,6 +17,50 @@
     <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 
 </head>
+<style>
+    a{
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+        color: #fff;
+        line-height: 20px;
+        background: lightslategrey;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+    .box_div{
+        position: relative;
+    }
+    span{
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        width: 0;
+        height: 0;
+        display: block;
+        border-top: 6px solid #fff;
+        border-bottom: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+    }
+    p{
+        height: 0px;
+        overflow: hidden;
+        font-size: 15px;
+        color: #000;
+        line-height: 20px;
+        padding-left: 5px;
+    }
+    .box_div:target p{
+        height: auto;
+    }
+    .box_div:target span{
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid #fff;
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+    }
+</style>
 
 <body>
 <div class="box">
@@ -25,6 +68,7 @@
         <a href="#box_one" style="padding-left: 5px">悬浮窗如何开启？</a>
         <span></span>
         <p>
+            <br>
             OPPO手机：<br>
             安卓系统6.0以上：手机管家->隐私权限->悬浮窗权限管理->开启微商工具箱<br>
             安卓系统5.0以下：手机管家->隐私权限->悬浮窗权限管理->开启微商工具箱<br>
@@ -42,6 +86,7 @@
         <a href="#box_two" style="padding-left: 5px">辅助服务如何开启？</a>
         <span></span>
         <p>
+            <br>
             OPPO手机：设置->其他设置->辅助功能->开启微商工具箱辅助服务<br>
             VIVO手机：设置->更多设置->辅助功能->开启微商工具箱辅助服务<br>
             华为手机：设置->高级设置->辅助功能->开启微商工具箱辅助服务<br>
@@ -55,6 +100,7 @@
         <a href="#box_three" style="padding-left: 5px">微信支持版本</a>
         <span></span>
         <p>
+            <br>
             砖助智能助手支持微信：v7.0.7，v7.0.8<br>
             如检测微信版本不支持，可使用以下方法解决：<br>
             1.微信发布新版本后暂不升级，待砖助智能助手发新版本支持后在升级<br>
