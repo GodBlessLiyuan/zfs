@@ -68,7 +68,7 @@
         <a href="#box_one" style="padding-left: 5px">悬浮窗如何开启？</a>
         <span></span>
         <p>
-            <br><br>
+            &nbsp; &nbsp; &nbsp; &nbsp; <br>
             OPPO手机：<br>
             安卓系统6.0以上：手机管家->隐私权限->悬浮窗权限管理->开启微商工具箱<br>
             安卓系统5.0以下：手机管家->隐私权限->悬浮窗权限管理->开启微商工具箱<br>
@@ -86,7 +86,7 @@
         <a href="#box_two" style="padding-left: 5px">辅助服务如何开启？</a>
         <span></span>
         <p>
-            <br><br>
+            &nbsp; &nbsp; &nbsp; &nbsp; <br>
             OPPO手机：设置->其他设置->辅助功能->开启微商工具箱辅助服务<br>
             VIVO手机：设置->更多设置->辅助功能->开启微商工具箱辅助服务<br>
             华为手机：设置->高级设置->辅助功能->开启微商工具箱辅助服务<br>
@@ -100,7 +100,7 @@
         <a href="#box_three" style="padding-left: 5px">微信支持版本</a>
         <span></span>
         <p>
-            <br><br>
+            &nbsp; &nbsp; &nbsp; &nbsp; <br>
             砖助智能助手支持微信：v7.0.7，v7.0.8<br>
             如检测微信版本不支持，可使用以下方法解决：<br>
             1.微信发布新版本后暂不升级，待砖助智能助手发新版本支持后在升级<br>
