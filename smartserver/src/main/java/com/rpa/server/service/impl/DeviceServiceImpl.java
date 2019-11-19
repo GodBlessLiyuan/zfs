@@ -17,9 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author: xiahui
@@ -61,9 +59,9 @@ public class DeviceServiceImpl implements IDeviceService {
             po.setCreateTime(new Date());
             deviceMapper.insert(po);
 
-            // 新增设备imei号
+            // 新增设备imei号，需去重
             List<DeviceImeiPO> imeiPOs = new ArrayList<>();
-            for (String imei : imeis) {
+            for (String imei : new HashSet<>(imeis)) {
                 DeviceImeiPO imeiPO = new DeviceImeiPO();
                 imeiPO.setDeviceId(po.getDeviceId());
                 imeiPO.setImei(imei);
