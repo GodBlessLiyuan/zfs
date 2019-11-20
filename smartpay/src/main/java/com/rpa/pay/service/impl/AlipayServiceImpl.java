@@ -21,6 +21,7 @@ import com.rpa.pay.service.AlipayService;
 import com.rpa.pay.utils.UserVipUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,6 +43,7 @@ import java.util.*;
  */
 @Service
 public class AlipayServiceImpl implements AlipayService {
+    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(AlipayServiceImpl.class);
 
     @Autowired
     private VipCommodityMapper vipCommodityMapper;
@@ -164,7 +166,8 @@ public class AlipayServiceImpl implements AlipayService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String aliNotify(Map<String, String> params) {
+    public String alipayNotify(Map<String, String> params) {
+        logger.info("alipayNotify: " + params.toString());
 
         this.storeInfo(params);
 
