@@ -37,6 +37,7 @@ DROP TABLE IF EXISTS t_white_device;
 DROP TABLE IF EXISTS t_device;
 DROP TABLE IF EXISTS t_feedback;
 DROP TABLE IF EXISTS t_functionvideo;
+DROP TABLE IF EXISTS t_godinsec_user;
 DROP TABLE IF EXISTS t_invite_detail;
 DROP TABLE IF EXISTS t_invite_user;
 DROP TABLE IF EXISTS t_key_text;
@@ -421,6 +422,18 @@ CREATE TABLE t_functionvideo
 	PRIMARY KEY (function_id),
 	UNIQUE (function_id),
 	UNIQUE (fun_name)
+);
+
+
+CREATE TABLE t_godinsec_user
+(
+	phone char(11) NOT NULL,
+	create_time datetime,
+	update_time datetime,
+	days int,
+	-- 1 未赠送  2 赠送
+	status tinyint DEFAULT 1 COMMENT '1 未赠送  2 赠送',
+	UNIQUE (phone)
 );
 
 
