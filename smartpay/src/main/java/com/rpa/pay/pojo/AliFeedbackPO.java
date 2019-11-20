@@ -20,8 +20,6 @@ public class AliFeedbackPO implements Serializable {
 
     private String signType;
 
-    private String sign;
-
     private String tradeNo;
 
     private String outTradeNo;
@@ -112,14 +110,6 @@ public class AliFeedbackPO implements Serializable {
 
     public void setSignType(String signType) {
         this.signType = signType;
-    }
-
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
     }
 
     public String getTradeNo() {
@@ -308,7 +298,6 @@ public class AliFeedbackPO implements Serializable {
             && (this.getAppId() == null ? other.getAppId() == null : this.getAppId().equals(other.getAppId()))
             && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
             && (this.getSignType() == null ? other.getSignType() == null : this.getSignType().equals(other.getSignType()))
-            && (this.getSign() == null ? other.getSign() == null : this.getSign().equals(other.getSign()))
             && (this.getTradeNo() == null ? other.getTradeNo() == null : this.getTradeNo().equals(other.getTradeNo()))
             && (this.getOutTradeNo() == null ? other.getOutTradeNo() == null : this.getOutTradeNo().equals(other.getOutTradeNo()))
             && (this.getOutBizNo() == null ? other.getOutBizNo() == null : this.getOutBizNo().equals(other.getOutBizNo()))
@@ -342,7 +331,6 @@ public class AliFeedbackPO implements Serializable {
         result = prime * result + ((getAppId() == null) ? 0 : getAppId().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         result = prime * result + ((getSignType() == null) ? 0 : getSignType().hashCode());
-        result = prime * result + ((getSign() == null) ? 0 : getSign().hashCode());
         result = prime * result + ((getTradeNo() == null) ? 0 : getTradeNo().hashCode());
         result = prime * result + ((getOutTradeNo() == null) ? 0 : getOutTradeNo().hashCode());
         result = prime * result + ((getOutBizNo() == null) ? 0 : getOutBizNo().hashCode());
@@ -379,7 +367,6 @@ public class AliFeedbackPO implements Serializable {
         sb.append(", appId=").append(appId);
         sb.append(", version=").append(version);
         sb.append(", signType=").append(signType);
-        sb.append(", sign=").append(sign);
         sb.append(", tradeNo=").append(tradeNo);
         sb.append(", outTradeNo=").append(outTradeNo);
         sb.append(", outBizNo=").append(outBizNo);

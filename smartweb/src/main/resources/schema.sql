@@ -162,7 +162,6 @@ CREATE TABLE t_ali_feedback
 	app_id char(32),
 	version char(3),
 	sign_type char(10),
-	sign char(255),
 	trade_no char(64),
 	out_trade_no char(64),
 	out_biz_no char(64),
@@ -464,7 +463,7 @@ CREATE TABLE t_invite_user
 	invite_phone char(16),
 	create_time datetime,
 	update_time datetime,
-	ip char(64),
+	ip char(128),
 	PRIMARY KEY (invite_id),
 	UNIQUE (invite_id),
 	UNIQUE (invite_phone)

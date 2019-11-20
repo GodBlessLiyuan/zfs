@@ -8,7 +8,6 @@
     <result column="app_id" jdbcType="CHAR" property="appId" />
     <result column="version" jdbcType="CHAR" property="version" />
     <result column="sign_type" jdbcType="CHAR" property="signType" />
-    <result column="sign" jdbcType="CHAR" property="sign" />
     <result column="trade_no" jdbcType="CHAR" property="tradeNo" />
     <result column="out_trade_no" jdbcType="CHAR" property="outTradeNo" />
     <result column="out_biz_no" jdbcType="CHAR" property="outBizNo" />
@@ -33,25 +32,23 @@
   </resultMap>
   <insert id="insert" parameterType="com.rpa.pay.pojo.AliFeedbackPO">
     insert into t_ali_feedback (notify_time, notify_type, notify_id, 
-      app_id, version, sign_type, sign, 
-      trade_no, out_trade_no, out_biz_no, 
-      buyer_id, buyer_logon_id, seller_id, 
-      seller_email, trade_status, total_amount, 
-      receipt_amount, invoice_amount, buyer_pay_amount, 
-      point_amount, refund_fee, subject, 
-      body, gmt_create, gmt_payment, 
-      gmt_refund, gmt_close, fund_bill_list
-      )
+      app_id, version, sign_type, trade_no, 
+      out_trade_no, out_biz_no, buyer_id, 
+      buyer_logon_id, seller_id, seller_email, 
+      trade_status, total_amount, receipt_amount, 
+      invoice_amount, buyer_pay_amount, point_amount, 
+      refund_fee, subject, body, gmt_create, 
+      gmt_payment, gmt_refund, gmt_close, 
+      fund_bill_list)
     values (#{notifyTime,jdbcType=TIMESTAMP}, #{notifyType,jdbcType=CHAR}, #{notifyId,jdbcType=CHAR}, 
-      #{appId,jdbcType=CHAR}, #{version,jdbcType=CHAR}, #{signType,jdbcType=CHAR}, #{sign,jdbcType=CHAR}, 
-      #{tradeNo,jdbcType=CHAR}, #{outTradeNo,jdbcType=CHAR}, #{outBizNo,jdbcType=CHAR}, 
-      #{buyerId,jdbcType=CHAR}, #{buyerLogonId,jdbcType=CHAR}, #{sellerId,jdbcType=CHAR}, 
-      #{sellerEmail,jdbcType=CHAR}, #{tradeStatus,jdbcType=CHAR}, #{totalAmount,jdbcType=REAL}, 
-      #{receiptAmount,jdbcType=REAL}, #{invoiceAmount,jdbcType=REAL}, #{buyerPayAmount,jdbcType=REAL}, 
-      #{pointAmount,jdbcType=REAL}, #{refundFee,jdbcType=REAL}, #{subject,jdbcType=CHAR}, 
-      #{body,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtPayment,jdbcType=TIMESTAMP}, 
-      #{gmtRefund,jdbcType=TIMESTAMP}, #{gmtClose,jdbcType=TIMESTAMP}, #{fundBillList,jdbcType=CHAR}
-      )
+      #{appId,jdbcType=CHAR}, #{version,jdbcType=CHAR}, #{signType,jdbcType=CHAR}, #{tradeNo,jdbcType=CHAR}, 
+      #{outTradeNo,jdbcType=CHAR}, #{outBizNo,jdbcType=CHAR}, #{buyerId,jdbcType=CHAR}, 
+      #{buyerLogonId,jdbcType=CHAR}, #{sellerId,jdbcType=CHAR}, #{sellerEmail,jdbcType=CHAR}, 
+      #{tradeStatus,jdbcType=CHAR}, #{totalAmount,jdbcType=REAL}, #{receiptAmount,jdbcType=REAL}, 
+      #{invoiceAmount,jdbcType=REAL}, #{buyerPayAmount,jdbcType=REAL}, #{pointAmount,jdbcType=REAL}, 
+      #{refundFee,jdbcType=REAL}, #{subject,jdbcType=CHAR}, #{body,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtPayment,jdbcType=TIMESTAMP}, #{gmtRefund,jdbcType=TIMESTAMP}, #{gmtClose,jdbcType=TIMESTAMP}, 
+      #{fundBillList,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.pay.pojo.AliFeedbackPO">
     insert into t_ali_feedback
@@ -73,9 +70,6 @@
       </if>
       <if test="signType != null">
         sign_type,
-      </if>
-      <if test="sign != null">
-        sign,
       </if>
       <if test="tradeNo != null">
         trade_no,
@@ -159,9 +153,6 @@
       </if>
       <if test="signType != null">
         #{signType,jdbcType=CHAR},
-      </if>
-      <if test="sign != null">
-        #{sign,jdbcType=CHAR},
       </if>
       <if test="tradeNo != null">
         #{tradeNo,jdbcType=CHAR},
