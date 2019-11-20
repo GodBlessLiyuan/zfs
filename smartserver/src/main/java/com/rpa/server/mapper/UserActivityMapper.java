@@ -1,6 +1,5 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.bo.UserActivityBO;
 import com.rpa.server.pojo.UserActivityPO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,7 +16,7 @@ public interface UserActivityMapper extends BaseMapper<UserActivityPO, Integer> 
      * @param userId
      * @return
      */
-    List<UserActivityBO> queryActivatedByUserId(Long userId);
+    List<UserActivityPO> queryActivatedByUserId(Long userId);
 
     /**
      * 通过 userId 和 status 查询 (status == 0 时，查询所有状态)

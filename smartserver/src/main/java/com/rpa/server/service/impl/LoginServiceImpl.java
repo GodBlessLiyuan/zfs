@@ -13,7 +13,6 @@ import com.rpa.server.utils.UserVipUtil;
 import com.rpa.server.vo.LoginVO;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author: xiahui
@@ -47,6 +45,8 @@ public class LoginServiceImpl implements ILoginService {
     private NewUserRecordMapper newUserRecordMapper;
     @Resource
     private UserVipMapper userVipMapper;
+    @Resource
+    private GodinsecUserMapper godinsecUserMapper;
 
     @Autowired
     private AmqpTemplate template;
@@ -57,7 +57,7 @@ public class LoginServiceImpl implements ILoginService {
         UserPO userPO = userMapper.queryByPhone(dto.getPh());
         // 前端是否出弹框
         byte gift = 0;
-        // 赠送天数
+        // 新用户送会员天数
         int days = 0;
         if (null == userPO) {
             // 注册
@@ -111,11 +111,25 @@ public class LoginServiceImpl implements ILoginService {
                 newUserRecordPO.setCreateTime(new Date());
                 newUserRecordMapper.insert(newUserRecordPO);
 
-                UserVipPO userVipPO = UserVipUtil.buildUserVipVO(null, po.getUserId(), userGiftsPO.getDays(), false);
-                userVipMapper.insert(userVipPO);
-
                 gift = 1;
                 days = userGiftsPO.getDays();
+            }
+
+            // 微商神器送会员
+            GodinsecUserPO godinsecUserPO = godinsecUserMapper.selectByPrimaryKey(dto.getPh());
+            int godDays = 0;
+            if (null != godinsecUserPO) {
+                godinsecUserPO.setUpdateTime(new Date());
+                godinsecUserPO.setStatus((byte) 2);
+                godinsecUserMapper.updateByPrimaryKey(godinsecUserPO);
+
+                godDays = godinsecUserPO.getDays();
+            }
+
+            if (days + godDays > 0) {
+                // 更新会员天数
+                UserVipPO userVipPO = UserVipUtil.buildUserVipVO(null, po.getUserId(), days + godDays, false);
+                userVipMapper.insert(userVipPO);
             }
 
             return this.buildResultVO(userDevPO, gift, days);
