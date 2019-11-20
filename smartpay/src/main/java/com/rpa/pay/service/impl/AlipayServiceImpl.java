@@ -168,6 +168,12 @@ public class AlipayServiceImpl implements AlipayService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String alipayNotify(Map<String, String> params) {
+
+        if (null == params) {
+            logger.info("获取支付宝返回数据失败");
+            return "fail";
+        }
+
         logger.info("alipayNotify: " + params.toString());
 
         this.storeInfo(params);
