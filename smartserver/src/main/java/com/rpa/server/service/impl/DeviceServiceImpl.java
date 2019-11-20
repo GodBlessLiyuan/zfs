@@ -50,6 +50,14 @@ public class DeviceServiceImpl implements IDeviceService {
             return this.buildResultVO(po.getDeviceId());
         }
 
+        // 过滤imei号长度<13
+        for(String imei : imeis) {
+            if(imei.length() < 13) {
+                imeis.remove(imei);
+            }
+        }
+
+
         List<Long> deviceIds = deviceImeiMapper.queryDevIdsByImei(imeis);
         if (null == deviceIds || deviceIds.size() == 0) {
             logger.warn("DeviceIds size: " + (null == deviceIds ? null : deviceIds.size()));
@@ -61,6 +69,7 @@ public class DeviceServiceImpl implements IDeviceService {
 
             // 新增设备imei号，需去重
             List<DeviceImeiPO> imeiPOs = new ArrayList<>();
+
             for (String imei : new HashSet<>(imeis)) {
                 DeviceImeiPO imeiPO = new DeviceImeiPO();
                 imeiPO.setDeviceId(po.getDeviceId());

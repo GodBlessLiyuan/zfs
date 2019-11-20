@@ -47,7 +47,7 @@ public class OrderServiceImpl implements IOrderService {
             vo.setComname(bo.getComName());
             vo.setOrdernumber(bo.getOrderNumber());
             vo.setPaytime(bo.getPayTime());
-            vo.setPrice(bo.getPrice());
+            vo.setPrice(String.valueOf(bo.getPay() / 100f));
             orderVOs.add(vo);
         }
         // 好评活动赠送
@@ -55,7 +55,7 @@ public class OrderServiceImpl implements IOrderService {
         for (UserActivityBO bo : userActivityBOs) {
             OrderVO vo = new OrderVO();
             vo.setType(2);
-            vo.setComname(bo.getComTypeName());
+            vo.setComname("好评活动赠送");
             vo.setPaytime(bo.getUpdateTime());
             orderVOs.add(vo);
         }
@@ -64,7 +64,7 @@ public class OrderServiceImpl implements IOrderService {
         for (NewUserRecordBO bo : newUserRecordBOs) {
             OrderVO vo = new OrderVO();
             vo.setType(3);
-            vo.setComname(bo.getComTypeName());
+            vo.setComname("新用户赠送");
             vo.setPaytime(bo.getCreateTime());
             orderVOs.add(vo);
         }
