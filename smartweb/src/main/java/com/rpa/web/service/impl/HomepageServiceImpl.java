@@ -76,7 +76,7 @@ public class HomepageServiceImpl implements HomepageService {
 
         dayRevenue = (String) this.template.opsForHash().get("revenue" + current_date, "dayRevenue");
         if (null == dayRevenue) {
-            dayRevenue = String.valueOf(this.orderMapper.queryDayRevenue());
+            dayRevenue = String.valueOf(this.orderMapper.queryDayRevenue()*0.01);
         }
 
         payCount = (String)this.template.opsForHash().get("revenue" + current_date, "payCount");
@@ -86,7 +86,7 @@ public class HomepageServiceImpl implements HomepageService {
 
         monthRevenue = (String) this.template.opsForHash().get("revenue" + current_date, "monthRevenue");
         if (null == monthRevenue) {
-            monthRevenue = String.valueOf(this.orderMapper.queryMonthRevenue());
+            monthRevenue = String.valueOf(this.orderMapper.queryMonthRevenue()*0.01);
         }
 
         // 创建一个map，存放返回给前端的结果

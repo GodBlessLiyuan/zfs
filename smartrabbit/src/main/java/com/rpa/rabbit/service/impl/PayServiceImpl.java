@@ -107,9 +107,9 @@ public class PayServiceImpl implements IPayService {
 
         // 将统计结果封装成map
         Map<String, String> revenue = new HashMap();
-        revenue.put("dayRevenue", String.valueOf(dayRevenue));
+        revenue.put("dayRevenue", String.valueOf(dayRevenue*0.01));
         revenue.put("payCount", String.valueOf(payCount));
-        revenue.put("monthRevenue", String.valueOf(monthRevenue));
+        revenue.put("monthRevenue", String.valueOf(monthRevenue*0.01));
         this.template.opsForHash().putAll("revenue" + current_date, revenue);
         this.template.expire("revenue" + current_date, 25, TimeUnit.HOURS);
     }
