@@ -70,6 +70,9 @@ public class AlipayServiceImpl implements AlipayService {
     @Value("${alipayconfig.alipay_public_key}")
     private String ALIPAY_PUBLIC_KEY;
 
+    @Value("${alipayconfig.alipay_notify}")
+    private String ALIPAY_NOTIFY;
+
     /**
      * 客户端携带商品ID访问服务端，生成订单信息，并加签返回给客户端
      * @param dto
@@ -135,9 +138,8 @@ public class AlipayServiceImpl implements AlipayService {
         model.setProductCode("QUICK_MSECURITY_PAY");
         // 封装参数
         request.setBizModel(model);
-        // 支付结果异步通知
-        //request.setNotifyUrl("外网可以访问的异步地址，供支付宝服务器访问");
-        request.setNotifyUrl("https://39.97.253.38/pay/v1.0/alinotify");
+        // 支付结果异步通知，参数是一个供支付宝服务器可访问的地址
+        request.setNotifyUrl(ALIPAY_NOTIFY);
 
         try {
             // 执行加签操作
