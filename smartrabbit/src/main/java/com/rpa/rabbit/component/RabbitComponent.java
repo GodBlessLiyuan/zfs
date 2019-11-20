@@ -35,7 +35,6 @@ public class RabbitComponent {
      */
     @RabbitListener(queues = "pay-notify")
     public void wxPayNotify(String orderNumber) {
-
         service.payNotify(orderNumber);
     }
 

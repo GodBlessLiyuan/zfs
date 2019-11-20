@@ -19,6 +19,7 @@ import com.rpa.pay.pojo.UserVipPO;
 import com.rpa.pay.pojo.VipCommodityPO;
 import com.rpa.pay.service.AlipayService;
 import com.rpa.pay.utils.UserVipUtil;
+import com.rpa.pay.utils.WxPayUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,7 +94,7 @@ public class AlipayServiceImpl implements AlipayService {
         // 创建订单
         OrderPO orderPO = new OrderPO();
 
-        orderPO.setOrderNumber(UUID.randomUUID().toString().replace("-", ""));
+        orderPO.setOrderNumber(WxPayUtil.genOrderNumber());
         orderPO.setUserDeviceId(dto.getUdd());
         orderPO.setCmdyId(dto.getCmdyid());
         orderPO.setUserId(dto.getUd());
@@ -167,7 +168,7 @@ public class AlipayServiceImpl implements AlipayService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String alipayNotify(Map<String, String> params) {
-        logger.info("alipayNotify2: " + params.toString());
+        logger.info("alipayNotify: " + params.toString());
 
         this.storeInfo(params);
 
@@ -188,8 +189,7 @@ public class AlipayServiceImpl implements AlipayService {
                     //交易成功，获取商户订单号
                     String orderNumber = params.get("out_trade_no");
                     // 更新相关信息
-                    this.updateInfo(orderNumber);
-                    return "success";
+                    return this.updateInfo(orderNumber);
                 } else {
                     return "fail";
                 }
@@ -214,34 +214,87 @@ public class AlipayServiceImpl implements AlipayService {
 
         AliFeedbackPO po = new AliFeedbackPO();
 
-        po.setNotifyTime(str2date(params.get("notify_time")));
-        po.setNotifyType(params.get("notify_type"));
-        po.setNotifyId(params.get("notify_id"));
-        po.setAppId(params.get("app_time"));
-        po.setVersion(params.get("version"));
-        po.setSignType(params.get("sign_type"));
-        po.setSign(params.get("sign"));
-        po.setTradeNo(params.get("trade_no"));
-        po.setOutTradeNo(params.get("out_trade_no"));
-        po.setOutBizNo(params.get("out_biz_no"));
-        po.setBuyerId(params.get("buyer_id"));
-        po.setBuyerLogonId(params.get("buyer_logon_id"));
-        po.setSellerId(params.get("seller_id"));
-        po.setSellerEmail(params.get("seller_email"));
-        po.setTradeStatus(params.get("trade_status"));
-        po.setTotalAmount(Float.valueOf(params.get("total_amount")));
-        po.setReceiptAmount(Float.valueOf(params.get("receipt_amount")));
-        po.setInvoiceAmount(Float.valueOf(params.get("invoice_amount")));
-        po.setBuyerPayAmount(Float.valueOf(params.get("buyer_pay_amount")));
-        po.setPointAmount(Float.valueOf(params.get("point_amount")));
-        po.setRefundFee(Float.valueOf(params.get("refund_fee")));
-        po.setSubject(params.get("subject"));
-        po.setBody(params.get("body"));
-        po.setGmtCreate(str2date(params.get("gmt_create")));
-        po.setGmtPayment(str2date(params.get("gmt_payment")));
-        po.setGmtRefund(str2date(params.get("gmt_refund")));
-        po.setGmtClose(str2date(params.get("gmt_close")));
-        po.setFundBillList(params.get("fund_bill_list"));
+        if (params.containsKey("notify_time")) {
+            po.setNotifyTime(str2date(params.get("notify_time")));
+        }
+        if (params.containsKey("notify_type")) {
+            po.setNotifyType(params.get("notify_type"));
+        }
+        if (params.containsKey("notify_id")) {
+            po.setNotifyId(params.get("notify_id"));
+        }
+        if (params.containsKey("app_time")) {
+            po.setAppId(params.get("app_time"));
+        }
+        if (params.containsKey("version")) {
+            po.setVersion(params.get("version"));
+        }
+        if (params.containsKey("sign_type")) {
+            po.setSignType(params.get("sign_type"));
+        }
+        if (params.containsKey("trade_no")) {
+            po.setTradeNo(params.get("trade_no"));
+        }
+        if (params.containsKey("out_trade_no")) {
+            po.setOutTradeNo(params.get("out_trade_no"));
+        }
+        if (params.containsKey("out_biz_no")) {
+            po.setOutBizNo(params.get("out_biz_no"));
+        }
+        if (params.containsKey("buyer_id")) {
+            po.setBuyerId(params.get("buyer_id"));
+        }
+        if (params.containsKey("buyer_logon_id")) {
+            po.setBuyerLogonId(params.get("buyer_logon_id"));
+        }
+        if (params.containsKey("seller_id")) {
+            po.setSellerId(params.get("seller_id"));
+        }
+        if (params.containsKey("seller_email")) {
+            po.setSellerEmail(params.get("seller_email"));
+        }
+        if (params.containsKey("trade_status")) {
+            po.setTradeStatus(params.get("trade_status"));
+        }
+        if (params.containsKey("total_amount")) {
+            po.setTotalAmount(Float.valueOf(params.get("total_amount")));
+        }
+        if (params.containsKey("receipt_amount")) {
+            po.setReceiptAmount(Float.valueOf(params.get("receipt_amount")));
+        }
+        if (params.containsKey("invoice_amount")) {
+            po.setInvoiceAmount(Float.valueOf(params.get("invoice_amount")));
+        }
+        if (params.containsKey("buyer_pay_amount")) {
+            po.setBuyerPayAmount(Float.valueOf(params.get("buyer_pay_amount")));
+        }
+        if (params.containsKey("point_amount")) {
+            po.setPointAmount(Float.valueOf(params.get("point_amount")));
+        }
+        if (params.containsKey("refund_fee")) {
+            po.setRefundFee(Float.valueOf(params.get("refund_fee")));
+        }
+        if (params.containsKey("subject")) {
+            po.setSubject(params.get("subject"));
+        }
+        if (params.containsKey("body")) {
+            po.setBody(params.get("body"));
+        }
+        if (params.containsKey("gmt_create")) {
+            po.setGmtCreate(str2date(params.get("gmt_create")));
+        }
+        if (params.containsKey("gmt_payment")) {
+            po.setGmtPayment(str2date(params.get("gmt_payment")));
+        }
+        if (params.containsKey("gmt_refund")) {
+            po.setGmtRefund(str2date(params.get("gmt_refund")));
+        }
+        if (params.containsKey("gmt_close")) {
+            po.setGmtClose(str2date(params.get("gmt_close")));
+        }
+        if (params.containsKey("fund_bill_list")) {
+            po.setFundBillList(params.get("fund_bill_list"));
+        }
 
         this.aliFeedbackMapper.insert(po);
     }
@@ -252,11 +305,14 @@ public class AlipayServiceImpl implements AlipayService {
      * 验签通过且交易成功，更新相关信息
      * @param orderNumber
      */
-    public void updateInfo(String orderNumber) {
+    public String updateInfo(String orderNumber) {
 
         //根据订单号，查询出订单
         OrderPO orderPO = this.orderMapper.queryByOrderNumber(orderNumber);
-
+        if (null == orderPO) {
+            logger.info("未查出订单信息");
+            return "fail";
+        }
         // 更新用户会员时间
         UserVipPO userVipPO = userVipMapper.queryByUserId(orderPO.getUserId());
         UserVipPO newUserVipVO = UserVipUtil.buildUserVipVO(userVipPO, orderPO.getUserId(), orderPO.getDays(), true);
@@ -286,6 +342,8 @@ public class AlipayServiceImpl implements AlipayService {
                                                                       }
                                                                   }
         );
+        logger.info("更新相关信息成功");
+        return "success";
     }
 
 

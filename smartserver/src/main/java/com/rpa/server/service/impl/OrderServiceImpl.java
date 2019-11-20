@@ -1,15 +1,13 @@
 package com.rpa.server.service.impl;
 
 import com.rpa.server.bo.BatchInfoBO;
-import com.rpa.server.bo.NewUserRecordBO;
 import com.rpa.server.bo.OrderBO;
-import com.rpa.server.bo.UserActivityBO;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.OrderDTO;
-import com.rpa.server.mapper.BatchInfoMapper;
-import com.rpa.server.mapper.NewUserRecordMapper;
-import com.rpa.server.mapper.OrderMapper;
-import com.rpa.server.mapper.UserActivityMapper;
+import com.rpa.server.mapper.*;
+import com.rpa.server.pojo.GodinsecUserPO;
+import com.rpa.server.pojo.NewUserRecordPO;
+import com.rpa.server.pojo.UserActivityPO;
 import com.rpa.server.service.IOrderService;
 import com.rpa.server.vo.OrderVO;
 import org.springframework.stereotype.Service;
@@ -33,6 +31,8 @@ public class OrderServiceImpl implements IOrderService {
     @Resource
     private NewUserRecordMapper newUserRecordMapper;
     @Resource
+    private GodinsecUserMapper godinsecUserMapper;
+    @Resource
     private BatchInfoMapper batchInfoMapper;
 
     @Override
@@ -51,17 +51,17 @@ public class OrderServiceImpl implements IOrderService {
             orderVOs.add(vo);
         }
         // 好评活动赠送
-        List<UserActivityBO> userActivityBOs = userActivityMapper.queryActivatedByUserId(dto.getUd());
-        for (UserActivityBO bo : userActivityBOs) {
+        List<UserActivityPO> userActivityPOs = userActivityMapper.queryActivatedByUserId(dto.getUd());
+        for (UserActivityPO po : userActivityPOs) {
             OrderVO vo = new OrderVO();
             vo.setType(2);
             vo.setComname("好评活动赠送");
-            vo.setPaytime(bo.getUpdateTime());
+            vo.setPaytime(po.getUpdateTime());
             orderVOs.add(vo);
         }
         // 新用户赠送
-        List<NewUserRecordBO> newUserRecordBOs = newUserRecordMapper.queryByUserId(dto.getUd());
-        for (NewUserRecordBO bo : newUserRecordBOs) {
+        List<NewUserRecordPO> newUserRecordPOs = newUserRecordMapper.queryByUserId(dto.getUd());
+        for (NewUserRecordPO bo : newUserRecordPOs) {
             OrderVO vo = new OrderVO();
             vo.setType(3);
             vo.setComname("新用户赠送");
@@ -69,6 +69,15 @@ public class OrderServiceImpl implements IOrderService {
             orderVOs.add(vo);
         }
         // V商神器赠送
+        List<GodinsecUserPO> godinsecUserPOs = godinsecUserMapper.queryByUserId(dto.getUd());
+        for (GodinsecUserPO po : godinsecUserPOs) {
+            OrderVO vo = new OrderVO();
+            vo.setType(4);
+            vo.setComname("V商神器赠送");
+            vo.setPaytime(po.getCreateTime());
+            orderVOs.add(vo);
+        }
+
         // 卡密激活
         List<BatchInfoBO> batchInfoBOs = batchInfoMapper.queryByUserId(dto.getUd());
         for (BatchInfoBO bo : batchInfoBOs) {
