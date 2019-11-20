@@ -4,6 +4,7 @@ import com.rpa.pay.common.ResultVO;
 import com.rpa.pay.dto.AlipayDTO;
 import com.rpa.pay.service.AlipayService;
 import com.rpa.pay.utils.VerifyUtil;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import java.util.Map;
 @RequestMapping("v1.0")
 @RestController
 public class AlipayController {
+    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(AlipayController.class);
 
     @Autowired
     private AlipayService alipayService;
@@ -53,9 +55,11 @@ public class AlipayController {
     public String alipayNotify(HttpServletRequest request) {
 
         // 存放转化后的参数集合
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,String> params = new HashMap();
 
         Map requestParams = request.getParameterMap();
+        logger.info("alipayNotify1: " + requestParams.toString());
+
         for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
             String name = (String) iter.next();
             String[] values = (String[]) requestParams.get(name);
