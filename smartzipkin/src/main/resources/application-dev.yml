@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: smartzipkin
+  rabbitmq:
+    connection-timeout: 6000
 management:
   metrics:
     web:
