@@ -220,7 +220,6 @@ public class AlipayServiceImpl implements AlipayService {
         po.setAppId(params.get("app_time"));
         po.setVersion(params.get("version"));
         po.setSignType(params.get("sign_type"));
-        po.setSign(params.get("sign"));
         po.setTradeNo(params.get("trade_no"));
         po.setOutTradeNo(params.get("out_trade_no"));
         po.setOutBizNo(params.get("out_biz_no"));
@@ -234,13 +233,19 @@ public class AlipayServiceImpl implements AlipayService {
         po.setInvoiceAmount(Float.valueOf(params.get("invoice_amount")));
         po.setBuyerPayAmount(Float.valueOf(params.get("buyer_pay_amount")));
         po.setPointAmount(Float.valueOf(params.get("point_amount")));
-        po.setRefundFee(Float.valueOf(params.get("refund_fee")));
+        if (params.containsKey("refund_fee")) {
+            po.setRefundFee(Float.valueOf(params.get("refund_fee")));
+        }
         po.setSubject(params.get("subject"));
         po.setBody(params.get("body"));
         po.setGmtCreate(str2date(params.get("gmt_create")));
         po.setGmtPayment(str2date(params.get("gmt_payment")));
-        po.setGmtRefund(str2date(params.get("gmt_refund")));
-        po.setGmtClose(str2date(params.get("gmt_close")));
+        if (params.containsKey("gmt_refund")) {
+            po.setGmtRefund(str2date(params.get("gmt_refund")));
+        }
+        if (params.containsKey("gmt_close")) {
+            po.setGmtClose(str2date(params.get("gmt_close")));
+        }
         po.setFundBillList(params.get("fund_bill_list"));
 
         this.aliFeedbackMapper.insert(po);

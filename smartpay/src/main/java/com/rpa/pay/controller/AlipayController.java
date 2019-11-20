@@ -55,7 +55,7 @@ public class AlipayController {
     public String alipayNotify(HttpServletRequest request) {
 
         // 存放转化后的参数集合
-        Map<String,String> params = new HashMap();
+        Map<String, String> params = new HashMap();
 
         Map requestParams = request.getParameterMap();
         logger.info("alipayNotify1: " + requestParams.toString());
@@ -72,7 +72,6 @@ public class AlipayController {
             //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
             params.put(name, valueStr);
         }
-
         //验签，并且如若支付成功，更新相关信息
         String status= this.alipayService.alipayNotify(params);
         return status;
