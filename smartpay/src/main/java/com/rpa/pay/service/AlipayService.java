@@ -17,5 +17,5 @@ public interface AlipayService {
 
     ResultVO paystatus(AlipayDTO dto);
 
-    String aliNotify(Map<String, String> conversionParams);
+    String alipayNotify(Map<String, String> conversionParams);
 }

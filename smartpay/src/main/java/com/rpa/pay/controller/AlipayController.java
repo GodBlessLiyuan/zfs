@@ -49,8 +49,8 @@ public class AlipayController {
      * 获取支付宝服务器发送来的支付完成通知（异步）
      * @return
      */
-    @PostMapping("alinotify")
-    public String alinotify(HttpServletRequest request) {
+    @PostMapping("alipaynotify")
+    public String alipayNotify(HttpServletRequest request) {
 
         // 存放转化后的参数集合
         Map<String,String> params = new HashMap<String,String>();
@@ -70,7 +70,7 @@ public class AlipayController {
         }
 
         //验签，并且如若支付成功，更新相关信息
-        String status= this.alipayService.aliNotify(params);
+        String status= this.alipayService.alipayNotify(params);
         return status;
     }
 
