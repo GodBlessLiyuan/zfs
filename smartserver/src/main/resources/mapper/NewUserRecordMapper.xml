@@ -13,7 +13,7 @@
     nur_id, user_id, user_device_id, device_id, nug_id, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_new_user_record
     where nur_id = #{nurId,jdbcType=INTEGER}
@@ -104,9 +104,7 @@
     where nur_id = #{nurId,jdbcType=INTEGER}
   </update>
 
-  <select id="queryByUserId" parameterType="java.lang.Long" resultType="com.rpa.server.bo.NewUserRecordBO">
-    select ug.com_type_name as comTypeName, nur.create_time as createTime
-    from t_new_user_record nur left join t_user_gifts ug on nur.nug_id = ug.nug_id
-    where nur.user_id = #{userId}
+  <select id="queryByUserId" parameterType="java.lang.Long" resultType="com.rpa.server.pojo.NewUserRecordPO">
+    select create_time as createTime from t_new_user_record where user_id = #{userId}
   </select>
 </mapper>
