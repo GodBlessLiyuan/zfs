@@ -2,12 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rpa.server.mapper.GodinsecUserMapper">
   <resultMap id="BaseResultMap" type="com.rpa.server.pojo.GodinsecUserPO">
-    <result column="phone" jdbcType="CHAR" property="phone" />
+    <id column="phone" jdbcType="CHAR" property="phone" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="days" jdbcType="INTEGER" property="days" />
     <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
+  <sql id="Base_Column_List">
+    phone, create_time, update_time, `days`, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_godinsec_user
+    where phone = #{phone,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_godinsec_user
+    where phone = #{phone,jdbcType=CHAR}
+  </delete>
   <insert id="insert" parameterType="com.rpa.server.pojo.GodinsecUserPO">
     insert into t_godinsec_user (phone, create_time, update_time, 
       `days`, `status`)
@@ -51,4 +64,30 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.server.pojo.GodinsecUserPO">
+    update t_godinsec_user
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="days != null">
+        `days` = #{days,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where phone = #{phone,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.server.pojo.GodinsecUserPO">
+    update t_godinsec_user
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `days` = #{days,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=TINYINT}
+    where phone = #{phone,jdbcType=CHAR}
+  </update>
 </mapper>
