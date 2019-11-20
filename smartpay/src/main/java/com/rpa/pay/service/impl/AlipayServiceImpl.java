@@ -167,7 +167,7 @@ public class AlipayServiceImpl implements AlipayService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String alipayNotify(Map<String, String> params) {
-        logger.info("alipayNotify: " + params.toString());
+        logger.info("alipayNotify2: " + params.toString());
 
         this.storeInfo(params);
 
