@@ -129,10 +129,21 @@
 
 <script>
     /**
-     * 页面加载事件：向后台发起请求
+     * 页面加载事件：一进入页面即向后台发起请求
      */
     window.onload = function () {
+        query();
+    }
 
+    /**
+     * 定时任务：每隔3秒即查一次
+     */
+    window.setInterval(query,1000*3);
+
+    /**
+     * 查询：向后台发起请求
+     */
+    function query() {
         $.get("homepage/query", function (result) {
             if (result.code === 1008) {
                 alert("登录超时，请重新登录！");
