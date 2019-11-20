@@ -26,7 +26,6 @@ import java.util.Map;
 @RequestMapping("v1.0")
 @RestController
 public class AlipayController {
-    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(AlipayController.class);
 
     @Autowired
     private AlipayService alipayService;
@@ -58,7 +57,6 @@ public class AlipayController {
         Map<String, String> params = new HashMap();
 
         Map requestParams = request.getParameterMap();
-        logger.info("alipayNotify1: " + requestParams.toString());
 
         for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
             String name = (String) iter.next();
