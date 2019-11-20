@@ -98,6 +98,9 @@ public class UserVipDetailsDTO implements Serializable, Comparable<UserVipDetail
 
     @Override
     public int compareTo(UserVipDetailsDTO dto) {
+        if (null == this.createTime || null == dto.getCreateTime()) {
+            return -1;
+        }
         // 降序
         return dto.getCreateTime().compareTo(this.createTime);
     }
