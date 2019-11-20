@@ -26,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationAdapter;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
@@ -135,7 +137,7 @@ public class AlipayServiceImpl implements AlipayService {
         request.setBizModel(model);
         // 支付结果异步通知
         //request.setNotifyUrl("外网可以访问的异步地址，供支付宝服务器访问");
-        request.setNotifyUrl("https://192.168.10.3/pay/v1.0/alinotify");
+        request.setNotifyUrl("https://39.97.253.38/pay/v1.0/alinotify");
 
         try {
             // 执行加签操作
@@ -271,8 +273,14 @@ public class AlipayServiceImpl implements AlipayService {
         orderPO.setEndtime(endDate);
         this.orderMapper.updateByPrimaryKey(orderPO);
 
-        // RabbitMQ，对其他模块进行异步通知
-        this.template.convertAndSend("pay-notify", orderNumber);
+        // 事务提交完成后，使用RabbitMQ，对其他模块进行异步通知
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+                                                                      @Override
+                                                                      public void afterCommit() {
+                                                                          template.convertAndSend("pay-notify", orderNumber);
+                                                                      }
+                                                                  }
+        );
     }
 
 
