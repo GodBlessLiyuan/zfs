@@ -16,25 +16,19 @@ INSERT INTO smarthelper.t_com_type (com_type_id, name, days, extra, a_id, create
 
 INSERT INTO smarthelper.t_activity (activity_id, activityname, position, status, a_id, create_time, update_time, dr, com_type_id, days, com_type_name, source) VALUES (1, null, null, 1, 1, null, null, null, 1, 7, '周卡', 1);
 
-
 INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (2, 'vbooster', '官网', null, null);
-INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (3, 'huawei', 'huawei', null, null);
-INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (4, 'yingyongbao', 'yingyongbao', '2019-10-24 10:15:57', null);
-INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (5, 'vivo', 'vivo', '2019-10-24 10:16:33', null);
-INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (6, 'OPPO', 'OPPO', '2019-10-24 11:27:47', null);
-INSERT INTO smarthelper.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (7, 'xxx', 'xxxxxxxx', '2019-10-31 16:06:17', null);
 
 INSERT INTO smarthelper.t_wxsupport (w_id, package_name, create_time, update_time, a_id, extra) VALUES (1, 'com.tencent.mm', '2019-10-29 18:25:55', null, 1, '微信');
-INSERT INTO smarthelper.t_wxsupport (w_id, package_name, create_time, update_time, a_id, extra) VALUES (2, 'com.qihoo.magic', '2019-10-29 18:24:45', null, 1, '360分身大师');
-INSERT INTO smarthelper.t_wxsupport (w_id, package_name, create_time, update_time, a_id, extra) VALUES (3, 'com.excelliance.dualaid', '2019-10-29 18:25:12', null, 1, '双开助手');
 
 INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (1, '4');
-INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (2, 'http://www.google.com');
-INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (10, '1');
-INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (11, 'http://www.baidu.com');
-INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (12, '4285794651');
+INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (2, 'https://mp.weixin.qq.com/s/an1ZP4Zop1ifr2Xbh4pD7Q');
+INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (10, '12');
+INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (11, '9RT8vIrWlkMdTuueDCOQAQWN4K6VdxKh');
+INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (12, '********');
 INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (13, 'wx11243454634');
 INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (14, 'http://share.com.cn');
-INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (15, 'http://problem.com.cn');
-INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (16, 'http://free.vip.com.cn');
-INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (17, 'http://protocol.com.cn');
+INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (15, 'http://39.97.253.38/share/v1.0/problem');
+INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (16, 'http://39.97.253.38/share/v1.0/freemember');
+INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (17, 'http://39.97.253.38/share/v1.0/memberprotocol');
+INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (18, 'http://39.97.253.38/share/v1.0/protocol');
+INSERT INTO smarthelper.t_key_value (key_name, value) VALUES (19, 'http://39.97.253.38/share/v1.0/memberrights');

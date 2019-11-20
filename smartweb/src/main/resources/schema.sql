@@ -380,6 +380,7 @@ CREATE TABLE t_exception
 	androidmodel char(64),
 	pkg char(32),
 	buildrelease char(16),
+	create_time datetime,
 	PRIMARY KEY (exceptionid),
 	UNIQUE (exceptionid)
 );
