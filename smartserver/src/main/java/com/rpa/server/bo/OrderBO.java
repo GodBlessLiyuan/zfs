@@ -13,5 +13,4 @@ import lombok.Data;
 public class OrderBO extends OrderPO {
 
     private String comName;
-    private String price;
 }

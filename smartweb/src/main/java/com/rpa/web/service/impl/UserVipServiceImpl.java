@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -101,6 +102,9 @@ public class UserVipServiceImpl implements IUserVipService {
             dto.setDays(batchInfoDO.getDays());
             userVipDetailsDTOs.add(dto);
         }
+
+        // 根据购买时间降序排序
+        Collections.sort(userVipDetailsDTOs);
 
         return new DTPageInfo<>(draw, userVipDetailsDTOs.size(), userVipDetailsDTOs);
     }

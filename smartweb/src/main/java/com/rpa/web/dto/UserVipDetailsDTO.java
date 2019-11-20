@@ -9,7 +9,7 @@ import java.util.Date;
  * @description: 用户会员详细信息
  * @version: 1.0
  */
-public class UserVipDetailsDTO implements Serializable {
+public class UserVipDetailsDTO implements Serializable, Comparable<UserVipDetailsDTO> {
     private static final long serialVersionUID = 1L;
     /**
      * 会员获取方式
@@ -94,5 +94,14 @@ public class UserVipDetailsDTO implements Serializable {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    @Override
+    public int compareTo(UserVipDetailsDTO dto) {
+        if (null == this.createTime || null == dto.getCreateTime()) {
+            return -1;
+        }
+        // 降序
+        return dto.getCreateTime().compareTo(this.createTime);
     }
 }

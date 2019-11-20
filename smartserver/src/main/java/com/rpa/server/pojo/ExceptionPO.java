@@ -1,6 +1,7 @@
 package com.rpa.server.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * t_exception
@@ -23,6 +24,8 @@ public class ExceptionPO implements Serializable {
     private String pkg;
 
     private String buildrelease;
+
+    private Date createTime;
 
     private String error;
 
@@ -84,6 +87,14 @@ public class ExceptionPO implements Serializable {
         this.buildrelease = buildrelease;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public String getError() {
         return error;
     }
@@ -111,6 +122,7 @@ public class ExceptionPO implements Serializable {
             && (this.getAndroidmodel() == null ? other.getAndroidmodel() == null : this.getAndroidmodel().equals(other.getAndroidmodel()))
             && (this.getPkg() == null ? other.getPkg() == null : this.getPkg().equals(other.getPkg()))
             && (this.getBuildrelease() == null ? other.getBuildrelease() == null : this.getBuildrelease().equals(other.getBuildrelease()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getError() == null ? other.getError() == null : this.getError().equals(other.getError()));
     }
 
@@ -125,6 +137,7 @@ public class ExceptionPO implements Serializable {
         result = prime * result + ((getAndroidmodel() == null) ? 0 : getAndroidmodel().hashCode());
         result = prime * result + ((getPkg() == null) ? 0 : getPkg().hashCode());
         result = prime * result + ((getBuildrelease() == null) ? 0 : getBuildrelease().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getError() == null) ? 0 : getError().hashCode());
         return result;
     }
@@ -142,6 +155,7 @@ public class ExceptionPO implements Serializable {
         sb.append(", androidmodel=").append(androidmodel);
         sb.append(", pkg=").append(pkg);
         sb.append(", buildrelease=").append(buildrelease);
+        sb.append(", createTime=").append(createTime);
         sb.append(", error=").append(error);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

@@ -37,6 +37,7 @@ DROP TABLE IF EXISTS t_white_device;
 DROP TABLE IF EXISTS t_device;
 DROP TABLE IF EXISTS t_feedback;
 DROP TABLE IF EXISTS t_functionvideo;
+DROP TABLE IF EXISTS t_godinsec_user;
 DROP TABLE IF EXISTS t_invite_detail;
 DROP TABLE IF EXISTS t_invite_user;
 DROP TABLE IF EXISTS t_key_text;
@@ -161,7 +162,6 @@ CREATE TABLE t_ali_feedback
 	app_id char(32),
 	version char(3),
 	sign_type char(10),
-	sign char(255),
 	trade_no char(64),
 	out_trade_no char(64),
 	out_biz_no char(64),
@@ -380,6 +380,7 @@ CREATE TABLE t_exception
 	androidmodel char(64),
 	pkg char(32),
 	buildrelease char(16),
+	create_time datetime,
 	PRIMARY KEY (exceptionid),
 	UNIQUE (exceptionid)
 );
@@ -423,6 +424,19 @@ CREATE TABLE t_functionvideo
 );
 
 
+CREATE TABLE t_godinsec_user
+(
+	phone char(11) NOT NULL,
+	create_time datetime,
+	update_time datetime,
+	days int,
+	-- 1 未赠送  2 赠送
+	status tinyint DEFAULT 1 COMMENT '1 未赠送  2 赠送',
+	PRIMARY KEY (phone),
+	UNIQUE (phone)
+);
+
+
 CREATE TABLE t_invite_detail
 (
 	inde_id bigint NOT NULL AUTO_INCREMENT,
@@ -449,7 +463,7 @@ CREATE TABLE t_invite_user
 	invite_phone char(16),
 	create_time datetime,
 	update_time datetime,
-	ip char(64),
+	ip char(128),
 	PRIMARY KEY (invite_id),
 	UNIQUE (invite_id),
 	UNIQUE (invite_phone)

@@ -8,6 +8,7 @@ import com.rpa.server.service.IExceptionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author: xiahui
@@ -30,6 +31,7 @@ public class ExceptionServiceImpl implements IExceptionService {
         po.setVersioncode(dto.getSoftv());
         po.setAndroidmodel(dto.getModel());
         po.setPkg(dto.getPkg());
+        po.setCreateTime(new Date());
         exceptionMapper.insert(po);
 
         return new ResultVO(1000);
