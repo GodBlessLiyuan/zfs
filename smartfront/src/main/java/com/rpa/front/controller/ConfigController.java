@@ -15,16 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ConfigController {
 
     /**
-     * 帮助
-     *
-     * @return
-     */
-    @GetMapping("problem")
-    public String problem() {
-        return "common_problem";
-    }
-
-    /**
      * 会员免费领取
      *
      * @return
