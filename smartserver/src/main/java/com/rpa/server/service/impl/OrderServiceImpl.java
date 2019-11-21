@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -88,6 +89,9 @@ public class OrderServiceImpl implements IOrderService {
             vo.setPaytime(bo.getUpdateTime());
             orderVOs.add(vo);
         }
+
+        // 根据购买时间降序排序
+        Collections.sort(orderVOs);
 
         return new ResultVO<>(1000, orderVOs);
     }

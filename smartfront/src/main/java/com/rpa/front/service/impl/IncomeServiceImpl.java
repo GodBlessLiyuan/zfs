@@ -18,6 +18,8 @@ import com.rpa.front.vo.DetailsVO;
 import com.rpa.front.vo.IncomeVO;
 import com.rpa.front.vo.RecordVO;
 import com.rpa.front.vo.ShareCodeVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,8 @@ import java.util.*;
 @EnableTransactionManagement
 @Service
 public class IncomeServiceImpl implements IIncomeService {
+    private static final Logger logger = LoggerFactory.getLogger(IncomeServiceImpl.class);
+
     @Resource
     private RevenueUserMapper revenueUserMapper;
     @Resource
@@ -187,13 +191,10 @@ public class IncomeServiceImpl implements IIncomeService {
 
         if (null == po.getShorturl() || null == po.getEndTime() || new Date().compareTo(po.getEndTime()) > 0) {
             ShortUrlEntity entity = this.longUrl2ShortUrl(shareUrl + po.getSharecode());
-            if (null == entity) {
+            if (null == entity || 0 != entity.getCode()) {
+                logger.warn(null == entity ? null : entity.getErrMsg());
                 return new ResultVO(2000);
             }
-            if (0 != entity.getCode()) {
-                return new ResultVO<>(2000, entity.getErrMsg());
-            }
-
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.YEAR, "1-year".equals(shortUrlConfig.getValidity()) ? 1 : 100);
 

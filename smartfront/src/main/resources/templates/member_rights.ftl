@@ -17,7 +17,7 @@
     <body >
         <#--<img src="${basePath}/images/member_rights.png" width="100"/>-->
         <!--奖励相关  -->
-        <div class="font_reward" style="font-size: 15px;font-weight: bolder;margin-left: 35px">会员规则如下，未勾选表示无权使用：</div>
+        <div class="font_reward" style="font-size: 15px;font-weight: bolder;margin-left: 35px;padding-top: 20px">会员规则如下，未勾选表示无权使用：</div>
         <div class="my_state">
             <div class="div_spacing">
                 <table class="table table-bordered table-hover table-condensed reward_details" style="width:90%">

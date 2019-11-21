@@ -8,6 +8,7 @@ spring:
     port: 5672
     username: root
     password: 123456
+    connection-timeout: 10000
   redis:
     database: 0
     host: 192.168.10.3

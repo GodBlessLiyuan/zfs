@@ -12,7 +12,7 @@ import java.util.Date;
  * @version: 1.0
  */
 @Data
-public class OrderVO implements Serializable {
+public class OrderVO implements Serializable, Comparable<OrderVO> {
     private static final long serialVersionUID = 1L;
 
     private Integer type;
@@ -21,4 +21,13 @@ public class OrderVO implements Serializable {
     private String ordernumber;
     private Date paytime;
     private String price;
+
+    @Override
+    public int compareTo(OrderVO vo) {
+        if (null == this.paytime || null == vo.getPaytime()) {
+            return -1;
+        }
+        // 降序
+        return vo.getPaytime().compareTo(this.paytime);
+    }
 }
