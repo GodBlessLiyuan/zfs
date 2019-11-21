@@ -17,7 +17,7 @@
     <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
-<body>
+<body onload="window.Share.showBackView()">
 
     <div class="well well-sm" style="margin-top: 20px;border:none">
         <span class="span_thead"> 总体情况 </span>

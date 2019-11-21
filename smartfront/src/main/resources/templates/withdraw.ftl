@@ -12,7 +12,7 @@
     <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
-<body>
+<body onload="window.Share.showBackView()">
 
     <!--顶部背景图片-->
     <div class="backimag" >
@@ -20,11 +20,12 @@
 
     <!--余额及提现 -->
     <div class="my_state1 bg_color" >
-        <div >
+        <div>
             <div class="total" >
                 <span class="tx_time" style="font-size: 18px">可提金额:￥</span><span id="balance" class="tx_time" style="font-size: 18px">${res.data.balance}</span>
             </div>
         </div>
+
 
         <div>
             <div style="width: 60%; float: left;padding-left: 30px;">

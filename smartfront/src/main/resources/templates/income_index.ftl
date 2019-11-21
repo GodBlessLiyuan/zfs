@@ -16,7 +16,7 @@
     <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 
 </head>
-    <body >
+    <body onload="window.Share.hideBackView()">
 
         <!--顶部背景图片-->
         <div class="backimag" >
