@@ -16,9 +16,8 @@
     <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 </head>
     <body >
-        <div style="padding-left: 5px; padding-right: 5px">
-            <p style="text-align: center; font-weight: bolder">《砖助智能助手服务使用协议》</p>
-            <br>
+        <div style="padding-left: 15px; padding-right: 15px">
+            <p style="text-align: center; font-weight: bolder;padding-top: 15px">《砖助智能助手服务使用协议》</p>
             砖助智能助手严格遵守现行法律法规，制定《砖助智能助手软件服务许可使用协议》。为使用砖助智能助手软件（以下称“本软件”），砖助智能助手软件使用人（以下称“用户”）应当基于了解本协议全部内容，在独立思考的基础上认可、同意本协议的全部条款并按照页面上的提示完成对协议的确认后开始使用本软件。若用户对本声明的任何条款有异议，请停止使用砖助智能助手所提供的全部服务。<br>
             <br>
             第一条【法律适用】<br>
