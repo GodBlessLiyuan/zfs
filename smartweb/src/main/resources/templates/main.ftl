@@ -161,19 +161,19 @@
                     $('#dayActiveUser').text(result.data.dayActiveUser);
                     $('#monthActiveUser').text(result.data.monthActiveUser);
 
-                    if ("null" == result.data.dayRevenue) {
+                    if ("null" == result.data.dayRevenue || null == result.data.dayRevenue) {
                         $('#dayRevenue').text("0");
                     } else {
                         $('#dayRevenue').text(result.data.dayRevenue);
                     }
 
-                    if ("null" == result.data.payCount) {
+                    if ("null" == result.data.payCount || null == result.data.payCount) {
                         $('#payCount').text("0");
                     } else {
                         $('#payCount').text(result.data.payCount);
                     }
 
-                    if ("null" == result.data.monthRevenue) {
+                    if ("null" == result.data.monthRevenue || null == result.data.monthRevenue) {
                         $('#monthRevenue').text("0");
                     } else {
                         $('#monthRevenue').text(result.data.monthRevenue);
