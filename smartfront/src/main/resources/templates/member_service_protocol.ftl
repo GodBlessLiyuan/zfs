@@ -15,7 +15,7 @@
     <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
 </head>
     <body >
-        <div>
+        <div style="padding-left: 5px; padding-right: 5px">
             <p style="text-align: center; font-weight: bolder">《砖助智能助手会员服务协议》</p>
             <br>
             砖助智能助手会员服务是有偿的增值服务，您必须在遵守砖助智能助手服务协议的基础上完全同意下列所有服务条款并完成付费，才能享受相关服务。<br>

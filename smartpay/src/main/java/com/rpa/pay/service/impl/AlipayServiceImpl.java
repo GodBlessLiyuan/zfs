@@ -109,8 +109,9 @@ public class AlipayServiceImpl implements AlipayService {
 
         String orderNumber = orderPO.getOrderNumber();
         Long totalAmount = vipCommodityPO.getDiscount();
+        String comName = vipCommodityPO.getComName();
         // 向支付宝服务器发起加签请求
-        String orderString = this.sign(orderNumber, totalAmount);
+        String orderString = this.sign(orderNumber, totalAmount, comName);
 
         // 返回结果给客户端
         Map<String, Object> result = new HashMap();
@@ -125,7 +126,7 @@ public class AlipayServiceImpl implements AlipayService {
      * 支付宝客户端对订单信息加签
      * @return
      */
-    private String sign(String orderNumber, Long totalAmount) {
+    private String sign(String orderNumber, Long totalAmount, String comName) {
         // 实例化客户端
         AlipayClient alipayClient = new DefaultAlipayClient(ALIPAY_GATEWAY, APP_ID, APP_PRIVATE_KEY,
                 "json", "utf-8", ALIPAY_PUBLIC_KEY, "RSA2");
@@ -133,8 +134,7 @@ public class AlipayServiceImpl implements AlipayService {
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
         // 传入业务参数
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-        model.setBody("我是测试数据");
-        model.setSubject("App支付测试Java");
+        model.setSubject(comName);
         model.setOutTradeNo(orderNumber);
         model.setTimeoutExpress("30m");
         model.setTotalAmount(String.valueOf(totalAmount*0.01));
