@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class AlipayDTO extends TokenDTO {
     private Integer cmdyid;
-    private String orderNumber;
+    private String number;
     private String verify;
     private String um;
 }

@@ -362,7 +362,7 @@ public class AlipayServiceImpl implements AlipayService {
     @Override
     public ResultVO paystatus(AlipayDTO dto) {
         // 根据订单号，查询订单详情
-        OrderPO orderPO = this.orderMapper.queryByOrderNumber(dto.getOrderNumber());
+        OrderPO orderPO = this.orderMapper.queryByOrderNumber(dto.getNumber());
         if (null == orderPO) {
             return new ResultVO(1023);
         } else {
