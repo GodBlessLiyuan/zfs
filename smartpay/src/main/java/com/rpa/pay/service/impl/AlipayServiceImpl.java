@@ -101,6 +101,7 @@ public class AlipayServiceImpl implements AlipayService {
         orderPO.setDeviceId(dto.getId());
         orderPO.setCreateTime(new Date());
         orderPO.setType(2);
+        orderPO.setStatus((byte)1);
         orderPO.setDays(vipCommodityPO.getDays());
         orderPO.setPay(vipCommodityPO.getDiscount());
 
@@ -338,6 +339,7 @@ public class AlipayServiceImpl implements AlipayService {
         orderPO.setPayTime(new Date());
         orderPO.setStarttime(startDate);
         orderPO.setEndtime(endDate);
+        orderPO.setStatus((byte)2);
         this.orderMapper.updateByPrimaryKey(orderPO);
 
         // 事务提交完成后，使用RabbitMQ，对其他模块进行异步通知
