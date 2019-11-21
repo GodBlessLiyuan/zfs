@@ -6,6 +6,7 @@ ps -ef | grep smartproducer | grep -v grep | awk '{print $2}' | xargs kill -9
 ps -ef | grep smartfront | grep -v grep | awk '{print $2}' | xargs kill -9
 ps -ef | grep smartconsumer | grep -v grep | awk '{print $2}' | xargs kill -9
 ps -ef | grep smarteureka | grep -v grep | awk '{print $2}' | xargs kill -9
+ps -ef | grep smartpay | grep -v grep | awk '{print $2}' | xargs kill -9
 ps -ef | grep rpa/smart | grep -v grep | awk '{print $2}' | xargs kill -9
 
 
