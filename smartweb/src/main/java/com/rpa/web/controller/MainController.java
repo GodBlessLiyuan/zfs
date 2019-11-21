@@ -17,7 +17,7 @@ public class MainController {
     @GetMapping("main")
     public String main(HttpSession session){
         if(session == null || session.getAttribute(ADMIN_USER) == null){
-            return "redirect:/";
+            return "redirect:/login";
         }
         return "main";
     }
