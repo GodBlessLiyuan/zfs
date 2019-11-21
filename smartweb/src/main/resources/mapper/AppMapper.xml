@@ -238,6 +238,7 @@
     <select id="queryVersionname" resultMap="BaseResultMap">
         select app_id, versionname
         from t_app
+        where dr = 1
     </select>
 
     <select id="queryByVersionCode" resultMap="BaseResultMap">
