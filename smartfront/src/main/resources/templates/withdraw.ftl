@@ -12,7 +12,7 @@
     <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
-<body>
+<body onload="window.Share.showBackView()">
 
     <!--顶部背景图片-->
     <div class="backimag" >

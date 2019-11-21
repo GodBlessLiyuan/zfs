@@ -23,7 +23,7 @@
 
 </head>
 
-<body>
+<body onload="">
 
 <!--*******************
     Preloader start
