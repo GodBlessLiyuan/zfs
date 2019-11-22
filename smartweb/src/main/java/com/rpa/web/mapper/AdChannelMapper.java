@@ -8,8 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
  * AdChannelMapper继承基类
  */
 @Mapper
-public interface AdChannelMapper extends BaseDAO<AdChannelDO, Integer> {
-    AdChannelPO queryByIds(Integer adId, Integer appId, Integer softChannelId);
+public interface AdChannelMapper extends BaseDAO<AdChannelPO, Integer> {
+    AdChannelDO queryByIds(Integer adId, Integer appId, Integer softChannelId);
 
     void update(AdChannelPO po);
+
+    AdChannelPO queryByIds2(Integer adId, Integer appId, Integer softChannelId);
 }
