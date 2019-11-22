@@ -40,7 +40,7 @@
                     <div class="card login-form mb-0">
                         <div class="card-body pt-5">
                             <a class="text-center" href="index.html"> <h4>智能移动社交营销平台管理系统</h4></a>
-
+                            <br>
                             <form class="mt-8 mb-8 login-input" method="post" action="entry">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Username" name="username" required="required">
@@ -49,10 +49,13 @@
                                     <input type="password" class="form-control" placeholder="Password" name="password" required="required">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="checkcode" placeholder="Checkcode" name="checkcode" required="required">
-                                    <img id="img" src="login/get/checkcode" />
-                                    <a onclick="javascript:changeImg()" style="color:blue;">看不清？</a>
-                                    <span id="msg"></span>
+                                    <div style="float: left">
+                                        <input type="text" class="form-control" id="checkcode" placeholder="Checkcode" name="checkcode" required="required" style="float: left">
+                                    </div>
+                                    <div style="float: right">
+                                        <img id="img" src="login/get/checkcode"/>
+                                        <a onclick="javascript:changeImg()" style="color:blue">看不清？</a>
+                                    </div>
                                 </div>
 
                                 <button class="btn login-form__btn submit w-100">Login</button>
