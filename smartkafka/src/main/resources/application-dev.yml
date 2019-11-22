@@ -30,5 +30,10 @@ logging:
   path: /data/ftp/smartftp/log
   file: ${logging.path}smartkafka
 
+kafka:
+  jaas:
+    conf:
+      path: classpath:kafka_client_jaas.conf
+
 
 
