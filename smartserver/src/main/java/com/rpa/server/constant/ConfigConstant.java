@@ -62,4 +62,8 @@ public class ConfigConstant {
      * 会员中心-用户服务协议
      */
     public static final int MEMBER_RIGHTS = 19;
+    /**
+     * 配置消息清粉后缀的短链接
+     */
+    public static final int CLEAR_FANS = 20;
 }

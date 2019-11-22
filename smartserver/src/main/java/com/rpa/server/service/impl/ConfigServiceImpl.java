@@ -83,7 +83,11 @@ public class ConfigServiceImpl implements IConfigService {
         if (null != po) {
             vo.setMemberrights(po.getValue());
         }
-
+        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.CLEAR_FANS);
+        if (null != po) {
+            vo.setClearfans(po.getValue());
+        }
+        
         cacheUtil.setCache(ConfigConstant.REDIS_KEY, vo, 1, TimeUnit.HOURS);
 
         return new ResultVO<>(1000, vo);
