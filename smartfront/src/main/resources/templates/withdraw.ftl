@@ -56,13 +56,13 @@
     </div>
 
     <!--提示规则-->
-    <div class="my_state2 bg_color" style="height:225px" >
+    <div class="my_state2 bg_color" style="height:250px" >
         <p style="margin-left: 10px;margin-top: 10px"><b>提现规则:</b></p>
-        <p  style="margin-left: 10px">
-            1.最低提现100元<br>
-            2.每次提现只能提整数<br>
-            3.每次提现金额将于48小时到账、双休日、法定节假日顺延<br>
-            4.当提现信息有误时、将会进行驳回、驳回后可重新进行提现操作<br>
+        <p  style="padding-left: 10px;padding-right: 10px;">
+            1.最低提现100元;<br>
+            2.每次提现只能提整数;<br>
+            3.每次提现金额将于48小时到账、双休日、法定节假日顺延;<br>
+            4.当提现信息有误时、将会进行驳回、驳回后可重新进行提现操作;<br>
             5.如发现作弊情况、将对客户进行封号处理，概不结算。
         </p>
     </div>
