@@ -25,4 +25,5 @@ public class ConfigVO implements Serializable {
     private String protocol;
     private String vipprotocol;
     private String memberrights;
+    private String clearfans;
 }
