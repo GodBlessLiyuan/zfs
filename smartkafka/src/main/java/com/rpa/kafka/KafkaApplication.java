@@ -13,6 +13,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class KafkaApplication {
 
+    //初始化系统属性
+    static {
+        System.setProperty("java.security.auth.login.config", "classpath:kafka_client_jaas.conf");
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(KafkaApplication.class, args);
     }
