@@ -4,6 +4,7 @@ import com.rpa.web.dto.ChBatchDTO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.ResultVO;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -23,4 +24,6 @@ public interface ChBatchService {
     ResultVO queryChanNicknames();
 
     ResultVO updateStatus(Integer batchId, Byte status, HttpSession httpSession);
+
+    void export(String chanNickname, Integer comTypeId, Byte status, String operator, HttpServletResponse response);
 }

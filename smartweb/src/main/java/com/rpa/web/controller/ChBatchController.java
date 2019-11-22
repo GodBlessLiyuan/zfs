@@ -7,6 +7,7 @@ import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -92,5 +93,22 @@ public class ChBatchController {
                            @RequestParam(value = "status") Byte status,
                            HttpSession httpSession){
         return this.chBatchService.updateStatus(batchId, status, httpSession);
+    }
+
+    /**
+     * 导出数据
+     * @param chanNickname
+     * @param comTypeId
+     * @param status
+     * @param operator
+     * @return
+     */
+    @GetMapping("export")
+    public void export(@RequestParam(value = "chanNickname", required = false) String chanNickname,
+                       @RequestParam(value = "comTypeId", required = false) Integer comTypeId,
+                       @RequestParam(value = "status", required = false) Byte status,
+                       @RequestParam(value = "operator", required = false) String operator,
+                       HttpServletResponse response) {
+        this.chBatchService.export(chanNickname, comTypeId, status, operator, response);
     }
 }

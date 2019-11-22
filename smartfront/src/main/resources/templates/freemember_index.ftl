@@ -14,7 +14,7 @@
     <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 
 </head>
-    <body >
+    <body style="background-image: url(${basePath}/images/bg_evaluate.png)">
         <div style="margin-top: 50px;text-align: center">
             <h2>应用市场五星好评</h2>
             <h2>会员免费领</h2>
