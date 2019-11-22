@@ -31,7 +31,7 @@ public class AdChannelController {
     public DTPageInfo<AdChannelDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                           @RequestParam(value = "start", defaultValue = "1") int start,
                                           @RequestParam(value = "length", defaultValue = "10") int length,
-                                          @RequestParam(value = "adId", required = false) int adId,
+                                          @RequestParam(value = "adId") int adId,
                                           @RequestParam(value = "name", required = false) String name,
                                           @RequestParam(value = "appId", required = false) int appId
     ) {

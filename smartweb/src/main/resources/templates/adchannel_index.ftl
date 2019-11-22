@@ -77,7 +77,7 @@
                                         </div>
                                         <div class="form-group col-md-2">
                                             <label>版本</label>
-                                            <select id="version" class="form-control">
+                                            <select id="versionname" class="form-control">
                                                 <option value='0' selected='selected'>全部</option>
                                             </select>
                                         </div>
@@ -170,7 +170,7 @@
             dataType: 'JSON',
             success: function (result) {
                 for (var i = 0; i < result.data.length; i++) {
-                    $('#version').append("<option value='" + result.data[i].appId + "'>" + result.data[i].versionName + "</option>");
+                    $('#versionname').append("<option value='" + result.data[i].appId + "'>" + result.data[i].versionName + "</option>");
                 }
             }
         });
@@ -205,7 +205,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "adchannel/query?adId=" + ${adId} + "&name=" + $('#channel').val() + "&appId=" + $('#version').val(),
+            "ajax": "adchannel/query?adId=" + ${adId} + "&name=" + $('#channel').val() + "&appId=" + $('#versionname').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -218,7 +218,7 @@
                 {
                     "data": "type",
                     "render": function (data, type, full) {
-                        var checked = data === 1 ? "checked='checked'" : "";
+                        var checked = data === 2 ? "checked='checked'" : "";
                         return "<input type='checkbox' id='checkbox' name='type' data-whatever='@getbootstrap' value='"+ data +"'" + checked +
                         " onclick='javascript:statusModal(" + full.adId + "," + full.appId + "," + full.softChannelId + "," + data + ")'>开启广告</input>";
                     }
