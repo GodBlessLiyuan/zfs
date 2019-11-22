@@ -53,8 +53,6 @@
             <div class="invation_top">
                 <span class="font_inva">我的邀请</span>
                 <span class="span_right "><a  class="font_inva" style="text-decoration:none" onclick="details()">详情></a></span>
-
-
             </div>
             <div class="rows state_bottom ">
                 <div class="flex1" catchtap="my_pickGoods">
@@ -110,7 +108,7 @@
                 </div>
 
                 <div class="div_spacing">
-                    <p class="padding_left" style="font-weight: bolder">温馨提示：</p>
+                    <p class="padding_left" style="font-weight: bolder">小砖温馨提示：</p>
                     <p class="drawTip padding_left">
                         1.好友支付时会根据您当前的会员状态分配奖励。<br>
                         2.VIP会员邀请后，如好友支付时你已不是会员，这时将无法获得邀请奖励哦。
