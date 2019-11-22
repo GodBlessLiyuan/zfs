@@ -32,6 +32,7 @@ public class SessionFilter implements Filter {
         excludeList.add("/images/");
         excludeList.add("/js/");
         excludeList.add("/plugins/");
+        excludeList.add("/actuator/");
     }
 
     @Override
