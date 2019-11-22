@@ -359,6 +359,17 @@
      * 导出
      */
     function exportClick() {
+        var chanNickname = $('#chanNickname').val()
+        var comTypeId = $('#comTypeId').val()
+        var status= $('#status').val()
+        var operator= $('#operator').val()
+        var json = {
+            chanNickname:chanNickname,
+            comTypeId:comTypeId,
+            status:status,
+            operator:operator
+        }
+        window.location.href = encodeURI('chbatch/export?parameterMap=' + JSON.stringify(json));
     }
 
 

@@ -33,7 +33,7 @@
       <if test="chanNickname != null and chanNickname != ''">
         AND c.chan_nickname = #{chanNickname}
       </if>
-      <if test="comTypeId != 0">
+      <if test="comTypeId != 0 and comTypeId != null">
         AND cb.com_type_id = #{comTypeId}
       </if>
       <if test="status != null and status != ''">

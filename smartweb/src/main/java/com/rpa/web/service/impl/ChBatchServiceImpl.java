@@ -15,15 +15,20 @@ import com.rpa.web.pojo.ChannelPO;
 import com.rpa.web.pojo.ComTypePO;
 import com.rpa.web.service.ChBatchService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.ExcelUtil;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -82,22 +87,7 @@ public class ChBatchServiceImpl implements ChBatchService {
         // 将查询到的 PO 数据转换为 DTO
         List<ChBatchDTO> DTOs = new ArrayList<>();
         for(ChBatchPO po: POs) {
-            ChBatchDTO dto = new ChBatchDTO();
-            dto.setBatchId(po.getBatchId());
-            dto.setChanNickname(po.getChanNickname());
-            dto.setChanName(po.getChanName());
-            dto.setCreateTime(po.getCreateTime());
-            dto.setCreater(queryUsernameByAid(po.getaId()));
-            dto.setComTypeId(po.getComTypeId());
-            dto.setComTypeName(po.getComTypeName());
-            dto.setNum(po.getNum());
-            dto.setActivity(queryStatusById(po.getBatchId(), 2));
-            dto.setNonActivity(queryStatusById(po.getBatchId(),1));
-            dto.setExtra(po.getExtra());
-            dto.setStatus(po.getStatus());
-            dto.setUpdateTime(po.getUpdateTime());
-            dto.setOperator(queryUsernameByAid(po.getUpdateAId()));
-
+            ChBatchDTO dto = po2dto(po);
             DTOs.add(dto);
         }
 
@@ -257,7 +247,49 @@ public class ChBatchServiceImpl implements ChBatchService {
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
 
+    /**
+     * 导出数据
+     * @param chanNickname
+     * @param comTypeId
+     * @param status
+     * @param operator
+     * @return
+     */
+    @Override
+    public void export(String chanNickname, Integer comTypeId, Byte status, String operator,
+                       HttpServletResponse response) {
 
+        // 创建map对象，封装查询条件，作为动态sql语句的参数
+        Map<String, Object> map = new HashMap<>(4);
+        map.put("chanNickname", chanNickname);
+        map.put("comTypeId", comTypeId);
+        map.put("status", status);
+        map.put("operator", operator);
+
+        // 按照条件查询数据
+        List<ChBatchPO> POs = chBatchMapper.query(map);
+        // 将查询到的 PO 数据转换为 DTO
+        List<ChBatchDTO> DTOs = new ArrayList<>();
+        for(ChBatchPO po: POs) {
+            ChBatchDTO dto = this.po2dto(po);
+            DTOs.add(dto);
+        }
+
+        //Excel文件名
+        String filename = "会员卡配置" + System.currentTimeMillis() + ".xls";
+        //生成Excel表格
+        HSSFWorkbook wb = this.toExcel(DTOs);
+        //响应到前端
+        try {
+            this.setResponseHeader(response, filename);
+            OutputStream os = response.getOutputStream();
+            wb.write(os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /**
@@ -297,5 +329,86 @@ public class ChBatchServiceImpl implements ChBatchService {
      */
     private Integer queryStatusById(Integer batchId, int status) {
         return this.batchInfoMapper.queryStatusById(batchId, status);
+    }
+
+    /**
+     * 将po转换为dto
+     * @param po
+     * @return
+     */
+    private ChBatchDTO po2dto(ChBatchPO po) {
+        ChBatchDTO dto = new ChBatchDTO();
+        dto.setBatchId(po.getBatchId());
+        dto.setChanNickname(po.getChanNickname());
+        dto.setChanName(po.getChanName());
+        dto.setCreateTime(po.getCreateTime());
+        dto.setCreater(queryUsernameByAid(po.getaId()));
+        dto.setComTypeId(po.getComTypeId());
+        dto.setComTypeName(po.getComTypeName());
+        dto.setNum(po.getNum());
+        dto.setActivity(queryStatusById(po.getBatchId(), 2));
+        dto.setNonActivity(queryStatusById(po.getBatchId(),1));
+        dto.setExtra(po.getExtra());
+        dto.setStatus(po.getStatus());
+        dto.setUpdateTime(po.getUpdateTime());
+        dto.setOperator(queryUsernameByAid(po.getUpdateAId()));
+        return dto;
+    }
+
+    /**
+     * 生成Excel表格
+     * @param DTOs
+     */
+    private HSSFWorkbook toExcel(List<ChBatchDTO> DTOs) {
+        //表头
+        String[] title = {"渠道标识", "渠道名称", "创建时间", "创建人", "产品类型", "创建数量", "已激活",
+                "未激活", "备注", "状态", "操作时间", "操作", "操作人"};
+        //sheet表名
+        String sheetname = "会员卡配置";
+
+        String[][] content = new String[DTOs.size()][title.length];
+        for (int i = 0; i < DTOs.size(); i++) {
+            ChBatchDTO dto = DTOs.get(i);
+            content[i][0] = dto.getChanNickname().toString();
+            content[i][1] = dto.getChanName().toString();
+            content[i][2] = dto.getCreateTime().toString();
+            content[i][3] = dto.getCreater().toString();
+            content[i][4] = dto.getComTypeName().toString();
+            content[i][5] = dto.getNum().toString();
+            content[i][6] = dto.getActivity().toString();
+            content[i][7] = dto.getNonActivity().toString();
+            content[i][8] = dto.getExtra().toString();
+            content[i][9] = dto.getStatus().toString();
+            content[i][10] = dto.getUpdateTime().toString();
+            content[i][11] = dto.getOperator().toString();
+            System.out.println(content[i][0]);
+        }
+
+        //创建HSSFWorkbook
+        HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetname, title, content, null);
+        return wb;
+    }
+
+    /**
+     * 发送响应流
+     * @param response
+     * @param filename
+     */
+    public void setResponseHeader(HttpServletResponse response, String filename) {
+        try {
+            try {
+                filename = new String(filename.getBytes("gb2312"),"ISO8859-1");
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            response.setContentType("application/octet-stream;charset=ISO8859-1");
+            response.addHeader("content-type", "application/x-msdownload");
+            response.setHeader("Content-Disposition", "attachment;filename="+ filename);
+            response.addHeader("Pargam", "no-cache");
+            response.addHeader("Cache-Control", "no-cache");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

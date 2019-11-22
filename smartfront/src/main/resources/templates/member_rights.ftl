@@ -135,7 +135,7 @@
                                     src="${basePath}/images/check_redbag_24.png"/></td>
                     </tr>
                     <tr>
-                        <td style="vertical-align: middle;text-align: center">勿打扰清理</td>
+                        <td style="vertical-align: middle;text-align: center">朋友圈清理</td>
                         <td style="vertical-align: middle; text-align: center"><img
                                     src="${basePath}/images/ico_delete_youshang_24.png"/></td>
                         <td style="vertical-align: middle; text-align: center"><img
