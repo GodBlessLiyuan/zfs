@@ -20,7 +20,20 @@ public class DatavController {
     public String userNumber(@RequestParam Integer id) {
         if (id == 1) {
             return CommonConstant.userNumber1;
+        }else if (id == 2) {
+            return CommonConstant.userNumber2;
         }
         return null;
     }
+
+    @GetMapping("userfrequency")
+    public String userNumber(@RequestParam Integer id) {
+        if (id == 1) {
+            return CommonConstant.userFrequency1;
+        }else if (id == 2) {
+            return CommonConstant.userFrequency2;
+        }
+        return null;
+    }
+
 }
