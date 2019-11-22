@@ -15,4 +15,9 @@ public class AppDTO extends VerifyDTO {
      * 应用版本
      */
     private Integer softv;
+
+    /**
+     * 应用渠道
+     */
+    private String channel;
 }

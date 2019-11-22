@@ -27,7 +27,7 @@ public class DatavController {
     }
 
     @GetMapping("userfrequency")
-    public String userNumber(@RequestParam Integer id) {
+    public String userFrequency(@RequestParam Integer id) {
         if (id == 1) {
             return CommonConstant.userFrequency1;
         }else if (id == 2) {
