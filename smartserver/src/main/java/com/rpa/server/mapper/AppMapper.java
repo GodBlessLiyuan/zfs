@@ -13,7 +13,8 @@ public interface AppMapper extends BaseMapper<AppPO, Integer> {
      *
      * @param versionCode
      * @param status
+     * @param chanId
      * @return
      */
-    AppPO queryMaxByVerId(Integer versionCode, Integer status);
+    AppPO queryMaxByVerId(Integer versionCode, Integer status, Integer chanId);
 }
