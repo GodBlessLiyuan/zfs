@@ -1,5 +1,6 @@
 package com.rpa.kafka;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -13,12 +14,12 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class KafkaApplication {
 
-    //初始化系统属性
-    static {
-        System.setProperty("java.security.auth.login.config", "classpath:kafka_client_jaas.conf");
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(KafkaApplication.class, args);
+    }
+
+    @Value("${kafka.jaas.conf.path}")
+    public void setKafkaConfPath(String kafkaConfPath) {
+        System.setProperty("java.security.auth.login.config", kafkaConfPath);
     }
 }
