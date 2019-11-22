@@ -8,7 +8,6 @@ import com.rpa.web.dto.AppDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdChannelMapper;
 import com.rpa.web.mapper.AppMapper;
-import com.rpa.web.mapper.SoftChannelMapper;
 import com.rpa.web.pojo.AdChannelPO;
 import com.rpa.web.pojo.AppPO;
 import com.rpa.web.service.AdChannelService;
@@ -20,7 +19,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+
 
 /**
  * @author: dangyi
