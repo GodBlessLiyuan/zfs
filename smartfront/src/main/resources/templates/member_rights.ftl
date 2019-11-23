@@ -14,10 +14,22 @@
     <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
     <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
 </head>
-    <body >
-        <#--<img src="${basePath}/images/member_rights.png" width="100"/>-->
+    <body>
+
+    <div style="background: #F8F8F8;height: 50px;padding-top: 20px;">
+        <p style="padding-left:30px;font-size: 14px;letter-spacing: 0;font-family:PingFang-SC-Medium "> 会员规则如下，未勾选表示无权使用：</p>
+    </div>
+
+    <div >
+        <img style="background-size: cover;background-repeat: no-repeat;width: 100%" src="${basePath}/images/freemeber_right.png)">
+    </div>
+
+
+
+
+    <#--<img src="${basePath}/images/member_rights.png" width="100"/>-->
         <!--奖励相关  -->
-        <div class="font_reward" style="font-size: 15px;font-weight: bolder;margin-left: 35px;padding-top: 20px">会员规则如下，未勾选表示无权使用：</div>
+<#--        <div class="font_reward" style="font-size: 15px;font-weight: bolder;margin-left: 35px;padding-top: 20px">会员规则如下，未勾选表示无权使用：</div>
         <div class="my_state">
             <div class="div_spacing">
                 <table class="table table-bordered table-hover table-condensed reward_details" style="width:90%">
@@ -145,5 +157,9 @@
                 </table>
             </div>
         </div>
+    -->
+
+
+
     </body>
 </html>
