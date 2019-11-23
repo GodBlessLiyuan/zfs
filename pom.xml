@@ -31,6 +31,7 @@
         <module>smartzipkin</module>
         <module>smartrabbit</module>
         <module>smartdatav</module>
+        <module>smartdetect</module>
     </modules>
 
     <dependencyManagement>
