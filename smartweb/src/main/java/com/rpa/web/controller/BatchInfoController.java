@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author: dangyi
  * @date: Created in 19:45 2019/10/8
@@ -55,13 +57,24 @@ public class BatchInfoController {
     public DTPageInfo<BatchInfoDTO> queryByBatchid(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                                    @RequestParam(value = "start", defaultValue = "1") int start,
                                                    @RequestParam(value = "length", defaultValue = "10") int length,
-                                                   @RequestParam(value = "batchId") Integer batchId
+                                                   @RequestParam(value = "batchId") Integer batchId,
+                                                   @RequestParam(value = "status") Byte status
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<BatchInfoDTO> dTPageInfo = batchInfoService.queryByBatchid(draw, start, length, batchId);
+        DTPageInfo<BatchInfoDTO> dTPageInfo = batchInfoService.queryByBatchid(draw, start, length, batchId, status);
         return dTPageInfo;
     }
 
-
-
+    /**
+     * 导出数据
+     * @param batchId
+     * @param status
+     * @param response
+     */
+    @GetMapping("export")
+    public void export(@RequestParam(value = "batchId") Integer batchId,
+                       @RequestParam(value = "status") Byte status,
+                       HttpServletResponse response) {
+        this.batchInfoService.export(batchId, status, response);
+    }
 }

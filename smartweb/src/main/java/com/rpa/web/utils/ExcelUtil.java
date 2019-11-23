@@ -2,6 +2,12 @@ package com.rpa.web.utils;
 
 import org.apache.poi.hssf.usermodel.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author: dangyi
  * @date: Created in 16:45 2019/11/22
@@ -9,6 +15,10 @@ import org.apache.poi.hssf.usermodel.*;
  * @description:
  */
 public class ExcelUtil {
+
+    /**
+     * 生成Excel表格
+     */
     public static HSSFWorkbook getHSSFWorkbook(String sheetName, String []title, String [][]values, HSSFWorkbook wb){
 
         // 第一步，创建一个HSSFWorkbook，对应一个Excel文件
@@ -24,7 +34,8 @@ public class ExcelUtil {
 
         // 第四步，创建单元格，并设置值表头 设置表头居中
         HSSFCellStyle style = wb.createCellStyle();
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        // 创建一个居中格式
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
         //声明列对象
         HSSFCell cell = null;
@@ -45,5 +56,49 @@ public class ExcelUtil {
             }
         }
         return wb;
+    }
+
+
+    /**
+     * 发送响应流数据到前端
+     */
+    public static void sendToClient(HSSFWorkbook wb, HttpServletResponse response) {
+        //获取当前时间
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String dateNowStr = sdf.format(date);
+        //Excel文件名
+        String filename = dateNowStr + ".xls";
+
+        //响应到前端
+        try {
+            setResponseHeader(response, filename);
+            OutputStream os = response.getOutputStream();
+            wb.write(os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 响应流设置
+     */
+    private static void setResponseHeader(HttpServletResponse response, String filename) {
+        try {
+            try {
+                filename = new String(filename.getBytes("gb2312"),"ISO8859-1");
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            response.setContentType("application/octet-stream;charset=ISO8859-1");
+            response.setHeader("Content-Disposition", "attachment;filename="+ filename);
+            response.addHeader("Pargam", "no-cache");
+            response.addHeader("Cache-Control", "no-cache");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
