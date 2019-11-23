@@ -1,0 +1,7 @@
+server:
+  port: 9019
+spring:
+  application: smartdetect
+logging:
+  path: /data/ftp/smartftp/log
+  file: ${logging.path}smartdetect
