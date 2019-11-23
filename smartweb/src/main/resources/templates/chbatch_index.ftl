@@ -363,13 +363,7 @@
         var comTypeId = $('#comTypeId').val()
         var status= $('#status').val()
         var operator= $('#operator').val()
-        var json = {
-            chanNickname:chanNickname,
-            comTypeId:comTypeId,
-            status:status,
-            operator:operator
-        }
-        window.location.href = encodeURI('chbatch/export?parameterMap=' + JSON.stringify(json));
+        window.location.href = 'chbatch/export?chanNickname='+ chanNickname +'&comTypeId='+ comTypeId +'&status='+ status +'&operator='+ operator;
     }
 
 

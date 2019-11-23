@@ -15,6 +15,7 @@ import com.rpa.web.pojo.ChannelPO;
 import com.rpa.web.pojo.ComTypePO;
 import com.rpa.web.service.ChBatchService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.utils.DateUtil;
 import com.rpa.web.utils.ExcelUtil;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
@@ -29,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -58,7 +61,7 @@ public class ChBatchServiceImpl implements ChBatchService {
 
 
     /**
-     * 查询
+     * 分页查询
      * @param draw
      * @param start
      * @param length
@@ -74,22 +77,8 @@ public class ChBatchServiceImpl implements ChBatchService {
         // 分页
         Page<ChBatchDTO> page = PageHelper.startPage(start, length);
 
-        // 创建map对象，封装查询条件，作为动态sql语句的参数
-        Map<String, Object> map = new HashMap<>(4);
-        map.put("chanNickname", chanNickname);
-        map.put("comTypeId", comTypeId);
-        map.put("status", status);
-        map.put("operator", operator);
-
-        // 按照条件查询数据
-        List<ChBatchPO> POs = chBatchMapper.query(map);
-
-        // 将查询到的 PO 数据转换为 DTO
-        List<ChBatchDTO> DTOs = new ArrayList<>();
-        for(ChBatchPO po: POs) {
-            ChBatchDTO dto = po2dto(po);
-            DTOs.add(dto);
-        }
+        //查询数据
+        List<ChBatchDTO> DTOs = this.query(chanNickname, comTypeId, status, operator);
 
         //根据分页查询的结果，封装最终的返回结果
         return new DTPageInfo<>(draw, page.getTotal(), DTOs);
@@ -176,8 +165,8 @@ public class ChBatchServiceImpl implements ChBatchService {
         po.setDays(chBatchMapper.queryDaysByTypeId(dto.getComTypeId()));
 
         // 创建时，创建人和更操作新人一样，此后创建人ID便不再改变
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
-        po.setUpdateAId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
+        po.setUpdateAId(aId);
 
         int count = this.chBatchMapper.insert(po);
 
@@ -232,7 +221,7 @@ public class ChBatchServiceImpl implements ChBatchService {
 
         po.setStatus(status);
         po.setUpdateTime(new Date());
-        po.setUpdateAId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setUpdateAId(aId);
 
         int count = chBatchMapper.updateByPrimaryKey(po);
 
@@ -259,6 +248,27 @@ public class ChBatchServiceImpl implements ChBatchService {
     public void export(String chanNickname, Integer comTypeId, Byte status, String operator,
                        HttpServletResponse response) {
 
+        //查询数据
+        List<ChBatchDTO> DTOs = this.query(chanNickname, comTypeId, status, operator);
+
+        //生成Excel表格
+        HSSFWorkbook wb = this.toExcel(DTOs);
+
+        //发送响应流数据给前端
+        ExcelUtil.sendToClient(wb, response);
+    }
+
+
+    /**
+     * 查询数据
+     * @param chanNickname
+     * @param comTypeId
+     * @param status
+     * @param operator
+     * @return
+     */
+    private List<ChBatchDTO> query(String chanNickname, Integer comTypeId, Byte status, String operator) {
+
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(4);
         map.put("chanNickname", chanNickname);
@@ -274,23 +284,33 @@ public class ChBatchServiceImpl implements ChBatchService {
             ChBatchDTO dto = this.po2dto(po);
             DTOs.add(dto);
         }
-
-        //Excel文件名
-        String filename = "会员卡配置" + System.currentTimeMillis() + ".xls";
-        //生成Excel表格
-        HSSFWorkbook wb = this.toExcel(DTOs);
-        //响应到前端
-        try {
-            this.setResponseHeader(response, filename);
-            OutputStream os = response.getOutputStream();
-            wb.write(os);
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return DTOs;
     }
 
+
+    /**
+     * 将po转换为dto
+     * @param po
+     * @return
+     */
+    private ChBatchDTO po2dto(ChBatchPO po) {
+        ChBatchDTO dto = new ChBatchDTO();
+        dto.setBatchId(po.getBatchId());
+        dto.setChanNickname(po.getChanNickname());
+        dto.setChanName(po.getChanName());
+        dto.setCreateTime(po.getCreateTime());
+        dto.setCreater(queryUsernameByAid(po.getaId()));
+        dto.setComTypeId(po.getComTypeId());
+        dto.setComTypeName(po.getComTypeName());
+        dto.setNum(po.getNum());
+        dto.setActivity(queryStatusById(po.getBatchId(), 2));
+        dto.setNonActivity(queryStatusById(po.getBatchId(),1));
+        dto.setExtra(po.getExtra());
+        dto.setStatus(po.getStatus());
+        dto.setUpdateTime(po.getUpdateTime());
+        dto.setOperator(queryUsernameByAid(po.getUpdateAId()));
+        return dto;
+    }
 
     /**
      * 根据aId，从t_admin_user表中查询username
@@ -331,29 +351,6 @@ public class ChBatchServiceImpl implements ChBatchService {
         return this.batchInfoMapper.queryStatusById(batchId, status);
     }
 
-    /**
-     * 将po转换为dto
-     * @param po
-     * @return
-     */
-    private ChBatchDTO po2dto(ChBatchPO po) {
-        ChBatchDTO dto = new ChBatchDTO();
-        dto.setBatchId(po.getBatchId());
-        dto.setChanNickname(po.getChanNickname());
-        dto.setChanName(po.getChanName());
-        dto.setCreateTime(po.getCreateTime());
-        dto.setCreater(queryUsernameByAid(po.getaId()));
-        dto.setComTypeId(po.getComTypeId());
-        dto.setComTypeName(po.getComTypeName());
-        dto.setNum(po.getNum());
-        dto.setActivity(queryStatusById(po.getBatchId(), 2));
-        dto.setNonActivity(queryStatusById(po.getBatchId(),1));
-        dto.setExtra(po.getExtra());
-        dto.setStatus(po.getStatus());
-        dto.setUpdateTime(po.getUpdateTime());
-        dto.setOperator(queryUsernameByAid(po.getUpdateAId()));
-        return dto;
-    }
 
     /**
      * 生成Excel表格
@@ -362,53 +359,48 @@ public class ChBatchServiceImpl implements ChBatchService {
     private HSSFWorkbook toExcel(List<ChBatchDTO> DTOs) {
         //表头
         String[] title = {"渠道标识", "渠道名称", "创建时间", "创建人", "产品类型", "创建数量", "已激活",
-                "未激活", "备注", "状态", "操作时间", "操作", "操作人"};
+                "未激活", "备注", "状态", "操作时间", "操作人"};
         //sheet表名
         String sheetname = "会员卡配置";
+
+        String status = "";
 
         String[][] content = new String[DTOs.size()][title.length];
         for (int i = 0; i < DTOs.size(); i++) {
             ChBatchDTO dto = DTOs.get(i);
-            content[i][0] = dto.getChanNickname().toString();
-            content[i][1] = dto.getChanName().toString();
-            content[i][2] = dto.getCreateTime().toString();
-            content[i][3] = dto.getCreater().toString();
-            content[i][4] = dto.getComTypeName().toString();
+            content[i][0] = dto.getChanNickname();
+            content[i][1] = dto.getChanName();
+            if (null == dto.getCreateTime()) {
+                content[i][2] = "";
+            } else {
+                content[i][2] = DateUtil.date2str(dto.getCreateTime());
+            }
+            content[i][3] = dto.getCreater();
+            content[i][4] = dto.getComTypeName();
             content[i][5] = dto.getNum().toString();
             content[i][6] = dto.getActivity().toString();
             content[i][7] = dto.getNonActivity().toString();
-            content[i][8] = dto.getExtra().toString();
-            content[i][9] = dto.getStatus().toString();
-            content[i][10] = dto.getUpdateTime().toString();
-            content[i][11] = dto.getOperator().toString();
-            System.out.println(content[i][0]);
+            content[i][8] = dto.getExtra();
+            if (dto.getStatus() == 1) {
+                status = "正常";
+            } else if (dto.getStatus() == 3) {
+                status = "已冻结";
+            } else if (dto.getStatus() == 4) {
+                status = "已失效";
+            } else if (dto.getStatus() == 5) {
+                status = "已结束";
+            }
+            content[i][9] = status;
+            if (null == dto.getUpdateTime()) {
+                content[i][10] = "";
+            }else {
+                content[i][10] = DateUtil.date2str(dto.getUpdateTime());
+            }
+            content[i][11] = dto.getOperator();
         }
 
         //创建HSSFWorkbook
         HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetname, title, content, null);
         return wb;
-    }
-
-    /**
-     * 发送响应流
-     * @param response
-     * @param filename
-     */
-    public void setResponseHeader(HttpServletResponse response, String filename) {
-        try {
-            try {
-                filename = new String(filename.getBytes("gb2312"),"ISO8859-1");
-            } catch (UnsupportedEncodingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            response.setContentType("application/octet-stream;charset=ISO8859-1");
-            response.addHeader("content-type", "application/x-msdownload");
-            response.setHeader("Content-Disposition", "attachment;filename="+ filename);
-            response.addHeader("Pargam", "no-cache");
-            response.addHeader("Cache-Control", "no-cache");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 }

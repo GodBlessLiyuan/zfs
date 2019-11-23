@@ -69,6 +69,10 @@
                     <div class="card">
                         <div class="card-body">
 
+                            <button type="button" class="btn btn-primary" id="export"
+                                    onclick="javascript:exportClick();">导出
+                            </button>
+                            <br>
                             <div class="basic-form">
                                 <form>
                                     <div class="form-group col-md-2">
@@ -165,6 +169,16 @@
         $('#status').val(null);
     }
 
+
+    /**
+     * 导出
+     */
+    function exportClick() {
+        var status= $('#status').val()
+        window.location.href = 'batchinfo/export?batchId='+ ${batchId} +'&status='+ status;
+    }
+
+
     /**
      * 查询
      */
@@ -177,7 +191,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "batchinfo/queryByBatchid?batchId=" + ${batchId},
+            "ajax": "batchinfo/queryByBatchid?batchId=" + ${batchId} + "&status=" + $('#status').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
