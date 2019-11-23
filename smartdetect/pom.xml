@@ -37,7 +37,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.rpa.zipkin.ZipkinApplication</mainClass>
+                    <mainClass>com.rpa.detect.DetectApplication</mainClass>
                     <layout>ZIP</layout>
                     <includes>
                         <include>
@@ -56,7 +56,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
