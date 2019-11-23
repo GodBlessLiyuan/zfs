@@ -21,7 +21,7 @@
     </div>
 
     <div >
-        <img style="background-size: cover;background-repeat: no-repeat;width: 100%" src="${basePath}/images/freemeber_right.png)">
+        <img style="background-size: cover;background-repeat: no-repeat;width: 100%" src="${basePath}/images/freemeber_right.png">
     </div>
 
 
