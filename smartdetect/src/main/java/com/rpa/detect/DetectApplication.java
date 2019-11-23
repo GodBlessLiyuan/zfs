@@ -29,8 +29,8 @@ public class DetectApplication {
     }
 
     public static void schedule() {
-        service.scheduleWithFixedDelay(new SmartWebDetectRunnable(), 1, 10, TimeUnit.SECONDS);
-        service.scheduleWithFixedDelay(new SmartServerDetectRunnable(), 2, 10, TimeUnit.SECONDS);
-        service.scheduleWithFixedDelay(new SmartFrontDetectRunnable(), 3, 10, TimeUnit.SECONDS);
+        service.scheduleWithFixedDelay(new SmartWebDetectRunnable(), 1, 1, TimeUnit.MINUTES);
+        service.scheduleWithFixedDelay(new SmartServerDetectRunnable(), 2, 1, TimeUnit.MINUTES);
+        service.scheduleWithFixedDelay(new SmartFrontDetectRunnable(), 3, 1, TimeUnit.MINUTES);
     }
 }
