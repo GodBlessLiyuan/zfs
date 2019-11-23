@@ -1,5 +1,7 @@
 package com.rpa.detect;
 
+import com.rpa.detect.command.SmartFrontDetectRunnable;
+import com.rpa.detect.command.SmartServerDetectRunnable;
 import com.rpa.detect.command.SmartWebDetectRunnable;
 import com.rpa.detect.constant.DetectConstant;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
@@ -28,5 +30,7 @@ public class DetectApplication {
 
     public static void schedule() {
         service.scheduleWithFixedDelay(new SmartWebDetectRunnable(), 1, 10, TimeUnit.SECONDS);
+        service.scheduleWithFixedDelay(new SmartServerDetectRunnable(), 2, 10, TimeUnit.SECONDS);
+        service.scheduleWithFixedDelay(new SmartFrontDetectRunnable(), 3, 10, TimeUnit.SECONDS);
     }
 }
