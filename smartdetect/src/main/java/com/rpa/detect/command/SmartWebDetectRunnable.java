@@ -32,10 +32,11 @@ public class SmartWebDetectRunnable implements Runnable {
 
             logger.info(String.valueOf(res));
             if (res != 3) {
-                // 重新启动
-                Runtime.getRuntime().exec("nohup java -Xms128m -Xmx512m  -Dloader.path=/data/project/lib -jar " +
+                cmds = new String[]{"/bin/sh", "-c", "nohup java -Xms128m -Xmx512m  -Dloader.path=/data/project/lib -jar " +
                         "/data/project/bin/smartweb-1.0.jar --spring.profiles.active=dev " +
-                        ">/data/project/logs/smartweb.log 2>&1 &");
+                        ">/data/project/logs/smartweb.log 2>&1 &"};
+                // 重新启动
+                Runtime.getRuntime().exec(cmds);
             }
         } catch (Exception e) {
             e.printStackTrace();
