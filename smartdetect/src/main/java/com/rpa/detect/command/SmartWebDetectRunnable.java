@@ -24,9 +24,18 @@ public class SmartWebDetectRunnable implements Runnable {
             pro.waitFor();
             InputStream in = pro.getInputStream();
             BufferedReader read = new BufferedReader(new InputStreamReader(in));
-            String line;
-            while ((line = read.readLine()) != null) {
-                logger.info(line);
+
+            int res = 0;
+            while (null != read.readLine()) {
+                res++;
+            }
+
+            logger.info(String.valueOf(res));
+            if (res != 3) {
+                // 重新启动
+                Runtime.getRuntime().exec("nohup java -Xms128m -Xmx512m  -Dloader.path=/data/project/lib -jar " +
+                        "/data/project/bin/smartweb-1.0.jar --spring.profiles.active=dev " +
+                        ">/data/project/logs/smartweb.log 2>&1 &");
             }
         } catch (Exception e) {
             e.printStackTrace();
