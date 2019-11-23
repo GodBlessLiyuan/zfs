@@ -22,6 +22,10 @@ public class DatavController {
             return CommonConstant.userNumber1;
         }else if (id == 2) {
             return CommonConstant.userNumber2;
+        }else if (id == 6) {
+            return CommonConstant.userNumber1;
+        }else if (id == 7) {
+            return CommonConstant.userNumber2;
         }
         return null;
     }
@@ -31,6 +35,10 @@ public class DatavController {
         if (id == 6) {
             return CommonConstant.userFrequency1;
         }else if (id == 7) {
+            return CommonConstant.userFrequency2;
+        }else if (id == 1) {
+            return CommonConstant.userFrequency1;
+        }else if (id == 2) {
             return CommonConstant.userFrequency2;
         }
         return null;
