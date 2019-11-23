@@ -28,9 +28,9 @@ public class DatavController {
 
     @GetMapping("userfrequency")
     public String userFrequency(@RequestParam Integer id) {
-        if (id == 1) {
+        if (id == 6) {
             return CommonConstant.userFrequency1;
-        }else if (id == 2) {
+        }else if (id == 7) {
             return CommonConstant.userFrequency2;
         }
         return null;
