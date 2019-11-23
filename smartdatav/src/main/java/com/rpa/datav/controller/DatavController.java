@@ -17,31 +17,31 @@ import org.springframework.web.bind.annotation.RestController;
 public class DatavController {
 
     @GetMapping("usernumber")
-    public String userNumber(@RequestParam Integer id) {
-        if (id == 1) {
+    public String userNumber(@RequestParam String id) {
+        if (id == "1") {
             return CommonConstant.userNumber1;
-        }else if (id == 2) {
+        }else if (id == "2") {
             return CommonConstant.userNumber2;
-        }else if (id == 6) {
+        }else if (id == "6") {
             return CommonConstant.userNumber1;
-        }else if (id == 7) {
+        }else if (id == "7") {
             return CommonConstant.userNumber2;
         }
-        return null;
+        return CommonConstant.userNumber1;
     }
 
     @GetMapping("userfrequency")
-    public String userFrequency(@RequestParam Integer id) {
-        if (id == 6) {
+    public String userFrequency(@RequestParam String id) {
+        if (id == "6") {
             return CommonConstant.userFrequency1;
-        }else if (id == 7) {
+        }else if (id == "7") {
             return CommonConstant.userFrequency2;
-        }else if (id == 1) {
+        }else if (id == "1") {
             return CommonConstant.userFrequency1;
-        }else if (id == 2) {
+        }else if (id == "2") {
             return CommonConstant.userFrequency2;
         }
-        return null;
+        return CommonConstant.userFrequency1;
     }
 
 }
