@@ -17,7 +17,7 @@
     <body style="background-image:  url(${basePath}/images/bg_evaluate.png);background-size: contain;background-repeat: no-repeat;background-color: #FA524A">
         <div class="betweenLR" style="margin-top: 400px">
             <#if null == status || status == 20>
-            <button type="button" class="drawSubmit" style="background-color: #FFE8B9;color:#D20f1C;font-size: 20px" onclick="freememberClick()">立即参与</button>
+            <button type="button" class="drawSubmit3" style="background-color: #FFE8B9;color:#D20f1C;font-size: 20px" onclick="freememberClick()">立即参与</button>
             </#if>
         </div>
 
