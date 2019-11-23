@@ -36,7 +36,7 @@ public class DetectProcessUtil {
                 res++;
             }
 
-            logger.info(name + "-" + Thread.currentThread().getName(), res);
+            logger.info(name + "-" + Thread.currentThread().getName() + ":" + res);
             if (res != num) {
                 cmds = new String[]{"/bin/sh", "-c", "service " + name + " start"};
                 // 重新启动
