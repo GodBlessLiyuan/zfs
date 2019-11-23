@@ -14,28 +14,24 @@
     <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 
 </head>
-    <body style="background-image: url(${basePath}/images/bg_evaluate.png)">
-        <div style="margin-top: 50px;text-align: center">
-            <h2>应用市场五星好评</h2>
-            <h2>会员免费领</h2>
+    <body style="background-image:  url(${basePath}/images/bg_evaluate.png);background-size: contain;background-repeat: no-repeat;background-color: #FA524A">
+        <div class="betweenLR" style="margin-top: 400px">
+            <#if null == status || status == 20>
+            <button type="button" class="drawSubmit" style="background-color: #FFE8B9;color:#D20f1C;font-size: 20px" onclick="freememberClick()">立即参与</button>
+            </#if>
         </div>
-        <div style="margin-top: 40%;margin-left: 15%;margin-right: 15%;">
-            <div class="betweenLR">
-                <#if null == status || status == 20>
-                <button type="button" class="drawSubmit" style="border-radius: 5px;outline: none;" id="participate" onclick="freememberClick()">立即参与</button>
-                </#if>
-            </div>
-        </div>
+
         <div style="margin-left: 20%;margin-right: 20%">
             <p style="text-align: center;vertical-align: middle; border:2px solid darkgray;border-radius: 5px;padding-top: 5px;">${msg}</p>
         </div>
-        <div style="margin-top: 10%">
-            <P style="margin-left: 10%;margin-right: 5%">
+
+        <div class="div_text" style="margin-top: 50px;" >
+            <p style="margin-left: 10%;margin-right: 5%">
                 <b>领取提示：</b><br>
                 1.每位用户只能领取一次奖励<br>
                 2.将您在应用市场5星好评截图上传即可，审核通过后即可获得会员奖励<br>
                 3.奖励为7天VIP
-            </P>
+            </p>
         </div>
     </body>
 
