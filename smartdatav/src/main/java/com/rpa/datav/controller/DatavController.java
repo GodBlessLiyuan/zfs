@@ -38,8 +38,6 @@ public class DatavController {
         return null;
     }
 
-
-
     @GetMapping("usernumber")
     public String userNumber(@RequestParam String fid) {
         logger.error("userNumber   fid:"+fid);
@@ -60,6 +58,20 @@ public class DatavController {
             return CommonConstant.userNumber1;
         }
         return null;
+    }
+
+    int num = 230000;
+    long lastTime;
+    @GetMapping("totalusernumber")
+    public String totalUserNumber() {
+
+        long diff = System.currentTimeMillis()-lastTime;
+        if(diff>=3*1000){
+            lastTime = System.currentTimeMillis();
+            return num++;
+        }else {
+            return num;
+        }
     }
 
 
