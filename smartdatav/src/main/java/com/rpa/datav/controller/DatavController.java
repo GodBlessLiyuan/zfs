@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Random;
+
 /**
  * @author: xiahui
  * @date: Created in 2019/11/21 11:31
@@ -62,15 +64,27 @@ public class DatavController {
 
     int num = 230000;
     long lastTime;
+    Random random = new Random();
     @GetMapping("totalusernumber")
     public String totalUserNumber() {
 
         long diff = System.currentTimeMillis()-lastTime;
-        if(diff>=3*1000){
+        if(diff>=6*1000){
             lastTime = System.currentTimeMillis();
-            return num++;
+            num = random.nextInt(2) + num;
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",num);
         }else {
-            return num;
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",num);
         }
     }
 
