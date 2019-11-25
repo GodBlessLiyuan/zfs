@@ -62,31 +62,158 @@ public class DatavController {
         return null;
     }
 
-    int num = 230000;
-    long lastTime;
     Random random = new Random();
+
+    int activate_num = 230000;
+    long lastTime;
     @GetMapping("totalusernumber")
     public String totalUserNumber() {
 
         long diff = System.currentTimeMillis()-lastTime;
         if(diff>=6*1000){
             lastTime = System.currentTimeMillis();
-            num = random.nextInt(2) + num;
+            activate_num = random.nextInt(3) + activate_num;
             return String.format("[\n" +
                     "{\n" +
                     "\"name\": \"\",\n" +
                     "\"value\": %s\n" +
                     "}\n" +
-                    "]",num);
+                    "]",activate_num);
         }else {
             return String.format("[\n" +
                     "{\n" +
                     "\"name\": \"\",\n" +
                     "\"value\": %s\n" +
                     "}\n" +
-                    "]",num);
+                    "]",activate_num);
         }
     }
 
+
+
+    int vip_num = 54800;
+    long lastTime1;
+    @GetMapping("vipusernumber")
+    public String vipUserNumber() {
+
+        long diff = System.currentTimeMillis()-lastTime1;
+        if(diff>=6*1000){
+            lastTime = System.currentTimeMillis();
+            vip_num = random.nextInt(3) + vip_num;
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",vip_num);
+        }else {
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",vip_num);
+        }
+    }
+
+    int new_add_num = 15000;
+    long lastTime2;
+    @GetMapping("newaddusernumber")
+    public String newaddUserNumber() {
+
+        long diff = System.currentTimeMillis()-lastTime2;
+        if(diff>=6*1000){
+            lastTime = System.currentTimeMillis();
+            new_add_num = random.nextInt(3) + new_add_num;
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",new_add_num);
+        }else {
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",new_add_num);
+        }
+    }
+
+    int huoyue_num = 138000;
+    long lastTime3;
+    @GetMapping("huoyueusernumber")
+    public String huoyueUserNumber() {
+
+        long diff = System.currentTimeMillis()-lastTime3;
+        if(diff>=6*1000){
+            lastTime = System.currentTimeMillis();
+            huoyue_num = random.nextInt(3) + huoyue_num;
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",huoyue_num);
+        }else {
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",huoyue_num);
+        }
+    }
+
+    int total_pinci = 1219300;
+    long lastTime4;
+    @GetMapping("totalusepincinum")
+    public String totalusepinciNumber() {
+
+        long diff = System.currentTimeMillis()-lastTime4;
+        if(diff>=6*1000){
+            lastTime = System.currentTimeMillis();
+            total_pinci = random.nextInt(50) + total_pinci;
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",total_pinci);
+        }else {
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",total_pinci);
+        }
+    }
+
+    int totalhour_num = 1115530;
+    long lastTime5;
+    @GetMapping("totalhournumber")
+    public String totalhourNumber() {
+
+        long diff = System.currentTimeMillis()-lastTime5;
+        if(diff>=6*1000){
+            lastTime = System.currentTimeMillis();
+            totalhour_num = random.nextInt(20) + totalhour_num;
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",totalhour_num);
+        }else {
+            return String.format("[\n" +
+                    "{\n" +
+                    "\"name\": \"\",\n" +
+                    "\"value\": %s\n" +
+                    "}\n" +
+                    "]",totalhour_num);
+        }
+    }
 
 }
