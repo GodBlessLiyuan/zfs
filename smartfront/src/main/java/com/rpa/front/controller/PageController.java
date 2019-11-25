@@ -3,13 +3,14 @@ package com.rpa.front.controller;
 import com.rpa.front.common.ErrorCode;
 import com.rpa.front.common.ResultVO;
 import com.rpa.front.constant.IncomeConstant;
-import com.rpa.front.dto.DownLoadDTO;
 import com.rpa.front.dto.IncomeDTO;
 import com.rpa.front.dto.UserActivityDTO;
 import com.rpa.front.service.IIncomeService;
 import com.rpa.front.service.UserActivityService;
 import com.rpa.front.utils.VerifyUtil;
 import com.rpa.front.vo.IncomeVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("v1.0")
 @Controller
 public class PageController {
+    private static final Logger logger = LoggerFactory.getLogger(PageController.class);
     @Autowired
     private IIncomeService service;
 
@@ -80,6 +82,9 @@ public class PageController {
     @GetMapping("details")
     public String details(ModelMap map, HttpServletRequest req) {
         IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(IncomeConstant.INCOME_SESSION);
+
+        logger.info(loginInfo == null ? null : loginInfo.toString());
+
         if (null == loginInfo) {
             map.put(IncomeConstant.INCOME_RESULT, new ResultVO<>(ErrorCode.SESSION_TIMEOUT));
             return "invitation_details_index";
@@ -100,10 +105,10 @@ public class PageController {
 
 
     /**
-     * @author: dangyi
      * @param dto
      * @param map
      * @param req
+     * @author: dangyi
      * @description：免费领取会员：根据两个ID查询状态 个人中心-免费领会员-webview的url
      */
     @PostMapping("freemember")
@@ -123,9 +128,9 @@ public class PageController {
             map.put("msg", "期待您的参与！");
         } else if (status == 1) {
             map.put("msg", "参与成功，正在审核中！");
-        }else if (status == 10 || status == 30) {
+        } else if (status == 10 || status == 30) {
             map.put("msg", "参与成功，奖励已发放！");
-        }else if (status == 20) {
+        } else if (status == 20) {
             map.put("msg", "您上传的图片不符合标准，请重新上传！");
         }
 
@@ -133,10 +138,10 @@ public class PageController {
     }
 
     @GetMapping("downloadApk")
-    public String downloadApk( ModelMap map) {
+    public String downloadApk(ModelMap map) {
 
-        ResultVO resultVO = service.getDownloadURL(null,null);
-        if(resultVO!=null) {
+        ResultVO resultVO = service.getDownloadURL(null, null);
+        if (resultVO != null) {
             map.put("url", resultVO.getData());
         }
         return "download_apk";

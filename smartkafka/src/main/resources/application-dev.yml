@@ -24,7 +24,7 @@ spring:
 eureka:
   client:
     service-url:
-      default-zone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
 logging:
   path: /data/ftp/smartftp/log
@@ -33,7 +33,7 @@ logging:
 kafka:
   jaas:
     conf:
-      path: classpath:kafka_client_jaas.conf
+      path: /data/project/smarthelper/smartkafka/src/main/resources/kafka_client_jaas.conf
 
 
 
