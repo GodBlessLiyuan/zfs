@@ -119,7 +119,7 @@
             $(".errorMsg").text("提现金额不能为空")
         }else if(parseFloat($("#importBalance").val())>parseFloat($("#balance").text())){
             $(".errorMsg").text("提现金额不能大于可用余额")
-        }else if($("#importBalance").val()<100){
+        }else if($("#importBalance").val()<0.01){
             $(".errorMsg").text("最低金额需达100元")
         }else if(Number.isInteger($("#importBalance").val()-0)==false){
             $(".errorMsg").text("提现金额需是整数")
