@@ -128,7 +128,6 @@
         }else if($("#Name").val()==""||$("#Name").val()==undefined){
             $(".errorMsg").text("支付宝姓名不能为空")
         }else{
-
             var  accountNum = $("#accountNum").val();
             var  Name = $("#Name").val();
             var money = $("#importBalance").val();
