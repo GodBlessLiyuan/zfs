@@ -175,7 +175,7 @@
     where inde_id = #{indeId,jdbcType=BIGINT}
   </update>
 
-  <select id="queryCountByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+  <select id="queryCountByUserId" parameterType="java.lang.Integer" resultType="java.lang.Long">
     select count(distinct invitee_id)
     from t_invite_detail
     where user_id = #{userId,jdbcType=BIGINT}

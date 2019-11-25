@@ -20,6 +20,6 @@ public class DetailsVO extends IncomeVO {
     public class Detail {
         private String ph;
         private Date ctime;
-        private Long earnings;
+        private Float earnings;
     }
 }

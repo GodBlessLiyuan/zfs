@@ -88,7 +88,7 @@ public class PayServiceImpl implements IPayService {
         RevenueUserPO revenueUserPO = revenueUserMapper.selectByPrimaryKey(inviteUserBO.getUserId());
         revenueUserPO.setTotalRevenue(revenueUserPO.getTotalRevenue() + earnings);
         revenueUserPO.setRemaining(revenueUserPO.getRemaining() + earnings);
-        revenueUserPO.setRegisterCount(inviteDetailMapper.queryCountByUserId(inviteUserBO.getUserId()));
+        revenueUserPO.setPayCount(inviteDetailMapper.queryCountByUserId(inviteUserBO.getUserId()));
         revenueUserMapper.updateByPrimaryKey(revenueUserPO);
     }
 
