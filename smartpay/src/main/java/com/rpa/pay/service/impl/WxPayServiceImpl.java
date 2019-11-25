@@ -91,7 +91,8 @@ public class WxPayServiceImpl implements IWxPayService {
         }
 
         if (!WxPayConstant.SUCCESS.equals(wxPayMap.get(WxPayConstant.RETURN_CODE))) {
-            return new ResultVO<>(2000, wxPayMap.get(WxPayConstant.RETURN_MSG));
+            logger.warn(wxPayMap.get(WxPayConstant.RETURN_MSG));
+            return new ResultVO<>(2000);
         }
 
         WxPayVO vo = new WxPayVO();
