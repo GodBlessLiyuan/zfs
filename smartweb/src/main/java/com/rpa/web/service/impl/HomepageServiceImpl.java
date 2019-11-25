@@ -4,6 +4,7 @@ import com.rpa.web.mapper.*;
 import com.rpa.web.service.HomepageService;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.Map;
  */
 @Service
 public class HomepageServiceImpl implements HomepageService {
+    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(HomepageServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -43,7 +45,6 @@ public class HomepageServiceImpl implements HomepageService {
      */
     @Override
     public ResultVO query() {
-
         String newRegister = null;
         String newUser = null;
         String dayActiveUser = null;
@@ -105,6 +106,7 @@ public class HomepageServiceImpl implements HomepageService {
         result.put("payCount", payCount);
         result.put("monthRevenue", monthRevenue);
 
+        logger.info("result: " + result.toString());
         return ResultVOUtil.success(result);
     }
 }
