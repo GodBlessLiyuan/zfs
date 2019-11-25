@@ -16,11 +16,11 @@ public class InviteDetailDTO implements Serializable {
 
     private String comTypeName;
 
-    private Long pay;
+    private Double pay;
 
-    private Long earnings;
+    private Double earnings;
 
-    private Byte proportion;
+    private String proportion;
 
     private Long inviteId;
 
@@ -66,27 +66,27 @@ public class InviteDetailDTO implements Serializable {
         this.comTypeName = comTypeName;
     }
 
-    public Long getPay() {
+    public Double getPay() {
         return pay;
     }
 
-    public void setPay(Long pay) {
+    public void setPay(Double pay) {
         this.pay = pay;
     }
 
-    public Long getEarnings() {
+    public Double getEarnings() {
         return earnings;
     }
 
-    public void setEarnings(Long earnings) {
+    public void setEarnings(Double earnings) {
         this.earnings = earnings;
     }
 
-    public Byte getProportion() {
+    public String getProportion() {
         return proportion;
     }
 
-    public void setProportion(Byte proportion) {
+    public void setProportion(String proportion) {
         this.proportion = proportion;
     }
 

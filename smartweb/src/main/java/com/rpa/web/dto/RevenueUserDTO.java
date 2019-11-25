@@ -15,13 +15,13 @@ public class RevenueUserDTO implements Serializable {
 
     private Long registerCount;
 
-    private Long totalRevenue;
+    private Double totalRevenue;
 
-    private Long withdraw;
+    private Double withdraw;
 
     private Integer withdrawTime;
 
-    private Long remaining;
+    private Double remaining;
 
     private String invitePhone;
 
@@ -61,19 +61,19 @@ public class RevenueUserDTO implements Serializable {
         this.registerCount = registerCount;
     }
 
-    public Long getTotalRevenue() {
+    public Double getTotalRevenue() {
         return totalRevenue;
     }
 
-    public void setTotalRevenue(Long totalRevenue) {
+    public void setTotalRevenue(Double totalRevenue) {
         this.totalRevenue = totalRevenue;
     }
 
-    public Long getWithdraw() {
+    public Double getWithdraw() {
         return withdraw;
     }
 
-    public void setWithdraw(Long withdraw) {
+    public void setWithdraw(Double withdraw) {
         this.withdraw = withdraw;
     }
 
@@ -85,11 +85,11 @@ public class RevenueUserDTO implements Serializable {
         this.withdrawTime = withdrawTime;
     }
 
-    public Long getRemaining() {
+    public Double getRemaining() {
         return remaining;
     }
 
-    public void setRemaining(Long remaining) {
+    public void setRemaining(Double remaining) {
         this.remaining = remaining;
     }
 

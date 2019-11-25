@@ -73,9 +73,9 @@ public class RevenueUserServiceImpl implements RevenueUserService {
                 dto.setInviteCount(po.getInviteCount());
                 dto.setRegisterCount(po.getRegisterCount());
                 dto.setPayCount(po.getPayCount());
-                dto.setTotalRevenue(po.getTotalRevenue());
-                dto.setRemaining(po.getRemaining());
-                dto.setWithdraw(po.getWithdraw());
+                dto.setTotalRevenue(po.getTotalRevenue()*0.01);
+                dto.setRemaining(po.getRemaining()*0.01);
+                dto.setWithdraw(po.getWithdraw()*0.01);
                 dto.setWithdrawTime(po.getWithdrawTime());
 
                 lists_DTO.add(dto);
@@ -122,7 +122,9 @@ public class RevenueUserServiceImpl implements RevenueUserService {
             dto.setInvitePhone(inviteUserDO.getInvitePhone());
             dto.setAcceptTime(inviteUserDO.getAcceptTime());
             dto.setRegisterTime(inviteUserDO.getRegisterTime());
-            dto.setEarnings(inviteUserDO.getEarnings());
+            if (null != inviteUserDO.getEarnings()) {
+                dto.setEarnings(inviteUserDO.getEarnings()*0.01);
+            }
 
             DTOs.add(dto);
         }
@@ -165,9 +167,10 @@ public class RevenueUserServiceImpl implements RevenueUserService {
             InviteDetailDTO dto = new InviteDetailDTO();
             dto.setPayTime(po.getPayTime());
             dto.setComTypeName(po.getComTypeName());
-            dto.setPay(po.getPay());
+            dto.setPay(po.getPay()*0.01);
             dto.setVipname(queryVipnameByVipid(po.getViptypeId()));
-            dto.setEarnings(po.getEarnings());
+            dto.setProportion(po.getProportion()+"%");
+            dto.setEarnings(po.getEarnings()*0.01);
 
             DTOs.add(dto);
         }
