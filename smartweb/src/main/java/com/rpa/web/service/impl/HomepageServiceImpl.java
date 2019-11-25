@@ -22,7 +22,6 @@ import java.util.Map;
  */
 @Service
 public class HomepageServiceImpl implements HomepageService {
-    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(HomepageServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -106,7 +105,6 @@ public class HomepageServiceImpl implements HomepageService {
         result.put("payCount", payCount);
         result.put("monthRevenue", monthRevenue);
 
-        logger.info("result: " + result.toString());
         return ResultVOUtil.success(result);
     }
 }
