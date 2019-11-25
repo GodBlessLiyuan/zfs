@@ -180,7 +180,7 @@
         }
 
         $('#datatab').DataTable({
-            "processing": true,
+            "processing": false,
             "serverSide": true,
             "searching": false, // 禁用全文搜索
             "ajax": "revenue/query/inviteduser/detail?userId=" + ${invitedUserId} + "&viptypeId=" + $('#status').val() +
