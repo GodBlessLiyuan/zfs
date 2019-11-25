@@ -23,7 +23,7 @@
         </div>
 
         <!--余额及提现 -->
-        <div class="my_state1 bg_color" >
+        <div class="my_state1 bg_color" style="box-shadow: 1px 1px 4px 4px #eeeeee;">
             <div class="">
                 <div class="total" style="font-size: 16px;color: #999999">
                     <b>我的余额</b>
@@ -36,20 +36,20 @@
                     </div>
                 </div>
                 <div style="width: 30%; height: 20px; float:right;margin-right: 15px">
-                    <a class="btn btn-primary " onclick="withdrawmoney()" style="border-radius: 20px; width:100%;background-color:#3496E8; vertical-align: center">提现</a>
+                    <a class="btn btn-primary " onclick="withdrawmoney()" style="border-radius: 20px; width:100%;background-color:#3496E8; color: #ffffff;vertical-align: center">提现</a>
                 </div>
             </div>
         </div>
 
         <!--帮你一步做推广，快速赚钱 -->
-        <div class="my_state2">
+        <div class="my_state2" style="box-shadow: 1px 1px 4px 4px #eeeeee;">
             <div class="rows">
                 <img class="bg_tuiguang" src="${basePath}/images/banner_extension.png" onclick="promotePage()">
             </div>
         </div>
 
-        <!--我的邀请 测试  -->
-       <div class="my_state">
+        <!--我的邀请 -->
+       <div class="my_state" style="box-shadow: 1px 1px 4px 4px #eeeeee;">
             <div class="invation_top">
                 <span class="font_inva">我的邀请</span>
                 <span class="span_right "><a  class="font_inva" style="text-decoration:none" onclick="details()">详情></a></span>
@@ -71,7 +71,7 @@
         </div>
 
         <!--奖励相关  -->
-        <div class="my_state">
+        <div class="my_state" style="box-shadow: 1px 1px 4px 4px #eeeeee;">
                 <div class="div_spacing">
                     <p class="font_reward padding_left" style="font-size: 15px;font-weight:bolder;margin-top:10px">如何获取奖励？</p>
                     <p class="font_reward padding_left" style="font-size: 13px">
