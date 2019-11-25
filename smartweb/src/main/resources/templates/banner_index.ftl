@@ -153,7 +153,7 @@
                             <input id="insert_banner_pic" class="form-control" type="file"/>
                         </div>
                         <div class="form-group">
-                            <span for="recipient-name" class="col-form-label">跳转：<span style="color: red"> *</span></span>
+                            <span for="recipient-name" class="col-form-label">跳转：</span>
                             <input id="insert_url" class="form-control" type="text"/>
                         </div>
                     </form>
@@ -270,9 +270,7 @@
             alert("名称不能为空！")
         }else if (picPath == null) {
             alert("banner图不能为空！")
-        }else if (url == null || url.trim() == "") {
-            alert("跳转不能为空！");
-        } else {
+        }else {
 
             $.ajax({
                 type: 'post',

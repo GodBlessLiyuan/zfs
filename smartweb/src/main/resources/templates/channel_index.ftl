@@ -70,7 +70,7 @@
                         <div class="card-body">
 
                             <button type="button" class="btn btn-primary" data-toggle='modal'
-                                    data-target='#insertModal' onclick="insertModal()">新增渠道
+                                    data-target='#insertModal' onclick="insertModal()">新增推广渠道
                             </button>
 
                             <hr>
@@ -78,7 +78,7 @@
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-md-2">
-                                            <label>渠道标识：</label>
+                                            <label>推广渠道标识：</label>
                                             <input id="chanNickname" type="text" class="form-control">
                                         </div>
                                         <div class="form-group col-md-2">
@@ -104,8 +104,8 @@
                                        style="table-layout: fixed; text-align: center; vertical-align: middle"><thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>渠道标识</th>
-                                        <th>渠道名称</th>
+                                        <th>推广渠道标识</th>
+                                        <th>推广渠道名称</th>
                                         <th>负责人</th>
                                         <th>联系电话</th>
                                         <th>备注</th>
@@ -263,8 +263,8 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "chanNickname"},
                 {"data": "chanName"},
+                {"data": "chanNickname"},
                 {"data": "proName"},
                 {"data": "phone"},
                 {"data": "extra"},
