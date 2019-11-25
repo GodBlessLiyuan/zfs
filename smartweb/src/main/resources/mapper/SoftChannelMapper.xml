@@ -104,4 +104,8 @@
         <include refid="Base_Column_List"/>
         from t_soft_channel order by soft_channel_id asc
     </select>
+    <select id="queryNameById" resultType="java.lang.String">
+        select name
+        from t_soft_channel where soft_channel_id = #{softChannelId}
+    </select>
 </mapper>

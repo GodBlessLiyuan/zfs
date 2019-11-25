@@ -1,6 +1,7 @@
 package com.rpa.server.service;
 
 import com.rpa.server.common.ResultVO;
+import com.rpa.server.dto.AdconfigDTO;
 
 /**
  * @author: dangyi
@@ -9,5 +10,5 @@ import com.rpa.server.common.ResultVO;
  * @description:
  */
 public interface AdconfigServcie {
-    ResultVO query();
+    ResultVO query(AdconfigDTO dto);
 }

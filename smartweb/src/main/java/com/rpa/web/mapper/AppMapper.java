@@ -25,4 +25,6 @@ public interface AppMapper extends BaseDAO<AppPO, Integer> {
      * @return
      */
     AppPO queryByVersionCode(Object versionCode);
+
+    List<Integer> queryVersioncodes();
 }

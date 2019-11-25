@@ -7,9 +7,7 @@ import com.rpa.web.dto.AdconfigDTO;
 import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
-import com.rpa.web.mapper.AdconfigMapper;
-import com.rpa.web.mapper.AdminUserMapper;
-import com.rpa.web.mapper.KeyValueMapper;
+import com.rpa.web.mapper.*;
 import com.rpa.web.pojo.AdconfigPO;
 import com.rpa.web.pojo.KeyValuePO;
 import com.rpa.web.service.AdconfigService;
@@ -17,6 +15,7 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -43,6 +42,19 @@ public class AdconfigServiceImpl implements AdconfigService {
 
     @Autowired
     private AdminUserMapper adminUserMapper;
+
+    @Autowired
+    private AdChannelMapper adChannelMapper;
+
+    @Autowired
+    private AppMapper appMapper;
+
+    @Autowired
+    private SoftChannelMapper softChannelMapper;
+
+    @Autowired
+    private StringRedisTemplate template;
+
     /**
      * 查询
      *
@@ -144,7 +156,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         // 把adconfigDTO 转换为 adconfigPO
         AdconfigPO po = new AdconfigPO();
         po.setAdNumber(dto.getAdNumber());
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
         po.setName(dto.getName());
         po.setContacts(dto.getContacts());
         po.setPhone(dto.getPhone());
@@ -190,6 +202,19 @@ public class AdconfigServiceImpl implements AdconfigService {
         adconfigPO.setaId(aId);
 
         int count = adconfigMapper.updateByPrimaryKey(adconfigPO);
+
+        //更新广告配置后，删除Redis
+        List<Integer> softChannelIds = this.adChannelMapper.querySoftChannelIdsByAdId(adconfigDTO.getAdId());
+        List<Integer> versioncodes = this.appMapper.queryVersioncodes();
+        for (Integer softChannelId : softChannelIds) {
+            String name = this.softChannelMapper.queryNameById(softChannelId);
+            for (Integer versioncode : versioncodes) {
+                String key = name + versioncode;
+                if (template.hasKey(key)) {
+                    template.delete(key);
+                }
+            }
+        }
 
         if (count == 1) {
             return ResultVOUtil.success();
