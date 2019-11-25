@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <!--帮你一步做推广，快速赚钱 -->
+        <!--帮你一步做推广，快速赚钱 -->s
         <div class="my_state2" style="box-shadow: 1px 1px 4px 4px #eeeeee;">
             <div class="rows">
                 <img class="bg_tuiguang" src="${basePath}/images/banner_extension.png" onclick="promotePage()">
