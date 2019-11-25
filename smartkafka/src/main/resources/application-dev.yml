@@ -24,7 +24,7 @@ spring:
 eureka:
   client:
     service-url:
-      default-zone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
 logging:
   path: /data/ftp/smartftp/log
