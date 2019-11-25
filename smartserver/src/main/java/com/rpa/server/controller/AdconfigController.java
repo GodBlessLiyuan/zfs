@@ -29,6 +29,6 @@ public class AdconfigController {
             return new ResultVO(2000);
         }
 
-        return this.adconfigServcie.query();
+        return this.adconfigServcie.query(dto);
     }
 }

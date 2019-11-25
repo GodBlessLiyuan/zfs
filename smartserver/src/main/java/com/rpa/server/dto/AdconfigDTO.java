@@ -1,6 +1,7 @@
 package com.rpa.server.dto;
 
 import com.rpa.server.dto.base.VerifyDTO;
+import lombok.Data;
 
 /**
  * @author: dangyi
@@ -8,6 +9,7 @@ import com.rpa.server.dto.base.VerifyDTO;
  * @version: 1.0.0
  * @description:
  */
+@Data
 public class AdconfigDTO extends VerifyDTO {
     /**
      * 应用版本

@@ -248,4 +248,9 @@
         order by app_id
         limit 1
     </select>
+
+    <select id="queryVersioncodes" parameterType="java.lang.Integer">
+        select distinct versioncode
+        from t_app
+    </select>
 </mapper>

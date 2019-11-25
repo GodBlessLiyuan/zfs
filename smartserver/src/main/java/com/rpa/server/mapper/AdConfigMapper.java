@@ -10,5 +10,5 @@ import java.util.List;
  */
 @Mapper
 public interface AdConfigMapper extends BaseMapper<AdConfigPO, Integer> {
-    List<AdConfigPO> query();
+    List<AdConfigPO> query(List<Integer> adIds);
 }

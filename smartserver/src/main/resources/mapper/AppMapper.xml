@@ -219,4 +219,10 @@
     order by a.versioncode desc
     limit 1
   </select>
+
+  <select id="queryIdByVersioncode" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select app_id as appId
+    from t_app
+    where versioncode = #{softv} and dr = 1;
+  </select>
 </mapper>

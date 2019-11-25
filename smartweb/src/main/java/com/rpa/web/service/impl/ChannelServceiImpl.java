@@ -146,7 +146,7 @@ public class ChannelServceiImpl implements ChannelService {
         po.setDr((byte)1);
         po.setCreateTime(new Date());
         po.setUpdateTime(new Date());
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
 
         int count = this.channelMapper.insert(po);
         return count ==1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);

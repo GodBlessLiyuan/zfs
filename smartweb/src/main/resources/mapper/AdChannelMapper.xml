@@ -110,4 +110,10 @@
             </if>
         </trim>
     </insert>
+
+    <select id="querySoftChannelIdsByAdId" resultType="java.lang.Integer">
+        select distinct ac.soft_channel_id
+        from t_ad_channel
+        where ad_id = #{adId} and dr = 1
+    </select>
 </mapper>

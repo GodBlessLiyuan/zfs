@@ -8,6 +8,7 @@ import com.rpa.web.dto.AppDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.AdChannelMapper;
 import com.rpa.web.mapper.AppMapper;
+import com.rpa.web.mapper.SoftChannelMapper;
 import com.rpa.web.pojo.AdChannelPO;
 import com.rpa.web.pojo.AppPO;
 import com.rpa.web.service.AdChannelService;
@@ -15,6 +16,7 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +43,12 @@ public class AdChannelServiceImpl implements AdChannelService {
 
     @Autowired
     private AppMapper appMapper;
+
+    @Autowired
+    private SoftChannelMapper softChannelMapper;
+
+    @Autowired
+    private StringRedisTemplate template;
 
     /**
      * 查询
@@ -145,7 +153,7 @@ public class AdChannelServiceImpl implements AdChannelService {
 
 
     /**
-     * 修改
+     * 修改：开/关广告渠道
      * @param list
      * @return
      */
@@ -172,6 +180,17 @@ public class AdChannelServiceImpl implements AdChannelService {
             po.setUpdateTime(new Date());
 
             this.adChannelMapper.update(po);
+
+
+            //修改了广告开放渠道后，删除Redis
+            String name = this.softChannelMapper.queryNameById(dto.getSoftChannelId());
+            List<Integer> versioncodes = this.appMapper.queryVersioncodes();
+            for (Integer versioncode : versioncodes) {
+                String key = name + versioncode;
+                if (template.hasKey(key)) {
+                    this.template.delete(key);
+                }
+            }
         }
 
         return ResultVOUtil.success();
