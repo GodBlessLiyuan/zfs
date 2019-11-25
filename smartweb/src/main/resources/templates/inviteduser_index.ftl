@@ -173,6 +173,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "searching": false, // 禁用全文搜索
             "ajax": "revenue/query/inviteduser?userId=" + ${userId} + "&invitePhone=" + $('#invitePhone').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {

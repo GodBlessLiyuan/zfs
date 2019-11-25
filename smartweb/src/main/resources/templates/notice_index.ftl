@@ -449,6 +449,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "searching": false, // 禁用全文搜索
             "ajax": "notice/query?startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val() +
                 "&status=" + $('#status').val() + "&type=" + $('#notice_type').val() + "&title=" + $('#title').val(),
             "fnDrawCallback": function () {
