@@ -1,14 +1,12 @@
 package com.rpa.datav.controller;
 
-import com.rpa.datav.constant.CommonConstant;
+import com.rpa.datav.constant.ZJCommonConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Random;
 
 /**
  * @author: xiahui
@@ -21,6 +19,7 @@ import java.util.Random;
 public class ZJDatavController {
 
     private final static Logger logger = LoggerFactory.getLogger(DatavController.class);
+
     @GetMapping("zjinfonumber")
     public String userNumber(@RequestParam String id) {
         try {
@@ -29,19 +28,18 @@ public class ZJDatavController {
                 return ZJCommonConstant.zjuserNumber1;
             } else if (num == 2) {
                 return ZJCommonConstant.zjuvipNumber2;
-            }else if (num == 3){
+            } else if (num == 3) {
                 return ZJCommonConstant.zjhuoyueNumber3;
-            }else if (num == 4){
+            } else if (num == 4) {
                 return ZJCommonConstant.zjtotalhourNumber4;
-            }else if (num == 5){
+            } else if (num == 5) {
                 return ZJCommonConstant.zjpinciNumber5;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return ZJCommonConstant.zjuserNumber1;
         }
         return null;
     }
-
 
 
 }
