@@ -13,5 +13,5 @@ public interface InviteDetailMapper extends BaseMapper<InviteDetailPO, Long> {
      * @param userId
      * @return
      */
-    Long queryCountByUserId(Long userId);
+    Integer queryCountByUserId(Long userId);
 }

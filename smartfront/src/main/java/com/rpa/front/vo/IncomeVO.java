@@ -31,5 +31,5 @@ public class IncomeVO implements Serializable {
     /**
      * 累计奖励
      */
-    private long totalmny;
+    private float totalmny;
 }

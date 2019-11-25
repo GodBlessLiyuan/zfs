@@ -160,7 +160,7 @@ public class IncomeServiceImpl implements IIncomeService {
         vo.setBalance(po.getRemaining());
         vo.setInvitenum(po.getInviteCount());
         vo.setPaynum(po.getPayCount());
-        vo.setTotalmny(po.getTotalRevenue());
+        vo.setTotalmny(po.getTotalRevenue() / 100f);
 
         List<InviteUserBO> bos = inviteUserMapper.queryByUserId(loginInfo.getUd());
         List<DetailsVO.Detail> details = new ArrayList<>();
@@ -170,7 +170,7 @@ public class IncomeServiceImpl implements IIncomeService {
             StringBuilder sb = new StringBuilder(bo.getInvitePhone());
             detail.setPh(sb.replace(3, 7, "****").toString());
             detail.setCtime(bo.getCreateTime());
-            detail.setEarnings(bo.getEarnings());
+            detail.setEarnings(bo.getEarnings() / 100f);
             details.add(detail);
         }
         vo.setDetails(details);
