@@ -18,7 +18,7 @@ import java.util.Random;
  */
 @RequestMapping("zjdatav")
 @RestController
-public class DatavController {
+public class ZJDatavController {
 
     private final static Logger logger = LoggerFactory.getLogger(DatavController.class);
     @GetMapping("zjinfonumber")
