@@ -98,7 +98,7 @@ public class DatavController {
 
         long diff = System.currentTimeMillis()-lastTime1;
         if(diff>=6*1000){
-            lastTime = System.currentTimeMillis();
+            lastTime1 = System.currentTimeMillis();
             vip_num = random.nextInt(3) + vip_num;
             return String.format("[\n" +
                     "{\n" +
@@ -123,7 +123,7 @@ public class DatavController {
 
         long diff = System.currentTimeMillis()-lastTime2;
         if(diff>=6*1000){
-            lastTime = System.currentTimeMillis();
+            lastTime2 = System.currentTimeMillis();
             new_add_num = random.nextInt(3) + new_add_num;
             return String.format("[\n" +
                     "{\n" +
@@ -148,7 +148,7 @@ public class DatavController {
 
         long diff = System.currentTimeMillis()-lastTime3;
         if(diff>=6*1000){
-            lastTime = System.currentTimeMillis();
+            lastTime3 = System.currentTimeMillis();
             huoyue_num = random.nextInt(3) + huoyue_num;
             return String.format("[\n" +
                     "{\n" +
@@ -173,7 +173,7 @@ public class DatavController {
 
         long diff = System.currentTimeMillis()-lastTime4;
         if(diff>=6*1000){
-            lastTime = System.currentTimeMillis();
+            lastTime4 = System.currentTimeMillis();
             total_pinci = random.nextInt(50) + total_pinci;
             return String.format("[\n" +
                     "{\n" +
@@ -198,7 +198,7 @@ public class DatavController {
 
         long diff = System.currentTimeMillis()-lastTime5;
         if(diff>=6*1000){
-            lastTime = System.currentTimeMillis();
+            lastTime5 = System.currentTimeMillis();
             totalhour_num = random.nextInt(20) + totalhour_num;
             return String.format("[\n" +
                     "{\n" +
