@@ -26,7 +26,7 @@ public class InviteUserDO extends InviteUserPO {
 
     private Date registerTime;
 
-    private String earnings;
+    private Double earnings;
 
     private static final long serialVersionUID = 1L;
 
@@ -94,11 +94,11 @@ public class InviteUserDO extends InviteUserPO {
         this.registerTime = registerTime;
     }
 
-    public String getEarnings() {
+    public Double getEarnings() {
         return earnings;
     }
 
-    public void setEarnings(String earnings) {
+    public void setEarnings(Double earnings) {
         this.earnings = earnings;
     }
 

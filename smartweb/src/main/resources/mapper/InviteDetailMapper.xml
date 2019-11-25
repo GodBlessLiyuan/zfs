@@ -31,7 +31,7 @@
     <include refid="Base_Column_List" />
     from t_invite_detail
     where invitee_id = #{userId}
-    <if test="viptypeId != null">
+    <if test="viptypeId != null and viptypeId != 0">
       AND viptype_id = #{viptypeId}
     </if>
     <if test="(startTime != null and startTime != '') and (endTime != null and endTime != '')">
