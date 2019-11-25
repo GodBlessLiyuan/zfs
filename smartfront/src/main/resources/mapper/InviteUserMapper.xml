@@ -105,9 +105,10 @@
   </update>
 
   <select id="queryByUserId" parameterType="java.lang.Long" resultType="com.rpa.front.bo.InviteUserBO">
-    select iu.invite_phone as invitePhone, iu.create_time as createTime, sum(id.earnings) as earnings
+    select iu.invite_phone as invitePhone, u.create_time as createTime, sum(id.earnings) as earnings
     from t_invite_user iu
     left join t_invite_detail id on iu.invite_id = id.invite_id
+    left join t_user u on iu.invite_phone = u.phone
     where iu.user_id = #{userId,jdbcType=BIGINT}
     group by iu.invite_id
   </select>
