@@ -30,6 +30,9 @@ public class UserVipServiceImpl implements IUserVipService {
     @Override
     public ResultVO validate(UserVipDTO dto) {
         UserDevicePO userDevicePO = userDeviceMapper.selectByPrimaryKey(dto.getUdd());
+        if (null == userDevicePO) {
+            return new ResultVO(2000);
+        }
         if (CommonConstant.SIGN_OUT == userDevicePO.getStatus()) {
             // 登出
             return new ResultVO(1012);
