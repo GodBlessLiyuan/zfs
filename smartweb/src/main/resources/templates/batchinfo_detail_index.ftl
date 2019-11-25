@@ -189,7 +189,7 @@
         }
 
         $('#datatab').DataTable({
-            "processing": true,
+            "processing": false,
             "serverSide": true,
             "searching": false, // 禁用全文搜索
             "ajax": "batchinfo/queryByBatchid?batchId=" + ${batchId} + "&status=" + $('#status').val(),

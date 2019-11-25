@@ -388,7 +388,7 @@
         }
 
         $('#datatab').DataTable({
-            "processing": true,
+            "processing": false,
             "serverSide": true,
             "searching": false, // 禁用全文搜索
             "ajax": "chbatch/query?chanNickname=" + $('#chanNickname').val() + "&comTypeId=" + $('#comTypeId').val()

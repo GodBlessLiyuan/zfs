@@ -203,7 +203,7 @@
         }
 
         $('#datatab').DataTable({
-            "processing": true,
+            "processing": false,
             "serverSide": true,
             "searching": false, // 禁用全文搜索
             "ajax": "adchannel/query?adId=" + ${adId} + "&name=" + $('#channel').val() + "&appId=" + $('#versionname').val(),

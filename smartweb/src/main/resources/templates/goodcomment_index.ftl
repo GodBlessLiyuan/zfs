@@ -206,7 +206,7 @@
         }
 
         $('#datatab').DataTable({
-            "processing": true,
+            "processing": false,
             "serverSide": true,
             "searching": false, // 禁用全文搜索
             "ajax": "goodcomment/query?phone=" + $('#phone').val(),
