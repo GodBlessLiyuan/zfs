@@ -227,11 +227,12 @@
      * 携带两个参数：邀请人的userId（用于返回本页面）和被邀请人的userId（用于页面详情查询）
      */
     function detailModal(invitedUserId) {
-        var inviteUserId = ${userId}
-        if (null === inviteUserId || null === invitedUserId) {
+        if (null === ${userId}) {
             alert("出了些问题，无法跳转，请联系工程师！");
+        }else if (null === invitedUserId) {
+            alert("被邀请人尚未注册，无法查看！")
         }else {
-            window.location.href = 'inviteduser/detail?inviteUserId='+ inviteUserId +'&invitedUserId='+ invitedUserId;
+            window.location.href = 'inviteduser/detail?inviteUserId='+ ${userId} +'&invitedUserId='+ invitedUserId;
         }
     }
 </script>
