@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationAdapter;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
@@ -131,6 +133,16 @@ public class LoginServiceImpl implements ILoginService {
                 UserVipPO userVipPO = UserVipUtil.buildUserVipVO(null, po.getUserId(), days + godDays, false);
                 userVipMapper.insert(userVipPO);
             }
+
+            // 事务提交完成后，发送消息
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+                                                                          @Override
+                                                                          public void afterCommit() {
+                                                                              // RabbitMQ
+                                                                              template.convertAndSend("register", dto.getPh());
+                                                                          }
+                                                                      }
+            );
 
             return this.buildResultVO(userDevPO, gift, days);
         }

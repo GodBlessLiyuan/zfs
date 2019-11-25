@@ -17,7 +17,7 @@ import java.util.Map;
 public class RabbitComponent {
 
     @Autowired
-    private IPayService service;
+    private IIncomeService service;
 
     @Autowired
     private DeviceStatisticsService deviceStatisticsService;
@@ -36,6 +36,17 @@ public class RabbitComponent {
     @RabbitListener(queues = "pay-notify")
     public void wxPayNotify(String orderNumber) {
         service.payNotify(orderNumber);
+    }
+
+
+    /**
+     * 微信支付确认通知
+     *
+     * @param phone 注册手机号
+     */
+    @RabbitListener(queues = "register")
+    public void register(String phone) {
+        service.register(phone);
     }
 
 

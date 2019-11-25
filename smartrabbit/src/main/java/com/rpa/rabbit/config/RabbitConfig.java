@@ -18,6 +18,10 @@ public class RabbitConfig {
         return new Queue("pay-notify");
     }
 
+    @Bean
+    public Queue register() {
+        return new Queue("register");
+    }
 
     /**
      * @author: dangyi
