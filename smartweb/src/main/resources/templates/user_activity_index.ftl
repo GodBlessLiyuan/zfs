@@ -170,6 +170,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "searching": false, // 禁用全文搜索
             "ordering": false, // 禁用排序
             "ajax": "useractivity/query?phone=" + $('#phone').val(),
             "fnDrawCallback": function () {

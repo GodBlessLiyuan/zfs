@@ -205,6 +205,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "searching": false, // 禁用全文搜索
             "ajax": "adchannel/query?adId=" + ${adId} + "&name=" + $('#channel').val() + "&appId=" + $('#versionname').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {

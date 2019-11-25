@@ -215,6 +215,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "searching": false, // 禁用全文搜索
             "ajax": "feedback/query?startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val() +
                 "&userId=" + $('#userId').val() + "&contact=" + $('#contact').val(),
             "fnDrawCallback": function () {

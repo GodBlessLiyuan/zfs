@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="./images/logo.png"  />
+    <link rel="icon" type="image/x-icon" href="./images/logo.png"/>
     <title>智能移动社交营销平台管理系统</title>
     <!-- Favicon icon -->
 
@@ -92,8 +92,9 @@
 
                             <hr>
                             <div class="table-responsive">
-                                   <table id="datatab" class="table table-striped table-bordered zero-configuration"
-                                       style="table-layout: fixed; text-align: center; vertical-align: middle"><thead>
+                                <table id="datatab" class="table table-striped table-bordered zero-configuration"
+                                       style="table-layout: fixed; text-align: center; vertical-align: middle">
+                                    <thead>
                                     <tr>
                                         <th>序号</th>
                                         <th>产品类型</th>
@@ -203,6 +204,8 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "searching": false, // 禁用全文搜索
+            "searching": false, // 禁用全文搜索
             "ordering": false, // 禁用排序
             "ajax": "comtype/query?username=" + $('#username').val(),
             "fnDrawCallback": function () {

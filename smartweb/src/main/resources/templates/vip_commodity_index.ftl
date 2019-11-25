@@ -363,6 +363,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "searching": false, // 禁用全文搜索
             "ordering": false, // 禁用排序
             "ajax": "vipcommodity/query?username=" + $('#username').val() + "&comTypeId=" + $('#comTypeId').val() +
                 "&channelId=" + $('#channelId').val(),

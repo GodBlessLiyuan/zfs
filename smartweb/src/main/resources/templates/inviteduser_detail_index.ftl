@@ -182,6 +182,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "searching": false, // 禁用全文搜索
             "ajax": "revenue/query/inviteduser/detail?userId=" + ${invitedUserId} + "&viptypeId=" + $('#status').val() +
                 "&startTime=" + $('#startTime').val() + "&endTime=" + $('#endTime').val(),
             "fnDrawCallback": function () {

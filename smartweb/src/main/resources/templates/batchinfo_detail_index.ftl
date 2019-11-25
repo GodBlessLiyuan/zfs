@@ -191,6 +191,7 @@
         $('#datatab').DataTable({
             "processing": true,
             "serverSide": true,
+            "searching": false, // 禁用全文搜索
             "ajax": "batchinfo/queryByBatchid?batchId=" + ${batchId} + "&status=" + $('#status').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
