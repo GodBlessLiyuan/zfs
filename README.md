@@ -68,13 +68,6 @@ cp /data/local/repo/com/rpa/smartzuul/1.0/smartzuul-1.0.jar /data/project/bin
 ps -ef | grep smartzuul | grep -v grep | awk '{print $2}' | xargs kill -9 | sleep 1
 nohup java -Xms128m -Xmx512m  -Dloader.path=/data/project/zuulib -jar /data/project/bin/smartzuul-1.0.jar --spring.profiles.active=dev >/data/project/logs/smartzuul.log 2>&1 &
 
-
-rm -rf /data/project/bin/smartkafka-1.0.jar
-cp /data/local/repo/com/rpa/smartkafka/1.0/smartkafka-1.0.jar /data/project/bin
-ps -ef | grep smartkafka | grep -v grep | awk '{print $2}' | xargs kill -9 | sleep 1
-nohup java -Xms128m -Xmx512m  -Dloader.path=/data/project/lib -jar /data/project/bin/smartkafka-1.0.jar --spring.profiles.active=dev >/data/project/logs/smartkafka.log 2>&1 &
-
-
 nohup mvn spring-boot:run -Dspring-boot.run.profiles=dev &
 
 

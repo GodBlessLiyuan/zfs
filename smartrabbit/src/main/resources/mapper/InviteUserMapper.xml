@@ -111,4 +111,10 @@
     left join t_user_vip uv on iu.user_id = uv.user_id
     where u.user_id = #{inviteeId, jdbcType=BIGINT}
   </select>
+
+  <select id="queryByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_invite_user
+    where invite_phone = #{phone,jdbcType=CHAR}
+  </select>
 </mapper>

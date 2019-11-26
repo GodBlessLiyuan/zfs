@@ -19,7 +19,7 @@ public class IncomeVO implements Serializable {
     /**
      * 余额
      */
-    private long balance;
+    private float balance;
     /**
      * 成功邀请
      */

@@ -8,8 +8,9 @@ import com.rpa.rabbit.mapper.InviteUserMapper;
 import com.rpa.rabbit.mapper.OrderMapper;
 import com.rpa.rabbit.mapper.RevenueUserMapper;
 import com.rpa.rabbit.pojo.InviteDetailPO;
+import com.rpa.rabbit.pojo.InviteUserPO;
 import com.rpa.rabbit.pojo.RevenueUserPO;
-import com.rpa.rabbit.service.IPayService;
+import com.rpa.rabbit.service.IIncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -18,18 +19,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author: xiahui
  * @date: Created in 2019/11/8 18:23
- * @description: 支付服务
+ * @description: 爱收益
  * @version: 1.0
  */
 @EnableTransactionManagement
 @Service
-public class PayServiceImpl implements IPayService {
+public class IncomeServiceImpl implements IIncomeService {
     @Resource
     private OrderMapper orderMapper;
     @Resource
@@ -64,7 +68,7 @@ public class PayServiceImpl implements IPayService {
         }
         long earnings = orderBO.getPay() * proportion / 100;
 
-        if(earnings == 0) {
+        if (earnings == 0) {
             // 无收益
             return;
         }
@@ -92,6 +96,22 @@ public class PayServiceImpl implements IPayService {
         revenueUserMapper.updateByPrimaryKey(revenueUserPO);
     }
 
+    @Override
+    public void register(String phone) {
+        List<InviteUserPO> inviteUserPOs = inviteUserMapper.queryByPhone(phone);
+        if (null == inviteUserPOs || inviteUserPOs.size() != 1) {
+            return;
+        }
+
+        RevenueUserPO revenueUserPO = revenueUserMapper.selectByPrimaryKey(inviteUserPOs.get(0).getUserId());
+        if (null == revenueUserPO) {
+            return;
+        }
+
+        // 注册数 +1
+        revenueUserPO.setRegisterCount(revenueUserPO.getRegisterCount() + 1);
+        revenueUserMapper.updateByPrimaryKey(revenueUserPO);
+    }
 
     /**
      * @author: dangyi
@@ -107,9 +127,9 @@ public class PayServiceImpl implements IPayService {
 
         // 将统计结果封装成map
         Map<String, String> revenue = new HashMap();
-        revenue.put("dayRevenue", String.valueOf(dayRevenue*0.01));
+        revenue.put("dayRevenue", String.valueOf(dayRevenue * 0.01));
         revenue.put("payCount", String.valueOf(payCount));
-        revenue.put("monthRevenue", String.valueOf(monthRevenue*0.01));
+        revenue.put("monthRevenue", String.valueOf(monthRevenue * 0.01));
         this.template.opsForHash().putAll("revenue" + current_date, revenue);
         this.template.expire("revenue" + current_date, 25, TimeUnit.HOURS);
     }
