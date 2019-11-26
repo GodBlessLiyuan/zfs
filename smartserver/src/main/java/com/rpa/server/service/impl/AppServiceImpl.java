@@ -74,7 +74,9 @@ public class AppServiceImpl implements IAppService {
 
         mqForDeviceInfo(dto, req);
 
-        cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
+        if (status == 2) {
+            cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
+        }
         return new ResultVO<>(1009, vo);
     }
 
