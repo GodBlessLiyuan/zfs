@@ -17,6 +17,7 @@ import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 
@@ -180,7 +181,7 @@ public class AdconfigServiceImpl implements AdconfigService {
     }
 
     /**
-     * 修改
+     * 修改广告配置信息
      *
      * @param adconfigDTO
      * @param httpSession
@@ -208,18 +209,8 @@ public class AdconfigServiceImpl implements AdconfigService {
 
         int count = adconfigMapper.updateByPrimaryKey(adconfigPO);
 
-        //更新广告配置后，删除Redis
-        List<Integer> softChannelIds = this.adChannelMapper.querySoftChannelIdsByAdId(adconfigDTO.getAdId());
-        List<Integer> versioncodes = this.appMapper.queryVersioncodes();
-        for (Integer softChannelId : softChannelIds) {
-            String name = this.softChannelMapper.queryNameById(softChannelId);
-            for (Integer versioncode : versioncodes) {
-                String key = name + versioncode;
-                if (template.hasKey(key)) {
-                    template.delete(key);
-                }
-            }
-        }
+        //删除Redis
+        this.deleteRedis(adconfigDTO.getAdId());
 
         if (count == 1) {
             return ResultVOUtil.success();
@@ -235,6 +226,7 @@ public class AdconfigServiceImpl implements AdconfigService {
      * @param httpSession
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO updateStatus(Integer adId, Byte status, HttpSession httpSession) {
 
@@ -253,6 +245,12 @@ public class AdconfigServiceImpl implements AdconfigService {
         po.setStatus(status);
         po.setUpdateTime(new Date());
         po.setaId(aId);
+
+        //修改中间表t_ad_channel表中当前ad_id数据的状态值
+        this.adChannelMapper.update2(adId, status);
+
+        //删除Redis
+        this.deleteRedis(adId);
 
         int count = this.adconfigMapper.updateByPrimaryKey(po);
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
@@ -278,6 +276,10 @@ public class AdconfigServiceImpl implements AdconfigService {
             return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
         }
         int count = this.keyValueMapper.updateByPrimaryKey(po);
+
+        //删除Redis
+        this.deleteRedis();
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
 
@@ -295,6 +297,10 @@ public class AdconfigServiceImpl implements AdconfigService {
         if (count == 1) {
             return ResultVOUtil.success();
         }
+
+        //删除Redis
+        this.deleteRedis(adId);
+
         return ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
     }
 
@@ -307,5 +313,39 @@ public class AdconfigServiceImpl implements AdconfigService {
      */
     private String queryUsernameByAid(Integer aId) {
         return this.adminUserMapper.queryUsernameByAid(aId);
+    }
+
+
+    /**
+     * 删除Redis，根据广告ID
+     */
+    private void deleteRedis(Integer adId) {
+        List<Integer> softChannelIds = this.adChannelMapper.querySoftChannelIdsByAdId(adId);
+        List<Integer> versioncodes = this.appMapper.queryVersioncodes();
+        for (Integer softChannelId : softChannelIds) {
+            String name = this.softChannelMapper.queryNameById(softChannelId);
+            for (Integer versioncode : versioncodes) {
+                String key = "smarthelper" + "adconfig" + name + versioncode;
+                if (template.hasKey(key)) {
+                    template.delete(key);
+                }
+            }
+        }
+    }
+
+    /**
+     * 删除Redis，所有的
+     */
+    private void deleteRedis(){
+        List<String> names = this.softChannelMapper.queryNames();
+        List<Integer> versioncodes = this.appMapper.queryVersioncodes();
+        for (String name : names) {
+            for (Integer versioncode : versioncodes) {
+                String key = "smarthelper" + "adconfig" + name + versioncode;
+                if (template.hasKey(key)) {
+                    template.delete(key);
+                }
+            }
+        }
     }
 }
