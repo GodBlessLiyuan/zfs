@@ -25,6 +25,7 @@
         <module>smarteureka</module>
         <module>smartzuul</module>
         <module>smartkafka</module>
+        <module>smartdatav</module>
         <module>smartfront</module>
         <module>smartpay</module>
         <module>smartcache</module>

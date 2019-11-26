@@ -64,26 +64,25 @@ public class DatavController {
     }
 
     @GetMapping("zjinfonumber")
-    public String userNumber(@RequestParam String id) {
+    public String zjuserNumber(@RequestParam String id) {
         try {
             int num = Integer.valueOf(id);
             if (num == 8) {
-                return ZJCommonConstant.zjuserNumber1;
+                return CommonConstant.zjuserNumber1;
             } else if (num == 9) {
-                return ZJCommonConstant.zjuvipNumber2;.
+                return CommonConstant.zjvipNumber2;.
             } else if (num == 10) {
-                return ZJCommonConstant.zjhuoyueNumber3;
+                return CommonConstant.zjhuoyueNumber3;
             } else if (num == 11) {
-                return ZJCommonConstant.zjtotalhourNumber4;
+                return CommonConstant.zjtotalhourNumber4;
             } else if (num == 12) {
-                return ZJCommonConstant.zjpinciNumber5;
+                return CommonConstant.zjpinciNumber5;
             }
         } catch (Exception e) {
-            return ZJCommonConstant.zjuserNumber1;
+            return CommonConstant.zjuserNumber1;
         }
         return null;
     }
-
 
     Random random = new Random();
 
