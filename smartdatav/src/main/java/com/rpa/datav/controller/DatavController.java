@@ -70,7 +70,7 @@ public class DatavController {
             if (num == 8) {
                 return CommonConstant.zjuserNumber1;
             } else if (num == 9) {
-                return CommonConstant.zjvipNumber2;.
+                return CommonConstant.zjvipNumber2;
             } else if (num == 10) {
                 return CommonConstant.zjhuoyueNumber3;
             } else if (num == 11) {
