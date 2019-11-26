@@ -119,7 +119,7 @@
             $(".errorMsg").text("提现金额不能为空")
         }else if(parseFloat($("#importBalance").val())>parseFloat($("#balance").text())){
             $(".errorMsg").text("提现金额不能大于可用余额")
-        }else if($("#importBalance").val()<0.01){
+        }else if($("#importBalance").val()<100){
             $(".errorMsg").text("最低金额需达100元")
         }else if(Number.isInteger($("#importBalance").val()-0)==false){
             $(".errorMsg").text("提现金额需是整数")
@@ -175,7 +175,7 @@
                         "display":"block"
                     });
                     $("html,body").css({"height":"100%","overflow":"hidden"});
-                } else if ('0001' == res["statuscode"]) {
+                } else if ('1001' == res["statuscode"]) {
 
                     closeBox();
                     $(".box-text2").text("已有提现订单，请勿重复申请");
