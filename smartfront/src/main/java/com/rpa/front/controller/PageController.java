@@ -17,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author: xiahui
@@ -81,17 +82,20 @@ public class PageController {
 
     @GetMapping("details")
     public String details(ModelMap map, HttpServletRequest req) {
-        IncomeDTO loginInfo = (IncomeDTO) req.getSession().getAttribute(IncomeConstant.INCOME_SESSION);
 
-        logger.info(loginInfo == null ? null : loginInfo.toString());
+        HttpSession session = req.getSession();
+        if (session != null) {
+            IncomeDTO loginInfo = (IncomeDTO) session.getAttribute(IncomeConstant.INCOME_SESSION);
 
-        if (null == loginInfo) {
-            map.put(IncomeConstant.INCOME_RESULT, new ResultVO<>(ErrorCode.SESSION_TIMEOUT));
-            return "invitation_details_index";
+            if (null == loginInfo) {
+                map.put(IncomeConstant.INCOME_RESULT, new ResultVO<>(ErrorCode.SESSION_TIMEOUT));
+                return "invitation_details_index";
+            }
+            ResultVO vo = service.queryDetails(loginInfo);
+            if (null != vo) {
+                map.put(IncomeConstant.INCOME_RESULT, vo);
+            }
         }
-
-        ResultVO vo = service.queryDetails(loginInfo);
-        map.put(IncomeConstant.INCOME_RESULT, vo);
 
         return "invitation_details_index";
     }

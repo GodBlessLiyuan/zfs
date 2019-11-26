@@ -50,7 +50,9 @@ public class VipCommodityDTO implements Serializable {
         dto.setDescription(po.getDescription());
         dto.setPrice(po.getPrice());
         dto.setShowDiscount(po.getShowDiscount());
-        dto.setDiscount(po.getDiscount() / 100F);
+        if (null != po.getDiscount()) {
+            dto.setDiscount(po.getDiscount() / 100F);
+        }
         dto.setStatus(po.getStatus());
         dto.setIstop(po.getIstop());
         dto.setCreateTime(po.getCreateTime());

@@ -160,21 +160,30 @@ public class IncomeServiceImpl implements IIncomeService {
         vo.setBalance(po.getRemaining());
         vo.setInvitenum(po.getInviteCount());
         vo.setPaynum(po.getPayCount());
-        vo.setTotalmny(po.getTotalRevenue() / 100f);
+        if (null != po.getTotalRevenue()) {
+            vo.setTotalmny(po.getTotalRevenue() / 100f);
+        }
 
         List<InviteUserBO> bos = inviteUserMapper.queryByUserId(loginInfo.getUd());
         List<DetailsVO.Detail> details = new ArrayList<>();
-        for (InviteUserBO bo : bos) {
-            DetailsVO.Detail detail = vo.new Detail();
-            // 手机号中间四位以*代替
-            StringBuilder sb = new StringBuilder(bo.getInvitePhone());
-            detail.setPh(sb.replace(3, 7, "****").toString());
-            detail.setCtime(bo.getCreateTime());
-            detail.setEarnings(bo.getEarnings() / 100f);
-            details.add(detail);
+        if (bos != null) {
+            for (InviteUserBO bo : bos) {
+                // 手机号中间四位以*代替
+                if (null != bo.getInvitePhone()) {
+                    DetailsVO.Detail detail = vo.new Detail();
+                    StringBuilder sb = new StringBuilder(bo.getInvitePhone());
+                    detail.setPh(sb.replace(3, 7, "****").toString());
+                    detail.setCtime(bo.getCreateTime());
+                    if (null != bo.getEarnings()) {
+                        detail.setEarnings(bo.getEarnings() / 100f);
+                    } else {
+                        detail.setEarnings(0.0f);
+                    }
+                    details.add(detail);
+                }
+            }
         }
         vo.setDetails(details);
-
         return new ResultVO<>(1000, vo);
     }
 

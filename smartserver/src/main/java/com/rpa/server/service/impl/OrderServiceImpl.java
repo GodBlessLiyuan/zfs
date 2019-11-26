@@ -48,7 +48,9 @@ public class OrderServiceImpl implements IOrderService {
             vo.setComname(bo.getComName());
             vo.setOrdernumber(bo.getOrderNumber());
             vo.setPaytime(bo.getPayTime());
-            vo.setPrice(String.valueOf(bo.getPay() / 100f));
+            if(null != bo.getPay()) {
+                vo.setPrice(String.valueOf(bo.getPay() / 100f));
+            }
             orderVOs.add(vo);
         }
         // 好评活动赠送
