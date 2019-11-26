@@ -10,14 +10,18 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author: xiahui
@@ -30,10 +34,11 @@ public class OtherAppServiceImpl implements IOtherAppService {
 
     @Resource
     private OtherAppMapper otherAppMapper;
+    @Autowired
+    private StringRedisTemplate template;
 
     @Value("${file.iconDir}")
     private String iconDir;
-
     @Value("${file.appDir}")
     private String appDir;
 
@@ -59,14 +64,26 @@ public class OtherAppServiceImpl implements IOtherAppService {
             po.setAppUrl(appUrl);
         }
         po.setCreateTime(new Date());
-
         otherAppMapper.insert(po);
 
+        this.deleteRedis();
         return ResultVOUtil.success();
     }
 
     @Override
     public int delete(int oId) {
-        return otherAppMapper.deleteByPrimaryKey(oId);
+        int first = otherAppMapper.deleteByPrimaryKey(oId);
+        this.deleteRedis();
+        return first;
+    }
+
+    /**
+     * 删除对应的Redis
+     */
+    private void deleteRedis() {
+        Set<String> redisKeys = template.keys("smarthelper_otherapp_*");
+        if (!CollectionUtils.isEmpty(redisKeys)) {
+            template.delete(redisKeys);
+        }
     }
 }
