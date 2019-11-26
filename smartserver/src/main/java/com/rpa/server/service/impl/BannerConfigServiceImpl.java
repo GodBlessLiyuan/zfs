@@ -45,7 +45,7 @@ public class BannerConfigServiceImpl implements IBannerConfigService {
         List<BannerConfigVO> vos;
 
         //Redis中的key
-        String key = "smarthelper" + "bannerconfig" + dto.getChannel() + dto.getSoftv();
+        String key = "smarthelper" + "bannerconfig";
 
         //先从Redis中查询，若为null，再去查询数据库
         if (template.hasKey(key)) {
