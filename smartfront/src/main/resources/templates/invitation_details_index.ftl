@@ -19,12 +19,9 @@
 </head>
 <body onload="window.Share.showBackView()">
 
-    <div class="well well-sm" style="margin-top: 20px;border:none">
+
+    <div class="my_state" style="box-shadow: 1px 1px 4px 4px #eeeeee;padding-top: 20px;">
         <span class="span_thead"> 总体情况 </span>
-    </div>
-
-    <div class="my_state ">
-
         <div class="rows state_bottom ">
             <div class="flex1" catchtap="my_pickGoods">
                 <p class="peopleNum"><b>${res.data.invitenum}</b></p>
@@ -41,42 +38,41 @@
         </div>
     </div>
 
-<!-- 邀请详情情况 -->
-    <div class="well well-sm" style="margin-top: 20px">
+    <!-- 邀请详情情况 -->
+    <div class="my_state" style="box-shadow: 1px 1px 4px 4px #eeeeee;padding-top: 20px;">
         <span class="span_thead"> 邀请详情 </span>
-    </div>
 
-    <div class="container">
-
-        <table class="table table-hover" >
-            <thead>
-            <tr>
-                <td>手机号</td>
-                <td>注册时间</td>
-                <td>现金收益</td>
-            </tr>
-            </thead>
-
-            <tbody>
-            <#list res.data.details as detail>
+        <div style="margin: 20px 10px 20px 10px">
+            <table class="table table-hover" >
+                <thead>
                 <tr>
-                    <td id="ph">${detail.ph}</td>
-
-                    <#if (detail.ctime)??>
-                        <td >${detail.ctime?string("yyyy-MM-dd")}</td>
-                    <#else>
-                        <td >暂未注册</td>
-                    </#if>
-
-                    <#if (detail.earnings)?? >
-                        <td style="color: red">${detail.earnings}</td>
-                    <#else>
-                        <td >暂无收益</td>
-                    </#if>
+                    <td style="text-align: center">手机号</td>
+                    <td style="text-align: center">注册时间</td>
+                    <td style="text-align: center">现金收益</td>
                 </tr>
-            </#list>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <#list res.data.details as detail>
+                    <tr>
+                        <td id="ph" style="text-align: center">${detail.ph}</td>
+
+                        <#if (detail.ctime)??>
+                            <td style="text-align: center">${detail.ctime?string("yyyy-MM-dd")}</td>
+                        <#else>
+                            <td style="text-align: center">暂未注册</td>
+                        </#if>
+
+                        <#if (detail.earnings)?? >
+                            <td style="color: red;text-align: center">${detail.earnings}</td>
+                        <#else>
+                            <td style="text-align: center" >暂无收益</td>
+                        </#if>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
 </body>
