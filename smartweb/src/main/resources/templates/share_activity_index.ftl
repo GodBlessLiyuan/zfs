@@ -147,8 +147,8 @@
                         </div>
                         <div class="form-group">
                             <span for="message-text" class="col-form-label">内容：<span style="color: red"> *</span></span>
-                            <div id="insert_content_type">
-                            </div>
+                            <input id='insert_content_text' class="form-control" type='text'/>
+                            <input id='insert_content_image' type='file'/>
                         </div>
                         <div class="form-group">
                             <span for="recipient-name" class="col-form-label">备注：</span>
@@ -285,9 +285,13 @@
      */
     function insertTypeClick() {
         var type = $('input[type="radio"][name="insert_type"]:checked').val();
-        var contentType = type == 1 ? "text" : "file";
-        document.getElementById("insert_content_type").innerHTML =
-            "<input id='insert_content' class='form-control' type='"+ contentType +"'/>"
+        if (type == 1) {
+            document.getElementById("insert_content_text").style.display = 'block';
+            document.getElementById("insert_content_image").style.display = 'none';
+        }else {
+            document.getElementById("insert_content_text").style.display = 'none';
+            document.getElementById("insert_content_image").style.display = 'block';
+        }
     }
 
 
@@ -300,22 +304,22 @@
         var reqData = new FormData();
         reqData.append("type", type);
         if (type == 1) {
-            reqData.append("contentText", $('#insert_content').val());
+            reqData.append("contentText", $('#insert_content_text').val());
             reqData.append("contentImage", null);
         } else {
             reqData.append("contentText", null);
-            reqData.append("contentImage", $('#insert_content')[0].files[0]);
+            reqData.append("contentImage", $('#insert_content_image')[0].files[0]);
         }
         reqData.append("extra", $('#insert_extra').val());
 
         if (type == 1) {
-            var contentText = $('#insert_content').val();
+            var contentText = $('#insert_content_text').val();
             if (contentText == null || contentText.trim() == "") {
                 alert("内容不能为空！");
                 return;
             }
         } else if (type == 2) {
-            var contentImage = $('#insert_content')[0].files[0];
+            var contentImage = $('#insert_content_image')[0].files[0];
             if (contentImage == null) {
                 alert("内容不能为空！");
                 return;
@@ -444,10 +448,10 @@
 
                     $('input[type="radio"][name="update_type"][value="' + TYPE + '"]').attr("checked", true)
                     if (TYPE === 1) {
-                        document.getElementById("update_content_type").innerHTML = "<input id='update_content' class='form-control' " +
+                        document.getElementById("update_content_type").innerHTML = "<input id='update_content'" +
                             "type='text' value='" + CONTENT + "'/>";
                     } else {
-                        document.getElementById("update_content_type").innerHTML = "<input id='update_content' class='form-control' type='file'/>" +
+                        document.getElementById("update_content_type").innerHTML = "<input id='update_content' type='file'/>" +
                             "<img src='" + CONTENT + "' height='50px' width='50px'/>";
                     }
                     $('#update_extra').val(result.data.extra);
