@@ -123,6 +123,6 @@
   <select id="queryByKey" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from t_batch_info
-    where vipkey = #{key,jdbcType=CHAR}
+    where binary vipkey = #{key,jdbcType=CHAR}
   </select>
 </mapper>

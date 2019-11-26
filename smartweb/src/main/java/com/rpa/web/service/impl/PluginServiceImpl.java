@@ -11,10 +11,13 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,13 +37,13 @@ public class PluginServiceImpl implements IPluginService {
 
     @Resource
     private PluginMapper pluginMapper;
-
     @Resource
     private AppPluChMapper appPluChMapper;
+    @Autowired
+    private StringRedisTemplate template;
 
     @Value("${file.pluginDir}")
     private String pluginDir;
-
 
     @Override
     public DTPageInfo<PluginDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
@@ -97,6 +100,7 @@ public class PluginServiceImpl implements IPluginService {
 
         appPluChMapper.batchInsert(appPluChPOs);
 
+        this.deleteRedis();
         return ResultVOUtil.success();
     }
 
@@ -146,6 +150,7 @@ public class PluginServiceImpl implements IPluginService {
             third = appPluChMapper.batchDelete(delApcIds);
         }
 
+        this.deleteRedis();
         return frist + secend + third;
     }
 
@@ -159,6 +164,7 @@ public class PluginServiceImpl implements IPluginService {
 
         int secend = appPluChMapper.updateStatus(pluginId, status);
 
+        this.deleteRedis();
         return frist + secend;
     }
 
@@ -168,6 +174,8 @@ public class PluginServiceImpl implements IPluginService {
         int frist = appPluChMapper.deleteByAppId(pluginId);
         // 插件表进行假删除
         int secend = pluginMapper.deleteByPrimaryKey(pluginId);
+
+        this.deleteRedis();
         return frist + secend;
     }
 
@@ -184,6 +192,16 @@ public class PluginServiceImpl implements IPluginService {
             pluginPO.setMd5(DigestUtils.md5DigestAsHex(file.getBytes()));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 删除应用更新对应的Redis
+     */
+    private void deleteRedis() {
+        Set<String> redisKeys = template.keys("smarthelper_plugin_*");
+        if (!CollectionUtils.isEmpty(redisKeys)) {
+            template.delete(redisKeys);
         }
     }
 }
