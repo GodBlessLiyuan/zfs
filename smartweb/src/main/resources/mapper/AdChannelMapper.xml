@@ -46,12 +46,18 @@
     </select>
 
     <update id="update" parameterType="com.rpa.web.pojo.AdChannelPO">
-    update t_ad_channel
-    set type = #{type,jdbcType=TINYINT}
-    where ad_id = #{adId,jdbcType=INTEGER}
-        AND soft_channel_id = #{softChannelId}
-        AND app_id = #{appId}
-  </update>
+        update t_ad_channel
+        set type = #{type,jdbcType=TINYINT}
+        where ad_id = #{adId,jdbcType=INTEGER}
+            AND soft_channel_id = #{softChannelId}
+            AND app_id = #{appId}
+    </update>
+
+    <update id="update2">
+        update t_ad_channel
+        set type = #{status}
+        where ad_id = #{adId}
+    </update>
 
     <insert id="insert" parameterType="com.rpa.web.pojo.AdChannelPO">
     insert into t_ad_channel (ad_id, soft_channel_id, create_time,

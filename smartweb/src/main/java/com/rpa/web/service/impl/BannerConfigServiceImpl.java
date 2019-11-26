@@ -117,6 +117,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
     }
 
+
     /**
      * 修改状态
      * @param bannerId
@@ -169,4 +170,9 @@ public class BannerConfigServiceImpl implements BannerConfigService {
     private String queryUsernameByAid(Integer aId) {
         return this.adminUserMapper.queryUsernameByAid(aId);
     }
+
+    /**
+     * 删除Redis
+     */
+
 }

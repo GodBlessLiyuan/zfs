@@ -181,18 +181,25 @@ public class AdChannelServiceImpl implements AdChannelService {
 
             this.adChannelMapper.update(po);
 
-
-            //修改了广告开放渠道后，删除Redis
-            String name = this.softChannelMapper.queryNameById(dto.getSoftChannelId());
-            List<Integer> versioncodes = this.appMapper.queryVersioncodes();
-            for (Integer versioncode : versioncodes) {
-                String key = name + versioncode;
-                if (template.hasKey(key)) {
-                    this.template.delete(key);
-                }
-            }
+            //删除Redis
+            this.deleteRedis(dto.getSoftChannelId());
         }
 
         return ResultVOUtil.success();
+    }
+
+
+    /**
+     * 删除Redis，根据soft_channel_id
+     */
+    private void deleteRedis(Integer softChannelId) {
+        String name = this.softChannelMapper.queryNameById(softChannelId);
+        List<Integer> versioncodes = this.appMapper.queryVersioncodes();
+        for (Integer versioncode : versioncodes) {
+            String key = "smarthelper" + "adconfig" + name + versioncode;
+            if (template.hasKey(key)) {
+                this.template.delete(key);
+            }
+        }
     }
 }
