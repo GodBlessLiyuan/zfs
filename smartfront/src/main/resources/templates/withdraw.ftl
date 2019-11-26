@@ -38,7 +38,6 @@
                 <button type="button" class="btn btn-primary" style="text-align: center;vertical-align: middle" onclick="drawTotal()">全部提现</button>
             </div>
         </div>
-
     </div>
 
     <!--请输入支付宝信息-->
