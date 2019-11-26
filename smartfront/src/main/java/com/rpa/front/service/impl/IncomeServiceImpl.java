@@ -85,10 +85,14 @@ public class IncomeServiceImpl implements IIncomeService {
         }
 
         IncomeVO vo = new IncomeVO();
-        vo.setBalance(po.getRemaining());
+        if (null != po.getRemaining()) {
+            vo.setBalance(po.getRemaining() / 100f);
+        }
         vo.setInvitenum(po.getInviteCount());
         vo.setPaynum(po.getPayCount());
-        vo.setTotalmny(po.getTotalRevenue());
+        if (null != po.getTotalRevenue()) {
+            vo.setTotalmny(po.getTotalRevenue() / 100f);
+        }
 
         return new ResultVO<>(1000, vo);
     }
