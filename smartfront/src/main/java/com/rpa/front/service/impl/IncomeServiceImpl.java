@@ -122,16 +122,16 @@ public class IncomeServiceImpl implements IIncomeService {
         withdrawUserPO.setUserDeviceId(loginInfo.getUdd());
         BigDecimal bd = new BigDecimal(Float.toString(dto.getMoney()));
         withdrawUserPO.setWithdraw(bd.multiply(new BigDecimal("100")).longValue());
-        withdrawUserPO.setRemaining(revenueUserPO.getRemaining() - dto.getMoney());
+        withdrawUserPO.setRemaining(revenueUserPO.getRemaining() - withdrawUserPO.getWithdraw());
         withdrawUserPO.setAliAccount(dto.getAccount());
         withdrawUserPO.setAliName(dto.getName());
         withdrawUserPO.setWithdrawTime(revenueUserPO.getWithdrawTime() + 1);
         withdrawUserPO.setStatus((byte) 1);
         withdrawUserMapper.insert(withdrawUserPO);
 
-        revenueUserPO.setWithdraw(revenueUserPO.getWithdraw() + dto.getMoney());
+        revenueUserPO.setWithdraw(revenueUserPO.getWithdraw() + withdrawUserPO.getWithdraw());
         revenueUserPO.setWithdrawTime(revenueUserPO.getWithdrawTime() + 1);
-        revenueUserPO.setRemaining(revenueUserPO.getRemaining() - dto.getMoney());
+        revenueUserPO.setRemaining(revenueUserPO.getRemaining() - withdrawUserPO.getWithdraw());
         revenueUserMapper.updateByPrimaryKey(revenueUserPO);
 
         return new ResultVO<>(1000, revenueUserPO.getRemaining());

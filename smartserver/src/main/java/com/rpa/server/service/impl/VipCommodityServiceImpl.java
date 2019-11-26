@@ -1,5 +1,6 @@
 package com.rpa.server.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.constant.CommonConstant;
 import com.rpa.server.dto.VipCommodityDTO;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: xiahui
@@ -32,6 +34,16 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
 
     @Override
     public ResultVO getCommodity(VipCommodityDTO dto) {
+        String redisKey = "smarthelper_vipcommodity_" + dto.getSoftv() + "_" + dto.getChannel();
+        String redisValue = cache.getCacheByKey(redisKey);
+        if (null != redisValue) {
+            List<VipCommodityVO> vos = JSON.parseObject(redisValue, List.class);
+            if (null == vos) {
+                return new ResultVO(1000);
+            }
+            return new ResultVO<>(1000, vos);
+        }
+
         List<VipCommodityPO> vcPOs = vipCommodityMapper.queryByChanId(CommonConstant.CHAN_DEF);
         Map<Integer, VipCommodityPO> vcMap = new HashMap<>(vcPOs.size());
         for (VipCommodityPO po : vcPOs) {
@@ -43,6 +55,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
             vcMap.put(po.getComTypeId(), po);
         }
         if (vcMap.size() == 0) {
+            cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
             return new ResultVO(1000);
         }
 
@@ -62,6 +75,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
             vos.add(vo);
         }
 
+        cache.setCache(redisKey, vos, 1, TimeUnit.DAYS);
         return new ResultVO<>(1000, vos);
     }
 }
