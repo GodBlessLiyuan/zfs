@@ -11,10 +11,13 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +39,8 @@ public class AppServiceImpl implements IAppService {
     private AppMapper appMapper;
     @Resource
     private AppChMapper appChMapper;
+    @Autowired
+    private StringRedisTemplate template;
 
     @Value("${file.appDir}")
     private String appDir;
@@ -120,6 +125,8 @@ public class AppServiceImpl implements IAppService {
 
         appChMapper.batchInsert(appChPOs);
 
+        this.deleteRedis();
+
         return ResultVOUtil.success();
     }
 
@@ -175,6 +182,7 @@ public class AppServiceImpl implements IAppService {
             third = appChMapper.batchDelete(delAcIds);
         }
 
+        this.deleteRedis();
 
         return frist + secend + third;
     }
@@ -203,6 +211,8 @@ public class AppServiceImpl implements IAppService {
 
         int secend = appChMapper.updateStatus(appId, status);
 
+        this.deleteRedis();
+
         return frist + secend;
     }
 
@@ -212,6 +222,9 @@ public class AppServiceImpl implements IAppService {
         int frist = appChMapper.deleteByAppId(appId);
         // 应用表进行假删除
         int secend = appMapper.deleteByPrimaryKey(appId);
+
+        this.deleteRedis();
+
         return frist + secend;
     }
 
@@ -245,5 +258,15 @@ public class AppServiceImpl implements IAppService {
         appPO.setaId(aId);
         appPO.setStatus(1);
         appPO.setDr((byte) 1);
+    }
+
+    /**
+     * 删除应用更新对应的Redis
+     */
+    private void deleteRedis() {
+        Set<String> redisKeys = template.keys("smarthelper_app_*");
+        if (!CollectionUtils.isEmpty(redisKeys)) {
+            template.delete(redisKeys);
+        }
     }
 }

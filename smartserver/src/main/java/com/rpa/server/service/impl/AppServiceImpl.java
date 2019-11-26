@@ -1,5 +1,6 @@
 package com.rpa.server.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.AppDTO;
 import com.rpa.server.mapper.AppMapper;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: xiahui
@@ -38,11 +40,22 @@ public class AppServiceImpl implements IAppService {
 
     @Override
     public ResultVO check(AppDTO dto, HttpServletRequest req) {
+        String redisKey = "smarthelper_app_" + dto.getSoftv() + "_" + dto.getChannel();
+        String redisValue = cache.getCacheByKey(redisKey);
+        if (null != redisValue) {
+            AppVO vo = JSON.parseObject(redisValue, AppVO.class);
+            if(null == vo) {
+                return new ResultVO(1008);
+            }
+            return new ResultVO<>(1009, vo);
+        }
+
         // 从Redis中取出设备白名单
         int status = cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
         int channId = cache.getSoftChannelId(dto.getChannel());
         AppPO appPO = appMapper.queryMaxByVerId(dto.getSoftv(), channId, status);
-        if (appPO == null) {
+        if (null == appPO) {
+            cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
             // 最新版本
             return new ResultVO(1008);
         }
@@ -58,6 +71,7 @@ public class AppServiceImpl implements IAppService {
 
         mqForDeviceInfo(dto, req);
 
+        cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
         return new ResultVO<>(1009, vo);
     }
 
