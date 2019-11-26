@@ -9,7 +9,7 @@ package com.rpa.datav.constant;
 public class ZJCommonConstant {
 
 
-    /* tab5 使用总频次*/
+    /* tab5 浙江 使用总频次*/
     public static final String zjpinciNumber5="[\n" +
             "{\n" +
             "\"x\": \"10/31\",\n" +
@@ -131,7 +131,7 @@ public class ZJCommonConstant {
 
 
 
-    /* tab4 使用总时长*/
+    /* tab4 浙江使用总时长*/
     public static final String zjtotalhourNumber4="[\n" +
             "{\n" +
             "\"x\": \"10/31\",\n" +
@@ -252,7 +252,7 @@ public class ZJCommonConstant {
             "]";
 
 
-    /* tab3 活跃用户数*/
+    /* tab3 浙江 活跃用户数*/
     public static final String zjhuoyueNumber3="[\n" +
             "{\n" +
             "\"x\": \"10/31\",\n" +
@@ -374,7 +374,7 @@ public class ZJCommonConstant {
 
 
 
-    /* VIP用户数*/
+    /* 浙江 VIP用户数*/
     public static final String zjuvipNumber2 ="[\n" +
             "{\n" +
             "\"x\": \"10/31\",\n" +
@@ -494,7 +494,7 @@ public class ZJCommonConstant {
             "}\n" +
             "]";
 
-    /*每日新增用户*/
+    /*浙江 每日新增用户*/
     public static final String zjuserNumber1 ="[\n" +
             "{\n" +
             "\"x\": \"10/31\",\n" +
