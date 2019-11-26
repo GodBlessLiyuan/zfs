@@ -16,5 +16,5 @@ public class DetermineDTO implements Serializable {
 
     private String account;
     private String name;
-    private Long money;
+    private Float money;
 }
