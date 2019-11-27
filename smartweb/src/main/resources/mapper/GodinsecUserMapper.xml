@@ -101,4 +101,10 @@
       `name` = #{name,jdbcType=CHAR}
     where phone = #{phone,jdbcType=CHAR}
   </update>
+
+  <select id="queryByUserId" parameterType="java.lang.Integer" resultType="com.rpa.web.pojo.GodinsecUserPO">
+    select gu.create_time as createTime, gu.name, gu.days
+    from t_godinsec_user gu left join t_user u on gu.phone = u.phone
+    where gu.`status` = 2 and user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

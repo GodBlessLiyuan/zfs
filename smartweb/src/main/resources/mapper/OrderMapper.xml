@@ -241,6 +241,6 @@
     from t_order o
     left join t_vipcommodity v on o.cmdy_id = v.cmdy_id
     left join t_user u on o.user_id = u.user_id
-    where o.user_id = #{userId}
+    where o.user_id = #{userId} and o.`status` = 2
   </select>
 </mapper>
