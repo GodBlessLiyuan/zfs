@@ -16,6 +16,7 @@ import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +37,9 @@ public class BannerConfigServiceImpl implements BannerConfigService {
 
     @Autowired
     private AdminUserMapper adminUserMapper;
+
+    @Autowired
+    private StringRedisTemplate template;
 
     @Value("${file.iconDir}")
     private String iconDir;
@@ -117,6 +121,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
     }
 
+
     /**
      * 修改状态
      * @param bannerId
@@ -168,5 +173,15 @@ public class BannerConfigServiceImpl implements BannerConfigService {
      */
     private String queryUsernameByAid(Integer aId) {
         return this.adminUserMapper.queryUsernameByAid(aId);
+    }
+
+    /**
+     * 删除Redis
+     */
+    private void deleteRedis() {
+        String key = "smarthelper" + "bannerconfig";
+        if (template.hasKey(key)) {
+            template.delete(key);
+        }
     }
 }

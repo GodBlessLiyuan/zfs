@@ -32,7 +32,7 @@
             <div>
                 <div style="width: 60%; float: left">
                     <div class="input-group" style="margin-left: 10px">
-                        <p id="" class="balanceNum left font_money">￥${res.data.balance}</p>
+                        <p id="" class="balanceNum left font_money">¥${res.data.balance}</p>
                     </div>
                 </div>
                 <div style="width: 30%; height: 20px; float:right;margin-right: 15px">
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <!--帮你一步做推广，快速赚钱 -->s
+        <!--帮你一步做推广，快速赚钱 -->
         <div class="my_state2" style="box-shadow: 1px 1px 4px 4px #eeeeee;">
             <div class="rows">
                 <img class="bg_tuiguang" src="${basePath}/images/banner_extension.png" onclick="promotePage()">

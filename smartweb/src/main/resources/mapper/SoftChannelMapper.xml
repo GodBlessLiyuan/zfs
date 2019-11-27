@@ -108,4 +108,8 @@
         select name
         from t_soft_channel where soft_channel_id = #{softChannelId}
     </select>
+    <select id="queryNames" resultType="java.lang.String">
+        select distinct name
+        from t_soft_channel
+    </select>
 </mapper>

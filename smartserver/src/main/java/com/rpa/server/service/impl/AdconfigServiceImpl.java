@@ -54,10 +54,10 @@ public class AdconfigServiceImpl implements AdconfigServcie {
     public ResultVO query(AdconfigDTO dto) {
 
         //准备好要返回的数据对象
-        AdconfigVO vo = new AdconfigVO();
+        AdconfigVO vo;
 
         //Redis中的key
-        String key = dto.getChannel() + dto.getSoftv();
+        String key ="smarthelper" + "adconfig" + dto.getChannel() + dto.getSoftv();
 
         //先从Redis中查询，若为null，再去查询数据库
         if (template.hasKey(key)) {
@@ -87,12 +87,12 @@ public class AdconfigServiceImpl implements AdconfigServcie {
                 map.put("number", po.getAdNumber());
                 lists.add(map);
             }
-
+            vo = new AdconfigVO();
             vo.setStrategy(strategy);
             vo.setAds(lists);
 
             //将对象用JSON序列化，存入Redis
-            cache.setCache(key,JSON.toJSONString(vo) ,24, TimeUnit.HOURS);
+            cache.setCache(key, vo ,24, TimeUnit.HOURS);
         }
         return new ResultVO(1000, vo);
     }

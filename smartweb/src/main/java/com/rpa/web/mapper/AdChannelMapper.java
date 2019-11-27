@@ -15,6 +15,8 @@ public interface AdChannelMapper extends BaseDAO<AdChannelPO, Integer> {
 
     void update(AdChannelPO po);
 
+    void update2(Integer adId, Byte status);
+
     AdChannelPO queryByIds2(Integer adId, Integer appId, Integer softChannelId);
 
     List<Integer> querySoftChannelIdsByAdId(Integer adId);

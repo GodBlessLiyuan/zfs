@@ -12,4 +12,6 @@ import java.util.Map;
 @Mapper
 public interface SoftChannelMapper extends BaseDAO<SoftChannelPO, Integer> {
     String queryNameById(Integer softChannelId);
+
+    List<String> queryNames();
 }

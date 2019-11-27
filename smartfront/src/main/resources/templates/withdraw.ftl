@@ -19,13 +19,12 @@
     </div>
 
     <!--余额及提现 -->
-    <div class="my_state1 bg_color" >
+    <div class="my_state1 bg_color"  style="box-shadow: 1px 1px 4px 4px #eeeeee;">
         <div>
             <div class="total" >
-                <span class="tx_time" style="font-size: 18px">可提金额:￥</span><span id="balance" class="tx_time" style="font-size: 18px">${res.data.balance}</span>
+                <span class="tx_time" style="font-size: 18px">可提金额:¥</span><span id="balance" class="tx_time" style="font-size: 18px">${res.data.balance}</span>
             </div>
         </div>
-
 
         <div>
             <div style="width: 60%; float: left;padding-left: 30px;">
@@ -35,14 +34,13 @@
                 </div>
             </div>
             <div style="float:left;padding-left:20px;margin-right: 10px">
-                <button type="button" class="btn btn-primary" style="text-align: center;vertical-align: middle" onclick="drawTotal()">全部提现</button>
+                <button type="button" class="btn btn-primary" style="text-align: center;vertical-align: middle;background-color: #58AFF6" onclick="drawTotal()">全部提现</button>
             </div>
         </div>
-
     </div>
 
     <!--请输入支付宝信息-->
-    <div class="my_state2 bg_color" style="height: 170px" >
+    <div class="my_state2 bg_color" style="height: 170px;box-shadow: 1px 1px 4px 4px #eeeeee;" >
         <br>
         <p class="font_tishi" ><b>&nbsp;&nbsp;&nbsp;&nbsp;请输入支付宝信息</b></p>
 
@@ -56,7 +54,7 @@
     </div>
 
     <!--提示规则-->
-    <div class="my_state2 bg_color" style="height:250px" >
+    <div class="my_state2 bg_color" style="height:250px;box-shadow: 1px 1px 4px 4px #eeeeee;" >
         <p style="margin-left: 10px;margin-top: 10px"><b>提现规则:</b></p>
         <p  style="padding-left: 10px;padding-right: 10px;">
             1.最低提现100元;<br>
@@ -119,7 +117,7 @@
             $(".errorMsg").text("提现金额不能为空")
         }else if(parseFloat($("#importBalance").val())>parseFloat($("#balance").text())){
             $(".errorMsg").text("提现金额不能大于可用余额")
-        }else if($("#importBalance").val()<0.01){
+        }else if($("#importBalance").val()<100){
             $(".errorMsg").text("最低金额需达100元")
         }else if(Number.isInteger($("#importBalance").val()-0)==false){
             $(".errorMsg").text("提现金额需是整数")
@@ -175,7 +173,7 @@
                         "display":"block"
                     });
                     $("html,body").css({"height":"100%","overflow":"hidden"});
-                } else if ('0001' == res["statuscode"]) {
+                } else if ('1001' == res["statuscode"]) {
 
                     closeBox();
                     $(".box-text2").text("已有提现订单，请勿重复申请");
