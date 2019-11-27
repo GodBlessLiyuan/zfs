@@ -1,6 +1,7 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.AppDTO;
 import com.rpa.server.mapper.AppMapper;
@@ -42,7 +43,7 @@ public class AppServiceImpl implements IAppService {
     public ResultVO check(AppDTO dto, HttpServletRequest req) {
 
         int status = cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
-        String redisKey = "smarthelper_app_" + dto.getSoftv() + "_" + dto.getChannel();
+        String redisKey = RedisKeyUtil.genAppRedisKey(dto.getSoftv(), dto.getChannel());
         if (status == 2) {
             String redisValue = cache.getCacheByKey(redisKey);
             if (null != redisValue) {

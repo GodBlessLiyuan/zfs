@@ -1,6 +1,7 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.OtherAppDTO;
 import com.rpa.server.mapper.OtherAppMapper;
@@ -35,7 +36,7 @@ public class OtherAppServiceImpl implements IOtherAppService {
 
     @Override
     public ResultVO query(OtherAppDTO dto) {
-        String redisKey = "smarthelper_otherapp_" + dto.getChannel();
+        String redisKey = RedisKeyUtil.genOtherAppRedisKey(dto.getChannel());
         String redisValue = cache.getCacheByKey(redisKey);
         if (null != redisValue) {
             List<OtherAppVO> vos = JSON.parseObject(redisValue, List.class);
