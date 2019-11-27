@@ -1,5 +1,6 @@
 package com.rpa.web.service.impl;
 
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.AppDTO;
 import com.rpa.web.mapper.AppChMapper;
@@ -264,7 +265,7 @@ public class AppServiceImpl implements IAppService {
      * 删除应用更新对应的Redis
      */
     private void deleteRedis() {
-        Set<String> redisKeys = template.keys("smarthelper_app_*");
+        Set<String> redisKeys = template.keys(RedisKeyUtil.genAppRedisKey("*"));
         if (!CollectionUtils.isEmpty(redisKeys)) {
             template.delete(redisKeys);
         }

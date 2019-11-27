@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.OtherAppDTO;
 import com.rpa.web.mapper.OtherAppMapper;
@@ -81,7 +82,7 @@ public class OtherAppServiceImpl implements IOtherAppService {
      * 删除对应的Redis
      */
     private void deleteRedis() {
-        Set<String> redisKeys = template.keys("smarthelper_otherapp_*");
+        Set<String> redisKeys = template.keys(RedisKeyUtil.genOtherAppRedisKey("*"));
         if (!CollectionUtils.isEmpty(redisKeys)) {
             template.delete(redisKeys);
         }
