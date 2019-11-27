@@ -69,10 +69,10 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
             dto.setCreateTime(po.getCreateTime());
             dto.setPhone(queryPhoneByUserId(po.getUserId()));
             if (null != po.getWithdraw()) {
-                dto.setWithdraw(Double.valueOf(po.getWithdraw())*0.01);
+                dto.setWithdraw(po.getWithdraw()*0.01);
             }
             if (null != po.getRemaining()) {
-                dto.setRemaining(Double.valueOf(po.getRemaining())*0.01);
+                dto.setRemaining(po.getRemaining()*0.01);
             }
             dto.setAliAccount(po.getAliAccount());
             dto.setAliName(po.getAliName());
