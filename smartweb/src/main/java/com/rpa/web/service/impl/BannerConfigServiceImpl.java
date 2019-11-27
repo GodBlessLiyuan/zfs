@@ -118,6 +118,10 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         po.setaId(aId);
 
         int count = this.bannerConfigMapper.insert(po);
+
+        //删除Redis
+        this.deleteRedis();
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
     }
 
@@ -151,6 +155,10 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         po.setaId(aId);
 
         int count = this.bannerConfigMapper.updateByPrimaryKey(po);
+
+        //删除Redis
+        this.deleteRedis();
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
 
@@ -162,6 +170,8 @@ public class BannerConfigServiceImpl implements BannerConfigService {
     @Override
     public ResultVO delete(int bannerId) {
         int count = this.bannerConfigMapper.deleteByPrimaryKey(bannerId);
+        //删除Redis
+        this.deleteRedis();
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
     }
 

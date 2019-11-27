@@ -66,27 +66,42 @@ public class AdconfigServiceImpl implements AdconfigServcie {
             //从t_key_value表中查询广告展现策略
             String strategy = this.keyValueMapper.queryValue(ConfigConstant.SHOW_INTERVAL);
             //从t_soft_channel中查询ID
-            int softChannelId = cache.getSoftChannelId(dto.getChannel());
+            Integer softChannelId = cache.getSoftChannelId(dto.getChannel());
             //从t_app中查询ID
-            int appId = this.appMapper.queryIdByVersioncode(dto.getSoftv());
+            Integer appId = this.appMapper.queryIdByVersioncode(dto.getSoftv());
+
             //从t_ad_channel表中查询广告IDs
-            List<Integer> adIds = this.adChannelMapper.queryAdIds(softChannelId, appId);
+            List<Integer> adIds;
+            if (0 == softChannelId || null == appId) {
+                adIds = null;
+            }else{
+                adIds = this.adChannelMapper.queryAdIds(softChannelId, appId);
+            }
 
             //从t_adconfig表中查询广告数据，供开屏广告展现使用
-            List<AdConfigPO> POs = this.adConfigMapper.query(adIds);
-            if (null == POs) {
-                return new ResultVO(1000, "");
+            List<AdConfigPO> pos;
+            if (null == adIds) {
+                pos = null;
+            } else {
+                pos = this.adConfigMapper.query(adIds);
             }
 
+            //将所查数据放入集合
             List<Map<String, Object>> lists = new ArrayList<>();
-            for (AdConfigPO po : POs) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("adid", po.getAdId());
-                map.put("sort", po.getPriority());
-                map.put("total", po.getTotal());
-                map.put("number", po.getAdNumber());
-                lists.add(map);
+            if (null == pos) {
+                lists = null;
+            } else {
+                for (AdConfigPO po : pos) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("adid", po.getAdId());
+                    map.put("sort", po.getPriority());
+                    map.put("total", po.getTotal());
+                    map.put("number", po.getAdNumber());
+                    lists.add(map);
+                }
             }
+
+            //将集合数据封装为对象
             vo = new AdconfigVO();
             vo.setStrategy(strategy);
             vo.setAds(lists);

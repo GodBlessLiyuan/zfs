@@ -11,4 +11,6 @@ public interface FunctionVideoMapper extends BaseDAO<FunctionVideoPO, Integer> {
     String queryUsernameByAid(Integer aId);
 
     int queryFunname(String funName);
+
+    String queryFunnameById(Integer functionId);
 }

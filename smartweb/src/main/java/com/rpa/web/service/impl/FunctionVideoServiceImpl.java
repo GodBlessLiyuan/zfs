@@ -16,6 +16,7 @@ import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +37,9 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
 
     @Autowired
     private AdminUserMapper adminUserMapper;
+
+    @Autowired
+    private StringRedisTemplate template;
 
     @Value("${file.videoDir}")
     private String videoDir;
@@ -183,6 +187,10 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
 
         int count = this.functionVideoMapper.updateByPrimaryKey(po);
 
+        //删除Redis
+        String funname = this.queryFunnameById(functionId);
+        deleteRedis(funname);
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
 
@@ -194,6 +202,11 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     @Override
     public ResultVO delete(Integer functionId) {
         int count = this.functionVideoMapper.deleteByPrimaryKey(functionId);
+
+        //删除Redis
+        String funname = this.queryFunnameById(functionId);
+        deleteRedis(funname);
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
     }
 
@@ -205,5 +218,26 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
      */
     private String queryUsernameByAid(Integer aId) {
         return this.adminUserMapper.queryUsernameByAid(aId);
+
+    }
+
+    /**
+     * 根据functionId，从t_functionvideo表中查询funname
+     */
+    private String queryFunnameById(Integer functionId) {
+        return this.functionVideoMapper.queryFunnameById(functionId);
+
+    }
+
+
+    /**
+     * 删除Redis
+     */
+    private void deleteRedis(String funname) {
+        //Redis中的key
+        String key = "smarthelper" + "notice" + funname;
+        if (template.hasKey(key)) {
+            template.delete(key);
+        }
     }
 }

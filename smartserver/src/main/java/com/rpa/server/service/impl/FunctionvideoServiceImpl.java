@@ -1,13 +1,19 @@
 package com.rpa.server.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.FunctionvideoDTO;
 import com.rpa.server.mapper.FunctionVideoMapper;
 import com.rpa.server.service.FunctionvideoService;
+import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.FunctionvideoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: dangyi
@@ -21,20 +27,38 @@ public class FunctionvideoServiceImpl implements FunctionvideoService {
     @Autowired
     private FunctionVideoMapper functionVideoMapper;
 
+    @Autowired
+    private StringRedisTemplate template;
+
+    @Resource
+    private RedisCacheUtil cache;
+
     @Value("${file.publicPath}")
     private String publicPath;
 
     @Override
     public ResultVO query(FunctionvideoDTO dto) {
 
-        String url = this.functionVideoMapper.queryUrl(dto.getFunction());
-        FunctionvideoVO vo = new FunctionvideoVO();
-        if (null == url) {
-            vo.setUrl(url);
-        } else {
-            vo.setUrl(publicPath + url);
-        }
+        FunctionvideoVO vo;
 
+        //Redis中的key
+        String key = "smarthelper" + "notice" + dto.getFunction();
+
+        //先从Redis中查询，若为null，再去查询数据库
+        if (template.hasKey(key)) {
+            vo = JSON.parseObject(cache.getCacheByKey(key), FunctionvideoVO.class);
+        } else {
+            String url = this.functionVideoMapper.queryUrl(dto.getFunction());
+            vo = new FunctionvideoVO();
+            if (null == url) {
+                vo.setUrl(url);
+            } else {
+                vo.setUrl(publicPath + url);
+            }
+
+            //将对象用JSON序列化，存入Redis
+            cache.setCache(key, vo ,24, TimeUnit.HOURS);
+        }
         return new ResultVO(1000, vo);
     }
 }
