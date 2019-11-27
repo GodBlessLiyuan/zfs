@@ -2,6 +2,7 @@ package com.rpa.web.service.impl;
 
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.VipCommodityConstant;
 import com.rpa.web.dto.VipCommodityDTO;
@@ -143,7 +144,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
      * 删除对应的Redis
      */
     private void deleteRedis() {
-        Set<String> redisKeys = template.keys("smarthelper_vipcommodity_*");
+        Set<String> redisKeys = template.keys(RedisKeyUtil.genVipCommodityRedisKey("*"));
         if (!CollectionUtils.isEmpty(redisKeys)) {
             template.delete(redisKeys);
         }

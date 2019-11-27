@@ -1,6 +1,7 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.PluginDTO;
 import com.rpa.server.mapper.PluginMapper;
@@ -29,7 +30,7 @@ public class PluginServiceImpl implements IPluginService {
 
     @Override
     public ResultVO check(PluginDTO dto) {
-        String redisKey = "smarthelper_plugin_" + dto.getPluginv();
+        String redisKey = RedisKeyUtil.genPluginRedisKey(dto.getPluginv());
         String redisValue = cache.getCacheByKey(redisKey);
         if (null != redisValue) {
             PluginVO vo = JSON.parseObject(redisValue, PluginVO.class);

@@ -1,6 +1,7 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.constant.CommonConstant;
 import com.rpa.server.dto.VipCommodityDTO;
@@ -34,7 +35,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
 
     @Override
     public ResultVO getCommodity(VipCommodityDTO dto) {
-        String redisKey = "smarthelper_vipcommodity_" + dto.getSoftv() + "_" + dto.getChannel();
+        String redisKey = RedisKeyUtil.genVipCommodityRedisKey(dto.getSoftv(), dto.getChannel());
         String redisValue = cache.getCacheByKey(redisKey);
         if (null != redisValue) {
             List<VipCommodityVO> vos = JSON.parseObject(redisValue, List.class);
