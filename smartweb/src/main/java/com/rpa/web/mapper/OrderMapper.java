@@ -21,7 +21,7 @@ public interface OrderMapper extends BaseDAO<OrderDO, OrderPOKey> {
 
     int queryPayCount();
 
-    Float queryDayRevenue();
+    float queryDayRevenue();
 
-    Float queryMonthRevenue();
+    float queryMonthRevenue();
 }

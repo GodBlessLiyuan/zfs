@@ -73,9 +73,15 @@ public class RevenueUserServiceImpl implements RevenueUserService {
                 dto.setInviteCount(po.getInviteCount());
                 dto.setRegisterCount(po.getRegisterCount());
                 dto.setPayCount(po.getPayCount());
-                dto.setTotalRevenue(po.getTotalRevenue()*0.01);
-                dto.setRemaining(po.getRemaining()*0.01);
-                dto.setWithdraw(po.getWithdraw()*0.01);
+                if (null != po.getTotalRevenue()) {
+                    dto.setTotalRevenue(po.getTotalRevenue()*0.01);
+                }
+                if (null != po.getRemaining()) {
+                    dto.setRemaining(po.getRemaining()*0.01);
+                }
+                if (null != po.getWithdraw()) {
+                    dto.setWithdraw(po.getWithdraw()*0.01);
+                }
                 dto.setWithdrawTime(po.getWithdrawTime());
 
                 lists_DTO.add(dto);
@@ -167,10 +173,14 @@ public class RevenueUserServiceImpl implements RevenueUserService {
             InviteDetailDTO dto = new InviteDetailDTO();
             dto.setPayTime(po.getPayTime());
             dto.setComTypeName(po.getComTypeName());
-            dto.setPay(po.getPay()*0.01);
+            if (null != po.getPay()) {
+                dto.setPay(po.getPay()*0.01);
+            }
             dto.setVipname(queryVipnameByVipid(po.getViptypeId()));
             dto.setProportion(po.getProportion()+"%");
-            dto.setEarnings(po.getEarnings()*0.01);
+            if (null != po.getEarnings()) {
+                dto.setEarnings(po.getEarnings()*0.01);
+            }
 
             DTOs.add(dto);
         }

@@ -138,7 +138,9 @@ public class AlipayServiceImpl implements AlipayService {
         model.setSubject(comName);
         model.setOutTradeNo(orderNumber);
         model.setTimeoutExpress("30m");
-        model.setTotalAmount(String.valueOf(totalAmount*0.01));
+        if (null != totalAmount) {
+            model.setTotalAmount(String.valueOf(totalAmount*0.01));
+        }
         model.setProductCode("QUICK_MSECURITY_PAY");
         // 封装参数
         request.setBizModel(model);

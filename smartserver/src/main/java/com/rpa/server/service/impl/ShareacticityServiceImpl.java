@@ -31,15 +31,10 @@ public class ShareacticityServiceImpl implements ShareactivityService {
     @Override
     public ResultVO query(ShareactivityDTO dto) {
 
-        List<ShareActivityPO> POs = this.shareActivityMapper.query();
-        List<ShareactivityVO> VOs = new ArrayList<>();
-
-        if (null == POs) {
-            return new ResultVO(1000,"");
-        }
-
+        List<ShareActivityPO> pos = this.shareActivityMapper.query();
+        List<ShareactivityVO> vos = new ArrayList<>();
         // 将查询到的 PO 转换为 VO
-        for (ShareActivityPO po : POs) {
+        for (ShareActivityPO po : pos) {
             ShareactivityVO vo = new ShareactivityVO();
             vo.setMid(po.getMaterialId());
             vo.setType(po.getType().intValue());
@@ -49,9 +44,9 @@ public class ShareacticityServiceImpl implements ShareactivityService {
                 vo.setContent(publicPath + po.getContent());
             }
 
-            VOs.add(vo);
+            vos.add(vo);
         }
 
-        return new ResultVO(1000,VOs);
+        return new ResultVO(1000,vos);
     }
 }

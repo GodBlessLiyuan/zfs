@@ -152,6 +152,7 @@
                 if (result.data) {
                     $('#register').text(result.data.newRegister);
                     $('#user').text(result.data.newUser);
+
                     if (result.data.newUser != 0) {
                         $('#ratio').text(Math.round(result.data.newRegister / result.data.newUser * 10000) / 100.00 + "%");
                     } else {
@@ -160,25 +161,9 @@
 
                     $('#dayActiveUser').text(result.data.dayActiveUser);
                     $('#monthActiveUser').text(result.data.monthActiveUser);
-
-                    if ("null" == result.data.dayRevenue || null == result.data.dayRevenue) {
-                        $('#dayRevenue').text("0");
-                    } else {
-                        $('#dayRevenue').text(result.data.dayRevenue);
-                    }
-
-                    if ("null" == result.data.payCount || null == result.data.payCount) {
-                        $('#payCount').text("0");
-                    } else {
-                        $('#payCount').text(result.data.payCount);
-                    }
-
-                    if ("null" == result.data.monthRevenue || null == result.data.monthRevenue) {
-                        $('#monthRevenue').text("0");
-                    } else {
-                        $('#monthRevenue').text(result.data.monthRevenue);
-                    }
-
+                    $('#dayRevenue').text(result.data.dayRevenue);
+                    $('#payCount').text(result.data.payCount);
+                    $('#monthRevenue').text(result.data.monthRevenue);
                 }
             } else {
                 alert("服务器异常，请联系管理员！")

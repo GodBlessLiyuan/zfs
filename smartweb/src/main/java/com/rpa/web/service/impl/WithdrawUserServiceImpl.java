@@ -68,8 +68,12 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
             dto.setWithdrawId(po.getWithdrawId());
             dto.setCreateTime(po.getCreateTime());
             dto.setPhone(queryPhoneByUserId(po.getUserId()));
-            dto.setWithdraw(po.getWithdraw());
-            dto.setRemaining(po.getRemaining());
+            if (null != po.getWithdraw()) {
+                dto.setWithdraw(po.getWithdraw()*0.01);
+            }
+            if (null != po.getRemaining()) {
+                dto.setRemaining(po.getRemaining()*0.01);
+            }
             dto.setAliAccount(po.getAliAccount());
             dto.setAliName(po.getAliName());
             dto.setWithdrawTime(po.getWithdrawTime());
@@ -110,7 +114,7 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
         po.setStatus(status);
         po.setAuditTime(new Date());
         po.setEndTime(new Date());
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
 
         int count = this.withdrawUserMapper.updateByPrimaryKey(po);
 

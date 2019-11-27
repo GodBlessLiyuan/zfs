@@ -18,9 +18,9 @@ public class WithdrawUserDTO implements Serializable {
 
     private Integer userDeviceId;
 
-    private Long withdraw;
+    private Double withdraw;
 
-    private Long remaining;
+    private Double remaining;
 
     private String aliAccount;
 
@@ -85,19 +85,19 @@ public class WithdrawUserDTO implements Serializable {
         this.userDeviceId = userDeviceId;
     }
 
-    public Long getWithdraw() {
+    public Double getWithdraw() {
         return withdraw;
     }
 
-    public void setWithdraw(Long withdraw) {
+    public void setWithdraw(Double withdraw) {
         this.withdraw = withdraw;
     }
 
-    public Long getRemaining() {
+    public Double getRemaining() {
         return remaining;
     }
 
-    public void setRemaining(Long remaining) {
+    public void setRemaining(Double remaining) {
         this.remaining = remaining;
     }
 
