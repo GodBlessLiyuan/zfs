@@ -126,8 +126,8 @@
     <!--**********************************
         弹框
     ***********************************-->
-    <!--弹框：查看图片-->
-    <div class="modal fade" id="url1Modal" style="display: none;" aria-hidden="true">
+    <!--弹框：查看图片,缩略图-->
+    <div class="modal fade" id="urlModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="form-group">
@@ -139,15 +139,25 @@
                 </div>
                 <div class="container-fluid">
                     <div class="row">
-                        <img src='' id="url1_pic" height='50px' width='50px'/>
-                        <img src='' id="url2_pic" height='50px' width='50px'/>
-                        <img src='' id="url3_pic" height='50px' width='50px'/>
+                        <img src='' id="url1_pic" height='100px' width='100px' data-toggle='modal' data-target='#bigpicModal' onclick="bigpic(this)"/>
+                        <img src='' id="url2_pic" height='100px' width='100px' data-toggle='modal' data-target='#bigpicModal' onclick="bigpic(this)"/>
+                        <img src='' id="url3_pic" height='100px' width='100px' data-toggle='modal' data-target='#bigpicModal' onclick="bigpic(this)"/>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--弹框：查看图片，大图-->
+    <div class="modal fade" id="bigpicModal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <img src='' id="bigpic"/>
             </div>
         </div>
     </div>
@@ -239,7 +249,7 @@
                         if (null == full.url1 && null == full.url2 && null == full.url3) {
                             return "";
                         } else {
-                            return "<button type='button'  data-toggle='modal' data-target='#url1Modal' data-whatever='@getbootstrap' " +
+                            return "<button type='button'  data-toggle='modal' data-target='#urlModal' data-whatever='@getbootstrap' " +
                                 "class='btn btn-primary' onclick='viewClick(\""+ full.url1 +"\",\""+ full.url2 +"\",\""+ full.url3 +"\")'>查看</button>";
                         }
                     }
@@ -265,7 +275,7 @@
 
 
     /**
-     * 查看图片
+     * 查看图片：缩略图
      */
     function viewClick(url1, url2, url3) {
         if ("null" == url1) {
@@ -286,6 +296,15 @@
             document.getElementById("url3_pic").style.display = "block";
             document.getElementById("url3_pic").src = url3;
         }
+    }
+
+
+    /**
+     * 查看图片：大图
+     */
+    function bigpic(obj) {
+        var bigpic = document.getElementById("bigpic");
+        bigpic.src = obj.src;
     }
 
 

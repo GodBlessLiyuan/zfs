@@ -120,9 +120,7 @@
     <div class="modal fade" id="imageModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="form-group">
-                    <img src="" id="image" height='50px' width='50px'/>
-                </div>
+                <img src="" id="image"/>
             </div>
         </div>
     </div>
