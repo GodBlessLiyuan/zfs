@@ -35,7 +35,7 @@ public class SmsServiceImpl implements ISmsService {
         try {
             String content = String.format("尊敬的用户，您本次的验证码是%s，请及时输入验证码完成操作。【砖助智能助手】",verifyCode);
 
-            String postData =  "sname=dlxinj00&spwd=admin1234&scorpid=&sprdid=1012818&sdst="+phone+"&smsg="+java.net.URLEncoder.encode(content,"utf-8");
+            String postData =  "sname=dlxinj00&spwd=admin123456&scorpid=&sprdid=1012818&sdst="+phone+"&smsg="+java.net.URLEncoder.encode(content,"utf-8");
             //发送POST请求
             URL url = new URL("http://cf.51welink.com/submitdata/Service.asmx/g_Submit");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
