@@ -38,6 +38,11 @@ public class OrderPO extends OrderPOKey implements Serializable {
      */
     private Byte status;
 
+    /**
+     * 1 未分成  2 已经计算过分成
+     */
+    private Byte revenue;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getUserDeviceId() {
@@ -136,6 +141,14 @@ public class OrderPO extends OrderPOKey implements Serializable {
         this.status = status;
     }
 
+    public Byte getRevenue() {
+        return revenue;
+    }
+
+    public void setRevenue(Byte revenue) {
+        this.revenue = revenue;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -161,7 +174,8 @@ public class OrderPO extends OrderPOKey implements Serializable {
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
             && (this.getPay() == null ? other.getPay() == null : this.getPay().equals(other.getPay()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getRevenue() == null ? other.getRevenue() == null : this.getRevenue().equals(other.getRevenue()));
     }
 
     @Override
@@ -182,6 +196,7 @@ public class OrderPO extends OrderPOKey implements Serializable {
         result = prime * result + ((getDays() == null) ? 0 : getDays().hashCode());
         result = prime * result + ((getPay() == null) ? 0 : getPay().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getRevenue() == null) ? 0 : getRevenue().hashCode());
         return result;
     }
 
@@ -203,6 +218,7 @@ public class OrderPO extends OrderPOKey implements Serializable {
         sb.append(", days=").append(days);
         sb.append(", pay=").append(pay);
         sb.append(", status=").append(status);
+        sb.append(", revenue=").append(revenue);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
