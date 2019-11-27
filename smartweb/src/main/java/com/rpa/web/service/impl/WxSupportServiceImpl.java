@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.WxSupportDTO;
 import com.rpa.web.mapper.WxSupportMapper;
@@ -9,6 +10,8 @@ import com.rpa.web.service.IWxSupportService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +30,9 @@ public class WxSupportServiceImpl implements IWxSupportService {
 
     @Resource
     private WxSupportMapper wxSupportMapper;
+
+    @Autowired
+    private StringRedisTemplate template;
 
     @Override
     public DTPageInfo<WxSupportDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
@@ -52,6 +58,21 @@ public class WxSupportServiceImpl implements IWxSupportService {
 
     @Override
     public int delete(int wId) {
+
+        //删除Redis
+        deleteRedis(wId);
+
         return wxSupportMapper.deleteByPrimaryKey(wId);
+    }
+
+    /**
+     * 删除Redis
+     */
+    private void deleteRedis(Integer wId) {
+        //Redis中的key
+        String key = RedisKeyUtil.genSupportRedisKey() + wId;
+        if (template.hasKey(key)) {
+            template.delete(key);
+        }
     }
 }

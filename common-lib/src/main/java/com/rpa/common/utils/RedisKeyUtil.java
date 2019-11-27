@@ -26,6 +26,30 @@ public class RedisKeyUtil {
         return RedisKeyUtil.genRedisKey(ModuleConstant.OTHER_APP, params);
     }
 
+    public static String genAdconfigRedisKey(Object... params) {
+        return RedisKeyUtil.genRedisKey(ModuleConstant.AD_CONFIG, params);
+    }
+
+    public static String genBannerconfigRedisKey(Object... params) {
+        return RedisKeyUtil.genRedisKey(ModuleConstant.BANNER_CONFIG, params);
+    }
+
+    public static String genNoticeRedisKey(Object... params) {
+        return RedisKeyUtil.genRedisKey(ModuleConstant.NOTICE, params);
+    }
+
+    public static String genFunctionvideoRedisKey(Object... params) {
+        return RedisKeyUtil.genRedisKey(ModuleConstant.FUNCTION_VIDEO, params);
+    }
+
+    public static String genSupportRedisKey(Object... params) {
+        return RedisKeyUtil.genRedisKey(ModuleConstant.SUPPORT, params);
+    }
+
+    public static String genShareRedisKey(Object... params) {
+        return RedisKeyUtil.genRedisKey(ModuleConstant.SHARE, params);
+    }
+
     /**
      * 生成RedisKey
      *
