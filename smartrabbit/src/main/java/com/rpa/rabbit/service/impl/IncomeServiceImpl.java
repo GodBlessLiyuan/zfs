@@ -11,6 +11,8 @@ import com.rpa.rabbit.pojo.InviteDetailPO;
 import com.rpa.rabbit.pojo.InviteUserPO;
 import com.rpa.rabbit.pojo.RevenueUserPO;
 import com.rpa.rabbit.service.IIncomeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,8 @@ import java.util.concurrent.TimeUnit;
 @EnableTransactionManagement
 @Service
 public class IncomeServiceImpl implements IIncomeService {
+    private static final Logger logger = LoggerFactory.getLogger(IncomeServiceImpl.class);
+
     @Resource
     private OrderMapper orderMapper;
     @Resource
