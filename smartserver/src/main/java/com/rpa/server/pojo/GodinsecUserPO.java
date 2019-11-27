@@ -21,6 +21,11 @@ public class GodinsecUserPO implements Serializable {
      */
     private Byte status;
 
+    /**
+     * 产品名称
+     */
+    private String name;
+
     private static final long serialVersionUID = 1L;
 
     public String getPhone() {
@@ -63,6 +68,14 @@ public class GodinsecUserPO implements Serializable {
         this.status = status;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -79,7 +92,8 @@ public class GodinsecUserPO implements Serializable {
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()));
     }
 
     @Override
@@ -91,6 +105,7 @@ public class GodinsecUserPO implements Serializable {
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getDays() == null) ? 0 : getDays().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         return result;
     }
 
@@ -105,6 +120,7 @@ public class GodinsecUserPO implements Serializable {
         sb.append(", updateTime=").append(updateTime);
         sb.append(", days=").append(days);
         sb.append(", status=").append(status);
+        sb.append(", name=").append(name);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

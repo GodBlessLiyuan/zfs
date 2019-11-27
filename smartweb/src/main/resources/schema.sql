@@ -432,6 +432,8 @@ CREATE TABLE t_godinsec_user
 	days int,
 	-- 1 未赠送  2 赠送
 	status tinyint DEFAULT 1 COMMENT '1 未赠送  2 赠送',
+	-- 产品名称
+	name char(64) NOT NULL COMMENT '产品名称',
 	PRIMARY KEY (phone),
 	UNIQUE (phone)
 );
