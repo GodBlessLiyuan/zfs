@@ -76,7 +76,7 @@ public class OrderServiceImpl implements IOrderService {
         for (GodinsecUserPO po : godinsecUserPOs) {
             OrderVO vo = new OrderVO();
             vo.setType(4);
-            vo.setComname("V商神器赠送");
+            vo.setComname(po.getName());
             vo.setPaytime(po.getCreateTime());
             orderVOs.add(vo);
         }

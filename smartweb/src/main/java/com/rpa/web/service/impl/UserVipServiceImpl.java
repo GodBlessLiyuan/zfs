@@ -7,6 +7,7 @@ import com.rpa.web.domain.*;
 import com.rpa.web.dto.UserVipDTO;
 import com.rpa.web.dto.UserVipDetailsDTO;
 import com.rpa.web.mapper.*;
+import com.rpa.web.pojo.GodinsecUserPO;
 import com.rpa.web.service.IUserVipService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,9 @@ public class UserVipServiceImpl implements IUserVipService {
 
     @Resource
     private BatchInfoMapper infoMapper;
+
+    @Resource
+    private GodinsecUserMapper godinsecUserMapper;
 
     @Override
     public DTPageInfo<UserVipDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
@@ -89,6 +93,17 @@ public class UserVipServiceImpl implements IUserVipService {
             userVipDetailsDTOs.add(dto);
         }
         // V商神器赠送
+        List<GodinsecUserPO> godinsecUserPOs = godinsecUserMapper.queryByUserId(userId);
+        for (GodinsecUserPO godinsecUserPO : godinsecUserPOs) {
+            UserVipDetailsDTO dto = new UserVipDetailsDTO();
+            dto.setVipType(UserVipConstant.USER_VIP_V);
+            dto.setUserChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
+            dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
+            dto.setCreateTime(godinsecUserPO.getCreateTime());
+            dto.setComTypeName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
+            dto.setDays(godinsecUserPO.getDays());
+            userVipDetailsDTOs.add(dto);
+        }
 
         // 卡密激活
         List<BatchInfoDO> batchInfoDOs = infoMapper.queryByUserId(userId);
