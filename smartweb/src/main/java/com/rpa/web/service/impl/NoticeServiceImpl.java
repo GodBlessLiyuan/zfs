@@ -16,6 +16,7 @@ import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +41,9 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Autowired
     private AdminUserMapper adminUserMapper;
+
+    @Autowired
+    private StringRedisTemplate template;
 
     @Value("${file.iconDir}")
     private String iconDir;
@@ -147,6 +151,10 @@ public class NoticeServiceImpl implements NoticeService {
         po.setStatus(1);
 
         int count = this.noticeMapper.insert(po);
+
+        //删除Redis
+        this.deleteRedis();
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
     }
 
@@ -174,6 +182,10 @@ public class NoticeServiceImpl implements NoticeService {
         po.setaId(aId);
 
         int count = this.noticeMapper.updateByPrimaryKey(po);
+
+        //删除Redis
+        this.deleteRedis();
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
 
@@ -187,6 +199,8 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public ResultVO delete(Integer noticeId) {
         int count = this.noticeMapper.deleteByPrimaryKey(noticeId);
+        //删除Redis
+        this.deleteRedis();
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
     }
 
@@ -296,5 +310,18 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
         return date;
+    }
+
+
+    /**
+     * 删除Redis
+     */
+    private void deleteRedis() {
+        String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        //Redis中的key
+        String key = "smarthelper" + "notice" + current_date;
+        if (template.hasKey(key)) {
+            template.delete(key);
+        }
     }
 }

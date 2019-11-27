@@ -37,6 +37,12 @@
     where fun_name = #{funName}
   </select>
 
+  <select id="queryFunnameById" resultType="java.lang.String">
+    select fun_name
+    from t_functionvideo
+    where function_id = #{functionId}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_functionvideo
     where function_id = #{functionId,jdbcType=INTEGER}
