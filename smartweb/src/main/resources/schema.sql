@@ -543,6 +543,8 @@ CREATE TABLE t_order
 	pay bigint,
 	-- 1 未支付  2 支付成功
 	status tinyint DEFAULT 1 COMMENT '1 未支付  2 支付成功',
+	-- 1 未分成  2 已经计算过分成
+	revenue tinyint DEFAULT 1 COMMENT '1 未分成  2 已经计算过分成',
 	PRIMARY KEY (order_id, order_number),
 	UNIQUE (order_id),
 	UNIQUE (order_number)

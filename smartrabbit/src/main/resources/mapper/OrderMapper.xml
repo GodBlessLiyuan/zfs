@@ -16,10 +16,11 @@
     <result column="days" jdbcType="INTEGER" property="days" />
     <result column="pay" jdbcType="BIGINT" property="pay" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="revenue" jdbcType="TINYINT" property="revenue" />
   </resultMap>
   <sql id="Base_Column_List">
     order_id, order_number, user_device_id, cmdy_id, user_id, device_id, create_time, 
-    starttime, endtime, pay_time, `type`, `days`, pay, `status`
+    starttime, endtime, pay_time, `type`, `days`, pay, `status`, revenue
   </sql>
   <select id="selectByPrimaryKey" parameterType="com.rpa.rabbit.pojo.OrderPOKey" resultMap="BaseResultMap">
     select 
@@ -194,6 +195,9 @@
       <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
       </if>
+      <if test="revenue != null">
+        revenue = #{revenue,jdbcType=TINYINT},
+      </if>
     </set>
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=CHAR}
@@ -211,7 +215,8 @@
       `type` = #{type,jdbcType=INTEGER},
       `days` = #{days,jdbcType=INTEGER},
       pay = #{pay,jdbcType=BIGINT},
-      `status` = #{status,jdbcType=TINYINT}
+      `status` = #{status,jdbcType=TINYINT},
+      revenue = #{revenue,jdbcType=TINYINT}
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=CHAR}
   </update>
