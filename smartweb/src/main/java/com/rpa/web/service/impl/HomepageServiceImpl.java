@@ -44,54 +44,62 @@ public class HomepageServiceImpl implements HomepageService {
      */
     @Override
     public ResultVO query() {
-        String newRegister = null;
-        String newUser = null;
-        String dayActiveUser = null;
-        String monthActiveUser = null;
-        String dayRevenue = null;
-        String payCount = null;
-        String monthRevenue = null;
 
+        //当前日期
         String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
+        //新增注册用户
+        String newRegister;
         newRegister = this.template.opsForValue().get("newRegister" + current_date);
         if (null == newRegister) {
             newRegister = String.valueOf(this.userMapper.queryTodayNewRegister());
         }
 
+        //新用户数
+        String newUser;
         newUser = this.template.opsForValue().get("newUser" + current_date);
         if (null == newUser) {
             newUser = String.valueOf(this.deviceMapper.queryTodayNewUser());
         }
 
+        //日活跃用户数
+        String dayActiveUser;
         dayActiveUser = (String) this.template.opsForHash().get("deviceStatistics" +current_date, "dayActiveUser");
         if (dayActiveUser == null) {
             dayActiveUser = String.valueOf(this.deviceStatisticsMapper.queryDayActiveUser());
         }
 
+        //月活跃用户数
+        String monthActiveUser;
         monthActiveUser = (String)this.template.opsForHash().get("deviceStatistics" + current_date, "monthActiveUser");
         if (null == monthActiveUser) {
             monthActiveUser = String.valueOf(this.deviceStatisticsMapper.queryMonthActiveUser());
         }
 
+        //当日收入
+        String dayRevenue;
         dayRevenue = (String) this.template.opsForHash().get("revenue" + current_date, "dayRevenue");
         if (null == dayRevenue) {
             Float dayRevenueFloat = this.orderMapper.queryDayRevenue();
             if (null != dayRevenueFloat) {
-                dayRevenue = String.valueOf(this.orderMapper.queryDayRevenue()*0.01);
+                dayRevenue = String.valueOf(dayRevenueFloat*0.01);
             }
         }
 
+        //支付次数
+        String payCount;
         payCount = (String)this.template.opsForHash().get("revenue" + current_date, "payCount");
         if (null == payCount) {
             payCount = String.valueOf(this.orderMapper.queryPayCount());
         }
 
+        //当月收入
+        String monthRevenue;
         monthRevenue = (String) this.template.opsForHash().get("revenue" + current_date, "monthRevenue");
         if (null == monthRevenue) {
             Float monthRevenueFloat = this.orderMapper.queryMonthRevenue();
             if (null != monthRevenueFloat) {
-                monthRevenue = String.valueOf(this.orderMapper.queryMonthRevenue()*0.01);
+                monthRevenue = String.valueOf(monthRevenueFloat*0.01);
             }
         }
 
