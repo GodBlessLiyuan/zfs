@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.AdminUserDTO;
@@ -189,7 +190,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
      * 删除Redis
      */
     private void deleteRedis() {
-        String key = "smarthelper" + "bannerconfig";
+        String key = RedisKeyUtil.genBannerconfigRedisKey();
         if (template.hasKey(key)) {
             template.delete(key);
         }

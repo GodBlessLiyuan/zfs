@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.AdminUserDTO;
@@ -235,7 +236,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
      */
     private void deleteRedis(String funname) {
         //Redis中的key
-        String key = "smarthelper" + "notice" + funname;
+        String key = RedisKeyUtil.genFunctionvideoRedisKey() + funname;
         if (template.hasKey(key)) {
             template.delete(key);
         }

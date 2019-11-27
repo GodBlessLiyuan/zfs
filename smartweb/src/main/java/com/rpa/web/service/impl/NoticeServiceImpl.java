@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.AdminUserDTO;
@@ -319,7 +320,7 @@ public class NoticeServiceImpl implements NoticeService {
     private void deleteRedis() {
         String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         //Redis中的key
-        String key = "smarthelper" + "notice" + current_date;
+        String key = RedisKeyUtil.genNoticeRedisKey() + current_date;
         if (template.hasKey(key)) {
             template.delete(key);
         }

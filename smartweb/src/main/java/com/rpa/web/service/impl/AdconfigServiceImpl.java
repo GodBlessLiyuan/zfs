@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.Constant;
 import com.rpa.web.dto.AdconfigDTO;
@@ -325,7 +326,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         for (Integer softChannelId : softChannelIds) {
             String name = this.softChannelMapper.queryNameById(softChannelId);
             for (Integer versioncode : versioncodes) {
-                String key = "smarthelper" + "adconfig" + name + versioncode;
+                String key = RedisKeyUtil.genAdconfigRedisKey() + name + versioncode;
                 if (template.hasKey(key)) {
                     template.delete(key);
                 }
@@ -341,7 +342,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         List<Integer> versioncodes = this.appMapper.queryVersioncodes();
         for (String name : names) {
             for (Integer versioncode : versioncodes) {
-                String key = "smarthelper" + "adconfig" + name + versioncode;
+                String key = RedisKeyUtil.genAdconfigRedisKey() + name + versioncode;
                 if (template.hasKey(key)) {
                     template.delete(key);
                 }

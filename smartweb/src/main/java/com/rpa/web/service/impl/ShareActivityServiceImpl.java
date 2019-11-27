@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.AdminUserDTO;
@@ -16,6 +17,7 @@ import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +38,9 @@ public class ShareActivityServiceImpl implements ShareActivityService {
 
     @Autowired
     private AdminUserMapper adminUserMapper;
+
+    @Autowired
+    private StringRedisTemplate template;
 
     @Value("${file.iconDir}")
     private String iconDir;
@@ -115,6 +120,10 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         po.setaId(aId);
 
         int count = this.shareActivityMapper.insert(po);
+
+        //删除Redis
+        deleteRedis();
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
     }
 
@@ -149,6 +158,10 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         po.setaId(aId);
 
         int count = this.shareActivityMapper.updateByPrimaryKey(po);
+
+        //删除Redis
+        deleteRedis();
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
     }
 
@@ -161,6 +174,10 @@ public class ShareActivityServiceImpl implements ShareActivityService {
     @Override
     public ResultVO delete(int materialId) {
         int count = this.shareActivityMapper.deleteByPrimaryKey(materialId);
+
+        //删除Redis
+        deleteRedis();
+
         return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
     }
 
@@ -200,5 +217,17 @@ public class ShareActivityServiceImpl implements ShareActivityService {
      */
     private String queryUsernameByAid(Integer aId) {
         return this.adminUserMapper.queryUsernameByAid(aId);
+    }
+
+
+    /**
+     * 删除Redis
+     */
+    private void deleteRedis() {
+        //Redis中的key
+        String key = RedisKeyUtil.genShareRedisKey();
+        if (template.hasKey(key)) {
+            template.delete(key);
+        }
     }
 }

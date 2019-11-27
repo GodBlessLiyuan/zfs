@@ -1,6 +1,7 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.constant.ConfigConstant;
 import com.rpa.server.dto.AdconfigDTO;
@@ -57,7 +58,7 @@ public class AdconfigServiceImpl implements AdconfigServcie {
         AdconfigVO vo;
 
         //Redis中的key
-        String key ="smarthelper" + "adconfig" + dto.getChannel() + dto.getSoftv();
+        String key = RedisKeyUtil.genAdconfigRedisKey() + dto.getChannel() + dto.getSoftv();
 
         //先从Redis中查询，若为null，再去查询数据库
         if (template.hasKey(key)) {
