@@ -23,9 +23,9 @@ public class InviteDetailConstant {
     /**
      * 普通会员分成
      */
-    public static final byte COMM_VIP_RATE = 10;
+    public static final byte COMM_VIP_RATE = 15;
     /**
      * 年会员分成
      */
-    public static final byte YEAR_VIP_RATE = 15;
+    public static final byte YEAR_VIP_RATE = 30;
 }
