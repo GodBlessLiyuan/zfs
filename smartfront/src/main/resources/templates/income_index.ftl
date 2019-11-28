@@ -23,7 +23,7 @@
         </div>
 
         <!--余额及提现 -->
-        <div class="my_state1 bg_color" style="box-shadow: 1px 1px 4px 4px #eeeeee;">
+        <div class="my_state1 bg_color" >
             <div class="">
                 <div class="total" style="font-size: 16px;color: #999999">
                     <b>我的余额</b>
@@ -36,7 +36,8 @@
                     </div>
                 </div>
                 <div style="width: 30%; height: 20px; float:right;margin-right: 15px">
-                    <a class="btn btn-primary " onclick="withdrawmoney()" style="border-radius: 20px; width:100%;background-color:#3496E8; color: #ffffff;vertical-align: center">提现</a>
+                    <a class="btn btn-primary btn_color" onclick="withdrawmoney()" style="border-radius: 20px; width:100%;background-image: linear-gradient(90deg, #5AAEF5 0%, #3496E8 100%);
+                    color: #ffffff;vertical-align: center">提现</a>
                 </div>
             </div>
         </div>

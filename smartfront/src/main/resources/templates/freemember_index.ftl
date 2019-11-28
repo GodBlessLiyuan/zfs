@@ -21,8 +21,8 @@
             </#if>
         </div>
 
-        <div style="margin-left: 20%;margin-right: 20%">
-            <p style="text-align: center;vertical-align: middle; border:2px solid darkgray;border-radius: 5px;padding-top: 5px;">${msg}</p>
+        <div class="div_text" style="margin-left: 20%;margin-right: 20%;border:none;">
+            <p style="text-align: center;vertical-align: middle; padding-top: 5px;">${msg}</p>
         </div>
 
         <div class="div_text" style="margin-top: 50px;" >
