@@ -173,14 +173,11 @@
     }
 
 
+
     /**
      * 动态显示当前时间
      */
-    var t = null;
     function showtime() {
-        //清除定时器
-        clearTimeout(t);
-
         var date = new Date();
         var year = date.getFullYear();
         var month = extra(date.getMonth() + 1);
@@ -194,11 +191,9 @@
 
         var show = year + '-' + month + '-' + day + '&ensp;' + hours + ':' + minutes + ':' + seconds + '&ensp;' + weekday[num];
         document.getElementById("time").innerHTML = show;
-
-        t = setTimeout(showtime, 1000); //设定定时器，循环运行
     }
-
     showtime();
+    window.setInterval(showtime,1000);
 
 
     //如果传入数字小于10，数字前补一位0
