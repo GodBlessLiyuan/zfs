@@ -5,6 +5,8 @@ import com.rpa.rabbit.pojo.OrderPO;
 import com.rpa.rabbit.pojo.OrderPOKey;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * OrderMapper继承基类
  */
@@ -23,4 +25,17 @@ public interface OrderMapper extends BaseMapper<OrderPO, OrderPOKey> {
     int queryPayCount();
 
     Float queryMonthRevenue();
+
+    /**
+     * 查询支付完成但尚未分成的数据
+     * @param orderId
+     * @return
+     */
+    List<OrderPO> queryNonRevenue(int orderId);
+
+    /**
+     * 查询当前最大OrderId
+     * @return
+     */
+    Integer queryMaxOrderId(int orderId);
 }
