@@ -29,3 +29,8 @@ mybatis:
 logging:
   path: E://log/
   file: ${logging.path}smartrabbit
+  level:
+    com:
+      rpa:
+        rabbit:
+          mapper: debug
