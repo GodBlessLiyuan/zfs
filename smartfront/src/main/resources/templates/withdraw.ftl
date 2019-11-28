@@ -19,7 +19,7 @@
     </div>
 
     <!--余额及提现 -->
-    <div class="my_state1 bg_color"  style="box-shadow: 1px 1px 4px 4px #eeeeee;">
+    <div class="my_state1 bg_color">
         <div>
             <div class="total" >
                 <span class="tx_time" style="font-size: 18px">可提金额:¥</span><span id="balance" class="tx_time" style="font-size: 18px">${res.data.balance}</span>
@@ -40,7 +40,7 @@
     </div>
 
     <!--请输入支付宝信息-->
-    <div class="my_state2 bg_color" style="height: 170px;box-shadow: 1px 1px 4px 4px #eeeeee;" >
+    <div class="my_state2 bg_color" style="height: 170px;" >
         <br>
         <p class="font_tishi" ><b>&nbsp;&nbsp;&nbsp;&nbsp;请输入支付宝信息</b></p>
 
@@ -54,7 +54,7 @@
     </div>
 
     <!--提示规则-->
-    <div class="my_state2 bg_color" style="height:250px;box-shadow: 1px 1px 4px 4px #eeeeee;" >
+    <div class="my_state2 bg_color" style="height:250px;" >
         <p style="margin-left: 10px;margin-top: 10px"><b>提现规则:</b></p>
         <p  style="padding-left: 10px;padding-right: 10px;">
             1.最低提现100元;<br>
