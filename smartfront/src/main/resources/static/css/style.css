@@ -447,8 +447,6 @@ button::after{
   -moz-tap-highlight-color: transparent;
 }
 
-
-
 .drawSubmit1{
   width: 80%;
   margin-left: 10%;
@@ -459,7 +457,6 @@ button::after{
   letter-spacing:1.6px;
   text-align: center;
   font-weight: bold;
-
 }
 
 .betweenLR{
@@ -690,7 +687,7 @@ button::after{
   overflow: hidden;
   height: 120px;
   border-radius: 6px;
-  box-shadow: 0px 4px 4px #eeeeee;
+  box-shadow: 1px 1px 4px 4px #eeeeee;
   margin:-85px 15px 10px 15px;
 }
 
@@ -719,7 +716,7 @@ button::after{
   overflow: hidden;
   height: 100px;
   border-radius: 6px;
-  box-shadow: 0px 4px 4px #eeeeee;
+  box-shadow: 1px 1px 4px 4px #eeeeee;
   margin:10px 15px 10px 15px;
 }
 
@@ -850,6 +847,9 @@ button::after{
   background-position: 0px 0px; /*图片显示的位置*/
   width: 20px; /*设置图片显示的宽*/
   height: 20px; /*图片显示的高*/
+}
+.div_text {
+
 }
 
 .div_text p {
