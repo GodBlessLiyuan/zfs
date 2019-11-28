@@ -74,13 +74,13 @@ public class RevenueUserServiceImpl implements RevenueUserService {
                 dto.setRegisterCount(po.getRegisterCount());
                 dto.setPayCount(po.getPayCount());
                 if (null != po.getTotalRevenue()) {
-                    dto.setTotalRevenue(po.getTotalRevenue()*0.01);
+                    dto.setTotalRevenue(Double.valueOf(po.getTotalRevenue())*0.01);
                 }
                 if (null != po.getRemaining()) {
-                    dto.setRemaining(po.getRemaining()*0.01);
+                    dto.setRemaining(Double.valueOf(po.getRemaining())*0.01);
                 }
                 if (null != po.getWithdraw()) {
-                    dto.setWithdraw(po.getWithdraw()*0.01);
+                    dto.setWithdraw(Double.valueOf(po.getWithdraw())*0.01);
                 }
                 dto.setWithdrawTime(po.getWithdrawTime());
 
@@ -174,12 +174,12 @@ public class RevenueUserServiceImpl implements RevenueUserService {
             dto.setPayTime(po.getPayTime());
             dto.setComTypeName(po.getComTypeName());
             if (null != po.getPay()) {
-                dto.setPay(po.getPay()*0.01);
+                dto.setPay(Double.valueOf(po.getPay())*0.01);
             }
             dto.setVipname(queryVipnameByVipid(po.getViptypeId()));
             dto.setProportion(po.getProportion()+"%");
             if (null != po.getEarnings()) {
-                dto.setEarnings(po.getEarnings()*0.01);
+                dto.setEarnings(Double.valueOf(po.getEarnings())*0.01);
             }
 
             DTOs.add(dto);
