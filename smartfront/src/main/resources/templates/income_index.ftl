@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <base href="${basePath}">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -9,11 +9,11 @@
     <meta name="format-detection" content="telephone=no">
     <title> 爱收益 </title>
 
-    <link rel="stylesheet" href="${basePath}/css/style.css">
-    <script src="${basePath}/js/generalize.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
-    <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./share/css/style.css">
+    <script src="./share/js/generalize.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./share/css/bootstrap.min.css">
+    <script src="./share/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="./share/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 
 </head>
     <body onload="window.Share.hideBackView()">
@@ -44,7 +44,7 @@
         <!--帮你一步做推广，快速赚钱 -->
         <div class="my_state2" style="box-shadow: 1px 1px 4px 4px #eeeeee;">
             <div class="rows">
-                <img class="bg_tuiguang" src="${basePath}/images/banner_extension.png" onclick="promotePage()">
+                <img class="bg_tuiguang" src="./share/images/banner_extension.png" onclick="promotePage()">
             </div>
         </div>
 
@@ -130,7 +130,7 @@
 
             function withdrawmoney(){
                 if(window.Share.isLogin()){
-                    window.location.href="${basePath}/v1.0/withdraw";
+                    window.location.href="./share/v1.0/withdraw";
                 }else {
                     window.Share.showDialog();
                 }
@@ -139,7 +139,7 @@
             /* 详情标签跳转函数*/
             function details() {
                 if(window.Share.isLogin()){
-                    window.location.href="${basePath}/v1.0/details";
+                    window.location.href="./share/v1.0/details";
                 }else{
                     window.Share.showDialog();
                 }
