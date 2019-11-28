@@ -10,8 +10,17 @@ import org.apache.ibatis.annotations.Mapper;
 public interface InviteDetailMapper extends BaseMapper<InviteDetailPO, Long> {
     /**
      * 查询注册人数
+     *
      * @param userId
      * @return
      */
     Integer queryCountByUserId(Long userId);
+
+    /**
+     * 通过orderId查询
+     *
+     * @param orderId
+     * @return
+     */
+    InviteDetailPO queryByOrderId(Integer orderId);
 }

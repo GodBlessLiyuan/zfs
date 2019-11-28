@@ -9,12 +9,14 @@ import com.rpa.rabbit.mapper.OrderMapper;
 import com.rpa.rabbit.mapper.RevenueUserMapper;
 import com.rpa.rabbit.pojo.InviteDetailPO;
 import com.rpa.rabbit.pojo.InviteUserPO;
+import com.rpa.rabbit.pojo.OrderPO;
 import com.rpa.rabbit.pojo.RevenueUserPO;
 import com.rpa.rabbit.service.IIncomeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class IncomeServiceImpl implements IIncomeService {
     private static final Logger logger = LoggerFactory.getLogger(IncomeServiceImpl.class);
+    private static int startOrderId = 0;
 
     @Resource
     private OrderMapper orderMapper;
@@ -56,6 +59,8 @@ public class IncomeServiceImpl implements IIncomeService {
         this.redisForRevenue();
         // 订单信息
         OrderBO orderBO = orderMapper.queryByOrderNumber(orderNumber);
+        orderBO.setRevenue((byte) 2);
+        orderMapper.updateByPrimaryKeySelective(orderBO);
         // 用户邀请人详情信息
         InviteUserBO inviteUserBO = inviteUserMapper.queryByInviteeId(orderBO.getUserId());
         if (null == inviteUserBO) {
@@ -117,6 +122,28 @@ public class IncomeServiceImpl implements IIncomeService {
         revenueUserMapper.updateByPrimaryKey(revenueUserPO);
     }
 
+    @Scheduled(fixedDelay = 2*60*60*1000)
+    public void scheduled() {
+        List<OrderPO> orderPOs = orderMapper.queryNonRevenue(startOrderId);
+        Integer maxOrderId = orderMapper.queryMaxOrderId(startOrderId);
+        if (null != maxOrderId) {
+            startOrderId = maxOrderId;
+        }
+        if (null == orderPOs || orderPOs.size() == 0) {
+            return;
+        }
+
+        for (OrderPO orderPO : orderPOs) {
+            InviteDetailPO inviteDetailPO = inviteDetailMapper.queryByOrderId(orderPO.getOrderId());
+            if (null == inviteDetailPO) {
+                this.payNotify(orderPO.getOrderNumber());
+            } else {
+                orderPO.setRevenue((byte) 2);
+                orderMapper.updateByPrimaryKey(orderPO);
+            }
+        }
+    }
+
     /**
      * @author: dangyi
      * @date: 2019.11.15
@@ -130,10 +157,10 @@ public class IncomeServiceImpl implements IIncomeService {
         Float monthRevenue = this.orderMapper.queryMonthRevenue();
 
         // 将统计结果封装成map
-        Map<String, String> revenue = new HashMap();
-        revenue.put("dayRevenue", String.valueOf(dayRevenue * 0.01));
+        Map<String, String> revenue = new HashMap<>(3);
+        revenue.put("dayRevenue", String.valueOf((null == dayRevenue ? 0 : dayRevenue) * 0.01));
         revenue.put("payCount", String.valueOf(payCount));
-        revenue.put("monthRevenue", String.valueOf(monthRevenue * 0.01));
+        revenue.put("monthRevenue", String.valueOf((null == monthRevenue ? 0 : monthRevenue) * 0.01));
         this.template.opsForHash().putAll("revenue" + current_date, revenue);
         this.template.expire("revenue" + current_date, 25, TimeUnit.HOURS);
     }

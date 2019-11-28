@@ -2,6 +2,7 @@ package com.rpa.rabbit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author: xiahui
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version: 1.0
  */
 @SpringBootApplication
+@EnableScheduling
 public class RabbitApplication {
 
     public static void main(String[] args) {

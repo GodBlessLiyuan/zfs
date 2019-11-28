@@ -44,6 +44,9 @@ public class AppServiceImpl implements IAppService {
 
         int status = cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
         String redisKey = RedisKeyUtil.genAppRedisKey(dto.getSoftv(), dto.getChannel());
+        //更新统计
+        mqForDeviceInfo(dto, req);
+
         if (status == 2) {
             String redisValue = cache.getCacheByKey(redisKey);
             if (null != redisValue) {
@@ -72,8 +75,6 @@ public class AppServiceImpl implements IAppService {
         vo.setContext(appPO.getContext());
         vo.setCode(appPO.getVersioncode());
         vo.setVersionname(appPO.getVersionname());
-
-        mqForDeviceInfo(dto, req);
 
         if (status == 2) {
             cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
