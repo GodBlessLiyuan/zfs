@@ -2,7 +2,7 @@
 ps -ef | grep smartserver | grep -v grep | awk '{print $2}' | xargs kill -9 
 ps -ef | grep smartzuul | grep -v grep | awk '{print $2}' | xargs kill -9
 ps -ef | grep smartweb | grep -v grep | awk '{print $2}' | xargs kill -9
-ps -ef | grep smartproducer | grep -v grep | awk '{print $2}' | xargs kill -9
+ps -ef | grep smartkafka | grep -v grep | awk '{print $2}' | xargs kill -9
 ps -ef | grep smartfront | grep -v grep | awk '{print $2}' | xargs kill -9
 ps -ef | grep smartconsumer | grep -v grep | awk '{print $2}' | xargs kill -9
 ps -ef | grep smarteureka | grep -v grep | awk '{print $2}' | xargs kill -9
@@ -42,10 +42,10 @@ ps -ef | grep smartserver | grep -v grep | awk '{print $2}' | xargs kill -9 | sl
 nohup java -Xms128m -Xmx512m  -Dloader.path=/data/project/lib -jar /data/project/bin/smartserver-1.0.1.jar --spring.profiles.active=dev >/data/project/logs/smartserver.log 2>&1 &
 
 
-rm -rf /data/project/bin/smartproducer-1.0.jar
-cp /data/local/repo/com/rpa/smartproducer/1.0/smartproducer-1.0.jar /data/project/bin
-ps -ef | grep smartproducer | grep -v grep | awk '{print $2}' | xargs kill -9 | sleep 1
-nohup java -Xms128m -Xmx512m  -Dloader.path=/data/project/lib -jar /data/project/bin/smartproducer-1.0.jar --spring.profiles.active=dev >/data/project/logs/smartproducer.log 2>&1 &
+rm -rf /data/project/bin/smartkafka-1.0.jar
+cp /data/local/repo/com/rpa/smartkafka/1.0/smartkafka-1.0.jar /data/project/bin
+ps -ef | grep smartkafka | grep -v grep | awk '{print $2}' | xargs kill -9 | sleep 1
+nohup java -Xms128m -Xmx512m  -Dloader.path=/data/project/lib -jar /data/project/bin/smartkafka-1.0.jar --spring.profiles.active=dev >/data/project/logs/smartkafka.log 2>&1 &
 
 rm -rf /data/project/bin/smartconsumer-1.0.jar
 cp /data/local/repo/com/rpa/smartconsumer/1.0/smartconsumer-1.0.jar /data/project/bin
