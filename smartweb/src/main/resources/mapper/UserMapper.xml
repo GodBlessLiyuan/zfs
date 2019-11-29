@@ -145,6 +145,7 @@
         as buildRelease, d.manufacturer, d.androidmodel
         from t_user u left join t_user_device ud on u.user_id = ud.user_id left join t_device d on ud.device_id =
         d.device_id
+        order by u.create_time desc
         <where>
             <if test="phone!=null and phone!=''">AND u.phone like '%' #{phone} '%'</if>
         </where>

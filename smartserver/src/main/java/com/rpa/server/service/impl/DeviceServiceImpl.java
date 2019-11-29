@@ -108,6 +108,7 @@ public class DeviceServiceImpl implements IDeviceService {
         po.setBuildversion(dto.getOsv());
         po.setBuildrelease(dto.getOsre());
         po.setSoftChannelId(cache.getSoftChannelId(dto.getChannel()));
+        po.setChanName(dto.getChannel());
         po.setManufacturer(dto.getFactory());
         po.setAndroidmodel(dto.getModel());
         po.setVersioncode(dto.getSoftv());

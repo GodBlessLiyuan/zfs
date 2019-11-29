@@ -205,6 +205,7 @@
         from t_device d
         left join t_user_device u on d.device_id = u.device_id where u.user_id is null
         <if test="channelId!=null and channelId!=''">AND soft_channel_id = #{channelId}</if>
+        order by d.create_time desc
     </select>
 
   <select id="queryTodayNewUser" resultType="java.lang.Integer">
