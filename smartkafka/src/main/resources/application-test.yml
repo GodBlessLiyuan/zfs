@@ -36,4 +36,4 @@ logging:
 kafka:
   jaas:
     conf:
-      path: D:/Project/smarthelper/smartkafka/src/main/resources/kafka_client_jaas.conf
+      path: classpath:kafka_client_jaas.conf
