@@ -110,7 +110,7 @@
     left join t_invite_detail id on iu.invite_id = id.invite_id
     left join t_user u on iu.invite_phone = u.phone
     where iu.user_id = #{userId,jdbcType=BIGINT}
-    group by iu.invite_id
+    group by iu.invite_id, u.create_time
   </select>
   <select id="queryByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
