@@ -111,7 +111,7 @@
 </div>
 
 <script>
-    // 打开 提现确认 弹框---并验证信息
+   /* 打开 提现确认 弹框-- -并验证信息*/
     function showBox(){
         if($("#importBalance").val()==""||$("#importBalance").val()==undefined){
             $(".errorMsg").text("提现金额不能为空")
@@ -157,7 +157,8 @@
 
 
         $.ajax({
-            url: "",
+            /*将提现信息 保存到后台 现在没有和支付宝 对接 后台审核 */
+            url: "/share/v1.0/determine",
             data: {
                 "money": money,
                 "zfb_account": zfb_account,
@@ -166,14 +167,16 @@
             type: "POST",
             async: false,
             success: function(res) {
-                if ('0000' == res["statuscode"]) {
+
+               /* 返回1000 提现成功 弹出提现成功提示框 */
+                if ('1000' == res["status"]) {
                     closeBox();
                     $(".successBox").show();
                     $("#zhezhaoa").css({
                         "display":"block"
                     });
                     $("html,body").css({"height":"100%","overflow":"hidden"});
-                } else if ('1001' == res["statuscode"]) {
+                } else if ('1001' == res["status"]) {
 
                     closeBox();
                     $(".box-text2").text("已有提现订单，请勿重复申请");
