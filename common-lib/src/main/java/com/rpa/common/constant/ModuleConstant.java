@@ -13,6 +13,7 @@ public class ModuleConstant {
     public static final String PLUGIN = "plugin";
     public static final String VIP_COMMODITY = "vipcommodity";
     public static final String OTHER_APP = "otherapp";
+    public static final String WHITE_DEVICE = "whitedevice";
     public static final String AD_CONFIG = "adconfig";
     public static final String BANNER_CONFIG = "bannerconfig";
     public static final String NOTICE = "notice";

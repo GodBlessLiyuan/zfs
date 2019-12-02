@@ -34,6 +34,7 @@
         <module>smartzipkin</module>
         <module>smartrabbit</module>
         <module>smartdetect</module>
+        <module>smartvoice</module>
     </modules>
 
     <dependencyManagement>
@@ -134,6 +135,10 @@
                     <artifactId>android-json</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.rpa</groupId>
+            <artifactId>common-lib</artifactId>
         </dependency>
     </dependencies>
 
