@@ -157,7 +157,7 @@
 
 
         $.ajax({
-            url: "",
+            url: "/share/v1.0/determine",
             data: {
                 "money": money,
                 "zfb_account": zfb_account,
@@ -166,14 +166,16 @@
             type: "POST",
             async: false,
             success: function(res) {
-                if ('0000' == res["statuscode"]) {
+
+               /* 返回1000 提现成功 弹出提现成功提示框 */
+                if ('1000' == res["status"]) {
                     closeBox();
                     $(".successBox").show();
                     $("#zhezhaoa").css({
                         "display":"block"
                     });
                     $("html,body").css({"height":"100%","overflow":"hidden"});
-                } else if ('1001' == res["statuscode"]) {
+                } else if ('1001' == res["status"]) {
 
                     closeBox();
                     $(".box-text2").text("已有提现订单，请勿重复申请");
