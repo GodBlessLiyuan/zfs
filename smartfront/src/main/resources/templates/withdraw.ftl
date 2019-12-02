@@ -111,7 +111,7 @@
 </div>
 
 <script>
-    // 打开 提现确认 弹框---并验证信息
+   /* 打开 提现确认 弹框-- -并验证信息*/
     function showBox(){
         if($("#importBalance").val()==""||$("#importBalance").val()==undefined){
             $(".errorMsg").text("提现金额不能为空")
@@ -157,6 +157,7 @@
 
 
         $.ajax({
+            /*将提现信息 保存到后台 现在没有和支付宝 对接 后台审核 */
             url: "/share/v1.0/determine",
             data: {
                 "money": money,
