@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.domain.WhiteDeviceDO;
 import com.rpa.web.dto.WhiteDeviceDTO;
@@ -14,12 +15,16 @@ import com.rpa.web.service.IWhiteDeviceService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.ResultVOUtil;
 import com.rpa.web.vo.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author: xiahui
@@ -34,6 +39,8 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
     private WhiteDeviceMapper whiteDeviceMapper;
     @Resource
     private DeviceImeiMapper deviceImeiMapper;
+    @Autowired
+    private StringRedisTemplate template;
 
     @Override
     public DTPageInfo<WhiteDeviceDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
@@ -67,11 +74,26 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
 
         whiteDeviceMapper.insert(po);
 
+        this.deleteRedis();
+
         return ResultVOUtil.success();
     }
 
     @Override
     public int deleteByDeviceId(int deviceId) {
-        return whiteDeviceMapper.deleteByDeviceId(deviceId);
+        int first = whiteDeviceMapper.deleteByDeviceId(deviceId);
+        this.deleteRedis();
+        return first;
+    }
+
+
+    /**
+     * 删除对应的Redis
+     */
+    private void deleteRedis() {
+        Set<String> redisKeys = template.keys(RedisKeyUtil.genWhiteDeviceRedisKey("*"));
+        if (!CollectionUtils.isEmpty(redisKeys)) {
+            template.delete(redisKeys);
+        }
     }
 }

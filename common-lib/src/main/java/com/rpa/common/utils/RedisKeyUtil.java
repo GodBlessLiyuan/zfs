@@ -22,6 +22,10 @@ public class RedisKeyUtil {
         return RedisKeyUtil.genRedisKey(ModuleConstant.VIP_COMMODITY, params);
     }
 
+    public static String genWhiteDeviceRedisKey(Object... params) {
+        return RedisKeyUtil.genRedisKey(ModuleConstant.WHITE_DEVICE, params);
+    }
+
     public static String genOtherAppRedisKey(Object... params) {
         return RedisKeyUtil.genRedisKey(ModuleConstant.OTHER_APP, params);
     }
