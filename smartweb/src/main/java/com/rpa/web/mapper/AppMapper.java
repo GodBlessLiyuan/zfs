@@ -4,6 +4,7 @@ import com.rpa.web.pojo.AppPO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * AppMapper继承基类
@@ -27,4 +28,18 @@ public interface AppMapper extends BaseDAO<AppPO, Integer> {
     AppPO queryByVersionCode(Object versionCode);
 
     List<Integer> queryVersioncodes();
+
+    /**
+     * 查询应用Id
+     * @return
+     * @param reqData
+     */
+    List<Integer> queryAppId(Map<String, Object> reqData);
+
+    /**
+     * 根据ids查询
+     * @param appIds
+     * @return
+     */
+    List<AppPO> queryByIds(List<Integer> appIds);
 }

@@ -208,16 +208,16 @@
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
 
-    <select id="query" resultType="com.rpa.web.pojo.AppPO">
+    <select id="queryByIds" resultType="com.rpa.web.pojo.AppPO">
         select a.app_id as appId, a.publish_time as publishTime, au.username, a.versionname as versionName, a.size,
         a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra
         from t_app a
         left join t_app_ch ac on a.app_id = ac.app_id
         left join t_soft_channel s on ac.soft_channel_id = s.soft_channel_id
-        left join t_admin_user au on a.a_id = au.a_id where a.dr = 1
-        <if test="updateType != null and updateType != 0">
-            and a.update_type = #{updateType}
-        </if>
+        left join t_admin_user au on a.a_id = au.a_id where a.dr = 1 and a.app_id in (
+        <foreach collection="list" item="appId" index="index" separator=",">
+            #{appId,jdbcType=INTEGER}
+        </foreach>)
     </select>
 
     <select id="queryAll" resultType="com.rpa.web.pojo.AppPO">
@@ -252,5 +252,14 @@
     <select id="queryVersioncodes" parameterType="java.lang.Integer">
         select distinct versioncode
         from t_app
+    </select>
+    <select id="queryAppId" resultType="java.lang.Integer">
+        select app_id as appId
+        from t_app
+        where dr = 1
+        <if test="updateType != null and updateType != 0">
+            and update_type = #{updateType}
+        </if>
+        order by app_id
     </select>
 </mapper>
