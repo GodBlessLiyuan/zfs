@@ -14,8 +14,6 @@ public class GodinsecUserPO implements Serializable {
 
     private Date updateTime;
 
-    private Integer days;
-
     /**
      * 1 未赠送  2 赠送
      */
@@ -25,6 +23,11 @@ public class GodinsecUserPO implements Serializable {
      * 产品名称
      */
     private String name;
+
+    /**
+     * vip到期时间
+     */
+    private Date endTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -52,14 +55,6 @@ public class GodinsecUserPO implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Integer getDays() {
-        return days;
-    }
-
-    public void setDays(Integer days) {
-        this.days = days;
-    }
-
     public Byte getStatus() {
         return status;
     }
@@ -74,6 +69,14 @@ public class GodinsecUserPO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     @Override
@@ -91,9 +94,9 @@ public class GodinsecUserPO implements Serializable {
         return (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()));
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()));
     }
 
     @Override
@@ -103,9 +106,9 @@ public class GodinsecUserPO implements Serializable {
         result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        result = prime * result + ((getDays() == null) ? 0 : getDays().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
         return result;
     }
 
@@ -118,9 +121,9 @@ public class GodinsecUserPO implements Serializable {
         sb.append(", phone=").append(phone);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", days=").append(days);
         sb.append(", status=").append(status);
         sb.append(", name=").append(name);
+        sb.append(", endTime=").append(endTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

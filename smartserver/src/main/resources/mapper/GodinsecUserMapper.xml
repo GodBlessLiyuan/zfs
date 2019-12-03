@@ -5,12 +5,12 @@
     <id column="phone" jdbcType="CHAR" property="phone" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="days" jdbcType="INTEGER" property="days" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="name" jdbcType="CHAR" property="name" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    phone, create_time, update_time, `days`, `status`, `name`
+    phone, create_time, update_time, `status`, `name`, end_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -24,9 +24,11 @@
   </delete>
   <insert id="insert" parameterType="com.rpa.server.pojo.GodinsecUserPO">
     insert into t_godinsec_user (phone, create_time, update_time, 
-      `days`, `status`, `name`)
+      `status`, `name`, end_time
+      )
     values (#{phone,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{days,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{name,jdbcType=CHAR})
+      #{status,jdbcType=TINYINT}, #{name,jdbcType=CHAR}, #{endTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.server.pojo.GodinsecUserPO">
     insert into t_godinsec_user
@@ -40,14 +42,14 @@
       <if test="updateTime != null">
         update_time,
       </if>
-      <if test="days != null">
-        `days`,
-      </if>
       <if test="status != null">
         `status`,
       </if>
       <if test="name != null">
         `name`,
+      </if>
+      <if test="endTime != null">
+        end_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -60,14 +62,14 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="days != null">
-        #{days,jdbcType=INTEGER},
-      </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
       </if>
       <if test="name != null">
         #{name,jdbcType=CHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -80,14 +82,14 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="days != null">
-        `days` = #{days,jdbcType=INTEGER},
-      </if>
       <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
       </if>
       <if test="name != null">
         `name` = #{name,jdbcType=CHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where phone = #{phone,jdbcType=CHAR}
@@ -96,14 +98,14 @@
     update t_godinsec_user
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      `days` = #{days,jdbcType=INTEGER},
       `status` = #{status,jdbcType=TINYINT},
-      `name` = #{name,jdbcType=CHAR}
+      `name` = #{name,jdbcType=CHAR},
+      end_time = #{endTime,jdbcType=TIMESTAMP}
     where phone = #{phone,jdbcType=CHAR}
   </update>
 
   <select id="queryByUserId" parameterType="java.lang.Long" resultType="com.rpa.server.pojo.GodinsecUserPO">
-    select gu.create_time as createTime, gu.name
+    select gu.create_time as createTime, gu.name, gu.end_time as endTime
     from t_godinsec_user gu left join t_user u on gu.phone = u.phone
     where gu.`status` = 2 and user_id = #{userId,jdbcType=BIGINT}
   </select>
