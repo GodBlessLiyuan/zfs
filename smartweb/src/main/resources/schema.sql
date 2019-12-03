@@ -426,7 +426,7 @@ CREATE TABLE t_functionvideo
 
 CREATE TABLE t_godinsec_user
 (
-	phone char(11) NOT NULL,t_godinsec_user
+	phone char(11) NOT NULL,
 	create_time datetime,
 	update_time datetime,
 	-- 1 未赠送  2 赠送
@@ -435,6 +435,8 @@ CREATE TABLE t_godinsec_user
 	name char(64) NOT NULL COMMENT '产品名称',
 	-- vip到期时间
 	end_time datetime COMMENT 'vip到期时间',
+	-- 赠送天数
+	days int DEFAULT 0 COMMENT '赠送天数',
 	PRIMARY KEY (phone),
 	UNIQUE (phone)
 );

@@ -8,9 +8,10 @@
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="name" jdbcType="CHAR" property="name" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="days" jdbcType="INTEGER" property="days" />
   </resultMap>
   <sql id="Base_Column_List">
-    phone, create_time, update_time, `status`, `name`, end_time
+    phone, create_time, update_time, `status`, `name`, end_time, `days`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -24,11 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.rpa.web.pojo.GodinsecUserPO">
     insert into t_godinsec_user (phone, create_time, update_time, 
-      `status`, `name`, end_time
-      )
+      `status`, `name`, end_time, 
+      `days`)
     values (#{phone,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=TINYINT}, #{name,jdbcType=CHAR}, #{endTime,jdbcType=TIMESTAMP}
-      )
+      #{status,jdbcType=TINYINT}, #{name,jdbcType=CHAR}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{days,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.web.pojo.GodinsecUserPO">
     insert into t_godinsec_user
@@ -51,6 +52,9 @@
       <if test="endTime != null">
         end_time,
       </if>
+      <if test="days != null">
+        `days`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="phone != null">
@@ -70,6 +74,9 @@
       </if>
       <if test="endTime != null">
         #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="days != null">
+        #{days,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -91,6 +98,9 @@
       <if test="endTime != null">
         end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="days != null">
+        `days` = #{days,jdbcType=INTEGER},
+      </if>
     </set>
     where phone = #{phone,jdbcType=CHAR}
   </update>
@@ -100,7 +110,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       `status` = #{status,jdbcType=TINYINT},
       `name` = #{name,jdbcType=CHAR},
-      end_time = #{endTime,jdbcType=TIMESTAMP}
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      `days` = #{days,jdbcType=INTEGER}
     where phone = #{phone,jdbcType=CHAR}
   </update>
 

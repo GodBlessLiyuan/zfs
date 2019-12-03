@@ -29,6 +29,11 @@ public class GodinsecUserPO implements Serializable {
      */
     private Date endTime;
 
+    /**
+     * 赠送天数
+     */
+    private Integer days;
+
     private static final long serialVersionUID = 1L;
 
     public String getPhone() {
@@ -79,6 +84,14 @@ public class GodinsecUserPO implements Serializable {
         this.endTime = endTime;
     }
 
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -96,7 +109,8 @@ public class GodinsecUserPO implements Serializable {
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()));
+            && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
+            && (this.getDays() == null ? other.getDays() == null : this.getDays().equals(other.getDays()));
     }
 
     @Override
@@ -109,6 +123,7 @@ public class GodinsecUserPO implements Serializable {
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
+        result = prime * result + ((getDays() == null) ? 0 : getDays().hashCode());
         return result;
     }
 
@@ -124,6 +139,7 @@ public class GodinsecUserPO implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", name=").append(name);
         sb.append(", endTime=").append(endTime);
+        sb.append(", days=").append(days);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
