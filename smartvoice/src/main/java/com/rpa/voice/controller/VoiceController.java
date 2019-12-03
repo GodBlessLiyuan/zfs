@@ -1,8 +1,15 @@
 package com.rpa.voice.controller;
 
+import com.rpa.common.utils.VerifyUtil;
 import com.rpa.common.vo.ResultVO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.rpa.voice.dto.VoicePlayDTO;
+import com.rpa.voice.dto.VoiceShareDTO;
+import com.rpa.voice.dto.VoiceUploadDTO;
+import com.rpa.voice.service.IVoiceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author: xiahui
@@ -10,11 +17,32 @@ import org.springframework.web.bind.annotation.RestController;
  * @description: 语音盒子
  * @version: 1.0
  */
+@RequestMapping("v1.1")
 @RestController
 public class VoiceController {
+    @Autowired
+    private IVoiceService service;
 
-    @PostMapping("voiceshare")
-    public ResultVO voiceShare() {
-        return null;
+    @PostMapping("share")
+    public ResultVO share(@RequestBody VoiceShareDTO dto, HttpServletRequest req) {
+        if (!VerifyUtil.checkToken(dto, req)) {
+            return new ResultVO(2000);
+        }
+
+        return service.share(dto);
+    }
+
+    @PostMapping("upload")
+    public ResultVO upload(@RequestBody VoiceUploadDTO dto, HttpServletRequest req) {
+        if (!VerifyUtil.checkToken(dto, req)) {
+            return new ResultVO(2000);
+        }
+
+        return service.upload(dto);
+    }
+
+    @GetMapping("play")
+    public ResultVO play(@RequestBody VoicePlayDTO dto) {
+        return service.play(dto);
     }
 }
