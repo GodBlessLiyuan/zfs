@@ -2,6 +2,7 @@ package com.rpa.server.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.rpa.common.utils.DateUtil;
 import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.LoginDTO;
 import com.rpa.server.mapper.*;
@@ -121,11 +122,11 @@ public class LoginServiceImpl implements ILoginService {
             GodinsecUserPO godinsecUserPO = godinsecUserMapper.selectByPrimaryKey(dto.getPh());
             int godDays = 0;
             if (null != godinsecUserPO) {
+                godDays = DateUtil.daysApart(new Date(), godinsecUserPO.getEndTime());
                 godinsecUserPO.setUpdateTime(new Date());
+                godinsecUserPO.setDays(godDays);
                 godinsecUserPO.setStatus((byte) 2);
                 godinsecUserMapper.updateByPrimaryKey(godinsecUserPO);
-
-                godDays = godinsecUserPO.getDays();
             }
 
             if (days + godDays > 0) {

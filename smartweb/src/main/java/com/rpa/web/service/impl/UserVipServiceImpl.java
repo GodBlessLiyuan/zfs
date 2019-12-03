@@ -99,7 +99,7 @@ public class UserVipServiceImpl implements IUserVipService {
             dto.setVipType(UserVipConstant.USER_VIP_V);
             dto.setUserChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
-            dto.setCreateTime(godinsecUserPO.getCreateTime());
+            dto.setCreateTime(godinsecUserPO.getUpdateTime());
             dto.setComTypeName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setDays(godinsecUserPO.getDays());
             userVipDetailsDTOs.add(dto);
