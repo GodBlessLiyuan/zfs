@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author: xiahui
@@ -27,8 +28,10 @@ public class VoiceServiceImpl implements IVoiceService {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     @Resource
     private VoiceShareMapper voiceShareMapper;
-    @Value("${file.baseUrl}")
+    @Value("${project.baseUrl}")
     private String baseUrl;
+    @Value("${project.shareUrl}")
+    private String shareUrl;
     @Value("${file.rootDir}")
     private String rootDir;
     @Value("${file.proDir}")
@@ -49,7 +52,7 @@ public class VoiceServiceImpl implements IVoiceService {
         po.setStatus((byte) 1);
         po.setPath(FileUtil.genFilePath(proDir, voiceDir, sdf.format(curDate),
                 ModuleConstant.VOICE + "_" + curDate.getTime()));
-        po.setUrl(null);
+        po.setUrl(shareUrl + UUID.randomUUID().toString().replace("-", ""));
         voiceShareMapper.insert(po);
 
         VoiceShareVO vo = new VoiceShareVO();
