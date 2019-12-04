@@ -23,7 +23,9 @@ logging:
         common:
           mapper: debug
 file:
-  baseUrl: http://192.168.10.3
   rootDir: /data/ftp/smartftp/
   proDir: smartfile
   voiceDir: voice
+project:
+  baseUrl: http://192.168.10.3
+  shareUrl: http://rpahelper.com/voice/v1.1/share/
