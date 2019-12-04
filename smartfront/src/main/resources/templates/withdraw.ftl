@@ -6,10 +6,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>余额提现</title>
-    <link rel="stylesheet" href="${basePath}/css/style.css">
-    <script src="${basePath}/js/generalize.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
-    <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./share/css/style.css">
+    <script src="./share/js/generalize.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./share/css/bootstrap.min.css">
+    <script src="./share/js/bootstrap.min.js" type="text/javascript"></script>
 
 </head>
 <body onload="window.Share.showBackView()">

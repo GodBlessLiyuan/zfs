@@ -9,11 +9,11 @@
     <meta name="format-detection" content="telephone=no">
     <title> 智能推广营销工具 </title>
 
-    <link rel="stylesheet" href="${basePath}/css/style.css">
-    <script src="${basePath}/js/generalize.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
-    <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./share/css/style.css">
+    <script src="./share/js/generalize.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./share/css/bootstrap.min.css">
+    <script src="./share/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="./share/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 
 </head>
 
@@ -30,7 +30,7 @@
 
         <style>
             body {
-                background-image: url("${basePath}/images/bg_extension.png");
+                background-image: url("./share/images/bg_extension.png");
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-position: center 0px;
