@@ -33,6 +33,7 @@ DROP TABLE IF EXISTS t_device_statistics;
 DROP TABLE IF EXISTS t_exception;
 DROP TABLE IF EXISTS t_user_notice;
 DROP TABLE IF EXISTS t_user_device;
+DROP TABLE IF EXISTS t_voice_share;
 DROP TABLE IF EXISTS t_white_device;
 DROP TABLE IF EXISTS t_device;
 DROP TABLE IF EXISTS t_feedback;
@@ -814,6 +815,26 @@ CREATE TABLE t_viptype
 );
 
 
+CREATE TABLE t_voice_share
+(
+	voiceid int NOT NULL AUTO_INCREMENT,
+	device_id bigint NOT NULL,
+	user_id bigint NOT NULL,
+	user_device_id int,
+	total int,
+	create_time datetime,
+	url char(255),
+	-- 1 初始阶段，未上传 2 上传文件中  3 完成  4 失败
+	status tinyint DEFAULT 1 COMMENT '1 初始阶段，未上传 2 上传文件中  3 完成  4 失败',
+	path char(128),
+	extra char(128),
+	PRIMARY KEY (voiceid),
+	UNIQUE (voiceid),
+	UNIQUE (device_id),
+	UNIQUE (user_id)
+);
+
+
 CREATE TABLE t_white_device
 (
 	device_id bigint NOT NULL,
@@ -1050,6 +1071,14 @@ ALTER TABLE t_exception
 
 
 ALTER TABLE t_user_device
+	ADD FOREIGN KEY (device_id)
+	REFERENCES t_device (device_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_voice_share
 	ADD FOREIGN KEY (device_id)
 	REFERENCES t_device (device_id)
 	ON UPDATE RESTRICT
