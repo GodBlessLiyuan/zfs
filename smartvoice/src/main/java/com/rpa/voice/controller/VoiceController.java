@@ -2,7 +2,6 @@ package com.rpa.voice.controller;
 
 import com.rpa.common.utils.VerifyUtil;
 import com.rpa.common.vo.ResultVO;
-import com.rpa.voice.dto.VoicePlayDTO;
 import com.rpa.voice.dto.VoiceShareDTO;
 import com.rpa.voice.dto.VoiceUploadDTO;
 import com.rpa.voice.service.IVoiceService;
@@ -39,10 +38,5 @@ public class VoiceController {
         }
 
         return service.upload(dto);
-    }
-
-    @GetMapping("play")
-    public ResultVO play(@RequestBody VoicePlayDTO dto) {
-        return service.play(dto);
     }
 }
