@@ -18,7 +18,7 @@
     `path`, extra
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_voice_share
     where voice_id = #{voiceId,jdbcType=BIGINT}
@@ -27,7 +27,7 @@
     delete from t_voice_share
     where voice_id = #{voiceId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.common.pojo.VoiceSharePO">
+  <insert id="insert" parameterType="com.rpa.common.pojo.VoiceSharePO" useGeneratedKeys="true" keyProperty="voiceId">
     insert into t_voice_share (voice_id, device_id, user_id, 
       user_device_id, total, create_time, 
       url, `status`, `path`, extra

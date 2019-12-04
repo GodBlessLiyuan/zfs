@@ -20,4 +20,6 @@ public class ModuleConstant {
     public static final String FUNCTION_VIDEO = "functionvideo";
     public static final String SUPPORT = "support";
     public static final String SHARE = "share";
+
+    public static final String VOICE = "voice";
 }

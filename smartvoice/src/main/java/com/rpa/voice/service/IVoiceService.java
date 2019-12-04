@@ -1,7 +1,6 @@
 package com.rpa.voice.service;
 
 import com.rpa.common.vo.ResultVO;
-import com.rpa.voice.dto.VoicePlayDTO;
 import com.rpa.voice.dto.VoiceShareDTO;
 import com.rpa.voice.dto.VoiceUploadDTO;
 
@@ -28,12 +27,4 @@ public interface IVoiceService {
      * @return
      */
     ResultVO upload(VoiceUploadDTO dto);
-
-    /**
-     * 语音播放
-     *
-     * @param dto
-     * @return
-     */
-    ResultVO play(VoicePlayDTO dto);
 }
