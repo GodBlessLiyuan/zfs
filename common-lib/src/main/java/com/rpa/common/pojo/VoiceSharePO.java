@@ -8,7 +8,7 @@ import java.util.Date;
  * @author 
  */
 public class VoiceSharePO implements Serializable {
-    private Integer voiceid;
+    private Long voiceId;
 
     private Long deviceId;
 
@@ -33,12 +33,12 @@ public class VoiceSharePO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getVoiceid() {
-        return voiceid;
+    public Long getVoiceId() {
+        return voiceId;
     }
 
-    public void setVoiceid(Integer voiceid) {
-        this.voiceid = voiceid;
+    public void setVoiceId(Long voiceId) {
+        this.voiceId = voiceId;
     }
 
     public Long getDeviceId() {
@@ -125,7 +125,7 @@ public class VoiceSharePO implements Serializable {
             return false;
         }
         VoiceSharePO other = (VoiceSharePO) that;
-        return (this.getVoiceid() == null ? other.getVoiceid() == null : this.getVoiceid().equals(other.getVoiceid()))
+        return (this.getVoiceId() == null ? other.getVoiceId() == null : this.getVoiceId().equals(other.getVoiceId()))
             && (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getUserDeviceId() == null ? other.getUserDeviceId() == null : this.getUserDeviceId().equals(other.getUserDeviceId()))
@@ -141,7 +141,7 @@ public class VoiceSharePO implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getVoiceid() == null) ? 0 : getVoiceid().hashCode());
+        result = prime * result + ((getVoiceId() == null) ? 0 : getVoiceId().hashCode());
         result = prime * result + ((getDeviceId() == null) ? 0 : getDeviceId().hashCode());
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getUserDeviceId() == null) ? 0 : getUserDeviceId().hashCode());
@@ -160,7 +160,7 @@ public class VoiceSharePO implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", voiceid=").append(voiceid);
+        sb.append(", voiceId=").append(voiceId);
         sb.append(", deviceId=").append(deviceId);
         sb.append(", userId=").append(userId);
         sb.append(", userDeviceId=").append(userDeviceId);

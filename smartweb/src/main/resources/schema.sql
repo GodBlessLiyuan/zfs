@@ -1,5 +1,4 @@
 use smarthelper;
-SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Indexes */
 
@@ -817,7 +816,7 @@ CREATE TABLE t_viptype
 
 CREATE TABLE t_voice_share
 (
-	voiceid int NOT NULL AUTO_INCREMENT,
+	voice_id bigint NOT NULL AUTO_INCREMENT,
 	device_id bigint NOT NULL,
 	user_id bigint NOT NULL,
 	user_device_id int,
@@ -828,10 +827,8 @@ CREATE TABLE t_voice_share
 	status tinyint DEFAULT 1 COMMENT '1 初始阶段，未上传 2 上传文件中  3 完成  4 失败',
 	path char(128),
 	extra char(128),
-	PRIMARY KEY (voiceid),
-	UNIQUE (voiceid),
-	UNIQUE (device_id),
-	UNIQUE (user_id)
+	PRIMARY KEY (voice_id),
+	UNIQUE (voice_id)
 );
 
 
@@ -1182,10 +1179,18 @@ ALTER TABLE t_user_device
 
 
 ALTER TABLE t_user_vip
-    ADD FOREIGN KEY (user_id)
-        REFERENCES t_user (user_id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT
+	ADD FOREIGN KEY (user_id)
+	REFERENCES t_user (user_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_voice_share
+	ADD FOREIGN KEY (user_id)
+	REFERENCES t_user (user_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 
