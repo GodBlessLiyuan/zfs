@@ -38,6 +38,8 @@ public class VoiceServiceImpl implements IVoiceService {
     private String proDir;
     @Value("${file.voiceDir}")
     private String voiceDir;
+    @Value("${wxpayconfig.appid}")
+    private String appId;
 
     @Override
     public ResultVO share(VoiceShareDTO dto) {
@@ -46,18 +48,20 @@ public class VoiceServiceImpl implements IVoiceService {
         po.setUserId(dto.getUd());
         po.setUserDeviceId(dto.getUdd());
         po.setTotal(dto.getTotal());
+        po.setTitle(dto.getTitle());
         po.setExtra(dto.getExtra());
         Date curDate = new Date();
         po.setCreateTime(curDate);
         po.setStatus((byte) 1);
         po.setPath(FileUtil.genFilePath(proDir, voiceDir, sdf.format(curDate),
                 ModuleConstant.VOICE + "_" + curDate.getTime()));
-        po.setUrl(shareUrl + UUID.randomUUID().toString().replace("-", ""));
+        po.setUrl(UUID.randomUUID().toString().replace("-", ""));
         voiceShareMapper.insert(po);
 
         VoiceShareVO vo = new VoiceShareVO();
-        vo.setUrl(po.getUrl());
+        vo.setUrl(shareUrl + po.getUrl());
         vo.setVid(po.getVoiceId());
+        vo.setAppid(appId);
 
         return new ResultVO<>(1000, vo);
     }
@@ -72,7 +76,7 @@ public class VoiceServiceImpl implements IVoiceService {
         String fileName = FileUtil.genFileName(ModuleConstant.VOICE, dto.getSuffix(), dto.getVid(), dto.getNum());
         String uploadPath = FileUtil.uploadBase64(rootDir, voiceSharePO.getPath(), fileName, dto.getVoice());
 
-        if(voiceSharePO.getTotal().equals(dto.getNum())) {
+        if (voiceSharePO.getTotal().equals(dto.getNum())) {
             voiceSharePO.setStatus((byte) 2);
             voiceShareMapper.updateByPrimaryKey(voiceSharePO);
         }

@@ -16,4 +16,5 @@ public class VoiceShareVO implements Serializable {
 
     private Long vid;
     private String url;
+    private String appid;
 }
