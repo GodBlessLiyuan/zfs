@@ -12,13 +12,14 @@
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="path" jdbcType="CHAR" property="path" />
     <result column="extra" jdbcType="CHAR" property="extra" />
+    <result column="title" jdbcType="CHAR" property="title" />
   </resultMap>
   <sql id="Base_Column_List">
     voice_id, device_id, user_id, user_device_id, total, create_time, url, `status`, 
-    `path`, extra
+    `path`, extra, title
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
+    select 
     <include refid="Base_Column_List" />
     from t_voice_share
     where voice_id = #{voiceId,jdbcType=BIGINT}
@@ -27,15 +28,15 @@
     delete from t_voice_share
     where voice_id = #{voiceId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.common.pojo.VoiceSharePO" useGeneratedKeys="true" keyProperty="voiceId">
+  <insert id="insert" parameterType="com.rpa.common.pojo.VoiceSharePO">
     insert into t_voice_share (voice_id, device_id, user_id, 
       user_device_id, total, create_time, 
-      url, `status`, `path`, extra
-      )
+      url, `status`, `path`, extra, 
+      title)
     values (#{voiceId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
       #{userDeviceId,jdbcType=INTEGER}, #{total,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{url,jdbcType=CHAR}, #{status,jdbcType=TINYINT}, #{path,jdbcType=CHAR}, #{extra,jdbcType=CHAR}
-      )
+      #{url,jdbcType=CHAR}, #{status,jdbcType=TINYINT}, #{path,jdbcType=CHAR}, #{extra,jdbcType=CHAR}, 
+      #{title,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.common.pojo.VoiceSharePO">
     insert into t_voice_share
@@ -70,6 +71,9 @@
       <if test="extra != null">
         extra,
       </if>
+      <if test="title != null">
+        title,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="voiceId != null">
@@ -101,6 +105,9 @@
       </if>
       <if test="extra != null">
         #{extra,jdbcType=CHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -134,6 +141,9 @@
       <if test="extra != null">
         extra = #{extra,jdbcType=CHAR},
       </if>
+      <if test="title != null">
+        title = #{title,jdbcType=CHAR},
+      </if>
     </set>
     where voice_id = #{voiceId,jdbcType=BIGINT}
   </update>
@@ -147,7 +157,8 @@
       url = #{url,jdbcType=CHAR},
       `status` = #{status,jdbcType=TINYINT},
       `path` = #{path,jdbcType=CHAR},
-      extra = #{extra,jdbcType=CHAR}
+      extra = #{extra,jdbcType=CHAR},
+      title = #{title,jdbcType=CHAR}
     where voice_id = #{voiceId,jdbcType=BIGINT}
   </update>
 </mapper>

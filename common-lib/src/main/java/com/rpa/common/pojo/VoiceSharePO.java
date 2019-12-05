@@ -31,6 +31,8 @@ public class VoiceSharePO implements Serializable {
 
     private String extra;
 
+    private String title;
+
     private static final long serialVersionUID = 1L;
 
     public Long getVoiceId() {
@@ -113,6 +115,14 @@ public class VoiceSharePO implements Serializable {
         this.extra = extra;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -134,7 +144,8 @@ public class VoiceSharePO implements Serializable {
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getPath() == null ? other.getPath() == null : this.getPath().equals(other.getPath()))
-            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()));
+            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
+            && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()));
     }
 
     @Override
@@ -151,6 +162,7 @@ public class VoiceSharePO implements Serializable {
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getPath() == null) ? 0 : getPath().hashCode());
         result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
+        result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
         return result;
     }
 
@@ -170,6 +182,7 @@ public class VoiceSharePO implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", path=").append(path);
         sb.append(", extra=").append(extra);
+        sb.append(", title=").append(title);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
