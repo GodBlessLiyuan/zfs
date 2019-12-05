@@ -13,6 +13,7 @@ import lombok.Data;
 public class VoiceShareDTO extends TokenDTO {
     private String verify;
     private String um;
+    private String title;
     private String extra;
     private Integer total;
 }

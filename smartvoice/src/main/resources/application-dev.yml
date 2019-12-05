@@ -29,3 +29,5 @@ file:
 project:
   baseUrl: http://192.168.10.3
   shareUrl: http://rpahelper.com/voice/v1.1/share/
+wxpayconfig:
+  appid: wxb3b271ca8cb83163
