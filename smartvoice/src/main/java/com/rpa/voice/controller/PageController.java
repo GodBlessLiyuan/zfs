@@ -25,6 +25,6 @@ public class PageController {
     public String shareCode(@PathVariable String shareCode, ModelMap map) {
         ResultVO vo = service.shareCode(shareCode);
         map.put("res", vo);
-        return "";
+        return "voicebox_index";
     }
 }
