@@ -1,5 +1,6 @@
 package com.rpa.web.service.impl;
 
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.mapper.*;
 import com.rpa.web.service.HomepageService;
 import com.rpa.web.utils.ResultVOUtil;
@@ -50,49 +51,55 @@ public class HomepageServiceImpl implements HomepageService {
 
         //新增注册用户
         String newRegister;
-        newRegister = this.template.opsForValue().get("newRegister" + current_date);
+        String key_newRegister = RedisKeyUtil.genHomepageRedisKey() + "newRegister" + current_date;
+        newRegister = this.template.opsForValue().get(key_newRegister);
         if (null == newRegister) {
             newRegister = String.valueOf(this.userMapper.queryTodayNewRegister());
         }
 
         //新用户数
         String newUser;
-        newUser = this.template.opsForValue().get("newUser" + current_date);
+        String key_newUser = RedisKeyUtil.genHomepageRedisKey() + "newUser" + current_date;
+        newUser = this.template.opsForValue().get(key_newUser);
         if (null == newUser) {
             newUser = String.valueOf(this.deviceMapper.queryTodayNewUser());
         }
 
+
+        String key_active = RedisKeyUtil.genHomepageRedisKey() + "deviceStatistics" + current_date;
         //日活跃用户数
         String dayActiveUser;
-        dayActiveUser = (String) this.template.opsForHash().get("deviceStatistics" +current_date, "dayActiveUser");
+        dayActiveUser = (String) this.template.opsForHash().get(key_active, "dayActiveUser");
         if (dayActiveUser == null) {
             dayActiveUser = String.valueOf(this.deviceStatisticsMapper.queryDayActiveUser());
         }
 
         //月活跃用户数
         String monthActiveUser;
-        monthActiveUser = (String)this.template.opsForHash().get("deviceStatistics" + current_date, "monthActiveUser");
+        monthActiveUser = (String)this.template.opsForHash().get(key_active, "monthActiveUser");
         if (null == monthActiveUser) {
             monthActiveUser = String.valueOf(this.deviceStatisticsMapper.queryMonthActiveUser());
         }
 
+
+        String key_revenue = RedisKeyUtil.genHomepageRedisKey() + "revenue" + current_date;
         //当日收入
         String dayRevenue;
-        dayRevenue = (String) this.template.opsForHash().get("revenue" + current_date, "dayRevenue");
+        dayRevenue = (String) this.template.opsForHash().get(key_revenue, "dayRevenue");
         if (null == dayRevenue) {
             dayRevenue = String.valueOf(this.orderMapper.queryDayRevenue()*0.01);
         }
 
         //支付次数
         String payCount;
-        payCount = (String)this.template.opsForHash().get("revenue" + current_date, "payCount");
+        payCount = (String)this.template.opsForHash().get(key_revenue, "payCount");
         if (null == payCount) {
             payCount = String.valueOf(this.orderMapper.queryPayCount());
         }
 
         //当月收入
         String monthRevenue;
-        monthRevenue = (String) this.template.opsForHash().get("revenue" + current_date, "monthRevenue");
+        monthRevenue = (String) this.template.opsForHash().get(key_revenue, "monthRevenue");
         if (null == monthRevenue) {
             monthRevenue = String.valueOf(this.orderMapper.queryMonthRevenue()*0.01);
         }

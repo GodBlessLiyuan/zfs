@@ -1,5 +1,6 @@
 package com.rpa.rabbit.service.impl;
 
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.rabbit.mapper.UserMapper;
 import com.rpa.rabbit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void newRegister() {
         String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String key = RedisKeyUtil.genHomepageRedisKey() + "newRegister" + current_date;
         int newRegister = this.userMapper.queryTodayNewRegister();
-        this.template.opsForValue().set("newRegister" + current_date, String.valueOf(newRegister), 25, TimeUnit.HOURS);
+        this.template.opsForValue().set(key, String.valueOf(newRegister), 25, TimeUnit.HOURS);
     }
 }

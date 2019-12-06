@@ -1,5 +1,6 @@
 package com.rpa.rabbit.service.impl;
 
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.rabbit.mapper.DeviceMapper;
 import com.rpa.rabbit.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public void newUser() {
         String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String key = RedisKeyUtil.genHomepageRedisKey() + "newUser" + current_date;
         int newUser = this.deviceMapper.queryTodayNewUser();
-        this.template.opsForValue().set("newUser" + current_date, String.valueOf(newUser), 25, TimeUnit.HOURS);
+        this.template.opsForValue().set(key, String.valueOf(newUser), 25, TimeUnit.HOURS);
     }
 }

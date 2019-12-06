@@ -1,5 +1,6 @@
 package com.rpa.rabbit.service.impl;
 
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.rabbit.bo.InviteUserBO;
 import com.rpa.rabbit.bo.OrderBO;
 import com.rpa.rabbit.constant.InviteDetailConstant;
@@ -161,7 +162,8 @@ public class IncomeServiceImpl implements IIncomeService {
         revenue.put("dayRevenue", String.valueOf((null == dayRevenue ? 0 : dayRevenue) * 0.01));
         revenue.put("payCount", String.valueOf(payCount));
         revenue.put("monthRevenue", String.valueOf((null == monthRevenue ? 0 : monthRevenue) * 0.01));
-        this.template.opsForHash().putAll("revenue" + current_date, revenue);
-        this.template.expire("revenue" + current_date, 25, TimeUnit.HOURS);
+        String key = RedisKeyUtil.genHomepageRedisKey() + "revenue" + current_date;
+        this.template.opsForHash().putAll(key, revenue);
+        this.template.expire(key, 25, TimeUnit.HOURS);
     }
 }
