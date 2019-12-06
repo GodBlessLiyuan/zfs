@@ -39,19 +39,9 @@
     .content li video {
         width: 100%;
         height: 80px;
-
     }
 </style>
-
-
 <body >
-
-${res.data}
-
-    <#list res.data.voices as a>
-        ${a}
-    </#list>
-
     <div class="div_main">
         <div class="div_voice">
             <ul class="content">
@@ -66,33 +56,13 @@ ${res.data}
                         </li>
                     </#list>
                 </#if>
-
             </ul>
         </div>
         <div class="div_tips">
             注：此录音只保存72小时，72小时后将删除，
             本语音由砖助智能助手提供技术支持。
-        <#--    <a class="div_a" href="" >点击下载</a>-->
+             <#--    <a class="div_a" href="" >点击下载</a>-->
         </div>
     </div>
 </body>
-
-<<<<<<< HEAD
-=======
-<script>
-
-	function loadMp3() {
-	    var status = ${res.status};
-	    var videoArr = ${res.data};
-	    // if('1000' === status){
-        //     for(var i=0;i<videoArr.length;i++){
-        //         var content = document.getElementsByTagName("ul")[0];
-        //         content.innerHTML += "<li><video controls=\"controls\" controlsList=\"nodownload\"><source src='"+videoArr[i]+"'type=\"video/mp4\"/></li>"
-        //     }
-        // }else {
-	    //     return;
-        // }
-	}
-</script>
->>>>>>> f8a6f892a5415f643c6af99bf03ed02b0d94db2a
 </html>
