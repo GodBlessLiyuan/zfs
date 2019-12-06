@@ -1,6 +1,8 @@
 package com.rpa.voice.controller;
 
 import com.rpa.common.vo.ResultVO;
+import com.rpa.voice.service.IVoiceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("v1.1")
 @Controller
 public class PageController {
+    @Autowired
+    private IVoiceService service;
 
     @GetMapping(value = "share/{shareCode}")
-    public String shareClick(@PathVariable String shareCode, ModelMap map) {
-        ResultVO vo = new ResultVO<>(1000, shareCode);
+    public String shareCode(@PathVariable String shareCode, ModelMap map) {
+        ResultVO vo = service.shareCode(shareCode);
         map.put("res", vo);
         return "";
     }

@@ -8,6 +8,7 @@ import com.rpa.common.vo.ResultVO;
 import com.rpa.voice.dto.VoiceShareDTO;
 import com.rpa.voice.dto.VoiceUploadDTO;
 import com.rpa.voice.service.IVoiceService;
+import com.rpa.voice.vo.VoiceShareCodeVO;
 import com.rpa.voice.vo.VoiceShareVO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -82,5 +85,25 @@ public class VoiceServiceImpl implements IVoiceService {
         }
 
         return new ResultVO<>(1000, baseUrl + uploadPath);
+    }
+
+    @Override
+    public ResultVO shareCode(String shareCode) {
+        VoiceSharePO voiceSharePO = voiceShareMapper.queryByCode(shareCode);
+        if(null == voiceSharePO) {
+            return new ResultVO(2000);
+        }
+
+        List<String> voiceUrls = new LinkedList<>();
+        String path = voiceSharePO.getPath();
+        for(int i=1; i<= voiceSharePO.getTotal(); i++) {
+            voiceUrls.add(baseUrl + path + FileUtil.genFileName(ModuleConstant.VOICE, "map3", voiceSharePO.getVoiceId(),
+                    i));
+        }
+
+        VoiceShareCodeVO vo = new VoiceShareCodeVO();
+        vo.setVoices(voiceUrls);
+
+        return new ResultVO<>(1000, vo);
     }
 }
