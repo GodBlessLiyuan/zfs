@@ -27,4 +27,12 @@ public interface IVoiceService {
      * @return
      */
     ResultVO upload(VoiceUploadDTO dto);
+
+    /**
+     * 分享页面
+     *
+     * @param shareCode
+     * @return
+     */
+    ResultVO shareCode(String shareCode);
 }
