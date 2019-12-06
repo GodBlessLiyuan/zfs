@@ -203,5 +203,6 @@
        u.phone like '%' #{phone} '%'
       </if>
     </where>
+    order by ua.status asc
   </select>
 </mapper>
