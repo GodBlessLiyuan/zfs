@@ -3,11 +3,53 @@
 <head>
 	<meta charset="utf-8" />
 	<title>语音盒子</title>
-	<link rel="stylesheet" href="./share/css/style.css">
+   <#-- <link rel="stylesheet" href="./share/css/style.css">-->
 
 </head>
+<style>
+    .div_main {
+        width: 100%;
+        background: #FFFFFF;
+        box-shadow: 0 -1px 0 0 #EEEEEE;
+    }
+
+    .div_tips {
+
+        background: #F8F8F8;
+        padding:20px 10%;
+
+        font-family: PingFang-SC-Medium;
+        font-size: 12px;
+        color: #999999;
+        letter-spacing: 0;
+        line-height: 20px;
+    }
+
+    .div_a {
+        font-family: PingFangSC-Semibold;
+        font-size: 12px;
+        color: #3698E9;
+        letter-spacing: 0;
+    }
+
+    .div_voice {
+        padding:20px 10%;
+    }
+
+    .content li video {
+        width: 100%;
+        height: 80px;
+
+    }
+</style>
 
 <body onload="loadMp3()">
+
+${res.data}
+
+    <#list res.data.voices as a>
+        ${a}
+    </#list>
 
     <div class="div_main">
         <div class="div_voice">
@@ -24,18 +66,19 @@
 
 </body>
 
-<script type="text/javascript">
+<script>
 
 	function loadMp3() {
-	    if(res.status == '1000'){
-            var videoArr = ${res.data.voices};
-            for(var i=0;i<videoArr.length;i++){
-                var content = document.getElementsByTagName("ul")[0];
-                content.innerHTML += "<li><video controls=\"controls\" controlsList=\"nodownload\"><source src='"+videoArr[i]+"'type=\"video/mp4\"/></li>"
-            }
-        }else {
-	        return;
-        }
+	    var status = ${res.status};
+	    var videoArr = ${res.data};
+	    // if('1000' === status){
+        //     for(var i=0;i<videoArr.length;i++){
+        //         var content = document.getElementsByTagName("ul")[0];
+        //         content.innerHTML += "<li><video controls=\"controls\" controlsList=\"nodownload\"><source src='"+videoArr[i]+"'type=\"video/mp4\"/></li>"
+        //     }
+        // }else {
+	    //     return;
+        // }
 	}
 </script>
 </html>
