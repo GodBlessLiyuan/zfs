@@ -97,7 +97,7 @@ public class VoiceServiceImpl implements IVoiceService {
         List<String> voiceUrls = new LinkedList<>();
         String path = voiceSharePO.getPath();
         for(int i=1; i<= voiceSharePO.getTotal(); i++) {
-            voiceUrls.add(baseUrl + path + FileUtil.genFileName(ModuleConstant.VOICE, "map3", voiceSharePO.getVoiceId(),
+            voiceUrls.add(baseUrl + path + FileUtil.genFileName(ModuleConstant.VOICE, "mp3", voiceSharePO.getVoiceId(),
                     i));
         }
 

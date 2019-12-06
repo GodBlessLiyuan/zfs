@@ -3,10 +3,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title>语音盒子</title>
-	<link rel="stylesheet" href="./share/css/style.css">
+   <#-- <link rel="stylesheet" href="./share/css/style.css">-->
 
 </head>
-
 <style>
     .div_main {
         width: 100%;
@@ -44,7 +43,14 @@
     }
 </style>
 
+
 <body >
+
+${res.data}
+
+    <#list res.data.voices as a>
+        ${a}
+    </#list>
 
     <div class="div_main">
         <div class="div_voice">
@@ -71,4 +77,22 @@
     </div>
 </body>
 
+<<<<<<< HEAD
+=======
+<script>
+
+	function loadMp3() {
+	    var status = ${res.status};
+	    var videoArr = ${res.data};
+	    // if('1000' === status){
+        //     for(var i=0;i<videoArr.length;i++){
+        //         var content = document.getElementsByTagName("ul")[0];
+        //         content.innerHTML += "<li><video controls=\"controls\" controlsList=\"nodownload\"><source src='"+videoArr[i]+"'type=\"video/mp4\"/></li>"
+        //     }
+        // }else {
+	    //     return;
+        // }
+	}
+</script>
+>>>>>>> f8a6f892a5415f643c6af99bf03ed02b0d94db2a
 </html>

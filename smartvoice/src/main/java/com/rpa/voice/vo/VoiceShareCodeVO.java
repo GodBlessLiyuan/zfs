@@ -15,6 +15,5 @@ import java.util.List;
 public class VoiceShareCodeVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String down;
     private List<String> voices;
 }
