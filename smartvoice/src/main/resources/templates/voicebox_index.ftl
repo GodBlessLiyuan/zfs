@@ -51,7 +51,7 @@
                     <#list res.data.voices as voice>
                         <li>
                             <audio controls="controls" controlslist="nodownload">
-                                <source src="${voice}" type="video/mp4">
+                                <source src="${voice}" type="audio/mpeg">
                             </audio>
                         </li>
                     </#list>
