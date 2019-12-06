@@ -43,7 +43,8 @@
     }
 </style>
 
-<body onload="loadMp3()">
+
+<body >
 
 ${res.data}
 
@@ -54,18 +55,30 @@ ${res.data}
     <div class="div_main">
         <div class="div_voice">
             <ul class="content">
+                <#if !res.data.voices?exists || res.data.voices?size==0>
+                    没有语音！
+                <#else>
+                    <#list res.data.voices as voice>
+                        <li>
+                            <video controls="controls" controlslist="nodownload">
+                                <source src="${voice}" type="video/mp4">
+                            </video>
+                        </li>
+                    </#list>
+                </#if>
+
             </ul>
         </div>
-
         <div class="div_tips">
             注：此录音只保存72小时，72小时后将删除，
             本语音由砖助智能助手提供技术支持。
         <#--    <a class="div_a" href="" >点击下载</a>-->
         </div>
     </div>
-
 </body>
 
+<<<<<<< HEAD
+=======
 <script>
 
 	function loadMp3() {
@@ -81,4 +94,5 @@ ${res.data}
         // }
 	}
 </script>
+>>>>>>> f8a6f892a5415f643c6af99bf03ed02b0d94db2a
 </html>
