@@ -39,13 +39,9 @@
     .content li video {
         width: 100%;
         height: 80px;
-
     }
 </style>
-
-
 <body >
-
     <div class="div_main">
         <div class="div_voice">
             <ul class="content">
@@ -60,15 +56,13 @@
                         </li>
                     </#list>
                 </#if>
-
             </ul>
         </div>
         <div class="div_tips">
             注：此录音只保存72小时，72小时后将删除，
             本语音由砖助智能助手提供技术支持。
-        <#--    <a class="div_a" href="" >点击下载</a>-->
+             <#--    <a class="div_a" href="" >点击下载</a>-->
         </div>
     </div>
 </body>
-
 </html>
