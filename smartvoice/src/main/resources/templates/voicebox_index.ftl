@@ -50,9 +50,9 @@
                 <#else>
                     <#list res.data.voices as voice>
                         <li>
-                            <video controls="controls" controlslist="nodownload">
+                            <audio controls="controls" controlslist="nodownload">
                                 <source src="${voice}" type="video/mp4">
-                            </video>
+                            </audio>
                         </li>
                     </#list>
                 </#if>
