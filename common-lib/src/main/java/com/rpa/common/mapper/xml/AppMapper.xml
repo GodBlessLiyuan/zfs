@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.common.mapper.AppMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.common.pojo.AppPO">
+    <id column="app_id" jdbcType="INTEGER" property="appId" />
+    <result column="versionname" jdbcType="CHAR" property="versionname" />
+    <result column="versioncode" jdbcType="INTEGER" property="versioncode" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="update_type" jdbcType="TINYINT" property="updateType" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="extra" jdbcType="CHAR" property="extra" />
+    <result column="context" jdbcType="CHAR" property="context" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
+    <result column="md5" jdbcType="CHAR" property="md5" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    app_id, versionname, versioncode, create_time, update_time, url, a_id, `status`, 
+    update_type, `size`, extra, context, publish_time, dr, md5
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_app
+    where app_id = #{appId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_app
+    where app_id = #{appId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.common.pojo.AppPO">
+    insert into t_app (app_id, versionname, versioncode, 
+      create_time, update_time, url, 
+      a_id, `status`, update_type, 
+      `size`, extra, context, publish_time, 
+      dr, md5)
+    values (#{appId,jdbcType=INTEGER}, #{versionname,jdbcType=CHAR}, #{versioncode,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, 
+      #{aId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{updateType,jdbcType=TINYINT}, 
+      #{size,jdbcType=INTEGER}, #{extra,jdbcType=CHAR}, #{context,jdbcType=CHAR}, #{publishTime,jdbcType=TIMESTAMP}, 
+      #{dr,jdbcType=TINYINT}, #{md5,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.common.pojo.AppPO">
+    insert into t_app
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="versionname != null">
+        versionname,
+      </if>
+      <if test="versioncode != null">
+        versioncode,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="updateType != null">
+        update_type,
+      </if>
+      <if test="size != null">
+        `size`,
+      </if>
+      <if test="extra != null">
+        extra,
+      </if>
+      <if test="context != null">
+        context,
+      </if>
+      <if test="publishTime != null">
+        publish_time,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+      <if test="md5 != null">
+        md5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appId != null">
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="versionname != null">
+        #{versionname,jdbcType=CHAR},
+      </if>
+      <if test="versioncode != null">
+        #{versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateType != null">
+        #{updateType,jdbcType=TINYINT},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="extra != null">
+        #{extra,jdbcType=CHAR},
+      </if>
+      <if test="context != null">
+        #{context,jdbcType=CHAR},
+      </if>
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="md5 != null">
+        #{md5,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.AppPO">
+    update t_app
+    <set>
+      <if test="versionname != null">
+        versionname = #{versionname,jdbcType=CHAR},
+      </if>
+      <if test="versioncode != null">
+        versioncode = #{versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateType != null">
+        update_type = #{updateType,jdbcType=TINYINT},
+      </if>
+      <if test="size != null">
+        `size` = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="extra != null">
+        extra = #{extra,jdbcType=CHAR},
+      </if>
+      <if test="context != null">
+        context = #{context,jdbcType=CHAR},
+      </if>
+      <if test="publishTime != null">
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="md5 != null">
+        md5 = #{md5,jdbcType=CHAR},
+      </if>
+    </set>
+    where app_id = #{appId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.AppPO">
+    update t_app
+    set versionname = #{versionname,jdbcType=CHAR},
+      versioncode = #{versioncode,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      url = #{url,jdbcType=VARCHAR},
+      a_id = #{aId,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      update_type = #{updateType,jdbcType=TINYINT},
+      `size` = #{size,jdbcType=INTEGER},
+      extra = #{extra,jdbcType=CHAR},
+      context = #{context,jdbcType=CHAR},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=TINYINT},
+      md5 = #{md5,jdbcType=CHAR}
+    where app_id = #{appId,jdbcType=INTEGER}
+  </update>
+</mapper>
