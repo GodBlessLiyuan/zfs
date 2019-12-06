@@ -54,6 +54,10 @@ public class RedisKeyUtil {
         return RedisKeyUtil.genRedisKey(ModuleConstant.SHARE, params);
     }
 
+    public static String genHomepageRedisKey(Object... params) {
+        return RedisKeyUtil.genRedisKey(ModuleConstant.HOMEPAGE, params);
+    }
+
     /**
      * 生成RedisKey
      *

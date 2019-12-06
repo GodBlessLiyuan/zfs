@@ -1,5 +1,6 @@
 package com.rpa.rabbit.service.impl;
 
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.rabbit.mapper.DeviceMapper;
 import com.rpa.rabbit.mapper.DeviceStatisticsMapper;
 import com.rpa.rabbit.pojo.DevicePO;
@@ -66,8 +67,9 @@ public class DeviceStatisticsServiceImpl implements DeviceStatisticsService {
 
             // 再存入Redis缓存
             String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            this.template.opsForHash().putAll("deviceStatistics" + current_date, deviceStatistics);
-            this.template.expire("deviceStatistics" + current_date, 25, TimeUnit.HOURS);
+            String key = RedisKeyUtil.genHomepageRedisKey() + "deviceStatistics" + current_date;
+            this.template.opsForHash().putAll(key, deviceStatistics);
+            this.template.expire(key, 25, TimeUnit.HOURS);
         }
 
     }
