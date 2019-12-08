@@ -6,6 +6,8 @@ import com.rpa.rabbit.mapper.DeviceStatisticsMapper;
 import com.rpa.rabbit.pojo.DevicePO;
 import com.rpa.rabbit.pojo.DeviceStatisticsPO;
 import com.rpa.rabbit.service.DeviceStatisticsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class DeviceStatisticsServiceImpl implements DeviceStatisticsService {
+    private final static Logger logger = LoggerFactory.getLogger(DeviceStatisticsServiceImpl.class);
 
     @Autowired
     private DeviceStatisticsMapper deviceStatisticsMapper;
@@ -70,7 +73,8 @@ public class DeviceStatisticsServiceImpl implements DeviceStatisticsService {
             String key = RedisKeyUtil.genHomepageRedisKey() + "deviceStatistics" + current_date;
             this.template.opsForHash().putAll(key, deviceStatistics);
             this.template.expire(key, 25, TimeUnit.HOURS);
+        } else {
+            logger.error(ip + " : " + deviceId + " : " + visitTime);
         }
-
     }
 }
