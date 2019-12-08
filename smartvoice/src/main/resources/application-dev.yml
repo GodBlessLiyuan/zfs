@@ -33,13 +33,7 @@ eureka:
 mybatis:
   mapper-locations: com/rpa/common/mapper/xml/*.xml
 logging:
-  path: /data/ftp/smartftp/log/
-  file: ${logging.path}smartvoice
-  level:
-    com:
-      rpa:
-        common:
-          mapper: debug
+  config: classpath:logback-spring.xml
 file:
   rootDir: /data/ftp/smartftp/
   proDir: smartfile

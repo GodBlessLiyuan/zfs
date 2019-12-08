@@ -16,5 +16,4 @@ zipkin:
       password: 123456
       queue: smartzipkin
 logging:
-  path: E://log/
-  file: ${logging.path}smartzipkin
+  config: classpath:logback-spring.xml
