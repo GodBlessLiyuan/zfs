@@ -64,3 +64,21 @@
 2019-12-08 19:29:37.729 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - Application version is -1: false
 2019-12-08 19:29:37.729 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - Getting all instance registry info from the eureka server
 2019-12-08 19:29:37.758 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - The response status is 200
+2019-12-08 19:34:07.649 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-12-08 19:39:07.651 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-12-08 19:44:07.652 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-12-08 19:49:07.653 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-12-08 19:54:07.655 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-12-08 19:59:07.657 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-12-08 20:04:07.657 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-12-08 20:09:07.659 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-12-08 20:14:02.854 [Thread-23] INFO  o.s.c.n.e.serviceregistry.EurekaServiceRegistry - Unregistering application SMARTWEB with eureka with status DOWN
+2019-12-08 20:14:02.854 [DiscoveryClient-InstanceInfoReplicator-0] INFO  com.netflix.discovery.DiscoveryClient - DiscoveryClient_SMARTWEB/Frank:smartweb:8080: registering service...
+2019-12-08 20:14:02.862 [Thread-23] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2019-12-08 20:14:02.864 [DiscoveryClient-InstanceInfoReplicator-0] INFO  com.netflix.discovery.DiscoveryClient - DiscoveryClient_SMARTWEB/Frank:smartweb:8080 - registration status: 204
+2019-12-08 20:14:04.514 [Thread-23] INFO  com.netflix.discovery.DiscoveryClient - Shutting down DiscoveryClient ...
+2019-12-08 20:14:07.515 [Thread-23] INFO  com.netflix.discovery.DiscoveryClient - Unregistering ...
+2019-12-08 20:14:07.527 [Thread-23] INFO  com.netflix.discovery.DiscoveryClient - DiscoveryClient_SMARTWEB/Frank:smartweb:8080 - deregister  status: 200
+2019-12-08 20:14:07.535 [Thread-23] INFO  com.netflix.discovery.DiscoveryClient - Completed shut down of DiscoveryClient
+2019-12-08 20:14:07.535 [Thread-23] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2019-12-08 20:14:07.543 [Thread-23] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
