@@ -19,4 +19,4 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 logging:
-  config: classpath:logback-spring.xml
+  config: classpath:logback-spring-test.xml

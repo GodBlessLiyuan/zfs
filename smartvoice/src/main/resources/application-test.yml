@@ -33,7 +33,7 @@ eureka:
 mybatis:
   mapper-locations: com/rpa/common/mapper/xml/*.xml
 logging:
-  config: classpath:logback-spring.xml
+  config: classpath:logback-spring-test.xml
 file:
   rootDir: E://file/
   proDir: smartfile
