@@ -40,7 +40,7 @@ public class WxsupportServiceImpl implements WxsupportService {
         WxsupportVO vo;
 
         //Redis中的key
-        String key = RedisKeyUtil.genSupportRedisKey() + dto.getIndex();
+        String key = RedisKeyUtil.genSupportRedisKey(dto.getIndex());
         //先从Redis中查询，若为null，再去查询数据库
         if (template.hasKey(key)) {
             vo = JSON.parseObject(cache.getCacheByKey(key), WxsupportVO.class);
