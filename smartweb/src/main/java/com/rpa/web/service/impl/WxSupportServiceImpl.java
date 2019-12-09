@@ -13,11 +13,13 @@ import com.rpa.web.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author: xiahui
@@ -53,6 +55,9 @@ public class WxSupportServiceImpl implements IWxSupportService {
 
         wxSupportMapper.insert(po);
 
+        //删除Redis
+        deleteRedis();
+
         return ResultVOUtil.success();
     }
 
@@ -60,19 +65,20 @@ public class WxSupportServiceImpl implements IWxSupportService {
     public int delete(int wId) {
 
         //删除Redis
-        deleteRedis(wId);
+        deleteRedis();
 
         return wxSupportMapper.deleteByPrimaryKey(wId);
     }
 
+
     /**
+     * @author：dangyi
      * 删除Redis
      */
-    private void deleteRedis(Integer wId) {
-        //Redis中的key
-        String key = RedisKeyUtil.genSupportRedisKey() + wId;
-        if (template.hasKey(key)) {
-            template.delete(key);
+    private void deleteRedis() {
+        Set<String> redisKeys = template.keys(RedisKeyUtil.genSupportRedisKey("*"));
+        if (!CollectionUtils.isEmpty(redisKeys)) {
+            template.delete(redisKeys);
         }
     }
 }

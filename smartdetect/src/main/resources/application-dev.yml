@@ -1,0 +1,6 @@
+server:
+  port: 9019
+spring:
+  application: smartdetect
+logging:
+  config: classpath:logback-spring-dev.xml
