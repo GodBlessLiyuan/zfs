@@ -14,39 +14,35 @@
     }
 
     .div_tips {
-
         background: #F8F8F8;
         padding:20px 10%;
-
         font-family: PingFang-SC-Medium;
         font-size: 12px;
         color: #999999;
         letter-spacing: 0;
         line-height: 20px;
     }
-
     .div_a {
         font-family: PingFangSC-Semibold;
         font-size: 12px;
         color: #3698E9;
         letter-spacing: 0;
     }
-
     .div_voice {
         padding:20px 10%;
     }
-
-    .content li video {
+    .content li audio {
         width: 100%;
-        height: 80px;
+        height: 90px;
     }
 </style>
 <body >
     <div class="div_main">
         <div class="div_voice">
-            <ul class="content">
+           <#-- 修改注释：去掉小圆点  -->
+            <ul class="content" style="list-style-type: none">
                 <#if !res.data.voices?exists || res.data.voices?size==0>
-                    没有语音！
+                    无要转发的语音！
                 <#else>
                     <#list res.data.voices as voice>
                         <li>
