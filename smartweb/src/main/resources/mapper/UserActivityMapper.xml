@@ -190,7 +190,7 @@
     from t_user_activity ua
     left join t_activity a on ua.activity_id = a.activity_id
     left join t_user u on ua.user_id = u.user_id
-    where ua.user_id = #{userId}
+    where ua.user_id = #{userId} and ua.`status` = 10
   </select>
 
   <select id="goodCommentQuery" resultType="com.rpa.web.domain.UserActivityDO">
