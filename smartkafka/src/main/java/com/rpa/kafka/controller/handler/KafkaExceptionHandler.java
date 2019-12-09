@@ -18,7 +18,7 @@ public class KafkaExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public ResultVO handlerPromptException(Exception e) {
-        logger.error("ProducerExceptionHandler: ", e);
+        logger.error("KafkaExceptionHandler: ", e);
         return new ResultVO(2000);
     }
 }
