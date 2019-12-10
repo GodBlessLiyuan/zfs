@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.common.mapper.ChBatchMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.common.pojo.ChBatchPO">
+    <id column="batch_id" jdbcType="INTEGER" property="batchId" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="com_type_id" jdbcType="INTEGER" property="comTypeId" />
+    <result column="chan_id" jdbcType="INTEGER" property="chanId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="com_type_name" jdbcType="CHAR" property="comTypeName" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
+    <result column="extra" jdbcType="CHAR" property="extra" />
+    <result column="update_a_id" jdbcType="INTEGER" property="updateAId" />
+    <result column="days" jdbcType="INTEGER" property="days" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    batch_id, num, a_id, com_type_id, chan_id, create_time, update_time, `status`, com_type_name, 
+    dr, extra, update_a_id, `days`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_ch_batch
+    where batch_id = #{batchId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_ch_batch
+    where batch_id = #{batchId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.common.pojo.ChBatchPO">
+    insert into t_ch_batch (batch_id, num, a_id, 
+      com_type_id, chan_id, create_time, 
+      update_time, `status`, com_type_name, 
+      dr, extra, update_a_id, 
+      `days`)
+    values (#{batchId,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, 
+      #{comTypeId,jdbcType=INTEGER}, #{chanId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{comTypeName,jdbcType=CHAR}, 
+      #{dr,jdbcType=TINYINT}, #{extra,jdbcType=CHAR}, #{updateAId,jdbcType=INTEGER}, 
+      #{days,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.common.pojo.ChBatchPO">
+    insert into t_ch_batch
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="batchId != null">
+        batch_id,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="comTypeId != null">
+        com_type_id,
+      </if>
+      <if test="chanId != null">
+        chan_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="comTypeName != null">
+        com_type_name,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+      <if test="extra != null">
+        extra,
+      </if>
+      <if test="updateAId != null">
+        update_a_id,
+      </if>
+      <if test="days != null">
+        `days`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="batchId != null">
+        #{batchId,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="comTypeId != null">
+        #{comTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="chanId != null">
+        #{chanId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="comTypeName != null">
+        #{comTypeName,jdbcType=CHAR},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="extra != null">
+        #{extra,jdbcType=CHAR},
+      </if>
+      <if test="updateAId != null">
+        #{updateAId,jdbcType=INTEGER},
+      </if>
+      <if test="days != null">
+        #{days,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.ChBatchPO">
+    update t_ch_batch
+    <set>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="comTypeId != null">
+        com_type_id = #{comTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="chanId != null">
+        chan_id = #{chanId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="comTypeName != null">
+        com_type_name = #{comTypeName,jdbcType=CHAR},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="extra != null">
+        extra = #{extra,jdbcType=CHAR},
+      </if>
+      <if test="updateAId != null">
+        update_a_id = #{updateAId,jdbcType=INTEGER},
+      </if>
+      <if test="days != null">
+        `days` = #{days,jdbcType=INTEGER},
+      </if>
+    </set>
+    where batch_id = #{batchId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.ChBatchPO">
+    update t_ch_batch
+    set num = #{num,jdbcType=INTEGER},
+      a_id = #{aId,jdbcType=INTEGER},
+      com_type_id = #{comTypeId,jdbcType=INTEGER},
+      chan_id = #{chanId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},
+      com_type_name = #{comTypeName,jdbcType=CHAR},
+      dr = #{dr,jdbcType=TINYINT},
+      extra = #{extra,jdbcType=CHAR},
+      update_a_id = #{updateAId,jdbcType=INTEGER},
+      `days` = #{days,jdbcType=INTEGER}
+    where batch_id = #{batchId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.common.mapper.AliFeedbackMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.common.pojo.AliFeedbackPO">
+    <result column="notify_time" jdbcType="TIMESTAMP" property="notifyTime" />
+    <result column="notify_type" jdbcType="CHAR" property="notifyType" />
+    <result column="notify_id" jdbcType="CHAR" property="notifyId" />
+    <result column="app_id" jdbcType="CHAR" property="appId" />
+    <result column="version" jdbcType="CHAR" property="version" />
+    <result column="sign_type" jdbcType="CHAR" property="signType" />
+    <result column="trade_no" jdbcType="CHAR" property="tradeNo" />
+    <result column="out_trade_no" jdbcType="CHAR" property="outTradeNo" />
+    <result column="out_biz_no" jdbcType="CHAR" property="outBizNo" />
+    <result column="buyer_id" jdbcType="CHAR" property="buyerId" />
+    <result column="buyer_logon_id" jdbcType="CHAR" property="buyerLogonId" />
+    <result column="seller_id" jdbcType="CHAR" property="sellerId" />
+    <result column="seller_email" jdbcType="CHAR" property="sellerEmail" />
+    <result column="trade_status" jdbcType="CHAR" property="tradeStatus" />
+    <result column="total_amount" jdbcType="REAL" property="totalAmount" />
+    <result column="receipt_amount" jdbcType="REAL" property="receiptAmount" />
+    <result column="invoice_amount" jdbcType="REAL" property="invoiceAmount" />
+    <result column="buyer_pay_amount" jdbcType="REAL" property="buyerPayAmount" />
+    <result column="point_amount" jdbcType="REAL" property="pointAmount" />
+    <result column="refund_fee" jdbcType="REAL" property="refundFee" />
+    <result column="subject" jdbcType="CHAR" property="subject" />
+    <result column="body" jdbcType="CHAR" property="body" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_payment" jdbcType="TIMESTAMP" property="gmtPayment" />
+    <result column="gmt_refund" jdbcType="TIMESTAMP" property="gmtRefund" />
+    <result column="gmt_close" jdbcType="TIMESTAMP" property="gmtClose" />
+    <result column="fund_bill_list" jdbcType="CHAR" property="fundBillList" />
+  </resultMap>
+  <insert id="insert" parameterType="com.rpa.common.pojo.AliFeedbackPO">
+    insert into t_ali_feedback (notify_time, notify_type, notify_id, 
+      app_id, version, sign_type, trade_no, 
+      out_trade_no, out_biz_no, buyer_id, 
+      buyer_logon_id, seller_id, seller_email, 
+      trade_status, total_amount, receipt_amount, 
+      invoice_amount, buyer_pay_amount, point_amount, 
+      refund_fee, subject, body, gmt_create, 
+      gmt_payment, gmt_refund, gmt_close, 
+      fund_bill_list)
+    values (#{notifyTime,jdbcType=TIMESTAMP}, #{notifyType,jdbcType=CHAR}, #{notifyId,jdbcType=CHAR}, 
+      #{appId,jdbcType=CHAR}, #{version,jdbcType=CHAR}, #{signType,jdbcType=CHAR}, #{tradeNo,jdbcType=CHAR}, 
+      #{outTradeNo,jdbcType=CHAR}, #{outBizNo,jdbcType=CHAR}, #{buyerId,jdbcType=CHAR}, 
+      #{buyerLogonId,jdbcType=CHAR}, #{sellerId,jdbcType=CHAR}, #{sellerEmail,jdbcType=CHAR}, 
+      #{tradeStatus,jdbcType=CHAR}, #{totalAmount,jdbcType=REAL}, #{receiptAmount,jdbcType=REAL}, 
+      #{invoiceAmount,jdbcType=REAL}, #{buyerPayAmount,jdbcType=REAL}, #{pointAmount,jdbcType=REAL}, 
+      #{refundFee,jdbcType=REAL}, #{subject,jdbcType=CHAR}, #{body,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtPayment,jdbcType=TIMESTAMP}, #{gmtRefund,jdbcType=TIMESTAMP}, #{gmtClose,jdbcType=TIMESTAMP}, 
+      #{fundBillList,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.common.pojo.AliFeedbackPO">
+    insert into t_ali_feedback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="notifyTime != null">
+        notify_time,
+      </if>
+      <if test="notifyType != null">
+        notify_type,
+      </if>
+      <if test="notifyId != null">
+        notify_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="signType != null">
+        sign_type,
+      </if>
+      <if test="tradeNo != null">
+        trade_no,
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no,
+      </if>
+      <if test="outBizNo != null">
+        out_biz_no,
+      </if>
+      <if test="buyerId != null">
+        buyer_id,
+      </if>
+      <if test="buyerLogonId != null">
+        buyer_logon_id,
+      </if>
+      <if test="sellerId != null">
+        seller_id,
+      </if>
+      <if test="sellerEmail != null">
+        seller_email,
+      </if>
+      <if test="tradeStatus != null">
+        trade_status,
+      </if>
+      <if test="totalAmount != null">
+        total_amount,
+      </if>
+      <if test="receiptAmount != null">
+        receipt_amount,
+      </if>
+      <if test="invoiceAmount != null">
+        invoice_amount,
+      </if>
+      <if test="buyerPayAmount != null">
+        buyer_pay_amount,
+      </if>
+      <if test="pointAmount != null">
+        point_amount,
+      </if>
+      <if test="refundFee != null">
+        refund_fee,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+      <if test="body != null">
+        body,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtPayment != null">
+        gmt_payment,
+      </if>
+      <if test="gmtRefund != null">
+        gmt_refund,
+      </if>
+      <if test="gmtClose != null">
+        gmt_close,
+      </if>
+      <if test="fundBillList != null">
+        fund_bill_list,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="notifyTime != null">
+        #{notifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notifyType != null">
+        #{notifyType,jdbcType=CHAR},
+      </if>
+      <if test="notifyId != null">
+        #{notifyId,jdbcType=CHAR},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=CHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=CHAR},
+      </if>
+      <if test="signType != null">
+        #{signType,jdbcType=CHAR},
+      </if>
+      <if test="tradeNo != null">
+        #{tradeNo,jdbcType=CHAR},
+      </if>
+      <if test="outTradeNo != null">
+        #{outTradeNo,jdbcType=CHAR},
+      </if>
+      <if test="outBizNo != null">
+        #{outBizNo,jdbcType=CHAR},
+      </if>
+      <if test="buyerId != null">
+        #{buyerId,jdbcType=CHAR},
+      </if>
+      <if test="buyerLogonId != null">
+        #{buyerLogonId,jdbcType=CHAR},
+      </if>
+      <if test="sellerId != null">
+        #{sellerId,jdbcType=CHAR},
+      </if>
+      <if test="sellerEmail != null">
+        #{sellerEmail,jdbcType=CHAR},
+      </if>
+      <if test="tradeStatus != null">
+        #{tradeStatus,jdbcType=CHAR},
+      </if>
+      <if test="totalAmount != null">
+        #{totalAmount,jdbcType=REAL},
+      </if>
+      <if test="receiptAmount != null">
+        #{receiptAmount,jdbcType=REAL},
+      </if>
+      <if test="invoiceAmount != null">
+        #{invoiceAmount,jdbcType=REAL},
+      </if>
+      <if test="buyerPayAmount != null">
+        #{buyerPayAmount,jdbcType=REAL},
+      </if>
+      <if test="pointAmount != null">
+        #{pointAmount,jdbcType=REAL},
+      </if>
+      <if test="refundFee != null">
+        #{refundFee,jdbcType=REAL},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=CHAR},
+      </if>
+      <if test="body != null">
+        #{body,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtPayment != null">
+        #{gmtPayment,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtRefund != null">
+        #{gmtRefund,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtClose != null">
+        #{gmtClose,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fundBillList != null">
+        #{fundBillList,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
