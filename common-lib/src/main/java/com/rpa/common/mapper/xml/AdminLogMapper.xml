@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.common.mapper.AdminLogMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.common.pojo.AdminLogPO">
+    <id column="v_id" jdbcType="INTEGER" property="vId" />
+    <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="action" jdbcType="VARCHAR" property="action" />
+    <result column="action_time" jdbcType="TIME" property="actionTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    v_id, a_id, `action`, action_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_admin_log
+    where v_id = #{vId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_admin_log
+    where v_id = #{vId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.common.pojo.AdminLogPO">
+    insert into t_admin_log (v_id, a_id, `action`, 
+      action_time)
+    values (#{vId,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, #{action,jdbcType=VARCHAR}, 
+      #{actionTime,jdbcType=TIME})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.common.pojo.AdminLogPO">
+    insert into t_admin_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vId != null">
+        v_id,
+      </if>
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="action != null">
+        `action`,
+      </if>
+      <if test="actionTime != null">
+        action_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vId != null">
+        #{vId,jdbcType=INTEGER},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="action != null">
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="actionTime != null">
+        #{actionTime,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.AdminLogPO">
+    update t_admin_log
+    <set>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="action != null">
+        `action` = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="actionTime != null">
+        action_time = #{actionTime,jdbcType=TIME},
+      </if>
+    </set>
+    where v_id = #{vId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.AdminLogPO">
+    update t_admin_log
+    set a_id = #{aId,jdbcType=INTEGER},
+      `action` = #{action,jdbcType=VARCHAR},
+      action_time = #{actionTime,jdbcType=TIME}
+    where v_id = #{vId,jdbcType=INTEGER}
+  </update>
+</mapper>

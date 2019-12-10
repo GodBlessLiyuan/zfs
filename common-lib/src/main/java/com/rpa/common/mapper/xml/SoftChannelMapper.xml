@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.common.mapper.SoftChannelMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.common.pojo.SoftChannelPO">
+    <id column="soft_channel_id" jdbcType="INTEGER" property="softChannelId" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="extra" jdbcType="CHAR" property="extra" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    soft_channel_id, `name`, extra, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_soft_channel
+    where soft_channel_id = #{softChannelId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_soft_channel
+    where soft_channel_id = #{softChannelId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.common.pojo.SoftChannelPO">
+    insert into t_soft_channel (soft_channel_id, `name`, extra, 
+      create_time, update_time)
+    values (#{softChannelId,jdbcType=INTEGER}, #{name,jdbcType=CHAR}, #{extra,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.common.pojo.SoftChannelPO">
+    insert into t_soft_channel
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="softChannelId != null">
+        soft_channel_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="extra != null">
+        extra,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="softChannelId != null">
+        #{softChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="extra != null">
+        #{extra,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.SoftChannelPO">
+    update t_soft_channel
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=CHAR},
+      </if>
+      <if test="extra != null">
+        extra = #{extra,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where soft_channel_id = #{softChannelId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.SoftChannelPO">
+    update t_soft_channel
+    set `name` = #{name,jdbcType=CHAR},
+      extra = #{extra,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where soft_channel_id = #{softChannelId,jdbcType=INTEGER}
+  </update>
+</mapper>
