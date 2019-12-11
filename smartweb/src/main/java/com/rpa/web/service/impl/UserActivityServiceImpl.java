@@ -1,14 +1,14 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.bo.UserActivityBO;
 import com.rpa.common.constant.Constant;
+import com.rpa.common.mapper.UserActivityMapper;
+import com.rpa.common.pojo.UserActivityPO;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.domain.UserActivityDO;
 import com.rpa.common.dto.AdminUserDTO;
-import com.rpa.web.dto.UserActivityDTO;
+import com.rpa.web.vo.UserActivityDTO;
 import com.rpa.common.mapper.AdminUserMapper;
-import com.rpa.web.mapper.UserActivityMapper;
-import com.rpa.web.pojo.UserActivityPO;
 import com.rpa.web.service.IUserActivityService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -39,8 +39,8 @@ public class UserActivityServiceImpl implements IUserActivityService {
 
     @Override
     public DTPageInfo<UserActivityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<UserActivityDO> page = PageHelper.startPage(pageNum, pageSize);
-        List<UserActivityDO> dos = userActivityMapper.query(reqData);
+        Page<UserActivityBO> page = PageHelper.startPage(pageNum, pageSize);
+        List<UserActivityBO> dos = userActivityMapper.query(reqData);
         return new DTPageInfo<>(draw, page.getTotal(), UserActivityDTO.convert(dos));
     }
 
@@ -64,13 +64,13 @@ public class UserActivityServiceImpl implements IUserActivityService {
         map.put("phone", phone);
 
         // 按照条件查询数据
-        List<UserActivityDO> lists_DO = this.userActivityMapper.goodCommentQuery(map);
+        List<UserActivityBO> lists_DO = this.userActivityMapper.goodCommentQuery(map);
 
         // 将查询到的 UserActivityDO 数据转换为 UserActivityDTO
         List<UserActivityDTO> lists_DTO = new ArrayList<>();
-        for(UserActivityDO userActivityDO : lists_DO) {
+        for(UserActivityBO userActivityDO : lists_DO) {
             UserActivityDTO dto = new UserActivityDTO();
-            dto.setuAId(userActivityDO.getuAId());
+            dto.setUAId(userActivityDO.getuAId());
             dto.setPhone(userActivityDO.getPhone());
             dto.setCreateTime(userActivityDO.getCreateTime());
             if (null == userActivityDO.getUrl()) {
