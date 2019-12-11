@@ -2,10 +2,10 @@ package com.rpa.web.controller;
 
 import com.rpa.common.constant.Constant;
 import com.rpa.common.dto.AdminUserDTO;
-import com.rpa.web.dto.ComTypeDTO;
 import com.rpa.web.service.IComTypeService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.ComTypeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,10 +30,10 @@ public class ComTypeController {
     private IComTypeService service;
 
     @RequestMapping("query")
-    public DTPageInfo<ComTypeDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                        @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                        @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                        @RequestParam(value = "username") String username) {
+    public DTPageInfo<ComTypeVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                       @RequestParam(value = "username") String username) {
 
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("username", username);
@@ -42,7 +42,7 @@ public class ComTypeController {
     }
 
     @RequestMapping("queryAll")
-    public List<ComTypeDTO> queryAll() {
+    public List<ComTypeVO> queryAll() {
         return service.queryAll();
     }
 

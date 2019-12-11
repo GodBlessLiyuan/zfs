@@ -25,5 +25,5 @@ public interface BaseMapper<Model, PK extends Serializable> {
 
     List query(Map<String, Object> map);
 
-    List<Model> queryAll();
+    List queryAll();
 }

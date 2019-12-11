@@ -1,10 +1,11 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.bo.ComTypeBO;
+import com.rpa.common.mapper.ComTypeMapper;
+import com.rpa.common.pojo.ComTypePO;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.ComTypeDTO;
-import com.rpa.web.mapper.ComTypeMapper;
-import com.rpa.web.pojo.ComTypePO;
+import com.rpa.web.vo.ComTypeVO;
 import com.rpa.web.service.IComTypeService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -42,17 +43,17 @@ public class ComTypeServiceImpl implements IComTypeService {
     }
 
     @Override
-    public DTPageInfo<ComTypeDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public DTPageInfo<ComTypeVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
 
-        Page<ComTypePO> page = PageHelper.startPage(pageNum, pageSize);
-        List<ComTypePO> data = mapper.query(reqData);
+        Page<ComTypeBO> page = PageHelper.startPage(pageNum, pageSize);
+        List<ComTypeBO> data = mapper.query(reqData);
 
-        return new DTPageInfo<>(draw, page.getTotal(), ComTypeDTO.convert(data));
+        return new DTPageInfo<>(draw, page.getTotal(), ComTypeVO.convert(data));
     }
 
     @Override
-    public List<ComTypeDTO> queryAll() {
-        List<ComTypePO> pos = mapper.queryAll();
-        return ComTypeDTO.convert(pos);
+    public List<ComTypeVO> queryAll() {
+        List<ComTypeBO> pos = mapper.queryAll();
+        return ComTypeVO.convert(pos);
     }
 }

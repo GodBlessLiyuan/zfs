@@ -5,7 +5,6 @@ import com.rpa.common.pojo.AdChannelPO;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.bo.AdChannelBO;
 import com.rpa.web.dto.AdChannelDTO;
-import com.rpa.web.dto.AppDTO;
 import com.rpa.common.mapper.AdChannelMapper;
 import com.rpa.common.mapper.AppMapper;
 import com.rpa.common.mapper.SoftChannelMapper;

@@ -1,23 +1,24 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.bo.ComTypeBO;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.common.constant.Constant;
+import com.rpa.common.mapper.ComTypeMapper;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.ChBatchDTO;
 import com.rpa.web.dto.ChannelDTO;
-import com.rpa.web.dto.ComTypeDTO;
 import com.rpa.web.mapper.*;
 import com.rpa.web.pojo.BatchInfoPO;
 import com.rpa.web.pojo.ChBatchPO;
 import com.rpa.web.pojo.ChannelPO;
-import com.rpa.web.pojo.ComTypePO;
 import com.rpa.web.service.ChBatchService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.DateUtil;
 import com.rpa.web.utils.ExcelUtil;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.ComTypeVO;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,21 +89,21 @@ public class ChBatchServiceImpl implements ChBatchService {
     @Override
     public ResultVO queryComTypes() {
 
-        List<ComTypePO> pos = this.comTypeMapper.queryAll();
+        List<ComTypeBO> bos = this.comTypeMapper.queryAll();
 
-        if (null == pos) {
+        if (null == bos) {
             return new ResultVO(1002);
         }
 
         // 将 po 转换为 dto
-        List<ComTypeDTO> dtos = new ArrayList<>();
-        for (ComTypePO po : pos) {
-            ComTypeDTO dto = new ComTypeDTO();
-            dto.setComTypeId(po.getComTypeId());
-            dto.setName(po.getName());
-            dtos.add(dto);
+        List<ComTypeVO> vos = new ArrayList<>();
+        for (ComTypeBO po : bos) {
+            ComTypeVO vo = new ComTypeVO();
+            vo.setComTypeId(po.getComTypeId());
+            vo.setName(po.getName());
+            vos.add(vo);
         }
-        return new ResultVO(1000, dtos);
+        return new ResultVO(1000, vos);
     }
 
 

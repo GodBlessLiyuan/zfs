@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.ComTypeDTO;
+import com.rpa.web.vo.ComTypeVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 
@@ -37,11 +37,11 @@ public interface IComTypeService {
      * @param reqData  请求数据
      * @return
      */
-    DTPageInfo<ComTypeDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<ComTypeVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 查询所有数据
      * @return
      */
-    List<ComTypeDTO> queryAll();
+    List<ComTypeVO> queryAll();
 }

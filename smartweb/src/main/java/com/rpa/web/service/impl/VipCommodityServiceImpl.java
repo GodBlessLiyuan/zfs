@@ -1,15 +1,13 @@
 package com.rpa.web.service.impl;
 
-
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.ComTypeMapper;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.VipCommodityConstant;
 import com.rpa.web.dto.VipCommodityDTO;
-import com.rpa.web.mapper.ComTypeMapper;
 import com.rpa.common.mapper.SoftChannelMapper;
 import com.rpa.web.mapper.VipCommodityMapper;
-import com.rpa.web.pojo.ComTypePO;
 import com.rpa.common.pojo.SoftChannelPO;
 import com.rpa.web.pojo.VipCommodityPO;
 import com.rpa.web.service.IVipCommodityService;
@@ -19,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import com.rpa.common.pojo.ComTypePO;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
