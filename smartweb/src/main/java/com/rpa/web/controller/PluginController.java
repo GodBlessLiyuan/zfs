@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.common.Constant;
+import com.rpa.common.constant.Constant;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.PluginDTO;
 import com.rpa.web.service.IPluginService;

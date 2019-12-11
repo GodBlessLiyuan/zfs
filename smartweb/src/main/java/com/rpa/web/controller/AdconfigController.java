@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
-import static com.rpa.web.common.Constant.SHOW_INTERVAL;
+import static com.rpa.common.constant.Constant.SHOW_INTERVAL;
 
 
 /**

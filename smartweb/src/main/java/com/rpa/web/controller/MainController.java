@@ -10,7 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static com.rpa.web.common.Constant.ADMIN_USER;
+import static com.rpa.common.constant.Constant.ADMIN_USER;
 
 @Controller
 public class MainController {

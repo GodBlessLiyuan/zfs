@@ -1,6 +1,6 @@
 package com.rpa.web.filter;
 
-import com.rpa.web.common.Constant;
+import com.rpa.common.constant.Constant;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;

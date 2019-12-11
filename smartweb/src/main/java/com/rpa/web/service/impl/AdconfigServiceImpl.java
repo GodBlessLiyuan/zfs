@@ -6,10 +6,10 @@ import com.rpa.common.pojo.AdconfigPO;
 import com.rpa.common.pojo.KeyValuePO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.common.Constant;
+import com.rpa.common.constant.Constant;
 import com.rpa.common.dto.AdconfigDTO;
 import com.rpa.common.dto.AdminUserDTO;
-import com.rpa.common.dto.KeyValueDTO;
+import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.service.AdconfigService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Date;
 
-import static com.rpa.web.common.Constant.SHOW_INTERVAL;
+import static com.rpa.common.constant.Constant.SHOW_INTERVAL;
 
 /**
  * @author: dangyi

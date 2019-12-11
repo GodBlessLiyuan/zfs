@@ -2,16 +2,16 @@ package com.rpa.web.service.impl;
 
 import com.rpa.common.mapper.KeyValueMapper;
 import com.rpa.common.pojo.KeyValuePO;
-import com.rpa.web.common.Constant;
-import com.rpa.common.dto.KeyValueDTO;
+import com.rpa.common.constant.Constant;
 import com.rpa.web.feign.CacheFeignClient;
 import com.rpa.web.service.AccountTutorialService;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.KeyValueVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.rpa.web.common.Constant.REDIS_KEY;
-import static com.rpa.web.common.Constant.TUTORIAL_URL;
+import static com.rpa.common.constant.Constant.REDIS_KEY;
+import static com.rpa.common.constant.Constant.TUTORIAL_URL;
 
 /**
  * @author: dangyi
@@ -29,7 +29,6 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
 
     /**
      * 查询
-     *
      * @param tutorial_url
      * @return
      */
@@ -43,17 +42,16 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
             return new ResultVO(1002);
         }
 
-        // 将查出的 PO 数据转换为 DTO
-        KeyValueDTO dto = new KeyValueDTO();
-        dto.setKeyName(po.getKeyName());
-        dto.setValue(po.getValue());
+        // 将查出的 po 数据转换为 vo
+        KeyValueVO vo = new KeyValueVO();
+        vo.setKeyName(po.getKeyName());
+        vo.setValue(po.getValue());
 
-        return new ResultVO(1000, dto);
+        return new ResultVO(1000, vo);
     }
 
     /**
      * 插入或修改
-     *
      * @param url
      * @return
      */
@@ -68,11 +66,10 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
         // 尝试着从t_key_value表中查出养号教程数据：无则插入，有则修改
         KeyValuePO po = this.keyValueMapper.selectByPrimaryKey(TUTORIAL_URL);
 
-        int count = 0;
         if (po == null) {
-            count = this.keyValueMapper.insert(tutorial_po);
+            this.keyValueMapper.insert(tutorial_po);
         } else {
-            count = this.keyValueMapper.updateByPrimaryKey(tutorial_po);
+            this.keyValueMapper.updateByPrimaryKey(tutorial_po);
 
             // 从t_key_value表中查出INDEX数据，值加1
             KeyValuePO index_po = this.keyValueMapper.selectByPrimaryKey(Constant.INDEX);

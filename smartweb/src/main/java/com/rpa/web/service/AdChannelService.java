@@ -1,8 +1,9 @@
 package com.rpa.web.service;
 
-import com.rpa.common.dto.AdChannelDTO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.AdChannelVO;
+import com.rpa.web.dto.AdChannelDTO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @description:
  */
 public interface AdChannelService {
-    DTPageInfo<AdChannelDTO> query(int draw, int start, int length, int adId, String name, int appId);
+    DTPageInfo<AdChannelVO> query(int draw, int start, int length, int adId, String name, int appId);
 
     ResultVO update(List<AdChannelDTO> list);
 

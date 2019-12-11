@@ -4,15 +4,17 @@ import com.github.pagehelper.Page;
 import com.rpa.common.pojo.AdChannelPO;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.bo.AdChannelBO;
-import com.rpa.common.dto.AdChannelDTO;
+import com.rpa.web.dto.AdChannelDTO;
 import com.rpa.web.dto.AppDTO;
 import com.rpa.common.mapper.AdChannelMapper;
-import com.rpa.web.mapper.AppMapper;
+import com.rpa.common.mapper.AppMapper;
 import com.rpa.common.mapper.SoftChannelMapper;
-import com.rpa.web.pojo.AppPO;
+import com.rpa.common.pojo.AppPO;
 import com.rpa.web.service.AdChannelService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.AdChannelVO;
+import com.rpa.web.vo.AppVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -59,10 +61,10 @@ public class AdChannelServiceImpl implements AdChannelService {
      * @return
      */
     @Override
-    public DTPageInfo<AdChannelDTO> query(int draw, int start, int length, int adId, String name, int appId) {
+    public DTPageInfo<AdChannelVO> query(int draw, int start, int length, int adId, String name, int appId) {
 
         // 分页
-        Page<AdChannelDTO> page = PageHelper.startPage(start, length);
+        Page<AdChannelVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
@@ -70,58 +72,59 @@ public class AdChannelServiceImpl implements AdChannelService {
         map.put("appId", appId);
 
         // 按照条件，从t_app和t_soft_channel表中联合查询数据，该数据中不含状态值
-        List<AdChannelBO> lists_DO = this.adChannelMapper.query(map);
+        List<AdChannelBO> bos = this.adChannelMapper.query(map);
 
         // 根据查询到的数据的三个ID，往中间表t_ad_channel中查询状态值
         // 如果中间表无此条数据，就新建，新建时状态值默认为1
-        // 然后再将所查询到的所有do数据转换为带着状态值的dto，返回
-        List<AdChannelDTO> lists_DTO = new ArrayList<>();
-        for (AdChannelBO do1 : lists_DO) {
-            AdChannelDTO dto = new AdChannelDTO();
+        // 然后再将所查询到的所有bo数据转换为带着状态值的vo，返回
+        List<com.rpa.web.vo.AdChannelVO> vos = new ArrayList<>();
+        for (AdChannelBO bo1 : bos) {
+
+            AdChannelVO vo;
 
             //往中间表t_ad_channel中查询
-            AdChannelBO do2 = this.adChannelMapper.queryByIds(adId, do1.getAppId(), do1.getSoftChannelId());
-            if (null == do2) {
+            AdChannelBO bo2 = this.adChannelMapper.queryByIds(adId, bo1.getAppId(), bo1.getSoftChannelId());
+            if (null == bo2) {
                 //先往中间表t_ad_channel中插入数据
-                AdChannelPO adChannelPO = new AdChannelPO();
-                adChannelPO.setAdId(adId);
-                adChannelPO.setSoftChannelId(do1.getSoftChannelId());
-                adChannelPO.setAppId(do1.getAppId());
-                adChannelPO.setCreateTime(new Date());
-                adChannelPO.setUpdateTime(new Date());
-                adChannelPO.setType((byte)1);
-                adChannelPO.setDr((byte)1);
-                this.adChannelMapper.insert(adChannelPO);
+                AdChannelPO po = new AdChannelPO();
+                po.setAdId(adId);
+                po.setSoftChannelId(bo1.getSoftChannelId());
+                po.setAppId(bo1.getAppId());
+                po.setCreateTime(new Date());
+                po.setUpdateTime(new Date());
+                po.setType((byte)1);
+                po.setDr((byte)1);
+                this.adChannelMapper.insert(po);
 
-                //再次查询，将数据转化为dto，返回
-                AdChannelBO do3 = new AdChannelBO();
-                dto = do2dto(do3);
+                //再次查询，将数据转化为vo，返回
+                AdChannelBO bo3 = new AdChannelBO();
+                vo = bo2vo(bo3);
             } else {
-                //将数据转换为dto，返回
-                dto = do2dto(do2);
+                //将数据转换为vo，返回
+                vo = bo2vo(bo2);
             }
 
-            lists_DTO.add(dto);
+            vos.add(vo);
         }
         //封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
     /**
      * 将do数据转换为dto
-     * @param adChannelBO
+     * @param bo
      * @return
      */
-    private AdChannelDTO do2dto(AdChannelBO adChannelBO) {
-        AdChannelDTO dto = new AdChannelDTO();
-        dto.setAdId(adChannelBO.getAdId());
-        dto.setSoftChannelId(adChannelBO.getSoftChannelId());
-        dto.setAppId(adChannelBO.getAppId());
-        dto.setType(adChannelBO.getType());
-        dto.setVersionname(adChannelBO.getVersionname());
-        dto.setName(adChannelBO.getName());
+    private AdChannelVO bo2vo(AdChannelBO bo) {
+        AdChannelVO vo = new AdChannelVO();
+        vo.setAdId(bo.getAdId());
+        vo.setSoftChannelId(bo.getSoftChannelId());
+        vo.setAppId(bo.getAppId());
+        vo.setType(bo.getType());
+        vo.setVersionname(bo.getVersionname());
+        vo.setName(bo.getName());
 
-        return dto;
+        return vo;
     }
 
     /**
@@ -137,30 +140,30 @@ public class AdChannelServiceImpl implements AdChannelService {
             return new ResultVO<>(1000, new ArrayList<>());
         }
 
-        // 将 po 转换为 dto 返回给前端
-        List<AppDTO> dtos = new ArrayList<>();
+        // 将 po 转换为 vo 返回给前端
+        List<AppVO> vos = new ArrayList<>();
         for (AppPO po : pos) {
-            AppDTO dto = new AppDTO();
-            dto.setAppId(po.getAppId());
-            dto.setVersionName(po.getVersionname());
+            AppVO vo = new AppVO();
+            vo.setAppId(po.getAppId());
+            vo.setVersionName(po.getVersionname());
 
-            dtos.add(dto);
+            vos.add(vo);
         }
-        return new ResultVO<>(1000, dtos);
+        return new ResultVO<>(1000, vos);
     }
 
 
     /**
      * 修改：开/关广告渠道
-     * @param list
+     * @param dtos
      * @return
      */
     @Override
     @Transactional
-    public ResultVO update(List<AdChannelDTO> list) {
+    public ResultVO update(List<AdChannelDTO> dtos) {
 
-        // 对传过来的 DTOs 进行迭代，并转换为 PO
-        for (AdChannelDTO dto : list) {
+        // 对传过来的 dtos 进行迭代，并转换为 po
+        for (AdChannelDTO dto : dtos) {
 
             // 先在数据库中查询出要修改的数据
             AdChannelPO po = this.adChannelMapper.queryByIds2(dto.getAdId(), dto.getAppId(), dto.getSoftChannelId());

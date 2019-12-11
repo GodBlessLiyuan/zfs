@@ -3,7 +3,7 @@
 <mapper namespace="com.rpa.common.mapper.KeyValueMapper">
   <resultMap id="BaseResultMap" type="com.rpa.common.pojo.KeyValuePO">
     <id column="key_name" jdbcType="INTEGER" property="keyName" />
-    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="value" jdbcType="CHAR" property="value" />
   </resultMap>
   <sql id="Base_Column_List">
     key_name, `value`
