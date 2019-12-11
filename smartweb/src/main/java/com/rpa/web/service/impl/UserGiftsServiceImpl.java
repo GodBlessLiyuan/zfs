@@ -56,7 +56,7 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
 
         userGiftsMapper.insert(userGiftsPO);
 
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 
     @Override
@@ -74,12 +74,12 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
         po.setStatus(status);
         userGiftsMapper.updateByPrimaryKey(po);
 
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 
     @Override
     public ResultVO delete(int nugId) {
         userGiftsMapper.deleteByPrimaryKey(nugId);
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 }

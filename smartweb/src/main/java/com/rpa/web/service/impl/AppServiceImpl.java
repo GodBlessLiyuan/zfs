@@ -110,7 +110,7 @@ public class AppServiceImpl implements IAppService {
                 appChMapper.batchInsert(insAppChPOs);
             }
 
-            return ResultVOUtil.success();
+            return new ResultVO(1000);
         }
 
         // 新增
@@ -132,7 +132,7 @@ public class AppServiceImpl implements IAppService {
 
         this.deleteRedis();
 
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 
     @Transactional(rollbackFor = {})

@@ -50,6 +50,6 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
 
         softChannelMapper.insert(po);
 
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 }

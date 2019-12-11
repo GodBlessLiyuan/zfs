@@ -57,7 +57,7 @@ public class WxSupportServiceImpl implements IWxSupportService {
         //删除Redis
         deleteRedis();
 
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 
     @Override

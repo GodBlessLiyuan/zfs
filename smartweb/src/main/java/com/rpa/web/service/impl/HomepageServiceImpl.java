@@ -112,6 +112,6 @@ public class HomepageServiceImpl implements HomepageService {
         result.put("payCount", payCount);
         result.put("monthRevenue", monthRevenue);
 
-        return ResultVOUtil.success(result);
+        return new ResultVO(1000, result);
     }
 }

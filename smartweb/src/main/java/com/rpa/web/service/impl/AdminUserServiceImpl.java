@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
-import static com.rpa.web.enumeration.ExceptionEnum.*;
 
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
@@ -109,11 +108,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         po.setCreateTime(new Date());
         po.setRelationAId(aId);
 
-        int count = this.adminUserMapper.insert(po);
-        if (count == 1) {
-            return ResultVOUtil.success();
-        }
-        return ResultVOUtil.error(INSERT_ERROR);
+        this.adminUserMapper.insert(po);
+        return new ResultVO(1000);
     }
 
 
@@ -127,18 +123,18 @@ public class AdminUserServiceImpl implements AdminUserService {
         List<RolePO> POs = this.roleMapper.queryAllRoles();
 
         if (null == POs) {
-            return ResultVOUtil.success("");
+            return new ResultVO(1002);
         }
 
         // 将 po 转换为 dto
-        List<RoleDTO> DTOs = new ArrayList<>();
+        List<RoleDTO> dtos = new ArrayList<>();
         for (RolePO po : POs) {
             RoleDTO dto = new RoleDTO();
             dto.setRoleId(po.getRoleId());
             dto.setRoleName(po.getRoleName());
-            DTOs.add(dto);
+            dtos.add(dto);
         }
-        return ResultVOUtil.success(DTOs);
+        return new ResultVO<>(1000, dtos);
     }
 
 
@@ -153,7 +149,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         AdminUserBO adminUserBO = this.adminUserMapper.queryById(aId);
 
         if (null == adminUserBO) {
-            return ResultVOUtil.error(QUERY_ERROR);
+            return new ResultVO(1002);
         }
 
         // 将 do 转换为 dto
@@ -169,7 +165,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         dto.setExtra(adminUserBO.getExtra());
         dto.setOperator(queryUsernameByAid(adminUserBO.getRelationAId()));
 
-        return ResultVOUtil.success(dto);
+        return new ResultVO<>(1000, dto);
     }
 
 
@@ -208,11 +204,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         po.setExtra(dto.getExtra());
         po.setRelationAId(aId);
 
-        int count = adminUserMapper.updateByPrimaryKey(po);
-        if (count == 1) {
-            return ResultVOUtil.success();
-        }
-        return ResultVOUtil.error(UPDATE_ERROR);
+        adminUserMapper.updateByPrimaryKey(po);
+        return new ResultVO(1000);
     }
 
 
@@ -224,11 +217,8 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     public ResultVO delete(Integer aId) {
-        int count = this.adminUserMapper.deleteByPrimaryKey(aId);
-        if (count == 1) {
-            return ResultVOUtil.success();
-        }
-        return ResultVOUtil.error(DELETE_ERROR);
+        this.adminUserMapper.deleteByPrimaryKey(aId);
+        return new ResultVO(1000);
     }
 
 

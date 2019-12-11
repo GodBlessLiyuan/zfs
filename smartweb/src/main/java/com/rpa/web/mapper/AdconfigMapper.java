@@ -1,5 +1,6 @@
 package com.rpa.web.mapper;
 
+import com.rpa.common.pojo.AdconfigPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

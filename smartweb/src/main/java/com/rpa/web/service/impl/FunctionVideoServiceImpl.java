@@ -6,7 +6,6 @@ import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.FunctionVideoDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.FunctionVideoMapper;
 import com.rpa.web.pojo.FunctionVideoPO;
@@ -14,6 +13,7 @@ import com.rpa.web.service.FunctionVideoService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.utils.OperatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -101,14 +101,14 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
 
         FunctionVideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
         if (null == po) {
-            return ResultVOUtil.error(ExceptionEnum.QUERY_ERROR);
+            return new ResultVO(1002);
         }
 
         FunctionVideoDTO dto = new FunctionVideoDTO();
         dto.setFunName(po.getFunName());
         dto.setExtra(po.getExtra());
 
-        return ResultVOUtil.success(dto);
+        return new ResultVO<>(1000, dto);
     }
 
 
@@ -123,11 +123,6 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     @Override
     public ResultVO insert(HttpSession httpSession, String funName, MultipartFile url, String extra) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         FunctionVideoPO po = new FunctionVideoPO();
 
         // 对funname进行唯一性校验，如果有重名，不给插入
@@ -135,7 +130,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         if (funname_count == 0) {
             po.setFunName(funName);
         }else {
-            return ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+            return new ResultVO(1003);
         }
 
         if (null == url) {
@@ -146,10 +141,10 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         po.setExtra(extra);
         po.setUpdateTime(new Date());
         po.setCreateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        int count = this.functionVideoMapper.insert(po);
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+        this.functionVideoMapper.insert(po);
+        return new ResultVO(1000);
     }
 
 
@@ -174,7 +169,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         FunctionVideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
 
         if (null == po) {
-            return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+            return new ResultVO(1002);
         }
 
         po.setFunName(funName);
@@ -185,13 +180,13 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         po.setUpdateTime(new Date());
         po.setaId(aId);
 
-        int count = this.functionVideoMapper.updateByPrimaryKey(po);
+        this.functionVideoMapper.updateByPrimaryKey(po);
 
         //删除Redis
         String funname = this.queryFunnameById(functionId);
         deleteRedis(funname);
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        return new ResultVO(1000);
     }
 
     /**
@@ -201,13 +196,14 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
      */
     @Override
     public ResultVO delete(Integer functionId) {
-        int count = this.functionVideoMapper.deleteByPrimaryKey(functionId);
+
+        this.functionVideoMapper.deleteByPrimaryKey(functionId);
 
         //删除Redis
         String funname = this.queryFunnameById(functionId);
         deleteRedis(funname);
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
+        return new ResultVO(1000);
     }
 
 

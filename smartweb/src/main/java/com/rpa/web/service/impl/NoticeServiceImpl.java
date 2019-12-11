@@ -6,7 +6,6 @@ import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.NoticeDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.NoticeMapper;
 import com.rpa.web.pojo.NoticePO;
@@ -150,12 +149,12 @@ public class NoticeServiceImpl implements NoticeService {
         po.setaId(aId);
         po.setStatus(1);
 
-        int count = this.noticeMapper.insert(po);
+        this.noticeMapper.insert(po);
 
         //删除Redis
         this.deleteRedis();
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+        return new ResultVO(1000);
     }
 
 
@@ -181,12 +180,12 @@ public class NoticeServiceImpl implements NoticeService {
         po.setUpdateTime(new Date());
         po.setaId(aId);
 
-        int count = this.noticeMapper.updateByPrimaryKey(po);
+        this.noticeMapper.updateByPrimaryKey(po);
 
         //删除Redis
         this.deleteRedis();
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        return new ResultVO(1000);
     }
 
 
@@ -198,10 +197,9 @@ public class NoticeServiceImpl implements NoticeService {
      */
     @Override
     public ResultVO delete(Integer noticeId) {
-        int count = this.noticeMapper.deleteByPrimaryKey(noticeId);
-        //删除Redis
+        this.noticeMapper.deleteByPrimaryKey(noticeId);
         this.deleteRedis();
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
+        return new ResultVO(1000);
     }
 
 

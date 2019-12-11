@@ -40,7 +40,7 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
         KeyValuePO po = this.keyValueMapper.selectByPrimaryKey(tutorial_url);
 
         if (null == po) {
-            return ResultVOUtil.success("");
+            return new ResultVO(1002);
         }
 
         // 将查出的 PO 数据转换为 DTO
@@ -48,7 +48,7 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
         dto.setKeyName(po.getKeyName());
         dto.setValue(po.getValue());
 
-        return ResultVOUtil.success(dto);
+        return new ResultVO(1000, dto);
     }
 
     /**

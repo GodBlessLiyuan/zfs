@@ -6,7 +6,6 @@ import com.rpa.web.common.PageHelper;
 import com.rpa.web.domain.UserActivityDO;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.UserActivityDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.UserActivityMapper;
 import com.rpa.web.pojo.UserActivityPO;
@@ -111,15 +110,15 @@ public class UserActivityServiceImpl implements IUserActivityService {
         UserActivityPO po = this.userActivityMapper.selectByPrimaryKey(uAId);
 
         if (null == po) {
-            return ResultVOUtil.error(ExceptionEnum.QUERY_ERROR);
+            return new ResultVO(1002);
         }
 
         po.setStatus(status);
         po.setUpdateTime(new Date());
         po.setaId(aId);
 
-        int count = this.userActivityMapper.updateStatus(po);
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        this.userActivityMapper.updateStatus(po);
+        return new ResultVO(1000);
     }
 
     /**
