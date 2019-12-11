@@ -207,4 +207,55 @@
       md5 = #{md5,jdbcType=CHAR}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryByIds" resultType="com.rpa.common.bo.AppBO">
+    select a.app_id as appId, a.publish_time as publishTime, au.username, a.versionname as versionName, a.size,
+    a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra
+    from t_app a
+    left join t_app_ch ac on a.app_id = ac.app_id
+    left join t_soft_channel s on ac.soft_channel_id = s.soft_channel_id
+    left join t_admin_user au on a.a_id = au.a_id where a.dr = 1 and a.app_id in (
+    <foreach collection="list" item="appId" index="index" separator=",">
+      #{appId,jdbcType=INTEGER}
+    </foreach>)
+  </select>
+  <select id="queryAll" resultType="com.rpa.common.pojo.AppPO">
+    select distinct a.app_id as appId, a.versionname as versionName
+    from t_app a
+    right join t_app_ch ac on a.app_id = ac.app_id
+    where a.dr = 1
+  </select>
+  <select id="queryById" parameterType="java.lang.Integer" resultType="com.rpa.common.bo.AppBO">
+    select a.app_id as appId, a.publish_time as publishTime, a.versionname as versionName, a.size,
+    a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra
+    from t_app a
+    left join t_app_ch ac on a.app_id = ac.app_id
+    left join t_soft_channel s on ac.soft_channel_id = s.soft_channel_id
+    where a.app_id = #{appId} and a.dr = 1
+  </select>
+  <select id="queryVersionname" resultMap="BaseResultMap">
+    select app_id, versionname
+    from t_app
+    where dr = 1
+  </select>
+  <select id="queryByVersionCode" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from t_app
+    where dr = 1 and versioncode = #{versionCode}
+    order by app_id
+    limit 1
+  </select>
+  <select id="queryVersioncodes" parameterType="java.lang.Integer">
+    select distinct versioncode
+    from t_app
+  </select>
+  <select id="queryAppId" resultType="java.lang.Integer">
+    select app_id as appId
+    from t_app
+    where dr = 1
+    <if test="updateType != null and updateType != 0">
+      and update_type = #{updateType}
+    </if>
+    order by app_id
+  </select>
 </mapper>
