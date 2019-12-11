@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.NewUserRecordDTO;
+import com.rpa.web.vo.NewUserRecordVO;
 import com.rpa.web.utils.DTPageInfo;
 
 import java.util.Map;
@@ -22,5 +22,5 @@ public interface INewUserRecordService {
      * @param reqData
      * @return
      */
-    DTPageInfo<NewUserRecordDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<NewUserRecordVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 }

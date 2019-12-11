@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.NewUserRecordDTO;
+import com.rpa.web.vo.NewUserRecordVO;
 import com.rpa.web.service.INewUserRecordService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,10 @@ public class NewUserRecordController {
     private INewUserRecordService service;
 
     @RequestMapping("query")
-    public DTPageInfo<NewUserRecordDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                              @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                              @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                              @RequestParam(value = "phone") String phone) {
+    public DTPageInfo<NewUserRecordVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                             @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                             @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                             @RequestParam(value = "phone") String phone) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("phone", phone);
 
