@@ -1,6 +1,5 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.BannerConfigDTO;
 import com.rpa.web.service.BannerConfigService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
