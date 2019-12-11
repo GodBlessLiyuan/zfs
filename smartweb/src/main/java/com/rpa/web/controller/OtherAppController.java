@@ -2,7 +2,7 @@ package com.rpa.web.controller;
 
 import com.rpa.common.constant.Constant;
 import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.OtherAppDTO;
+import com.rpa.web.vo.OtherAppVO;
 import com.rpa.web.service.IOtherAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -31,10 +31,10 @@ public class OtherAppController {
     private IOtherAppService service;
 
     @RequestMapping("query")
-    public DTPageInfo<OtherAppDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                         @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                         @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                         @RequestParam(value = "name") String name) {
+    public DTPageInfo<OtherAppVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                        @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                        @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                        @RequestParam(value = "name") String name) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("name", name);
 
