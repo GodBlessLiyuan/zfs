@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.WhiteDeviceDTO;
+import com.rpa.web.vo.WhiteDeviceVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 
@@ -23,7 +23,7 @@ public interface IWhiteDeviceService {
      * @param reqData
      * @return
      */
-    DTPageInfo<WhiteDeviceDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<WhiteDeviceVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 插入

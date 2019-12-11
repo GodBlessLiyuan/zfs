@@ -1,14 +1,14 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.bo.WhiteDeviceBO;
+import com.rpa.common.mapper.WhiteDeviceMapper;
+import com.rpa.common.pojo.WhiteDevicePO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.domain.WhiteDeviceDO;
-import com.rpa.web.dto.WhiteDeviceDTO;
+import com.rpa.web.vo.WhiteDeviceVO;
 import com.rpa.web.mapper.DeviceImeiMapper;
-import com.rpa.web.mapper.WhiteDeviceMapper;
 import com.rpa.web.pojo.DeviceImeiPO;
-import com.rpa.web.pojo.WhiteDevicePO;
 import com.rpa.web.service.IWhiteDeviceService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -40,10 +40,10 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
     private StringRedisTemplate template;
 
     @Override
-    public DTPageInfo<WhiteDeviceDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<WhiteDeviceDO> page = PageHelper.offsetPage(pageNum, pageSize);
-        List<WhiteDeviceDO> pos = whiteDeviceMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), WhiteDeviceDTO.convert(pos));
+    public DTPageInfo<WhiteDeviceVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+        Page<WhiteDeviceBO> page = PageHelper.offsetPage(pageNum, pageSize);
+        List<WhiteDeviceBO> pos = whiteDeviceMapper.query(reqData);
+        return new DTPageInfo<>(draw, page.getTotal(), WhiteDeviceVO.convert(pos));
     }
 
     @Override
