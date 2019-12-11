@@ -1,6 +1,6 @@
 package com.rpa.web.dto;
 
-import com.rpa.web.domain.OrderDO;
+import com.rpa.common.bo.OrderBO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -35,24 +35,24 @@ public class OrderDTO implements Serializable {
     /**
      * do 转 dto
      *
-     * @param d
+     * @param bo
      * @return
      */
-    public static OrderDTO convert(OrderDO d) {
+    public static OrderDTO convert(OrderBO bo) {
         OrderDTO dto = new OrderDTO();
 
-        dto.setOrderNumber(d.getOrderNumber());
-        dto.setUserChanName(d.getUserChanName());
-        dto.setSaleChanName(d.getSaleChanName());
-        dto.setType(d.getType());
-        dto.setPhone(d.getPhone());
-        dto.setCreateTime(d.getCreateTime());
-        dto.setPayTime(d.getPayTime());
-        dto.setComName(d.getComName());
-        dto.setDays(d.getDays());
-        dto.setPrice(d.getPrice());
-        dto.setShowDiscount(d.getShowDiscount());
-        dto.setDiscount(d.getDiscount() / 100);
+        dto.setOrderNumber(bo.getOrderNumber());
+        dto.setUserChanName(bo.getUserChanName());
+        dto.setSaleChanName(bo.getSaleChanName());
+        dto.setType(bo.getType());
+        dto.setPhone(bo.getPhone());
+        dto.setCreateTime(bo.getCreateTime());
+        dto.setPayTime(bo.getPayTime());
+        dto.setComName(bo.getComName());
+        dto.setDays(bo.getDays());
+        dto.setPrice(bo.getPrice());
+        dto.setShowDiscount(bo.getShowDiscount());
+        dto.setDiscount(bo.getDiscount() / 100);
 
         return dto;
     }
@@ -60,14 +60,14 @@ public class OrderDTO implements Serializable {
     /**
      * dos 转 dtos
      *
-     * @param dos
+     * @param bos
      * @return
      */
-    public static List<OrderDTO> convert(List<OrderDO> dos) {
+    public static List<OrderDTO> convert(List<OrderBO> bos) {
 
         List<OrderDTO> dtos = new ArrayList<>();
-        for (OrderDO d : dos) {
-            dtos.add(OrderDTO.convert(d));
+        for (OrderBO bo : bos) {
+            dtos.add(OrderDTO.convert(bo));
         }
 
         return dtos;

@@ -1,16 +1,16 @@
-package com.rpa.web.domain;
+package com.rpa.common.bo;
 
-import com.rpa.web.pojo.OrderPO;
+import com.rpa.common.pojo.OrderPO;
 import lombok.Data;
 
 /**
  * @author: xiahui
- * @date: Created in 2019/10/9 17:23
+ * @date: Created in 2019/12/11 11:20
  * @description: TODO
  * @version: 1.0
  */
 @Data
-public class OrderDO extends OrderPO {
+public class OrderBO extends OrderPO {
 
     private String userChanName;
     private String saleChanName;
