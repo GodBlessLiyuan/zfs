@@ -2,7 +2,7 @@ package com.rpa.web.controller;
 
 import com.rpa.common.constant.Constant;
 import com.rpa.common.dto.AdminUserDTO;
-import com.rpa.web.dto.UserGiftsDTO;
+import com.rpa.web.vo.UserGiftsVO;
 import com.rpa.web.service.IUserGiftsSercive;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -29,11 +29,11 @@ public class UserGiftsController {
     private IUserGiftsSercive sercive;
 
     @RequestMapping("query")
-    public DTPageInfo<UserGiftsDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                          @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                          @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                          @RequestParam(value = "username") String username,
-                                          @RequestParam(value = "comTypeId") String comTypeId) {
+    public DTPageInfo<UserGiftsVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                         @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                         @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                         @RequestParam(value = "username") String username,
+                                         @RequestParam(value = "comTypeId") String comTypeId) {
         Map<String, Object> reqData = new HashMap<>(2);
         reqData.put("username", username);
         reqData.put("comTypeId", comTypeId);

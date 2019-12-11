@@ -1,12 +1,13 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.bo.UserGiftsBO;
 import com.rpa.common.mapper.ComTypeMapper;
+import com.rpa.common.mapper.UserGiftsMapper;
 import com.rpa.common.pojo.ComTypePO;
+import com.rpa.common.pojo.UserGiftsPO;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.UserGiftsDTO;
-import com.rpa.web.mapper.UserGiftsMapper;
-import com.rpa.web.pojo.UserGiftsPO;
+import com.rpa.web.vo.UserGiftsVO;
 import com.rpa.web.service.IUserGiftsSercive;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -33,11 +34,11 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
     private ComTypeMapper comTypeMapper;
 
     @Override
-    public DTPageInfo<UserGiftsDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<UserGiftsPO> page = PageHelper.startPage(pageNum, pageSize);
-        List<UserGiftsPO> pos = userGiftsMapper.query(reqData);
+    public DTPageInfo<UserGiftsVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+        Page<UserGiftsBO> page = PageHelper.startPage(pageNum, pageSize);
+        List<UserGiftsBO> pos = userGiftsMapper.query(reqData);
 
-        return new DTPageInfo<>(draw, page.getTotal(), UserGiftsDTO.convert(pos));
+        return new DTPageInfo<>(draw, page.getTotal(), UserGiftsVO.convert(pos));
     }
 
     @Override
