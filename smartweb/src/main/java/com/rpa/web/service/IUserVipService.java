@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.UserVipDTO;
+import com.rpa.web.vo.UserVipVO;
 import com.rpa.web.dto.UserVipDetailsDTO;
 import com.rpa.web.utils.DTPageInfo;
 
@@ -22,7 +22,7 @@ public interface IUserVipService {
      * @param reqData
      * @return
      */
-    DTPageInfo<UserVipDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<UserVipVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 分页查询用户会用详细信息

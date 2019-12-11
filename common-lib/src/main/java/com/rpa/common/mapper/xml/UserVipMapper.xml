@@ -97,4 +97,17 @@
       </if>
     </trim>
   </insert>
+
+  <select id="query" resultType="com.rpa.common.bo.UserVipBO">
+    select uv.user_id as userId, u.phone, u.create_time as createTime, uv.first_time as firstTime, uv.end_time as
+    endTime, uv.vend_time as
+    vendTime, uv.last_time as lastTime
+    from t_user_vip uv
+    left join t_user u on uv.user_id = u.user_id
+    <where>
+      <if test="phone != null and phone != ''"> and u.phone like '%' #{phone} '%'</if>
+      <if test="isPay == 1"> and uv.first_time is not null</if>
+      <if test="isPay == 2"> and uv.first_time is null</if>
+    </where>
+  </select>
 </mapper>
