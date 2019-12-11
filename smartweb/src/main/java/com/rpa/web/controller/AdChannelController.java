@@ -1,5 +1,6 @@
 package com.rpa.web.controller;
 
+import com.rpa.web.dto.AdChannelDTO;
 import com.rpa.web.service.AdChannelService;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.utils.DTPageInfo;
@@ -57,7 +58,7 @@ public class AdChannelController {
      * @return
      */
     @PostMapping("update")
-    public ResultVO update(@RequestBody List<AdChannelVO> list) {
+    public ResultVO update(@RequestBody List<AdChannelDTO> list) {
         return this.adChannelService.update(list);
     }
 }

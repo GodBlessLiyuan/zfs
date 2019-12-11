@@ -5,7 +5,6 @@ import com.rpa.common.pojo.AdChannelPO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * AdChannelMapper继承基类
