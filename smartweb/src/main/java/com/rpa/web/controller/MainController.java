@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.AdminUserDTO;
+import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.utils.Md5Util;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

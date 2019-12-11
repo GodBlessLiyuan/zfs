@@ -2,11 +2,10 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.NoticeDTO;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 
 /**
  * @author: dangyi

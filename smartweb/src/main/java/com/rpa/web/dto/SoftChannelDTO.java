@@ -1,6 +1,6 @@
 package com.rpa.web.dto;
 
-import com.rpa.web.pojo.SoftChannelPO;
+import com.rpa.common.pojo.SoftChannelPO;
 
 import java.io.Serializable;
 import java.util.ArrayList;

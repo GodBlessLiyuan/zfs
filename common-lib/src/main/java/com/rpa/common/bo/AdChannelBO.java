@@ -1,6 +1,6 @@
-package com.rpa.web.domain;
+package com.rpa.common.bo;
 
-import com.rpa.web.pojo.AdChannelPO;
+import com.rpa.common.pojo.AdChannelPO;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.Date;
  * t_ad_channel
  * @author 
  */
-public class AdChannelDO extends AdChannelPO implements Serializable {
+public class AdChannelBO extends AdChannelPO implements Serializable {
     private Integer adId;
 
     private Integer softChannelId;
@@ -119,7 +119,7 @@ public class AdChannelDO extends AdChannelPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        AdChannelDO other = (AdChannelDO) that;
+        AdChannelBO other = (AdChannelBO) that;
         return (this.getAdId() == null ? other.getAdId() == null : this.getAdId().equals(other.getAdId()))
             && (this.getSoftChannelId() == null ? other.getSoftChannelId() == null : this.getSoftChannelId().equals(other.getSoftChannelId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))

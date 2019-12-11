@@ -4,17 +4,16 @@ import com.github.pagehelper.Page;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.AdminUserDTO;
+import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.NoticeDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
-import com.rpa.web.mapper.AdminUserMapper;
+import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.NoticeMapper;
 import com.rpa.web.pojo.NoticePO;
 import com.rpa.web.service.NoticeService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
-import com.rpa.web.utils.ResultVOUtil;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -82,7 +81,7 @@ public class NoticeServiceImpl implements NoticeService {
         // 按照条件查询数据
         List<NoticePO> lists_PO = noticeMapper.query(map);
 
-        // 将查询到的 AdconfigPO 数据转换为 AdconfigDTO
+        // 将查询到的 PO 数据转换为 DTO
         List<NoticeDTO> lists_DTO = new ArrayList<>();
         for (NoticePO po : lists_PO) {
             NoticeDTO dto = new NoticeDTO();

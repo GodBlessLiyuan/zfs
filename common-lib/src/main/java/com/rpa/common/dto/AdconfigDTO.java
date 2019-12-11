@@ -1,4 +1,4 @@
-package com.rpa.web.dto;
+package com.rpa.common.dto;
 
 import java.io.Serializable;
 import java.util.Date;

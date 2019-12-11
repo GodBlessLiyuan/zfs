@@ -1,8 +1,6 @@
 package com.rpa.web.controller.handler;
 
-import com.rpa.web.exception.PromptException;
-import com.rpa.web.utils.ResultVOUtil;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,10 +19,6 @@ public class WebExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ResultVO handlerPromptException(Exception e) {
         logger.error("WebExceptionHandler: ", e);
-        if (e instanceof PromptException) {
-            return ResultVOUtil.error(((PromptException) e).getCode(), e.getMessage());
-        }
-
-        return new ResultVO(2000, "服务器内部错误!");
+        return new ResultVO(2000);
     }
 }

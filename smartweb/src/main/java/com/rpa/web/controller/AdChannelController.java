@@ -1,14 +1,13 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.AdChannelDTO;
+import com.rpa.common.dto.AdChannelDTO;
 import com.rpa.web.service.AdChannelService;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author: dangyi

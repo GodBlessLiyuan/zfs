@@ -1,8 +1,8 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.AdChannelDTO;
+import com.rpa.common.dto.AdChannelDTO;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 
 import java.util.List;
 

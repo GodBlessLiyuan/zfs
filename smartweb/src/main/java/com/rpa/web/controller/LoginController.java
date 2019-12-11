@@ -1,7 +1,7 @@
 package com.rpa.web.controller;
 
 import com.rpa.web.service.LoginService;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

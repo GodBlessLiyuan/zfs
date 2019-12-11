@@ -1,6 +1,5 @@
 package com.rpa.voice.service;
 
-import com.rpa.common.vo.ResultVO;
 import com.rpa.voice.dto.VoiceShareDTO;
 import com.rpa.voice.dto.VoiceUploadDTO;
 

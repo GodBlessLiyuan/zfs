@@ -1,10 +1,9 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.AdconfigDTO;
-import com.rpa.web.dto.KeyValueDTO;
+import com.rpa.common.dto.AdconfigDTO;
 import com.rpa.web.service.AdconfigService;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

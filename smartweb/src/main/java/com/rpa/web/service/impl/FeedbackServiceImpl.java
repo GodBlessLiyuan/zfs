@@ -3,7 +3,6 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.FeedbackDTO;
-import com.rpa.web.mapper.AdminUserMapper;
 import com.rpa.web.mapper.FeedbackMapper;
 import com.rpa.web.mapper.UserMapper;
 import com.rpa.web.pojo.FeedbackPO;
@@ -64,7 +63,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         // 按照条件查询数据
         List<FeedbackPO> lists_PO = this.feedbackMapper.query(map);
 
-        // 将查询到的 AdconfigPO 数据转换为 AdconfigDTO
+        // 将查询到的PO 数据转换为 DTO
         List<FeedbackDTO> lists_DTO = new ArrayList<>();
         for(FeedbackPO po: lists_PO) {
             FeedbackDTO dto = new FeedbackDTO();
