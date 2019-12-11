@@ -1,19 +1,20 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.rpa.common.constant.Constant;
+import com.rpa.common.bo.ChannelBO;
+import com.rpa.common.pojo.ChannelPO;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.ChannelDTO;
 import com.rpa.web.dto.PromoterDTO;
 import com.rpa.common.mapper.AdminUserMapper;
-import com.rpa.web.mapper.ChannelMapper;
+import com.rpa.common.mapper.ChannelMapper;
 import com.rpa.web.mapper.PromoterMapper;
-import com.rpa.web.pojo.ChannelPO;
 import com.rpa.web.pojo.PromoterPO;
 import com.rpa.web.service.ChannelService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.utils.OperatorUtil;
+import com.rpa.web.vo.ChannelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,10 +49,10 @@ public class ChannelServceiImpl implements ChannelService {
      * @return
      */
     @Override
-    public DTPageInfo<ChannelDTO> query(int draw, int start, int length, String chanNickname, Integer proId) {
+    public DTPageInfo<ChannelVO> query(int draw, int start, int length, String chanNickname, Integer proId) {
 
         // 分页
-        Page<ChannelDTO> page = PageHelper.startPage(start, length);
+        Page<ChannelVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
@@ -59,25 +60,25 @@ public class ChannelServceiImpl implements ChannelService {
         map.put("proId", proId);
 
         // 按照条件查询数据
-        List<ChannelPO> lists_PO = channelMapper.query(map);
+        List<ChannelBO> bos = channelMapper.query(map);
 
-        // 将查询到的 ChannelPO 数据转换为 ChannelDTO
-        List<ChannelDTO> lists_DTO = new ArrayList<>();
-        for(ChannelPO po: lists_PO) {
-            ChannelDTO dto = new ChannelDTO();
-            dto.setChanNickname(po.getChanNickname());
-            dto.setChanName(po.getChanName());
-            dto.setProName(po.getProName());
-            dto.setPhone(po.getPhone());
-            dto.setExtra(po.getExtra());
-            dto.setCreateTime(po.getCreateTime());
-            dto.setOperator(queryUsernameByAid(po.getaId()));
+        // 将查询到的 bo 数据转换为 vo
+        List<ChannelVO> vos = new ArrayList<>();
+        for(ChannelBO bo: bos) {
+            ChannelVO vo = new ChannelVO();
+            vo.setChanNickname(bo.getChanNickname());
+            vo.setChanName(bo.getChanName());
+            vo.setProName(bo.getProName());
+            vo.setPhone(bo.getPhone());
+            vo.setExtra(bo.getExtra());
+            vo.setCreateTime(bo.getCreateTime());
+            vo.setOperator(queryUsernameByAid(bo.getaId()));
 
-            lists_DTO.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
 
@@ -88,17 +89,17 @@ public class ChannelServceiImpl implements ChannelService {
     @Override
     public ResultVO queryProNames() {
 
-        List<ChannelPO> pos = this.channelMapper.queryProNames();
+        List<ChannelBO> bos = this.channelMapper.queryProNames();
 
-        // 将查询到的 PO 转换为 DTO
-        List<ChannelDTO> dtos = new ArrayList<>();
-        for (ChannelPO po : pos) {
-            ChannelDTO dto = new ChannelDTO();
-            dto.setProId(po.getProId());
-            dto.setProName(po.getProName());
-            dtos.add(dto);
+        // 将查询到的 bo 转换为 vo
+        List<ChannelVO> vos = new ArrayList<>();
+        for (ChannelBO bo : bos) {
+            ChannelVO vo = new ChannelVO();
+            vo.setProId(bo.getProId());
+            vo.setProName(bo.getProName());
+            vos.add(vo);
         }
-        return new ResultVO(1000, dtos);
+        return new ResultVO(1000, vos);
     }
 
     /**
@@ -130,12 +131,7 @@ public class ChannelServceiImpl implements ChannelService {
     @Override
     public ResultVO insert(ChannelDTO dto, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
-        // 把 DTO 转换为 PO
+        // 把 dto 转换为 po
         ChannelPO po = new ChannelPO();
         po.setChanNickname(dto.getChanNickname());
         po.setChanName(dto.getChanName());
@@ -144,12 +140,11 @@ public class ChannelServceiImpl implements ChannelService {
         po.setDr((byte)1);
         po.setCreateTime(new Date());
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         this.channelMapper.insert(po);
         return new ResultVO(1000);
     }
-
 
 
 
