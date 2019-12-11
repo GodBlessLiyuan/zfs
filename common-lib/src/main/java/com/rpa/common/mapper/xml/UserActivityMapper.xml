@@ -161,4 +161,46 @@
       url = #{url,jdbcType=CHAR}
     where u_a_id = #{uAId,jdbcType=INTEGER}
   </update>
+
+  <update id="updateStatus" parameterType="com.rpa.common.pojo.UserActivityPO">
+    update t_user_activity
+    set activity_id = #{activityId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      `time` = #{time,jdbcType=TIME},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_device_id = #{userDeviceId,jdbcType=INTEGER},
+      device_id = #{deviceId,jdbcType=BIGINT},
+      a_id = #{aId,jdbcType=INTEGER},
+      url = #{url,jdbcType=CHAR}
+    where u_a_id = #{uAId,jdbcType=INTEGER}
+  </update>
+  <select id="query" resultType="com.rpa.common.bo.UserActivityBO">
+    select u.phone, ua.create_time as createTime, a.com_type_name as comTypeName, a.days, a.source, ua.status
+    from t_user_activity ua
+    left join t_activity a on ua.activity_id = a.activity_id
+    left join t_user u on ua.user_id = u.user_id
+    where ua.`status` in (10, 30)
+    <if test="phone != null and phone != ''"> and u.phone like '%' #{phone} '%'</if>
+  </select>
+  <select id="queryByUserId" resultType="com.rpa.common.bo.UserActivityBO">
+    select u.chan_name as userChanName, ua.create_time as createTime, a.com_type_name as comTypeName, a.days
+    from t_user_activity ua
+    left join t_activity a on ua.activity_id = a.activity_id
+    left join t_user u on ua.user_id = u.user_id
+    where ua.user_id = #{userId} and ua.`status` = 10
+  </select>
+  <select id="goodCommentQuery" resultType="com.rpa.common.bo.UserActivityBO">
+    select ua.u_a_id as uAId, u.phone, ua.create_time as createTime, ua.url, a.com_type_name as comTypeName, ua.status, ua.a_id as aId
+    from t_user_activity ua
+    left join t_activity a on ua.activity_id = a.activity_id
+    left join t_user u on ua.user_id = u.user_id
+    <where>
+      <if test="phone != null and phone != ''">
+        u.phone like '%' #{phone} '%'
+      </if>
+    </where>
+    order by ua.status asc
+  </select>
 </mapper>
