@@ -7,13 +7,15 @@ import com.rpa.common.pojo.KeyValuePO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.constant.Constant;
-import com.rpa.common.dto.AdconfigDTO;
+import com.rpa.web.dto.AdconfigDTO;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.KeyValueDTO;
 import com.rpa.web.service.AdconfigService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.utils.OperatorUtil;
+import com.rpa.web.vo.AdconfigVO;
+import com.rpa.web.vo.KeyValueVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -72,10 +74,10 @@ public class AdconfigServiceImpl implements AdconfigService {
      * @return
      */
     @Override
-    public DTPageInfo<AdconfigDTO> query(int draw, int start, int length, String name, String adNumber, Byte status) {
+    public DTPageInfo<AdconfigVO> query(int draw, int start, int length, String name, String adNumber, Byte status) {
 
         // 分页
-        Page<AdconfigDTO> page = PageHelper.startPage(start, length);
+        Page<AdconfigVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(3);
@@ -84,29 +86,20 @@ public class AdconfigServiceImpl implements AdconfigService {
         map.put("status", status);
 
         // 按照条件查询数据
-        List<AdconfigPO> lists_PO = this.adconfigMapper.query(map);
+        List<AdconfigPO> pos = this.adconfigMapper.query(map);
 
-        // 将查询到的 AdconfigPO 数据转换为 AdconfigDTO
-        List<AdconfigDTO> lists_DTO = new ArrayList<>();
-        for (AdconfigPO po : lists_PO) {
-            AdconfigDTO dto = new AdconfigDTO();
-            dto.setAdId(po.getAdId());
-            dto.setAdNumber(po.getAdNumber());
-            dto.setName(po.getName());
-            dto.setCreateTime(po.getCreateTime());
-            dto.setContacts(po.getContacts());
-            dto.setPhone(po.getPhone());
-            dto.setPriority(po.getPriority());
-            dto.setTotal(po.getTotal());
-            dto.setStatus(po.getStatus());
+        // 将查询到的 po 数据转换为 vo
+        List<AdconfigVO> vos = new ArrayList<>();
+        for (AdconfigPO po : pos) {
+            AdconfigVO vo = po2vo(po);
             String username = queryUsernameByAid(po.getaId());
-            dto.setOperator(username);
+            vo.setOperator(username);
 
-            lists_DTO.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
     /**
@@ -121,11 +114,11 @@ public class AdconfigServiceImpl implements AdconfigService {
         if (null == po) {
             return new ResultVO(1002);
         }
-        KeyValueDTO dto = new KeyValueDTO();
-        dto.setKeyName(po.getKeyName());
-        dto.setValue(po.getValue());
+        KeyValueVO vo = new KeyValueVO();
+        vo.setKeyName(po.getKeyName());
+        vo.setValue(po.getValue());
 
-        return new ResultVO<>(1000, dto);
+        return new ResultVO<>(1000, vo);
     }
 
     /**
@@ -140,8 +133,9 @@ public class AdconfigServiceImpl implements AdconfigService {
 
         if (null == po) {
             return new ResultVO(1002);
+        } else {
+            return new ResultVO<>(1000, po2vo(po));
         }
-        return new ResultVO<>(1000, po);
     }
 
 
@@ -153,15 +147,10 @@ public class AdconfigServiceImpl implements AdconfigService {
     @Override
     public ResultVO insert(AdconfigDTO dto, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         // dto 转换为 po
         AdconfigPO po = new AdconfigPO();
         po.setAdNumber(dto.getAdNumber());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
         po.setName(dto.getName());
         po.setContacts(dto.getContacts());
         po.setPhone(dto.getPhone());
@@ -185,11 +174,6 @@ public class AdconfigServiceImpl implements AdconfigService {
     @Override
     public ResultVO update(AdconfigDTO dto, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         // 根据 ad_id，从数据库获取要修改的数据对象
         AdconfigPO po = this.adconfigMapper.selectByPrimaryKey(dto.getAdId());
 
@@ -201,7 +185,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         po.setPriority(dto.getPriority());
         po.setTotal(dto.getTotal());
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         this.adconfigMapper.updateByPrimaryKey(po);
 
@@ -260,11 +244,11 @@ public class AdconfigServiceImpl implements AdconfigService {
 
         // 先查询下t_key_value表中是否有SHOW_INTERVAL数据
         KeyValuePO keyValuePO = this.keyValueMapper.selectByPrimaryKey(SHOW_INTERVAL);
-        if (keyValuePO == null) {
+        if (null == keyValuePO) {
             this.keyValueMapper.insert(po);
-            return new ResultVO(1000);
+        } else {
+            this.keyValueMapper.updateByPrimaryKey(po);
         }
-        int count = this.keyValueMapper.updateByPrimaryKey(po);
 
         //删除Redis
         this.deleteRedis();
@@ -282,12 +266,35 @@ public class AdconfigServiceImpl implements AdconfigService {
      */
     @Override
     public ResultVO delete(int adId) {
+
         this.adconfigMapper.deleteByPrimaryKey(adId);
 
         //删除Redis
         this.deleteRedis(adId);
 
         return new ResultVO(1000);
+    }
+
+
+    /**
+     * AdconfigPO 转换为 AdconfigVO
+     * @param po
+     * @return
+     */
+    private AdconfigVO po2vo(AdconfigPO po) {
+        AdconfigVO vo = new AdconfigVO();
+        vo.setAdId(po.getAdId());
+        vo.setAdNumber(po.getAdNumber());
+        vo.setContacts(po.getContacts());
+        vo.setCreateTime(po.getCreateTime());
+        vo.setName(po.getName());
+        vo.setPhone(po.getPhone());
+        vo.setPriority(po.getPriority());
+        vo.setStatus(po.getStatus());
+        vo.setTotal(po.getTotal());
+        vo.setUpdateTime(po.getUpdateTime());
+        vo.setDr(po.getDr());
+        return vo;
     }
 
 

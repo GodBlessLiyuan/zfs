@@ -1,8 +1,9 @@
 package com.rpa.web.service;
 
-import com.rpa.common.dto.AdconfigDTO;
+import com.rpa.web.dto.AdconfigDTO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.AdconfigVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * @description: 开屏广告
  */
 public interface AdconfigService {
-    public DTPageInfo<AdconfigDTO> query(int draw, int start, int length, String name, String adNumber, Byte status);
+    public DTPageInfo<AdconfigVO> query(int draw, int start, int length, String name, String adNumber, Byte status);
 
     ResultVO insert(AdconfigDTO adconfigDTO, HttpSession httpSession);
 

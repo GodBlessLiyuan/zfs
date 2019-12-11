@@ -1,9 +1,10 @@
 package com.rpa.web.controller;
 
-import com.rpa.common.dto.AdconfigDTO;
+import com.rpa.web.dto.AdconfigDTO;
 import com.rpa.web.service.AdconfigService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.AdconfigVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class AdconfigController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<AdconfigDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+    public DTPageInfo<AdconfigVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                          @RequestParam(value = "start", defaultValue = "1") int start,
                                          @RequestParam(value = "length", defaultValue = "10") int length,
                                          @RequestParam(value = "name", required = false) String name,
@@ -45,7 +46,7 @@ public class AdconfigController {
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<AdconfigDTO> dTPageInfo = adconfigService.query(draw, start, length, name, adNumber, status);
+        DTPageInfo<AdconfigVO> dTPageInfo = adconfigService.query(draw, start, length, name, adNumber, status);
         return dTPageInfo;
     }
 
