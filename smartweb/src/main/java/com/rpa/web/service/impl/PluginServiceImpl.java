@@ -101,7 +101,7 @@ public class PluginServiceImpl implements IPluginService {
         appPluChMapper.batchInsert(appPluChPOs);
 
         this.deleteRedis();
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 
     @Transactional(rollbackFor = {})

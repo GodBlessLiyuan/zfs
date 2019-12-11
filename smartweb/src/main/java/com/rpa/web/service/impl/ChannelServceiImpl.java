@@ -6,7 +6,6 @@ import com.rpa.web.common.PageHelper;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.ChannelDTO;
 import com.rpa.web.dto.PromoterDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.ChannelMapper;
 import com.rpa.web.mapper.PromoterMapper;
@@ -89,17 +88,17 @@ public class ChannelServceiImpl implements ChannelService {
     @Override
     public ResultVO queryProNames() {
 
-        List<ChannelPO> POs = this.channelMapper.queryProNames();
+        List<ChannelPO> pos = this.channelMapper.queryProNames();
 
         // 将查询到的 PO 转换为 DTO
-        List<ChannelDTO> DTOs = new ArrayList<>();
-        for (ChannelPO po : POs) {
+        List<ChannelDTO> dtos = new ArrayList<>();
+        for (ChannelPO po : pos) {
             ChannelDTO dto = new ChannelDTO();
             dto.setProId(po.getProId());
             dto.setProName(po.getProName());
-            DTOs.add(dto);
+            dtos.add(dto);
         }
-        return ResultVOUtil.success(DTOs);
+        return new ResultVO(1000, dtos);
     }
 
     /**
@@ -109,17 +108,17 @@ public class ChannelServceiImpl implements ChannelService {
     @Override
     public ResultVO queryAllProNames() {
 
-        List<PromoterPO> POs = this.promoterMapper.queryAllProNames();
+        List<PromoterPO> pos = this.promoterMapper.queryAllProNames();
 
         // 将查询到的 PO 转换为 DTO
-        List<PromoterDTO> DTOs = new ArrayList<>();
-        for (PromoterPO po : POs) {
+        List<PromoterDTO> dtos = new ArrayList<>();
+        for (PromoterPO po : pos) {
             PromoterDTO dto = new PromoterDTO();
             dto.setProId(po.getProId());
             dto.setProName(po.getProName());
-            DTOs.add(dto);
+            dtos.add(dto);
         }
-        return ResultVOUtil.success(DTOs);
+        return new ResultVO(1000, dtos);
     }
 
     /**
@@ -147,8 +146,8 @@ public class ChannelServceiImpl implements ChannelService {
         po.setUpdateTime(new Date());
         po.setaId(aId);
 
-        int count = this.channelMapper.insert(po);
-        return count ==1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+        this.channelMapper.insert(po);
+        return new ResultVO(1000);
     }
 
 

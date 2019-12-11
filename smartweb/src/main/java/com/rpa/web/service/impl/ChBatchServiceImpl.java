@@ -8,7 +8,6 @@ import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.ChBatchDTO;
 import com.rpa.web.dto.ChannelDTO;
 import com.rpa.web.dto.ComTypeDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.mapper.*;
 import com.rpa.web.pojo.BatchInfoPO;
 import com.rpa.web.pojo.ChBatchPO;
@@ -89,21 +88,21 @@ public class ChBatchServiceImpl implements ChBatchService {
     @Override
     public ResultVO queryComTypes() {
 
-        List<ComTypePO> POs = this.comTypeMapper.queryAll();
+        List<ComTypePO> pos = this.comTypeMapper.queryAll();
 
-        if (null == POs) {
-            return ResultVOUtil.success("");
+        if (null == pos) {
+            return new ResultVO(1002);
         }
 
         // 将 po 转换为 dto
-        List<ComTypeDTO> DTOs = new ArrayList<>();
-        for (ComTypePO po : POs) {
+        List<ComTypeDTO> dtos = new ArrayList<>();
+        for (ComTypePO po : pos) {
             ComTypeDTO dto = new ComTypeDTO();
             dto.setComTypeId(po.getComTypeId());
             dto.setName(po.getName());
-            DTOs.add(dto);
+            dtos.add(dto);
         }
-        return ResultVOUtil.success(DTOs);
+        return new ResultVO(1000, dtos);
     }
 
 
@@ -114,21 +113,21 @@ public class ChBatchServiceImpl implements ChBatchService {
     @Override
     public ResultVO queryChanNicknames() {
 
-        List<ChannelPO> POs = this.channelMapper.queryChanNicknames();
+        List<ChannelPO> pos = this.channelMapper.queryChanNicknames();
 
-        if (null == POs) {
-            return ResultVOUtil.success("");
+        if (null == pos) {
+            return new ResultVO(1002);
         }
 
         // 将 po 转换为 dto
-        List<ChannelDTO> DTOs = new ArrayList<>();
-        for (ChannelPO po : POs) {
+        List<ChannelDTO> dtos = new ArrayList<>();
+        for (ChannelPO po : pos) {
             ChannelDTO dto = new ChannelDTO();
             dto.setChanId(po.getChanId());
             dto.setChanNickname(po.getChanNickname());
-            DTOs.add(dto);
+            dtos.add(dto);
         }
-        return ResultVOUtil.success(DTOs);
+        return new ResultVO(1000, dtos);
     }
 
 
@@ -164,7 +163,7 @@ public class ChBatchServiceImpl implements ChBatchService {
         po.setaId(aId);
         po.setUpdateAId(aId);
 
-        int count = this.chBatchMapper.insert(po);
+        this.chBatchMapper.insert(po);
 
 
         /**
@@ -188,7 +187,7 @@ public class ChBatchServiceImpl implements ChBatchService {
 
         this.batchInfoMapper.insertBatchInfo(batchInfoPOs);
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+        return new ResultVO(1000);
     }
 
 
@@ -212,14 +211,14 @@ public class ChBatchServiceImpl implements ChBatchService {
         ChBatchPO po = this.chBatchMapper.selectByPrimaryKey(batchId);
 
         if (null == po) {
-            return ResultVOUtil.error(ExceptionEnum.QUERY_ERROR);
+            return new ResultVO(1002);
         }
 
         po.setStatus(status);
         po.setUpdateTime(new Date());
         po.setUpdateAId(aId);
 
-        int count = chBatchMapper.updateByPrimaryKey(po);
+        chBatchMapper.updateByPrimaryKey(po);
 
 
         /**
@@ -229,7 +228,7 @@ public class ChBatchServiceImpl implements ChBatchService {
 
         this.batchInfoMapper.updateStatusByBatchId(status, batchId);
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        return new ResultVO(1000);
     }
 
     /**

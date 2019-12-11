@@ -5,7 +5,6 @@ import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.WithdrawUserDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.UserMapper;
 import com.rpa.web.mapper.WithdrawUserMapper;
@@ -107,7 +106,7 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
         WithdrawUserPO po = this.withdrawUserMapper.selectByPrimaryKey(withdrawId);
 
         if (null == po) {
-            return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+            return new ResultVO(1002);
         }
 
         po.setStatus(status);
@@ -115,7 +114,7 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
         po.setEndTime(new Date());
         po.setaId(aId);
 
-        int count = this.withdrawUserMapper.updateByPrimaryKey(po);
+        this.withdrawUserMapper.updateByPrimaryKey(po);
 
 
         /**
@@ -123,10 +122,8 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
          */
         this.AliPay(po.getAliAccount(), po.getAliName());
 
-        if (count == 1) {
-            return ResultVOUtil.success();
-        }
-        return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+
+        return new ResultVO(1000);
     }
 
 

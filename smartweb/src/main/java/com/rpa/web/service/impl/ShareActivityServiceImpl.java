@@ -6,7 +6,6 @@ import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.ShareActivityDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.ShareActivityMapper;
 import com.rpa.web.pojo.ShareActivityPO;
@@ -118,12 +117,12 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         po.setCreateTime(new Date());
         po.setaId(aId);
 
-        int count = this.shareActivityMapper.insert(po);
+        this.shareActivityMapper.insert(po);
 
         //删除Redis
         deleteRedis();
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+        return new ResultVO(1000);
     }
 
 
@@ -156,12 +155,12 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         po.setUpdateTime(new Date());
         po.setaId(aId);
 
-        int count = this.shareActivityMapper.updateByPrimaryKey(po);
+        this.shareActivityMapper.updateByPrimaryKey(po);
 
         //删除Redis
         deleteRedis();
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        return new ResultVO(1000);
     }
 
 
@@ -172,12 +171,12 @@ public class ShareActivityServiceImpl implements ShareActivityService {
      */
     @Override
     public ResultVO delete(int materialId) {
-        int count = this.shareActivityMapper.deleteByPrimaryKey(materialId);
+        this.shareActivityMapper.deleteByPrimaryKey(materialId);
 
         //删除Redis
         deleteRedis();
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
+        return new ResultVO(1000);
     }
 
 
@@ -191,7 +190,7 @@ public class ShareActivityServiceImpl implements ShareActivityService {
 
         ShareActivityPO po = this.shareActivityMapper.selectByPrimaryKey(materialId);
         if (null == po) {
-            return ResultVOUtil.error(ExceptionEnum.QUERY_ERROR);
+            return new ResultVO(1002);
         }
 
         // 将查询到的 po 转换为 dto
@@ -204,7 +203,7 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         }
         dto.setExtra(po.getExtra());
 
-        return ResultVOUtil.success(dto);
+        return new ResultVO<>(1000, dto);
     }
 
 

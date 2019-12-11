@@ -67,7 +67,7 @@ public class OtherAppServiceImpl implements IOtherAppService {
         otherAppMapper.insert(po);
 
         this.deleteRedis();
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 
     @Override

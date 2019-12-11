@@ -38,7 +38,7 @@ public class ComTypeServiceImpl implements IComTypeService {
 
         mapper.insert(po);
 
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 
     @Override

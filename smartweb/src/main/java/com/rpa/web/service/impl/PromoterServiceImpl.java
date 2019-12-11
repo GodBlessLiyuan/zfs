@@ -5,7 +5,6 @@ import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.PromoterDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.PromoterMapper;
 import com.rpa.web.pojo.PromoterPO;
@@ -97,10 +96,10 @@ public class PromoterServiceImpl implements PromoterService {
         po.setaId(dto.getaId());
         po.setCreateTime(new Date());
         po.setUpdateTime(new Date());
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
 
-        int count = this.promoterMapper.insert(po);
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+        this.promoterMapper.insert(po);
+        return new ResultVO(1000);
     }
 
     /**
@@ -120,7 +119,7 @@ public class PromoterServiceImpl implements PromoterService {
         PromoterPO po = this.promoterMapper.selectByPrimaryKey(dto.getProId());
 
         if (null == po) {
-            return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+            return new ResultVO(1002);
         }
 
         // 把 dto 转换为 po
@@ -129,10 +128,10 @@ public class PromoterServiceImpl implements PromoterService {
         po.setExtra(dto.getExtra());
         po.setaId(dto.getaId());
         po.setUpdateTime(new Date());
-        po.setaId(aId);//测试的时候，暂且写为1，正常参数应为aId
+        po.setaId(aId);
 
-        int count = promoterMapper.updateByPrimaryKey(po);
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        promoterMapper.updateByPrimaryKey(po);
+        return new ResultVO(1000);
 
     }
 

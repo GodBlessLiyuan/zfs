@@ -10,10 +10,10 @@ import com.rpa.web.common.Constant;
 import com.rpa.common.dto.AdconfigDTO;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.common.dto.KeyValueDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.service.AdconfigService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.utils.OperatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Date;
 
 import static com.rpa.web.common.Constant.SHOW_INTERVAL;
-import static com.rpa.web.enumeration.ExceptionEnum.QUERY_ERROR;
 
 /**
  * @author: dangyi
@@ -120,13 +119,13 @@ public class AdconfigServiceImpl implements AdconfigService {
 
         KeyValuePO po = this.keyValueMapper.selectByPrimaryKey(showInterval);
         if (null == po) {
-            return ResultVOUtil.success(null);
+            return new ResultVO(1002);
         }
         KeyValueDTO dto = new KeyValueDTO();
         dto.setKeyName(po.getKeyName());
         dto.setValue(po.getValue());
 
-        return ResultVOUtil.success(dto);
+        return new ResultVO<>(1000, dto);
     }
 
     /**
@@ -140,9 +139,9 @@ public class AdconfigServiceImpl implements AdconfigService {
         AdconfigPO po = this.adconfigMapper.selectByPrimaryKey(id);
 
         if (null == po) {
-            return ResultVOUtil.error(QUERY_ERROR);
+            return new ResultVO(1002);
         }
-        return ResultVOUtil.success(po);
+        return new ResultVO<>(1000, po);
     }
 
 
@@ -159,7 +158,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
         int aId = adminUserDTO.getaId();
 
-        // 把adconfigDTO 转换为 adconfigPO
+        // dto 转换为 po
         AdconfigPO po = new AdconfigPO();
         po.setAdNumber(dto.getAdNumber());
         po.setaId(aId);
@@ -173,21 +172,18 @@ public class AdconfigServiceImpl implements AdconfigService {
         po.setStatus((byte) 1);
         po.setDr((byte) 1);
 
-        int count = this.adconfigMapper.insert(po);
-        if (count == 1) {
-            return ResultVOUtil.success();
-        }
-        return ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+        this.adconfigMapper.insert(po);
+        return new ResultVO(1000);
     }
 
     /**
      * 修改广告配置信息
      *
-     * @param adconfigDTO
+     * @param dto
      * @param httpSession
      */
     @Override
-    public ResultVO update(AdconfigDTO adconfigDTO, HttpSession httpSession) {
+    public ResultVO update(AdconfigDTO dto, HttpSession httpSession) {
 
         // 从session中获取当前用户的a_id
         // 能从session中获取用户的信息，说明当前用户是登录状态
@@ -195,27 +191,24 @@ public class AdconfigServiceImpl implements AdconfigService {
         int aId = adminUserDTO.getaId();
 
         // 根据 ad_id，从数据库获取要修改的数据对象
-        AdconfigPO adconfigPO = this.adconfigMapper.selectByPrimaryKey(adconfigDTO.getAdId());
+        AdconfigPO po = this.adconfigMapper.selectByPrimaryKey(dto.getAdId());
 
-        // 把 adconfigDTO 转换为 adconfigPO
-        adconfigPO.setAdNumber(adconfigDTO.getAdNumber());
-        adconfigPO.setName(adconfigDTO.getName());
-        adconfigPO.setContacts(adconfigDTO.getContacts());
-        adconfigPO.setPhone(adconfigDTO.getPhone());
-        adconfigPO.setPriority(adconfigDTO.getPriority());
-        adconfigPO.setTotal(adconfigDTO.getTotal());
-        adconfigPO.setUpdateTime(new Date());
-        adconfigPO.setaId(aId);
+        // 把 dto 转换为 po
+        po.setAdNumber(dto.getAdNumber());
+        po.setName(dto.getName());
+        po.setContacts(dto.getContacts());
+        po.setPhone(dto.getPhone());
+        po.setPriority(dto.getPriority());
+        po.setTotal(dto.getTotal());
+        po.setUpdateTime(new Date());
+        po.setaId(aId);
 
-        int count = adconfigMapper.updateByPrimaryKey(adconfigPO);
+        this.adconfigMapper.updateByPrimaryKey(po);
 
         //删除Redis
-        this.deleteRedis(adconfigDTO.getAdId());
+        this.deleteRedis(dto.getAdId());
 
-        if (count == 1) {
-            return ResultVOUtil.success();
-        }
-        return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        return new ResultVO(1000);
     }
 
     /**
@@ -230,21 +223,16 @@ public class AdconfigServiceImpl implements AdconfigService {
     @Override
     public ResultVO updateStatus(Integer adId, Byte status, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         // 根据主键ad_id，从数据库查出要修改的数据
         AdconfigPO po = this.adconfigMapper.selectByPrimaryKey(adId);
 
         if (null == po) {
-            return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+            return new ResultVO(1002);
         }
 
         po.setStatus(status);
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         //修改中间表t_ad_channel表中当前ad_id数据的状态值
         this.adChannelMapper.update2(adId, status);
@@ -252,8 +240,9 @@ public class AdconfigServiceImpl implements AdconfigService {
         //删除Redis
         this.deleteRedis(adId);
 
-        int count = this.adconfigMapper.updateByPrimaryKey(po);
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        this.adconfigMapper.updateByPrimaryKey(po);
+
+        return new ResultVO(1000);
     }
 
     /**
@@ -272,15 +261,15 @@ public class AdconfigServiceImpl implements AdconfigService {
         // 先查询下t_key_value表中是否有SHOW_INTERVAL数据
         KeyValuePO keyValuePO = this.keyValueMapper.selectByPrimaryKey(SHOW_INTERVAL);
         if (keyValuePO == null) {
-            int count = this.keyValueMapper.insert(po);
-            return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+            this.keyValueMapper.insert(po);
+            return new ResultVO(1000);
         }
         int count = this.keyValueMapper.updateByPrimaryKey(po);
 
         //删除Redis
         this.deleteRedis();
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        return new ResultVO(1000);
     }
 
 
@@ -293,15 +282,12 @@ public class AdconfigServiceImpl implements AdconfigService {
      */
     @Override
     public ResultVO delete(int adId) {
-        int count = adconfigMapper.deleteByPrimaryKey(adId);
-        if (count == 1) {
-            return ResultVOUtil.success();
-        }
+        this.adconfigMapper.deleteByPrimaryKey(adId);
 
         //删除Redis
         this.deleteRedis(adId);
 
-        return ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
+        return new ResultVO(1000);
     }
 
 

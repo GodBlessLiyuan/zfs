@@ -2,12 +2,12 @@ package com.rpa.web.service.impl;
 
 import com.rpa.web.common.Constant;
 import com.rpa.common.dto.AdminUserDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.common.pojo.AdminUserPO;
 import com.rpa.web.service.LoginService;
 import com.rpa.web.utils.Md5Util;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.utils.OperatorUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -146,12 +146,10 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ResultVO updatePassword(HttpSession httpSession, String oldPassword, String newPassword) {
 
-        // 先从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO dto = (AdminUserDTO) httpSession.getAttribute(ADMIN_USER);
-        int aId = dto.getaId();
+        // 获取当前用户ID
+        int aId = OperatorUtil.getOperatorId(httpSession);
 
-        // 对输入的旧密码进行校验，以确保的确是用户本人在进行修改密码操作
+        // 保存在数据库中的密码
         String password = this.adminUserMapper.queryPassword(aId);
 
         try {
@@ -161,14 +159,12 @@ public class LoginServiceImpl implements LoginService {
             e.printStackTrace();
         }
 
+        // 校验：用户输入的旧密码与数据库比对
         if (oldPassword.equals(password)) {
-            int count = this.adminUserMapper.updatePassword(aId, newPassword);
-            if (count == 1) {
-                return ResultVOUtil.success();
-            }
-            return ResultVOUtil.error(ExceptionEnum.PASSWORD_UPDATE_ERROR);
+            this.adminUserMapper.updatePassword(aId, newPassword);
+            return new ResultVO(1000);
         }
-        return ResultVOUtil.error(ExceptionEnum.PASSWORD_ERROR);
+        return new ResultVO(1004);
     }
 
 

@@ -6,7 +6,6 @@ import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.BannerConfigDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.BannerConfigMapper;
 import com.rpa.web.pojo.BannerConfigPO;
@@ -122,7 +121,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         //删除Redis
         this.deleteRedis();
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.INSERT_ERROR);
+        return new ResultVO(1000);
     }
 
 
@@ -144,7 +143,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         // 先查出要修改的数据
         BannerConfigPO po = this.bannerConfigMapper.selectByPrimaryKey(bannerId);
         if (null == po) {
-            return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+            return new ResultVO(1002);
         }
 
         po.setStatus(status);
@@ -159,7 +158,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         //删除Redis
         this.deleteRedis();
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        return new ResultVO(1000);
     }
 
     /**
@@ -172,7 +171,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         int count = this.bannerConfigMapper.deleteByPrimaryKey(bannerId);
         //删除Redis
         this.deleteRedis();
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.DELETE_ERROR);
+        return new ResultVO(1000);
     }
 
 
