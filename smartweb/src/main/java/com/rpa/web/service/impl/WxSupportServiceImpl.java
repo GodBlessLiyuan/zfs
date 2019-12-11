@@ -1,11 +1,11 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.WxsupportMapper;
+import com.rpa.common.pojo.WxsupportPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.WxSupportDTO;
-import com.rpa.web.mapper.WxSupportMapper;
-import com.rpa.web.pojo.WxSupportPO;
+import com.rpa.web.vo.WxSupportVO;
 import com.rpa.web.service.IWxSupportService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -30,21 +30,21 @@ import java.util.Set;
 public class WxSupportServiceImpl implements IWxSupportService {
 
     @Resource
-    private WxSupportMapper wxSupportMapper;
+    private WxsupportMapper wxSupportMapper;
 
     @Autowired
     private StringRedisTemplate template;
 
     @Override
-    public DTPageInfo<WxSupportDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<WxSupportPO> page = PageHelper.startPage(pageNum, pageSize);
-        List<WxSupportPO> pos = wxSupportMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), WxSupportDTO.convert(pos));
+    public DTPageInfo<WxSupportVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+        Page<WxsupportPO> page = PageHelper.startPage(pageNum, pageSize);
+        List<WxsupportPO> pos = wxSupportMapper.query(reqData);
+        return new DTPageInfo<>(draw, page.getTotal(), WxSupportVO.convert(pos));
     }
 
     @Override
     public ResultVO insert(String packageName, String extra, int aId) {
-        WxSupportPO po = new WxSupportPO();
+        WxsupportPO po = new WxsupportPO();
 
         po.setPackageName(packageName);
         po.setExtra(extra);
@@ -71,8 +71,7 @@ public class WxSupportServiceImpl implements IWxSupportService {
 
 
     /**
-     * @author：dangyi
-     * 删除Redis
+     * @author：dangyi 删除Redis
      */
     private void deleteRedis() {
         Set<String> redisKeys = template.keys(RedisKeyUtil.genSupportRedisKey("*"));

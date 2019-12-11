@@ -60,4 +60,22 @@
       </if>
     </trim>
   </insert>
+
+  <select id="query" resultType="com.rpa.common.bo.WhiteDeviceBO">
+    select w.device_id as deviceId, w.extra, w.status, w.a_id as aId, w.create_time as createTime, d.imei
+    from t_white_device w
+    left join t_device_imei d on w.device_id = d.device_id
+    <where>
+      <if test="imei != null and imei != ''">
+        and d.imei like '%' #{imei} '%'
+      </if>
+    </where>
+  </select>
+  <select id="queryByDeviceId" parameterType="java.lang.Long" resultType="com.rpa.common.pojo.WhiteDevicePO">
+    select device_id from t_white_device where device_id = #{deviceId}
+  </select>
+  <delete id="deleteByDeviceId" parameterType="java.lang.Integer">
+    delete from t_white_device
+    where device_id = #{deviceId,jdbcType=INTEGER}
+  </delete>
 </mapper>

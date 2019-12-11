@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.WxSupportDTO;
+import com.rpa.web.vo.WxSupportVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 
@@ -23,7 +23,7 @@ public interface IWxSupportService {
      * @param reqData
      * @return
      */
-    DTPageInfo<WxSupportDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<WxSupportVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
 
     /**

@@ -2,7 +2,7 @@ package com.rpa.web.controller;
 
 import com.rpa.common.constant.Constant;
 import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.WxSupportDTO;
+import com.rpa.web.vo.WxSupportVO;
 import com.rpa.web.service.IWxSupportService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -29,10 +29,10 @@ public class WxSupportController {
     private IWxSupportService service;
 
     @RequestMapping("query")
-    public DTPageInfo<WxSupportDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                          @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                          @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                          @RequestParam(value = "packageName") String name) {
+    public DTPageInfo<WxSupportVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                         @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                         @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                         @RequestParam(value = "packageName") String name) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("name", name);
 

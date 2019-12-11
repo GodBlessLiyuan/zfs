@@ -103,4 +103,13 @@
       extra = #{extra,jdbcType=CHAR}
     where w_id = #{wId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from t_wxsupport
+    <where>
+      <if test="name!=null and name!=''">and package_name like '%' #{name} '%'</if>
+    </where>
+  </select>
 </mapper>
