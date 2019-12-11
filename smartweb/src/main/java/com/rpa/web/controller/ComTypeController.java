@@ -3,8 +3,6 @@ package com.rpa.web.controller;
 import com.rpa.web.common.Constant;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.ComTypeDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
-import com.rpa.web.exception.PromptException;
 import com.rpa.web.service.IComTypeService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -54,7 +52,7 @@ public class ComTypeController {
                            @RequestParam(value = "extra") String extra, HttpServletRequest req) {
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {
-            throw new PromptException(ExceptionEnum.SESSION_ERROR);
+            return new ResultVO(1001);
         }
 
         return service.insert(name, days, extra, admin.getaId());

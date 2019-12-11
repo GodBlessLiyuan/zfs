@@ -3,8 +3,6 @@ package com.rpa.web.controller;
 import com.rpa.web.common.Constant;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.PluginDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
-import com.rpa.web.exception.PromptException;
 import com.rpa.web.service.IPluginService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -66,7 +64,7 @@ public class PluginController {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {
-            throw new PromptException(ExceptionEnum.SESSION_ERROR);
+            return new ResultVO(1001);
         }
 
         return service.insert(file, appId, softChannel, context, extra, admin.getaId());
