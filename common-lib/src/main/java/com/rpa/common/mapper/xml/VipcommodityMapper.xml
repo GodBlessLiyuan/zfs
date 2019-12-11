@@ -245,4 +245,36 @@
       istop = #{istop,jdbcType=TINYINT}
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultType="com.rpa.common.bo.VipcommodityBO">
+    select
+    v.cmdy_id as cmdyId, v.viptype_id as viptypeId, v.com_type_id as comTypeId, v.com_name as comName, v.price,
+    v.discount, v.position, v.create_time as createTime, v.soft_channel_id as softChannelId, v.name,
+    v.update_time as updateTime, v.days, v.a_id as aId, v.description, v.show_discount as showDiscount, v.status,
+    u.username,v.com_type_name as comTypeName, v.istop
+    from t_vipcommodity v
+    left join t_admin_user u on v.a_id = u.a_id
+    <where>
+      <if test="username != null and username != ''"> AND u.username like '%' #{username} '%' </if>
+      <if test="comTypeId != null and comTypeId != 0"> and v.com_type_id = #{comTypeId} </if>
+      <if test="channelId != null and channelId != 0"> and v.soft_channel_id = #{channelId} </if>
+    </where>
+  </select>
+  <select id="queryByChanIdAndComTypeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_vipcommodity
+    where soft_channel_id = #{softChannelId,jdbcType=INTEGER} and com_type_id = #{comTypeId,jdbcType=INTEGER}
+  </select>
+  <select id="queryDayRevenue" resultType="java.lang.Float">
+    select sum(v.discount)
+    from t_vipcommodity v
+    left join t_order o on v.cmdy_id = o.cmdy_id
+    where o.pay_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
+  </select>
+  <select id="queryMonthRevenue" resultType="java.lang.Float">
+    select sum(v.discount)
+    from t_vipcommodity v
+    left join t_order o on v.cmdy_id = o.cmdy_id
+    where o.pay_time >= (select timestamp(date_add(curdate(), interval - day(curdate()) + 1 day)))
+  </select>
 </mapper>
