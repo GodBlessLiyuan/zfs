@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.VipCommodityDTO;
+import com.rpa.web.vo.VipCommodityVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 
@@ -23,7 +23,7 @@ public interface IVipCommodityService {
      * @param reqData  请求数据
      * @return
      */
-    DTPageInfo<VipCommodityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<VipCommodityVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 根据主键查询数据
@@ -31,7 +31,7 @@ public interface IVipCommodityService {
      * @param cmdyId 主键
      * @return
      */
-    VipCommodityDTO queryById(int cmdyId);
+    VipCommodityVO queryById(int cmdyId);
 
     /**
      * 新增

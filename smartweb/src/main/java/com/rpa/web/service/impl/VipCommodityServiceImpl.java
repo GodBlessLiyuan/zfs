@@ -1,15 +1,16 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.bo.VipcommodityBO;
 import com.rpa.common.mapper.ComTypeMapper;
+import com.rpa.common.mapper.VipcommodityMapper;
+import com.rpa.common.pojo.VipcommodityPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.VipCommodityConstant;
-import com.rpa.web.dto.VipCommodityDTO;
+import com.rpa.web.vo.VipCommodityVO;
 import com.rpa.common.mapper.SoftChannelMapper;
-import com.rpa.web.mapper.VipCommodityMapper;
 import com.rpa.common.pojo.SoftChannelPO;
-import com.rpa.web.pojo.VipCommodityPO;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -36,7 +37,7 @@ import java.util.Set;
 public class VipCommodityServiceImpl implements IVipCommodityService {
 
     @Resource
-    private VipCommodityMapper vipCommodityMapper;
+    private VipcommodityMapper vipcommodityMapper;
     @Resource
     private ComTypeMapper comTypeMapper;
     @Resource
@@ -45,29 +46,29 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     private StringRedisTemplate template;
 
     @Override
-    public DTPageInfo<VipCommodityDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public DTPageInfo<VipCommodityVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
 
-        Page<VipCommodityPO> page = PageHelper.startPage(pageNum, pageSize);
-        List<VipCommodityPO> data = vipCommodityMapper.query(reqData);
+        Page<VipcommodityBO> page = PageHelper.startPage(pageNum, pageSize);
+        List<VipcommodityBO> data = vipcommodityMapper.query(reqData);
 
-        return new DTPageInfo<>(draw, page.getTotal(), VipCommodityDTO.convert(data));
+        return new DTPageInfo<>(draw, page.getTotal(), VipCommodityVO.convert(data));
     }
 
     @Override
-    public VipCommodityDTO queryById(int cmdyId) {
-        return VipCommodityDTO.convert(vipCommodityMapper.selectByPrimaryKey(cmdyId));
+    public VipCommodityVO queryById(int cmdyId) {
+        return VipCommodityVO.convert((VipcommodityBO) vipcommodityMapper.selectByPrimaryKey(cmdyId));
     }
 
     @Override
     public ResultVO insert(int channelId, int comTypeId, String comName, String description, String price, String showDiscount,
                            float discount, int aId) {
-        VipCommodityPO po = vipCommodityMapper.queryByChanIdAndComTypeId(channelId, comTypeId);
+        VipcommodityPO po = vipcommodityMapper.queryByChanIdAndComTypeId(channelId, comTypeId);
         if (po != null) {
             // 当前渠道-产品已存在！
             return new ResultVO(1103);
         }
 
-        VipCommodityPO vipCommodityPO = new VipCommodityPO();
+        VipcommodityPO vipCommodityPO = new VipcommodityPO();
         vipCommodityPO.setSoftChannelId(channelId);
         vipCommodityPO.setComTypeId(comTypeId);
         vipCommodityPO.setComName(comName);
@@ -96,7 +97,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         vipCommodityPO.setStatus((byte) 1);
         vipCommodityPO.setIstop((byte) 1);
 
-        vipCommodityMapper.insert(vipCommodityPO);
+        vipcommodityMapper.insert(vipCommodityPO);
 
         this.deleteRedis();
         return new ResultVO(1000);
@@ -104,7 +105,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
 
     @Override
     public int update(int cmdyId, String comName, String description, String price, String showDiscount, float discount) {
-        VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(cmdyId);
+        VipcommodityPO vipCommodityPO = vipcommodityMapper.selectByPrimaryKey(cmdyId);
         vipCommodityPO.setComName(comName);
         vipCommodityPO.setDescription(description);
         vipCommodityPO.setPrice(price);
@@ -112,7 +113,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         BigDecimal bd = new BigDecimal(Float.toString(discount));
         vipCommodityPO.setDiscount(bd.multiply(new BigDecimal("100")).longValue());
         vipCommodityPO.setUpdateTime(new Date());
-        int first = vipCommodityMapper.updateByPrimaryKey(vipCommodityPO);
+        int first = vipcommodityMapper.updateByPrimaryKey(vipCommodityPO);
 
         this.deleteRedis();
         return first;
@@ -120,9 +121,9 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
 
     @Override
     public int updateStatus(int cmdyId, byte status) {
-        VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(cmdyId);
+        VipcommodityPO vipCommodityPO = vipcommodityMapper.selectByPrimaryKey(cmdyId);
         vipCommodityPO.setStatus(status);
-        int first = vipCommodityMapper.updateByPrimaryKey(vipCommodityPO);
+        int first = vipcommodityMapper.updateByPrimaryKey(vipCommodityPO);
 
         this.deleteRedis();
         return first;
@@ -130,9 +131,9 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
 
     @Override
     public int updateIsTop(int cmdyId, byte isTop) {
-        VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(cmdyId);
+        VipcommodityPO vipCommodityPO = vipcommodityMapper.selectByPrimaryKey(cmdyId);
         vipCommodityPO.setIstop(isTop);
-        int first = vipCommodityMapper.updateByPrimaryKey(vipCommodityPO);
+        int first = vipcommodityMapper.updateByPrimaryKey(vipCommodityPO);
 
         this.deleteRedis();
         return first;

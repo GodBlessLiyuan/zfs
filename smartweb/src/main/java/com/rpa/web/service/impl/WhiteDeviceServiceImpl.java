@@ -2,13 +2,13 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.bo.WhiteDeviceBO;
+import com.rpa.common.mapper.DeviceImeiMapper;
 import com.rpa.common.mapper.WhiteDeviceMapper;
+import com.rpa.common.pojo.DeviceImeiPO;
 import com.rpa.common.pojo.WhiteDevicePO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.vo.WhiteDeviceVO;
-import com.rpa.web.mapper.DeviceImeiMapper;
-import com.rpa.web.pojo.DeviceImeiPO;
 import com.rpa.web.service.IWhiteDeviceService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;

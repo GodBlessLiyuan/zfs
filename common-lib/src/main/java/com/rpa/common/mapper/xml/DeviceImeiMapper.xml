@@ -55,4 +55,11 @@
     set device_id = #{deviceId,jdbcType=BIGINT}
     where imei = #{imei,jdbcType=CHAR}
   </update>
+
+  <select id="queryByImei" parameterType="java.lang.String" resultType="com.rpa.web.pojo.DeviceImeiPO">
+    select
+    <include refid="Base_Column_List"></include>
+    from t_device_imei
+    where imei = #{imei}
+  </select>
 </mapper>

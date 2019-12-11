@@ -2,7 +2,7 @@ package com.rpa.web.controller;
 
 import com.rpa.common.constant.Constant;
 import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.VipCommodityDTO;
+import com.rpa.web.vo.VipCommodityVO;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -29,12 +29,12 @@ public class VipCommodityController {
     private IVipCommodityService service;
 
     @RequestMapping("query")
-    public DTPageInfo<VipCommodityDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                             @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                             @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                             @RequestParam(value = "username") String username,
-                                             @RequestParam(value = "comTypeId") int comTypeId,
-                                             @RequestParam(value = "channelId") int channelId) {
+    public DTPageInfo<VipCommodityVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                            @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                            @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                            @RequestParam(value = "username") String username,
+                                            @RequestParam(value = "comTypeId") int comTypeId,
+                                            @RequestParam(value = "channelId") int channelId) {
 
         Map<String, Object> reqData = new HashMap<>(3);
         reqData.put("username", username);
@@ -45,7 +45,7 @@ public class VipCommodityController {
     }
 
     @RequestMapping("queryById")
-    public VipCommodityDTO queryById(@RequestParam(value = "cmdyId") int cmdyId) {
+    public VipCommodityVO queryById(@RequestParam(value = "cmdyId") int cmdyId) {
         return service.queryById(cmdyId);
     }
 

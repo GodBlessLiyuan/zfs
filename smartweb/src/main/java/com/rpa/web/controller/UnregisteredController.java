@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.DeviceDTO;
+import com.rpa.web.vo.DeviceVO;
 import com.rpa.web.service.IUnregisteredService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +25,10 @@ public class UnregisteredController {
     private IUnregisteredService service;
 
     @RequestMapping("query")
-    public DTPageInfo<DeviceDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                       @RequestParam(value = "channelId") int channelId) {
+    public DTPageInfo<DeviceVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                      @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                      @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                      @RequestParam(value = "channelId") int channelId) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("channelId", channelId);
 

@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.DeviceDTO;
+import com.rpa.web.vo.DeviceVO;
 import com.rpa.web.utils.DTPageInfo;
 
 import java.util.Map;
@@ -22,5 +22,5 @@ public interface IUnregisteredService {
      * @param reqData
      * @return
      */
-    DTPageInfo<DeviceDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<DeviceVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 }

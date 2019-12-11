@@ -1,5 +1,6 @@
 package com.rpa.web.service.impl;
 
+import com.rpa.common.mapper.DeviceMapper;
 import com.rpa.common.mapper.OrderMapper;
 import com.rpa.common.mapper.UserMapper;
 import com.rpa.common.utils.RedisKeyUtil;

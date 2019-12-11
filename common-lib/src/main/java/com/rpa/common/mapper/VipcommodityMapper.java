@@ -8,4 +8,12 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface VipcommodityMapper extends BaseMapper<VipcommodityPO, Integer> {
+    /**
+     * 根据渠道Id和产品Id查询数据
+     *
+     * @param softChannelId 渠道Id
+     * @param comTypeId     产品Id
+     * @return
+     */
+    VipcommodityPO queryByChanIdAndComTypeId(int softChannelId, int comTypeId);
 }

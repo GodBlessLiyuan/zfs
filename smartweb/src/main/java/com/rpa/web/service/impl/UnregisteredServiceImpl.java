@@ -1,10 +1,10 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.DeviceMapper;
+import com.rpa.common.pojo.DevicePO;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.DeviceDTO;
-import com.rpa.web.mapper.DeviceMapper;
-import com.rpa.web.pojo.DevicePO;
+import com.rpa.web.vo.DeviceVO;
 import com.rpa.web.service.IUnregisteredService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
@@ -26,9 +26,9 @@ public class UnregisteredServiceImpl implements IUnregisteredService {
     private DeviceMapper deviceMapper;
 
     @Override
-    public DTPageInfo<DeviceDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public DTPageInfo<DeviceVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<DevicePO> page = PageHelper.startPage(pageNum, pageSize);
         List<DevicePO> pos = deviceMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), DeviceDTO.convert(pos));
+        return new DTPageInfo<>(draw, page.getTotal(), DeviceVO.convert(pos));
     }
 }

@@ -1,6 +1,6 @@
-package com.rpa.web.dto;
+package com.rpa.web.vo;
 
-import com.rpa.web.pojo.DevicePO;
+import com.rpa.common.pojo.DevicePO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import java.util.List;
  * @version: 1.0
  */
 @Data
-public class DeviceDTO implements Serializable {
+public class DeviceVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,8 +34,8 @@ public class DeviceDTO implements Serializable {
      * @param po PO
      * @return DTO
      */
-    public static DeviceDTO convert(DevicePO po) {
-        DeviceDTO dto = new DeviceDTO();
+    public static DeviceVO convert(DevicePO po) {
+        DeviceVO dto = new DeviceVO();
 
         dto.setCreateTime(po.getCreateTime());
         dto.setChanName(po.getChanName());
@@ -55,11 +55,11 @@ public class DeviceDTO implements Serializable {
      * @param pos POs
      * @return DTOs
      */
-    public static List<DeviceDTO> convert(List<DevicePO> pos) {
-        List<DeviceDTO> dtos = new ArrayList<>();
+    public static List<DeviceVO> convert(List<DevicePO> pos) {
+        List<DeviceVO> dtos = new ArrayList<>();
 
         for (DevicePO po : pos) {
-            dtos.add(DeviceDTO.convert(po));
+            dtos.add(DeviceVO.convert(po));
         }
 
         return dtos;
