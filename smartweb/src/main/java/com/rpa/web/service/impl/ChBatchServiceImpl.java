@@ -2,23 +2,21 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.bo.ComTypeBO;
-import com.rpa.common.mapper.AdminUserMapper;
-import com.rpa.common.constant.Constant;
-import com.rpa.common.mapper.BatchInfoMapper;
-import com.rpa.common.mapper.ComTypeMapper;
+import com.rpa.common.mapper.*;
+import com.rpa.common.pojo.ChBatchPO;
+import com.rpa.common.pojo.ChannelPO;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.ChBatchDTO;
-import com.rpa.web.dto.ChannelDTO;
-import com.rpa.web.mapper.*;
-import com.rpa.web.pojo.BatchInfoPO;
-import com.rpa.web.pojo.ChBatchPO;
-import com.rpa.web.pojo.ChannelPO;
+import com.rpa.common.pojo.BatchInfoPO;
+import com.rpa.common.bo.ChBatchBO;
 import com.rpa.web.service.ChBatchService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.DateUtil;
 import com.rpa.web.utils.ExcelUtil;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.utils.OperatorUtil;
+import com.rpa.web.vo.ChBatchVO;
+import com.rpa.web.vo.ChannelVO;
 import com.rpa.web.vo.ComTypeVO;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -69,16 +67,16 @@ public class ChBatchServiceImpl implements ChBatchService {
      * @return
      */
     @Override
-    public DTPageInfo<ChBatchDTO> query(int draw, int start, int length, String chanNickname, Integer comTypeId, Byte status, String operator) {
+    public DTPageInfo<ChBatchVO> query(int draw, int start, int length, String chanNickname, Integer comTypeId, Byte status, String operator) {
 
         // 分页
-        Page<ChBatchDTO> page = PageHelper.startPage(start, length);
+        Page<ChBatchVO> page = PageHelper.startPage(start, length);
 
         //查询数据
-        List<ChBatchDTO> DTOs = this.query(chanNickname, comTypeId, status, operator);
+        List<ChBatchVO> vos = this.query(chanNickname, comTypeId, status, operator);
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), DTOs);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
 
@@ -121,15 +119,15 @@ public class ChBatchServiceImpl implements ChBatchService {
             return new ResultVO(1002);
         }
 
-        // 将 po 转换为 dto
-        List<ChannelDTO> dtos = new ArrayList<>();
+        // 将 po 转换为 vo
+        List<ChannelVO> vos = new ArrayList<>();
         for (ChannelPO po : pos) {
-            ChannelDTO dto = new ChannelDTO();
-            dto.setChanId(po.getChanId());
-            dto.setChanNickname(po.getChanNickname());
-            dtos.add(dto);
+            ChannelVO vo = new ChannelVO();
+            vo.setChanId(po.getChanId());
+            vo.setChanNickname(po.getChanNickname());
+            vos.add(vo);
         }
-        return new ResultVO(1000, dtos);
+        return new ResultVO(1000, vos);
     }
 
 
@@ -142,11 +140,6 @@ public class ChBatchServiceImpl implements ChBatchService {
     @Override
     @Transactional(rollbackFor = {})
     public ResultVO insert(ChBatchDTO dto, HttpSession httpSession) {
-
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
 
         // 把 DTO 转换为 PO
         ChBatchPO po = new ChBatchPO();
@@ -162,8 +155,8 @@ public class ChBatchServiceImpl implements ChBatchService {
         po.setDays(chBatchMapper.queryDaysByTypeId(dto.getComTypeId()));
 
         // 创建时，创建人和更操作新人一样，此后创建人ID便不再改变
-        po.setaId(aId);
-        po.setUpdateAId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
+        po.setUpdateAId(OperatorUtil.getOperatorId(httpSession));
 
         this.chBatchMapper.insert(po);
 
@@ -204,11 +197,6 @@ public class ChBatchServiceImpl implements ChBatchService {
     @Transactional(rollbackFor = {})
     public ResultVO updateStatus(Integer batchId, Byte status, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         // 查询出要修改的数据
         ChBatchPO po = this.chBatchMapper.selectByPrimaryKey(batchId);
 
@@ -218,7 +206,7 @@ public class ChBatchServiceImpl implements ChBatchService {
 
         po.setStatus(status);
         po.setUpdateTime(new Date());
-        po.setUpdateAId(aId);
+        po.setUpdateAId(OperatorUtil.getOperatorId(httpSession));
 
         chBatchMapper.updateByPrimaryKey(po);
 
@@ -246,10 +234,10 @@ public class ChBatchServiceImpl implements ChBatchService {
                        HttpServletResponse response) {
 
         //查询数据
-        List<ChBatchDTO> DTOs = this.query(chanNickname, comTypeId, status, operator);
+        List<ChBatchVO> vos = this.query(chanNickname, comTypeId, status, operator);
 
         //生成Excel表格
-        HSSFWorkbook wb = this.toExcel(DTOs);
+        HSSFWorkbook wb = this.toExcel(vos);
 
         //发送响应流数据给前端
         ExcelUtil.sendToClient(wb, response);
@@ -264,7 +252,7 @@ public class ChBatchServiceImpl implements ChBatchService {
      * @param operator
      * @return
      */
-    private List<ChBatchDTO> query(String chanNickname, Integer comTypeId, Byte status, String operator) {
+    private List<ChBatchVO> query(String chanNickname, Integer comTypeId, Byte status, String operator) {
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(4);
@@ -274,39 +262,39 @@ public class ChBatchServiceImpl implements ChBatchService {
         map.put("operator", operator);
 
         // 按照条件查询数据
-        List<ChBatchPO> POs = chBatchMapper.query(map);
+        List<ChBatchBO> pos = chBatchMapper.query(map);
         // 将查询到的 PO 数据转换为 DTO
-        List<ChBatchDTO> DTOs = new ArrayList<>();
-        for(ChBatchPO po: POs) {
-            ChBatchDTO dto = this.po2dto(po);
-            DTOs.add(dto);
+        List<ChBatchVO> vos = new ArrayList<>();
+        for(ChBatchBO po: pos) {
+            ChBatchVO vo = this.po2vo(po);
+            vos.add(vo);
         }
-        return DTOs;
+        return vos;
     }
 
 
     /**
-     * 将po转换为dto
+     * 将po转换为vo
      * @param po
      * @return
      */
-    private ChBatchDTO po2dto(ChBatchPO po) {
-        ChBatchDTO dto = new ChBatchDTO();
-        dto.setBatchId(po.getBatchId());
-        dto.setChanNickname(po.getChanNickname());
-        dto.setChanName(po.getChanName());
-        dto.setCreateTime(po.getCreateTime());
-        dto.setCreater(queryUsernameByAid(po.getaId()));
-        dto.setComTypeId(po.getComTypeId());
-        dto.setComTypeName(po.getComTypeName());
-        dto.setNum(po.getNum());
-        dto.setActivity(queryStatusById(po.getBatchId(), 2));
-        dto.setNonActivity(queryStatusById(po.getBatchId(),1));
-        dto.setExtra(po.getExtra());
-        dto.setStatus(po.getStatus());
-        dto.setUpdateTime(po.getUpdateTime());
-        dto.setOperator(queryUsernameByAid(po.getUpdateAId()));
-        return dto;
+    private ChBatchVO po2vo(ChBatchBO po) {
+        ChBatchVO vo = new ChBatchVO();
+        vo.setBatchId(po.getBatchId());
+        vo.setChanNickname(po.getChanNickname());
+        vo.setChanName(po.getChanName());
+        vo.setCreateTime(po.getCreateTime());
+        vo.setCreater(queryUsernameByAid(po.getaId()));
+        vo.setComTypeId(po.getComTypeId());
+        vo.setComTypeName(po.getComTypeName());
+        vo.setNum(po.getNum());
+        vo.setActivity(queryStatusById(po.getBatchId(), 2));
+        vo.setNonActivity(queryStatusById(po.getBatchId(),1));
+        vo.setExtra(po.getExtra());
+        vo.setStatus(po.getStatus());
+        vo.setUpdateTime(po.getUpdateTime());
+        vo.setOperator(queryUsernameByAid(po.getUpdateAId()));
+        return vo;
     }
 
     /**
@@ -351,9 +339,9 @@ public class ChBatchServiceImpl implements ChBatchService {
 
     /**
      * 生成Excel表格
-     * @param DTOs
+     * @param vos
      */
-    private HSSFWorkbook toExcel(List<ChBatchDTO> DTOs) {
+    private HSSFWorkbook toExcel(List<ChBatchVO> vos) {
         //表头
         String[] title = {"渠道标识", "渠道名称", "创建时间", "创建人", "产品类型", "创建数量", "已激活",
                 "未激活", "备注", "状态", "操作时间", "操作人"};
@@ -362,38 +350,38 @@ public class ChBatchServiceImpl implements ChBatchService {
 
         String status = "";
 
-        String[][] content = new String[DTOs.size()][title.length];
-        for (int i = 0; i < DTOs.size(); i++) {
-            ChBatchDTO dto = DTOs.get(i);
-            content[i][0] = dto.getChanNickname();
-            content[i][1] = dto.getChanName();
-            if (null == dto.getCreateTime()) {
+        String[][] content = new String[vos.size()][title.length];
+        for (int i = 0; i < vos.size(); i++) {
+            ChBatchVO vo = vos.get(i);
+            content[i][0] = vo.getChanNickname();
+            content[i][1] = vo.getChanName();
+            if (null == vo.getCreateTime()) {
                 content[i][2] = "";
             } else {
-                content[i][2] = DateUtil.date2str(dto.getCreateTime());
+                content[i][2] = DateUtil.date2str(vo.getCreateTime());
             }
-            content[i][3] = dto.getCreater();
-            content[i][4] = dto.getComTypeName();
-            content[i][5] = dto.getNum().toString();
-            content[i][6] = dto.getActivity().toString();
-            content[i][7] = dto.getNonActivity().toString();
-            content[i][8] = dto.getExtra();
-            if (dto.getStatus() == 1) {
+            content[i][3] = vo.getCreater();
+            content[i][4] = vo.getComTypeName();
+            content[i][5] = vo.getNum().toString();
+            content[i][6] = vo.getActivity().toString();
+            content[i][7] = vo.getNonActivity().toString();
+            content[i][8] = vo.getExtra();
+            if (vo.getStatus() == 1) {
                 status = "正常";
-            } else if (dto.getStatus() == 3) {
+            } else if (vo.getStatus() == 3) {
                 status = "已冻结";
-            } else if (dto.getStatus() == 4) {
+            } else if (vo.getStatus() == 4) {
                 status = "已失效";
-            } else if (dto.getStatus() == 5) {
+            } else if (vo.getStatus() == 5) {
                 status = "已结束";
             }
             content[i][9] = status;
-            if (null == dto.getUpdateTime()) {
+            if (null == vo.getUpdateTime()) {
                 content[i][10] = "";
             }else {
-                content[i][10] = DateUtil.date2str(dto.getUpdateTime());
+                content[i][10] = DateUtil.date2str(vo.getUpdateTime());
             }
-            content[i][11] = dto.getOperator();
+            content[i][11] = vo.getOperator();
         }
 
         //创建HSSFWorkbook

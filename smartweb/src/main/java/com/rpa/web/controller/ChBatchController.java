@@ -4,6 +4,7 @@ import com.rpa.web.dto.ChBatchDTO;
 import com.rpa.web.service.ChBatchService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.ChBatchVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class ChBatchController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<ChBatchDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+    public DTPageInfo<ChBatchVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                         @RequestParam(value = "start", defaultValue = "1") int start,
                                         @RequestParam(value = "length", defaultValue = "10") int length,
                                         @RequestParam(value = "chanNickname", required = false) String chanNickname,
@@ -45,7 +46,7 @@ public class ChBatchController {
                                         @RequestParam(value = "operator", required = false) String operator
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<ChBatchDTO> dTPageInfo = chBatchService.query(draw, start, length, chanNickname, comTypeId, status, operator);
+        DTPageInfo<ChBatchVO> dTPageInfo = chBatchService.query(draw, start, length, chanNickname, comTypeId, status, operator);
         return dTPageInfo;
     }
 

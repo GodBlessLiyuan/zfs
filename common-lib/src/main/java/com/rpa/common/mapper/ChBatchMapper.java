@@ -8,4 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ChBatchMapper extends BaseMapper<ChBatchPO, Integer> {
+
+    Integer queryTypeIdByBatchId(Integer batchId);
+
+    Integer queryDaysByTypeId(Integer typeId);
+
 }

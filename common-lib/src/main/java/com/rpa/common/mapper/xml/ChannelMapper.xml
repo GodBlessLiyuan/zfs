@@ -139,4 +139,32 @@
       dr = #{dr,jdbcType=TINYINT}
     where chan_id = #{chanId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" parameterType="java.lang.Integer" resultType="com.rpa.common.pojo.ChannelPO">
+    select
+    chan_nickname as chanNickname, chan_name as chanName, c.pro_id as proId, p.pro_name as proName,
+    phone, c.extra, c.create_time as createTime, c.a_id as aId
+    from t_channel c
+    left join t_promoter p on c.pro_id = p.pro_id
+    <where>
+      <if test="chanNickname != null and chanNickname != ''">
+        AND chan_nickname = #{chanNickname}
+      </if>
+      <if test="proId != null and proId != ''">
+        AND c.pro_id = #{proId}
+      </if>
+    </where>
+  </select>
+
+  <select id="queryProNames" resultType="com.rpa.common.pojo.ChannelPO">
+    select distinct
+    p.pro_name as proName, c.pro_id as proId
+    from t_channel c
+    left join t_promoter p on c.pro_id = p.pro_id
+  </select>
+
+  <select id="queryChanNicknames" resultType="com.rpa.common.pojo.ChannelPO">
+    select chan_id as chanId, chan_nickname as chanNickname
+    from t_channel
+  </select>
 </mapper>

@@ -4,6 +4,7 @@ import com.rpa.web.dto.ChannelDTO;
 import com.rpa.web.service.ChannelService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.ChannelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,14 +34,14 @@ public class ChannelController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<ChannelDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                        @RequestParam(value = "start", defaultValue = "1") int start,
-                                        @RequestParam(value = "length", defaultValue = "10") int length,
-                                        @RequestParam(value = "chanNickname", required = false) String chanNickname,
-                                        @RequestParam(value = "proId", required = false) Integer proId
+    public DTPageInfo<ChannelVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                       @RequestParam(value = "start", defaultValue = "1") int start,
+                                       @RequestParam(value = "length", defaultValue = "10") int length,
+                                       @RequestParam(value = "chanNickname", required = false) String chanNickname,
+                                       @RequestParam(value = "proId", required = false) Integer proId
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<ChannelDTO> dTPageInfo = channelService.query(draw, start, length, chanNickname, proId);
+        DTPageInfo<ChannelVO> dTPageInfo = channelService.query(draw, start, length, chanNickname, proId);
         return dTPageInfo;
     }
 

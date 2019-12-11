@@ -1,4 +1,4 @@
-package com.rpa.web.pojo;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_channel
  * @author 
  */
-public class ChannelPO implements Serializable {
+public class ChannelVO implements Serializable {
     private Integer chanId;
 
     private String chanNickname;
@@ -18,20 +18,15 @@ public class ChannelPO implements Serializable {
 
     private Integer proId;
 
-    private Integer aId;
-
-    private Date createTime;
-
-    private Date updateTime;
+    private String phone;
 
     private String extra;
 
-    /**
-     * 1 未删除  2删除
-     */
-    private Byte dr;
+    private Date createTime;
 
-    private String phone;
+    private String operator;
+
+    private Byte dr;
 
     private static final long serialVersionUID = 1L;
 
@@ -75,12 +70,12 @@ public class ChannelPO implements Serializable {
         this.proId = proId;
     }
 
-    public Integer getaId() {
-        return aId;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setaId(Integer aId) {
-        this.aId = aId;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Date getCreateTime() {
@@ -91,14 +86,6 @@ public class ChannelPO implements Serializable {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public String getExtra() {
         return extra;
     }
@@ -107,20 +94,20 @@ public class ChannelPO implements Serializable {
         this.extra = extra;
     }
 
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
     public Byte getDr() {
         return dr;
     }
 
     public void setDr(Byte dr) {
         this.dr = dr;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     @Override
@@ -134,17 +121,14 @@ public class ChannelPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ChannelPO other = (ChannelPO) that;
+        ChannelVO other = (ChannelVO) that;
         return (this.getChanId() == null ? other.getChanId() == null : this.getChanId().equals(other.getChanId()))
             && (this.getChanNickname() == null ? other.getChanNickname() == null : this.getChanNickname().equals(other.getChanNickname()))
             && (this.getChanName() == null ? other.getChanName() == null : this.getChanName().equals(other.getChanName()))
-            && (this.getProId() == null ? other.getProId() == null : this.getProId().equals(other.getProId()))
-            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
+            && (this.getProName() == null ? other.getProName() == null : this.getProName().equals(other.getProName()))
+            && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
-            && (this.getDr() == null ? other.getDr() == null : this.getDr().equals(other.getDr()))
-            && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()));
+            && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()));
     }
 
     @Override
@@ -154,12 +138,10 @@ public class ChannelPO implements Serializable {
         result = prime * result + ((getChanId() == null) ? 0 : getChanId().hashCode());
         result = prime * result + ((getChanNickname() == null) ? 0 : getChanNickname().hashCode());
         result = prime * result + ((getChanName() == null) ? 0 : getChanName().hashCode());
-        result = prime * result + ((getProId() == null) ? 0 : getProId().hashCode());
-        result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
+        result = prime * result + ((getProName() == null) ? 0 : getProName().hashCode());
+        result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
-        result = prime * result + ((getDr() == null) ? 0 : getDr().hashCode());
         return result;
     }
 
@@ -172,12 +154,10 @@ public class ChannelPO implements Serializable {
         sb.append(", chanId=").append(chanId);
         sb.append(", chanNickname=").append(chanNickname);
         sb.append(", chanName=").append(chanName);
-        sb.append(", proId=").append(proId);
-        sb.append(", aId=").append(aId);
+        sb.append(", proName=").append(proName);
+        sb.append(", phone=").append(phone);
         sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
         sb.append(", extra=").append(extra);
-        sb.append(", dr=").append(dr);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

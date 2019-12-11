@@ -1,4 +1,4 @@
-package com.rpa.web.pojo;
+package com.rpa.common.bo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_ch_batch
  * @author 
  */
-public class ChBatchPO implements Serializable {
+public class ChBatchBO implements Serializable {
     private Integer batchId;
 
     private Integer num;
@@ -228,7 +228,7 @@ public class ChBatchPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ChBatchPO other = (ChBatchPO) that;
+        ChBatchBO other = (ChBatchBO) that;
         return (this.getBatchId() == null ? other.getBatchId() == null : this.getBatchId().equals(other.getBatchId()))
             && (this.getNum() == null ? other.getNum() == null : this.getNum().equals(other.getNum()))
             && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
