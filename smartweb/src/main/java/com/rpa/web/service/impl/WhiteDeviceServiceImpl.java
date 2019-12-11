@@ -5,8 +5,6 @@ import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.domain.WhiteDeviceDO;
 import com.rpa.web.dto.WhiteDeviceDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
-import com.rpa.web.exception.PromptException;
 import com.rpa.web.mapper.DeviceImeiMapper;
 import com.rpa.web.mapper.WhiteDeviceMapper;
 import com.rpa.web.pojo.DeviceImeiPO;
@@ -53,7 +51,7 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
         List<DeviceImeiPO> deviceImeiPOs = deviceImeiMapper.queryByImei(imei);
         if (deviceImeiPOs == null || deviceImeiPOs.size() == 0) {
             // 未找到对应的deviceId
-            throw new PromptException(ExceptionEnum.IMEI_INPUT_ERROR);
+            return new ResultVO(1101);
         }
 
         // deviced 与 imei 是1-n关系,故这里deviceId有且仅有一个
@@ -61,7 +59,7 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
         List<WhiteDevicePO> whiteDevicePOs = whiteDeviceMapper.queryByDeviceId(deviceId);
         if (whiteDevicePOs != null && whiteDevicePOs.size() > 0) {
             // 已存在在白名单里
-            throw new PromptException(ExceptionEnum.IMEI_EXIST);
+            return new ResultVO(1102);
         }
 
         WhiteDevicePO po = new WhiteDevicePO();
@@ -75,7 +73,7 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
 
         this.deleteRedis();
 
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 
     @Override

@@ -6,8 +6,6 @@ import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.VipCommodityConstant;
 import com.rpa.web.dto.VipCommodityDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
-import com.rpa.web.exception.PromptException;
 import com.rpa.web.mapper.ComTypeMapper;
 import com.rpa.common.mapper.SoftChannelMapper;
 import com.rpa.web.mapper.VipCommodityMapper;
@@ -66,7 +64,8 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
                            float discount, int aId) {
         VipCommodityPO po = vipCommodityMapper.queryByChanIdAndComTypeId(channelId, comTypeId);
         if (po != null) {
-            throw new PromptException(3000, "当前渠道-产品已存在！");
+            // 当前渠道-产品已存在！
+            return new ResultVO(1103);
         }
 
         VipCommodityPO vipCommodityPO = new VipCommodityPO();
@@ -101,7 +100,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         vipCommodityMapper.insert(vipCommodityPO);
 
         this.deleteRedis();
-        return new ResultVO(ExceptionEnum.SUCCESS);
+        return new ResultVO(1000);
     }
 
     @Override
