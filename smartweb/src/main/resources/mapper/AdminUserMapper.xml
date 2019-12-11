@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.web.mapper.AdminUserMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.web.pojo.AdminUserPO">
+<mapper namespace="com.rpa.common.mapper.AdminUserMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.common.pojo.AdminUserPO">
     <id column="a_id" jdbcType="INTEGER" property="aId" />
     <result column="username" jdbcType="CHAR" property="username" />
     <result column="password" jdbcType="CHAR" property="password" />
@@ -27,7 +27,7 @@
     where a_id = #{aId,jdbcType=INTEGER}
   </select>
 
-  <select id="queryBy" resultType="com.rpa.web.domain.AdminUserDO">
+  <select id="queryBy" resultType="com.rpa.common.bo.AdminUserBO">
     select
     au.a_id as aId, username as userName, `password`, email, is_lock as isLock, au.create_time as createTime,
     last_time as lastTime, dr, au.role_id as roleId, relation_a_id as relationAId, `name`, extra, phone,
@@ -44,7 +44,7 @@
     </where>
   </select>
 
-  <select id="queryById" resultType="com.rpa.web.domain.AdminUserDO">
+  <select id="queryById" resultType="com.rpa.common.bo.AdminUserBO">
     select
     au.a_id as aId, username as userName, `password`, email, is_lock as isLock, au.create_time as createTime,
     last_time as lastTime, dr, au.role_id as roleId, relation_a_id as relationAId, `name`, extra, phone,
@@ -83,7 +83,7 @@
     delete from t_admin_user
     where a_id = #{aId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.web.pojo.AdminUserPO">
+  <insert id="insert" parameterType="com.rpa.common.pojo.AdminUserPO">
     insert into t_admin_user (a_id, username, `password`, 
       email, is_lock, create_time, 
       last_time, dr, role_id, 
@@ -95,7 +95,7 @@
       #{relationAId,jdbcType=INTEGER}, #{name,jdbcType=CHAR}, #{extra,jdbcType=CHAR}, 
       #{phone,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.web.pojo.AdminUserPO">
+  <insert id="insertSelective" parameterType="com.rpa.common.pojo.AdminUserPO">
     insert into t_admin_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="aId != null">
@@ -180,7 +180,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.web.pojo.AdminUserPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.AdminUserPO">
     update t_admin_user
     <set>
       <if test="username != null">
@@ -222,7 +222,7 @@
     </set>
     where a_id = #{aId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.web.pojo.AdminUserPO">
+  <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.AdminUserPO">
     update t_admin_user
     set username = #{username,jdbcType=CHAR},
       `password` = #{password,jdbcType=CHAR},

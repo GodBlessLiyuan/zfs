@@ -2,7 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.ComTypeDTO;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 
 import java.util.List;
 import java.util.Map;

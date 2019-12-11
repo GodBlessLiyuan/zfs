@@ -1,20 +1,19 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.*;
+import com.rpa.common.pojo.AdconfigPO;
+import com.rpa.common.pojo.KeyValuePO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.Constant;
-import com.rpa.web.dto.AdconfigDTO;
-import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.KeyValueDTO;
+import com.rpa.common.dto.AdconfigDTO;
+import com.rpa.common.dto.AdminUserDTO;
+import com.rpa.common.dto.KeyValueDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
-import com.rpa.web.mapper.*;
-import com.rpa.web.pojo.AdconfigPO;
-import com.rpa.web.pojo.KeyValuePO;
 import com.rpa.web.service.AdconfigService;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.utils.ResultVOUtil;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -86,7 +85,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         map.put("status", status);
 
         // 按照条件查询数据
-        List<AdconfigPO> lists_PO = adconfigMapper.query(map);
+        List<AdconfigPO> lists_PO = this.adconfigMapper.query(map);
 
         // 将查询到的 AdconfigPO 数据转换为 AdconfigDTO
         List<AdconfigDTO> lists_DTO = new ArrayList<>();

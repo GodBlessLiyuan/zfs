@@ -1,20 +1,18 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.pojo.AdChannelPO;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.domain.AdChannelDO;
-import com.rpa.web.dto.AdChannelDTO;
+import com.rpa.common.bo.AdChannelBO;
+import com.rpa.common.dto.AdChannelDTO;
 import com.rpa.web.dto.AppDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
-import com.rpa.web.mapper.AdChannelMapper;
+import com.rpa.common.mapper.AdChannelMapper;
 import com.rpa.web.mapper.AppMapper;
-import com.rpa.web.mapper.SoftChannelMapper;
-import com.rpa.web.pojo.AdChannelPO;
+import com.rpa.common.mapper.SoftChannelMapper;
 import com.rpa.web.pojo.AppPO;
 import com.rpa.web.service.AdChannelService;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.utils.ResultVOUtil;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -72,17 +70,17 @@ public class AdChannelServiceImpl implements AdChannelService {
         map.put("appId", appId);
 
         // 按照条件，从t_app和t_soft_channel表中联合查询数据，该数据中不含状态值
-        List<AdChannelDO> lists_DO = this.adChannelMapper.query(map);
+        List<AdChannelBO> lists_DO = this.adChannelMapper.query(map);
 
         // 根据查询到的数据的三个ID，往中间表t_ad_channel中查询状态值
         // 如果中间表无此条数据，就新建，新建时状态值默认为1
         // 然后再将所查询到的所有do数据转换为带着状态值的dto，返回
         List<AdChannelDTO> lists_DTO = new ArrayList<>();
-        for (AdChannelDO do1 : lists_DO) {
+        for (AdChannelBO do1 : lists_DO) {
             AdChannelDTO dto = new AdChannelDTO();
 
             //往中间表t_ad_channel中查询
-            AdChannelDO do2 = this.adChannelMapper.queryByIds(adId, do1.getAppId(), do1.getSoftChannelId());
+            AdChannelBO do2 = this.adChannelMapper.queryByIds(adId, do1.getAppId(), do1.getSoftChannelId());
             if (null == do2) {
                 //先往中间表t_ad_channel中插入数据
                 AdChannelPO adChannelPO = new AdChannelPO();
@@ -96,7 +94,7 @@ public class AdChannelServiceImpl implements AdChannelService {
                 this.adChannelMapper.insert(adChannelPO);
 
                 //再次查询，将数据转化为dto，返回
-                AdChannelDO do3 = new AdChannelDO();
+                AdChannelBO do3 = new AdChannelBO();
                 dto = do2dto(do3);
             } else {
                 //将数据转换为dto，返回
@@ -111,17 +109,17 @@ public class AdChannelServiceImpl implements AdChannelService {
 
     /**
      * 将do数据转换为dto
-     * @param adChannelDO
+     * @param adChannelBO
      * @return
      */
-    private AdChannelDTO do2dto(AdChannelDO adChannelDO) {
+    private AdChannelDTO do2dto(AdChannelBO adChannelBO) {
         AdChannelDTO dto = new AdChannelDTO();
-        dto.setAdId(adChannelDO.getAdId());
-        dto.setSoftChannelId(adChannelDO.getSoftChannelId());
-        dto.setAppId(adChannelDO.getAppId());
-        dto.setType(adChannelDO.getType());
-        dto.setVersionname(adChannelDO.getVersionname());
-        dto.setName(adChannelDO.getName());
+        dto.setAdId(adChannelBO.getAdId());
+        dto.setSoftChannelId(adChannelBO.getSoftChannelId());
+        dto.setAppId(adChannelBO.getAppId());
+        dto.setType(adChannelBO.getType());
+        dto.setVersionname(adChannelBO.getVersionname());
+        dto.setName(adChannelBO.getName());
 
         return dto;
     }
@@ -133,22 +131,22 @@ public class AdChannelServiceImpl implements AdChannelService {
     @Override
     public ResultVO queryVersionname() {
 
-        List<AppPO> appPOS = this.appMapper.queryVersionname();
+        List<AppPO> pos = this.appMapper.queryVersionname();
 
-        if (null == appPOS) {
-            return ResultVOUtil.error(ExceptionEnum.QUERY_ERROR);
+        if (null == pos) {
+            return new ResultVO<>(1000, new ArrayList<>());
         }
 
         // 将 po 转换为 dto 返回给前端
         List<AppDTO> dtos = new ArrayList<>();
-        for (AppPO po : appPOS) {
+        for (AppPO po : pos) {
             AppDTO dto = new AppDTO();
             dto.setAppId(po.getAppId());
             dto.setVersionName(po.getVersionname());
 
             dtos.add(dto);
         }
-        return ResultVOUtil.success(dtos);
+        return new ResultVO<>(1000, dtos);
     }
 
 
@@ -168,7 +166,7 @@ public class AdChannelServiceImpl implements AdChannelService {
             AdChannelPO po = this.adChannelMapper.queryByIds2(dto.getAdId(), dto.getAppId(), dto.getSoftChannelId());
 
             if (null == po) {
-                return ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+                return new ResultVO(1002);
             }
 
             int type = dto.getType();
@@ -185,7 +183,7 @@ public class AdChannelServiceImpl implements AdChannelService {
             this.deleteRedis(dto.getSoftChannelId());
         }
 
-        return ResultVOUtil.success();
+        return new ResultVO(1000);
     }
 
 

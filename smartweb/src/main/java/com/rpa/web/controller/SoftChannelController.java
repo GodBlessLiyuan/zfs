@@ -3,7 +3,7 @@ package com.rpa.web.controller;
 import com.rpa.web.dto.SoftChannelDTO;
 import com.rpa.web.service.ISoftChannelService;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

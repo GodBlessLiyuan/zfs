@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.web.mapper.AdChannelMapper">
+<mapper namespace="com.rpa.common.mapper.AdChannelMapper">
     <resultMap id="BaseResultMap" type="com.rpa.web.pojo.AdChannelPO">
         <result column="ad_id" jdbcType="INTEGER" property="adId"/>
         <result column="soft_channel_id" jdbcType="INTEGER" property="softChannelId"/>
@@ -10,7 +10,7 @@
         <result column="app_id" jdbcType="INTEGER" property="appId"/>
         <result column="dr" jdbcType="TINYINT" property="dr"/>
     </resultMap>
-    <select id="query" resultType="com.rpa.web.domain.AdChannelDO">
+    <select id="query" resultType="com.rpa.common.bo.AdChannelBO">
         select
         versionname, app_id as appId, name, soft_channel_id as softChannelId
         from t_soft_channel join t_app
@@ -23,7 +23,7 @@
         </if>
     </select>
 
-    <select id="queryByIds" resultType="com.rpa.web.domain.AdChannelDO">
+    <select id="queryByIds" resultType="com.rpa.common.bo.AdChannelBO">
         select ac.ad_id as adId, ac.soft_channel_id as softChannelId, ac.app_id as appId,
         ac.type, sc.name, a.versionname
         from t_ad_channel ac

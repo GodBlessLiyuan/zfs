@@ -17,7 +17,7 @@ public class AdChannelPO implements Serializable {
     private Date updateTime;
 
     /**
-     * 1 开始 2 关闭
+     * 1 关闭广告  2 开启广告
      */
     private Byte type;
 

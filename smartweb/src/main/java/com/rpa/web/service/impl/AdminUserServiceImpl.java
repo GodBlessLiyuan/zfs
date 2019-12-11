@@ -3,18 +3,17 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.web.common.Constant;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.domain.AdminUserDO;
-import com.rpa.web.dto.AdminUserDTO;
+import com.rpa.common.bo.AdminUserBO;
+import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.RoleDTO;
-import com.rpa.web.mapper.AdminUserMapper;
+import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.RoleMapper;
-import com.rpa.web.pojo.AdminUserPO;
+import com.rpa.common.pojo.AdminUserPO;
 import com.rpa.web.pojo.RolePO;
 import com.rpa.web.service.AdminUserService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.Md5Util;
-import com.rpa.web.utils.ResultVOUtil;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,21 +52,21 @@ public class AdminUserServiceImpl implements AdminUserService {
         map.put("extra", extra);
 
         // 按照条件查询数据
-        List<AdminUserDO> lists_DO = adminUserMapper.queryBy(map);
+        List<AdminUserBO> lists_DO = adminUserMapper.queryBy(map);
 
         // 将查询到的 DO 数据转换为 DTO
         List<AdminUserDTO> lists_DTO = new ArrayList<>();
-        for (AdminUserDO adminUserDO : lists_DO) {
+        for (AdminUserBO adminUserBO : lists_DO) {
             AdminUserDTO dto = new AdminUserDTO();
-            dto.setaId(adminUserDO.getaId());
-            dto.setUsername(adminUserDO.getUsername());
-            dto.setName(adminUserDO.getName());
-            dto.setPhone(adminUserDO.getPhone());
-            dto.setEmail(adminUserDO.getEmail());
-            dto.setRoleId(adminUserDO.getRoleId());
-            dto.setRoleName(adminUserDO.getRoleName());
-            dto.setExtra(adminUserDO.getExtra());
-            dto.setOperator(queryUsernameByAid(adminUserDO.getRelationAId()));
+            dto.setaId(adminUserBO.getaId());
+            dto.setUsername(adminUserBO.getUsername());
+            dto.setName(adminUserBO.getName());
+            dto.setPhone(adminUserBO.getPhone());
+            dto.setEmail(adminUserBO.getEmail());
+            dto.setRoleId(adminUserBO.getRoleId());
+            dto.setRoleName(adminUserBO.getRoleName());
+            dto.setExtra(adminUserBO.getExtra());
+            dto.setOperator(queryUsernameByAid(adminUserBO.getRelationAId()));
 
             lists_DTO.add(dto);
         }
@@ -151,24 +150,24 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public ResultVO queryById(Integer aId) {
 
-        AdminUserDO adminUserDO = this.adminUserMapper.queryById(aId);
+        AdminUserBO adminUserBO = this.adminUserMapper.queryById(aId);
 
-        if (null == adminUserDO) {
+        if (null == adminUserBO) {
             return ResultVOUtil.error(QUERY_ERROR);
         }
 
         // 将 do 转换为 dto
         AdminUserDTO dto = new AdminUserDTO();
-        dto.setaId(adminUserDO.getaId());
-        dto.setUsername(adminUserDO.getUsername());
-        dto.setPassword(adminUserDO.getPassword());
-        dto.setName(adminUserDO.getName());
-        dto.setPhone(adminUserDO.getPhone());
-        dto.setEmail(adminUserDO.getEmail());
-        dto.setRoleId(adminUserDO.getRoleId());
-        dto.setRoleName(adminUserDO.getRoleName());
-        dto.setExtra(adminUserDO.getExtra());
-        dto.setOperator(queryUsernameByAid(adminUserDO.getRelationAId()));
+        dto.setaId(adminUserBO.getaId());
+        dto.setUsername(adminUserBO.getUsername());
+        dto.setPassword(adminUserBO.getPassword());
+        dto.setName(adminUserBO.getName());
+        dto.setPhone(adminUserBO.getPhone());
+        dto.setEmail(adminUserBO.getEmail());
+        dto.setRoleId(adminUserBO.getRoleId());
+        dto.setRoleName(adminUserBO.getRoleName());
+        dto.setExtra(adminUserBO.getExtra());
+        dto.setOperator(queryUsernameByAid(adminUserBO.getRelationAId()));
 
         return ResultVOUtil.success(dto);
     }

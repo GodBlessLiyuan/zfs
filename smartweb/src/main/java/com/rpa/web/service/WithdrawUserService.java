@@ -2,7 +2,7 @@ package com.rpa.web.service;
 
 import com.rpa.web.dto.WithdrawUserDTO;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 
 import javax.servlet.http.HttpSession;
 

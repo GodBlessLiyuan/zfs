@@ -1,14 +1,12 @@
 package com.rpa.web.service.impl;
 
+import com.rpa.common.mapper.KeyValueMapper;
+import com.rpa.common.pojo.KeyValuePO;
 import com.rpa.web.common.Constant;
-import com.rpa.web.dto.KeyValueDTO;
-import com.rpa.web.enumeration.ExceptionEnum;
+import com.rpa.common.dto.KeyValueDTO;
 import com.rpa.web.feign.CacheFeignClient;
-import com.rpa.web.mapper.KeyValueMapper;
-import com.rpa.web.pojo.KeyValuePO;
 import com.rpa.web.service.AccountTutorialService;
-import com.rpa.web.utils.ResultVOUtil;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,7 +86,7 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
          */
         cacheFeignClient.delete(REDIS_KEY);
 
-        return count == 1 ? ResultVOUtil.success() : ResultVOUtil.error(ExceptionEnum.UPDATE_ERROR);
+        return new ResultVO(1000);
     }
 
 

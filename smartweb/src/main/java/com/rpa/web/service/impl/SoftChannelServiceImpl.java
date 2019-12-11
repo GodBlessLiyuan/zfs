@@ -3,12 +3,11 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.SoftChannelDTO;
-import com.rpa.web.mapper.SoftChannelMapper;
-import com.rpa.web.pojo.SoftChannelPO;
+import com.rpa.common.mapper.SoftChannelMapper;
+import com.rpa.common.pojo.SoftChannelPO;
 import com.rpa.web.service.ISoftChannelService;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.utils.ResultVOUtil;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

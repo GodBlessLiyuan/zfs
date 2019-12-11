@@ -1,16 +1,14 @@
 package com.rpa.web.controller;
 
 import com.rpa.web.dto.NoticeDTO;
-import com.rpa.web.pojo.NoticePO;
 import com.rpa.web.service.NoticeService;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 
 /**
  * @author: dangyi

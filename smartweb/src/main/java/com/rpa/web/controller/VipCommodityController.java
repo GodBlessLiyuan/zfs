@@ -1,13 +1,13 @@
 package com.rpa.web.controller;
 
 import com.rpa.web.common.Constant;
-import com.rpa.web.dto.AdminUserDTO;
+import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.VipCommodityDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.exception.PromptException;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

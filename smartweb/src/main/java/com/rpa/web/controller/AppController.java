@@ -1,14 +1,13 @@
 package com.rpa.web.controller;
 
 import com.rpa.web.common.Constant;
-import com.rpa.web.dto.AdminUserDTO;
+import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.AppDTO;
 import com.rpa.web.enumeration.ExceptionEnum;
 import com.rpa.web.exception.PromptException;
-import com.rpa.web.pojo.AdminUserPO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package com.rpa.web.pojo;
+package com.rpa.common.dto;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_admin_user
  * @author 
  */
-public class AdminUserPO implements Serializable {
+public class AdminUserDTO implements Serializable {
     private Integer aId;
 
     private String username;
@@ -36,6 +36,10 @@ public class AdminUserPO implements Serializable {
     private String extra;
 
     private String phone;
+
+    private String roleName;
+
+    private String operator;
 
     private static final long serialVersionUID = 1L;
 
@@ -143,6 +147,22 @@ public class AdminUserPO implements Serializable {
         this.phone = phone;
     }
 
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -154,7 +174,7 @@ public class AdminUserPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        AdminUserPO other = (AdminUserPO) that;
+        AdminUserDTO other = (AdminUserDTO) that;
         return (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))

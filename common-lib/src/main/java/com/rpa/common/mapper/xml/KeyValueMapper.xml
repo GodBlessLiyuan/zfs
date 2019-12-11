@@ -18,9 +18,9 @@
     delete from t_key_value
     where key_name = #{keyName,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.common.pojo.KeyValuePO">
+  <insert id="insert" parameterType="ccom.rpa.common.pojo.KeyValuePO">
     insert into t_key_value (key_name, `value`)
-    values (#{keyName,jdbcType=INTEGER}, #{value,jdbcType=CHAR})
+    values (#{keyName,jdbcType=INTEGER}, #{value,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.common.pojo.KeyValuePO">
     insert into t_key_value
@@ -37,7 +37,7 @@
         #{keyName,jdbcType=INTEGER},
       </if>
       <if test="value != null">
-        #{value,jdbcType=CHAR},
+        #{value,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -45,14 +45,14 @@
     update t_key_value
     <set>
       <if test="value != null">
-        `value` = #{value,jdbcType=CHAR},
+        `value` = #{value,jdbcType=VARCHAR},
       </if>
     </set>
     where key_name = #{keyName,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.KeyValuePO">
     update t_key_value
-    set `value` = #{value,jdbcType=CHAR}
+    set `value` = #{value,jdbcType=VARCHAR}
     where key_name = #{keyName,jdbcType=INTEGER}
   </update>
 </mapper>

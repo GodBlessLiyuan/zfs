@@ -9,8 +9,7 @@ import com.rpa.web.pojo.ComTypePO;
 import com.rpa.web.pojo.UserGiftsPO;
 import com.rpa.web.service.IUserGiftsSercive;
 import com.rpa.web.utils.DTPageInfo;
-import com.rpa.web.utils.ResultVOUtil;
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.vo.ResultVO;
+import com.rpa.common.vo.ResultVO;
 
 /**
  * @author: dangyi
