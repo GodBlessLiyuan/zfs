@@ -1,6 +1,6 @@
-package com.rpa.web.domain;
+package com.rpa.common.bo;
 
-import com.rpa.web.pojo.BatchInfoPO;
+import com.rpa.common.pojo.BatchInfoPO;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ import java.util.Date;
  * @version: 1.0.0
  * @description:
  */
-public class BatchInfoDO extends BatchInfoPO {
+public class BatchInfoBO extends BatchInfoPO {
 
     private String chanNickname;
 

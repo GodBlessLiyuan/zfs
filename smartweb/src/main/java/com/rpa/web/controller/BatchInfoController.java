@@ -1,8 +1,8 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.BatchInfoDTO;
 import com.rpa.web.service.BatchInfoService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.BatchInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,13 +34,13 @@ public class BatchInfoController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<BatchInfoDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                          @RequestParam(value = "start", defaultValue = "1") int start,
-                                          @RequestParam(value = "length", defaultValue = "10") int length,
-                                          @RequestParam(value = "vipkey", required = false) String vipkey
+    public DTPageInfo<BatchInfoVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                         @RequestParam(value = "start", defaultValue = "1") int start,
+                                         @RequestParam(value = "length", defaultValue = "10") int length,
+                                         @RequestParam(value = "vipkey", required = false) String vipkey
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<BatchInfoDTO> dTPageInfo = batchInfoService.query(draw, start, length, vipkey);
+        DTPageInfo<BatchInfoVO> dTPageInfo = batchInfoService.query(draw, start, length, vipkey);
         return dTPageInfo;
     }
 
@@ -54,14 +54,14 @@ public class BatchInfoController {
      * @return
      */
     @GetMapping("queryByBatchid")
-    public DTPageInfo<BatchInfoDTO> queryByBatchid(@RequestParam(value = "draw", defaultValue = "1") int draw,
+    public DTPageInfo<BatchInfoVO> queryByBatchid(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                                    @RequestParam(value = "start", defaultValue = "1") int start,
                                                    @RequestParam(value = "length", defaultValue = "10") int length,
                                                    @RequestParam(value = "batchId") Integer batchId,
                                                    @RequestParam(value = "status") Byte status
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<BatchInfoDTO> dTPageInfo = batchInfoService.queryByBatchid(draw, start, length, batchId, status);
+        DTPageInfo<BatchInfoVO> dTPageInfo = batchInfoService.queryByBatchid(draw, start, length, batchId, status);
         return dTPageInfo;
     }
 

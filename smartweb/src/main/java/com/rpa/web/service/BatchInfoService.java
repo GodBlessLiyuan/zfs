@@ -1,7 +1,7 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.BatchInfoDTO;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.BatchInfoVO;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
  * @description: TODO
  */
 public interface BatchInfoService {
-    DTPageInfo<BatchInfoDTO> query(int draw, int start, int length, String vipkey);
+    DTPageInfo<BatchInfoVO> query(int draw, int start, int length, String vipkey);
 
-    DTPageInfo<BatchInfoDTO> queryByBatchid(int draw, int start, int length, Integer batchId, Byte status);
+    DTPageInfo<BatchInfoVO> queryByBatchid(int draw, int start, int length, Integer batchId, Byte status);
 
     void export(Integer batchId, Byte status, HttpServletResponse response);
 }

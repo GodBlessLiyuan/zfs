@@ -1,4 +1,4 @@
-package com.rpa.web.dto;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_batch_info
  * @author 
  */
-public class BatchInfoDTO implements Serializable {
+public class BatchInfoVO implements Serializable {
     private Integer id;
 
     private String vipkey;
@@ -137,7 +137,7 @@ public class BatchInfoDTO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        BatchInfoDTO other = (BatchInfoDTO) that;
+        BatchInfoVO other = (BatchInfoVO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getVipkey() == null ? other.getVipkey() == null : this.getVipkey().equals(other.getVipkey()))
             && (this.getBatchId() == null ? other.getBatchId() == null : this.getBatchId().equals(other.getBatchId()))
