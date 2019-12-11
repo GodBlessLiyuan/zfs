@@ -1,4 +1,4 @@
-package com.rpa.web.pojo;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_bannerconfig
  * @author 
  */
-public class BannerConfigPO implements Serializable {
+public class BannerConfigVO implements Serializable {
     private Integer bannerId;
 
     private Integer aId;
@@ -19,7 +19,7 @@ public class BannerConfigPO implements Serializable {
     private Date updateTime;
 
     /**
-     * 1关闭 2开启
+     * 1关闭 2开启 3 删除
      */
     private Byte status;
 
@@ -33,6 +33,8 @@ public class BannerConfigPO implements Serializable {
     private String url;
 
     private String picPath;
+
+    private String operator;
 
     private static final long serialVersionUID = 1L;
 
@@ -116,6 +118,14 @@ public class BannerConfigPO implements Serializable {
         this.picPath = picPath;
     }
 
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -127,7 +137,7 @@ public class BannerConfigPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        BannerConfigPO other = (BannerConfigPO) that;
+        BannerConfigVO other = (BannerConfigVO) that;
         return (this.getBannerId() == null ? other.getBannerId() == null : this.getBannerId().equals(other.getBannerId()))
             && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))

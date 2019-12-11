@@ -4,6 +4,7 @@ import com.rpa.web.dto.BannerConfigDTO;
 import com.rpa.web.service.BannerConfigService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.BannerConfigVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,15 +34,15 @@ public class BannerConfigController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<BannerConfigDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                             @RequestParam(value = "start", defaultValue = "1") int start,
-                                             @RequestParam(value = "length", defaultValue = "10") int length,
-                                             @RequestParam(value = "name", required = false) String name,
-                                             @RequestParam(value = "status", required = false) Byte status
+    public DTPageInfo<BannerConfigVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                            @RequestParam(value = "start", defaultValue = "1") int start,
+                                            @RequestParam(value = "length", defaultValue = "10") int length,
+                                            @RequestParam(value = "name", required = false) String name,
+                                            @RequestParam(value = "status", required = false) Byte status
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<BannerConfigDTO> dTPageInfo = bannerConfigService.query(draw, start, length, name, status);
+        DTPageInfo<BannerConfigVO> dTPageInfo = bannerConfigService.query(draw, start, length, name, status);
         return dTPageInfo;
     }
 

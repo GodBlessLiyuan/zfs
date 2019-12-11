@@ -19,7 +19,7 @@ public class BannerconfigPO implements Serializable {
     private Date updateTime;
 
     /**
-     * 1关闭 2开启 3 删除
+     * 1关闭 2开启 3删除
      */
     private Byte status;
 

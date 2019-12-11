@@ -1,18 +1,17 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.BannerconfigMapper;
 import com.rpa.common.utils.RedisKeyUtil;
-import com.rpa.common.constant.Constant;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.BannerConfigDTO;
 import com.rpa.common.mapper.AdminUserMapper;
-import com.rpa.web.mapper.BannerConfigMapper;
-import com.rpa.web.pojo.BannerConfigPO;
+import com.rpa.common.pojo.BannerconfigPO;
 import com.rpa.web.service.BannerConfigService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.utils.OperatorUtil;
+import com.rpa.web.vo.BannerConfigVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -32,7 +31,7 @@ import java.util.*;
 public class BannerConfigServiceImpl implements BannerConfigService {
 
     @Autowired
-    private BannerConfigMapper bannerConfigMapper;
+    private BannerconfigMapper bannerconfigMapper;
 
     @Autowired
     private AdminUserMapper adminUserMapper;
@@ -56,10 +55,10 @@ public class BannerConfigServiceImpl implements BannerConfigService {
      * @return
      */
     @Override
-    public DTPageInfo<BannerConfigDTO> query(int draw, int start, int length, String name, Byte status) {
+    public DTPageInfo<BannerConfigVO> query(int draw, int start, int length, String name, Byte status) {
 
         // 分页
-        Page<BannerConfigDTO> page = PageHelper.startPage(start, length);
+        Page<BannerConfigVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
@@ -67,29 +66,29 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         map.put("status", status);
 
         // 按照条件查询数据
-        List<BannerConfigPO> lists_PO = bannerConfigMapper.query(map);
+        List<BannerconfigPO> pos = bannerconfigMapper.query(map);
 
-        // 将查询到的 PO 数据转换为 DTO
-        List<BannerConfigDTO> lists_DTO = new ArrayList<>();
-        for (BannerConfigPO po : lists_PO) {
-            BannerConfigDTO dto = new BannerConfigDTO();
-            dto.setBannerId(po.getBannerId());
-            dto.setName(po.getName());
-            dto.setStartTime(po.getStartTime());
+        // 将查询到的 po 数据转换为 vo
+        List<BannerConfigVO> vos = new ArrayList<>();
+        for (BannerconfigPO po : pos) {
+            BannerConfigVO vo = new BannerConfigVO();
+            vo.setBannerId(po.getBannerId());
+            vo.setName(po.getName());
+            vo.setStartTime(po.getStartTime());
             if (null == po.getPicPath()) {
-                dto.setPicPath(po.getPicPath());
+                vo.setPicPath(po.getPicPath());
             } else {
-                dto.setPicPath(publicPath + po.getPicPath());
+                vo.setPicPath(publicPath + po.getPicPath());
             }
-            dto.setUrl(po.getUrl());
-            dto.setStatus(po.getStatus());
-            dto.setOperator(queryUsernameByAid(po.getaId()));
+            vo.setUrl(po.getUrl());
+            vo.setStatus(po.getStatus());
+            vo.setOperator(queryUsernameByAid(po.getaId()));
 
-            lists_DTO.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
     /**
@@ -101,12 +100,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
     @Override
     public ResultVO insert(String name, MultipartFile picPath, String url, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
-        BannerConfigPO po = new BannerConfigPO();
+        BannerconfigPO po = new BannerconfigPO();
         po.setName(name);
         po.setPicPath(FileUtil.uploadFile(picPath, iconDir, "banner"));
         po.setUrl(url);
@@ -114,9 +108,9 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         po.setUpdateTime(new Date());
         po.setStatus((byte)1);
         po.setDr((byte)1);
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        int count = this.bannerConfigMapper.insert(po);
+        this.bannerconfigMapper.insert(po);
 
         //删除Redis
         this.deleteRedis();
@@ -135,13 +129,8 @@ public class BannerConfigServiceImpl implements BannerConfigService {
     @Override
     public ResultVO update(Integer bannerId, Byte status, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         // 先查出要修改的数据
-        BannerConfigPO po = this.bannerConfigMapper.selectByPrimaryKey(bannerId);
+        BannerconfigPO po = this.bannerconfigMapper.selectByPrimaryKey(bannerId);
         if (null == po) {
             return new ResultVO(1002);
         }
@@ -151,9 +140,9 @@ public class BannerConfigServiceImpl implements BannerConfigService {
             po.setStartTime(new Date());
         }
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        int count = this.bannerConfigMapper.updateByPrimaryKey(po);
+        this.bannerconfigMapper.updateByPrimaryKey(po);
 
         //删除Redis
         this.deleteRedis();
@@ -168,8 +157,7 @@ public class BannerConfigServiceImpl implements BannerConfigService {
      */
     @Override
     public ResultVO delete(int bannerId) {
-        int count = this.bannerConfigMapper.deleteByPrimaryKey(bannerId);
-        //删除Redis
+        this.bannerconfigMapper.deleteByPrimaryKey(bannerId);
         this.deleteRedis();
         return new ResultVO(1000);
     }
