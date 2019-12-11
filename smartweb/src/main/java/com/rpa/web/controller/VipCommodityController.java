@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.common.Constant;
+import com.rpa.common.constant.Constant;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.web.dto.VipCommodityDTO;
 import com.rpa.web.service.IVipCommodityService;

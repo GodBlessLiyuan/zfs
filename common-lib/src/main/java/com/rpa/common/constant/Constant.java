@@ -1,4 +1,4 @@
-package com.rpa.web.common;
+package com.rpa.common.constant;
 
 /**
  * @author: dangyi

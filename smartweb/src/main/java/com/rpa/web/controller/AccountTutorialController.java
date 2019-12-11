@@ -5,7 +5,7 @@ import com.rpa.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static com.rpa.web.common.Constant.TUTORIAL_URL;
+import static com.rpa.common.constant.Constant.TUTORIAL_URL;
 
 
 /**

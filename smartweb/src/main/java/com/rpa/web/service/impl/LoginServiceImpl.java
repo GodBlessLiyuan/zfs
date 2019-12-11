@@ -1,6 +1,6 @@
 package com.rpa.web.service.impl;
 
-import com.rpa.web.common.Constant;
+import com.rpa.common.constant.Constant;
 import com.rpa.common.dto.AdminUserDTO;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.common.pojo.AdminUserPO;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
-import static com.rpa.web.common.Constant.ADMIN_USER;
+import static com.rpa.common.constant.Constant.ADMIN_USER;
 
 /**
  * @author: dangyi

@@ -1,4 +1,4 @@
-package com.rpa.common.dto;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_ad_channel
  * @author 
  */
-public class AdChannelDTO implements Serializable {
+public class AdChannelVO implements Serializable {
     private Integer adId;
 
     private Integer softChannelId;
@@ -117,7 +117,7 @@ public class AdChannelDTO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        AdChannelDTO other = (AdChannelDTO) that;
+        AdChannelVO other = (AdChannelVO) that;
         return (this.getAdId() == null ? other.getAdId() == null : this.getAdId().equals(other.getAdId()))
             && (this.getSoftChannelId() == null ? other.getSoftChannelId() == null : this.getSoftChannelId().equals(other.getSoftChannelId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))

@@ -1,4 +1,4 @@
-package com.rpa.web.dto;
+package com.rpa.web.vo;
 
 import com.rpa.common.bo.AppBO;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.util.*;
  * @version: 1.0
  */
 @Data
-public class AppDTO implements Serializable {
+public class AppVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,8 +35,8 @@ public class AppDTO implements Serializable {
      * @param bo
      * @return
      */
-    public static AppDTO convert(AppBO bo) {
-        AppDTO dto = new AppDTO();
+    public static AppVO convert(AppBO bo) {
+        AppVO dto = new AppVO();
 
         dto.setAppId(bo.getAppId());
         dto.setChanId(String.valueOf(bo.getChanId()));
@@ -59,17 +59,17 @@ public class AppDTO implements Serializable {
      * @param bos
      * @return
      */
-    public static List<AppDTO> convert(List<AppBO> bos) {
+    public static List<AppVO> convert(List<AppBO> bos) {
         // 合并相同的appId
-        Map<Integer, AppDTO> dtos = new HashMap<>();
+        Map<Integer, AppVO> dtos = new HashMap<>();
         for (AppBO bo : bos) {
             int appId = bo.getAppId();
             if (dtos.containsKey(appId)) {
-                AppDTO dto = dtos.get(appId);
+                AppVO dto = dtos.get(appId);
                 dto.setChanId(dto.getChanId() + "," + bo.getChanId());
                 dto.setChanName(dto.getChanName() + "," + bo.getChanName());
             } else {
-                dtos.put(appId, AppDTO.convert(bo));
+                dtos.put(appId, AppVO.convert(bo));
             }
         }
 

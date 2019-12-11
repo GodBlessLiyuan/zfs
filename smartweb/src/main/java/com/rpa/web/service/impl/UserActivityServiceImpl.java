@@ -1,7 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.rpa.web.common.Constant;
+import com.rpa.common.constant.Constant;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.domain.UserActivityDO;
 import com.rpa.common.dto.AdminUserDTO;
