@@ -161,4 +161,11 @@
       title = #{title,jdbcType=CHAR}
     where voice_id = #{voiceId,jdbcType=BIGINT}
   </update>
+
+  <select id="queryByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_voice_share
+    where url = #{shareCode,jdbcType=CHAR}
+  </select>
 </mapper>

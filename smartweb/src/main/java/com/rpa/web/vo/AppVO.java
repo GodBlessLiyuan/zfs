@@ -29,12 +29,6 @@ public class AppVO implements Serializable {
     private Integer status;
     private String extra;
 
-    /**
-     * po 转 dto
-     *
-     * @param bo
-     * @return
-     */
     public static AppVO convert(AppBO bo) {
         AppVO dto = new AppVO();
 
@@ -53,12 +47,6 @@ public class AppVO implements Serializable {
         return dto;
     }
 
-    /**
-     * pos 转 dtos
-     *
-     * @param bos
-     * @return
-     */
     public static List<AppVO> convert(List<AppBO> bos) {
         // 合并相同的appId
         Map<Integer, AppVO> dtos = new HashMap<>();

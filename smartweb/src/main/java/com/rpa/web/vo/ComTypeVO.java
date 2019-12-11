@@ -28,12 +28,6 @@ public class ComTypeVO implements Serializable {
     private Date updateTime;
     private String username;
 
-    /**
-     * BO 转 VO
-     *
-     * @param bo PO
-     * @return VO
-     */
     public static ComTypeVO convert(ComTypeBO bo) {
         ComTypeVO dto = new ComTypeVO();
 
@@ -48,12 +42,6 @@ public class ComTypeVO implements Serializable {
         return dto;
     }
 
-    /**
-     * PO 批量转 DTO
-     *
-     * @param bos POs
-     * @return DTOs
-     */
     public static List<ComTypeVO> convert(List<ComTypeBO> bos) {
         List<ComTypeVO> dtos = new ArrayList<>();
 

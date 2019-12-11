@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.UserGiftsDTO;
+import com.rpa.web.vo.UserGiftsVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 
@@ -22,7 +22,7 @@ public interface IUserGiftsSercive {
      * @param reqData
      * @return
      */
-    DTPageInfo<UserGiftsDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<UserGiftsVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 插入
