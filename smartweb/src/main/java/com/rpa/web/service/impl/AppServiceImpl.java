@@ -77,7 +77,8 @@ public class AppServiceImpl implements IAppService {
         // 解析Apk
         Map<String, Object> apkInfo = FileUtil.resolveApk(file, appDir, "app");
         if (apkInfo.get("channel") == null || !"vbooster".equals(apkInfo.get("channel"))) {
-            return ResultVOUtil.error(2000, "上传应用非官方渠道！");
+            // 上传应用非官方渠道！
+            return new ResultVO(1103);
         }
 
         // 查询是否已存在
