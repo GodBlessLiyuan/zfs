@@ -3,7 +3,7 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.common.constant.Constant;
 import com.rpa.web.common.PageHelper;
-import com.rpa.common.dto.AdminUserDTO;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.ChannelDTO;
 import com.rpa.web.dto.PromoterDTO;
 import com.rpa.common.mapper.AdminUserMapper;

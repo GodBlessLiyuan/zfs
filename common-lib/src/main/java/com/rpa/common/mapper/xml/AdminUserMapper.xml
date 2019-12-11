@@ -185,4 +185,63 @@
       phone = #{phone,jdbcType=CHAR}
     where a_id = #{aId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryBy" resultType="com.rpa.common.bo.AdminUserBO">
+    select
+    au.a_id as aId, username as userName, `password`, email, is_lock as isLock, au.create_time as createTime,
+    last_time as lastTime, dr, au.role_id as roleId, relation_a_id as relationAId, `name`, extra, phone,
+    r.role_name as roleName
+    from t_admin_user au
+    left join t_role r on au.role_id = r.role_id
+    <where>
+      <if test="phone != null and phone != ''">
+        AND phone = #{phone}
+      </if>
+      <if test="extra != null and extra != ''">
+        AND extra like '%' #{extra} '%'
+      </if>
+    </where>
+  </select>
+
+  <select id="queryById" resultType="com.rpa.common.bo.AdminUserBO">
+    select
+    au.a_id as aId, username as userName, `password`, email, is_lock as isLock, au.create_time as createTime,
+    last_time as lastTime, dr, au.role_id as roleId, relation_a_id as relationAId, `name`, extra, phone,
+    r.role_name as roleName
+    from t_admin_user au
+    left join t_role r on au.role_id = r.role_id
+    where au.a_id = #{aId}
+  </select>
+
+  <select id="queryPassword" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select password
+    from t_admin_user
+    where a_id = #{aId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select username
+    from t_admin_user
+    where a_id = #{aId}
+  </select>
+
+  <select id="queryPhoneByAid" resultType="java.lang.String">
+    select phone
+    from t_admin_user
+    where a_id = #{aId}
+  </select>
+
+  <select id="queryUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_admin_user
+    where username = #{username}
+  </select>
+
+
+  <update id="updatePassword">
+    update t_admin_user
+    set `password` = #{newPassword,jdbcType=CHAR}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
 </mapper>

@@ -6,7 +6,7 @@ import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.common.constant.Constant;
 import com.rpa.common.mapper.ComTypeMapper;
 import com.rpa.web.common.PageHelper;
-import com.rpa.common.dto.AdminUserDTO;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.ChBatchDTO;
 import com.rpa.web.dto.ChannelDTO;
 import com.rpa.web.mapper.*;

@@ -1,14 +1,15 @@
 package com.rpa.web.service;
 
-import com.rpa.common.dto.AdminUserDTO;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.AdminUserVO;
 
 import javax.servlet.http.HttpSession;
 
 public interface AdminUserService {
 
-    DTPageInfo<AdminUserDTO> query(int draw, int start, int length, String phone, String extra);
+    DTPageInfo<AdminUserVO> query(int draw, int start, int length, String phone, String extra);
 
     ResultVO insert(AdminUserDTO adminUserDTO, HttpSession httpSession);
 

@@ -2,11 +2,10 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.bo.UserActivityBO;
-import com.rpa.common.constant.Constant;
 import com.rpa.common.mapper.UserActivityMapper;
 import com.rpa.common.pojo.UserActivityPO;
 import com.rpa.web.common.PageHelper;
-import com.rpa.common.dto.AdminUserDTO;
+import com.rpa.web.utils.OperatorUtil;
 import com.rpa.web.vo.UserActivityDTO;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.service.IUserActivityService;
@@ -101,11 +100,6 @@ public class UserActivityServiceImpl implements IUserActivityService {
     @Override
     public ResultVO updateStatus(HttpSession httpSession, Integer uAId, Byte status) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         // 根据uAId，查询出要修改的数据
         UserActivityPO po = this.userActivityMapper.selectByPrimaryKey(uAId);
 
@@ -115,7 +109,7 @@ public class UserActivityServiceImpl implements IUserActivityService {
 
         po.setStatus(status);
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         this.userActivityMapper.updateStatus(po);
         return new ResultVO(1000);

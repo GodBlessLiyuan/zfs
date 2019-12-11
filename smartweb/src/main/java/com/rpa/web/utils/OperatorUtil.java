@@ -1,6 +1,6 @@
 package com.rpa.web.utils;
 
-import com.rpa.common.dto.AdminUserDTO;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.common.constant.Constant;
 
 import javax.servlet.http.HttpSession;
