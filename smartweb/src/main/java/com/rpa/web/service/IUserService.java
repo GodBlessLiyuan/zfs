@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.UserDTO;
+import com.rpa.web.vo.UserVO;
 import com.rpa.web.utils.DTPageInfo;
 
 import java.util.Map;
@@ -21,5 +21,5 @@ public interface IUserService {
      * @param reqData
      * @return
      */
-    DTPageInfo<UserDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<UserVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 }

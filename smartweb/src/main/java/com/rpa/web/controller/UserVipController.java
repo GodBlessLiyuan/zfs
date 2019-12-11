@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.UserVipDTO;
+import com.rpa.web.vo.UserVipVO;
 import com.rpa.web.dto.UserVipDetailsDTO;
 import com.rpa.web.service.IUserVipService;
 import com.rpa.web.utils.DTPageInfo;
@@ -26,11 +26,11 @@ public class UserVipController {
     private IUserVipService service;
 
     @RequestMapping("query")
-    public DTPageInfo<UserVipDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                        @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                        @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                        @RequestParam(value = "phone") String phone,
-                                        @RequestParam(value = "isPay") byte isPay) {
+    public DTPageInfo<UserVipVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                       @RequestParam(value = "phone") String phone,
+                                       @RequestParam(value = "isPay") byte isPay) {
         Map<String, Object> reqData = new HashMap<>(2);
         reqData.put("phone", phone);
         reqData.put("isPay", isPay);

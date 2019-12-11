@@ -4,13 +4,15 @@ import com.github.pagehelper.Page;
 import com.rpa.common.bo.NewUserRecordBO;
 import com.rpa.common.bo.OrderBO;
 import com.rpa.common.bo.UserActivityBO;
+import com.rpa.common.bo.UserVipBO;
 import com.rpa.common.mapper.NewUserRecordMapper;
 import com.rpa.common.mapper.OrderMapper;
 import com.rpa.common.mapper.UserActivityMapper;
+import com.rpa.common.mapper.UserVipMapper;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.UserVipConstant;
 import com.rpa.web.domain.*;
-import com.rpa.web.dto.UserVipDTO;
+import com.rpa.web.vo.UserVipVO;
 import com.rpa.web.dto.UserVipDetailsDTO;
 import com.rpa.web.mapper.*;
 import com.rpa.web.pojo.GodinsecUserPO;
@@ -52,10 +54,10 @@ public class UserVipServiceImpl implements IUserVipService {
     private GodinsecUserMapper godinsecUserMapper;
 
     @Override
-    public DTPageInfo<UserVipDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<UserVipDO> page = PageHelper.startPage(pageNum, pageSize);
-        List<UserVipDO> dos = userVipMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), UserVipDTO.convert(dos));
+    public DTPageInfo<UserVipVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+        Page<UserVipBO> page = PageHelper.startPage(pageNum, pageSize);
+        List<UserVipBO> dos = userVipMapper.query(reqData);
+        return new DTPageInfo<>(draw, page.getTotal(), UserVipVO.convert(dos));
     }
 
     @Override
