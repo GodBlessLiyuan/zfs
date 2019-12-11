@@ -1,7 +1,7 @@
 package com.rpa.web.controller;
 
 import com.rpa.common.constant.Constant;
-import com.rpa.common.dto.AdminUserDTO;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.service.IComTypeService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;

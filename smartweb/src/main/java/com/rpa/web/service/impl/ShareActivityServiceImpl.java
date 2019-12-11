@@ -4,7 +4,7 @@ import com.github.pagehelper.Page;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.constant.Constant;
 import com.rpa.web.common.PageHelper;
-import com.rpa.common.dto.AdminUserDTO;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.ShareActivityDTO;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.mapper.ShareActivityMapper;

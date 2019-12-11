@@ -1,9 +1,10 @@
 package com.rpa.web.controller;
 
-import com.rpa.common.dto.AdminUserDTO;
+import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.service.AdminUserService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.AdminUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,15 +27,15 @@ public class AdminUserController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<AdminUserDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                          @RequestParam(value = "start", defaultValue = "1") int start,
-                                          @RequestParam(value = "length", defaultValue = "10") int length,
-                                          @RequestParam(value = "phone", required = false) String phone,
-                                          @RequestParam(value = "extra", required = false) String extra
+    public DTPageInfo<AdminUserVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                         @RequestParam(value = "start", defaultValue = "1") int start,
+                                         @RequestParam(value = "length", defaultValue = "10") int length,
+                                         @RequestParam(value = "phone", required = false) String phone,
+                                         @RequestParam(value = "extra", required = false) String extra
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<AdminUserDTO> dTPageInfo = adminUserService.query(draw, start, length, phone, extra);
+        DTPageInfo<AdminUserVO> dTPageInfo = adminUserService.query(draw, start, length, phone, extra);
         return dTPageInfo;
     }
 
