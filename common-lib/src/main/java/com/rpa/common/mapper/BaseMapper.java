@@ -1,6 +1,8 @@
 package com.rpa.common.mapper;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * DAO公共基类，由MybatisGenerator自动生成请勿修改
@@ -20,4 +22,8 @@ public interface BaseMapper<Model, PK extends Serializable> {
     int updateByPrimaryKeySelective(Model record);
 
     int updateByPrimaryKey(Model record);
+
+    List query(Map<String, Object> map);
+
+    List<Model> queryAll();
 }
