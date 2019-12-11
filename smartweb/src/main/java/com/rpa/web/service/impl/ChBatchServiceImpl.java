@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.rpa.common.bo.ComTypeBO;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.common.constant.Constant;
+import com.rpa.common.mapper.BatchInfoMapper;
 import com.rpa.common.mapper.ComTypeMapper;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.AdminUserDTO;

@@ -1,17 +1,18 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.bo.BatchInfoBO;
 import com.rpa.common.bo.NewUserRecordBO;
 import com.rpa.common.bo.OrderBO;
 import com.rpa.common.bo.UserActivityBO;
 import com.rpa.common.bo.UserVipBO;
+import com.rpa.common.mapper.BatchInfoMapper;
 import com.rpa.common.mapper.NewUserRecordMapper;
 import com.rpa.common.mapper.OrderMapper;
 import com.rpa.common.mapper.UserActivityMapper;
 import com.rpa.common.mapper.UserVipMapper;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.UserVipConstant;
-import com.rpa.web.domain.*;
 import com.rpa.web.vo.UserVipVO;
 import com.rpa.web.dto.UserVipDetailsDTO;
 import com.rpa.web.mapper.*;
@@ -114,15 +115,15 @@ public class UserVipServiceImpl implements IUserVipService {
         }
 
         // 卡密激活
-        List<BatchInfoDO> batchInfoDOs = infoMapper.queryByUserId(userId);
-        for (BatchInfoDO batchInfoDO : batchInfoDOs) {
+        List<BatchInfoBO> batchInfoBOS = infoMapper.queryByUserId(userId);
+        for (BatchInfoBO batchInfoBO : batchInfoBOS) {
             UserVipDetailsDTO dto = new UserVipDetailsDTO();
             dto.setVipType(UserVipConstant.USER_VIP_BATCH);
-            dto.setUserChanName(batchInfoDO.getUserChanName());
+            dto.setUserChanName(batchInfoBO.getUserChanName());
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
-            dto.setCreateTime(batchInfoDO.getUpdateTime());
-            dto.setComTypeName(batchInfoDO.getComTypeName());
-            dto.setDays(batchInfoDO.getDays());
+            dto.setCreateTime(batchInfoBO.getUpdateTime());
+            dto.setComTypeName(batchInfoBO.getComTypeName());
+            dto.setDays(batchInfoBO.getDays());
             userVipDetailsDTOs.add(dto);
         }
 
