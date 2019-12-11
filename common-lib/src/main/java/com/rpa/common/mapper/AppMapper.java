@@ -1,5 +1,6 @@
 package com.rpa.common.mapper;
 
+import com.rpa.common.bo.AppBO;
 import com.rpa.common.pojo.AppPO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,15 +14,17 @@ import java.util.Map;
 public interface AppMapper extends BaseMapper<AppPO, Integer> {
     /**
      * 根据Id查询数据
+     *
      * @param appId
      * @return
      */
-    List<AppPO> queryById(int appId);
+    List<AppBO> queryById(int appId);
 
     List<AppPO> queryVersionname();
 
     /**
      * 根据 versionCode 查询数据
+     *
      * @param versionCode
      * @return
      */
@@ -31,15 +34,17 @@ public interface AppMapper extends BaseMapper<AppPO, Integer> {
 
     /**
      * 查询应用Id
-     * @return
+     *
      * @param reqData
+     * @return
      */
     List<Integer> queryAppId(Map<String, Object> reqData);
 
     /**
      * 根据ids查询
+     *
      * @param appIds
      * @return
      */
-    List<AppPO> queryByIds(List<Integer> appIds);
+    List<AppBO> queryByIds(List<Integer> appIds);
 }

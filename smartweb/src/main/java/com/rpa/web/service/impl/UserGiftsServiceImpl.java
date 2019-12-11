@@ -1,11 +1,11 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.ComTypeMapper;
+import com.rpa.common.pojo.ComTypePO;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.UserGiftsDTO;
-import com.rpa.web.mapper.ComTypeMapper;
 import com.rpa.web.mapper.UserGiftsMapper;
-import com.rpa.web.pojo.ComTypePO;
 import com.rpa.web.pojo.UserGiftsPO;
 import com.rpa.web.service.IUserGiftsSercive;
 import com.rpa.web.utils.DTPageInfo;

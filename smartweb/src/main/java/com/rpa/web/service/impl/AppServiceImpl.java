@@ -1,16 +1,17 @@
 package com.rpa.web.service.impl;
 
+import com.rpa.common.bo.AppBO;
 import com.rpa.common.mapper.AppMapper;
 import com.rpa.common.pojo.AppPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.AppDTO;
 import com.rpa.web.mapper.AppChMapper;
 import com.rpa.web.pojo.AppChPO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.AppVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -46,28 +47,28 @@ public class AppServiceImpl implements IAppService {
     private String appDir;
 
     @Override
-    public DTPageInfo<AppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public DTPageInfo<AppVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         PageHelper.startPage(pageNum, pageSize);
         List<Integer> appIds = appMapper.queryAppId(reqData);
 
-        List<AppPO> appPOs = new ArrayList<>();
+        List<AppBO> bos = new ArrayList<>();
         if(null != appIds && appIds.size() > 0) {
-            appPOs = appMapper.queryByIds(appIds);
+            bos = appMapper.queryByIds(appIds);
         }
-        List<AppDTO> dto = AppDTO.convert(appPOs);
+        List<AppVO> dto = AppVO.convert(bos);
         return new DTPageInfo<>(draw, dto.size(), dto);
     }
 
     @Override
-    public List<AppDTO> queryAll() {
-        List<AppPO> pos = appMapper.queryAll();
-        return AppDTO.convert(pos);
+    public List<AppVO> queryAll() {
+        List<AppBO> pos = appMapper.queryAll();
+        return AppVO.convert(pos);
     }
 
     @Override
-    public List<AppDTO> queryById(int appId) {
-        List<AppPO> pos = appMapper.queryById(appId);
-        return AppDTO.convert(pos);
+    public List<AppVO> queryById(int appId) {
+        List<AppBO> pos = appMapper.queryById(appId);
+        return AppVO.convert(pos);
     }
 
     @Transactional(rollbackFor = {})

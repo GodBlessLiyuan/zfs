@@ -1,8 +1,8 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.AppDTO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.AppVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public interface IAppService {
      * @param reqData
      * @return
      */
-    DTPageInfo<AppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<AppVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 插入
@@ -62,7 +62,7 @@ public interface IAppService {
      *
      * @return
      */
-    List<AppDTO> queryAll();
+    List<AppVO> queryAll();
 
     /**
      * 根据ID查询数据
@@ -70,7 +70,7 @@ public interface IAppService {
      * @param appId
      * @return
      */
-    List<AppDTO> queryById(int appId);
+    List<AppVO> queryById(int appId);
 
     /**
      * 更新

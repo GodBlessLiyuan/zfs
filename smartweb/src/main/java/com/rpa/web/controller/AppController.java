@@ -2,10 +2,10 @@ package com.rpa.web.controller;
 
 import com.rpa.common.constant.Constant;
 import com.rpa.common.dto.AdminUserDTO;
-import com.rpa.web.dto.AppDTO;
 import com.rpa.web.service.IAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.AppVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,10 +32,10 @@ public class AppController {
     private IAppService service;
 
     @RequestMapping("query")
-    public DTPageInfo<AppDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                    @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                    @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                    @RequestParam(value = "updateType") byte updateType) {
+    public DTPageInfo<AppVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                   @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                   @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                   @RequestParam(value = "updateType") byte updateType) {
 
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("updateType", updateType);
@@ -44,14 +44,14 @@ public class AppController {
     }
 
     @RequestMapping("queryAll")
-    public List<AppDTO> queryAll() {
-        List<AppDTO> datas = service.queryAll();
+    public List<AppVO> queryAll() {
+        List<AppVO> datas = service.queryAll();
         return datas;
     }
 
     @RequestMapping("queryById")
-    public AppDTO queryById(@RequestParam(value = "appId") int appId) {
-        List<AppDTO> dtos = service.queryById(appId);
+    public AppVO queryById(@RequestParam(value = "appId") int appId) {
+        List<AppVO> dtos = service.queryById(appId);
         return dtos.get(0);
     }
 
