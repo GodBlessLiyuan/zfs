@@ -1,8 +1,8 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.BannerConfigDTO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.BannerConfigVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface BannerConfigService {
-    DTPageInfo<BannerConfigDTO> query(int draw, int start, int length, String name, Byte status);
+    DTPageInfo<BannerConfigVO> query(int draw, int start, int length, String name, Byte status);
 
     ResultVO update(Integer bannerId, Byte status, HttpSession httpSession);
 

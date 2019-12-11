@@ -150,4 +150,18 @@
       pic_path = #{picPath,jdbcType=CHAR}
     where banner_id = #{bannerId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_bannerconfig
+    <where>
+      <if test="name != null and name != ''">
+        AND name = #{name}
+      </if>
+      <if test="status != null and status != ''">
+        AND status = #{status}
+      </if>
+    </where>
+  </select>
 </mapper>
