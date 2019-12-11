@@ -79,4 +79,28 @@
       soft_channel_id = #{softChannelId,jdbcType=INTEGER}
     where ac_id = #{acId,jdbcType=INTEGER}
   </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_app_ch (ac_id, `status`, app_id, soft_channel_id) values
+    <foreach collection="list" item="appChPO" index="index" separator=",">
+      (#{appChPO.acId,jdbcType=INTEGER}, #{appChPO.status,jdbcType=TINYINT}, #{appChPO.appId,jdbcType=INTEGER},
+      #{appChPO.softChannelId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <update id="updateStatus" parameterType="java.lang.Integer">
+    update t_app_ch set `status` = #{status,jdbcType=TINYINT} where app_id = #{appId}
+  </update>
+  <delete id="deleteByAppId" parameterType="java.lang.Integer">
+    delete from t_app_ch where app_id = #{appId,jdbcType=INTEGER}
+  </delete>
+  <select id="queryByAppId" parameterType="java.lang.Integer" resultType="com.rpa.common.pojo.AppChPO">
+    select <include refid="Base_Column_List" /> from t_app_ch where app_id = #{appId}
+  </select>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from t_app_ch where ac_id in (
+    <foreach collection="list" item="acId" index="index" separator=",">
+      #{acId,jdbcType=INTEGER}
+    </foreach>
+    )
+  </delete>
 </mapper>

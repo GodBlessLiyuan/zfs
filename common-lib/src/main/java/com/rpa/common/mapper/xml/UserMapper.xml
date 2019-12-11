@@ -125,4 +125,30 @@
       soft_channel_id = #{softChannelId,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
+
+  <select id="query" resultType="com.rpa.common.bo.UserBO">
+    select
+    u.phone, u.create_time as createTime, u.chan_name as chanName, d.versionname as versionName, d.buildrelease
+    as buildRelease, d.manufacturer, d.androidmodel
+    from t_user u left join t_user_device ud on u.user_id = ud.user_id left join t_device d on ud.device_id =
+    d.device_id
+    <where>
+      <if test="phone!=null and phone!=''">AND u.phone like '%' #{phone} '%'</if>
+    </where>
+    order by u.create_time desc
+  </select>
+  <select id="queryTodayNewRegister" resultType="java.lang.Integer">
+    select count(user_id)
+    from t_user
+    where create_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
+  </select>
+  <select id="queryPhoneByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+    select phone
+    from t_user
+    where user_id = #{userId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
 </mapper>

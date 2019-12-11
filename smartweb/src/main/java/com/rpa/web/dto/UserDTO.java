@@ -1,6 +1,6 @@
 package com.rpa.web.dto;
 
-import com.rpa.web.domain.UserDO;
+import com.rpa.common.bo.UserBO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -30,37 +30,25 @@ public class UserDTO implements Serializable {
     private String manufacturer;
     private String androidModel;
 
-    /**
-     * PO 转 DTO
-     *
-     * @param d d
-     * @return DTO
-     */
-    public static UserDTO convert(UserDO d) {
+    public static UserDTO convert(UserBO bo) {
         UserDTO dto = new UserDTO();
 
-        dto.setPhone(d.getPhone());
-        dto.setCreateTime(d.getCreateTime());
-        dto.setChanName(d.getChanName());
-        dto.setVersionName(d.getVersionName());
-        dto.setBuildRelease(d.getBuildRelease());
-        dto.setManufacturer(d.getManufacturer());
-        dto.setAndroidModel(d.getAndroidModel());
+        dto.setPhone(bo.getPhone());
+        dto.setCreateTime(bo.getCreateTime());
+        dto.setChanName(bo.getChanName());
+        dto.setVersionName(bo.getVersionName());
+        dto.setBuildRelease(bo.getBuildRelease());
+        dto.setManufacturer(bo.getManufacturer());
+        dto.setAndroidModel(bo.getAndroidModel());
 
         return dto;
     }
 
-    /**
-     * PO 批量转 DTO
-     *
-     * @param dos
-     * @return DTOs
-     */
-    public static List<UserDTO> convert(List<UserDO> dos) {
+    public static List<UserDTO> convert(List<UserBO> bos) {
         List<UserDTO> dtos = new ArrayList<>();
 
-        for (UserDO d : dos) {
-            dtos.add(UserDTO.convert(d));
+        for (UserBO bo : bos) {
+            dtos.add(UserDTO.convert(bo));
         }
 
         return dtos;

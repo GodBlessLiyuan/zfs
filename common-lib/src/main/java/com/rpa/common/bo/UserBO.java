@@ -1,16 +1,16 @@
-package com.rpa.web.domain;
+package com.rpa.common.bo;
 
-import com.rpa.web.pojo.UserPO;
+import com.rpa.common.pojo.UserPO;
 import lombok.Data;
 
 /**
  * @author: xiahui
- * @date: Created in 2019/10/24 15:14
- * @description: 用户信息
+ * @date: Created in 2019/12/11 16:02
+ * @description: TODO
  * @version: 1.0
  */
 @Data
-public class UserDO extends UserPO {
+public class UserBO extends UserPO {
     /**
      * 应用版本名称
      */
