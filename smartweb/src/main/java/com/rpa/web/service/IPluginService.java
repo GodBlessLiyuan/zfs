@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.PluginDTO;
+import com.rpa.web.vo.PluginVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +25,7 @@ public interface IPluginService {
      * @param reqData
      * @return
      */
-    DTPageInfo<PluginDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<PluginVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 根据插件Id 查询数据
@@ -33,7 +33,7 @@ public interface IPluginService {
      * @param pluginId 插件Id
      * @return
      */
-    List<PluginDTO> queryById(int pluginId);
+    List<PluginVO> queryById(int pluginId);
 
     /**
      * 根据PluginId 和 AppId 查询渠道Ids

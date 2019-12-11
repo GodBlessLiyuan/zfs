@@ -1,12 +1,13 @@
 package com.rpa.web.service.impl;
 
+import com.rpa.common.bo.PluginBO;
 import com.rpa.common.mapper.AppPluChMapper;
+import com.rpa.common.mapper.PluginMapper;
 import com.rpa.common.pojo.AppPluChPO;
+import com.rpa.common.pojo.PluginPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.PluginDTO;
-import com.rpa.web.mapper.PluginMapper;
-import com.rpa.web.pojo.PluginPO;
+import com.rpa.web.vo.PluginVO;
 import com.rpa.web.service.IPluginService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
@@ -46,16 +47,16 @@ public class PluginServiceImpl implements IPluginService {
     private String pluginDir;
 
     @Override
-    public DTPageInfo<PluginDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public DTPageInfo<PluginVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         PageHelper.startPage(pageNum, pageSize);
-        List<PluginPO> pos = pluginMapper.query(reqData);
-        List<PluginDTO> dtos = PluginDTO.convert(pos);
+        List<PluginBO> pos = pluginMapper.query(reqData);
+        List<PluginVO> dtos = PluginVO.convert(pos);
         return new DTPageInfo<>(draw, dtos.size(), dtos);
     }
 
     @Override
-    public List<PluginDTO> queryById(int pluginId) {
-        return PluginDTO.convert(pluginMapper.queryById(pluginId));
+    public List<PluginVO> queryById(int pluginId) {
+        return PluginVO.convert(pluginMapper.queryById(pluginId));
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.OtherAppDTO;
+import com.rpa.web.vo.OtherAppVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +24,7 @@ public interface IOtherAppService {
      * @param reqData
      * @return
      */
-    DTPageInfo<OtherAppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<OtherAppVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 插入

@@ -2,7 +2,7 @@ package com.rpa.web.controller;
 
 import com.rpa.common.constant.Constant;
 import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.PluginDTO;
+import com.rpa.web.vo.PluginVO;
 import com.rpa.web.service.IPluginService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -32,10 +32,10 @@ public class PluginController {
 
 
     @RequestMapping("/plugin/query")
-    public DTPageInfo<PluginDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                       @RequestParam(value = "username") String username) {
+    public DTPageInfo<PluginVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                      @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                      @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                      @RequestParam(value = "username") String username) {
 
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("username", username);
@@ -44,8 +44,8 @@ public class PluginController {
     }
 
     @RequestMapping("/plugin/queryById")
-    public PluginDTO queryById(@RequestParam(value = "pluginId") int pluginId) {
-        List<PluginDTO> dtos = service.queryById(pluginId);
+    public PluginVO queryById(@RequestParam(value = "pluginId") int pluginId) {
+        List<PluginVO> dtos = service.queryById(pluginId);
         return dtos.get(0);
     }
 

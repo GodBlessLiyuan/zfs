@@ -1,11 +1,12 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.bo.OtherAppBO;
+import com.rpa.common.mapper.OtherAppMapper;
+import com.rpa.common.pojo.OtherAppPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.OtherAppDTO;
-import com.rpa.web.mapper.OtherAppMapper;
-import com.rpa.web.pojo.OtherAppPO;
+import com.rpa.web.vo.OtherAppVO;
 import com.rpa.web.service.IOtherAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
@@ -43,10 +44,10 @@ public class OtherAppServiceImpl implements IOtherAppService {
     private String appDir;
 
     @Override
-    public DTPageInfo<OtherAppDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<OtherAppPO> page = PageHelper.startPage(pageNum, pageSize);
-        List<OtherAppPO> pos = otherAppMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), OtherAppDTO.convert(pos));
+    public DTPageInfo<OtherAppVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+        Page<OtherAppBO> page = PageHelper.startPage(pageNum, pageSize);
+        List<OtherAppBO> pos = otherAppMapper.query(reqData);
+        return new DTPageInfo<>(draw, page.getTotal(), OtherAppVO.convert(pos));
     }
 
     @Override
