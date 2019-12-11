@@ -1,7 +1,9 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.bo.NewUserRecordBO;
 import com.rpa.common.bo.OrderBO;
+import com.rpa.common.mapper.NewUserRecordMapper;
 import com.rpa.common.mapper.OrderMapper;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.UserVipConstant;
@@ -83,15 +85,15 @@ public class UserVipServiceImpl implements IUserVipService {
             userVipDetailsDTOs.add(dto);
         }
         // 新用户赠送
-        List<NewUserRecordDO> newUserRecordDOs = newUserRecordMapper.queryByUserId(userId);
-        for (NewUserRecordDO newUserRecordDO : newUserRecordDOs) {
+        List<NewUserRecordBO> newUserRecordBOs = newUserRecordMapper.queryByUserId(userId);
+        for (NewUserRecordBO bo : newUserRecordBOs) {
             UserVipDetailsDTO dto = new UserVipDetailsDTO();
             dto.setVipType(UserVipConstant.USER_VIP_GIFTS);
-            dto.setUserChanName(newUserRecordDO.getUserChanName());
+            dto.setUserChanName(bo.getUserChanName());
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
-            dto.setCreateTime(newUserRecordDO.getCreateTime());
-            dto.setComTypeName(newUserRecordDO.getComTypeName());
-            dto.setDays(newUserRecordDO.getDays());
+            dto.setCreateTime(bo.getCreateTime());
+            dto.setComTypeName(bo.getComTypeName());
+            dto.setDays(bo.getDays());
             userVipDetailsDTOs.add(dto);
         }
         // V商神器赠送

@@ -1,10 +1,10 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.bo.NewUserRecordBO;
+import com.rpa.common.mapper.NewUserRecordMapper;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.NewUserRecordDTO;
-import com.rpa.web.mapper.NewUserRecordMapper;
-import com.rpa.web.pojo.NewUserRecordPO;
+import com.rpa.web.vo.NewUserRecordVO;
 import com.rpa.web.service.INewUserRecordService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
@@ -26,10 +26,10 @@ public class NewUserRecordServiceImpl implements INewUserRecordService {
     private NewUserRecordMapper newUserRecordMapper;
 
     @Override
-    public DTPageInfo<NewUserRecordDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<NewUserRecordPO> page = PageHelper.startPage(pageNum, pageSize);
-        List<NewUserRecordPO> pos = newUserRecordMapper.query(reqData);
+    public DTPageInfo<NewUserRecordVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+        Page<NewUserRecordBO> page = PageHelper.startPage(pageNum, pageSize);
+        List<NewUserRecordBO> pos = newUserRecordMapper.query(reqData);
 
-        return new DTPageInfo<>(draw, page.getTotal(), NewUserRecordDTO.convert(pos));
+        return new DTPageInfo<>(draw, page.getTotal(), NewUserRecordVO.convert(pos));
     }
 }
