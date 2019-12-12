@@ -1,4 +1,4 @@
-package com.rpa.web.pojo;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_notice
  * @author 
  */
-public class NoticePO implements Serializable {
+public class NoticeVO implements Serializable {
     private Integer noticeId;
 
     private String title;
@@ -24,21 +24,19 @@ public class NoticePO implements Serializable {
     private Date startTime;
 
     /**
-     * 1关闭  2开启
+     * 1 关闭  2 开始 3 删除
      */
     private Integer status;
 
     private Date endTime;
 
-    private String picurl;
-
     private Date createTime;
 
-    private Date updateTime;
-
-    private Integer aId;
-
     private String url;
+
+    private String picurl;
+
+    private String operator;
 
     private static final long serialVersionUID = 1L;
 
@@ -106,6 +104,14 @@ public class NoticePO implements Serializable {
         this.endTime = endTime;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getPicurl() {
         return picurl;
     }
@@ -122,29 +128,14 @@ public class NoticePO implements Serializable {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
-    public Integer getaId() {
-        return aId;
-    }
-
-    public void setaId(Integer aId) {
-        this.aId = aId;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     @Override
     public boolean equals(Object that) {
@@ -157,7 +148,7 @@ public class NoticePO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        NoticePO other = (NoticePO) that;
+        NoticeVO other = (NoticeVO) that;
         return (this.getNoticeId() == null ? other.getNoticeId() == null : this.getNoticeId().equals(other.getNoticeId()))
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
             && (this.getText() == null ? other.getText() == null : this.getText().equals(other.getText()))
@@ -166,10 +157,6 @@ public class NoticePO implements Serializable {
             && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
-            && (this.getPicurl() == null ? other.getPicurl() == null : this.getPicurl().equals(other.getPicurl()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()));
     }
 
@@ -185,10 +172,6 @@ public class NoticePO implements Serializable {
         result = prime * result + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
-        result = prime * result + ((getPicurl() == null) ? 0 : getPicurl().hashCode());
-        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         return result;
     }
@@ -207,10 +190,6 @@ public class NoticePO implements Serializable {
         sb.append(", startTime=").append(startTime);
         sb.append(", status=").append(status);
         sb.append(", endTime=").append(endTime);
-        sb.append(", picurl=").append(picurl);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", aId=").append(aId);
         sb.append(", url=").append(url);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

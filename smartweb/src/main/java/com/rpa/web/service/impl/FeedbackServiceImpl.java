@@ -54,7 +54,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(4);
         map.put("startTime", startTime);
-        map.put("endTime", DateUtil.plusOneDay(endTime));
+        map.put("endTime", DateUtil.str2str1(endTime));
         map.put("userId", userId);
         map.put("contact", contact);
 

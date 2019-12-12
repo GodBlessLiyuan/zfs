@@ -1,14 +1,14 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.NoticeMapper;
 import com.rpa.common.utils.RedisKeyUtil;
-import com.rpa.common.constant.Constant;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.NoticeDTO;
+import com.rpa.web.utils.DateUtil;
+import com.rpa.web.utils.OperatorUtil;
+import com.rpa.web.vo.NoticeVO;
 import com.rpa.common.mapper.AdminUserMapper;
-import com.rpa.web.mapper.NoticeMapper;
-import com.rpa.web.pojo.NoticePO;
+import com.rpa.common.pojo.NoticePO;
 import com.rpa.web.service.NoticeService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
@@ -20,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -64,48 +62,48 @@ public class NoticeServiceImpl implements NoticeService {
      * @return
      */
     @Override
-    public DTPageInfo<NoticeDTO> query(int draw, int start, int length, String startTime, String endTime, Integer status, Byte type, String title) {
+    public DTPageInfo<NoticeVO> query(int draw, int start, int length, String startTime, String endTime, Integer status, Byte type, String title) {
 
         // 分页
-        Page<NoticeDTO> page = PageHelper.startPage(start, length);
+        Page<NoticeVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(5);
         map.put("startTime", startTime);
-        map.put("endTime", strToDate3(endTime));
+        map.put("endTime", DateUtil.str2str2(endTime));
         map.put("status", status);
         map.put("type", type);
         map.put("title", title);
 
         // 按照条件查询数据
-        List<NoticePO> lists_PO = noticeMapper.query(map);
+        List<NoticePO> pos = noticeMapper.query(map);
 
-        // 将查询到的 PO 数据转换为 DTO
-        List<NoticeDTO> lists_DTO = new ArrayList<>();
-        for (NoticePO po : lists_PO) {
-            NoticeDTO dto = new NoticeDTO();
-            dto.setNoticeId(po.getNoticeId());
-            dto.setType(po.getType());
-            dto.setTitle(po.getTitle());
-            dto.setCreateTime(po.getCreateTime());
-            dto.setShowTime(po.getShowTime());
-            dto.setStartTime(po.getStartTime());
-            dto.setEndTime(po.getEndTime());
-            dto.setUrl(po.getUrl());
-            dto.setText(po.getText());
+        // 将查询到的 PO 数据转换为 VO
+        List<NoticeVO> vos = new ArrayList<>();
+        for (NoticePO po : pos) {
+            NoticeVO vo = new NoticeVO();
+            vo.setNoticeId(po.getNoticeId());
+            vo.setType(po.getType());
+            vo.setTitle(po.getTitle());
+            vo.setCreateTime(po.getCreateTime());
+            vo.setShowTime(po.getShowTime());
+            vo.setStartTime(po.getStartTime());
+            vo.setEndTime(po.getEndTime());
+            vo.setUrl(po.getUrl());
+            vo.setText(po.getText());
             if (null == po.getPicurl()) {
-                dto.setPicurl(po.getPicurl());
+                vo.setPicurl(po.getPicurl());
             } else {
-                dto.setPicurl(publicPath + po.getPicurl());
+                vo.setPicurl(publicPath + po.getPicurl());
             }
-            dto.setStatus(po.getStatus());
-            dto.setOperator(queryUsernameByAid(po.getaId()));
+            vo.setStatus(po.getStatus());
+            vo.setOperator(queryUsernameByAid(po.getaId()));
 
-            lists_DTO.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
     /**
@@ -126,12 +124,6 @@ public class NoticeServiceImpl implements NoticeService {
     public ResultVO insert(Byte type, String text, MultipartFile picurl, String title, String url, String showTime,
                            String startTime, String endTime, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
-        // 把 noticeDTO 转换为 noticePO
         NoticePO po = new NoticePO();
         po.setType(type);
         po.setText(text);
@@ -142,11 +134,11 @@ public class NoticeServiceImpl implements NoticeService {
         }
         po.setTitle(title);
         po.setUrl(url);
-        po.setShowTime(strToTime(showTime));
-        po.setStartTime(strToDate1(startTime));
-        po.setEndTime(strToDate2(endTime));
+        po.setShowTime(DateUtil.str2time(showTime));
+        po.setStartTime(DateUtil.str2date1(startTime));
+        po.setEndTime(DateUtil.str2date2(endTime));
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
         po.setStatus(1);
 
         this.noticeMapper.insert(po);
@@ -169,16 +161,11 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public ResultVO updateStatus(Integer noticeId, Integer status, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         // 查询出要修改的数据
         NoticePO po = this.noticeMapper.selectByPrimaryKey(noticeId);
         po.setStatus(status);
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         this.noticeMapper.updateByPrimaryKey(po);
 
@@ -211,103 +198,6 @@ public class NoticeServiceImpl implements NoticeService {
      */
     private String queryUsernameByAid(Integer aId) {
         return this.adminUserMapper.queryUsernameByAid(aId);
-    }
-
-
-    /**
-     * 类型转换：将字符串类型的时间，转换为日期类型
-     *
-     * @param strDate
-     * @return
-     */
-    private Date strToDate1(String strDate) {
-        if (null == strDate || strDate.length() < 1) {
-            return null;
-        }
-
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-
-        try {
-            date = format.parse(strDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return date;
-    }
-
-
-    /**
-     * 类型转换：将字符串类型的时间，转换为日期类型，并设置为当天最后一刻
-     *
-     * @param strDate
-     * @return
-     */
-    private Date strToDate2(String strDate) {
-
-        if (null == strDate || strDate.length() < 1) {
-            return null;
-        }
-
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-
-        try {
-            date = format.parse(strDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
-        date = calendar.getTime();
-
-        return date;
-    }
-
-
-    /**
-     * 类型转换：将字符串类型的时间，转换为日期类型，设置为当天最后一刻后，再转回字符串
-     *
-     * @param strDate
-     * @return
-     */
-    private String strToDate3(String strDate) {
-        if (null == strDate || "".equals(strDate)) {
-            return null;
-        } else {
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return format.format(this.strToDate2(strDate));
-        }
-
-
-    }
-
-
-    /**
-     * 类型转换：将字符串类型的时间，转换为时间类型
-     *
-     * @param strTime
-     * @return
-     */
-    private Date strToTime(String strTime) {
-        if (null == strTime || strTime.length() < 1) {
-            return null;
-        }
-
-        DateFormat format = new SimpleDateFormat("HH:mm");
-        Date date = null;
-
-        try {
-            date = format.parse(strTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return date;
     }
 
 
