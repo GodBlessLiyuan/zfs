@@ -170,7 +170,7 @@
   <select id="queryStatusById" resultType="java.lang.Integer">
     select count(batch_id)
     from t_batch_info
-    where batch_id = #{batchId} and status = #{status}
+    where batch_id = #{batchId} and `status` = #{status}
   </select>
 
 </mapper>
