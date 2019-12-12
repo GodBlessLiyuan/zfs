@@ -86,6 +86,16 @@ public class PageController {
     }
 
     /**
+     * 微信白名单
+     *
+     * @return
+     */
+    @RequestMapping("/blankapp")
+    public String blankApp() {
+        return "blankapp_index";
+    }
+
+    /**
      * 测试白名单
      *
      * @return
