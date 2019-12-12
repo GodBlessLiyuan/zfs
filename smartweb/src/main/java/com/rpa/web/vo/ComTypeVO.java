@@ -29,17 +29,17 @@ public class ComTypeVO implements Serializable {
     private String username;
 
     public static ComTypeVO convert(ComTypeBO bo) {
-        ComTypeVO dto = new ComTypeVO();
+        ComTypeVO vo = new ComTypeVO();
 
-        dto.setComTypeId(bo.getComTypeId());
-        dto.setName(bo.getName());
-        dto.setDays(bo.getDays());
-        dto.setExtra(bo.getExtra());
-        dto.setCreateTime(bo.getCreateTime());
-        dto.setUpdateTime(bo.getUpdateTime());
-        dto.setUsername(bo.getUsername());
+        vo.setComTypeId(bo.getComTypeId());
+        vo.setName(bo.getName());
+        vo.setDays(bo.getDays());
+        vo.setExtra(bo.getExtra());
+        vo.setCreateTime(bo.getCreateTime());
+        vo.setUpdateTime(bo.getUpdateTime());
+        vo.setUsername(bo.getUsername());
 
-        return dto;
+        return vo;
     }
 
     public static List<ComTypeVO> convert(List<ComTypeBO> bos) {
