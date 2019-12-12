@@ -262,8 +262,8 @@ public class ChBatchServiceImpl implements ChBatchService {
         map.put("operator", operator);
 
         // 按照条件查询数据
-        List<ChBatchBO> pos = chBatchMapper.query(map);
-        // 将查询到的 PO 数据转换为 DTO
+        List<ChBatchBO> pos = this.chBatchMapper.query(map);
+        // 将查询到的 po 数据转换为 vo
         List<ChBatchVO> vos = new ArrayList<>();
         for(ChBatchBO po: pos) {
             ChBatchVO vo = this.po2vo(po);
@@ -332,7 +332,7 @@ public class ChBatchServiceImpl implements ChBatchService {
      * @param status
      * @return
      */
-    private Integer queryStatusById(Integer batchId, int status) {
+    private Integer queryStatusById(int batchId, int status) {
         return this.batchInfoMapper.queryStatusById(batchId, status);
     }
 

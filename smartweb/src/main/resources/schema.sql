@@ -1,8 +1,4 @@
-use smartvssq;
-
-
-
-
+use smartdkfs;
 
 /* Drop Tables */
 

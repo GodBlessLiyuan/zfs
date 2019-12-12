@@ -3,6 +3,7 @@ package com.rpa.common.mapper;
 import com.rpa.common.bo.BatchInfoBO;
 import com.rpa.common.pojo.BatchInfoPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public interface BatchInfoMapper extends BaseMapper<BatchInfoBO, Integer> {
      */
     List<BatchInfoBO> queryByUserId(int userId);
 
-    Integer queryStatusById(Integer batchId, int status);
+    Integer queryStatusById(@Param("batchId")int batchId, @Param("status")int status);
 
     List<BatchInfoBO> queryByBatchid(Map<String, Object> map);
 }

@@ -20,8 +20,7 @@ import com.rpa.pay.pojo.VipCommodityPO;
 import com.rpa.pay.service.AlipayService;
 import com.rpa.pay.utils.UserVipUtil;
 import com.rpa.pay.utils.WxPayUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,7 @@ import java.util.*;
  */
 @Service
 public class AlipayServiceImpl implements AlipayService {
-    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(AlipayServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(AlipayServiceImpl.class);
 
     @Autowired
     private VipCommodityMapper vipCommodityMapper;
@@ -181,7 +180,6 @@ public class AlipayServiceImpl implements AlipayService {
 
         this.storeInfo(params);
 
-        Logger logger = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
         boolean flag;
 
         try {
