@@ -1,6 +1,5 @@
 use smartdkfs;
 
-
 /* Drop Tables */
 
 DROP TABLE IF EXISTS t_user_activity;
@@ -8,6 +7,9 @@ DROP TABLE IF EXISTS t_activity;
 DROP TABLE IF EXISTS t_ad_channel;
 DROP TABLE IF EXISTS t_adconfig;
 DROP TABLE IF EXISTS t_admin_log;
+DROP TABLE IF EXISTS t_app_ava_ch;
+DROP TABLE IF EXISTS t_avatar;
+DROP TABLE IF EXISTS t_blank_app;
 DROP TABLE IF EXISTS t_new_user_record;
 DROP TABLE IF EXISTS t_user_gifts;
 DROP TABLE IF EXISTS t_order;
@@ -206,6 +208,23 @@ CREATE TABLE t_app
 );
 
 
+CREATE TABLE t_app_ava_ch
+(
+	aac_id bigint NOT NULL AUTO_INCREMENT,
+	app_id int NOT NULL,
+	soft_channel_id int NOT NULL,
+	avatar_id bigint NOT NULL,
+	-- 1 未发布 2 发布
+	status tinyint DEFAULT 1 COMMENT '1 未发布 2 发布',
+	create_time datetime,
+	update_time datetime,
+	PRIMARY KEY (aac_id),
+	UNIQUE (aac_id),
+	UNIQUE (soft_channel_id),
+	UNIQUE (avatar_id)
+);
+
+
 CREATE TABLE t_app_ch
 (
 	ac_id int NOT NULL AUTO_INCREMENT,
@@ -230,6 +249,31 @@ CREATE TABLE t_app_plu_ch
 	update_time datetime,
 	PRIMARY KEY (apc_id),
 	UNIQUE (apc_id)
+);
+
+
+CREATE TABLE t_avatar
+(
+	avatar_id bigint NOT NULL AUTO_INCREMENT,
+	version_name char(64),
+	version_code int,
+	create_time datetime,
+	update_time datetime,
+	url char(255),
+	-- 1 未发布  2 发布
+	status tinyint DEFAULT 1 COMMENT '1 未发布  2 发布',
+	-- 1 不同更新 2 强制更新
+	update_type tinyint DEFAULT 1 COMMENT '1 不同更新 2 强制更新',
+	size int,
+	extra char(255),
+	context char(255),
+	publish_time datetime,
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
+	md5 char(32),
+	a_id int NOT NULL,
+	PRIMARY KEY (avatar_id),
+	UNIQUE (avatar_id)
 );
 
 
@@ -264,6 +308,19 @@ CREATE TABLE t_batch_info
 	user_id bigint DEFAULT 0,
 	PRIMARY KEY (id),
 	UNIQUE (id)
+);
+
+
+CREATE TABLE t_blank_app
+(
+	blank_id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,
+	package_name char(32),
+	app_name char(32),
+	create_time datetime,
+	extra char(255),
+	a_id int NOT NULL,
+	PRIMARY KEY (blank_id),
+	UNIQUE (blank_id)
 );
 
 
@@ -959,6 +1016,22 @@ ALTER TABLE t_admin_log
 ;
 
 
+ALTER TABLE t_avatar
+	ADD FOREIGN KEY (a_id)
+	REFERENCES t_admin_user (a_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_blank_app
+	ADD FOREIGN KEY (a_id)
+	REFERENCES t_admin_user (a_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE t_com_type
     ADD FOREIGN KEY (a_id)
         REFERENCES t_admin_user (a_id)
@@ -983,6 +1056,14 @@ ALTER TABLE t_ad_channel
 ;
 
 
+ALTER TABLE t_app_ava_ch
+	ADD FOREIGN KEY (app_id)
+	REFERENCES t_app (app_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE t_app_ch
 	ADD FOREIGN KEY (app_id)
 	REFERENCES t_app (app_id)
@@ -994,6 +1075,14 @@ ALTER TABLE t_app_ch
 ALTER TABLE t_app_plu_ch
 	ADD FOREIGN KEY (app_id)
 	REFERENCES t_app (app_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_app_ava_ch
+	ADD FOREIGN KEY (avatar_id)
+	REFERENCES t_avatar (avatar_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -1128,6 +1217,14 @@ ALTER TABLE t_admin_user
 
 
 ALTER TABLE t_ad_channel
+	ADD FOREIGN KEY (soft_channel_id)
+	REFERENCES t_soft_channel (soft_channel_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_app_ava_ch
 	ADD FOREIGN KEY (soft_channel_id)
 	REFERENCES t_soft_channel (soft_channel_id)
 	ON UPDATE RESTRICT
