@@ -125,7 +125,7 @@
       <if test="username!=null and username!=''">AND u.username like '%' #{username} '%'</if>
     </where>
   </select>
-  <select id="queryAll" resultMap="BaseResultMap">
+  <select id="queryAll" resultType="com.rpa.common.bo.ComTypeBO">
     select
     <include refid="Base_Column_List"/>
     from t_com_type order by com_type_id asc

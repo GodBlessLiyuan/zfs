@@ -53,7 +53,7 @@ public class ComTypeServiceImpl implements IComTypeService {
 
     @Override
     public List<ComTypeVO> queryAll() {
-        List<ComTypeBO> pos = mapper.queryAll();
-        return ComTypeVO.convert(pos);
+        List<ComTypeBO> bos = mapper.queryAll();
+        return ComTypeVO.convert(bos);
     }
 }

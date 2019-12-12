@@ -1,6 +1,7 @@
 package com.rpa.web.vo;
 
 import com.rpa.common.bo.VipcommodityBO;
+import com.rpa.common.pojo.VipcommodityPO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -33,40 +34,34 @@ public class VipCommodityVO implements Serializable {
     private Date createTime;
     private String username;
 
-    /**
-     * PO 转 DTO
-     *
-     * @param bo PO
-     * @return DTO
-     */
-    public static VipCommodityVO convert(VipcommodityBO bo) {
+    public static VipCommodityVO convert(VipcommodityPO po) {
         VipCommodityVO vo = new VipCommodityVO();
 
-        vo.setCmdyId(bo.getCmdyId());
-        vo.setName(bo.getName());
-        vo.setComTypeName(bo.getComTypeName());
-        vo.setDays(bo.getDays());
-        vo.setComName(bo.getComName());
-        vo.setDescription(bo.getDescription());
-        vo.setPrice(bo.getPrice());
-        vo.setShowDiscount(bo.getShowDiscount());
-        if (null != bo.getDiscount()) {
-            vo.setDiscount(bo.getDiscount() / 100F);
+        vo.setCmdyId(po.getCmdyId());
+        vo.setName(po.getName());
+        vo.setComTypeName(po.getComTypeName());
+        vo.setDays(po.getDays());
+        vo.setComName(po.getComName());
+        vo.setDescription(po.getDescription());
+        vo.setPrice(po.getPrice());
+        vo.setShowDiscount(po.getShowDiscount());
+        if (null != po.getDiscount()) {
+            vo.setDiscount(po.getDiscount() / 100F);
         }
-        vo.setStatus(bo.getStatus());
-        vo.setIstop(bo.getIstop());
-        vo.setCreateTime(bo.getCreateTime());
+        vo.setStatus(po.getStatus());
+        vo.setIstop(po.getIstop());
+        vo.setCreateTime(po.getCreateTime());
+
+        return vo;
+    }
+
+    public static VipCommodityVO convert(VipcommodityBO bo) {
+        VipCommodityVO vo = VipCommodityVO.convert((VipcommodityPO) bo);
         vo.setUsername(bo.getUsername());
 
         return vo;
     }
 
-    /**
-     * PO 批量转 DTO
-     *
-     * @param bos POs
-     * @return DTOs
-     */
     public static List<VipCommodityVO> convert(List<VipcommodityBO> bos) {
         List<VipCommodityVO> vos = new ArrayList<>();
 

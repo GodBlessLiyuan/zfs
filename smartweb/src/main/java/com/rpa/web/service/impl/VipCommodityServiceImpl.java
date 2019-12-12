@@ -56,7 +56,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
 
     @Override
     public VipCommodityVO queryById(int cmdyId) {
-        return VipCommodityVO.convert((VipcommodityBO) vipcommodityMapper.selectByPrimaryKey(cmdyId));
+        return VipCommodityVO.convert(vipcommodityMapper.selectByPrimaryKey(cmdyId));
     }
 
     @Override
