@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.FunctionVideoDTO;
+import com.rpa.web.vo.FunctionVideoVO;
 import com.rpa.web.service.FunctionVideoService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -33,14 +33,14 @@ public class FunctionVideoController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<FunctionVideoDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                              @RequestParam(value = "start", defaultValue = "1") int start,
-                                              @RequestParam(value = "length", defaultValue = "10") int length,
-                                              @RequestParam(value = "funName", required = false) String funName
+    public DTPageInfo<FunctionVideoVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                             @RequestParam(value = "start", defaultValue = "1") int start,
+                                             @RequestParam(value = "length", defaultValue = "10") int length,
+                                             @RequestParam(value = "funName", required = false) String funName
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<FunctionVideoDTO> dTPageInfo = this.functionVideoService.query(draw, start, length, funName);
+        DTPageInfo<FunctionVideoVO> dTPageInfo = this.functionVideoService.query(draw, start, length, funName);
         return dTPageInfo;
     }
 

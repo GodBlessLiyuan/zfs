@@ -2,13 +2,11 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.utils.RedisKeyUtil;
-import com.rpa.common.constant.Constant;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.FunctionVideoDTO;
+import com.rpa.web.vo.FunctionVideoVO;
 import com.rpa.common.mapper.AdminUserMapper;
-import com.rpa.web.mapper.FunctionVideoMapper;
-import com.rpa.web.pojo.FunctionVideoPO;
+import com.rpa.common.mapper.FunctionVideoMapper;
+import com.rpa.common.pojo.FunctionVideoPO;
 import com.rpa.web.service.FunctionVideoService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
@@ -57,37 +55,37 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
      * @return
      */
     @Override
-    public DTPageInfo<FunctionVideoDTO> query(int draw, int start, int length, String funName) {
+    public DTPageInfo<FunctionVideoVO> query(int draw, int start, int length, String funName) {
 
         // 分页
-        Page<FunctionVideoDTO> page = PageHelper.startPage(start, length);
+        Page<FunctionVideoVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(1);
         map.put("funName", funName);
 
         // 按照条件查询数据
-        List<FunctionVideoPO> lists_PO = functionVideoMapper.query(map);
+        List<FunctionVideoPO> pos = functionVideoMapper.query(map);
 
-        // 将查询到的 FunctionVideoPO 数据转换为 FunctionVideoDTO
-        List<FunctionVideoDTO> lists_DTO = new ArrayList<>();
-        for(FunctionVideoPO po: lists_PO) {
-            FunctionVideoDTO dto = new FunctionVideoDTO();
-            dto.setFunctionId(po.getFunctionId());
-            dto.setFunName(po.getFunName());
+        // 将查询到的 po 数据转换为 vo
+        List<FunctionVideoVO> vos = new ArrayList<>();
+        for(FunctionVideoPO po: pos) {
+            FunctionVideoVO vo = new FunctionVideoVO();
+            vo.setFunctionId(po.getFunctionId());
+            vo.setFunName(po.getFunName());
             if (null == po.getUrl()) {
-                dto.setUrl(po.getUrl());
+                vo.setUrl(po.getUrl());
             } else {
-                dto.setUrl(publicPath + po.getUrl());
+                vo.setUrl(publicPath + po.getUrl());
             }
-            dto.setExtra(po.getExtra());
-            dto.setOperator(queryUsernameByAid(po.getaId()));
+            vo.setExtra(po.getExtra());
+            vo.setOperator(queryUsernameByAid(po.getaId()));
 
-            lists_DTO.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
 
@@ -104,11 +102,11 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
             return new ResultVO(1002);
         }
 
-        FunctionVideoDTO dto = new FunctionVideoDTO();
-        dto.setFunName(po.getFunName());
-        dto.setExtra(po.getExtra());
+        FunctionVideoVO vo = new FunctionVideoVO();
+        vo.setFunName(po.getFunName());
+        vo.setExtra(po.getExtra());
 
-        return new ResultVO<>(1000, dto);
+        return new ResultVO<>(1000, vo);
     }
 
 
@@ -160,11 +158,6 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     @Override
     public ResultVO update(HttpSession httpSession, Integer functionId, String funName, MultipartFile url, String extra) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         // 从数据库中查询出要修改的数据
         FunctionVideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
 
@@ -178,7 +171,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         }
         po.setExtra(extra);
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         this.functionVideoMapper.updateByPrimaryKey(po);
 

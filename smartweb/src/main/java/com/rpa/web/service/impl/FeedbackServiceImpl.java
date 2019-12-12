@@ -1,20 +1,18 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.FeedbackMapper;
 import com.rpa.common.mapper.UserMapper;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.FeedbackDTO;
-import com.rpa.web.mapper.FeedbackMapper;
-import com.rpa.web.pojo.FeedbackPO;
+import com.rpa.web.utils.DateUtil;
+import com.rpa.web.vo.FeedbackVO;
+import com.rpa.common.pojo.FeedbackPO;
 import com.rpa.web.service.FeedbackService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -48,56 +46,56 @@ public class FeedbackServiceImpl implements FeedbackService {
      * @return
      */
     @Override
-    public DTPageInfo<FeedbackDTO> query(int draw, int start, int length, String startTime, String endTime, String userId, String contact) {
+    public DTPageInfo<FeedbackVO> query(int draw, int start, int length, String startTime, String endTime, String userId, String contact) {
 
         // 分页
-        Page<FeedbackDTO> page = PageHelper.startPage(start, length);
+        Page<FeedbackVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(4);
         map.put("startTime", startTime);
-        map.put("endTime", endDatePlusOne(endTime));
+        map.put("endTime", DateUtil.plusOneDay(endTime));
         map.put("userId", userId);
         map.put("contact", contact);
 
         // 按照条件查询数据
-        List<FeedbackPO> lists_PO = this.feedbackMapper.query(map);
+        List<FeedbackPO> pos = this.feedbackMapper.query(map);
 
         // 将查询到的PO 数据转换为 DTO
-        List<FeedbackDTO> lists_DTO = new ArrayList<>();
-        for(FeedbackPO po: lists_PO) {
-            FeedbackDTO dto = new FeedbackDTO();
-            dto.setFeedbackId(po.getFeedbackId());
-            dto.setPhone(queryPhoneByUserId(po.getUserId()));
-            dto.setDeviceId(po.getDeviceId());
-            dto.setManufacturer(po.getManufacturer());
-            dto.setAndroidmodel(po.getAndroidmodel());
-            dto.setBuildversion(po.getBuildversion());
-            dto.setVersioncode(po.getVersioncode());
-            dto.setCreateTime(po.getCreateTime());
-            dto.setContact(po.getContact());
-            dto.setContext(po.getContext());
+        List<FeedbackVO> vos = new ArrayList<>();
+        for(FeedbackPO po: pos) {
+            FeedbackVO vo = new FeedbackVO();
+            vo.setFeedbackId(po.getFeedbackId());
+            vo.setPhone(queryPhoneByUserId(po.getUserId()));
+            vo.setDeviceId(po.getDeviceId());
+            vo.setManufacturer(po.getManufacturer());
+            vo.setAndroidmodel(po.getAndroidmodel());
+            vo.setBuildversion(po.getBuildversion());
+            vo.setVersioncode(po.getVersioncode());
+            vo.setCreateTime(po.getCreateTime());
+            vo.setContact(po.getContact());
+            vo.setContext(po.getContext());
             if (null == po.getUrl1()) {
-                dto.setUrl1(po.getUrl1());
+                vo.setUrl1(po.getUrl1());
             } else {
-                dto.setUrl1(publicPath + po.getUrl1());
+                vo.setUrl1(publicPath + po.getUrl1());
             }
             if (null == po.getUrl2()) {
-                dto.setUrl2(po.getUrl2());
+                vo.setUrl2(po.getUrl2());
             } else {
-                dto.setUrl2(publicPath + po.getUrl2());
+                vo.setUrl2(publicPath + po.getUrl2());
             }
             if (null == po.getUrl3()) {
-                dto.setUrl3(po.getUrl3());
+                vo.setUrl3(po.getUrl3());
             } else {
-                dto.setUrl3(publicPath + po.getUrl3());
+                vo.setUrl3(publicPath + po.getUrl3());
             }
 
-            lists_DTO.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
 
@@ -108,32 +106,5 @@ public class FeedbackServiceImpl implements FeedbackService {
      */
     public String queryPhoneByUserId(Long userId) {
         return this.userMapper.queryPhoneByUserId(userId);
-    }
-
-    /**
-     * 类型转换：将字符串类型的时间，转换为日期类型，加一天后再转回字符串
-     * @param strDate
-     * @return
-     */
-    private String endDatePlusOne(String strDate) {
-        if (null == strDate || "".equals(strDate)) {
-            return null;
-        } else {
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = null;
-            try {
-                date = format.parse(strDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.add(Calendar.DATE, 1);
-            date = calendar.getTime();
-
-            return format.format(date);
-        }
-
-
     }
 }
