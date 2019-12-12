@@ -390,10 +390,10 @@
         } else {
             $.post("adconfig/insert", {adNumber:adNumber, name:name, contacts:contacts, phone:phone,
                 priority:priority, total:total}, function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
-                }else if (result.code === 0) {
+                }else if (result.status === 0) {
                     alert("新增成功！")
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -430,7 +430,7 @@
             url: 'adconfig/query/strategy',
             dataType: 'JSON',
             success: function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
                 } else {
@@ -446,10 +446,10 @@
     function setAdClick() {
         var show_interval = $('#show_interval').val();
         $.post("adconfig/update/strategy", {show_interval:show_interval}, function (result) {
-            if (result.code === 1008) {
+            if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.code === 0) {
+            }else if (result.status === 0) {
                 alert("设置成功！")
             } else {
                 alert("设置失败！")
@@ -560,10 +560,10 @@
         var adId = $('#statusChange_1').val();
         var status = $('#statusChange_2').val();
         $.post("adconfig/update/status", {adId:adId, status:status}, function (result) {
-            if (result.code === 1008) {
+            if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.code === 0) {
+            }else if (result.status === 0) {
                 alert("状态修改成功！");
                 $('#datatab').DataTable().draw(false);
             } else {
@@ -596,7 +596,7 @@
             url: 'adconfig/queryById?adId=' + adId,
             dataType: 'JSON',
             success: function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
                 } else {
@@ -639,10 +639,10 @@
         } else {
             $.post("adconfig/update", {adId:adId, adNumber:adNumber, name:name, contacts:contacts, phone:phone,
                 priority:priority, total:total}, function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
-                }else if (result.code === 0) {
+                }else if (result.status === 0) {
                     alert("更新成功！")
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -667,10 +667,10 @@
     function deleteClick() {
         var adId = $('#delete').val();
         $.post("adconfig/delete", {adId:adId}, function (result) {
-            if (result.code === 1008) {
+            if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.code === 0) {
+            }else if (result.status === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);
             } else {
