@@ -1,9 +1,4 @@
-use smarthelper;
-
-/* Drop Indexes */
-
-DROP INDEX ix_invite_detail_userid ON t_invite_detail;
-
+use smartdkfs;
 
 
 /* Drop Tables */
@@ -826,7 +821,7 @@ CREATE TABLE t_voice_share
 	-- 1 初始阶段，未上传 2 上传文件中  3 完成  4 失败
 	status tinyint DEFAULT 1 COMMENT '1 初始阶段，未上传 2 上传文件中  3 完成  4 失败',
 	path char(128),
-	extra char(256),
+	extra char(255),
 	title char(128),
 	PRIMARY KEY (voice_id),
 	UNIQUE (voice_id)

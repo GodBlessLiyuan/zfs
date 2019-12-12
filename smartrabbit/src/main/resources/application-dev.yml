@@ -16,7 +16,7 @@ spring:
     password: 123456
     timeout: 1000
   datasource:
-    url: jdbc:mysql://192.168.10.3:3306/smarthelper?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.10.3:3306/smartdkfs?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
