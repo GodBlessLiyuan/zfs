@@ -228,7 +228,7 @@
             url: "newusergifts/insert?comTypeId=" + comTypeId,
             dataType: 'json',
             success: function (res) {
-                if (res.code !== 0) {
+                if (res.status !== 1000) {
                     alert(res.msg);
                 } else {
                     document.getElementById("iModalX").click();
@@ -321,7 +321,7 @@
             url: 'newusergifts/updateStatus?nugId=' + nugId + '&status=' + status,
             dataType: 'JSON',
             success: function (res) {
-                if (res.code === 0) {
+                if (res.status === 1000) {
                     $('#datatab').DataTable().draw(false);
                 } else {
                     alert(res.msg);

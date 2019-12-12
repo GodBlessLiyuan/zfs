@@ -473,7 +473,7 @@
                     discount,
                 dataType: 'json',
                 success: function (res) {
-                    if (res.code !== 0) {
+                    if (res.status !== 1000) {
                         alert(res.msg);
                     } else {
                         document.getElementById("iModalX").click();

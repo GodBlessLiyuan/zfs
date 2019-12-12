@@ -441,7 +441,7 @@
                 processData: false,
                 success: function (res) {
                     $('#preloader').hide();
-                    if (res.code !== 0) {
+                    if (res.status !== 1000) {
                         alert(res.msg);
                     } else {
                         document.getElementById("iModalX").click();

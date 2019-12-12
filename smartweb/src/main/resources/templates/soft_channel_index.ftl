@@ -196,7 +196,7 @@
                 url: "softchannel/insert?channelName=" + channelName + "&extra=" + extra,
                 dataType: 'json',
                 success: function (res) {
-                    if (res.code === 0) {
+                    if (res.status === 1000) {
                         document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
                     } else {
