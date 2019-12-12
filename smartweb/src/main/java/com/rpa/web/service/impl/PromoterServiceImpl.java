@@ -1,16 +1,16 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.rpa.common.constant.Constant;
+import com.rpa.common.mapper.PromoterMapper;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.web.dto.PromoterDTO;
 import com.rpa.common.mapper.AdminUserMapper;
-import com.rpa.web.mapper.PromoterMapper;
-import com.rpa.web.pojo.PromoterPO;
+import com.rpa.common.pojo.PromoterPO;
 import com.rpa.web.service.PromoterService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.utils.OperatorUtil;
+import com.rpa.web.vo.PromoterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,10 +42,10 @@ public class PromoterServiceImpl implements PromoterService {
      * @return
      */
     @Override
-    public DTPageInfo<PromoterDTO> query(int draw, int start, int length, String proName, String phone) {
+    public DTPageInfo<PromoterVO> query(int draw, int start, int length, String proName, String phone) {
 
         // 分页
-        Page<PromoterDTO> page = PageHelper.startPage(start, length);
+        Page<PromoterVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
@@ -53,26 +53,26 @@ public class PromoterServiceImpl implements PromoterService {
         map.put("phone", phone);
 
         // 按照条件查询数据
-        List<PromoterPO> lists_PO = promoterMapper.query(map);
+        List<PromoterPO> pos = promoterMapper.query(map);
 
-        // 将查询到的 PromoterPO 数据转换为 PromoterDTO
-        List<PromoterDTO> lists_DTO = new ArrayList<>();
-        for(PromoterPO po: lists_PO) {
-            PromoterDTO dto = new PromoterDTO();
-            dto.setProId(po.getProId());
-            dto.setProName(po.getProName());
-            dto.setPhone(po.getPhone());
-            dto.setExtra(po.getExtra());
-            dto.setaId(po.getaId());
-            dto.setCreateTime(po.getCreateTime());
-            dto.setUpdateTime(po.getUpdateTime());
-            dto.setOperator(queryUsernameByAid(po.getaId()));
+        // 将查询到的 po 数据转换为 vo
+        List<PromoterVO> vos = new ArrayList<>();
+        for(PromoterPO po: pos) {
+            PromoterVO vo = new PromoterVO();
+            vo.setProId(po.getProId());
+            vo.setProName(po.getProName());
+            vo.setPhone(po.getPhone());
+            vo.setExtra(po.getExtra());
+            vo.setaId(po.getaId());
+            vo.setCreateTime(po.getCreateTime());
+            vo.setUpdateTime(po.getUpdateTime());
+            vo.setOperator(queryUsernameByAid(po.getaId()));
 
-            lists_DTO.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
     /**
@@ -83,11 +83,6 @@ public class PromoterServiceImpl implements PromoterService {
     @Override
     public ResultVO insert(PromoterDTO dto, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         // 把 dto 转换为 po
         PromoterPO po = new PromoterPO();
         po.setProName(dto.getProName());
@@ -96,7 +91,7 @@ public class PromoterServiceImpl implements PromoterService {
         po.setaId(dto.getaId());
         po.setCreateTime(new Date());
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         this.promoterMapper.insert(po);
         return new ResultVO(1000);
@@ -109,11 +104,6 @@ public class PromoterServiceImpl implements PromoterService {
      */
     @Override
     public ResultVO update(PromoterDTO dto, HttpSession httpSession) {
-
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
 
         // 从数据库中查询出要修改的数据
         PromoterPO po = this.promoterMapper.selectByPrimaryKey(dto.getProId());
@@ -128,7 +118,7 @@ public class PromoterServiceImpl implements PromoterService {
         po.setExtra(dto.getExtra());
         po.setaId(dto.getaId());
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         promoterMapper.updateByPrimaryKey(po);
         return new ResultVO(1000);

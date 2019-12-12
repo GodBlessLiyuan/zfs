@@ -1,15 +1,14 @@
-package com.rpa.web.domain;
+package com.rpa.common.bo;
 
-import com.rpa.web.pojo.InviteUserPO;
+import com.rpa.common.pojo.InviteUserPO;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * t_invite_user
  * @author 
  */
-public class InviteUserDO extends InviteUserPO {
+public class InviteUserBO extends InviteUserPO {
     private Integer inviteId;
 
     private Long userId;
@@ -113,7 +112,7 @@ public class InviteUserDO extends InviteUserPO {
         if (getClass() != that.getClass()) {
             return false;
         }
-        InviteUserDO other = (InviteUserDO) that;
+        InviteUserBO other = (InviteUserBO) that;
         return (this.getInviteId() == null ? other.getInviteId() == null : this.getInviteId().equals(other.getInviteId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getInvitePhone() == null ? other.getInvitePhone() == null : this.getInvitePhone().equals(other.getInvitePhone()))

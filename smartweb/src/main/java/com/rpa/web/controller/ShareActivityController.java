@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.ShareActivityDTO;
+import com.rpa.web.vo.ShareActivityVO;
 import com.rpa.web.service.ShareActivityService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -32,14 +32,14 @@ public class ShareActivityController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<ShareActivityDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                              @RequestParam(value = "start", defaultValue = "1") int start,
-                                              @RequestParam(value = "length", defaultValue = "10") int length,
-                                              @RequestParam(value = "type", required = false) Byte type
+    public DTPageInfo<ShareActivityVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                             @RequestParam(value = "start", defaultValue = "1") int start,
+                                             @RequestParam(value = "length", defaultValue = "10") int length,
+                                             @RequestParam(value = "type", required = false) Byte type
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<ShareActivityDTO> dTPageInfo = shareActivityService.query(draw, start, length, type);
+        DTPageInfo<ShareActivityVO> dTPageInfo = shareActivityService.query(draw, start, length, type);
         return dTPageInfo;
     }
 

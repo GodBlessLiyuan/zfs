@@ -55,4 +55,10 @@
     set vipname = #{vipname,jdbcType=CHAR}
     where viptype_id = #{viptypeId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryVipnameByVipid" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select vipname
+    from t_viptype
+    where viptype_id = #{viptypeId,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -125,4 +125,23 @@
       dr = #{dr,jdbcType=TINYINT}
     where pro_id = #{proId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_promoter
+    <where>
+      <if test="proName != null and proName != ''">
+        and pro_name like '%' #{proName} '%'
+      </if>
+      <if test="phone != null and phone != ''">
+        and phone = #{phone}
+      </if>
+    </where>
+  </select>
+
+  <select id="queryAllProNames" resultMap="BaseResultMap">
+    select pro_id, pro_name
+    from t_promoter
+  </select>
 </mapper>

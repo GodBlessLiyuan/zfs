@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.WithdrawUserDTO;
+import com.rpa.web.vo.WithdrawUserVO;
 import com.rpa.web.service.WithdrawUserService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -32,15 +32,15 @@ public class WithdrawUserController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<WithdrawUserDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                             @RequestParam(value = "start", defaultValue = "1") int start,
-                                             @RequestParam(value = "length", defaultValue = "10") int length,
-                                             @RequestParam(value = "phone", required = false) String phone,
-                                             @RequestParam(value = "status", required = false) Byte status
+    public DTPageInfo<WithdrawUserVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                            @RequestParam(value = "start", defaultValue = "1") int start,
+                                            @RequestParam(value = "length", defaultValue = "10") int length,
+                                            @RequestParam(value = "phone", required = false) String phone,
+                                            @RequestParam(value = "status", required = false) Byte status
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<WithdrawUserDTO> dTPageInfo = withdrawUserService.query(draw, start, length, phone, status);
+        DTPageInfo<WithdrawUserVO> dTPageInfo = withdrawUserService.query(draw, start, length, phone, status);
         return dTPageInfo;
     }
 

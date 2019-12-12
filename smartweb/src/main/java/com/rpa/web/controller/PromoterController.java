@@ -4,6 +4,7 @@ import com.rpa.web.dto.PromoterDTO;
 import com.rpa.web.service.PromoterService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.PromoterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,14 +34,14 @@ public class PromoterController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<PromoterDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                         @RequestParam(value = "start", defaultValue = "1") int start,
-                                         @RequestParam(value = "length", defaultValue = "10") int length,
-                                         @RequestParam(value = "proName", required = false) String proName,
-                                         @RequestParam(value = "phone", required = false) String phone
+    public DTPageInfo<PromoterVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                          @RequestParam(value = "start", defaultValue = "1") int start,
+                                          @RequestParam(value = "length", defaultValue = "10") int length,
+                                          @RequestParam(value = "proName", required = false) String proName,
+                                          @RequestParam(value = "phone", required = false) String phone
     ) {
         // 调用业务层，返回页面结果
-        DTPageInfo<PromoterDTO> dTPageInfo = promoterService.query(draw, start, length, proName, phone);
+        DTPageInfo<PromoterVO> dTPageInfo = promoterService.query(draw, start, length, proName, phone);
         return dTPageInfo;
     }
 

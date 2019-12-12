@@ -3,6 +3,7 @@ package com.rpa.web.service;
 import com.rpa.web.dto.PromoterDTO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.vo.PromoterVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface PromoterService {
-    DTPageInfo<PromoterDTO> query(int draw, int start, int length, String proName, String phone);
+    DTPageInfo<PromoterVO> query(int draw, int start, int length, String proName, String phone);
 
     ResultVO insert(PromoterDTO promoterDTO, HttpSession httpSession);
 

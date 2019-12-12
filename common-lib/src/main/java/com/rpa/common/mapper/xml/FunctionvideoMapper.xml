@@ -114,4 +114,27 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where function_id = #{functionId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_functionvideo
+    <where>
+      <if test="funName != null and funName != ''">
+        AND fun_name like '%' #{funName} '%'
+      </if>
+    </where>
+  </select>
+
+  <select id="queryFunname" resultType="java.lang.Integer">
+    select count(function_id)
+    from t_functionvideo
+    where fun_name = #{funName}
+  </select>
+
+  <select id="queryFunnameById" resultType="java.lang.String">
+    select fun_name
+    from t_functionvideo
+    where function_id = #{functionId}
+  </select>
 </mapper>

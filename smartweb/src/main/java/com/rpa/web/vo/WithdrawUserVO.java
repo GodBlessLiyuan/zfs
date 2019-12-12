@@ -1,4 +1,4 @@
-package com.rpa.web.dto;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_withdraw_user
  * @author 
  */
-public class WithdrawUserDTO implements Serializable {
+public class WithdrawUserVO implements Serializable {
     private Integer withdrawId;
 
     private Date createTime;
@@ -184,7 +184,7 @@ public class WithdrawUserDTO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        WithdrawUserDTO other = (WithdrawUserDTO) that;
+        WithdrawUserVO other = (WithdrawUserVO) that;
         return (this.getWithdrawId() == null ? other.getWithdrawId() == null : this.getWithdrawId().equals(other.getWithdrawId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))

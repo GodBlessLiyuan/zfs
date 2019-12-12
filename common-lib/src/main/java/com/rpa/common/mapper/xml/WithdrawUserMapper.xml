@@ -196,4 +196,21 @@
       a_id = #{aId,jdbcType=INTEGER}
     where withdraw_id = #{withdrawId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultType="com.rpa.common.pojo.WithdrawUserPO">
+    select
+    withdraw_id as withdrawId, wu.create_time as createTime, wu.user_id as userId, device_id as deviceId,
+    user_device_id as userDeviceId, withdraw, remaining, ali_account as aliAccount, ali_name as aliName,
+    withdraw_time as withdrawTime, audit_time as auditTime, end_time as endTime, `status`, a_id as aId
+    from t_withdraw_user wu
+    left join t_user u on wu.user_id = u.user_id
+    <where>
+      <if test="phone != null and phone != ''">
+        u.phone = #{phone}
+      </if>
+      <if test="status != 0">
+        status = #{status}
+      </if>
+    </where>
+  </select>
 </mapper>

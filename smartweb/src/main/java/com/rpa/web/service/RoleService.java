@@ -1,9 +1,7 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.RoleDTO;
 import com.rpa.web.utils.DTPageInfo;
-
-import javax.servlet.http.HttpSession;
+import com.rpa.web.vo.RoleVO;
 
 /**
  * @author: dangyi
@@ -12,5 +10,5 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface RoleService {
-    DTPageInfo<RoleDTO> query(int draw, int start, int length);
+    DTPageInfo<RoleVO> query(int draw, int start, int length);
 }

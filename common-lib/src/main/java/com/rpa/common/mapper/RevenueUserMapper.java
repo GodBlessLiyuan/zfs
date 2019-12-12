@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RevenueUserMapper extends BaseMapper<RevenueUserPO, Long> {
+    String queryPhoneByUserId(Long userId);
 }

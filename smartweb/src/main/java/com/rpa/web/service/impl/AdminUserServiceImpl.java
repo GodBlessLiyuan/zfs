@@ -2,14 +2,13 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.constant.Constant;
+import com.rpa.common.mapper.RoleMapper;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.bo.AdminUserBO;
 import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.RoleDTO;
 import com.rpa.common.mapper.AdminUserMapper;
-import com.rpa.web.mapper.RoleMapper;
 import com.rpa.common.pojo.AdminUserPO;
-import com.rpa.web.pojo.RolePO;
+import com.rpa.common.pojo.RolePO;
 import com.rpa.web.service.AdminUserService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.Md5Util;

@@ -103,4 +103,16 @@
       role_num = #{roleNum,jdbcType=CHAR}
     where role_id = #{roleId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultMap="BaseResultMap">
+    select  role_id, role_name, role_num
+    from t_role
+  </select>
+
+  <select id="queryAllRoles"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_role
+  </select>
+
 </mapper>

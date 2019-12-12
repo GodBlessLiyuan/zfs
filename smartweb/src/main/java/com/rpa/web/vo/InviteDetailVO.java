@@ -1,4 +1,4 @@
-package com.rpa.web.dto;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_invite_detail
  * @author 
  */
-public class InviteDetailDTO implements Serializable {
+public class InviteDetailVO implements Serializable {
     private Long indeId;
 
     private Integer orderId;
@@ -141,7 +141,7 @@ public class InviteDetailDTO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        InviteDetailDTO other = (InviteDetailDTO) that;
+        InviteDetailVO other = (InviteDetailVO) that;
         return (this.getIndeId() == null ? other.getIndeId() == null : this.getIndeId().equals(other.getIndeId()))
             && (this.getOrderId() == null ? other.getOrderId() == null : this.getOrderId().equals(other.getOrderId()))
             && (this.getComTypeId() == null ? other.getComTypeId() == null : this.getComTypeId().equals(other.getComTypeId()))

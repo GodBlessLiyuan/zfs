@@ -1,4 +1,4 @@
-package com.rpa.web.pojo;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_invite_user
  * @author 
  */
-public class InviteUserPO implements Serializable {
+public class InviteUserVO implements Serializable {
     private Integer inviteId;
 
     private Long userId;
@@ -19,6 +19,12 @@ public class InviteUserPO implements Serializable {
     private Date updateTime;
 
     private String ip;
+
+    private Date acceptTime;
+
+    private Date registerTime;
+
+    private Double earnings;
 
     private static final long serialVersionUID = 1L;
 
@@ -70,6 +76,31 @@ public class InviteUserPO implements Serializable {
         this.ip = ip;
     }
 
+    public Date getAcceptTime() {
+        return acceptTime;
+    }
+
+    public void setAcceptTime(Date acceptTime) {
+        this.acceptTime = acceptTime;
+    }
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public Double getEarnings() {
+        return earnings;
+    }
+
+    public void setEarnings(Double earnings) {
+        this.earnings = earnings;
+    }
+
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -81,7 +112,7 @@ public class InviteUserPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        InviteUserPO other = (InviteUserPO) that;
+        InviteUserVO other = (InviteUserVO) that;
         return (this.getInviteId() == null ? other.getInviteId() == null : this.getInviteId().equals(other.getInviteId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getInvitePhone() == null ? other.getInvitePhone() == null : this.getInvitePhone().equals(other.getInvitePhone()))

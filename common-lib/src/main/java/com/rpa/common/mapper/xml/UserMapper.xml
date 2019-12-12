@@ -147,8 +147,4 @@
     from t_user
     where user_id = #{userId}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_user
-    where user_id = #{userId,jdbcType=BIGINT}
-  </delete>
 </mapper>

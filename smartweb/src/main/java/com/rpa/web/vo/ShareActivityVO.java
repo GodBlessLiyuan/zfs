@@ -1,4 +1,4 @@
-package com.rpa.web.dto;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_share_activity
  * @author 
  */
-public class ShareActivityDTO implements Serializable {
+public class ShareActivityVO implements Serializable {
     private Integer materialId;
 
     /**
@@ -104,7 +104,7 @@ public class ShareActivityDTO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ShareActivityDTO other = (ShareActivityDTO) that;
+        ShareActivityVO other = (ShareActivityVO) that;
         return (this.getMaterialId() == null ? other.getMaterialId() == null : this.getMaterialId().equals(other.getMaterialId()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
