@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.FeedbackDTO;
+import com.rpa.web.vo.FeedbackVO;
 import com.rpa.web.service.FeedbackService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +34,17 @@ public class FeedbackController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<FeedbackDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                         @RequestParam(value = "start", defaultValue = "1") int start,
-                                         @RequestParam(value = "length", defaultValue = "10") int length,
-                                         @RequestParam(value = "startTime", required = false) String startTime,
-                                         @RequestParam(value = "endTime", required = false) String endTime,
-                                         @RequestParam(value = "userId", required = false) String userId,
-                                         @RequestParam(value = "contact", required = false) String contact
+    public DTPageInfo<FeedbackVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                        @RequestParam(value = "start", defaultValue = "1") int start,
+                                        @RequestParam(value = "length", defaultValue = "10") int length,
+                                        @RequestParam(value = "startTime", required = false) String startTime,
+                                        @RequestParam(value = "endTime", required = false) String endTime,
+                                        @RequestParam(value = "userId", required = false) String userId,
+                                        @RequestParam(value = "contact", required = false) String contact
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<FeedbackDTO> dTPageInfo = feedbackService.query(draw, start, length, startTime, endTime, userId, contact);
+        DTPageInfo<FeedbackVO> dTPageInfo = feedbackService.query(draw, start, length, startTime, endTime, userId, contact);
         return dTPageInfo;
     }
 }

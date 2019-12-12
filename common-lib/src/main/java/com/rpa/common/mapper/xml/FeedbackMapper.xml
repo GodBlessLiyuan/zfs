@@ -207,4 +207,25 @@
       url3 = #{url3,jdbcType=CHAR}
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_feedback
+    <where>
+      <if test="(startTime != null and startTime != '') and (endTime != null and endTime != '')">
+        AND create_time between #{startTime} AND #{endTime}
+      </if>
+      <if test="userId != null and userId != ''">
+        AND user_id =  #{userId}
+      </if>
+      <if test="contact != null and contact != ''">
+        AND contact = #{contact}
+      </if>
+      <if test="funName != null and funName != ''">
+        AND fun_name like '%' #{funName} '%'
+      </if>
+    </where>
+    order by create_time desc
+  </select>
 </mapper>

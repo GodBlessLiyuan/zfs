@@ -1,4 +1,4 @@
-package com.rpa.web.pojo;
+package com.rpa.common.pojo;
 
 import java.io.Serializable;
 import java.util.Date;

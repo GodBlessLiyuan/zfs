@@ -1,4 +1,4 @@
-package com.rpa.web.dto;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_functionvideo
  * @author 
  */
-public class FunctionVideoDTO implements Serializable {
+public class FunctionVideoVO implements Serializable {
     private Integer functionId;
 
     private String funName;
@@ -103,7 +103,7 @@ public class FunctionVideoDTO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        FunctionVideoDTO other = (FunctionVideoDTO) that;
+        FunctionVideoVO other = (FunctionVideoVO) that;
         return (this.getFunctionId() == null ? other.getFunctionId() == null : this.getFunctionId().equals(other.getFunctionId()))
             && (this.getFunName() == null ? other.getFunName() == null : this.getFunName().equals(other.getFunName()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))

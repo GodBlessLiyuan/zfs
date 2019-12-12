@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.FeedbackDTO;
+import com.rpa.web.vo.FeedbackVO;
 import com.rpa.web.utils.DTPageInfo;
 
 /**
@@ -10,5 +10,5 @@ import com.rpa.web.utils.DTPageInfo;
  * @description:
  */
 public interface FeedbackService {
-    DTPageInfo<FeedbackDTO> query(int draw, int start, int length, String startTime, String endTime, String userId, String contact);
+    DTPageInfo<FeedbackVO> query(int draw, int start, int length, String startTime, String endTime, String userId, String contact);
 }

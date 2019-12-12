@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.FunctionVideoDTO;
+import com.rpa.web.vo.FunctionVideoVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface FunctionVideoService {
-    DTPageInfo<FunctionVideoDTO> query(int draw, int start, int length, String funName);
+    DTPageInfo<FunctionVideoVO> query(int draw, int start, int length, String funName);
 
     ResultVO queryById(Integer functionId);
 

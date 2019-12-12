@@ -1,4 +1,4 @@
-package com.rpa.web.dto;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.Date;
  * t_feedback
  * @author 
  */
-public class FeedbackDTO implements Serializable {
+public class FeedbackVO implements Serializable {
     private Integer feedbackId;
 
     private Long userId;
@@ -174,7 +174,7 @@ public class FeedbackDTO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        FeedbackDTO other = (FeedbackDTO) that;
+        FeedbackVO other = (FeedbackVO) that;
         return (this.getFeedbackId() == null ? other.getFeedbackId() == null : this.getFeedbackId().equals(other.getFeedbackId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getDeviceId() == null ? other.getDeviceId() == null : this.getDeviceId().equals(other.getDeviceId()))
