@@ -361,7 +361,7 @@
                 processData: false,
                 success: function (res) {
                     $('#preloader').hide();
-                    if (res.code === 0) {
+                    if (res.status === 1000) {
                         document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
                     } else {
