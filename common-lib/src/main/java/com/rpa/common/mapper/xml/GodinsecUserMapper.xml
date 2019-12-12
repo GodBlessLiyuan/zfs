@@ -114,4 +114,10 @@
       `days` = #{days,jdbcType=INTEGER}
     where phone = #{phone,jdbcType=CHAR}
   </update>
+
+  <select id="queryByUserId" parameterType="java.lang.Integer" resultType="com.rpa.common.pojo.GodinsecUserPO">
+    select gu.update_time as updateTime, gu.name, gu.days
+    from t_godinsec_user gu left join t_user u on gu.phone = u.phone
+    where gu.`status` = 2 and user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

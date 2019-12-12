@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.OrderDTO;
+import com.rpa.web.vo.OrderVO;
 import com.rpa.web.service.IOrderService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,17 +44,17 @@ public class OrderController {
      * @return 一页数据
      */
     @RequestMapping("query")
-    public DTPageInfo<OrderDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                      @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                      @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                      @RequestParam(value = "startDate") String startDate,
-                                      @RequestParam(value = "endDate") String endDate,
-                                      @RequestParam(value = "comTypeId") int comTypeId,
-                                      @RequestParam(value = "type") int type,
-                                      @RequestParam(value = "uChanId") int uChanId,
-                                      @RequestParam(value = "sChanId") int sChanId,
-                                      @RequestParam(value = "phone") String phone,
-                                      @RequestParam(value = "number") String number) throws ParseException {
+    public DTPageInfo<OrderVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                     @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                     @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                     @RequestParam(value = "startDate") String startDate,
+                                     @RequestParam(value = "endDate") String endDate,
+                                     @RequestParam(value = "comTypeId") int comTypeId,
+                                     @RequestParam(value = "type") int type,
+                                     @RequestParam(value = "uChanId") int uChanId,
+                                     @RequestParam(value = "sChanId") int sChanId,
+                                     @RequestParam(value = "phone") String phone,
+                                     @RequestParam(value = "number") String number) throws ParseException {
         Map<String, Object> reqData = new HashMap<>(8);
         reqData.put("startDate", startDate);
         if(null != endDate && !"".equals(endDate)) {

@@ -6,17 +6,12 @@ import com.rpa.common.bo.NewUserRecordBO;
 import com.rpa.common.bo.OrderBO;
 import com.rpa.common.bo.UserActivityBO;
 import com.rpa.common.bo.UserVipBO;
-import com.rpa.common.mapper.BatchInfoMapper;
-import com.rpa.common.mapper.NewUserRecordMapper;
-import com.rpa.common.mapper.OrderMapper;
-import com.rpa.common.mapper.UserActivityMapper;
-import com.rpa.common.mapper.UserVipMapper;
+import com.rpa.common.mapper.*;
+import com.rpa.common.pojo.GodinsecUserPO;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.UserVipConstant;
 import com.rpa.web.vo.UserVipVO;
-import com.rpa.web.dto.UserVipDetailsDTO;
-import com.rpa.web.mapper.*;
-import com.rpa.web.pojo.GodinsecUserPO;
+import com.rpa.web.vo.UserVipDetailsVO;
 import com.rpa.web.service.IUserVipService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
@@ -62,12 +57,12 @@ public class UserVipServiceImpl implements IUserVipService {
     }
 
     @Override
-    public DTPageInfo<UserVipDetailsDTO> queryDetails(int draw, int pageNum, int pageSize, int userId) {
-        List<UserVipDetailsDTO> userVipDetailsDTOs = new ArrayList<>();
+    public DTPageInfo<UserVipDetailsVO> queryDetails(int draw, int pageNum, int pageSize, int userId) {
+        List<UserVipDetailsVO> detailsVOs = new ArrayList<>();
         // 购买
         List<OrderBO> orderBOs = orderMapper.queryByUserId(userId);
         for (OrderBO bo : orderBOs) {
-            UserVipDetailsDTO dto = new UserVipDetailsDTO();
+            UserVipDetailsVO dto = new UserVipDetailsVO();
             dto.setVipType(UserVipConstant.USER_VIP_ORDER);
             dto.setUserChanName(bo.getUserChanName());
             dto.setSaleChanName(bo.getSaleChanName());
@@ -75,61 +70,61 @@ public class UserVipServiceImpl implements IUserVipService {
             dto.setCreateTime(bo.getCreateTime());
             dto.setComTypeName(bo.getComTypeName());
             dto.setDays(bo.getDays());
-            userVipDetailsDTOs.add(dto);
+            detailsVOs.add(dto);
         }
         // 好评活动赠送
         List<UserActivityBO> userActivityBOs = userActivityMapper.queryByUserId(userId);
         for (UserActivityBO bo : userActivityBOs) {
-            UserVipDetailsDTO dto = new UserVipDetailsDTO();
+            UserVipDetailsVO dto = new UserVipDetailsVO();
             dto.setVipType(UserVipConstant.USER_VIP_ACTIVITY);
             dto.setUserChanName(bo.getUserChanName());
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(bo.getCreateTime());
             dto.setComTypeName(bo.getComTypeName());
             dto.setDays(bo.getDays());
-            userVipDetailsDTOs.add(dto);
+            detailsVOs.add(dto);
         }
         // 新用户赠送
         List<NewUserRecordBO> newUserRecordBOs = newUserRecordMapper.queryByUserId(userId);
         for (NewUserRecordBO bo : newUserRecordBOs) {
-            UserVipDetailsDTO dto = new UserVipDetailsDTO();
+            UserVipDetailsVO dto = new UserVipDetailsVO();
             dto.setVipType(UserVipConstant.USER_VIP_GIFTS);
             dto.setUserChanName(bo.getUserChanName());
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(bo.getCreateTime());
             dto.setComTypeName(bo.getComTypeName());
             dto.setDays(bo.getDays());
-            userVipDetailsDTOs.add(dto);
+            detailsVOs.add(dto);
         }
         // V商神器赠送
         List<GodinsecUserPO> godinsecUserPOs = godinsecUserMapper.queryByUserId(userId);
         for (GodinsecUserPO godinsecUserPO : godinsecUserPOs) {
-            UserVipDetailsDTO dto = new UserVipDetailsDTO();
+            UserVipDetailsVO dto = new UserVipDetailsVO();
             dto.setVipType(UserVipConstant.USER_VIP_V);
             dto.setUserChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(godinsecUserPO.getUpdateTime());
             dto.setComTypeName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setDays(godinsecUserPO.getDays());
-            userVipDetailsDTOs.add(dto);
+            detailsVOs.add(dto);
         }
 
         // 卡密激活
         List<BatchInfoBO> batchInfoBOS = infoMapper.queryByUserId(userId);
         for (BatchInfoBO batchInfoBO : batchInfoBOS) {
-            UserVipDetailsDTO dto = new UserVipDetailsDTO();
+            UserVipDetailsVO dto = new UserVipDetailsVO();
             dto.setVipType(UserVipConstant.USER_VIP_BATCH);
             dto.setUserChanName(batchInfoBO.getUserChanName());
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(batchInfoBO.getUpdateTime());
             dto.setComTypeName(batchInfoBO.getComTypeName());
             dto.setDays(batchInfoBO.getDays());
-            userVipDetailsDTOs.add(dto);
+            detailsVOs.add(dto);
         }
 
         // 根据购买时间降序排序
-        Collections.sort(userVipDetailsDTOs);
+        Collections.sort(detailsVOs);
 
-        return new DTPageInfo<>(draw, userVipDetailsDTOs.size(), userVipDetailsDTOs);
+        return new DTPageInfo<>(draw, detailsVOs.size(), detailsVOs);
     }
 }

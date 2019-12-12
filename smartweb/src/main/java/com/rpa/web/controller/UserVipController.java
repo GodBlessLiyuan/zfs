@@ -1,7 +1,7 @@
 package com.rpa.web.controller;
 
 import com.rpa.web.vo.UserVipVO;
-import com.rpa.web.dto.UserVipDetailsDTO;
+import com.rpa.web.vo.UserVipDetailsVO;
 import com.rpa.web.service.IUserVipService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +39,10 @@ public class UserVipController {
     }
 
     @RequestMapping("queryDetails")
-    public DTPageInfo<UserVipDetailsDTO> queryDetails(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                                      @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                                      @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                                      @RequestParam(value = "userId") int userId) {
+    public DTPageInfo<UserVipDetailsVO> queryDetails(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                                     @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                                     @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                                     @RequestParam(value = "userId") int userId) {
         return service.queryDetails(draw, pageNum, pageSize, userId);
     }
 }

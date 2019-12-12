@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.SoftChannelDTO;
+import com.rpa.web.vo.SoftChannelVO;
 import com.rpa.web.service.ISoftChannelService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -27,10 +27,10 @@ public class SoftChannelController {
     private ISoftChannelService service;
 
     @RequestMapping("query")
-    public DTPageInfo<SoftChannelDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                            @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                            @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                            @RequestParam(value = "channelName") String channelName) {
+    public DTPageInfo<SoftChannelVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                           @RequestParam(value = "start", defaultValue = "1") int pageNum,
+                                           @RequestParam(value = "length", defaultValue = "10") int pageSize,
+                                           @RequestParam(value = "channelName") String channelName) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("name", channelName);
 
@@ -38,7 +38,7 @@ public class SoftChannelController {
     }
 
     @RequestMapping("queryAll")
-    public List<SoftChannelDTO> queryAll() {
+    public List<SoftChannelVO> queryAll() {
         return service.queryAll();
     }
 

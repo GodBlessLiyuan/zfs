@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.SoftChannelDTO;
+import com.rpa.web.vo.SoftChannelVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 
@@ -23,13 +23,13 @@ public interface ISoftChannelService {
      * @param reqData
      * @return
      */
-    DTPageInfo<SoftChannelDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<SoftChannelVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 查询全部数据
      * @return
      */
-    List<SoftChannelDTO> queryAll();
+    List<SoftChannelVO> queryAll();
 
     /**
      * 插入

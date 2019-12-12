@@ -4,7 +4,7 @@ import com.github.pagehelper.Page;
 import com.rpa.common.bo.OrderBO;
 import com.rpa.common.mapper.OrderMapper;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.OrderDTO;
+import com.rpa.web.vo.OrderVO;
 import com.rpa.web.service.IOrderService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,9 @@ public class OrderServiceImpl implements IOrderService {
 
 
     @Override
-    public DTPageInfo<OrderDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public DTPageInfo<OrderVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<OrderBO> page = PageHelper.startPage(pageNum, pageSize);
         List<OrderBO> pos = orderMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), OrderDTO.convert(pos));
+        return new DTPageInfo<>(draw, page.getTotal(), OrderVO.convert(pos));
     }
 }
