@@ -214,11 +214,11 @@
                 url: "blankapp/insert?packageName=" + packageName + "&appName=" + appName + "&extra=" + extra,
                 dataType: 'json',
                 success: function (data) {
-                    if (data.code === 0) {
+                    if (data.status === 1000) {
                         document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
                     } else {
-                        alert(data.msg);
+                        alert("服务器内部错误！");
                     }
                 }
             });
@@ -226,11 +226,11 @@
     }
 
     function deleteClick() {
-        let wId = moduleData.get("id");
+        let blankId = moduleData.get("id");
 
         $.ajax({
             type: 'GET',
-            url: 'blankapp/delete?wId=' + wId,
+            url: 'blankapp/delete?blankId=' + blankId,
             dataType: 'json',
             success: function (res) {
                 $('#datatab').DataTable().draw(false);
@@ -273,7 +273,7 @@
                 {"data": "createTime"},
                 {"data": "extra"},
                 {
-                    "data": "wId",
+                    "data": "blankId",
                     "render": function (data, type, full) {
                         return "<button data-toggle='modal' data-target='#deleteModal' data-whatever='@getbootstrap' " +
                             "class='btn btn-primary' onclick='deleteModal(" + data + ")'>删除</button>";
@@ -302,8 +302,8 @@
      * 删除弹框界面设值
      * @param data cmdyId
      */
-    function deleteModal(wId) {
-        moduleData.set("id", wId);
+    function deleteModal(blankId) {
+        moduleData.set("id", blankId);
     }
 
     /**
