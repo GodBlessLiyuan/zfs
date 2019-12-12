@@ -1,54 +1,53 @@
-package com.rpa.web.pojo;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * t_share_activity
+ * t_promoter
  * @author 
  */
-public class ShareActivityPO implements Serializable {
-    private Integer materialId;
+public class PromoterVO implements Serializable {
+    private Integer proId;
 
-    /**
-     * 1 文字 2 图片
-     */
-    private Byte type;
+    private String proName;
 
-    private String content;
+    private String phone;
 
     private String extra;
+
+    private Integer aId;
 
     private Date createTime;
 
     private Date updateTime;
 
-    private Integer aId;
+    private String operator;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getMaterialId() {
-        return materialId;
+    public Integer getProId() {
+        return proId;
     }
 
-    public void setMaterialId(Integer materialId) {
-        this.materialId = materialId;
+    public void setProId(Integer proId) {
+        this.proId = proId;
     }
 
-    public Byte getType() {
-        return type;
+    public String getProName() {
+        return proName;
     }
 
-    public void setType(Byte type) {
-        this.type = type;
+    public void setProName(String proName) {
+        this.proName = proName;
     }
 
-    public String getContent() {
-        return content;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getExtra() {
@@ -57,6 +56,14 @@ public class ShareActivityPO implements Serializable {
 
     public void setExtra(String extra) {
         this.extra = extra;
+    }
+
+    public Integer getaId() {
+        return aId;
+    }
+
+    public void setaId(Integer aId) {
+        this.aId = aId;
     }
 
     public Date getCreateTime() {
@@ -75,12 +82,12 @@ public class ShareActivityPO implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Integer getaId() {
-        return aId;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setaId(Integer aId) {
-        this.aId = aId;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     @Override
@@ -94,27 +101,27 @@ public class ShareActivityPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ShareActivityPO other = (ShareActivityPO) that;
-        return (this.getMaterialId() == null ? other.getMaterialId() == null : this.getMaterialId().equals(other.getMaterialId()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
-            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
+        PromoterVO other = (PromoterVO) that;
+        return (this.getProId() == null ? other.getProId() == null : this.getProId().equals(other.getProId()))
+            && (this.getProName() == null ? other.getProName() == null : this.getProName().equals(other.getProName()))
+            && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
             && (this.getExtra() == null ? other.getExtra() == null : this.getExtra().equals(other.getExtra()))
+            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getaId() == null ? other.getaId() == null : this.getaId().equals(other.getaId()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getMaterialId() == null) ? 0 : getMaterialId().hashCode());
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
-        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
+        result = prime * result + ((getProId() == null) ? 0 : getProId().hashCode());
+        result = prime * result + ((getProName() == null) ? 0 : getProName().hashCode());
+        result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
         result = prime * result + ((getExtra() == null) ? 0 : getExtra().hashCode());
+        result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        result = prime * result + ((getaId() == null) ? 0 : getaId().hashCode());
         return result;
     }
 
@@ -124,13 +131,13 @@ public class ShareActivityPO implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", materialId=").append(materialId);
-        sb.append(", type=").append(type);
-        sb.append(", content=").append(content);
+        sb.append(", proId=").append(proId);
+        sb.append(", proName=").append(proName);
+        sb.append(", phone=").append(phone);
         sb.append(", extra=").append(extra);
+        sb.append(", aId=").append(aId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", aId=").append(aId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

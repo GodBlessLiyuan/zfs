@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.WithdrawUserDTO;
+import com.rpa.web.vo.WithdrawUserVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface WithdrawUserService {
-    DTPageInfo<WithdrawUserDTO> query(int draw, int start, int length, String phone, Byte status);
+    DTPageInfo<WithdrawUserVO> query(int draw, int start, int length, String phone, Byte status);
 
     ResultVO update(Integer withdrawId, Byte status, HttpSession httpSession);
 }

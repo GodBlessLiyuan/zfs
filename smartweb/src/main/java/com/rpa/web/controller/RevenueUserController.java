@@ -1,8 +1,8 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.InviteDetailDTO;
-import com.rpa.web.dto.InviteUserDTO;
-import com.rpa.web.dto.RevenueUserDTO;
+import com.rpa.web.vo.InviteDetailVO;
+import com.rpa.web.vo.InviteUserVO;
+import com.rpa.web.vo.RevenueUserVO;
 import com.rpa.web.service.RevenueUserService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +33,15 @@ public class RevenueUserController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<RevenueUserDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                            @RequestParam(value = "start", defaultValue = "1") int start,
-                                            @RequestParam(value = "length", defaultValue = "10") int length,
-                                            @RequestParam(value = "phone", required = false) String phone,
-                                            @RequestParam(value = "orderby", required = false) int orderby
+    public DTPageInfo<RevenueUserVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                           @RequestParam(value = "start", defaultValue = "1") int start,
+                                           @RequestParam(value = "length", defaultValue = "10") int length,
+                                           @RequestParam(value = "phone", required = false) String phone,
+                                           @RequestParam(value = "orderby", required = false) int orderby
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<RevenueUserDTO> dTPageInfo = revenueUserService.query(draw, start, length, phone, orderby);
+        DTPageInfo<RevenueUserVO> dTPageInfo = revenueUserService.query(draw, start, length, phone, orderby);
         return dTPageInfo;
     }
 
@@ -56,15 +56,15 @@ public class RevenueUserController {
      * @return
      */
     @GetMapping("/query/inviteduser")
-    public DTPageInfo<InviteUserDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                           @RequestParam(value = "start", defaultValue = "1") int start,
-                                           @RequestParam(value = "length", defaultValue = "10") int length,
-                                           @RequestParam(value = "userId") Integer userId,
-                                           @RequestParam(value = "invitePhone", required = false) String invitePhone
+    public DTPageInfo<InviteUserVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                          @RequestParam(value = "start", defaultValue = "1") int start,
+                                          @RequestParam(value = "length", defaultValue = "10") int length,
+                                          @RequestParam(value = "userId") Integer userId,
+                                          @RequestParam(value = "invitePhone", required = false) String invitePhone
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<InviteUserDTO> dTPageInfo = revenueUserService.queryInviteduser(draw, start, length, userId, invitePhone);
+        DTPageInfo<InviteUserVO> dTPageInfo = revenueUserService.queryInviteduser(draw, start, length, userId, invitePhone);
         return dTPageInfo;
     }
 
@@ -81,17 +81,17 @@ public class RevenueUserController {
      * @return
      */
     @GetMapping("/query/inviteduser/detail")
-    public DTPageInfo<InviteDetailDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                             @RequestParam(value = "start", defaultValue = "1") int start,
-                                             @RequestParam(value = "length", defaultValue = "10") int length,
-                                             @RequestParam(value = "userId") Integer userId,
-                                             @RequestParam(value = "viptypeId", required = false) Integer viptypeId,
-                                             @RequestParam(value = "startTime", required = false) String startTime,
-                                             @RequestParam(value = "endTime", required = false) String endTime
+    public DTPageInfo<InviteDetailVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                            @RequestParam(value = "start", defaultValue = "1") int start,
+                                            @RequestParam(value = "length", defaultValue = "10") int length,
+                                            @RequestParam(value = "userId") Integer userId,
+                                            @RequestParam(value = "viptypeId", required = false) Integer viptypeId,
+                                            @RequestParam(value = "startTime", required = false) String startTime,
+                                            @RequestParam(value = "endTime", required = false) String endTime
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<InviteDetailDTO> dTPageInfo = revenueUserService.queryInviteduserDetail(draw, start, length, userId, viptypeId, startTime, endTime);
+        DTPageInfo<InviteDetailVO> dTPageInfo = revenueUserService.queryInviteduserDetail(draw, start, length, userId, viptypeId, startTime, endTime);
         return dTPageInfo;
     }
 

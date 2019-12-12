@@ -114,4 +114,15 @@
       a_id = #{aId,jdbcType=INTEGER}
     where material_id = #{materialId,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_share_activity
+    <where>
+      <if test="type != 0">
+        type = #{type}
+      </if>
+    </where>
+  </select>
 </mapper>

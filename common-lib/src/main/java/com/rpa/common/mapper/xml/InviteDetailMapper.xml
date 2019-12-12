@@ -174,4 +174,17 @@
       invite_id = #{inviteId,jdbcType=INTEGER}
     where inde_id = #{indeId,jdbcType=BIGINT}
   </update>
+
+  <select id="queryInviteduserDetail" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_invite_detail
+    where invitee_id = #{userId}
+    <if test="viptypeId != null and viptypeId != 0">
+      AND viptype_id = #{viptypeId}
+    </if>
+    <if test="(startTime != null and startTime != '') and (endTime != null and endTime != '')">
+      AND pay_time between #{startTime} AND #{endTime}
+    </if>
+  </select>
 </mapper>

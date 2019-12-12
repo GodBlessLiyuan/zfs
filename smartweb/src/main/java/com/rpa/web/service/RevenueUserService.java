@@ -1,11 +1,9 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.InviteDetailDTO;
-import com.rpa.web.dto.InviteUserDTO;
-import com.rpa.web.dto.RevenueUserDTO;
+import com.rpa.web.vo.InviteDetailVO;
+import com.rpa.web.vo.InviteUserVO;
+import com.rpa.web.vo.RevenueUserVO;
 import com.rpa.web.utils.DTPageInfo;
-
-import java.util.Date;
 
 /**
  * @author: dangyi
@@ -14,9 +12,9 @@ import java.util.Date;
  * @description:
  */
 public interface RevenueUserService {
-    DTPageInfo<RevenueUserDTO> query(int draw, int start, int length, String phone, int orderby);
+    DTPageInfo<RevenueUserVO> query(int draw, int start, int length, String phone, int orderby);
 
-    DTPageInfo<InviteUserDTO> queryInviteduser(int draw, int start, int length, Integer userId, String invitePhone);
+    DTPageInfo<InviteUserVO> queryInviteduser(int draw, int start, int length, Integer userId, String invitePhone);
 
-    DTPageInfo<InviteDetailDTO> queryInviteduserDetail(int draw, int start, int length, Integer userId, Integer viptypeId, String startTime, String endTime);
+    DTPageInfo<InviteDetailVO> queryInviteduserDetail(int draw, int start, int length, Integer userId, Integer viptypeId, String startTime, String endTime);
 }

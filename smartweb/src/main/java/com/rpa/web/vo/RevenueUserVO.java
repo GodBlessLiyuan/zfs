@@ -1,4 +1,4 @@
-package com.rpa.web.pojo;
+package com.rpa.web.vo;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
  * t_revenue_user
  * @author 
  */
-public class RevenueUserPO implements Serializable {
+public class RevenueUserVO implements Serializable {
     private Long userId;
 
     private Integer inviteCount;
@@ -15,13 +15,17 @@ public class RevenueUserPO implements Serializable {
 
     private Long registerCount;
 
-    private Long totalRevenue;
+    private Double totalRevenue;
 
-    private Long withdraw;
+    private Double withdraw;
 
     private Integer withdrawTime;
 
-    private Long remaining;
+    private Double remaining;
+
+    private String invitePhone;
+
+    private String phone;
 
     private static final long serialVersionUID = 1L;
 
@@ -57,19 +61,19 @@ public class RevenueUserPO implements Serializable {
         this.registerCount = registerCount;
     }
 
-    public Long getTotalRevenue() {
+    public Double getTotalRevenue() {
         return totalRevenue;
     }
 
-    public void setTotalRevenue(Long totalRevenue) {
+    public void setTotalRevenue(Double totalRevenue) {
         this.totalRevenue = totalRevenue;
     }
 
-    public Long getWithdraw() {
+    public Double getWithdraw() {
         return withdraw;
     }
 
-    public void setWithdraw(Long withdraw) {
+    public void setWithdraw(Double withdraw) {
         this.withdraw = withdraw;
     }
 
@@ -81,12 +85,28 @@ public class RevenueUserPO implements Serializable {
         this.withdrawTime = withdrawTime;
     }
 
-    public Long getRemaining() {
+    public Double getRemaining() {
         return remaining;
     }
 
-    public void setRemaining(Long remaining) {
+    public void setRemaining(Double remaining) {
         this.remaining = remaining;
+    }
+
+    public String getInvitePhone() {
+        return invitePhone;
+    }
+
+    public void setInvitePhone(String invitePhone) {
+        this.invitePhone = invitePhone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -100,7 +120,7 @@ public class RevenueUserPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        RevenueUserPO other = (RevenueUserPO) that;
+        RevenueUserVO other = (RevenueUserVO) that;
         return (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getInviteCount() == null ? other.getInviteCount() == null : this.getInviteCount().equals(other.getInviteCount()))
             && (this.getPayCount() == null ? other.getPayCount() == null : this.getPayCount().equals(other.getPayCount()))

@@ -1,15 +1,14 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.rpa.common.mapper.UserMapper;
+import com.rpa.common.mapper.*;
+import com.rpa.common.pojo.InviteDetailPO;
+import com.rpa.common.pojo.RevenueUserPO;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.domain.InviteUserDO;
-import com.rpa.web.dto.InviteDetailDTO;
-import com.rpa.web.dto.InviteUserDTO;
-import com.rpa.web.dto.RevenueUserDTO;
-import com.rpa.web.mapper.*;
-import com.rpa.web.pojo.InviteDetailPO;
-import com.rpa.web.pojo.RevenueUserPO;
+import com.rpa.common.bo.InviteUserBO;
+import com.rpa.web.vo.InviteDetailVO;
+import com.rpa.web.vo.InviteUserVO;
+import com.rpa.web.vo.RevenueUserVO;
 import com.rpa.web.service.RevenueUserService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class RevenueUserServiceImpl implements RevenueUserService {
     private InviteDetailMapper inviteDetailMapper;
 
     @Autowired
-    private VipTypeMapper vipTypeMapper;
+    private ViptypeMapper vipTypeMapper;
 
     /**
      * 查询：查询邀请人的收益信息
@@ -51,10 +50,10 @@ public class RevenueUserServiceImpl implements RevenueUserService {
      * @return
      */
     @Override
-    public DTPageInfo<RevenueUserDTO> query(int draw, int start, int length, String phone, int orderby) {
+    public DTPageInfo<RevenueUserVO> query(int draw, int start, int length, String phone, int orderby) {
 
         // 分页
-        Page<RevenueUserDTO> page = PageHelper.startPage(start, length);
+        Page<RevenueUserVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
@@ -62,35 +61,35 @@ public class RevenueUserServiceImpl implements RevenueUserService {
         map.put("orderby", orderby);
 
         // 按照条件查询数据
-        List<RevenueUserPO> lists_PO = this.revenueUserMapper.query(map);
+        List<RevenueUserPO> pos = this.revenueUserMapper.query(map);
 
-        // 将查询到的 PO 数据转换为 DTO
-        List<RevenueUserDTO> lists_DTO = new ArrayList<>();
-        for (RevenueUserPO po : lists_PO) {
+        // 将查询到的 PO 数据转换为 VO
+        List<RevenueUserVO> vos = new ArrayList<>();
+        for (RevenueUserPO po : pos) {
             if (po.getInviteCount() != 0) {
-                RevenueUserDTO dto = new RevenueUserDTO();
-                dto.setUserId(po.getUserId());
-                dto.setPhone(queryPhoneByUserId(po.getUserId()));
-                dto.setInviteCount(po.getInviteCount());
-                dto.setRegisterCount(po.getRegisterCount());
-                dto.setPayCount(po.getPayCount());
+                RevenueUserVO vo = new RevenueUserVO();
+                vo.setUserId(po.getUserId());
+                vo.setPhone(queryPhoneByUserId(po.getUserId()));
+                vo.setInviteCount(po.getInviteCount());
+                vo.setRegisterCount(po.getRegisterCount());
+                vo.setPayCount(po.getPayCount());
                 if (null != po.getTotalRevenue()) {
-                    dto.setTotalRevenue(Double.valueOf(po.getTotalRevenue())*0.01);
+                    vo.setTotalRevenue(Double.valueOf(po.getTotalRevenue())*0.01);
                 }
                 if (null != po.getRemaining()) {
-                    dto.setRemaining(Double.valueOf(po.getRemaining())*0.01);
+                    vo.setRemaining(Double.valueOf(po.getRemaining())*0.01);
                 }
                 if (null != po.getWithdraw()) {
-                    dto.setWithdraw(Double.valueOf(po.getWithdraw())*0.01);
+                    vo.setWithdraw(Double.valueOf(po.getWithdraw())*0.01);
                 }
-                dto.setWithdrawTime(po.getWithdrawTime());
+                vo.setWithdrawTime(po.getWithdrawTime());
 
-                lists_DTO.add(dto);
+                vos.add(vo);
             }
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
     /**
@@ -103,10 +102,10 @@ public class RevenueUserServiceImpl implements RevenueUserService {
      * @return
      */
     @Override
-    public DTPageInfo<InviteUserDTO> queryInviteduser(int draw, int start, int length, Integer userId, String invitePhone) {
+    public DTPageInfo<InviteUserVO> queryInviteduser(int draw, int start, int length, Integer userId, String invitePhone) {
 
         // 分页
-        Page<InviteUserDTO> page = PageHelper.startPage(start, length);
+        Page<InviteUserVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
@@ -114,30 +113,30 @@ public class RevenueUserServiceImpl implements RevenueUserService {
         map.put("invitePhone", invitePhone);
 
         // 按照条件查询数据
-        List<InviteUserDO> DOs = this.inviteUserMapper.queryInviteduser(map);
+        List<InviteUserBO> bos = this.inviteUserMapper.queryInviteduser(map);
 
-        // 将查询到的 DO 数据转换为 DTO
-        List<InviteUserDTO> DTOs = new ArrayList<>();
-        for (InviteUserDO inviteUserDO : DOs) {
+        // 将查询到的 bo 数据转换为 vo
+        List<InviteUserVO> vos = new ArrayList<>();
+        for (InviteUserBO bo : bos) {
 
             /**
              * 这里所查询的userId，是根据invitePhone从t_user表中查询到的被邀请人的userId
              * t_invite表中的user_id是邀请人的，不是被邀请人的，作用仅限于连表，不必返回给前端
              */
-            InviteUserDTO dto = new InviteUserDTO();
-            dto.setUserId(inviteUserDO.getUserId());
-            dto.setInvitePhone(inviteUserDO.getInvitePhone());
-            dto.setAcceptTime(inviteUserDO.getAcceptTime());
-            dto.setRegisterTime(inviteUserDO.getRegisterTime());
-            if (null != inviteUserDO.getEarnings()) {
-                dto.setEarnings(inviteUserDO.getEarnings()*0.01);
+            InviteUserVO vo = new InviteUserVO();
+            vo.setUserId(bo.getUserId());
+            vo.setInvitePhone(bo.getInvitePhone());
+            vo.setAcceptTime(bo.getAcceptTime());
+            vo.setRegisterTime(bo.getRegisterTime());
+            if (null != bo.getEarnings()) {
+                vo.setEarnings(bo.getEarnings()*0.01);
             }
 
-            DTOs.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), DTOs);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
 
@@ -153,10 +152,10 @@ public class RevenueUserServiceImpl implements RevenueUserService {
      * @return
      */
     @Override
-    public DTPageInfo<InviteDetailDTO> queryInviteduserDetail(int draw, int start, int length, Integer userId, Integer viptypeId, String startTime, String endTime) {
+    public DTPageInfo<InviteDetailVO> queryInviteduserDetail(int draw, int start, int length, Integer userId, Integer viptypeId, String startTime, String endTime) {
 
         // 分页
-        Page<InviteDetailDTO> page = PageHelper.startPage(start, length);
+        Page<InviteDetailVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
@@ -166,28 +165,28 @@ public class RevenueUserServiceImpl implements RevenueUserService {
         map.put("endTime", endTime);
 
         // 按照条件查询数据
-        List<InviteDetailPO> POs = this.inviteDetailMapper.queryInviteduserDetail(map);
+        List<InviteDetailPO> pos = this.inviteDetailMapper.queryInviteduserDetail(map);
 
-        // 将查询到的 PO 数据转换为 DTO
-        List<InviteDetailDTO> DTOs = new ArrayList<>();
-        for (InviteDetailPO po : POs) {
-            InviteDetailDTO dto = new InviteDetailDTO();
-            dto.setPayTime(po.getPayTime());
-            dto.setComTypeName(po.getComTypeName());
+        // 将查询到的 po 数据转换为 vo
+        List<InviteDetailVO> vos = new ArrayList<>();
+        for (InviteDetailPO po : pos) {
+            InviteDetailVO vo = new InviteDetailVO();
+            vo.setPayTime(po.getPayTime());
+            vo.setComTypeName(po.getComTypeName());
             if (null != po.getPay()) {
-                dto.setPay(Double.valueOf(po.getPay())*0.01);
+                vo.setPay(Double.valueOf(po.getPay())*0.01);
             }
-            dto.setVipname(queryVipnameByVipid(po.getViptypeId()));
-            dto.setProportion(po.getProportion()+"%");
+            vo.setVipname(queryVipnameByVipid(po.getViptypeId()));
+            vo.setProportion(po.getProportion()+"%");
             if (null != po.getEarnings()) {
-                dto.setEarnings(Double.valueOf(po.getEarnings())*0.01);
+                vo.setEarnings(Double.valueOf(po.getEarnings())*0.01);
             }
 
-            DTOs.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), DTOs);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
 

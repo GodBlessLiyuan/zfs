@@ -1,16 +1,15 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.RoleMapper;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.RoleDTO;
-import com.rpa.web.mapper.RoleMapper;
-import com.rpa.web.pojo.RolePO;
+import com.rpa.common.pojo.RolePO;
 import com.rpa.web.service.RoleService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.RoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -34,26 +33,26 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public DTPageInfo<RoleDTO> query(int draw, int start, int length) {
+    public DTPageInfo<RoleVO> query(int draw, int start, int length) {
 
         // 分页
-        Page<RoleDTO> page = PageHelper.startPage(start, length);
+        Page<RoleVO> page = PageHelper.startPage(start, length);
 
         // 按照条件查询数据
-        List<RolePO> lists_PO = roleMapper.query();
+        List<RolePO> pos = roleMapper.query();
 
         // 将查询到的 PO 数据转换为 DTO
-        List<RoleDTO> lists_DTO = new ArrayList<>();
-        for (RolePO po : lists_PO) {
-            RoleDTO dto = new RoleDTO();
-            dto.setRoleId(po.getRoleId());
-            dto.setRoleNum(po.getRoleNum());
-            dto.setRoleName(po.getRoleName());
+        List<RoleVO> vos = new ArrayList<>();
+        for (RolePO po : pos) {
+            RoleVO vo = new RoleVO();
+            vo.setRoleId(po.getRoleId());
+            vo.setRoleNum(po.getRoleNum());
+            vo.setRoleName(po.getRoleName());
 
-            lists_DTO.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 }

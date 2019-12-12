@@ -1,14 +1,13 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.ShareActivityMapper;
 import com.rpa.common.utils.RedisKeyUtil;
-import com.rpa.common.constant.Constant;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.dto.ShareActivityDTO;
+import com.rpa.web.utils.OperatorUtil;
+import com.rpa.web.vo.ShareActivityVO;
 import com.rpa.common.mapper.AdminUserMapper;
-import com.rpa.web.mapper.ShareActivityMapper;
-import com.rpa.web.pojo.ShareActivityPO;
+import com.rpa.common.pojo.ShareActivityPO;
 import com.rpa.web.service.ShareActivityService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
@@ -55,37 +54,37 @@ public class ShareActivityServiceImpl implements ShareActivityService {
      * @return
      */
     @Override
-    public DTPageInfo<ShareActivityDTO> query(int draw, int start, int length, Byte type) {
+    public DTPageInfo<ShareActivityVO> query(int draw, int start, int length, Byte type) {
 
         // 分页
-        Page<ShareActivityDTO> page = PageHelper.startPage(start, length);
+        Page<ShareActivityVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(1);
         map.put("type", type);
 
         // 按照条件查询数据
-        List<ShareActivityPO> lists_PO = this.shareActivityMapper.query(map);
+        List<ShareActivityPO> pos = this.shareActivityMapper.query(map);
 
-        // 将查询到的 ShareActivityPO 数据转换为 ShareActivityDTO
-        List<ShareActivityDTO> lists_DTO = new ArrayList<>();
-        for(ShareActivityPO po: lists_PO) {
-            ShareActivityDTO dto = new ShareActivityDTO();
-            dto.setMaterialId(po.getMaterialId());
-            dto.setType(po.getType());
+        // 将查询到的 po 数据转换为 vo
+        List<ShareActivityVO> vos = new ArrayList<>();
+        for(ShareActivityPO po: pos) {
+            ShareActivityVO vo = new ShareActivityVO();
+            vo.setMaterialId(po.getMaterialId());
+            vo.setType(po.getType());
             if (po.getType() == 1) {
-                dto.setContent(po.getContent());
+                vo.setContent(po.getContent());
             } else {
-                dto.setContent(publicPath + po.getContent());
+                vo.setContent(publicPath + po.getContent());
             }
-            dto.setExtra(po.getExtra());
-            dto.setOperator(queryUsernameByAid(po.getaId()));
+            vo.setExtra(po.getExtra());
+            vo.setOperator(queryUsernameByAid(po.getaId()));
 
-            lists_DTO.add(dto);
+            vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), lists_DTO);
+        return new DTPageInfo<>(draw, page.getTotal(), vos);
     }
 
 
@@ -100,10 +99,6 @@ public class ShareActivityServiceImpl implements ShareActivityService {
      */
     @Override
     public ResultVO insert(Byte type, String contentText, MultipartFile contentImage, String extra, HttpSession httpSession) {
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
 
         // 创建一个 po 对象
         ShareActivityPO po = new ShareActivityPO();
@@ -115,7 +110,7 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         }
         po.setExtra(extra);
         po.setCreateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         this.shareActivityMapper.insert(po);
 
@@ -138,11 +133,6 @@ public class ShareActivityServiceImpl implements ShareActivityService {
     @Override
     public ResultVO update(Integer materialId, Byte type, String contentText, MultipartFile contentImage, String extra, HttpSession httpSession) {
 
-        // 从session中获取当前用户的a_id
-        // 能从session中获取用户的信息，说明当前用户是登录状态
-        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
-        int aId = adminUserDTO.getaId();
-
         // 根据material_id字段，从表t_share_activity中查出要修改的数据
         ShareActivityPO po = this.shareActivityMapper.selectByPrimaryKey(materialId);
         po.setType(type);
@@ -153,7 +143,7 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         }
         po.setExtra(extra);
         po.setUpdateTime(new Date());
-        po.setaId(aId);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         this.shareActivityMapper.updateByPrimaryKey(po);
 
@@ -171,6 +161,7 @@ public class ShareActivityServiceImpl implements ShareActivityService {
      */
     @Override
     public ResultVO delete(int materialId) {
+
         this.shareActivityMapper.deleteByPrimaryKey(materialId);
 
         //删除Redis
@@ -194,7 +185,7 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         }
 
         // 将查询到的 po 转换为 dto
-        ShareActivityDTO dto = new ShareActivityDTO();
+        ShareActivityVO dto = new ShareActivityVO();
         dto.setType(po.getType());
         if (po.getType() == 1) {
             dto.setContent(po.getContent());

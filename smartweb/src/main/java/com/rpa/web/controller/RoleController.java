@@ -1,12 +1,10 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.RoleDTO;
 import com.rpa.web.service.RoleService;
 import com.rpa.web.utils.DTPageInfo;
+import com.rpa.web.vo.RoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * @author: dangyi
@@ -30,12 +28,12 @@ public class RoleController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<RoleDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                     @RequestParam(value = "start", defaultValue = "1") int start,
-                                     @RequestParam(value = "length", defaultValue = "10") int length
+    public DTPageInfo<RoleVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                    @RequestParam(value = "start", defaultValue = "1") int start,
+                                    @RequestParam(value = "length", defaultValue = "10") int length
     ) {
         // 调用业务层，返回页面结果
-        DTPageInfo<RoleDTO> dTPageInfo = roleService.query(draw, start, length);
+        DTPageInfo<RoleVO> dTPageInfo = roleService.query(draw, start, length);
         return dTPageInfo;
     }
 }

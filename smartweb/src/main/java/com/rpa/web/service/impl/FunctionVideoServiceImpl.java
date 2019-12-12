@@ -5,8 +5,8 @@ import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.vo.FunctionVideoVO;
 import com.rpa.common.mapper.AdminUserMapper;
-import com.rpa.common.mapper.FunctionVideoMapper;
-import com.rpa.common.pojo.FunctionVideoPO;
+import com.rpa.common.mapper.FunctionvideoMapper;
+import com.rpa.common.pojo.FunctionvideoPO;
 import com.rpa.web.service.FunctionVideoService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
@@ -31,7 +31,7 @@ import java.util.*;
 public class FunctionVideoServiceImpl implements FunctionVideoService {
 
     @Autowired
-    private FunctionVideoMapper functionVideoMapper;
+    private FunctionvideoMapper functionVideoMapper;
 
     @Autowired
     private AdminUserMapper adminUserMapper;
@@ -65,11 +65,11 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         map.put("funName", funName);
 
         // 按照条件查询数据
-        List<FunctionVideoPO> pos = functionVideoMapper.query(map);
+        List<FunctionvideoPO> pos = functionVideoMapper.query(map);
 
         // 将查询到的 po 数据转换为 vo
         List<FunctionVideoVO> vos = new ArrayList<>();
-        for(FunctionVideoPO po: pos) {
+        for(FunctionvideoPO po: pos) {
             FunctionVideoVO vo = new FunctionVideoVO();
             vo.setFunctionId(po.getFunctionId());
             vo.setFunName(po.getFunName());
@@ -97,7 +97,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     @Override
     public ResultVO queryById(Integer functionId) {
 
-        FunctionVideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
+        FunctionvideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
         if (null == po) {
             return new ResultVO(1002);
         }
@@ -121,7 +121,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     @Override
     public ResultVO insert(HttpSession httpSession, String funName, MultipartFile url, String extra) {
 
-        FunctionVideoPO po = new FunctionVideoPO();
+        FunctionvideoPO po = new FunctionvideoPO();
 
         // 对funname进行唯一性校验，如果有重名，不给插入
         int funname_count = this.functionVideoMapper.queryFunname(funName);
@@ -159,7 +159,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     public ResultVO update(HttpSession httpSession, Integer functionId, String funName, MultipartFile url, String extra) {
 
         // 从数据库中查询出要修改的数据
-        FunctionVideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
+        FunctionvideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
 
         if (null == po) {
             return new ResultVO(1002);

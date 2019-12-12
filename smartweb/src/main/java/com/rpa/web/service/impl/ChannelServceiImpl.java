@@ -2,14 +2,14 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.bo.ChannelBO;
+import com.rpa.common.mapper.PromoterMapper;
 import com.rpa.common.pojo.ChannelPO;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.ChannelDTO;
 import com.rpa.web.dto.PromoterDTO;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.common.mapper.ChannelMapper;
-import com.rpa.web.mapper.PromoterMapper;
-import com.rpa.web.pojo.PromoterPO;
+import com.rpa.common.pojo.PromoterPO;
 import com.rpa.web.service.ChannelService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;

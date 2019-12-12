@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.ShareActivityDTO;
+import com.rpa.web.vo.ShareActivityVO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface ShareActivityService {
-    DTPageInfo<ShareActivityDTO> query(int draw, int start, int length, Byte type);
+    DTPageInfo<ShareActivityVO> query(int draw, int start, int length, Byte type);
     
     ResultVO delete(int materialId);
 
