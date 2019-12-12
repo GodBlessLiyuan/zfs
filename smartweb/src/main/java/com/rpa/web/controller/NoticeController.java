@@ -1,6 +1,6 @@
 package com.rpa.web.controller;
 
-import com.rpa.web.dto.NoticeDTO;
+import com.rpa.web.vo.NoticeVO;
 import com.rpa.web.service.NoticeService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -37,17 +37,17 @@ public class NoticeController {
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<NoticeDTO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                       @RequestParam(value = "start", defaultValue = "1") int start,
-                                       @RequestParam(value = "length", defaultValue = "10") int length,
-                                       @RequestParam(value = "startTime", required = false) String startTime,
-                                       @RequestParam(value = "endTime", required = false) String endTime,
-                                       @RequestParam(value = "status", required = false) Integer status,
-                                       @RequestParam(value = "type", required = false) Byte type,
-                                       @RequestParam(value = "title", required = false) String title
+    public DTPageInfo<NoticeVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
+                                      @RequestParam(value = "start", defaultValue = "1") int start,
+                                      @RequestParam(value = "length", defaultValue = "10") int length,
+                                      @RequestParam(value = "startTime", required = false) String startTime,
+                                      @RequestParam(value = "endTime", required = false) String endTime,
+                                      @RequestParam(value = "status", required = false) Integer status,
+                                      @RequestParam(value = "type", required = false) Byte type,
+                                      @RequestParam(value = "title", required = false) String title
     ) {
         // 调用业务层，返回页面结果
-        DTPageInfo<NoticeDTO> dTPageInfo = noticeService.query(draw, start, length, startTime, endTime, status, type, title);
+        DTPageInfo<NoticeVO> dTPageInfo = noticeService.query(draw, start, length, startTime, endTime, status, type, title);
         return dTPageInfo;
     }
 

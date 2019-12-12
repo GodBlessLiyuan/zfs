@@ -79,4 +79,16 @@
       ip = #{ip,jdbcType=CHAR}
     where sid = #{sid,jdbcType=INTEGER}
   </update>
+
+  <select id="queryDayActiveUser" resultType="java.lang.Integer">
+    select count(distinct device_id)
+    from t_device_statistics
+    where visit_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
+  </select>
+
+  <select id="queryMonthActiveUser" resultType="java.lang.Integer">
+    select count(distinct device_id)
+    from t_device_statistics
+    where visit_time >= (select timestamp(date_add(curdate(), interval - day(curdate()) + 1 day)))
+  </select>
 </mapper>
