@@ -205,11 +205,11 @@
                 url: "whiltedevice/insert?imei=" + imei + "&extra=" + extra,
                 dataType: 'json',
                 success: function (data) {
-                    if (data.code === 0) {
+                    if (data.status === 1000) {
                         document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
                     } else {
-                        alert(data.msg);
+                        alert("服务器内部错误！");
                     }
                 }
             });
