@@ -1,6 +1,6 @@
 package com.rpa.web.service;
 
-import com.rpa.web.dto.OrderDTO;
+import com.rpa.web.vo.OrderVO;
 import com.rpa.web.utils.DTPageInfo;
 
 import java.util.Map;
@@ -20,5 +20,5 @@ public interface IOrderService {
      * @param reqData
      * @return
      */
-    DTPageInfo<OrderDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    DTPageInfo<OrderVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 }

@@ -2,7 +2,7 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.dto.SoftChannelDTO;
+import com.rpa.web.vo.SoftChannelVO;
 import com.rpa.common.mapper.SoftChannelMapper;
 import com.rpa.common.pojo.SoftChannelPO;
 import com.rpa.web.service.ISoftChannelService;
@@ -28,16 +28,16 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
     private SoftChannelMapper softChannelMapper;
 
     @Override
-    public DTPageInfo<SoftChannelDTO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public DTPageInfo<SoftChannelVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<SoftChannelPO> page = PageHelper.startPage(pageNum, pageSize);
         List<SoftChannelPO> pos = softChannelMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), SoftChannelDTO.convert(pos));
+        return new DTPageInfo<>(draw, page.getTotal(), SoftChannelVO.convert(pos));
     }
 
     @Override
-    public List<SoftChannelDTO> queryAll() {
+    public List<SoftChannelVO> queryAll() {
         List<SoftChannelPO> pos = softChannelMapper.queryAll();
-        return SoftChannelDTO.convert(pos);
+        return SoftChannelVO.convert(pos);
     }
 
     @Override

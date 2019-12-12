@@ -1,7 +1,7 @@
 package com.rpa.web.service;
 
 import com.rpa.web.vo.UserVipVO;
-import com.rpa.web.dto.UserVipDetailsDTO;
+import com.rpa.web.vo.UserVipDetailsVO;
 import com.rpa.web.utils.DTPageInfo;
 
 import java.util.Map;
@@ -32,5 +32,5 @@ public interface IUserVipService {
      * @param userId
      * @return
      */
-    DTPageInfo<UserVipDetailsDTO> queryDetails(int draw, int pageNum, int pageSize, int userId);
+    DTPageInfo<UserVipDetailsVO> queryDetails(int draw, int pageNum, int pageSize, int userId);
 }

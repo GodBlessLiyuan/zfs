@@ -1,4 +1,4 @@
-package com.rpa.web.dto;
+package com.rpa.web.vo;
 
 import com.rpa.common.bo.OrderBO;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.util.List;
  * @version: 1.0
  */
 @Data
-public class OrderDTO implements Serializable {
+public class OrderVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,23 +38,23 @@ public class OrderDTO implements Serializable {
      * @param bo
      * @return
      */
-    public static OrderDTO convert(OrderBO bo) {
-        OrderDTO dto = new OrderDTO();
+    public static OrderVO convert(OrderBO bo) {
+        OrderVO vo = new OrderVO();
 
-        dto.setOrderNumber(bo.getOrderNumber());
-        dto.setUserChanName(bo.getUserChanName());
-        dto.setSaleChanName(bo.getSaleChanName());
-        dto.setType(bo.getType());
-        dto.setPhone(bo.getPhone());
-        dto.setCreateTime(bo.getCreateTime());
-        dto.setPayTime(bo.getPayTime());
-        dto.setComName(bo.getComName());
-        dto.setDays(bo.getDays());
-        dto.setPrice(bo.getPrice());
-        dto.setShowDiscount(bo.getShowDiscount());
-        dto.setDiscount(bo.getDiscount() / 100);
+        vo.setOrderNumber(bo.getOrderNumber());
+        vo.setUserChanName(bo.getUserChanName());
+        vo.setSaleChanName(bo.getSaleChanName());
+        vo.setType(bo.getType());
+        vo.setPhone(bo.getPhone());
+        vo.setCreateTime(bo.getCreateTime());
+        vo.setPayTime(bo.getPayTime());
+        vo.setComName(bo.getComName());
+        vo.setDays(bo.getDays());
+        vo.setPrice(bo.getPrice());
+        vo.setShowDiscount(bo.getShowDiscount());
+        vo.setDiscount(bo.getDiscount() / 100);
 
-        return dto;
+        return vo;
     }
 
     /**
@@ -63,13 +63,13 @@ public class OrderDTO implements Serializable {
      * @param bos
      * @return
      */
-    public static List<OrderDTO> convert(List<OrderBO> bos) {
+    public static List<OrderVO> convert(List<OrderBO> bos) {
 
-        List<OrderDTO> dtos = new ArrayList<>();
+        List<OrderVO> vos = new ArrayList<>();
         for (OrderBO bo : bos) {
-            dtos.add(OrderDTO.convert(bo));
+            vos.add(OrderVO.convert(bo));
         }
 
-        return dtos;
+        return vos;
     }
 }
