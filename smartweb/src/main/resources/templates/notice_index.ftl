@@ -389,10 +389,10 @@
                 contentType: false,
                 processData: false,
                 success: function (result) {
-                    if (result.code === 1008) {
+                    if (result.status === 1008) {
                         alert("登录超时，请重新登录！");
                         window.location.href = 'login';
-                    }else if (result.code == 0) {
+                    }else if (result.status == 0) {
                         alert("新增成功！");
                     } else {
                         alert("新增失败！");
@@ -571,10 +571,10 @@
         var status = $('#statusChange_2').val();
 
         $.post("notice/update/status", {noticeId:noticeId, status:status}, function (result) {
-            if (result.code === 1008) {
+            if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.code === 0) {
+            }else if (result.status === 0) {
                 alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
             } else {
@@ -597,10 +597,10 @@
     function deleteClick() {
         var noticeId = $('#delete').val();
         $.post("notice/delete", {noticeId:noticeId}, function (result) {
-            if (result.code === 1008) {
+            if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.code === 0) {
+            }else if (result.status === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);
             } else {

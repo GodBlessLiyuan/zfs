@@ -313,7 +313,7 @@
             url: 'admin/queryAllRoles',
             dataType: 'JSON',
             success: function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
                 } else {
@@ -353,10 +353,10 @@
 
             $.post("admin/insert", {roleId:roleId, username:username, password:password, name:name, phone:phone,
                 email:email, extra:extra}, function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
-                }else if (result.code === 0) {
+                }else if (result.status === 0) {
                     alert("新增成功！")
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -451,7 +451,7 @@
             url: 'admin/queryAllRoles',
             dataType: 'JSON',
             success: function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
                 } else {
@@ -467,7 +467,7 @@
             url: 'admin/queryById?aId=' + aId,
             dataType: 'JSON',
             success: function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
                 } else {
@@ -512,10 +512,10 @@
 
             $.post("admin/update", {aId:aId, roleId:roleId, username:username, password:password, name:name,
                 phone:phone, email:email, extra:extra}, function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
-                }else if (result.code === 0) {
+                }else if (result.status === 0) {
                     alert("更新成功！")
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -540,10 +540,10 @@
     function deleteClick() {
         var aId = $('#delete').val();
         $.post("admin/delete", {aId:aId}, function (result) {
-            if (result.code === 1008) {
+            if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.code === 0) {
+            }else if (result.status === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);
             } else {

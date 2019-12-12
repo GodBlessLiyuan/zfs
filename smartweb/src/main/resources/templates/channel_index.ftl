@@ -220,7 +220,7 @@
             url: 'channel/queryProNames',
             dataType: 'JSON',
             success: function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
                 } else {
@@ -302,7 +302,7 @@
             url: 'channel/queryAllProNames',
             dataType: 'JSON',
             success: function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
                 } else {
@@ -332,10 +332,10 @@
 
             $.post("channel/insert", {chanName:chanName, chanNickname:chanNickname, proId:proId, extra:extra},
                 function (result) {
-                    if (result.code === 1008) {
+                    if (result.status === 1008) {
                         alert("登录超时，请重新登录！");
                         window.location.href = 'login';
-                    }else if (result.code === 0) {
+                    }else if (result.status === 0) {
                         alert("新增成功！")
                         $('#datatab').DataTable().draw(false);
                     } else {

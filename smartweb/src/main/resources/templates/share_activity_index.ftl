@@ -333,10 +333,10 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
-                }else if (result.code == 0) {
+                }else if (result.status == 0) {
                     alert("新增成功！");
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -438,7 +438,7 @@
             dataType: 'JSON',
             success: function (result) {
 
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
                 } else {
@@ -527,10 +527,10 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                if (result.code === 1008) {
+                if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
-                }else if (result.code == 0) {
+                }else if (result.status == 0) {
                     alert("修改成功！");
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -556,10 +556,10 @@
     function deleteClick() {
         var materialId = $('#delete').val();
         $.post("shareactivity/delete", {materialId: materialId}, function (result) {
-            if (result.code === 1008) {
+            if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.code === 0) {
+            }else if (result.status === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);
             } else {

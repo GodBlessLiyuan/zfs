@@ -94,12 +94,12 @@ public class ChBatchServiceImpl implements ChBatchService {
             return new ResultVO(1002);
         }
 
-        // 将 po 转换为 dto
+        // 将 bo 转换为 vo
         List<ComTypeVO> vos = new ArrayList<>();
-        for (ComTypeBO po : bos) {
+        for (ComTypeBO bo : bos) {
             ComTypeVO vo = new ComTypeVO();
-            vo.setComTypeId(po.getComTypeId());
-            vo.setName(po.getName());
+            vo.setComTypeId(bo.getComTypeId());
+            vo.setName(bo.getName());
             vos.add(vo);
         }
         return new ResultVO(1000, vos);

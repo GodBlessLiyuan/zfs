@@ -140,7 +140,7 @@
     where chan_id = #{chanId,jdbcType=INTEGER}
   </update>
 
-  <select id="query" parameterType="java.lang.Integer" resultType="com.rpa.common.pojo.ChannelPO">
+  <select id="query" parameterType="java.lang.Integer" resultType="com.rpa.common.bo.ChannelBO">
     select
     chan_nickname as chanNickname, chan_name as chanName, c.pro_id as proId, p.pro_name as proName,
     phone, c.extra, c.create_time as createTime, c.a_id as aId
@@ -156,7 +156,7 @@
     </where>
   </select>
 
-  <select id="queryProNames" resultType="com.rpa.common.pojo.ChannelPO">
+  <select id="queryProNames" resultType="com.rpa.common.bo.ChannelBO">
     select distinct
     p.pro_name as proName, c.pro_id as proId
     from t_channel c

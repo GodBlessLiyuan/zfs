@@ -280,10 +280,10 @@
                 contentType: false,
                 processData: false,
                 success: function (result) {
-                    if (result.code === 1008) {
+                    if (result.status === 1008) {
                         alert("登录超时，请重新登录！");
                         window.location.href = 'login';
-                    }else if (result.code == 0) {
+                    }else if (result.status == 0) {
                         alert("新增成功！");
                     } else {
                         alert("新增失败！");
@@ -399,10 +399,10 @@
         var bannerId = $('#statusChange_1').val();
         var status = $('#statusChange_2').val();
         $.post("bannerconfig/update/status", {bannerId:bannerId, status:status}, function (result) {
-            if (result.code === 1008) {
+            if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.code === 0) {
+            }else if (result.status === 0) {
                 alert("状态修改成功！")
                 $('#datatab').DataTable().draw(false);
             } else {
@@ -425,10 +425,10 @@
     function deleteClick() {
         var bannerId = $('#delete').val();
         $.post("bannerconfig/delete", {bannerId:bannerId}, function (result) {
-            if (result.code === 1008) {
+            if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.code === 0) {
+            }else if (result.status === 0) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);
             } else {
