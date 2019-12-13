@@ -86,7 +86,7 @@ public class PageController {
     }
 
     /**
-     * 微信白名单
+     * 应用黑名单
      *
      * @return
      */
@@ -113,6 +113,16 @@ public class PageController {
     @RequestMapping("/appversion")
     public String app() {
         return "app_index";
+    }
+
+    /**
+     * 分身更新
+     *
+     * @return
+     */
+    @RequestMapping("/avatar")
+    public String avatar() {
+        return "avatar_index";
     }
 
     /**
