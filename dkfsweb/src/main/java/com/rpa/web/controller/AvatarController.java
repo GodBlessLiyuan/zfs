@@ -68,9 +68,9 @@ public class AvatarController {
     }
 
     @RequestMapping("updateStatus")
-    public ResultVO updateStatus(@RequestParam(value = "appId") int appId,
+    public ResultVO updateStatus(@RequestParam(value = "avatarId") long avatarId,
                                  @RequestParam(value = "status") byte status) {
-        return service.updateStatus(appId, status);
+        return service.updateStatus(avatarId, status);
     }
 
     @RequestMapping("delete")

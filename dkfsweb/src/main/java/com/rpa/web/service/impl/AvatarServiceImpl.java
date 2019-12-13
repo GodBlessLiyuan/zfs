@@ -196,11 +196,11 @@ public class AvatarServiceImpl implements IAvatarService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO updateStatus(long avatarId, byte status) {
-//        AvatarPO appPO = avatarMapper.selectByPrimaryKey(avatarId);
-//        appPO.setPublishTime(status == 2 ? new Date() : null);
-//        appPO.setStatus(status);
-//        avatarMapper.updateByPrimaryKey(appPO);
-//        appAvaChMapper.updateStatus(avatarId, status);
+        AvatarPO avatarPO = avatarMapper.selectByPrimaryKey(avatarId);
+        avatarPO.setPublishTime(status == 2 ? new Date() : null);
+        avatarPO.setStatus(status);
+        avatarMapper.updateByPrimaryKey(avatarPO);
+        appAvaChMapper.updateStatus(avatarId, status);
 
         return new ResultVO(1000);
     }

@@ -131,4 +131,7 @@
     from t_app_ava_ch
     where avatar_id = #{avatarId,jdbcType=BIGINT} and app_id = #{appId,jdbcType=INTEGER}
   </select>
+  <update id="updateStatus">
+    update t_app_ava_ch set `status` = #{status,jdbcType=TINYINT} where avatar_id = #{avatarId,jdbcType=BIGINT}
+  </update>
 </mapper>

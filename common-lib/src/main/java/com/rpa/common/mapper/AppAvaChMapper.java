@@ -13,5 +13,7 @@ import java.util.List;
 public interface AppAvaChMapper extends BaseMapper<AppAvaChPO, Long> {
     void batchInsert(List<AppAvaChPO> aacPOs);
 
-    List<AppAvaChPO> queryByAvatarIdAndAppId(@Param("avatarId") Long avatarId,@Param("appId") int appId);
+    List<AppAvaChPO> queryByAvatarIdAndAppId(@Param("avatarId") Long avatarId, @Param("appId") int appId);
+
+    void updateStatus(@Param("avatarId") long avatarId, @Param("status") byte status);
 }
