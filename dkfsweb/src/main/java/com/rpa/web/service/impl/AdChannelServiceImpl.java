@@ -2,6 +2,7 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.pojo.AdChannelPO;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.bo.AdChannelBO;
 import com.rpa.web.dto.AdChannelDTO;
@@ -19,12 +20,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -182,7 +180,7 @@ public class AdChannelServiceImpl implements AdChannelService {
             this.adChannelMapper.update(po);
 
             //删除Redis
-            this.deleteRedis(dto.getSoftChannelId());
+            this.deleteRedis();
         }
 
         return new ResultVO(1000);
@@ -192,14 +190,10 @@ public class AdChannelServiceImpl implements AdChannelService {
     /**
      * 删除Redis，根据soft_channel_id
      */
-    private void deleteRedis(Integer softChannelId) {
-        String name = this.softChannelMapper.queryNameById(softChannelId);
-        List<Integer> versioncodes = this.appMapper.queryVersioncodes();
-        for (Integer versioncode : versioncodes) {
-            String key = "smarthelper" + "adconfig" + name + versioncode;
-            if (template.hasKey(key)) {
-                this.template.delete(key);
-            }
+    private void deleteRedis() {
+        Set<String> redisKeys = template.keys(RedisKeyUtil.genAdconfigRedisKey("*"));
+        if (!CollectionUtils.isEmpty(redisKeys)) {
+            template.delete(redisKeys);
         }
     }
 }
