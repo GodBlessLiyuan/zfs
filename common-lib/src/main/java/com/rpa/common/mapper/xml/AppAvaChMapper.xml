@@ -14,7 +14,7 @@
     aac_id, app_id, soft_channel_id, avatar_id, `status`, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_app_ava_ch
     where aac_id = #{aacId,jdbcType=BIGINT}
@@ -114,4 +114,21 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where aac_id = #{aacId,jdbcType=BIGINT}
   </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_app_ava_ch (aac_id, app_id, soft_channel_id,
+      avatar_id, `status`, create_time,
+      update_time)
+    values
+    <foreach collection="list" item="aacPO" index="index" separator=",">
+      (#{aacPO.aacId,jdbcType=BIGINT}, #{aacPO.appId,jdbcType=INTEGER}, #{aacPO.softChannelId,jdbcType=INTEGER},
+      #{aacPO.avatarId,jdbcType=BIGINT}, #{aacPO.status,jdbcType=TINYINT}, #{aacPO.createTime,jdbcType=TIMESTAMP},
+      #{aacPO.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <select id="queryByAvatarIdAndAppId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_app_ava_ch
+    where avatar_id = #{avatarId,jdbcType=BIGINT} and app_id = #{appId,jdbcType=INTEGER}
+  </select>
 </mapper>

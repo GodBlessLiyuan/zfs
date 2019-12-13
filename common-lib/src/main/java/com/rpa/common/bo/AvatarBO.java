@@ -11,4 +11,8 @@ import lombok.Data;
  */
 @Data
 public class AvatarBO extends AvatarPO {
+    private String username;
+    private String versionName;
+    private int chanId;
+    private String chanName;
 }

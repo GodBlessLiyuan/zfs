@@ -470,7 +470,7 @@
             "serverSide": true,
             "searching": false, // 禁用全文搜索
             "ordering": false, // 禁用排序
-            "ajax": "avatar/query?username=" + $('#username').val(),
+            "ajax": "avatar/query?updateType=" + $('#updateType').val(),
             "fnDrawCallback": function () {
                 this.api().column(0).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -480,7 +480,9 @@
                 {"data": null, "targets": 0},
                 {"data": "publishTime"},
                 {"data": "username"},
+                {"data": "versionName"},
                 {"data": "size"},
+                {"data": "updateType"},
                 {"data": "context"},
                 {"data": "name"},
                 {"data": "status"},
@@ -512,7 +514,13 @@
             ],
             "columnDefs": [
                 {
-                    "targets": [6],
+                    "targets": [5],
+                    "render": function (data, type, full) {
+                        return data === 1 ? "普通更新" : "强制更新";
+                    }
+                },
+                {
+                    "targets": [8],
                     "render": function (data, type, full) {
                         return data === 1 ? "未发布" : "已发布";
                     }

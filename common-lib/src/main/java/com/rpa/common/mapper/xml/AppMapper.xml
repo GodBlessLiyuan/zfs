@@ -32,7 +32,7 @@
     delete from t_app
     where app_id = #{appId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.common.pojo.AppPO">
+  <insert id="insert" parameterType="com.rpa.common.pojo.AppPO" useGeneratedKeys="true" keyProperty="appId">
     insert into t_app (app_id, versionname, versioncode, 
       create_time, update_time, url, 
       a_id, `status`, update_type, 

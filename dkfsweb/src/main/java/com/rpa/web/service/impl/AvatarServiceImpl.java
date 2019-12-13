@@ -1,5 +1,6 @@
 package com.rpa.web.service.impl;
 
+import com.rpa.common.bo.AvatarBO;
 import com.rpa.common.constant.ModuleConstant;
 import com.rpa.common.mapper.AppAvaChMapper;
 import com.rpa.common.mapper.AvatarMapper;
@@ -41,15 +42,14 @@ public class AvatarServiceImpl implements IAvatarService {
     @Override
     public DTPageInfo<AvatarVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         PageHelper.startPage(pageNum, pageSize);
-        return null;
-//        List<Integer> appIds = avatarMapper.queryAppId(reqData);
-//
-//        List<AppBO> bos = new ArrayList<>();
-//        if (null != appIds && appIds.size() > 0) {
-//            bos = avatarMapper.queryByIds(appIds);
-//        }
-//        List<AvatarVO> dto = AvatarVO.convert(bos);
-//        return new DTPageInfo<>(draw, dto.size(), dto);
+        List<Integer> avatarIds = avatarMapper.queryAvatarIds(reqData);
+
+        List<AvatarBO> bos = new ArrayList<>();
+        if (null != avatarIds && avatarIds.size() > 0) {
+            bos = avatarMapper.queryByAvatarIds(avatarIds);
+        }
+        List<AvatarVO> dto = AvatarVO.convert(bos);
+        return new DTPageInfo<>(draw, dto.size(), dto);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -73,46 +73,37 @@ public class AvatarServiceImpl implements IAvatarService {
 
             List<AppAvaChPO> aacPOs = new ArrayList<>();
             for (int chanId : softChannel) {
-                AppAvaChPO aacPO = new AppAvaChPO();
-                aacPO.setAppId(appId);
-                aacPO.setSoftChannelId(chanId);
-                aacPO.setAvatarId(avatarPO.getAvatarId());
-                aacPO.setStatus((byte) 1);
-                aacPO.setCreateTime(new Date());
-                aacPOs.add(aacPO);
+                aacPOs.add(genAacPO(appId, chanId, avatarPO.getAvatarId()));
             }
             appAvaChMapper.batchInsert(aacPOs);
 
             return new ResultVO(1000);
         }
 
-//        // 更新
-//        buildAvatarPO(file, updateType, context, extra, aId, apkInfo, avatarPO);
-//        avatarMapper.updateByPrimaryKey(avatarPO);
-//        // 根据appId查询应用渠道数据
-//        List<AppAvaChPO> appChPOs = appAvaChMapper.queryByAppId(avatarPO.getAppId());
-//
-//        Map<Integer, AppAvaChPO> map = new HashMap<>(appChPOs.size());
-//        for (AppAvaChPO appChPO : appChPOs) {
-//            map.put(appChPO.getSoftChannelId(), appChPO);
-//        }
-//        // 待新增的AppChPO
-//        List<AppAvaChPO> insAppChPOs = new ArrayList<>();
-//        for (int scId : softChannel) {
-//            if (!map.containsKey(scId)) {
-//                AppAvaChPO appChPO = new AppAvaChPO();
-//                appChPO.setStatus(avatarPO.getStatus().byteValue());
-//                appChPO.setAppId(avatarPO.getAppId());
-//                appChPO.setSoftChannelId(scId);
-//                insAppChPOs.add(appChPO);
-//            }
-//        }
-//
-//        if (insAppChPOs.size() != 0) {
-//            // 新增应用渠道数据
-//            appAvaChMapper.batchInsert(insAppChPOs);
-//        }
+        // 更新
+        buildAvatarPO(file, updateType, context, extra, aId, apkInfo, avatarPO);
+        avatarMapper.updateByPrimaryKey(avatarPO);
+        // 根据avatarId和appId查询应用渠道数据
+        List<AppAvaChPO> aacPOs = appAvaChMapper.queryByAvatarIdAndAppId(avatarPO.getAvatarId(), appId);
+        List<Integer> exitChanIds = new ArrayList<>();
+        if (null != aacPOs && aacPOs.size() > 0) {
+            for (AppAvaChPO po : aacPOs) {
+                exitChanIds.add(po.getSoftChannelId());
+            }
+        }
 
+        // 待新增的AppChPO
+        List<AppAvaChPO> insAppChPOs = new ArrayList<>();
+        for (int chanId : softChannel) {
+            if (exitChanIds.size() == 0 || !exitChanIds.contains(chanId)) {
+                insAppChPOs.add(genAacPO(appId, chanId, avatarPO.getAvatarId()));
+            }
+        }
+
+        if (insAppChPOs.size() != 0) {
+            // 新增应用渠道数据
+            appAvaChMapper.batchInsert(insAppChPOs);
+        }
 
         return new ResultVO(1000);
     }
@@ -168,6 +159,24 @@ public class AvatarServiceImpl implements IAvatarService {
 //        }
 
         return new ResultVO(1000);
+    }
+
+    /**
+     * 生成 AppAvaChPO
+     *
+     * @param appId
+     * @param chanId
+     * @param avatarId
+     * @return
+     */
+    private AppAvaChPO genAacPO(int appId, int chanId, long avatarId) {
+        AppAvaChPO aacPO = new AppAvaChPO();
+        aacPO.setAppId(appId);
+        aacPO.setSoftChannelId(chanId);
+        aacPO.setAvatarId(avatarId);
+        aacPO.setStatus((byte) 1);
+        aacPO.setCreateTime(new Date());
+        return aacPO;
     }
 
     private void setAppPObyFile(MultipartFile file, AvatarPO appPO) {

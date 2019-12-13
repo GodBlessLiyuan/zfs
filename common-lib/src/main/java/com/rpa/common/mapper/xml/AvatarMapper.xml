@@ -211,8 +211,28 @@
   <select id="queryByVersionCode" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from t_avatar
-    where dr = 1 and versioncode = #{versionCode}
+    where dr = 1 and version_code = #{versionCode}
     order by avatar_id
     limit 1
+  </select>
+  <select id="queryAvatarIds" resultType="java.lang.Long">
+    select avatar_id as avatarId
+    from t_avatar
+    where dr = 1
+    <if test="updateType != null and updateType != 0">
+      and update_type = #{updateType,jdbcType=TINYINT}
+    </if>
+    order by avatar_id
+  </select>
+  <select id="queryByAvatarIds" resultType="com.rpa.common.bo.AvatarBO">
+    select a.avatar_id as avatarId, a.publish_time as publishTime, au.username, a.version_name as versionName, a.size,
+    a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra
+    from t_avatar a
+    left join t_app_ava_ch aac on a.avatar_id = aac.avatar_id
+    left join t_soft_channel s on aac.soft_channel_id = s.soft_channel_id
+    left join t_admin_user au on a.a_id = au.a_id where a.dr = 1 and a.avatar_id in (
+    <foreach collection="list" item="avatarId" index="index" separator=",">
+      #{avatarId,jdbcType=BIGINT}
+    </foreach>)
   </select>
 </mapper>
