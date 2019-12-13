@@ -14,6 +14,7 @@ import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -74,13 +75,13 @@ public class RevenueUserServiceImpl implements RevenueUserService {
                 vo.setRegisterCount(po.getRegisterCount());
                 vo.setPayCount(po.getPayCount());
                 if (null != po.getTotalRevenue()) {
-                    vo.setTotalRevenue(Double.valueOf(po.getTotalRevenue())*0.01);
+                    vo.setTotalRevenue(decimal(po.getTotalRevenue()*0.01));
                 }
                 if (null != po.getRemaining()) {
-                    vo.setRemaining(Double.valueOf(po.getRemaining())*0.01);
+                    vo.setRemaining(decimal(po.getRemaining()*0.01));
                 }
                 if (null != po.getWithdraw()) {
-                    vo.setWithdraw(Double.valueOf(po.getWithdraw())*0.01);
+                    vo.setWithdraw(decimal(po.getWithdraw()*0.01));
                 }
                 vo.setWithdrawTime(po.getWithdrawTime());
 
@@ -129,7 +130,7 @@ public class RevenueUserServiceImpl implements RevenueUserService {
             vo.setAcceptTime(bo.getAcceptTime());
             vo.setRegisterTime(bo.getRegisterTime());
             if (null != bo.getEarnings()) {
-                vo.setEarnings(bo.getEarnings()*0.01);
+                vo.setEarnings(decimal(bo.getEarnings()*0.01));
             }
 
             vos.add(vo);
@@ -174,12 +175,12 @@ public class RevenueUserServiceImpl implements RevenueUserService {
             vo.setPayTime(po.getPayTime());
             vo.setComTypeName(po.getComTypeName());
             if (null != po.getPay()) {
-                vo.setPay(Double.valueOf(po.getPay())*0.01);
+                vo.setPay(decimal(po.getPay()*0.01));
             }
             vo.setVipname(queryVipnameByVipid(po.getViptypeId()));
             vo.setProportion(po.getProportion()+"%");
             if (null != po.getEarnings()) {
-                vo.setEarnings(Double.valueOf(po.getEarnings())*0.01);
+                vo.setEarnings(decimal(po.getEarnings()*0.01));
             }
 
             vos.add(vo);
@@ -207,5 +208,15 @@ public class RevenueUserServiceImpl implements RevenueUserService {
      */
     private String queryVipnameByVipid(Integer viptypeId) {
         return this.vipTypeMapper.queryVipnameByVipid(viptypeId);
+    }
+
+    /**
+     * 保留两位小数
+     * @param d
+     * @return
+     */
+    private Double decimal(Double d) {
+        BigDecimal bd = new BigDecimal(d);
+        return bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 }

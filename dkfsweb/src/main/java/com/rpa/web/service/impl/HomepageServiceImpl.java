@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -88,7 +89,7 @@ public class HomepageServiceImpl implements HomepageService {
         String dayRevenue;
         dayRevenue = (String) this.template.opsForHash().get(key_revenue, "dayRevenue");
         if (null == dayRevenue) {
-            dayRevenue = String.valueOf(this.orderMapper.queryDayRevenue()*0.01);
+            dayRevenue = String.valueOf(decimal(this.orderMapper.queryDayRevenue()*0.01));
         }
 
         //支付次数
@@ -102,7 +103,7 @@ public class HomepageServiceImpl implements HomepageService {
         String monthRevenue;
         monthRevenue = (String) this.template.opsForHash().get(key_revenue, "monthRevenue");
         if (null == monthRevenue) {
-            monthRevenue = String.valueOf(this.orderMapper.queryMonthRevenue()*0.01);
+            monthRevenue = String.valueOf(decimal(this.orderMapper.queryMonthRevenue()*0.01));
         }
 
         // 创建一个map，存放返回给前端的结果
@@ -116,5 +117,15 @@ public class HomepageServiceImpl implements HomepageService {
         result.put("monthRevenue", monthRevenue);
 
         return new ResultVO(1000, result);
+    }
+
+    /**
+     * 保留两位小数
+     * @param d
+     * @return
+     */
+    private Double decimal(Double d) {
+        BigDecimal bd = new BigDecimal(d);
+        return bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 }
