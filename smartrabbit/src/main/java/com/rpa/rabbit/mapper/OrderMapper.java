@@ -20,11 +20,11 @@ public interface OrderMapper extends BaseMapper<OrderPO, OrderPOKey> {
      */
     OrderBO queryByOrderNumber(String orderNumber);
 
-    Float queryDayRevenue();
+    Long queryDayRevenue();
 
     int queryPayCount();
 
-    Float queryMonthRevenue();
+    Long queryMonthRevenue();
 
     /**
      * 查询支付完成但尚未分成的数据
