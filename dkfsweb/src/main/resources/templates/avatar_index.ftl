@@ -590,7 +590,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/plugin/querySoftChannelByIds?avatarId=' + $('#uAvatarId').val() + "&appId=" + appId,
+                    url: 'avatar/queryChanIds?avatarId=' + $('#uAvatarId').val() + "&appId=" + appId,
                     dataType: 'JSON',
                     success: function (data) {
                         $.each(data, function (i, id) {

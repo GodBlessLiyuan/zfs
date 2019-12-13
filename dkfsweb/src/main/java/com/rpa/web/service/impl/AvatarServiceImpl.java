@@ -58,6 +58,18 @@ public class AvatarServiceImpl implements IAvatarService {
         return AvatarVO.convert(pos);
     }
 
+    @Override
+    public List<Integer> queryChanIds(long avatarId, int appId) {
+        List<AppAvaChPO> aacPOs = appAvaChMapper.queryByAvatarIdAndAppId(avatarId, appId);
+
+        List<Integer> chanIds = new ArrayList<>();
+        for (AppAvaChPO po : aacPOs) {
+            chanIds.add(po.getSoftChannelId());
+        }
+
+        return chanIds;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO insert(MultipartFile file, byte updateType, int appId, int[] softChannel, String context, String extra,

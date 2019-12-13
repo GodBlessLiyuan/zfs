@@ -49,6 +49,12 @@ public class AvatarController {
         return vos.get(0);
     }
 
+    @RequestMapping("queryChanIds")
+    public List<Integer> queryChanIds(@RequestParam(value = "avatarId") long avatarId, @RequestParam(value =
+            "appId") int appId) {
+        return service.queryChanIds(avatarId, appId);
+    }
+
     @PostMapping("insert")
     public ResultVO insert(@RequestParam(value = "file") MultipartFile file,
                            @RequestParam(value = "updateType") byte updateType,

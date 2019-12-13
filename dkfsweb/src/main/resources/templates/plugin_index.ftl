@@ -558,7 +558,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: '/plugin/querySoftChannelByIds?pluginId=' + $('#uPluginId').val() + "&appId=" + appId,
+                    url: 'plugin/querySoftChannelByIds?pluginId=' + $('#uPluginId').val() + "&appId=" + appId,
                     dataType: 'JSON',
                     success: function (data) {
                         $.each(data, function (i, id) {

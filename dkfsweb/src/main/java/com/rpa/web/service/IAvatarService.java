@@ -80,4 +80,12 @@ public interface IAvatarService {
      * @return
      */
     ResultVO update(long avatarId, MultipartFile file, byte updateType, int appId, int[] softChannel, String context, String extra);
+
+    /**
+     * 查询渠道信息
+     * @param avatarId
+     * @param appId
+     * @return
+     */
+    List<Integer> queryChanIds(long avatarId, int appId);
 }
