@@ -1,6 +1,5 @@
 package com.rpa.web.service.impl;
 
-import com.rpa.common.bo.AvatarBO;
 import com.rpa.common.constant.ModuleConstant;
 import com.rpa.common.mapper.AppAvaChMapper;
 import com.rpa.common.mapper.AvatarMapper;
@@ -55,64 +54,65 @@ public class AvatarServiceImpl implements IAvatarService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultVO insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra,
+    public ResultVO insert(MultipartFile file, byte updateType, int appId, int[] softChannel, String context, String extra,
                            int aId) {
-//        // 解析Apk
-//        Map<String, Object> apkInfo = FileUtil.resolveApk(file, avatarDir, ModuleConstant.AVATAR);
-//        if (apkInfo.get("channel") == null || !"vbooster".equals(apkInfo.get("channel"))) {
-//            // 上传应用非官方渠道！
-//            return new ResultVO(1103);
+        // 解析Apk
+        Map<String, Object> apkInfo = FileUtil.resolveApk(file, avatarDir, ModuleConstant.AVATAR);
+        if (apkInfo.get("channel") == null || !"vbooster".equals(apkInfo.get("channel"))) {
+            // 上传应用非官方渠道！
+            return new ResultVO(1103);
+        }
+
+        // 查询是否已存在
+        AvatarPO avatarPO = avatarMapper.queryByVersionCode(apkInfo.get("versioncode"));
+        if (null == avatarPO) {
+            // 新增
+            avatarPO = new AvatarPO();
+            this.buildAvatarPO(file, updateType, context, extra, aId, apkInfo, avatarPO);
+            avatarMapper.insert(avatarPO);
+
+            List<AppAvaChPO> aacPOs = new ArrayList<>();
+            for (int chanId : softChannel) {
+                AppAvaChPO aacPO = new AppAvaChPO();
+                aacPO.setAppId(appId);
+                aacPO.setSoftChannelId(chanId);
+                aacPO.setAvatarId(avatarPO.getAvatarId());
+                aacPO.setStatus((byte) 1);
+                aacPO.setCreateTime(new Date());
+                aacPOs.add(aacPO);
+            }
+            appAvaChMapper.batchInsert(aacPOs);
+
+            return new ResultVO(1000);
+        }
+
+//        // 更新
+//        buildAvatarPO(file, updateType, context, extra, aId, apkInfo, avatarPO);
+//        avatarMapper.updateByPrimaryKey(avatarPO);
+//        // 根据appId查询应用渠道数据
+//        List<AppAvaChPO> appChPOs = appAvaChMapper.queryByAppId(avatarPO.getAppId());
+//
+//        Map<Integer, AppAvaChPO> map = new HashMap<>(appChPOs.size());
+//        for (AppAvaChPO appChPO : appChPOs) {
+//            map.put(appChPO.getSoftChannelId(), appChPO);
+//        }
+//        // 待新增的AppChPO
+//        List<AppAvaChPO> insAppChPOs = new ArrayList<>();
+//        for (int scId : softChannel) {
+//            if (!map.containsKey(scId)) {
+//                AppAvaChPO appChPO = new AppAvaChPO();
+//                appChPO.setStatus(avatarPO.getStatus().byteValue());
+//                appChPO.setAppId(avatarPO.getAppId());
+//                appChPO.setSoftChannelId(scId);
+//                insAppChPOs.add(appChPO);
+//            }
 //        }
 //
-//        // 查询是否已存在
-//        AvatarPO appPO = avatarMapper.queryByVersionCode(apkInfo.get("versioncode"));
-//        if (appPO != null) {
-//            // 更新
-//            buildAppVO(file, updateType, context, extra, aId, apkInfo, appPO);
-//            avatarMapper.updateByPrimaryKey(appPO);
-//            // 根据appId查询应用渠道数据
-//            List<AppAvaChPO> appChPOs = appAvaChMapper.queryByAppId(appPO.getAppId());
-//
-//            Map<Integer, AppAvaChPO> map = new HashMap<>(appChPOs.size());
-//            for (AppAvaChPO appChPO : appChPOs) {
-//                map.put(appChPO.getSoftChannelId(), appChPO);
-//            }
-//            // 待新增的AppChPO
-//            List<AppAvaChPO> insAppChPOs = new ArrayList<>();
-//            for (int scId : softChannel) {
-//                if (!map.containsKey(scId)) {
-//                    AppAvaChPO appChPO = new AppAvaChPO();
-//                    appChPO.setStatus(appPO.getStatus().byteValue());
-//                    appChPO.setAppId(appPO.getAppId());
-//                    appChPO.setSoftChannelId(scId);
-//                    insAppChPOs.add(appChPO);
-//                }
-//            }
-//
-//            if (insAppChPOs.size() != 0) {
-//                // 新增应用渠道数据
-//                appAvaChMapper.batchInsert(insAppChPOs);
-//            }
-//
-//            return new ResultVO(1000);
+//        if (insAppChPOs.size() != 0) {
+//            // 新增应用渠道数据
+//            appAvaChMapper.batchInsert(insAppChPOs);
 //        }
-//
-//        // 新增
-//        appPO = new AvatarPO();
-//        buildAppVO(file, updateType, context, extra, aId, apkInfo, appPO);
-//
-//        avatarMapper.insert(appPO);
-//
-//        List<AppAvaChPO> appChPOs = new ArrayList<>();
-//        for (int chanId : softChannel) {
-//            AppAvaChPO appChPO = new AppAvaChPO();
-//            appChPO.setAppId(appPO.getAppId());
-//            appChPO.setSoftChannelId(chanId);
-//            appChPO.setStatus((byte) 1);
-//            appChPOs.add(appChPO);
-//        }
-//
-//        appAvaChMapper.batchInsert(appChPOs);
+
 
         return new ResultVO(1000);
     }
@@ -215,26 +215,25 @@ public class AvatarServiceImpl implements IAvatarService {
      * @param extra
      * @param aId
      * @param apkInfo
-     * @param appPO
+     * @param avatarPO
      */
-    private void buildAppVO(MultipartFile file, byte updateType, String context, String extra, int aId, Map<String, Object> apkInfo, AvatarPO appPO) {
-        appPO.setUrl((String) apkInfo.get("url"));
-        appPO.setVersionName((String) apkInfo.get("versionname"));
-        appPO.setVersionCode(Math.toIntExact((Long) apkInfo.get("versioncode")));
-        appPO.setSize((int) file.getSize());
+    private void buildAvatarPO(MultipartFile file, byte updateType, String context, String extra, int aId, Map<String, Object> apkInfo, AvatarPO avatarPO) {
 
+        avatarPO.setVersionName((String) apkInfo.get("versionname"));
+        avatarPO.setVersionCode(Math.toIntExact((Long) apkInfo.get("versioncode")));
+        avatarPO.setCreateTime(new Date());
+        avatarPO.setUrl((String) apkInfo.get("url"));
+        avatarPO.setStatus((byte) 1);
+        avatarPO.setUpdateType(updateType);
+        avatarPO.setSize((int) file.getSize());
+        avatarPO.setExtra(extra);
+        avatarPO.setContext(context);
+        avatarPO.setDr((byte) 1);
         try {
-            appPO.setMd5(DigestUtils.md5DigestAsHex(file.getBytes()));
+            avatarPO.setMd5(DigestUtils.md5DigestAsHex(file.getBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        appPO.setUpdateType(updateType);
-        appPO.setContext(context);
-        appPO.setExtra(extra);
-
-        appPO.setCreateTime(new Date());
-        appPO.setaId(aId);
-        appPO.setStatus((byte) 1);
-        appPO.setDr((byte) 1);
+        avatarPO.setaId(aId);
     }
 }
