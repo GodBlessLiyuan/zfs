@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AvatarMapper extends BaseMapper<AvatarPO, Long> {
+    AvatarPO queryByVersionCode(Object versionCode);
 }

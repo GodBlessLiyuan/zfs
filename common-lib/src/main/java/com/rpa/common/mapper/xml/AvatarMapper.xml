@@ -32,7 +32,7 @@
     delete from t_avatar
     where avatar_id = #{avatarId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.common.pojo.AvatarPO">
+  <insert id="insert" parameterType="com.rpa.common.pojo.AvatarPO" useGeneratedKeys="true" keyProperty="avatarId">
     insert into t_avatar (avatar_id, version_name, version_code, 
       create_time, update_time, url, 
       `status`, update_type, `size`, 
@@ -207,4 +207,12 @@
       a_id = #{aId,jdbcType=INTEGER}
     where avatar_id = #{avatarId,jdbcType=BIGINT}
   </update>
+
+  <select id="queryByVersionCode" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_avatar
+    where dr = 1 and versioncode = #{versionCode}
+    order by avatar_id
+    limit 1
+  </select>
 </mapper>

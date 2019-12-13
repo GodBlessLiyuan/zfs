@@ -33,13 +33,14 @@ public interface IAvatarService {
      *
      * @param file        apk文件
      * @param updateType  更新方式
+     * @param appId       应用版本
      * @param softChannel 更新渠道
      * @param context     更新内容
      * @param extra       备注
      * @param aId         管理员
      * @return
      */
-    ResultVO insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra, int aId);
+    ResultVO insert(MultipartFile file, byte updateType, int appId, int[] softChannel, String context, String extra, int aId);
 
     /**
      * 更新状态（发布&取消发布）
