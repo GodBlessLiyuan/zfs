@@ -219,9 +219,7 @@ CREATE TABLE t_app_ava_ch
 	create_time datetime,
 	update_time datetime,
 	PRIMARY KEY (aac_id),
-	UNIQUE (aac_id),
-	UNIQUE (soft_channel_id),
-	UNIQUE (avatar_id)
+	UNIQUE (aac_id)
 );
 
 
