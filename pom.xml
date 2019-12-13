@@ -22,7 +22,7 @@
 
     <modules>
         <module>common-lib</module>
-        <module>smartweb</module>
+        <module>dkfsweb</module>
         <module>smartserver</module>
         <module>smarteureka</module>
         <module>smartzuul</module>

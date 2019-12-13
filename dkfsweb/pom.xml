@@ -11,8 +11,8 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>smartweb</artifactId>
-    <name>smartweb</name>
+    <artifactId>dkfsweb</artifactId>
+    <name>dkfsweb</name>
     <version>1.0.1</version>
 
     <build>
