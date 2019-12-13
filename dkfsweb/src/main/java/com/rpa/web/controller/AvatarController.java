@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +43,12 @@ public class AvatarController {
         return service.query(draw, pageNum, pageSize, reqData);
     }
 
+    @RequestMapping("queryById")
+    public AvatarVO queryById(@RequestParam(value = "avatarId") long avatarId) {
+        List<AvatarVO> vos = service.queryById(avatarId);
+        return vos.get(0);
+    }
+
     @PostMapping("insert")
     public ResultVO insert(@RequestParam(value = "file") MultipartFile file,
                            @RequestParam(value = "updateType") byte updateType,
@@ -58,13 +65,14 @@ public class AvatarController {
     }
 
     @PostMapping("update")
-    public ResultVO update(@RequestParam(value = "appId") int appId,
+    public ResultVO update(@RequestParam(value = "avatarId") int avatarId,
                            @RequestParam(value = "file", required = false) MultipartFile file,
                            @RequestParam(value = "updateType") byte updateType,
+                           @RequestParam(value = "appId") int appId,
                            @RequestParam(value = "softChannel") int[] softChannel,
                            @RequestParam(value = "context") String context,
                            @RequestParam(value = "extra") String extra) {
-        return service.update(appId, file, updateType, softChannel, context, extra);
+        return service.update(avatarId, file, updateType, appId, softChannel, context, extra);
     }
 
     @RequestMapping("updateStatus")
@@ -74,7 +82,7 @@ public class AvatarController {
     }
 
     @RequestMapping("delete")
-    public ResultVO delete(@RequestParam(value = "appId") int appId) {
-        return service.delete(appId);
+    public ResultVO delete(@RequestParam(value = "avatarId") long avatarId) {
+        return service.delete(avatarId);
     }
 }

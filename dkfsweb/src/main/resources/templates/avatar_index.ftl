@@ -402,6 +402,7 @@
         let reqData = new FormData();
         reqData.append("avatarId", $('#uAvatarId').val())
         reqData.append("file", $('#uFile')[0].files[0]);
+        reqData.append("updateType", $('#uUpdateType').val());
         reqData.append("appId", $('#uAppId').val());
         reqData.append("softChannel", $('#uSoftChannel').val());
         reqData.append("context", $('#uContext').val());
@@ -608,7 +609,7 @@
     function updateModal(avatarId) {
         $.ajax({
             type: 'GET',
-            url: 'plugin/queryById?avatarId=' + avatarId,
+            url: 'avatar/queryById?avatarId=' + avatarId,
             dataType: 'JSON',
             success: function (data) {
                 $('#uAvatarId').val(data.avatarId);
@@ -648,7 +649,7 @@
      * 重置
      */
     function resetClick() {
-        $('#username').val(null);
+        $('#updateType option:first').prop('selected', 'selected');
     }
 
     /**

@@ -29,6 +29,14 @@ public interface IAvatarService {
     DTPageInfo<AvatarVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
+     * 根据ID查询数据
+     *
+     * @param avatarId
+     * @return
+     */
+    List<AvatarVO> queryById(long avatarId);
+
+    /**
      * 插入
      *
      * @param file        apk文件
@@ -65,10 +73,11 @@ public interface IAvatarService {
      * @param avatarId    分身Id
      * @param file        链接地址
      * @param updateType  更新类型
+     * @param appId       应用ID
      * @param softChannel 渠道
      * @param context     内容
      * @param extra       备注
      * @return
      */
-    ResultVO update(long avatarId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra);
+    ResultVO update(long avatarId, MultipartFile file, byte updateType, int appId, int[] softChannel, String context, String extra);
 }

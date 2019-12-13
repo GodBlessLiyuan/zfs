@@ -14,7 +14,9 @@ import java.util.Map;
 public interface AvatarMapper extends BaseMapper<AvatarPO, Long> {
     AvatarPO queryByVersionCode(Object versionCode);
 
-    List<AvatarBO> queryByAvatarIds(List<Integer> appIds);
+    List<AvatarBO> queryByAvatarIds(List<Integer> avatarIds);
 
     List<Integer> queryAvatarIds(Map<String, Object> reqData);
+
+    List<AvatarBO> queryByAvatarId(long avatarId);
 }

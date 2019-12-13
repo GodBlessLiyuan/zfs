@@ -25,10 +25,10 @@
     from t_plugin
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_plugin
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    update t_plugin set dr = 2
     where plugin_id = #{pluginId,jdbcType=INTEGER}
-  </delete>
+  </update>
   <insert id="insert" parameterType="com.rpa.common.pojo.PluginPO">
     insert into t_plugin (plugin_id, `status`, context, 
       extra, a_id, create_time, 

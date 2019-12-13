@@ -134,4 +134,14 @@
   <update id="updateStatus">
     update t_app_ava_ch set `status` = #{status,jdbcType=TINYINT} where avatar_id = #{avatarId,jdbcType=BIGINT}
   </update>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from t_app_ava_ch where aac_id in (
+    <foreach collection="list" item="aacId" index="index" separator=",">
+      #{aacId,jdbcType=BIGINT}
+    </foreach>
+    )
+  </delete>
+  <delete id="deleteByAvatarId" parameterType="java.lang.Long">
+    delete from t_app_ava_ch where avatar_id = #{avatarId,jdbcType=BIGINT}
+  </delete>
 </mapper>

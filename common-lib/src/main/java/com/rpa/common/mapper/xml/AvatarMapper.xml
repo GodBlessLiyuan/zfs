@@ -28,10 +28,10 @@
     from t_avatar
     where avatar_id = #{avatarId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_avatar
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    update t_avatar set dr = 2
     where avatar_id = #{avatarId,jdbcType=BIGINT}
-  </delete>
+  </update>
   <insert id="insert" parameterType="com.rpa.common.pojo.AvatarPO" useGeneratedKeys="true" keyProperty="avatarId">
     insert into t_avatar (avatar_id, version_name, version_code, 
       create_time, update_time, url, 
@@ -223,6 +223,14 @@
       and update_type = #{updateType,jdbcType=TINYINT}
     </if>
     order by avatar_id
+  </select>
+  <select id="queryByAvatarId" parameterType="java.lang.Long" resultType="com.rpa.common.bo.AvatarBO">
+    select a.avatar_id as avatarId, a.publish_time as publishTime, a.version_name as versionName, a.size,
+    a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra
+    from t_avatar a
+    left join t_app_ava_ch aac on a.avatar_id = aac.avatar_id
+    left join t_soft_channel s on aac.soft_channel_id = s.soft_channel_id
+    where a.avatar_id = #{avatarId,jdbcType=BIGINT} and a.dr = 1
   </select>
   <select id="queryByAvatarIds" resultType="com.rpa.common.bo.AvatarBO">
     select a.avatar_id as avatarId, a.publish_time as publishTime, au.username, a.version_name as versionName, a.size,

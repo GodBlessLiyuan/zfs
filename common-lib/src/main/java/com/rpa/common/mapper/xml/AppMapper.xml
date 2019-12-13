@@ -28,10 +28,10 @@
     from t_app
     where app_id = #{appId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_app
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    update t_app set dr = 2
     where app_id = #{appId,jdbcType=INTEGER}
-  </delete>
+  </update>
   <insert id="insert" parameterType="com.rpa.common.pojo.AppPO" useGeneratedKeys="true" keyProperty="appId">
     insert into t_app (app_id, versionname, versioncode, 
       create_time, update_time, url, 

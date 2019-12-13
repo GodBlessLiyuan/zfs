@@ -16,4 +16,8 @@ public interface AppAvaChMapper extends BaseMapper<AppAvaChPO, Long> {
     List<AppAvaChPO> queryByAvatarIdAndAppId(@Param("avatarId") Long avatarId, @Param("appId") int appId);
 
     void updateStatus(@Param("avatarId") long avatarId, @Param("status") byte status);
+
+    void batchDelete(List<Long> aacIds);
+
+    void deleteByAvatarId(long avatarId);
 }
