@@ -168,11 +168,8 @@
     total_revenue as totalRevenue, withdraw, withdraw_time as withdrawTime, remaining
     from t_revenue_user ru
     left join t_user u on ru.user_id = u.user_id
-    <where>
-      <if test="phone != null and phone != ''">
-        u.phone = #{phone}
-      </if>
-    </where>
+    where invite_count != 0
+    <if test="phone != null and phone != ''">and u.phone = #{phone}</if>
     <if test="orderBy == 1"> order by invite_count </if>
     <if test="orderBy == 2"> order by register_count </if>
     <if test="orderBy == 3"> order by pay_count </if>
