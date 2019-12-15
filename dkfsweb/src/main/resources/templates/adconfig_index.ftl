@@ -393,7 +393,7 @@
                 if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
-                }else if (result.status === 0) {
+                }else if (result.status === 1000) {
                     alert("新增成功！")
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -449,7 +449,7 @@
             if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.status === 0) {
+            }else if (result.status === 1000) {
                 alert("设置成功！")
             } else {
                 alert("设置失败！")
@@ -563,7 +563,7 @@
             if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.status === 0) {
+            }else if (result.status === 1000) {
                 alert("状态修改成功！");
                 $('#datatab').DataTable().draw(false);
             } else {
@@ -642,7 +642,7 @@
                 if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
-                }else if (result.status === 0) {
+                }else if (result.status === 1000) {
                     alert("更新成功！")
                     $('#datatab').DataTable().draw(false);
                 } else {
@@ -670,7 +670,7 @@
             if (result.status === 1008) {
                 alert("登录超时，请重新登录！");
                 window.location.href = 'login';
-            }else if (result.status === 0) {
+            }else if (result.status === 1000) {
                 alert("删除成功！")
                 $('#datatab').DataTable().draw(false);
             } else {
