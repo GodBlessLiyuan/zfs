@@ -44,36 +44,30 @@ public class LoginServiceImpl implements LoginService {
             password = Md5Util.encodeByMd5(Constant.SALT + password);
         } catch (Exception e) {
             e.printStackTrace();
-            result.put("flag", false);
-            result.put("msg", "MD5异常");
             return "forward:login";
         }
 
         // 将用户输入的验证码与服务器生成的进行比对
-        if (serverCheckcode == null) {
-            result.put("flag", false);
-            result.put("msg", "服务器异常，请联系管理员！");
+        if (null == serverCheckcode) {
+            result.put("msg_checkcode", "服务器获取验证码异常，请重试！");
             return "forward:/login";
         }
 
         else if (!serverCheckcode.equalsIgnoreCase(checkcode)) {
             // 验证码校验失败
-            result.put("flag", false);
-            result.put("msg", "验证码输入错误，请重新输入！");
+            result.put("msg_checkcode", "验证码输入错误！");
             return "forward:/login";
         }
 
         //判断用户名是否存在
-        else if (po == null) {
-            result.put("flag", false);
-            result.put("msg", "用户名不存在");
+        else if (null == po) {
+            result.put("msg_username", "用户名不存在！");
             return "forward:/login";
         }
 
         //判断密码是否正确
         else if (!po.getPassword().equals(password)) {
-            result.put("flag", false);
-            result.put("msg", "密码错误");
+            result.put("msg_password", "密码输入错误！");
             return "forward:/login";
         }
 
@@ -119,8 +113,6 @@ public class LoginServiceImpl implements LoginService {
                 userInfo = Md5Util.encodeByMd5(username + password);
             } catch (Exception e) {
                 e.printStackTrace();
-                result.put("flag", false);
-                result.put("msg", "MD5异常");
                 return "forward:/login";
             }
             Cookie userInfoCookie = new Cookie("userInfo", userInfo);
