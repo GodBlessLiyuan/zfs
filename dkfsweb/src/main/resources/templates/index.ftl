@@ -43,16 +43,20 @@
                             <br>
                             <form class="mt-8 mb-8 login-input" method="post" action="entry">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Username" name="username" required="required" onfocus="clearUsernameMsg()">
-                                </div>
-                                <div>
-                                    <p id="msg_username" style="color: red">${msg_username!""}</p>
+                                    <div>
+                                        <input type="text" class="form-control" placeholder="Username" name="username" required="required" onfocus="clearUsernameMsg()">
+                                    </div>
+                                    <div>
+                                        <p id="msg_username" style="color: red">${msg_username!""}</p>
+                                    </div>
                                 </div>
                                 <div class="form-group">
+                                    <div>
                                     <input type="password" class="form-control" placeholder="Password" name="password" required="required" onfocus="clearPasswordMsg()">
-                                </div>
-                                <div>
-                                    <p id="msg_password" style="color: red">${msg_password!""}</p>
+                                    </div>
+                                    <div>
+                                        <p id="msg_password" style="color: red">${msg_password!""}</p>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div style="float: left">
@@ -91,6 +95,27 @@
     function changeImg(){
         var img = document.getElementById("img");
         img.src = "login/get/checkcode?date=" + new Date();
+    }
+
+    /**
+     * 清除提示语：username
+     */
+    function clearUsernameMsg() {
+        document.getElementById("msg_username").innerText = ""
+    }
+
+    /**
+     * 清除提示语：password
+     */
+    function clearPasswordMsg() {
+        document.getElementById("msg_password").innerText = ""
+    }
+
+    /**
+     * 清除提示语：checkcode
+     */
+    function clearCheckcodeMsg() {
+        document.getElementById("msg_checkcode").innerText = ""
     }
 </script>
 
