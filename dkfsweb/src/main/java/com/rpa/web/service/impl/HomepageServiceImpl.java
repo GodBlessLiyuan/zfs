@@ -51,24 +51,23 @@ public class HomepageServiceImpl implements HomepageService {
         //当前日期
         String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
+        String key_user = RedisKeyUtil.genHomepageRedisKey("user", current_date);
         //新增注册用户
         String newRegister;
-        String key_newRegister = RedisKeyUtil.genHomepageRedisKey() + "newRegister" + current_date;
-        newRegister = this.template.opsForValue().get(key_newRegister);
+        newRegister = (String) this.template.opsForHash().get(key_user, "newRegister");
         if (null == newRegister) {
             newRegister = String.valueOf(this.userMapper.queryTodayNewRegister());
         }
 
         //新用户数
         String newUser;
-        String key_newUser = RedisKeyUtil.genHomepageRedisKey() + "newUser" + current_date;
-        newUser = this.template.opsForValue().get(key_newUser);
+        newUser = (String) this.template.opsForHash().get(key_user, "newUser");
         if (null == newUser) {
             newUser = String.valueOf(this.deviceMapper.queryTodayNewUser());
         }
 
 
-        String key_active = RedisKeyUtil.genHomepageRedisKey() + "deviceStatistics" + current_date;
+        String key_active = RedisKeyUtil.genHomepageRedisKey("deviceStatistics", current_date);
         //日活跃用户数
         String dayActiveUser;
         dayActiveUser = (String) this.template.opsForHash().get(key_active, "dayActiveUser");
@@ -84,7 +83,7 @@ public class HomepageServiceImpl implements HomepageService {
         }
 
 
-        String key_revenue = RedisKeyUtil.genHomepageRedisKey() + "revenue" + current_date;
+        String key_revenue = RedisKeyUtil.genHomepageRedisKey( "revenue", current_date);
         //当日收入
         String dayRevenue;
         dayRevenue = (String) this.template.opsForHash().get(key_revenue, "dayRevenue");

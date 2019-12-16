@@ -70,7 +70,7 @@ public class DeviceStatisticsServiceImpl implements DeviceStatisticsService {
 
             // 再存入Redis缓存
             String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            String key = RedisKeyUtil.genHomepageRedisKey() + "deviceStatistics" + current_date;
+            String key = RedisKeyUtil.genHomepageRedisKey( "deviceStatistics", current_date);
             this.template.opsForHash().putAll(key, deviceStatistics);
             this.template.expire(key, 25, TimeUnit.HOURS);
         } else {

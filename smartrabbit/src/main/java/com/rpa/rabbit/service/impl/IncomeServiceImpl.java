@@ -4,10 +4,7 @@ import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.rabbit.bo.InviteUserBO;
 import com.rpa.rabbit.bo.OrderBO;
 import com.rpa.rabbit.constant.InviteDetailConstant;
-import com.rpa.rabbit.mapper.InviteDetailMapper;
-import com.rpa.rabbit.mapper.InviteUserMapper;
-import com.rpa.rabbit.mapper.OrderMapper;
-import com.rpa.rabbit.mapper.RevenueUserMapper;
+import com.rpa.rabbit.mapper.*;
 import com.rpa.rabbit.pojo.InviteDetailPO;
 import com.rpa.rabbit.pojo.InviteUserPO;
 import com.rpa.rabbit.pojo.OrderPO;
@@ -53,6 +50,10 @@ public class IncomeServiceImpl implements IIncomeService {
     private InviteDetailMapper inviteDetailMapper;
     @Autowired
     private StringRedisTemplate template;
+    @Resource
+    private DeviceMapper deviceMapper;
+    @Resource
+    private UserMapper userMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -109,6 +110,9 @@ public class IncomeServiceImpl implements IIncomeService {
 
     @Override
     public void register(String phone) {
+        //调用方法，更新Redis
+        this.redisForUser();
+
         List<InviteUserPO> inviteUserPOs = inviteUserMapper.queryByPhone(phone);
         if (null == inviteUserPOs || inviteUserPOs.size() != 1) {
             return;
@@ -163,8 +167,31 @@ public class IncomeServiceImpl implements IIncomeService {
         revenue.put("dayRevenue", String.valueOf(decimal((null == dayRevenue ? 0 : dayRevenue) * 0.01)));
         revenue.put("payCount", String.valueOf(payCount));
         revenue.put("monthRevenue", String.valueOf(decimal((null == monthRevenue ? 0 : monthRevenue) * 0.01)));
-        String key = RedisKeyUtil.genHomepageRedisKey() + "revenue" + current_date;
+        String key = RedisKeyUtil.genHomepageRedisKey( "revenue", current_date);
         this.template.opsForHash().putAll(key, revenue);
+        this.template.expire(key, 25, TimeUnit.HOURS);
+    }
+
+
+    /**
+     * @author: dangyi
+     * @date: 2019.12.16
+     * @description: 新用户访问、注册，更新Redis
+     */
+    private void redisForUser() {
+        String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+        int newUser = this.deviceMapper.queryTodayNewUser();
+        int newRegister = this.userMapper.queryTodayNewRegister();
+
+        //将统计结果封装成map
+        Map<String, String> user = new HashMap<>(2);
+        user.put("newUser", String.valueOf(newUser));
+        user.put("newRegister", String.valueOf(newRegister));
+
+        //存入Redis
+        String key = RedisKeyUtil.genHomepageRedisKey("user", current_date);
+        this.template.opsForHash().putAll(key, user);
         this.template.expire(key, 25, TimeUnit.HOURS);
     }
 

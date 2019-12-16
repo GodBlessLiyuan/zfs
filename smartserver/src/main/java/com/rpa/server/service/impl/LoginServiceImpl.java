@@ -73,14 +73,6 @@ public class LoginServiceImpl implements ILoginService {
             po.setIp(RequestUtil.getIpAddr(req));
             userMapper.insert(po);
 
-            /**
-             * @author: dangyi
-             * @date: 2019/11/15
-             * @description: 插入成功后，发送消息给RabbitMQ
-             */
-            this.template.convertAndSend("new_register", "");
-
-
             // 登出当前设备所有在线用户
             userDeviceMapper.signOutByDevId(dto.getId());
 
@@ -91,14 +83,6 @@ public class LoginServiceImpl implements ILoginService {
             userDevPO.setStatus((byte) 1);
             userDevPO.setCreateTime(new Date());
             userDeviceMapper.insert(userDevPO);
-
-            /**
-             * @author: dangyi
-             * @date: 2019/11/15
-             * @description: 插入成功后，发送消息给RabbitMQ
-             */
-            this.template.convertAndSend("new_user", "");
-
 
             // 新用户是否送会员
             List<UserGiftsPO> userGiftsPOs = userGiftsMapper.queryOpenGift();
