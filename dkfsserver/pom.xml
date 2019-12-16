@@ -11,8 +11,8 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>smartserver</artifactId>
-    <name>smartserver</name>
+    <artifactId>dkfsserver</artifactId>
+    <name>dkfsserver</name>
     <version>1.0.1</version>
 
     <dependencies>

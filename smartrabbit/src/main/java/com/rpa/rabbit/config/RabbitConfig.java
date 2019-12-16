@@ -33,26 +33,4 @@ public class RabbitConfig {
     public Queue queueForDeviceStatistics() {
         return new Queue("device_statistics");
     }
-
-    /**
-     * @author: dangyi
-     * @date: Created in 2019/11/15
-     * @description: 新注册用户的消息队列
-     * @return
-     */
-    @Bean
-    public Queue queueForNewRegister() {
-        return new Queue("new_register");
-    }
-
-    /**
-     * @author: dangyi
-     * @date: Created in 2019/11/15
-     * @description: 新用户的消息队列
-     * @return
-     */
-    @Bean
-    public Queue queueForNewUser() {
-        return new Queue("new_user");
-    }
 }

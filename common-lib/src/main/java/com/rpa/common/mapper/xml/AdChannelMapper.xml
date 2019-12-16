@@ -68,12 +68,6 @@
         </trim>
     </insert>
 
-    <select id="querySoftChannelIdsByAdId" resultType="java.lang.Integer">
-        select distinct ac.soft_channel_id
-        from t_ad_channel
-        where ad_id = #{adId} and dr = 1
-    </select>
-
     <select id="query" resultType="com.rpa.common.bo.AdChannelBO">
         select
         versionname, app_id as appId, name, soft_channel_id as softChannelId

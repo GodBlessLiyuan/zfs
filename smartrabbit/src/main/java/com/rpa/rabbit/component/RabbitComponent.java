@@ -60,26 +60,4 @@ public class RabbitComponent {
     public void deviceStatic(Map<String, Object> deviceInfo) {
         deviceStatisticsService.deviceStatic(deviceInfo);
     }
-
-
-    /**
-     * @author: dangyi
-     * @date: Created in 2019/11/15
-     * @description: 新注册用户
-     */
-    @RabbitListener(queues = "new_register")
-    public void newRegister(String msg) {
-        userService.newRegister();
-    }
-
-
-    /**
-     * @author: dangyi
-     * @date: Created in 2019/11/15
-     * @description: 新增用户
-     */
-    @RabbitListener(queues = "new_user")
-    public void newUser(String msg) {
-        deviceService.newUser();
-    }
 }

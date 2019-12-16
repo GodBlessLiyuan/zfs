@@ -30,8 +30,6 @@ public interface AppMapper extends BaseMapper<AppPO, Integer> {
      */
     AppPO queryByVersionCode(Object versionCode);
 
-    List<Integer> queryVersioncodes();
-
     /**
      * 查询应用Id
      *
