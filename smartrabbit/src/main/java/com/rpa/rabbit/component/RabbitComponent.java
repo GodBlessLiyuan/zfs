@@ -22,12 +22,6 @@ public class RabbitComponent {
     @Autowired
     private DeviceStatisticsService deviceStatisticsService;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private DeviceService deviceService;
-
     /**
      * 微信支付确认通知
      *
