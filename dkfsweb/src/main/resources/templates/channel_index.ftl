@@ -335,7 +335,7 @@
                     if (result.status === 1008) {
                         alert("登录超时，请重新登录！");
                         window.location.href = 'login';
-                    }else if (result.status === 0) {
+                    }else if (result.status === 1000) {
                         alert("新增成功！")
                         $('#datatab').DataTable().draw(false);
                     } else {

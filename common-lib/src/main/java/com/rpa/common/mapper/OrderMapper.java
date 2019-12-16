@@ -22,7 +22,7 @@ public interface OrderMapper extends BaseMapper<OrderPO, OrderPOKey> {
 
     int queryPayCount();
 
-    float queryDayRevenue();
+    Long queryDayRevenue();
 
-    float queryMonthRevenue();
+    Long queryMonthRevenue();
 }

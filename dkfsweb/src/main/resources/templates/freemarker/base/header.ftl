@@ -107,7 +107,7 @@
             alert("输入密码不一致，请重新输入！");
         }else {
             $.post("updatePassword", {oldPassword: oldPassword, newPassword: newPassword}, function (result) {
-                if (result.status === 0) {
+                if (result.status === 1000) {
                     alert("密码修改成功！")
                 } else {
                     alert("密码修改失败！")

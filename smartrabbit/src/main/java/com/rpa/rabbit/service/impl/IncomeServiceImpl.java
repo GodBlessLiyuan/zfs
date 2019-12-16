@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -153,17 +154,27 @@ public class IncomeServiceImpl implements IIncomeService {
     private void redisForRevenue() {
         String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-        Float dayRevenue = this.orderMapper.queryDayRevenue();
+        Long dayRevenue = this.orderMapper.queryDayRevenue();
         int payCount = this.orderMapper.queryPayCount();
-        Float monthRevenue = this.orderMapper.queryMonthRevenue();
+        Long monthRevenue = this.orderMapper.queryMonthRevenue();
 
         // 将统计结果封装成map
         Map<String, String> revenue = new HashMap<>(3);
-        revenue.put("dayRevenue", String.valueOf((null == dayRevenue ? 0 : dayRevenue) * 0.01));
+        revenue.put("dayRevenue", String.valueOf(decimal((null == dayRevenue ? 0 : dayRevenue) * 0.01)));
         revenue.put("payCount", String.valueOf(payCount));
-        revenue.put("monthRevenue", String.valueOf((null == monthRevenue ? 0 : monthRevenue) * 0.01));
+        revenue.put("monthRevenue", String.valueOf(decimal((null == monthRevenue ? 0 : monthRevenue) * 0.01)));
         String key = RedisKeyUtil.genHomepageRedisKey() + "revenue" + current_date;
         this.template.opsForHash().putAll(key, revenue);
         this.template.expire(key, 25, TimeUnit.HOURS);
+    }
+
+    /**
+     * 保留两位小数
+     * @param d
+     * @return
+     */
+    private Double decimal(Double d) {
+        BigDecimal bd = new BigDecimal(d);
+        return bd.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 }

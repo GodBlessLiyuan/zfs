@@ -235,12 +235,12 @@
     left join t_user u on o.user_id = u.user_id
     where o.user_id = #{userId} and o.`status` = 2
   </select>
-  <select id="queryDayRevenue" resultType="java.lang.Float">
+  <select id="queryDayRevenue" resultType="java.lang.Long">
     select IFNULL(sum(pay),0)
     from t_order
     where pay_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
   </select>
-  <select id="queryMonthRevenue" resultType="java.lang.Float">
+  <select id="queryMonthRevenue" resultType="java.lang.Long">
     select IFNULL(sum(pay),0)
     from t_order
     where pay_time >= (SELECT timestamp(date_add(curdate(), interval - day(curdate()) + 1 day)))

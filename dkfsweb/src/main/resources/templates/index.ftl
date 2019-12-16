@@ -43,19 +43,32 @@
                             <br>
                             <form class="mt-8 mb-8 login-input" method="post" action="entry">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Username" name="username" required="required">
+                                    <div>
+                                        <input type="text" class="form-control" placeholder="Username" name="username" required="required" onfocus="clearUsernameMsg()">
+                                    </div>
+                                    <div>
+                                        <p id="msg_username" style="color: red">${msg_username!""}</p>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Password" name="password" required="required">
+                                    <div>
+                                    <input type="password" class="form-control" placeholder="Password" name="password" required="required" onfocus="clearPasswordMsg()">
+                                    </div>
+                                    <div>
+                                        <p id="msg_password" style="color: red">${msg_password!""}</p>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div style="float: left">
-                                        <input type="text" class="form-control" id="checkcode" placeholder="Checkcode" name="checkcode" required="required" style="float: left">
+                                        <input type="text" class="form-control" id="checkcode" placeholder="Checkcode" name="checkcode" required="required" style="float: left" onfocus="clearCheckcodeMsg()">
                                     </div>
                                     <div style="float: right">
                                         <img id="img" src="login/get/checkcode"/>
                                         <a onclick="javascript:changeImg()" style="color:blue">看不清？</a>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <p id="msg_checkcode" class="form-control" style="color: red">${msg_checkcode!""}</p>
                                 </div>
 
                                 <button class="btn login-form__btn submit w-100">Login</button>
@@ -82,6 +95,27 @@
     function changeImg(){
         var img = document.getElementById("img");
         img.src = "login/get/checkcode?date=" + new Date();
+    }
+
+    /**
+     * 清除提示语：username
+     */
+    function clearUsernameMsg() {
+        document.getElementById("msg_username").innerText = ""
+    }
+
+    /**
+     * 清除提示语：password
+     */
+    function clearPasswordMsg() {
+        document.getElementById("msg_password").innerText = ""
+    }
+
+    /**
+     * 清除提示语：checkcode
+     */
+    function clearCheckcodeMsg() {
+        document.getElementById("msg_checkcode").innerText = ""
     }
 </script>
 
