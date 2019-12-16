@@ -37,32 +37,30 @@ public class AppServiceImpl implements IAppService {
     @Value("${file.publicPath}")
     private String filePublicPath;
     @Value("${smart.config.gray}")
-    private String gray;
+    private boolean gray;
     @Autowired
     private AmqpTemplate template;
 
     @Override
     public ResultVO check(AppDTO dto, HttpServletRequest req) {
 
-        int status = "true".equals(this.gray) || cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
-        String redisKey = RedisKeyUtil.genAppRedisKey(dto.getSoftv(), dto.getChannel());
+        int status = this.gray || cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
+        String redisKey = RedisKeyUtil.genAppRedisKey(dto.getSoftv(), dto.getChannel(), status);
         //更新统计
         mqForDeviceInfo(dto, req);
 
-        if (status == 2) {
-            String redisValue = cache.getCacheByKey(redisKey);
-            if (null != redisValue) {
-                AppVO vo = JSON.parseObject(redisValue, AppVO.class);
-                if (null == vo) {
-                    return new ResultVO(1008);
-                }
-                return new ResultVO<>(1009, vo);
+        String redisValue = cache.getCacheByKey(redisKey);
+        if (null != redisValue) {
+            AppVO vo = JSON.parseObject(redisValue, AppVO.class);
+            if (null == vo) {
+                return new ResultVO(1008);
             }
+            return new ResultVO<>(1009, vo);
         }
 
         // 从Redis中取出设备白名单
-        int channId = cache.getSoftChannelId(dto.getChannel());
-        AppPO appPO = appMapper.queryMaxByVerId(dto.getSoftv(), channId, status);
+        int chanId = cache.getSoftChannelId(dto.getChannel());
+        AppPO appPO = appMapper.queryMaxByVerId(dto.getSoftv(), chanId, status);
         if (null == appPO) {
             cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
             // 最新版本
@@ -78,9 +76,8 @@ public class AppServiceImpl implements IAppService {
         vo.setCode(appPO.getVersioncode());
         vo.setVersionname(appPO.getVersionname());
 
-        if (status == 2) {
-            cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
-        }
+        cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
+
         return new ResultVO<>(1009, vo);
     }
 
