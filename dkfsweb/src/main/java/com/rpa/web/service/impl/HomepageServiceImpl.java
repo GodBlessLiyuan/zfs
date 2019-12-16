@@ -71,7 +71,7 @@ public class HomepageServiceImpl implements HomepageService {
         //日活跃用户数
         String dayActiveUser;
         dayActiveUser = (String) this.template.opsForHash().get(key_active, "dayActiveUser");
-        if (dayActiveUser == null) {
+        if (null == dayActiveUser) {
             dayActiveUser = String.valueOf(this.deviceStatisticsMapper.queryDayActiveUser());
         }
 
