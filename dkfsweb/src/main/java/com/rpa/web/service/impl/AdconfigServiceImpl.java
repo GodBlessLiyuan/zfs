@@ -17,14 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpSession;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Date;
+import java.util.*;
 
 import static com.rpa.common.constant.Constant.SHOW_INTERVAL;
 
@@ -49,12 +46,6 @@ public class AdconfigServiceImpl implements AdconfigService {
 
     @Autowired
     private AdChannelMapper adChannelMapper;
-
-    @Autowired
-    private AppMapper appMapper;
-
-    @Autowired
-    private SoftChannelMapper softChannelMapper;
 
     @Autowired
     private StringRedisTemplate template;
@@ -187,7 +178,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         this.adconfigMapper.updateByPrimaryKey(po);
 
         //删除Redis
-        this.deleteRedis(dto.getAdId());
+        this.deleteRedis();
 
         return new ResultVO(1000);
     }
@@ -219,7 +210,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         this.adChannelMapper.update2(adId, status);
 
         //删除Redis
-        this.deleteRedis(adId);
+        this.deleteRedis();
 
         this.adconfigMapper.updateByPrimaryKey(po);
 
@@ -253,8 +244,6 @@ public class AdconfigServiceImpl implements AdconfigService {
         return new ResultVO(1000);
     }
 
-
-
     /**
      * 删除广告
      *
@@ -267,7 +256,7 @@ public class AdconfigServiceImpl implements AdconfigService {
         this.adconfigMapper.deleteByPrimaryKey(adId);
 
         //删除Redis
-        this.deleteRedis(adId);
+        this.deleteRedis();
 
         return new ResultVO(1000);
     }
@@ -305,37 +294,13 @@ public class AdconfigServiceImpl implements AdconfigService {
         return this.adminUserMapper.queryUsernameByAid(aId);
     }
 
-
     /**
-     * 删除Redis，根据广告ID
+     * 删除Redis，根据soft_channel_id
      */
-    private void deleteRedis(Integer adId) {
-        List<Integer> softChannelIds = this.adChannelMapper.querySoftChannelIdsByAdId(adId);
-        List<Integer> versioncodes = this.appMapper.queryVersioncodes();
-        for (Integer softChannelId : softChannelIds) {
-            String name = this.softChannelMapper.queryNameById(softChannelId);
-            for (Integer versioncode : versioncodes) {
-                String key = RedisKeyUtil.genAdconfigRedisKey() + name + versioncode;
-                if (template.hasKey(key)) {
-                    template.delete(key);
-                }
-            }
-        }
-    }
-
-    /**
-     * 删除Redis，所有的
-     */
-    private void deleteRedis(){
-        List<String> names = this.softChannelMapper.queryNames();
-        List<Integer> versioncodes = this.appMapper.queryVersioncodes();
-        for (String name : names) {
-            for (Integer versioncode : versioncodes) {
-                String key = RedisKeyUtil.genAdconfigRedisKey() + name + versioncode;
-                if (template.hasKey(key)) {
-                    template.delete(key);
-                }
-            }
+    private void deleteRedis() {
+        Set<String> redisKeys = template.keys(RedisKeyUtil.genAdconfigRedisKey("*"));
+        if (!CollectionUtils.isEmpty(redisKeys)) {
+            template.delete(redisKeys);
         }
     }
 }
