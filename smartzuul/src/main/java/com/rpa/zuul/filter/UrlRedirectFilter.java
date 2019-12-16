@@ -23,8 +23,8 @@ public class UrlRedirectFilter extends ZuulFilter {
     private static final Logger logger = LoggerFactory.getLogger(UrlRedirectFilter.class);
 
     @Value("${zuul.config.gray}")
-    private boolean gray;
-    @Value("${zuul.config.redirect")
+    private String gray;
+    @Value("${zuul.config.redirect}")
     private String redirect;
 
     @Override
@@ -48,10 +48,9 @@ public class UrlRedirectFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest req = ctx.getRequest();
         String gray = req.getHeader("gray");
-        if (this.gray && "aaa".equals(gray)) {
+        if ("true".equals(this.gray) && "true".equals(gray)) {
             ctx.setRouteHost(new URL(this.redirect));
-            String url = req.getRequestURI();
-            logger.info(url);
+            logger.info(ctx.getRouteHost().toURI().toString());
         }
         return null;
     }

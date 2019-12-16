@@ -36,13 +36,15 @@ public class AppServiceImpl implements IAppService {
     private RedisCacheUtil cache;
     @Value("${file.publicPath}")
     private String filePublicPath;
+    @Value("${smart.config.gray}")
+    private String gray;
     @Autowired
     private AmqpTemplate template;
 
     @Override
     public ResultVO check(AppDTO dto, HttpServletRequest req) {
 
-        int status = cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
+        int status = "true".equals(this.gray) || cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
         String redisKey = RedisKeyUtil.genAppRedisKey(dto.getSoftv(), dto.getChannel());
         //更新统计
         mqForDeviceInfo(dto, req);
