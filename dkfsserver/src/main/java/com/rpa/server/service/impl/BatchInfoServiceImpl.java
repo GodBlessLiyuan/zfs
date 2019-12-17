@@ -1,12 +1,12 @@
 package com.rpa.server.service.impl;
 
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.pojo.BatchInfoPO;
+import com.rpa.common.pojo.UserVipPO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.BatchInfoConstant;
 import com.rpa.server.dto.BatchInfoDTO;
 import com.rpa.server.mapper.BatchInfoMapper;
 import com.rpa.server.mapper.UserVipMapper;
-import com.rpa.server.pojo.BatchInfoPO;
-import com.rpa.server.pojo.UserVipPO;
 import com.rpa.server.service.IBatchInfoService;
 import com.rpa.server.utils.UserVipUtil;
 import org.springframework.stereotype.Service;

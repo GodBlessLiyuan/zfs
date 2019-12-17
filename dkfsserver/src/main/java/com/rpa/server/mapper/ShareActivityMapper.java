@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.ShareActivityPO;
+import com.rpa.common.pojo.ShareActivityPO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

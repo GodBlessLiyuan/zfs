@@ -1,8 +1,8 @@
 package com.rpa.server.mapper;
 
+import com.rpa.common.pojo.OrderPO;
+import com.rpa.common.pojo.OrderPOKey;
 import com.rpa.server.bo.OrderBO;
-import com.rpa.server.pojo.OrderPO;
-import com.rpa.server.pojo.OrderPOKey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

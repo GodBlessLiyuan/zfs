@@ -1,13 +1,13 @@
 package com.rpa.server.service.impl;
 
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.pojo.ActivityPO;
+import com.rpa.common.pojo.UserActivityPO;
+import com.rpa.common.pojo.UserVipPO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.ActivityDTO;
 import com.rpa.server.mapper.ActivityMapper;
 import com.rpa.server.mapper.UserActivityMapper;
 import com.rpa.server.mapper.UserVipMapper;
-import com.rpa.server.pojo.ActivityPO;
-import com.rpa.server.pojo.UserActivityPO;
-import com.rpa.server.pojo.UserVipPO;
 import com.rpa.server.service.IActivityService;
 import com.rpa.server.utils.UserVipUtil;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.WhiteDevicePO;
+import com.rpa.common.pojo.WhiteDevicePO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Set;

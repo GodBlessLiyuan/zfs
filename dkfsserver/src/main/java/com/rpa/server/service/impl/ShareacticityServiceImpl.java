@@ -1,11 +1,11 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.pojo.ShareActivityPO;
 import com.rpa.common.utils.RedisKeyUtil;
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.ShareactivityDTO;
 import com.rpa.server.mapper.ShareActivityMapper;
-import com.rpa.server.pojo.ShareActivityPO;
 import com.rpa.server.service.ShareactivityService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.ShareactivityVO;

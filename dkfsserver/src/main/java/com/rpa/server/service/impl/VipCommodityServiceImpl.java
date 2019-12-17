@@ -1,12 +1,12 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.pojo.VipcommodityPO;
 import com.rpa.common.utils.RedisKeyUtil;
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.CommonConstant;
 import com.rpa.server.dto.VipCommodityDTO;
 import com.rpa.server.mapper.VipCommodityMapper;
-import com.rpa.server.pojo.VipCommodityPO;
 import com.rpa.server.service.IVipCommodityService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.VipCommodityVO;
@@ -45,14 +45,14 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
             return new ResultVO<>(1000, vos);
         }
 
-        List<VipCommodityPO> vcPOs = vipCommodityMapper.queryByChanId(CommonConstant.CHAN_DEF);
-        Map<Integer, VipCommodityPO> vcMap = new HashMap<>(vcPOs.size());
-        for (VipCommodityPO po : vcPOs) {
+        List<VipcommodityPO> vcPOs = vipCommodityMapper.queryByChanId(CommonConstant.CHAN_DEF);
+        Map<Integer, VipcommodityPO> vcMap = new HashMap<>(vcPOs.size());
+        for (VipcommodityPO po : vcPOs) {
             vcMap.put(po.getComTypeId(), po);
         }
 
-        List<VipCommodityPO> pos = vipCommodityMapper.queryByChanId(cache.getSoftChannelId(dto.getChannel()));
-        for (VipCommodityPO po : pos) {
+        List<VipcommodityPO> pos = vipCommodityMapper.queryByChanId(cache.getSoftChannelId(dto.getChannel()));
+        for (VipcommodityPO po : pos) {
             vcMap.put(po.getComTypeId(), po);
         }
         if (vcMap.size() == 0) {
@@ -61,7 +61,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         }
 
         List<VipCommodityVO> vos = new ArrayList<>();
-        for (VipCommodityPO po : vcMap.values()) {
+        for (VipcommodityPO po : vcMap.values()) {
             VipCommodityVO vo = new VipCommodityVO();
             vo.setCmdid(po.getCmdyId());
             vo.setDescription(po.getDescription());

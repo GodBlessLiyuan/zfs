@@ -1,8 +1,8 @@
 package com.rpa.server.controller;
 
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.DeviceDTO;
 import com.rpa.server.service.IDeviceService;
-import com.rpa.server.common.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

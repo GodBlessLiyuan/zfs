@@ -1,9 +1,9 @@
 package com.rpa.server.service.impl;
 
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.pojo.FeedbackPO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.FeedbackDTO;
 import com.rpa.server.mapper.FeedbackMapper;
-import com.rpa.server.pojo.FeedbackPO;
 import com.rpa.server.service.IFeedbackService;
 import com.rpa.server.utils.UploadUtil;
 import org.springframework.stereotype.Service;

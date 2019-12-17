@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.UserHistoryPO;
+import com.rpa.common.pojo.UserHistoryPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

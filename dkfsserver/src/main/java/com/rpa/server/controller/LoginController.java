@@ -1,6 +1,6 @@
 package com.rpa.server.controller;
 
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.LoginDTO;
 import com.rpa.server.service.ILoginService;
 import com.rpa.server.service.ISmsService;

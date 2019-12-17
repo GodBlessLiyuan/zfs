@@ -1,7 +1,7 @@
 package com.rpa.server.mapper;
 
+import com.rpa.common.pojo.BatchInfoPO;
 import com.rpa.server.bo.BatchInfoBO;
-import com.rpa.server.pojo.BatchInfoPO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

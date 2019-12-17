@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.PromoterPO;
+import com.rpa.common.pojo.PromoterPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
