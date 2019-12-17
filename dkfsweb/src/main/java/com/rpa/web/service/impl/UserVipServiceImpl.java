@@ -57,7 +57,7 @@ public class UserVipServiceImpl implements IUserVipService {
     }
 
     @Override
-    public DTPageInfo<UserVipDetailsVO> queryDetails(int draw, int pageNum, int pageSize, int userId) {
+    public DTPageInfo<UserVipDetailsVO> queryDetails(int draw, int pageNum, int pageSize, long userId) {
         List<UserVipDetailsVO> detailsVOs = new ArrayList<>();
         // 购买
         List<OrderBO> orderBOs = orderMapper.queryByUserId(userId);

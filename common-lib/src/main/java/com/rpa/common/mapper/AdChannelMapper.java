@@ -18,4 +18,6 @@ public interface AdChannelMapper extends BaseMapper<AdChannelPO, Integer> {
     void update2(Integer adId, Byte status);
 
     AdChannelPO queryByIds2(Integer adId, Integer appId, Integer softChannelId);
+
+    List<Integer> queryAdIds(int softChannelId, int appId);
 }

@@ -10,5 +10,13 @@ import java.util.List;
  */
 @Mapper
 public interface GodinsecUserMapper extends BaseMapper<GodinsecUserPO, String> {
-    List<GodinsecUserPO> queryByUserId(int userId);
+    List<GodinsecUserPO> queryByUserId(Long userId);
+
+    /**
+     * 根据用户名查询
+     *
+     * @param userId
+     * @return
+     */
+    List<GodinsecUserPO> queryByUserId2(Long userId);
 }

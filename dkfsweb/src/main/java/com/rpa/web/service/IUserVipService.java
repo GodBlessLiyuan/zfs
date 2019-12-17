@@ -32,5 +32,5 @@ public interface IUserVipService {
      * @param userId
      * @return
      */
-    DTPageInfo<UserVipDetailsVO> queryDetails(int draw, int pageNum, int pageSize, int userId);
+    DTPageInfo<UserVipDetailsVO> queryDetails(int draw, int pageNum, int pageSize, long userId);
 }

@@ -16,5 +16,13 @@ public interface NewUserRecordMapper extends BaseMapper<NewUserRecordPO, Integer
      * @param userId
      * @return
      */
-    List<NewUserRecordBO> queryByUserId(int userId);
+    List<NewUserRecordBO> queryByUserId(Long userId);
+
+    /**
+     * 根据 userId 查询新用户赠送
+     *
+     * @param userId
+     * @return
+     */
+    List<NewUserRecordPO> queryByUserId2(Long userId);
 }

@@ -254,4 +254,20 @@
     </if>
     order by app_id
   </select>
+  <select id="queryMaxByVerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select a.url, a.md5, a.update_type, a.context, a.versioncode, a.versionname
+    from t_app a left join t_app_ch ac on a.app_id = ac.app_id
+    where dr = 1 and a.versioncode > #{versionCode,jdbcType=INTEGER} and ac.soft_channel_id =
+    #{chanId,jdbcType=INTEGER}
+    <if test="status == 2">
+      and a.`status` = #{status,jdbcType=INTEGER}
+    </if>
+    order by a.versioncode desc
+    limit 1
+  </select>
+  <select id="queryIdByVersioncode" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select app_id as appId
+    from t_app
+    where versioncode = #{softv} and dr = 1;
+  </select>
 </mapper>
