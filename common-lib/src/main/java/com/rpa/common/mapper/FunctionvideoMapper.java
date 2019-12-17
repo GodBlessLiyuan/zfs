@@ -13,4 +13,6 @@ public interface FunctionvideoMapper extends BaseMapper<FunctionvideoPO, Integer
     int queryFunname(String funName);
 
     String queryFunnameById(Integer functionId);
+
+    String queryUrl(String function);
 }

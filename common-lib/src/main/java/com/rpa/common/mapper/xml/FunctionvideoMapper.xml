@@ -137,4 +137,10 @@
     from t_functionvideo
     where function_id = #{functionId}
   </select>
+
+  <select id="queryUrl" parameterType="java.lang.String" resultType="java.lang.String">
+    select url
+    from t_functionvideo
+    where fun_name = #{function}
+  </select>
 </mapper>

@@ -1,10 +1,10 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.mapper.WxsupportMapper;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.WxsupportDTO;
-import com.rpa.server.mapper.WxSupportMapper;
 import com.rpa.server.service.WxsupportService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.WxsupportVO;
@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class WxsupportServiceImpl implements WxsupportService {
 
     @Autowired
-    private WxSupportMapper wxSupportMapper;
+    private WxsupportMapper wxSupportMapper;
 
     @Autowired
     private StringRedisTemplate template;

@@ -112,4 +112,14 @@
       <if test="name!=null and name!=''">and package_name like '%' #{name} '%'</if>
     </where>
   </select>
+
+  <select id="queryMaxId" resultType="java.lang.Integer">
+    select max(w_id)
+    from t_wxsupport
+  </select>
+
+  <select id="queryPkgs" resultType="java.lang.String">
+    select package_name
+    from t_wxsupport
+  </select>
 </mapper>
