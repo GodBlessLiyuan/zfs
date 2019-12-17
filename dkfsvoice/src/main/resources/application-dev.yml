@@ -1,0 +1,45 @@
+server:
+  port: 8002
+spring:
+  application:
+    name: dkfsvoice
+  datasource:
+    url: jdbc:mysql://192.168.10.3:3306/smartdkfs?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  freemarker:
+    template-loader-path: classpath:/templates
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .ftl
+    settings:
+      classic_compatible: true
+  jackson:
+    serialization:
+      indent-output: true
+      fail-on-empty-beans: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+08
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+mybatis:
+  mapper-locations: com/rpa/common/mapper/xml/*.xml
+logging:
+  config: classpath:logback-spring-dev.xml
+file:
+  rootDir: /data/ftp/dkfsftp/
+  proDir: dkfsfile
+  voiceDir: dkfsvoice
+project:
+  baseUrl: http://192.168.10.3
+  shareUrl: http://rpahelper.com/dkfsvoice/v1.1/share/
+wxpayconfig:
+  appid: wxb3b271ca8cb83163

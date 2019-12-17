@@ -1,0 +1,43 @@
+server:
+  port: 8006
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: 192.168.10.3:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        sasl.mechanism: PLAIN
+        security.protocol: SASL_PLAINTEXT
+  application:
+    name: dkfskafka
+  jackson:
+    serialization:
+      indent-output: true
+      fail-on-empty-beans: false
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+08
+  zipkin:
+    base-url: http://localhost:9411
+    rabbitmq:
+      queue: dkfszipkin
+      connection-timeout: 10000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+logging:
+  config: classpath:logback-spring-dev.xml
+
+kafka:
+  default:
+    topic: dkfs
+  jaas:
+    conf:
+      path: classpath:kafka_client_jaas.conf
+
+
+

@@ -3,7 +3,7 @@
 
 <configuration>
 
-    <property name="LOG_PATH" value="/data/ftp/dkfsftp/log/dkfsweb" />
+    <property name="LOG_PATH" value="E://log/dkfscache" />
 
     <!--输出日志到控制台-->
     <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
@@ -71,7 +71,7 @@
             <!--<charset>UTF-8</charset>-->
         </encoder>
         <!-- 循环政策：基于时间创建日志文件 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> <!--路径-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--日志文件的命名及存储位置-->
             <fileNamePattern>${LOG_PATH}/warn.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!--最大保存时间：14天-->
@@ -99,6 +99,7 @@
         </rollingPolicy>
     </appender>
 
+    <!--指定最基础的日志输出级别，只有该级别及其以上的日志，方能输出，默认为debug-->
     <root level="info">
         <appender-ref ref="consoleLog"/>
         <appender-ref ref="fileDebugLog"/>

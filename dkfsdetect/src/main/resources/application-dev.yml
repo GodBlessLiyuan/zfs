@@ -1,0 +1,6 @@
+server:
+  port: 8008
+spring:
+  application: dkfsdetect
+logging:
+  config: classpath:logback-spring-dev.xml
