@@ -18,7 +18,7 @@ public interface OrderMapper extends BaseMapper<OrderPO, OrderPOKey> {
      * @param userId
      * @return
      */
-    List<OrderBO> queryByUserId(int userId);
+    List<OrderBO> queryByUserId(Long userId);
 
     int queryPayCount();
 

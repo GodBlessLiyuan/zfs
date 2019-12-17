@@ -17,4 +17,8 @@ public interface DeviceImeiMapper extends BaseMapper<DeviceImeiPO, String> {
      * @return
      */
     List<DeviceImeiPO> queryByImei(String imei);
+
+    List<Long> queryDevIdsByImei(List<String> imei);
+
+    void batchInsert(List<DeviceImeiPO> devImeiPOs);
 }

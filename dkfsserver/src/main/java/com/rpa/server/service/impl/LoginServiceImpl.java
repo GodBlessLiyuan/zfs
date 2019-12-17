@@ -2,15 +2,11 @@ package com.rpa.server.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.rpa.common.mapper.UserDeviceMapper;
-import com.rpa.common.mapper.UserGiftsMapper;
-import com.rpa.common.mapper.UserMapper;
-import com.rpa.common.mapper.UserVipMapper;
+import com.rpa.common.mapper.*;
 import com.rpa.common.pojo.*;
 import com.rpa.common.utils.DateUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.LoginDTO;
-import com.rpa.server.mapper.*;
 import com.rpa.server.service.ILoginService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.utils.RequestUtil;

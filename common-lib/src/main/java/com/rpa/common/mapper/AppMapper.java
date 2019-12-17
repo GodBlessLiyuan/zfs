@@ -45,4 +45,16 @@ public interface AppMapper extends BaseMapper<AppPO, Integer> {
      * @return
      */
     List<AppBO> queryByIds(List<Integer> appIds);
+
+    /**
+     * 查询大于指定版本中VersionId最大的一条记录
+     *
+     * @param versionCode
+     * @param chanId
+     * @param status
+     * @return
+     */
+    AppPO queryMaxByVerId(Integer versionCode, Integer chanId, Integer status);
+
+    Integer queryIdByVersioncode(Integer softv);
 }

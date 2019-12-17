@@ -12,7 +12,7 @@ import java.util.Map;
  * BatchInfoMapper继承基类
  */
 @Mapper
-public interface BatchInfoMapper extends BaseMapper<BatchInfoBO, Integer> {
+public interface BatchInfoMapper extends BaseMapper<BatchInfoPO, Integer> {
     void insertBatchInfo(List<BatchInfoPO> batchInfoPOs);
     void updateStatusByBatchId(Byte status, Integer batchId);
 
@@ -21,9 +21,25 @@ public interface BatchInfoMapper extends BaseMapper<BatchInfoBO, Integer> {
      * @param userId
      * @return
      */
-    List<BatchInfoBO> queryByUserId(int userId);
+    List<BatchInfoBO> queryByUserId(Long userId);
 
     Integer queryStatusById(@Param("batchId")int batchId, @Param("status")int status);
 
     List<BatchInfoBO> queryByBatchid(Map<String, Object> map);
+
+    /**
+     * 根据userId查询卡密信息
+     *
+     * @param ud
+     * @return
+     */
+    List<BatchInfoBO> queryByUserId2(Long ud);
+
+    /**
+     * 根据key查询卡密信息
+     *
+     * @param key
+     * @return
+     */
+    BatchInfoPO queryByKey(String key);
 }

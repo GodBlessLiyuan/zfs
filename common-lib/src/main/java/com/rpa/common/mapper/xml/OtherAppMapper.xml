@@ -148,4 +148,7 @@
       <if test="name!=null and name!=''">AND o.o_name like '%' #{name} '%'</if>
     </where>
   </select>
+  <select id="queryAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from t_other_app
+  </select>
 </mapper>

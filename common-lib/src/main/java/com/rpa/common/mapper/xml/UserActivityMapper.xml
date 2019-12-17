@@ -204,7 +204,7 @@
     order by ua.status asc
   </select>
 
-  <select id="queryActivatedByUserId" parameterType="java.lang.Long" resultType="com.rpa.server.pojo.UserActivityPO">
+  <select id="queryActivatedByUserId" parameterType="java.lang.Long" resultType="com.rpa.common.pojo.UserActivityPO">
     select update_time as updateTime from t_user_activity
     where user_id = #{userId} and `status` = 30
   </select>

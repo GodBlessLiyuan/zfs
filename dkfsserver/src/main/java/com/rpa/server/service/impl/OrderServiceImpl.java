@@ -1,14 +1,13 @@
 package com.rpa.server.service.impl;
 
-import com.rpa.common.mapper.UserActivityMapper;
+import com.rpa.common.bo.BatchInfoBO;
+import com.rpa.common.bo.OrderBO;
+import com.rpa.common.mapper.*;
 import com.rpa.common.pojo.GodinsecUserPO;
 import com.rpa.common.pojo.NewUserRecordPO;
 import com.rpa.common.pojo.UserActivityPO;
 import com.rpa.common.vo.ResultVO;
-import com.rpa.server.bo.BatchInfoBO;
-import com.rpa.server.bo.OrderBO;
 import com.rpa.server.dto.OrderDTO;
-import com.rpa.server.mapper.*;
 import com.rpa.server.service.IOrderService;
 import com.rpa.server.vo.OrderVO;
 import org.springframework.stereotype.Service;
@@ -64,7 +63,7 @@ public class OrderServiceImpl implements IOrderService {
             orderVOs.add(vo);
         }
         // 新用户赠送
-        List<NewUserRecordPO> newUserRecordPOs = newUserRecordMapper.queryByUserId(dto.getUd());
+        List<NewUserRecordPO> newUserRecordPOs = newUserRecordMapper.queryByUserId2(dto.getUd());
         for (NewUserRecordPO bo : newUserRecordPOs) {
             OrderVO vo = new OrderVO();
             vo.setType(3);
@@ -73,7 +72,7 @@ public class OrderServiceImpl implements IOrderService {
             orderVOs.add(vo);
         }
         // V商神器赠送
-        List<GodinsecUserPO> godinsecUserPOs = godinsecUserMapper.queryByUserId(dto.getUd());
+        List<GodinsecUserPO> godinsecUserPOs = godinsecUserMapper.queryByUserId2(dto.getUd());
         for (GodinsecUserPO po : godinsecUserPOs) {
             OrderVO vo = new OrderVO();
             vo.setType(4);
@@ -83,7 +82,7 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         // 卡密激活
-        List<BatchInfoBO> batchInfoBOs = batchInfoMapper.queryByUserId(dto.getUd());
+        List<BatchInfoBO> batchInfoBOs = batchInfoMapper.queryByUserId2(dto.getUd());
         for (BatchInfoBO bo : batchInfoBOs) {
             OrderVO vo = new OrderVO();
             vo.setType(5);

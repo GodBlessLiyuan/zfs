@@ -18,7 +18,7 @@ public interface UserActivityMapper extends BaseMapper<UserActivityPO, Integer> 
      * @param userId
      * @return
      */
-    List<UserActivityBO> queryByUserId(int userId);
+    List<UserActivityBO> queryByUserId(Long userId);
 
     List<UserActivityBO> goodCommentQuery(Map<String, Object> map);
 

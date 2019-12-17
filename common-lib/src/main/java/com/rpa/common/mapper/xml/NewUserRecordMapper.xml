@@ -122,4 +122,8 @@
     left join t_user u on nur.user_id = u.user_id
     where nur.user_id = #{userId}
   </select>
+
+  <select id="queryByUserId2" parameterType="java.lang.Long" resultType="com.rpa.common.pojo.NewUserRecordPO">
+    select create_time as createTime from t_new_user_record where user_id = #{userId}
+  </select>
 </mapper>

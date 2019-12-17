@@ -1,11 +1,11 @@
 package com.rpa.server.service.impl;
 
+import com.rpa.common.mapper.DeviceImeiMapper;
 import com.rpa.common.mapper.DeviceMapper;
 import com.rpa.common.pojo.DeviceImeiPO;
 import com.rpa.common.pojo.DevicePO;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.DeviceDTO;
-import com.rpa.server.mapper.DeviceImeiMapper;
 import com.rpa.server.service.IDeviceService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.DeviceVO;
