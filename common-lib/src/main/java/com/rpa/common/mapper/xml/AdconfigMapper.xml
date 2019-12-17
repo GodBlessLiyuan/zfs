@@ -190,4 +190,15 @@
     </where>
   </select>
 
+  <select id="queryById" parameterType="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_adconfig
+    where ad_id in (
+    <foreach collection="list" item="item" index="index" separator=",">
+      #{item}
+    </foreach>
+    )
+    and status = 2 and dr = 1
+  </select>
 </mapper>

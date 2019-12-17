@@ -1,11 +1,11 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.mapper.BannerconfigMapper;
 import com.rpa.common.pojo.BannerconfigPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.BannerConfigDTO;
-import com.rpa.server.mapper.BannerConfigMapper;
 import com.rpa.server.service.IBannerConfigService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.BannerConfigVO;
@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class BannerConfigServiceImpl implements IBannerConfigService {
     @Resource
-    private BannerConfigMapper bannerConfigMapper;
+    private BannerconfigMapper bannerConfigMapper;
 
     @Autowired
     private StringRedisTemplate template;

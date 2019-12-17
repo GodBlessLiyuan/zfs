@@ -1,13 +1,13 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.mapper.AdconfigMapper;
 import com.rpa.common.pojo.AdconfigPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.ConfigConstant;
 import com.rpa.server.dto.AdconfigDTO;
 import com.rpa.server.mapper.AdChannelMapper;
-import com.rpa.server.mapper.AdConfigMapper;
 import com.rpa.server.mapper.AppMapper;
 import com.rpa.server.mapper.KeyValueMapper;
 import com.rpa.server.service.AdconfigServcie;
@@ -37,7 +37,7 @@ public class AdconfigServiceImpl implements AdconfigServcie {
     private KeyValueMapper keyValueMapper;
 
     @Autowired
-    private AdConfigMapper adConfigMapper;
+    private AdconfigMapper adConfigMapper;
 
     @Autowired
     private AppMapper appMapper;
@@ -84,7 +84,7 @@ public class AdconfigServiceImpl implements AdconfigServcie {
             if (null == adIds) {
                 pos = null;
             } else {
-                pos = this.adConfigMapper.query(adIds);
+                pos = this.adConfigMapper.queryById(adIds);
             }
 
             //将所查数据放入集合

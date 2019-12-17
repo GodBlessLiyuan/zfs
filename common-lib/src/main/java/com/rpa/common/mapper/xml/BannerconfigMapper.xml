@@ -164,4 +164,12 @@
       </if>
     </where>
   </select>
+
+  <select id="queryAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_bannerconfig
+    where dr = 1 and status = 2
+    order by banner_id desc
+  </select>
 </mapper>
