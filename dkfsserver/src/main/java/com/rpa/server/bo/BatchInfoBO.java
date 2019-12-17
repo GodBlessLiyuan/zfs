@@ -1,6 +1,6 @@
 package com.rpa.server.bo;
 
-import com.rpa.server.pojo.BatchInfoPO;
+import com.rpa.common.pojo.BatchInfoPO;
 import lombok.Data;
 
 /**

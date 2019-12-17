@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.WithdrawUserPO;
+import com.rpa.common.pojo.WithdrawUserPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

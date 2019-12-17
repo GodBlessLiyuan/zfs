@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.DeviceStatisticsPO;
+import com.rpa.common.pojo.DeviceStatisticsPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

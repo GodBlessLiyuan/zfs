@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.ChBatchPO;
+import com.rpa.common.pojo.ChBatchPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,15 +1,15 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.pojo.AdconfigPO;
 import com.rpa.common.utils.RedisKeyUtil;
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.ConfigConstant;
 import com.rpa.server.dto.AdconfigDTO;
 import com.rpa.server.mapper.AdChannelMapper;
 import com.rpa.server.mapper.AdConfigMapper;
 import com.rpa.server.mapper.AppMapper;
 import com.rpa.server.mapper.KeyValueMapper;
-import com.rpa.server.pojo.AdConfigPO;
 import com.rpa.server.service.AdconfigServcie;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.AdconfigVO;
@@ -80,7 +80,7 @@ public class AdconfigServiceImpl implements AdconfigServcie {
             }
 
             //从t_adconfig表中查询广告数据，供开屏广告展现使用
-            List<AdConfigPO> pos;
+            List<AdconfigPO> pos;
             if (null == adIds) {
                 pos = null;
             } else {
@@ -92,7 +92,7 @@ public class AdconfigServiceImpl implements AdconfigServcie {
             if (null == pos) {
                 lists = null;
             } else {
-                for (AdConfigPO po : pos) {
+                for (AdconfigPO po : pos) {
                     Map<String, Object> map = new HashMap<>();
                     map.put("adid", po.getAdId());
                     map.put("sort", po.getPriority());

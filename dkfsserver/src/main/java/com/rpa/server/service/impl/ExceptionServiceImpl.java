@@ -1,9 +1,9 @@
 package com.rpa.server.service.impl;
 
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.pojo.ExceptionPO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.ExceptionDTO;
 import com.rpa.server.mapper.ExceptionMapper;
-import com.rpa.server.pojo.ExceptionPO;
 import com.rpa.server.service.IExceptionService;
 import org.springframework.stereotype.Service;
 

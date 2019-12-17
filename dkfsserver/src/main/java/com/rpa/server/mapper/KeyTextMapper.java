@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.KeyTextPO;
+import com.rpa.common.pojo.KeyTextPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,7 +1,6 @@
 package com.rpa.server.controller;
 
-import com.auth0.jwt.JWT;
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.UserVipDTO;
 import com.rpa.server.service.IUserVipService;
 import com.rpa.server.utils.VerifyUtil;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author: xiahui

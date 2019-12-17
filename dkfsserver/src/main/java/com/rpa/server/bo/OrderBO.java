@@ -1,6 +1,6 @@
 package com.rpa.server.bo;
 
-import com.rpa.server.pojo.OrderPO;
+import com.rpa.common.pojo.OrderPO;
 import lombok.Data;
 
 /**

@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.UserNoticePO;
+import com.rpa.common.pojo.UserNoticePO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

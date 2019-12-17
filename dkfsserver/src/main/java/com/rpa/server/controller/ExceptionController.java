@@ -1,6 +1,6 @@
 package com.rpa.server.controller;
 
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.ExceptionDTO;
 import com.rpa.server.service.IExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;

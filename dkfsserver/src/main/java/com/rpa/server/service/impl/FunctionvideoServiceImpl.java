@@ -2,7 +2,7 @@ package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.rpa.common.utils.RedisKeyUtil;
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.FunctionvideoDTO;
 import com.rpa.server.mapper.FunctionVideoMapper;
 import com.rpa.server.service.FunctionvideoService;

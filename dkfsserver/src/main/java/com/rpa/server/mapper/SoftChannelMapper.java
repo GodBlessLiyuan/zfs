@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.SoftChannelPO;
+import com.rpa.common.pojo.SoftChannelPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

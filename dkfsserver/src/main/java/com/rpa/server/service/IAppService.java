@@ -1,6 +1,6 @@
 package com.rpa.server.service;
 
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.AppDTO;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,11 +1,11 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.pojo.BannerconfigPO;
 import com.rpa.common.utils.RedisKeyUtil;
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.BannerConfigDTO;
 import com.rpa.server.mapper.BannerConfigMapper;
-import com.rpa.server.pojo.BannerConfigPO;
 import com.rpa.server.service.IBannerConfigService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.BannerConfigVO;
@@ -52,13 +52,13 @@ public class BannerConfigServiceImpl implements IBannerConfigService {
         if (template.hasKey(key)) {
             vos = JSON.parseObject(cache.getCacheByKey(key), List.class);
         } else {
-            List<BannerConfigPO> bannerConfigPOs = bannerConfigMapper.queryAll();
+            List<BannerconfigPO> bannerConfigPOs = bannerConfigMapper.queryAll();
             if (bannerConfigPOs == null || bannerConfigPOs.size() == 0) {
                 return new ResultVO(1000);
             }
 
             vos = new ArrayList<>();
-            for (BannerConfigPO po : bannerConfigPOs) {
+            for (BannerconfigPO po : bannerConfigPOs) {
                 BannerConfigVO vo = new BannerConfigVO();
                 vo.setAdid(po.getBannerId());
                 if (po.getUrl() != null && !"".equals(po.getUrl())) {

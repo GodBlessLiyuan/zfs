@@ -1,6 +1,6 @@
 package com.rpa.server.controller;
 
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.AppDTO;
 import com.rpa.server.service.IAppService;
 import com.rpa.server.utils.VerifyUtil;

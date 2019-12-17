@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.FeedbackPO;
+import com.rpa.common.pojo.FeedbackPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

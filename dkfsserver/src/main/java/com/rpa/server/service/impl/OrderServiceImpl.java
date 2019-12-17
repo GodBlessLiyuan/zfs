@@ -1,13 +1,13 @@
 package com.rpa.server.service.impl;
 
+import com.rpa.common.pojo.GodinsecUserPO;
+import com.rpa.common.pojo.NewUserRecordPO;
+import com.rpa.common.pojo.UserActivityPO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.bo.BatchInfoBO;
 import com.rpa.server.bo.OrderBO;
-import com.rpa.server.common.ResultVO;
 import com.rpa.server.dto.OrderDTO;
 import com.rpa.server.mapper.*;
-import com.rpa.server.pojo.GodinsecUserPO;
-import com.rpa.server.pojo.NewUserRecordPO;
-import com.rpa.server.pojo.UserActivityPO;
 import com.rpa.server.service.IOrderService;
 import com.rpa.server.vo.OrderVO;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.ExceptionPO;
+import com.rpa.common.pojo.ExceptionPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

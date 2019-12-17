@@ -1,6 +1,6 @@
 package com.rpa.server.controller;
 
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.FeedbackDTO;
 import com.rpa.server.service.IFeedbackService;
 import com.rpa.server.utils.VerifyUtil;

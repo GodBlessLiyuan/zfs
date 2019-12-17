@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.AdChannelPO;
+import com.rpa.common.pojo.AdChannelPO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

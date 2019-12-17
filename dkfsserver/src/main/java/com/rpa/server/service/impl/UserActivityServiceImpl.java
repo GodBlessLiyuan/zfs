@@ -1,9 +1,9 @@
 package com.rpa.server.service.impl;
 
-import com.rpa.server.common.ResultVO;
+import com.rpa.common.pojo.UserActivityPO;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.UserActivityDTO;
 import com.rpa.server.mapper.UserActivityMapper;
-import com.rpa.server.pojo.UserActivityPO;
 import com.rpa.server.service.IUserActivityService;
 import com.rpa.server.utils.UploadUtil;
 import org.springframework.stereotype.Service;

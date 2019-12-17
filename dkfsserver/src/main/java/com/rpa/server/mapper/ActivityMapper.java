@@ -1,6 +1,6 @@
 package com.rpa.server.mapper;
 
-import com.rpa.server.pojo.ActivityPO;
+import com.rpa.common.pojo.ActivityPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
