@@ -8,4 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserVipMapper extends BaseMapper<UserVipPO, UserVipPO> {
+    /**
+     * 根据用户Id查询数据
+     *
+     * @param ud 用户Id
+     * @return
+     */
+    UserVipPO queryByUserId(Long ud);
 }

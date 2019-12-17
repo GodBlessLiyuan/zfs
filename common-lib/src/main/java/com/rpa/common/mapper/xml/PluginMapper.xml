@@ -192,4 +192,11 @@
     left join t_app a on apc.app_id = a.app_id
     where p.plugin_id = #{pluginId} and p.dr = 1
   </select>
+  <select id="queryMaxByPluId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_plugin
+    where dr = 1 and plugin_id > #{pluginId,jdbcType=INTEGER}
+    order by plugin_id desc
+    limit 1
+  </select>
 </mapper>

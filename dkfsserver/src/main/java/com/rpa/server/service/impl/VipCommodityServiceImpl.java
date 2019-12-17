@@ -1,12 +1,12 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.mapper.VipcommodityMapper;
 import com.rpa.common.pojo.VipcommodityPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.CommonConstant;
 import com.rpa.server.dto.VipCommodityDTO;
-import com.rpa.server.mapper.VipCommodityMapper;
 import com.rpa.server.service.IVipCommodityService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.VipCommodityVO;
@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class VipCommodityServiceImpl implements IVipCommodityService {
     @Resource
-    private VipCommodityMapper vipCommodityMapper;
+    private VipcommodityMapper vipCommodityMapper;
     @Autowired
     private RedisCacheUtil cache;
 

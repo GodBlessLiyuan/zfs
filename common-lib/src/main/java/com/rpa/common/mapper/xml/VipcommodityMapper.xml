@@ -277,4 +277,9 @@
     left join t_order o on v.cmdy_id = o.cmdy_id
     where o.pay_time >= (select timestamp(date_add(curdate(), interval - day(curdate()) + 1 day)))
   </select>
+  <select id="queryByChanId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_vipcommodity
+    where status = 2 and soft_channel_id = #{softChannelId,jdbcType=INTEGER}
+  </select>
 </mapper>

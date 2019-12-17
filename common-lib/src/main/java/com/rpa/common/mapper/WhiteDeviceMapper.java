@@ -4,6 +4,7 @@ import com.rpa.common.pojo.WhiteDevicePO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * WhiteDeviceMapper继承基类
@@ -25,4 +26,11 @@ public interface WhiteDeviceMapper extends BaseMapper<WhiteDevicePO, WhiteDevice
      * @return
      */
     List<WhiteDevicePO> queryByDeviceId(Long deviceId);
+
+    /**
+     * 查询所有白名单设备Id
+     *
+     * @return
+     */
+    Set<String> queryAllDevId();
 }
