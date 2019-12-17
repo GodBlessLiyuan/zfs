@@ -1,6 +1,6 @@
 package com.rpa.common.bo;
 
-import com.rpa.common.pojo.WhilteDevicePO;
+import com.rpa.common.pojo.WhiteDevicePO;
 import lombok.Data;
 
 /**
@@ -10,6 +10,6 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-public class WhiteDeviceBO extends WhilteDevicePO {
+public class WhiteDeviceBO extends WhiteDevicePO {
     private String imei;
 }

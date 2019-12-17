@@ -110,4 +110,10 @@
       <if test="isPay == 2"> and uv.first_time is null</if>
     </where>
   </select>
+  <select id="queryByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user_vip
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

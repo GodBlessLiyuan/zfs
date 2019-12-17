@@ -2,6 +2,10 @@ package com.rpa.server.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.rpa.common.mapper.UserDeviceMapper;
+import com.rpa.common.mapper.UserGiftsMapper;
+import com.rpa.common.mapper.UserMapper;
+import com.rpa.common.mapper.UserVipMapper;
 import com.rpa.common.pojo.*;
 import com.rpa.common.utils.DateUtil;
 import com.rpa.common.vo.ResultVO;

@@ -1,11 +1,11 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.mapper.PluginMapper;
 import com.rpa.common.pojo.PluginPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.PluginDTO;
-import com.rpa.server.mapper.PluginMapper;
 import com.rpa.server.service.IPluginService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.PluginVO;

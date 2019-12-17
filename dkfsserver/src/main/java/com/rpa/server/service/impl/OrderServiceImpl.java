@@ -1,5 +1,6 @@
 package com.rpa.server.service.impl;
 
+import com.rpa.common.mapper.UserActivityMapper;
 import com.rpa.common.pojo.GodinsecUserPO;
 import com.rpa.common.pojo.NewUserRecordPO;
 import com.rpa.common.pojo.UserActivityPO;

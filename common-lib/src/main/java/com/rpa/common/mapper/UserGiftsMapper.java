@@ -17,4 +17,11 @@ public interface UserGiftsMapper extends BaseMapper<UserGiftsPO, Integer> {
      * @return
      */
     List<UserGiftsPO> queryByStatus(Byte status);
+
+    /**
+     * 根据已开启的用户配置表
+     *
+     * @return
+     */
+    List<UserGiftsPO> queryOpenGift();
 }

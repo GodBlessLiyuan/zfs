@@ -12,7 +12,13 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<UserPO, Long> {
     String queryPhoneByUserId(Long userId);
 
-    String queryPhoneByUserid(Long aId);
-
     int queryTodayNewRegister();
+
+    /**
+     * 根据phone查询数据
+     *
+     * @param ph
+     * @return
+     */
+    UserPO queryByPhone(String ph);
 }

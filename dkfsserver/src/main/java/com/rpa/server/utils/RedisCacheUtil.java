@@ -1,10 +1,10 @@
 package com.rpa.server.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.mapper.SoftChannelMapper;
+import com.rpa.common.mapper.WhiteDeviceMapper;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.server.constant.LoginConstant;
-import com.rpa.server.mapper.SoftChannelMapper;
-import com.rpa.server.mapper.WhiteDeviceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;

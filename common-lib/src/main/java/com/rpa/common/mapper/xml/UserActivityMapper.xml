@@ -203,4 +203,20 @@
     </where>
     order by ua.status asc
   </select>
+
+  <select id="queryActivatedByUserId" parameterType="java.lang.Long" resultType="com.rpa.server.pojo.UserActivityPO">
+    select update_time as updateTime from t_user_activity
+    where user_id = #{userId} and `status` = 30
+  </select>
+  <select id="queryByUserIdAndStatus" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_user_activity
+    where user_id = #{userId}
+    <if test="status != null and status != 0">
+      and `status` = #{status,jdbcType=TINYINT}
+    </if>
+  </select>
+  <update id="activate" parameterType="java.lang.Long">
+    update t_user_activity set `status` = 30 where user_id = #{userId} and `status` = 10;
+  </update>
 </mapper>

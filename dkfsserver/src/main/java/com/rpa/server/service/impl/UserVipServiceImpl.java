@@ -1,12 +1,12 @@
 package com.rpa.server.service.impl;
 
+import com.rpa.common.mapper.UserDeviceMapper;
+import com.rpa.common.mapper.UserVipMapper;
 import com.rpa.common.pojo.UserDevicePO;
 import com.rpa.common.pojo.UserVipPO;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.CommonConstant;
 import com.rpa.server.dto.UserVipDTO;
-import com.rpa.server.mapper.UserDeviceMapper;
-import com.rpa.server.mapper.UserVipMapper;
 import com.rpa.server.service.IUserVipService;
 import com.rpa.server.vo.UserVipVO;
 import org.springframework.stereotype.Service;

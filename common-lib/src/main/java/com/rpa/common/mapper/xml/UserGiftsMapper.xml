@@ -158,4 +158,9 @@
     from t_user_gifts
     where `status` = #{status,jdbcType=TINYINT} and dr = 1
   </select>
+  <select id="queryOpenGift" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_user_gifts
+    where dr = 1 and `status` = 2
+  </select>
 </mapper>

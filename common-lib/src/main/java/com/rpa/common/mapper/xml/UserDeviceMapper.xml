@@ -90,4 +90,17 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where user_device_id = #{userDeviceId,jdbcType=INTEGER}
   </update>
+
+  <update id="signOutByDevId" parameterType="java.lang.Long">
+    update t_user_device set `status` = 2 where device_id = #{deviceId,jdbcType=BIGINT} and `status` = 1
+  </update>
+  <update id="signOutByUserId" parameterType="java.lang.Long">
+    update t_user_device set `status` = 2 where user_id = #{userId,jdbcType=BIGINT} and `status` = 1
+  </update>
+  <select id="queryByDevIdAndUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user_device
+    where device_id = #{deviceId,jdbcType=BIGINT} and user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

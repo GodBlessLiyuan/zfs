@@ -78,4 +78,8 @@
     delete from t_white_device
     where device_id = #{deviceId,jdbcType=INTEGER}
   </delete>
+  <select id="queryAllDevId" resultType="java.lang.String">
+    select distinct device_id
+    from t_white_device
+  </select>
 </mapper>
