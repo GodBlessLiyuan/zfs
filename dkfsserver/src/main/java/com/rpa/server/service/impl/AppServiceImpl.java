@@ -36,7 +36,7 @@ public class AppServiceImpl implements IAppService {
     private RedisCacheUtil cache;
     @Value("${file.publicPath}")
     private String filePublicPath;
-    @Value("${smart.config.gray}")
+    @Value("${dkfs.config.gray}")
     private boolean gray;
     @Autowired
     private AmqpTemplate template;

@@ -3,7 +3,7 @@
 
 <configuration>
 
-    <property name="LOG_PATH" value="/data/ftp/dkfsftp/log/dkfsweb" />
+    <property name="LOG_PATH" value="/data/ftp/dkfsftp/log/dkfspay" />
 
     <!--输出日志到控制台-->
     <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">

@@ -24,17 +24,16 @@
         <module>common-lib</module>
         <module>dkfsweb</module>
         <module>dkfsserver</module>
-        <module>smarteureka</module>
-        <module>smartzuul</module>
-        <module>smartkafka</module>
-        <module>smartdatav</module>
-        <module>smartfront</module>
-        <module>smartpay</module>
-        <module>smartcache</module>
-        <module>smartzipkin</module>
-        <module>smartrabbit</module>
-        <module>smartdetect</module>
-        <module>smartvoice</module>
+        <module>dkfseureka</module>
+        <module>dkfszuul</module>
+        <module>dkfskafka</module>
+        <module>dkfsfront</module>
+        <module>dkfspay</module>
+        <module>dkfscache</module>
+        <module>dkfszipkin</module>
+        <module>dkfsrabbit</module>
+        <module>dkfsdetect</module>
+        <module>dkfsvoice</module>
     </modules>
 
     <dependencyManagement>

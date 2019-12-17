@@ -7,7 +7,7 @@ package com.rpa.common.constant;
  * @version: 1.0
  */
 public class ModuleConstant {
-    public static final String PROJECT = "smarthelper";
+    public static final String PROJECT = "smartdkfs";
 
     public static final String APP = "app";
     public static final String PLUGIN = "plugin";

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @description: Cache Feign 接口
  * @version: 1.0
  */
-@FeignClient(name = "smartcache")
+@FeignClient(name = "dkfscache")
 public interface CacheFeignClient {
     /**
      * 删除对应缓存
