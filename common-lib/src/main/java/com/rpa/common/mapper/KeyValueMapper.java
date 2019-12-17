@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface KeyValueMapper extends BaseMapper<KeyValuePO, Integer> {
+    String queryValue(int showInterval);
 }
