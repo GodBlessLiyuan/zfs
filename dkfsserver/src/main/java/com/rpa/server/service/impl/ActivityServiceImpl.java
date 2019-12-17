@@ -1,11 +1,11 @@
 package com.rpa.server.service.impl;
 
+import com.rpa.common.mapper.ActivityMapper;
 import com.rpa.common.pojo.ActivityPO;
 import com.rpa.common.pojo.UserActivityPO;
 import com.rpa.common.pojo.UserVipPO;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.ActivityDTO;
-import com.rpa.server.mapper.ActivityMapper;
 import com.rpa.server.mapper.UserActivityMapper;
 import com.rpa.server.mapper.UserVipMapper;
 import com.rpa.server.service.IActivityService;
