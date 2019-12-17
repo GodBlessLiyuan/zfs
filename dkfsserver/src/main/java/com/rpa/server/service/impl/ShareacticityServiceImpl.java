@@ -1,11 +1,11 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.rpa.common.mapper.ShareActivityMapper;
 import com.rpa.common.pojo.ShareActivityPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.ShareactivityDTO;
-import com.rpa.server.mapper.ShareActivityMapper;
 import com.rpa.server.service.ShareactivityService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.ShareactivityVO;
@@ -52,7 +52,7 @@ public class ShareacticityServiceImpl implements ShareactivityService {
             vos = JSON.parseObject(cache.getCacheByKey(key), List.class);
         } else {
             vos = new ArrayList<>();
-            List<ShareActivityPO> pos = this.shareActivityMapper.query();
+            List<ShareActivityPO> pos = this.shareActivityMapper.queryAll();
             for (ShareActivityPO po : pos) {
                 ShareactivityVO vo = new ShareactivityVO();
                 vo.setMid(po.getMaterialId());
