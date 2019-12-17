@@ -5,7 +5,6 @@ import com.rpa.common.pojo.KeyValuePO;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.ConfigConstant;
 import com.rpa.server.dto.ConfigDTO;
-import com.rpa.server.mapper.KeyValueMapper;
 import com.rpa.server.service.IConfigService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.ConfigVO;

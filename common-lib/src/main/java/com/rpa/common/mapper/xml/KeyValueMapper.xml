@@ -55,4 +55,10 @@
     set `value` = #{value,jdbcType=VARCHAR}
     where key_name = #{keyName,jdbcType=INTEGER}
   </update>
+
+  <select id="queryValue" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select value
+    from t_key_value
+    where key_name = #{keyName,jdbcType=INTEGER}
+  </select>
 </mapper>
