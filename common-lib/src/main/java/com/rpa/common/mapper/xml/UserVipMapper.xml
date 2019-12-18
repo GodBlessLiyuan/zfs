@@ -14,6 +14,10 @@
     <result column="first_time" jdbcType="TIMESTAMP" property="firstTime" />
     <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
   </resultMap>
+  <sql id="Base_Column_List">
+    user_id, viptype_id, start_time, start_time, end_time, `status`, create_time, update_time, vcreate_time,
+    vend_time, first_time, last_time
+  </sql>
   <insert id="insert" parameterType="com.rpa.common.pojo.UserVipPO">
     insert into t_user_vip (user_id, viptype_id, start_time, 
       end_time, `status`, create_time, 
@@ -97,6 +101,21 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.server.pojo.UserVipPO">
+    update t_user_vip
+    set
+      viptype_id = #{viptypeId,jdbcType=INTEGER},
+      start_time =#{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      vcreate_time = #{vcreateTime,jdbcType=TIMESTAMP},
+      vend_time = #{vendTime,jdbcType=TIMESTAMP},
+      first_time = #{firstTime,jdbcType=TIMESTAMP},
+      last_time = #{lastTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
 
   <select id="query" resultType="com.rpa.common.bo.UserVipBO">
     select uv.user_id as userId, u.phone, u.create_time as createTime, uv.first_time as firstTime, uv.end_time as
