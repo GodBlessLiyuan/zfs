@@ -72,18 +72,14 @@ public class AdconfigServiceImpl implements AdconfigServcie {
             Integer appId = this.appMapper.queryIdByVersioncode(dto.getSoftv());
 
             //从t_ad_channel表中查询广告IDs
-            List<Integer> adIds;
-            if (0 == softChannelId || null == appId) {
-                adIds = null;
-            }else{
+            List<Integer> adIds = null;
+            if (0 != softChannelId && null != appId) {
                 adIds = this.adChannelMapper.queryAdIds(softChannelId, appId);
             }
 
             //从t_adconfig表中查询广告数据，供开屏广告展现使用
-            List<AdconfigPO> pos;
-            if (null == adIds) {
-                pos = null;
-            } else {
+            List<AdconfigPO> pos = null;
+            if (null != adIds && adIds.size() != 0) {
                 pos = this.adConfigMapper.queryById(adIds);
             }
 
