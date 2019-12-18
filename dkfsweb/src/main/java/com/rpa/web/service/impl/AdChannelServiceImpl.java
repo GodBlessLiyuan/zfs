@@ -188,7 +188,7 @@ public class AdChannelServiceImpl implements AdChannelService {
 
 
     /**
-     * 删除Redis，根据soft_channel_id
+     * 删除Redis
      */
     private void deleteRedis() {
         Set<String> redisKeys = template.keys(RedisKeyUtil.genAdconfigRedisKey("*"));
