@@ -63,7 +63,7 @@
                                         <input type="text" class="form-control" id="checkcode" placeholder="Checkcode" name="checkcode" required="required" style="float: left" onfocus="clearCheckcodeMsg()">
                                     </div>
                                     <div style="float: right">
-                                        <img id="img" src="login/get/checkcode"/>
+                                        <img id="img" src=""/>
                                         <a onclick="javascript:changeImg()" style="color:blue">看不清？</a>
                                     </div>
                                 </div>
@@ -96,6 +96,8 @@
         var img = document.getElementById("img");
         img.src = "login/get/checkcode?date=" + new Date();
     }
+
+    changeImg();
 
     /**
      * 清除提示语：username
