@@ -95,7 +95,7 @@ public class AdChannelServiceImpl implements AdChannelService {
                 this.adChannelMapper.insert(po);
 
                 //再次查询，将数据转化为vo，返回
-                AdChannelBO bo3 = new AdChannelBO();
+                AdChannelBO bo3 = this.adChannelMapper.queryByIds(adId, bo1.getAppId(), bo1.getSoftChannelId());
                 vo = bo2vo(bo3);
             } else {
                 //将数据转换为vo，返回
