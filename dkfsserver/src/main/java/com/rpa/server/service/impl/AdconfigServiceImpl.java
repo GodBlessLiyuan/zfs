@@ -13,7 +13,6 @@ import com.rpa.server.dto.AdconfigDTO;
 import com.rpa.server.service.AdconfigServcie;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.AdconfigVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -33,19 +32,19 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class AdconfigServiceImpl implements AdconfigServcie {
 
-    @Autowired
+    @Resource
     private KeyValueMapper keyValueMapper;
 
-    @Autowired
+    @Resource
     private AdconfigMapper adConfigMapper;
 
-    @Autowired
+    @Resource
     private AppMapper appMapper;
 
-    @Autowired
+    @Resource
     private AdChannelMapper adChannelMapper;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
     @Resource

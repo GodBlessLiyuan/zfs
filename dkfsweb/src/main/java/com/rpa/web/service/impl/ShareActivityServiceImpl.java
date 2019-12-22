@@ -2,6 +2,7 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.mapper.ShareActivityMapper;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.utils.OperatorUtil;
@@ -12,12 +13,14 @@ import com.rpa.web.service.ShareActivityService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.common.vo.ResultVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -29,14 +32,15 @@ import java.util.*;
  */
 @Service
 public class ShareActivityServiceImpl implements ShareActivityService {
+    private final static Logger logger = LoggerFactory.getLogger(ShareActivityServiceImpl.class);
 
-    @Autowired
+    @Resource
     private ShareActivityMapper shareActivityMapper;
 
-    @Autowired
+    @Resource
     private AdminUserMapper adminUserMapper;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
     @Value("${file.iconDir}")
@@ -112,7 +116,10 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         po.setCreateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.shareActivityMapper.insert(po);
+        int result = this.shareActivityMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
 
         //删除Redis
         deleteRedis();
@@ -145,7 +152,10 @@ public class ShareActivityServiceImpl implements ShareActivityService {
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.shareActivityMapper.updateByPrimaryKey(po);
+        int result = this.shareActivityMapper.updateByPrimaryKey(po);
+        if (result == 0) {
+            LogUtil.log(logger, "update", "更新失败", po);
+        }
 
         //删除Redis
         deleteRedis();
@@ -162,7 +172,10 @@ public class ShareActivityServiceImpl implements ShareActivityService {
     @Override
     public ResultVO delete(int materialId) {
 
-        this.shareActivityMapper.deleteByPrimaryKey(materialId);
+        int result = this.shareActivityMapper.deleteByPrimaryKey(materialId);
+        if (result == 0) {
+            LogUtil.log(logger, "update", "删除失败", materialId);
+        }
 
         //删除Redis
         deleteRedis();

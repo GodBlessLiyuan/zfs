@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.vo.FunctionVideoVO;
@@ -12,12 +13,14 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.utils.OperatorUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -29,14 +32,15 @@ import java.util.*;
  */
 @Service
 public class FunctionVideoServiceImpl implements FunctionVideoService {
+    private final static Logger logger = LoggerFactory.getLogger(FunctionVideoServiceImpl.class);
 
-    @Autowired
+    @Resource
     private FunctionvideoMapper functionVideoMapper;
 
-    @Autowired
+    @Resource
     private AdminUserMapper adminUserMapper;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
     @Value("${file.videoDir}")
@@ -141,7 +145,10 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         po.setCreateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.functionVideoMapper.insert(po);
+        int result = this.functionVideoMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
         return new ResultVO(1000);
     }
 
@@ -173,7 +180,10 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.functionVideoMapper.updateByPrimaryKey(po);
+        int result = this.functionVideoMapper.updateByPrimaryKey(po);
+        if (result == 0) {
+            LogUtil.log(logger, "update", "更新失败", po);
+        }
 
         //删除Redis
         String funname = this.queryFunnameById(functionId);
@@ -190,7 +200,10 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     @Override
     public ResultVO delete(Integer functionId) {
 
-        this.functionVideoMapper.deleteByPrimaryKey(functionId);
+        int result = this.functionVideoMapper.deleteByPrimaryKey(functionId);
+        if (result == 0) {
+            LogUtil.log(logger, "delete", "删除失败", functionId);
+        }
 
         //删除Redis
         String funname = this.queryFunnameById(functionId);

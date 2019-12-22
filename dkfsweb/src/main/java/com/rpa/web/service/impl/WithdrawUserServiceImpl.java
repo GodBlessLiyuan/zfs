@@ -3,6 +3,7 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.common.mapper.UserMapper;
 import com.rpa.common.mapper.WithdrawUserMapper;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.utils.OperatorUtil;
 import com.rpa.web.vo.WithdrawUserVO;
@@ -11,9 +12,11 @@ import com.rpa.common.pojo.WithdrawUserPO;
 import com.rpa.web.service.WithdrawUserService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -25,14 +28,15 @@ import java.util.*;
  */
 @Service
 public class WithdrawUserServiceImpl implements WithdrawUserService {
+    private final static Logger logger = LoggerFactory.getLogger(WithdrawUserServiceImpl.class);
 
-    @Autowired
+    @Resource
     private WithdrawUserMapper withdrawUserMapper;
 
-    @Autowired
+    @Resource
     private AdminUserMapper adminUserMapper;
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     /**
@@ -108,8 +112,10 @@ public class WithdrawUserServiceImpl implements WithdrawUserService {
         po.setEndTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.withdrawUserMapper.updateByPrimaryKey(po);
-
+        int result = this.withdrawUserMapper.updateByPrimaryKey(po);
+        if (result == 0) {
+            LogUtil.log(logger, "update", "修改失败", po);
+        }
 
         /**
          * 调用支付宝接口，进行付款操作

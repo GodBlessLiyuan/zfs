@@ -1,8 +1,10 @@
 package com.rpa.web.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.rpa.common.constant.Constant;
 import com.rpa.common.mapper.RoleMapper;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.bo.AdminUserBO;
 import com.rpa.web.dto.AdminUserDTO;
@@ -16,20 +18,23 @@ import com.rpa.common.vo.ResultVO;
 import com.rpa.web.utils.OperatorUtil;
 import com.rpa.web.vo.AdminUserVO;
 import com.rpa.web.vo.RoleVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
 
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
+    private final static Logger logger = LoggerFactory.getLogger(AdminUserServiceImpl.class);
 
-    @Autowired
+    @Resource
     private AdminUserMapper adminUserMapper;
 
-    @Autowired
+    @Resource
     private RoleMapper roleMapper;
 
     /**
@@ -82,7 +87,10 @@ public class AdminUserServiceImpl implements AdminUserService {
         po.setCreateTime(new Date());
 
         //插入
-        this.adminUserMapper.insert(po);
+        int result = this.adminUserMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
 
         return new ResultVO(1000);
     }
@@ -148,7 +156,10 @@ public class AdminUserServiceImpl implements AdminUserService {
         dto2po(dto, po, httpSession);
 
         // 修改
-        adminUserMapper.updateByPrimaryKey(po);
+        int result = adminUserMapper.updateByPrimaryKey(po);
+        if (result == 0) {
+            LogUtil.log(logger, "update", "修改失败", po);
+        }
 
         return new ResultVO(1000);
     }
@@ -157,12 +168,13 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     /**
      * 账号管理——删除
-     * @param aId
-     * @return
      */
     @Override
     public ResultVO delete(Integer aId) {
-        this.adminUserMapper.deleteByPrimaryKey(aId);
+        int result = this.adminUserMapper.deleteByPrimaryKey(aId);
+        if (result == 0) {
+            LogUtil.log(logger, "delete", "删除失败", aId);
+        }
         return new ResultVO(1000);
     }
 

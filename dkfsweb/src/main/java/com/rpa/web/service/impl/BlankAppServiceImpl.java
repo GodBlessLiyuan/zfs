@@ -3,11 +3,14 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.common.mapper.BlankAppMapper;
 import com.rpa.common.pojo.BlankAppPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.service.IBlankAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.BlankAppVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,6 +26,7 @@ import java.util.Map;
  */
 @Service
 public class BlankAppServiceImpl implements IBlankAppService {
+    private final static Logger logger = LoggerFactory.getLogger(BlankAppServiceImpl.class);
 
     @Resource
     private BlankAppMapper blankAppMapper;
@@ -44,7 +48,10 @@ public class BlankAppServiceImpl implements IBlankAppService {
         po.setCreateTime(new Date());
         po.setaId(aId);
 
-        blankAppMapper.insert(po);
+        int result = blankAppMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
 
         return new ResultVO(1000);
     }

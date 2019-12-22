@@ -4,6 +4,7 @@ import com.rpa.common.mapper.DeviceImeiMapper;
 import com.rpa.common.mapper.DeviceMapper;
 import com.rpa.common.pojo.DeviceImeiPO;
 import com.rpa.common.pojo.DevicePO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.DeviceDTO;
 import com.rpa.server.service.IDeviceService;
@@ -45,7 +46,10 @@ public class DeviceServiceImpl implements IDeviceService {
             // 新增设备信息
             DevicePO po = this.buildDevicePO(new DevicePO(), dto);
             po.setCreateTime(new Date());
-            deviceMapper.insert(po);
+            int result = deviceMapper.insert(po);
+            if (result == 0) {
+                LogUtil.log(logger, "queryDevice", "插入失败", po);
+            }
 
             return this.buildResultVO(po.getDeviceId());
         }
@@ -65,7 +69,10 @@ public class DeviceServiceImpl implements IDeviceService {
             // 新增设备信息
             DevicePO po = this.buildDevicePO(new DevicePO(), dto);
             po.setCreateTime(new Date());
-            deviceMapper.insert(po);
+            int result1 = deviceMapper.insert(po);
+            if (result1 == 0) {
+                LogUtil.log(logger, "insert", "新增设备信息失败", po);
+            }
 
             // 新增设备imei号，需去重
             List<DeviceImeiPO> imeiPOs = new ArrayList<>();
@@ -76,7 +83,10 @@ public class DeviceServiceImpl implements IDeviceService {
                 imeiPO.setImei(imei);
                 imeiPOs.add(imeiPO);
             }
-            deviceImeiMapper.batchInsert(imeiPOs);
+            int result2 = deviceImeiMapper.batchInsert(imeiPOs);
+            if (result2 == 0) {
+                LogUtil.log(logger, "insert", "插入imeiPOs失败", imeiPOs);
+            }
 
             return buildResultVO(po.getDeviceId());
         }
@@ -87,7 +97,10 @@ public class DeviceServiceImpl implements IDeviceService {
             DevicePO po = deviceMapper.selectByPrimaryKey(deviceIds.get(0));
             this.buildDevicePO(po, dto);
             po.setUpdateTime(new Date());
-            deviceMapper.updateByPrimaryKeySelective(po);
+            int result3 = deviceMapper.updateByPrimaryKeySelective(po);
+            if (result3 == 0) {
+                LogUtil.log(logger, "insert", "插入失败", po);
+            }
 
             return this.buildResultVO(po.getDeviceId());
         }

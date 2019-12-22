@@ -4,11 +4,14 @@ import com.rpa.common.mapper.UserDeviceMapper;
 import com.rpa.common.mapper.UserVipMapper;
 import com.rpa.common.pojo.UserDevicePO;
 import com.rpa.common.pojo.UserVipPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.CommonConstant;
 import com.rpa.server.dto.UserVipDTO;
 import com.rpa.server.service.IUserVipService;
 import com.rpa.server.vo.UserVipVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +25,8 @@ import java.util.Date;
  */
 @Service
 public class UserVipServiceImpl implements IUserVipService {
+    private final static Logger logger = LoggerFactory.getLogger(UserVipServiceImpl.class);
+
     @Resource
     private UserVipMapper userVipMapper;
     @Resource
@@ -76,7 +81,10 @@ public class UserVipServiceImpl implements IUserVipService {
         }
 
         // 更新
-        userVipMapper.updateByPrimaryKey(userVipPO);
+        int result = userVipMapper.updateByPrimaryKey(userVipPO);
+        if (result == 0) {
+            LogUtil.log(logger, "validate", "更新失败", userVipPO);
+        }
 
         return new ResultVO(1005);
     }

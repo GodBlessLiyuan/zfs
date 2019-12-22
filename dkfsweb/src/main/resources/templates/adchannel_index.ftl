@@ -313,7 +313,7 @@
                 if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
-                }else if (result.status == 0) {
+                }else if (result.status == 1000) {
                     alert("更改成功！");
                 } else {
                     alert("更改失败！");

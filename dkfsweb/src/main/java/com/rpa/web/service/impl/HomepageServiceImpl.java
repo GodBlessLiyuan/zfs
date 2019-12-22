@@ -7,10 +7,10 @@ import com.rpa.common.mapper.UserMapper;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.service.HomepageService;
 import com.rpa.common.vo.ResultVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,19 +26,19 @@ import java.util.Map;
 @Service
 public class HomepageServiceImpl implements HomepageService {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
-    @Autowired
+    @Resource
     private DeviceMapper deviceMapper;
 
-    @Autowired
+    @Resource
     private OrderMapper orderMapper;
 
-    @Autowired
+    @Resource
     private DeviceStatisticsMapper deviceStatisticsMapper;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
     /**

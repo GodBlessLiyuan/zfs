@@ -10,9 +10,9 @@ import com.rpa.web.utils.DateUtil;
 import com.rpa.web.utils.ExcelUtil;
 import com.rpa.web.vo.BatchInfoVO;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
@@ -26,7 +26,7 @@ import java.util.*;
 @Service
 public class BatchInfoServiceImpl implements BatchInfoService {
 
-    @Autowired
+    @Resource
     private BatchInfoMapper batchInfoMapper;
 
     /**

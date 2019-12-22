@@ -2,19 +2,21 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.pojo.AdChannelPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.bo.AdChannelBO;
 import com.rpa.web.dto.AdChannelDTO;
 import com.rpa.common.mapper.AdChannelMapper;
 import com.rpa.common.mapper.AppMapper;
-import com.rpa.common.mapper.SoftChannelMapper;
 import com.rpa.common.pojo.AppPO;
 import com.rpa.web.service.AdChannelService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.vo.AdChannelVO;
 import com.rpa.web.vo.AppVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 
@@ -34,15 +37,13 @@ import java.util.*;
 @Service
 @EnableTransactionManagement
 public class AdChannelServiceImpl implements AdChannelService {
+    private final static Logger logger = LoggerFactory.getLogger(AdChannelServiceImpl.class);
 
-    @Autowired
+    @Resource
     private AdChannelMapper adChannelMapper;
 
-    @Autowired
+    @Resource
     private AppMapper appMapper;
-
-    @Autowired
-    private SoftChannelMapper softChannelMapper;
 
     @Autowired
     private StringRedisTemplate template;
@@ -108,9 +109,7 @@ public class AdChannelServiceImpl implements AdChannelService {
     }
 
     /**
-     * 将do数据转换为dto
-     * @param bo
-     * @return
+     * bo转vo
      */
     private AdChannelVO bo2vo(AdChannelBO bo) {
         AdChannelVO vo = new AdChannelVO();
@@ -177,7 +176,10 @@ public class AdChannelServiceImpl implements AdChannelService {
             }
             po.setUpdateTime(new Date());
 
-            this.adChannelMapper.update(po);
+            int result = this.adChannelMapper.update(po);
+            if (result == 0) {
+                LogUtil.log(logger, "update", "广告渠道开关修改失败", po);
+            }
 
             //删除Redis
             this.deleteRedis();

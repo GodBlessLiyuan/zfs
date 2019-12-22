@@ -6,11 +6,14 @@ import com.rpa.common.mapper.ComTypeMapper;
 import com.rpa.common.mapper.UserGiftsMapper;
 import com.rpa.common.pojo.ComTypePO;
 import com.rpa.common.pojo.UserGiftsPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.vo.UserGiftsVO;
 import com.rpa.web.service.IUserGiftsSercive;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +29,7 @@ import java.util.Map;
  */
 @Service
 public class UserGiftsServiceImpl implements IUserGiftsSercive {
+    private final static Logger logger = LoggerFactory.getLogger(UserGiftsServiceImpl.class);
 
     @Resource
     private UserGiftsMapper userGiftsMapper;
@@ -55,7 +59,10 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
         userGiftsPO.setaId(aId);
         userGiftsPO.setDr((byte) 1);
 
-        userGiftsMapper.insert(userGiftsPO);
+        int result = userGiftsMapper.insert(userGiftsPO);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", userGiftsPO);
+        }
 
         return new ResultVO(1000);
     }
@@ -73,14 +80,20 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
 
         UserGiftsPO po = userGiftsMapper.selectByPrimaryKey(nugId);
         po.setStatus(status);
-        userGiftsMapper.updateByPrimaryKey(po);
+        int result = userGiftsMapper.updateByPrimaryKey(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "修改失败", po);
+        }
 
         return new ResultVO(1000);
     }
 
     @Override
     public ResultVO delete(int nugId) {
-        userGiftsMapper.deleteByPrimaryKey(nugId);
+        int result = userGiftsMapper.deleteByPrimaryKey(nugId);
+        if (result == 0) {
+            LogUtil.log(logger, "delete", "删除失败", nugId);
+        }
         return new ResultVO(1000);
     }
 }

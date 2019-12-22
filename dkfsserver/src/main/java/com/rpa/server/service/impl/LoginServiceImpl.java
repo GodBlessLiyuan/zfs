@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.rpa.common.mapper.*;
 import com.rpa.common.pojo.*;
 import com.rpa.common.utils.DateUtil;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.LoginDTO;
 import com.rpa.server.service.ILoginService;
@@ -12,6 +13,8 @@ import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.utils.RequestUtil;
 import com.rpa.server.utils.UserVipUtil;
 import com.rpa.server.vo.LoginVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,7 @@ import java.util.List;
 @EnableTransactionManagement
 @Service
 public class LoginServiceImpl implements ILoginService {
+    private final static Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
     @Autowired
     private RedisCacheUtil cache;
@@ -71,8 +75,10 @@ public class LoginServiceImpl implements ILoginService {
             po.setSoftChannelId(cache.getSoftChannelId(dto.getChannel()));
             po.setCreateTime(new Date());
             po.setIp(RequestUtil.getIpAddr(req));
-            userMapper.insert(po);
-
+            int result1 = userMapper.insert(po);
+            if (result1 == 0) {
+                LogUtil.log(logger, "insert", "新增用户失败", po);
+            }
             // 登出当前设备所有在线用户
             userDeviceMapper.signOutByDevId(dto.getId());
 
@@ -82,7 +88,10 @@ public class LoginServiceImpl implements ILoginService {
             userDevPO.setUserId(po.getUserId());
             userDevPO.setStatus((byte) 1);
             userDevPO.setCreateTime(new Date());
-            userDeviceMapper.insert(userDevPO);
+            int result2 = userDeviceMapper.insert(userDevPO);
+            if (result2 == 0) {
+                LogUtil.log(logger, "insert", "新增用户设备失败", userDevPO);
+            }
 
             // 新用户是否送会员
             List<UserGiftsPO> userGiftsPOs = userGiftsMapper.queryOpenGift();
@@ -96,8 +105,10 @@ public class LoginServiceImpl implements ILoginService {
                 newUserRecordPO.setUserDeviceId(userDevPO.getUserDeviceId());
                 newUserRecordPO.setNugId(userGiftsPO.getNugId());
                 newUserRecordPO.setCreateTime(new Date());
-                newUserRecordMapper.insert(newUserRecordPO);
-
+                int result3 = newUserRecordMapper.insert(newUserRecordPO);
+                if (result3 == 0) {
+                    LogUtil.log(logger, "insert", "新增新用户失败", userDevPO);
+                }
                 gift = 1;
                 days = userGiftsPO.getDays();
             }
@@ -110,13 +121,19 @@ public class LoginServiceImpl implements ILoginService {
                 godinsecUserPO.setUpdateTime(new Date());
                 godinsecUserPO.setDays(godDays);
                 godinsecUserPO.setStatus((byte) 2);
-                godinsecUserMapper.updateByPrimaryKey(godinsecUserPO);
+                int result4 = godinsecUserMapper.updateByPrimaryKey(godinsecUserPO);
+                if (result4 == 0) {
+                    LogUtil.log(logger, "insert", "微商神器送会员新增失败", godinsecUserPO);
+                }
             }
 
             if (days + godDays > 0) {
                 // 更新会员天数
                 UserVipPO userVipPO = UserVipUtil.buildUserVipVO(null, po.getUserId(), days + godDays, false);
-                userVipMapper.insert(userVipPO);
+                int result5 = userVipMapper.insert(userVipPO);
+                if (result5 == 0) {
+                    LogUtil.log(logger, "insert", "更新会员天数失败", userVipPO);
+                }
             }
 
             // 事务提交完成后，发送消息
@@ -141,9 +158,13 @@ public class LoginServiceImpl implements ILoginService {
         // 更新当前用户信息
         userPO.setIp(RequestUtil.getIpAddr(req));
         userPO.setUpdateTime(new Date());
-        userMapper.updateByPrimaryKey(userPO);
+        int result6 = userMapper.updateByPrimaryKey(userPO);
+        if (result6 == 0) {
+            LogUtil.log(logger, "insert", "更新当前用户信息失败", userPO);
+        }
 
         UserDevicePO userDevicePO = userDeviceMapper.queryByDevIdAndUserId(dto.getId(), userPO.getUserId());
+        int result7;
         if (userDevicePO == null) {
             // 新增用户-设备关系
             userDevicePO = new UserDevicePO();
@@ -151,12 +172,14 @@ public class LoginServiceImpl implements ILoginService {
             userDevicePO.setUserId(userPO.getUserId());
             userDevicePO.setStatus((byte) 1);
             userDevicePO.setCreateTime(new Date());
-            userDeviceMapper.insert(userDevicePO);
+            result7 = userDeviceMapper.insert(userDevicePO);
         } else {
             userDevicePO.setStatus((byte) 1);
-            userDeviceMapper.updateByPrimaryKey(userDevicePO);
+            result7 = userDeviceMapper.updateByPrimaryKey(userDevicePO);
         }
-
+        if (result7 == 0) {
+            LogUtil.log(logger, "insert", "新增用户设备关系失败", userDevicePO);
+        }
         return this.buildResultVO(userDevicePO, gift, days);
     }
 

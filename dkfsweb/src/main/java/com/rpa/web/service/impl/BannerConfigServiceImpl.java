@@ -2,6 +2,7 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.mapper.BannerconfigMapper;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.common.mapper.AdminUserMapper;
@@ -12,12 +13,14 @@ import com.rpa.web.utils.FileUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.utils.OperatorUtil;
 import com.rpa.web.vo.BannerConfigVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -29,14 +32,15 @@ import java.util.*;
  */
 @Service
 public class BannerConfigServiceImpl implements BannerConfigService {
+    private final static Logger logger = LoggerFactory.getLogger(BannerConfigServiceImpl.class);
 
-    @Autowired
+    @Resource
     private BannerconfigMapper bannerconfigMapper;
 
-    @Autowired
+    @Resource
     private AdminUserMapper adminUserMapper;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
     @Value("${file.iconDir}")
@@ -110,7 +114,10 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         po.setDr((byte)1);
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.bannerconfigMapper.insert(po);
+        int result = this.bannerconfigMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
 
         //删除Redis
         this.deleteRedis();
@@ -142,7 +149,10 @@ public class BannerConfigServiceImpl implements BannerConfigService {
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.bannerconfigMapper.updateByPrimaryKey(po);
+        int result = this.bannerconfigMapper.updateByPrimaryKey(po);
+        if (result == 0) {
+            LogUtil.log(logger, "update", "修改状态失败", po);
+        }
 
         //删除Redis
         this.deleteRedis();
@@ -157,7 +167,10 @@ public class BannerConfigServiceImpl implements BannerConfigService {
      */
     @Override
     public ResultVO delete(int bannerId) {
-        this.bannerconfigMapper.deleteByPrimaryKey(bannerId);
+        int result = this.bannerconfigMapper.deleteByPrimaryKey(bannerId);
+        if (result == 0) {
+            LogUtil.log(logger, "delete", "删除失败", bannerId);
+        }
         this.deleteRedis();
         return new ResultVO(1000);
     }

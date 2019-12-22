@@ -2,10 +2,13 @@ package com.rpa.server.service.impl;
 
 import com.rpa.common.mapper.FeedbackMapper;
 import com.rpa.common.pojo.FeedbackPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.FeedbackDTO;
 import com.rpa.server.service.IFeedbackService;
 import com.rpa.server.utils.UploadUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,6 +22,8 @@ import java.util.Date;
  */
 @Service
 public class FeedbackServiceImpl implements IFeedbackService {
+    private final static Logger logger = LoggerFactory.getLogger(FeedbackServiceImpl.class);
+
     @Resource
     private FeedbackMapper feedbackMapper;
 
@@ -48,7 +53,10 @@ public class FeedbackServiceImpl implements IFeedbackService {
             feedbackPO.setUrl3(UploadUtil.uploadBase64Image(dto.getPicdata3()));
         }
 
-        feedbackMapper.insert(feedbackPO);
+        int result = feedbackMapper.insert(feedbackPO);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", feedbackPO);
+        }
 
         return new ResultVO(1000);
     }

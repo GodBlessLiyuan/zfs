@@ -3,12 +3,17 @@ package com.rpa.web.service.impl;
 import com.rpa.common.mapper.KeyValueMapper;
 import com.rpa.common.pojo.KeyValuePO;
 import com.rpa.common.constant.Constant;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.web.feign.CacheFeignClient;
 import com.rpa.web.service.AccountTutorialService;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.vo.KeyValueVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 import static com.rpa.common.constant.Constant.REDIS_KEY;
 import static com.rpa.common.constant.Constant.TUTORIAL_URL;
@@ -21,14 +26,16 @@ import static com.rpa.common.constant.Constant.TUTORIAL_URL;
  */
 @Service
 public class AccountTutorialServiceImpl implements AccountTutorialService {
+    private final static Logger logger = LoggerFactory.getLogger(AccountTutorialServiceImpl.class);
 
-    @Autowired
+    @Resource
     private KeyValueMapper keyValueMapper;
     @Autowired
     private CacheFeignClient cacheFeignClient;
 
     /**
      * 查询
+     *
      * @param tutorial_url
      * @return
      */
@@ -52,13 +59,14 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
 
     /**
      * 插入或修改
+     *
      * @param url
      * @return
      */
     @Override
     public ResultVO insert(String url) {
 
-        // 先准备好养好教程数据对象
+        // 先准备好养号教程数据对象
         KeyValuePO tutorial_po = new KeyValuePO();
         tutorial_po.setKeyName(Constant.TUTORIAL_URL);
         tutorial_po.setValue(url);
@@ -66,15 +74,23 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
         // 尝试着从t_key_value表中查出养号教程数据：无则插入，有则修改
         KeyValuePO po = this.keyValueMapper.selectByPrimaryKey(TUTORIAL_URL);
 
+        int result1;
         if (po == null) {
-            this.keyValueMapper.insert(tutorial_po);
+            result1 = this.keyValueMapper.insert(tutorial_po);
         } else {
-            this.keyValueMapper.updateByPrimaryKey(tutorial_po);
+            result1 = this.keyValueMapper.updateByPrimaryKey(tutorial_po);
 
             // 从t_key_value表中查出INDEX数据，值加1
             KeyValuePO index_po = this.keyValueMapper.selectByPrimaryKey(Constant.INDEX);
             index_po.setValue(String.valueOf(Integer.parseInt(index_po.getValue()) + 1));
-            this.keyValueMapper.updateByPrimaryKey(index_po);
+            int result2 = this.keyValueMapper.updateByPrimaryKey(index_po);
+            if (result2 == 0) {
+                LogUtil.log(logger, "insert", "养号教程中，index加1失败", index_po);
+            }
+        }
+
+        if (result1 == 0) {
+            LogUtil.log(logger, "insert", "插入或修改失败", tutorial_po);
         }
 
         /**

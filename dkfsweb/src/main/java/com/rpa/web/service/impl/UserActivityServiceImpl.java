@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.rpa.common.bo.UserActivityBO;
 import com.rpa.common.mapper.UserActivityMapper;
 import com.rpa.common.pojo.UserActivityPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.utils.OperatorUtil;
 import com.rpa.web.vo.UserActivityDTO;
@@ -11,6 +12,8 @@ import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.web.service.IUserActivityService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,7 @@ import java.util.*;
  */
 @Service
 public class UserActivityServiceImpl implements IUserActivityService {
+    private final static Logger logger = LoggerFactory.getLogger(UserActivityServiceImpl.class);
 
     @Resource
     private UserActivityMapper userActivityMapper;
@@ -111,7 +115,10 @@ public class UserActivityServiceImpl implements IUserActivityService {
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.userActivityMapper.updateStatus(po);
+        int result = this.userActivityMapper.updateStatus(po);
+        if (result == 0) {
+            LogUtil.log(logger, "updateStatus", "更新失败", po);
+        }
         return new ResultVO(1000);
     }
 
