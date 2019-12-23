@@ -28,16 +28,36 @@ public class FeedbackVO implements Serializable {
 
     private String url3;
 
+    /**
+     * 手机厂商
+     */
     private String manufacturer;
 
+    /**
+     * 手机型号
+     */
     private String androidmodel;
 
     /**
-     * android系统的版本号
+     * android系统的版本序号（自定义）
      */
     private Byte buildversion;
 
+    /**
+     * Android系统版本号（Google定义）
+     */
+    private String buildrelease;
+
+    /**
+     * 应用版本序号
+     */
     private Integer versioncode;
+
+
+    /**
+     * 应用版本号，v1.0.0
+     */
+    private String versionname;
 
     private String phone;
 
@@ -161,6 +181,22 @@ public class FeedbackVO implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getBuildrelease() {
+        return buildrelease;
+    }
+
+    public void setBuildrelease(String buildrelease) {
+        this.buildrelease = buildrelease;
+    }
+
+    public String getVersionname() {
+        return versionname;
+    }
+
+    public void setVersionname(String versionname) {
+        this.versionname = versionname;
     }
 
     @Override
