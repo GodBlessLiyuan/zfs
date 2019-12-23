@@ -6,12 +6,15 @@ import com.rpa.common.mapper.AppAvaChMapper;
 import com.rpa.common.mapper.AvatarMapper;
 import com.rpa.common.pojo.AppAvaChPO;
 import com.rpa.common.pojo.AvatarPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.service.IAvatarService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.web.vo.AvatarVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,7 @@ import java.util.*;
  */
 @Service
 public class AvatarServiceImpl implements IAvatarService {
+    private final static Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
 
     @Resource
     private AvatarMapper avatarMapper;
@@ -93,7 +97,10 @@ public class AvatarServiceImpl implements IAvatarService {
             for (int chanId : softChannel) {
                 aacPOs.add(genAacPO(appId, chanId, avatarPO.getAvatarId()));
             }
-            appAvaChMapper.batchInsert(aacPOs);
+            int result = appAvaChMapper.batchInsert(aacPOs);
+            if (result == 0) {
+                LogUtil.log(logger, "insert", "新增失败", aacPOs);
+            }
 
             return new ResultVO(1000);
         }
@@ -120,7 +127,10 @@ public class AvatarServiceImpl implements IAvatarService {
 
         if (insAppChPOs.size() != 0) {
             // 新增应用渠道数据
-            appAvaChMapper.batchInsert(insAppChPOs);
+            int result = appAvaChMapper.batchInsert(insAppChPOs);
+            if (result == 0) {
+                LogUtil.log(logger, "insert", "新增应用渠道数据失败", insAppChPOs);
+            }
         }
 
         return new ResultVO(1000);
@@ -144,8 +154,10 @@ public class AvatarServiceImpl implements IAvatarService {
         avatarPO.setContext(context);
         avatarPO.setExtra(extra);
         avatarPO.setUpdateTime(new Date());
-        avatarMapper.updateByPrimaryKey(avatarPO);
-
+        int result1 = avatarMapper.updateByPrimaryKey(avatarPO);
+        if (result1 == 0) {
+            LogUtil.log(logger, "update", "更新avatarPO失败", avatarPO);
+        }
         // 根据appId查询应用渠道数据
         List<AppAvaChPO> aacPOs = appAvaChMapper.queryByAvatarIdAndAppId(avatarId, appId);
         List<AppAvaChPO> insAacPOs = new ArrayList<>();
@@ -165,7 +177,10 @@ public class AvatarServiceImpl implements IAvatarService {
 
         if (insAacPOs.size() != 0) {
             // 新增应用渠道数据
-            appAvaChMapper.batchInsert(insAacPOs);
+            int result2 = appAvaChMapper.batchInsert(insAacPOs);
+            if (result2 == 0) {
+                LogUtil.log(logger, "update", "插入insAacPOs失败", insAacPOs);
+            }
         }
 
         if (exitAacMap.size() != 0) {
@@ -174,7 +189,10 @@ public class AvatarServiceImpl implements IAvatarService {
             for (AppAvaChPO po : exitAacMap.values()) {
                 delAacIds.add(po.getAacId());
             }
-            appAvaChMapper.batchDelete(delAacIds);
+            int result3 = appAvaChMapper.batchDelete(delAacIds);
+            if (result3 == 0) {
+                LogUtil.log(logger, "update", "删除delAacIds失败", delAacIds);
+            }
         }
 
         return new ResultVO(1000);
@@ -205,7 +223,10 @@ public class AvatarServiceImpl implements IAvatarService {
         avatarPO.setPublishTime(status == 2 ? new Date() : null);
         avatarPO.setStatus(status);
         avatarMapper.updateByPrimaryKey(avatarPO);
-        appAvaChMapper.updateStatus(avatarId, status);
+        int result = appAvaChMapper.updateStatus(avatarId, status);
+        if (result == 0) {
+            LogUtil.log(logger, "updateStatus", "更新状态失败", avatarId, status);
+        }
 
         return new ResultVO(1000);
     }
@@ -213,9 +234,15 @@ public class AvatarServiceImpl implements IAvatarService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO delete(long avatarId) {
-        appAvaChMapper.deleteByAvatarId(avatarId);
+        int result1 = appAvaChMapper.deleteByAvatarId(avatarId);
+        if (result1 == 0) {
+            LogUtil.log(logger, "delete", "删除失败", avatarId, avatarId);
+        }
         // 应用表进行假删除
-        avatarMapper.deleteByPrimaryKey(avatarId);
+        int result2 = avatarMapper.deleteByPrimaryKey(avatarId);
+        if (result2 == 0) {
+            LogUtil.log(logger, "delete", "应用表进行假删除失败", avatarId);
+        }
 
         return new ResultVO(1000);
     }

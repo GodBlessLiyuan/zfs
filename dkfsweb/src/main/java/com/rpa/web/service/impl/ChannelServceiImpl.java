@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.rpa.common.bo.ChannelBO;
 import com.rpa.common.mapper.PromoterMapper;
 import com.rpa.common.pojo.ChannelPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.ChannelDTO;
 import com.rpa.web.dto.PromoterDTO;
@@ -15,9 +16,11 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.utils.OperatorUtil;
 import com.rpa.web.vo.ChannelVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -29,14 +32,15 @@ import java.util.*;
  */
 @Service
 public class ChannelServceiImpl implements ChannelService {
+    private final static Logger logger = LoggerFactory.getLogger(ChannelServceiImpl.class);
 
-    @Autowired
+    @Resource
     private ChannelMapper channelMapper;
 
-    @Autowired
+    @Resource
     private AdminUserMapper adminUserMapper;
 
-    @Autowired
+    @Resource
     private PromoterMapper promoterMapper;
 
     /**
@@ -142,7 +146,10 @@ public class ChannelServceiImpl implements ChannelService {
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.channelMapper.insert(po);
+        int result = this.channelMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
         return new ResultVO(1000);
     }
 

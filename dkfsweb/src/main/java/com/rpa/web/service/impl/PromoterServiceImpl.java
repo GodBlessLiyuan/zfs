@@ -2,6 +2,7 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.mapper.PromoterMapper;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.PromoterDTO;
 import com.rpa.common.mapper.AdminUserMapper;
@@ -11,9 +12,11 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.utils.OperatorUtil;
 import com.rpa.web.vo.PromoterVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -25,11 +28,12 @@ import java.util.*;
  */
 @Service
 public class PromoterServiceImpl implements PromoterService {
+    private final static Logger logger = LoggerFactory.getLogger(PromoterServiceImpl.class);
 
-    @Autowired
+    @Resource
     private PromoterMapper promoterMapper;
 
-    @Autowired
+    @Resource
     private AdminUserMapper adminUserMapper;
 
     /**
@@ -93,7 +97,10 @@ public class PromoterServiceImpl implements PromoterService {
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.promoterMapper.insert(po);
+        int result = this.promoterMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
         return new ResultVO(1000);
     }
 
@@ -120,7 +127,10 @@ public class PromoterServiceImpl implements PromoterService {
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        promoterMapper.updateByPrimaryKey(po);
+        int result = promoterMapper.updateByPrimaryKey(po);
+        if (result == 0) {
+            LogUtil.log(logger, "update", "更新失败", po);
+        }
         return new ResultVO(1000);
 
     }

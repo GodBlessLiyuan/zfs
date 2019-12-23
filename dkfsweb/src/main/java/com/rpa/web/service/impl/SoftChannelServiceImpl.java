@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.vo.SoftChannelVO;
 import com.rpa.common.mapper.SoftChannelMapper;
@@ -8,6 +9,8 @@ import com.rpa.common.pojo.SoftChannelPO;
 import com.rpa.web.service.ISoftChannelService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,6 +26,7 @@ import java.util.Map;
  */
 @Service
 public class SoftChannelServiceImpl implements ISoftChannelService {
+    private final static Logger logger = LoggerFactory.getLogger(SoftChannelServiceImpl.class);
 
     @Resource
     private SoftChannelMapper softChannelMapper;
@@ -48,7 +52,10 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
         po.setExtra(extra);
         po.setCreateTime(new Date());
 
-        softChannelMapper.insert(po);
+        int result = softChannelMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
 
         return new ResultVO(1000);
     }

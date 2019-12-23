@@ -2,6 +2,7 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.mapper.NoticeMapper;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.utils.DateUtil;
@@ -13,12 +14,14 @@ import com.rpa.web.service.NoticeService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.common.vo.ResultVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -32,14 +35,15 @@ import java.util.*;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
+    private final static Logger logger = LoggerFactory.getLogger(NoticeServiceImpl.class);
 
-    @Autowired
+    @Resource
     private NoticeMapper noticeMapper;
 
-    @Autowired
+    @Resource
     private AdminUserMapper adminUserMapper;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
     @Value("${file.iconDir}")
@@ -141,8 +145,10 @@ public class NoticeServiceImpl implements NoticeService {
         po.setaId(OperatorUtil.getOperatorId(httpSession));
         po.setStatus(1);
 
-        this.noticeMapper.insert(po);
-
+        int result = this.noticeMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
         //删除Redis
         this.deleteRedis();
 
@@ -167,7 +173,10 @@ public class NoticeServiceImpl implements NoticeService {
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.noticeMapper.updateByPrimaryKey(po);
+        int result = this.noticeMapper.updateByPrimaryKey(po);
+        if (result == 0) {
+            LogUtil.log(logger, "updateStatus", "更新状态失败", po);
+        }
 
         //删除Redis
         this.deleteRedis();
@@ -184,7 +193,10 @@ public class NoticeServiceImpl implements NoticeService {
      */
     @Override
     public ResultVO delete(Integer noticeId) {
-        this.noticeMapper.deleteByPrimaryKey(noticeId);
+        int result = this.noticeMapper.deleteByPrimaryKey(noticeId);
+        if (result == 0) {
+            LogUtil.log(logger, "delete", "删除失败", noticeId);
+        }
         this.deleteRedis();
         return new ResultVO(1000);
     }

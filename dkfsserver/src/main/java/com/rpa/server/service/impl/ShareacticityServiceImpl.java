@@ -9,7 +9,6 @@ import com.rpa.server.dto.ShareactivityDTO;
 import com.rpa.server.service.ShareactivityService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.ShareactivityVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -28,10 +27,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class ShareacticityServiceImpl implements ShareactivityService {
 
-    @Autowired
+    @Resource
     private ShareActivityMapper shareActivityMapper;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
     @Resource

@@ -98,8 +98,8 @@
                                        style="table-layout: fixed; text-align: center; vertical-align: middle"><thead>
                                     <tr>
                                         <th>序号</th>
-                                        <th>渠道</th>
                                         <th>版本</th>
+                                        <th>渠道</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -214,8 +214,8 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
-                {"data": "name"},
                 {"data": "versionname"},
+                {"data": "name"},
                 {
                     "data": "type",
                     "render": function (data, type, full) {
@@ -313,7 +313,7 @@
                 if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
-                }else if (result.status == 0) {
+                }else if (result.status == 1000) {
                     alert("更改成功！");
                 } else {
                     alert("更改失败！");

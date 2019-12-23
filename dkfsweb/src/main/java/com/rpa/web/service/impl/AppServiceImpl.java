@@ -5,6 +5,7 @@ import com.rpa.common.mapper.AppChMapper;
 import com.rpa.common.mapper.AppMapper;
 import com.rpa.common.pojo.AppChPO;
 import com.rpa.common.pojo.AppPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.service.IAppService;
@@ -12,6 +13,8 @@ import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.vo.AppVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -35,6 +38,8 @@ import java.util.*;
 @EnableTransactionManagement
 @Service
 public class AppServiceImpl implements IAppService {
+    private final static Logger logger = LoggerFactory.getLogger(AppServiceImpl.class);
+
 
     @Resource
     private AppMapper appMapper;
@@ -109,7 +114,10 @@ public class AppServiceImpl implements IAppService {
 
             if (insAppChPOs.size() != 0) {
                 // 新增应用渠道数据
-                appChMapper.batchInsert(insAppChPOs);
+                int result = appChMapper.batchInsert(insAppChPOs);
+                if (result == 0) {
+                    LogUtil.log(logger, "insert", "新增应用渠道失败", insAppChPOs);
+                }
             }
 
             return new ResultVO(1000);
@@ -119,7 +127,10 @@ public class AppServiceImpl implements IAppService {
         appPO = new AppPO();
         buildAppVO(file, updateType, context, extra, aId, apkInfo, appPO);
 
-        appMapper.insert(appPO);
+        int result1 = appMapper.insert(appPO);
+        if (result1 == 0) {
+            LogUtil.log(logger, "insert", "新增appPO失败", appPO);
+        }
 
         List<AppChPO> appChPOs = new ArrayList<>();
         for (int chanId : softChannel) {
@@ -130,7 +141,10 @@ public class AppServiceImpl implements IAppService {
             appChPOs.add(appChPO);
         }
 
-        appChMapper.batchInsert(appChPOs);
+        int result2 = appChMapper.batchInsert(appChPOs);
+        if (result2 == 0) {
+            LogUtil.log(logger, "insert", "新增appChPOs失败", appChPOs);
+        }
 
         this.deleteRedis();
 
@@ -150,6 +164,9 @@ public class AppServiceImpl implements IAppService {
         appPO.setExtra(extra);
         appPO.setUpdateTime(new Date());
         int frist = appMapper.updateByPrimaryKey(appPO);
+        if (frist == 0) {
+            LogUtil.log(logger, "update", "更新appChPOs失败", appPO);
+        }
 
         // 根据appId查询应用渠道数据
         List<AppChPO> appChPOs = appChMapper.queryByAppId(appId);
@@ -177,6 +194,9 @@ public class AppServiceImpl implements IAppService {
         if (insAppChPOs.size() != 0) {
             // 新增应用渠道数据
             secend = appChMapper.batchInsert(insAppChPOs);
+            if (secend == 0) {
+                LogUtil.log(logger, "update", "新增应用渠道数据失败", insAppChPOs);
+            }
         }
 
         int third = 0;
@@ -187,6 +207,9 @@ public class AppServiceImpl implements IAppService {
                 delAcIds.add(po.getAcId());
             }
             third = appChMapper.batchDelete(delAcIds);
+            if (third == 0) {
+                LogUtil.log(logger, "update", "删除delAcIds失败", delAcIds);
+            }
         }
 
         this.deleteRedis();
@@ -215,8 +238,14 @@ public class AppServiceImpl implements IAppService {
         appPO.setPublishTime(status == 2 ? new Date() : null);
         appPO.setStatus(status);
         int frist = appMapper.updateByPrimaryKey(appPO);
+        if (frist == 0) {
+            LogUtil.log(logger, "updateStatus", "删除appPO失败", appPO);
+        }
 
         int secend = appChMapper.updateStatus(appId, status);
+        if (secend == 0) {
+            LogUtil.log(logger, "updateStatus", "更新失败", appId, status);
+        }
 
         this.deleteRedis();
 
@@ -227,8 +256,14 @@ public class AppServiceImpl implements IAppService {
     @Override
     public int delete(int appId) {
         int frist = appChMapper.deleteByAppId(appId);
+        if (frist == 0) {
+            LogUtil.log(logger, "delete", "删除失败", appId);
+        }
         // 应用表进行假删除
         int secend = appMapper.deleteByPrimaryKey(appId);
+        if (secend == 0) {
+            LogUtil.log(logger, "delete", "应用表假删除失败", appId);
+        }
 
         this.deleteRedis();
 

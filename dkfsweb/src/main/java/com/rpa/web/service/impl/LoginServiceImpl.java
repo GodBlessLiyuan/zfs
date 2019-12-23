@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.rpa.common.constant.Constant;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.web.dto.AdminUserDTO;
 import com.rpa.common.mapper.AdminUserMapper;
 import com.rpa.common.pojo.AdminUserPO;
@@ -8,6 +9,8 @@ import com.rpa.web.service.LoginService;
 import com.rpa.web.utils.Md5Util;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.utils.OperatorUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +29,7 @@ import static com.rpa.common.constant.Constant.ADMIN_USER;
  */
 @Service
 public class LoginServiceImpl implements LoginService {
+    private final static Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
     @Resource
     private AdminUserMapper adminUserMapper;
@@ -153,10 +157,14 @@ public class LoginServiceImpl implements LoginService {
 
         // 校验：用户输入的旧密码与数据库比对
         if (oldPassword.equals(password)) {
-            this.adminUserMapper.updatePassword(aId, newPassword);
+            int result = this.adminUserMapper.updatePassword(aId, newPassword);
+            if (result == 0) {
+                LogUtil.log(logger, "updatePassword", "密码修改失败", aId, newPassword);
+            }
             return new ResultVO(1000);
+        } else {
+            return new ResultVO(1004);
         }
-        return new ResultVO(1004);
     }
 
 

@@ -3,6 +3,7 @@ package com.rpa.common.mapper;
 import com.rpa.common.bo.AdChannelBO;
 import com.rpa.common.pojo.AdChannelPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,13 +12,13 @@ import java.util.List;
  */
 @Mapper
 public interface AdChannelMapper extends BaseMapper<AdChannelPO, Integer> {
-    AdChannelBO queryByIds(Integer adId, Integer appId, Integer softChannelId);
+    AdChannelBO queryByIds(@Param("adId")Integer adId, @Param("appId")Integer appId, @Param("softChannelId")Integer softChannelId);
 
-    void update(AdChannelPO po);
+    int update(AdChannelPO po);
 
-    void update2(Integer adId, Byte status);
+    int update2(@Param("adId")Integer adId, @Param("status")Byte status);
 
-    AdChannelPO queryByIds2(Integer adId, Integer appId, Integer softChannelId);
+    AdChannelPO queryByIds2(@Param("adId")Integer adId, @Param("appId")Integer appId, @Param("softChannelId")Integer softChannelId);
 
     List<Integer> queryAdIds(int softChannelId, int appId);
 }

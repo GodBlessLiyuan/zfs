@@ -3,12 +3,15 @@ package com.rpa.web.service.impl;
 import com.github.pagehelper.Page;
 import com.rpa.common.mapper.WxsupportMapper;
 import com.rpa.common.pojo.WxsupportPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.vo.WxSupportVO;
 import com.rpa.web.service.IWxSupportService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,7 @@ import java.util.Set;
  */
 @Service
 public class WxSupportServiceImpl implements IWxSupportService {
+    private final static Logger logger = LoggerFactory.getLogger(WxSupportServiceImpl.class);
 
     @Resource
     private WxsupportMapper wxSupportMapper;
@@ -52,7 +56,10 @@ public class WxSupportServiceImpl implements IWxSupportService {
 
         po.setaId(aId);
 
-        wxSupportMapper.insert(po);
+        int result = wxSupportMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "删除失败", po);
+        }
 
         //删除Redis
         deleteRedis();

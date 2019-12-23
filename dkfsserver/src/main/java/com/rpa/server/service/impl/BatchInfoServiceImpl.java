@@ -4,11 +4,14 @@ import com.rpa.common.mapper.BatchInfoMapper;
 import com.rpa.common.mapper.UserVipMapper;
 import com.rpa.common.pojo.BatchInfoPO;
 import com.rpa.common.pojo.UserVipPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.BatchInfoConstant;
 import com.rpa.server.dto.BatchInfoDTO;
 import com.rpa.server.service.IBatchInfoService;
 import com.rpa.server.utils.UserVipUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,8 @@ import java.util.Date;
 @EnableTransactionManagement
 @Service
 public class BatchInfoServiceImpl implements IBatchInfoService {
+    private final static Logger logger = LoggerFactory.getLogger(BatchInfoServiceImpl.class);
+
     @Resource
     private BatchInfoMapper batchInfoMapper;
     @Resource
@@ -49,15 +54,22 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         po.setUserId(dto.getUd());
         po.setStatus((byte) 2);
         po.setUpdateTime(new Date());
-        batchInfoMapper.updateByPrimaryKey(po);
+        int result1 = batchInfoMapper.updateByPrimaryKey(po);
+        if (result1 == 0) {
+            LogUtil.log(logger, "activate", "更新失败", po);
+        }
 
         // 更新用户会员数据
         UserVipPO userVipPO = userVipMapper.queryByUserId(dto.getUd());
         UserVipPO newUserVipPO = UserVipUtil.buildUserVipVO(userVipPO, dto.getUd(), po.getDays(), false);
+        int result2;
         if (userVipPO == null) {
-            userVipMapper.insert(newUserVipPO);
+            result2 = userVipMapper.insert(newUserVipPO);
         } else {
-            userVipMapper.updateByPrimaryKey(newUserVipPO);
+            result2 = userVipMapper.updateByPrimaryKey(newUserVipPO);
+        }
+        if (result1 == 0) {
+            LogUtil.log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
         }
         return new ResultVO(1000);
     }

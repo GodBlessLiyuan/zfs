@@ -5,6 +5,7 @@ import com.rpa.common.bo.VipcommodityBO;
 import com.rpa.common.mapper.ComTypeMapper;
 import com.rpa.common.mapper.VipcommodityMapper;
 import com.rpa.common.pojo.VipcommodityPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.common.VipCommodityConstant;
@@ -14,6 +15,8 @@ import com.rpa.common.pojo.SoftChannelPO;
 import com.rpa.web.service.IVipCommodityService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,7 @@ import java.util.Set;
  */
 @Service
 public class VipCommodityServiceImpl implements IVipCommodityService {
+    private final static Logger logger = LoggerFactory.getLogger(VipCommodityServiceImpl.class);
 
     @Resource
     private VipcommodityMapper vipcommodityMapper;
@@ -97,7 +101,10 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         vipCommodityPO.setStatus((byte) 1);
         vipCommodityPO.setIstop((byte) 1);
 
-        vipcommodityMapper.insert(vipCommodityPO);
+        int result = vipcommodityMapper.insert(vipCommodityPO);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", vipCommodityPO);
+        }
 
         this.deleteRedis();
         return new ResultVO(1000);
@@ -114,7 +121,9 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         vipCommodityPO.setDiscount(bd.multiply(new BigDecimal("100")).longValue());
         vipCommodityPO.setUpdateTime(new Date());
         int first = vipcommodityMapper.updateByPrimaryKey(vipCommodityPO);
-
+        if (first == 0) {
+            LogUtil.log(logger, "update", "更新失败", vipCommodityPO);
+        }
         this.deleteRedis();
         return first;
     }
@@ -124,7 +133,9 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         VipcommodityPO vipCommodityPO = vipcommodityMapper.selectByPrimaryKey(cmdyId);
         vipCommodityPO.setStatus(status);
         int first = vipcommodityMapper.updateByPrimaryKey(vipCommodityPO);
-
+        if (first == 0) {
+            LogUtil.log(logger, "updateStatus", "更新失败", vipCommodityPO);
+        }
         this.deleteRedis();
         return first;
     }
@@ -134,7 +145,9 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         VipcommodityPO vipCommodityPO = vipcommodityMapper.selectByPrimaryKey(cmdyId);
         vipCommodityPO.setIstop(isTop);
         int first = vipcommodityMapper.updateByPrimaryKey(vipCommodityPO);
-
+        if (first == 0) {
+            LogUtil.log(logger, "updateIsTop", "更新失败", vipCommodityPO);
+        }
         this.deleteRedis();
         return first;
     }

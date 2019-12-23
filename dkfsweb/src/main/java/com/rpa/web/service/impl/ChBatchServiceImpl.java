@@ -5,6 +5,7 @@ import com.rpa.common.bo.ComTypeBO;
 import com.rpa.common.mapper.*;
 import com.rpa.common.pojo.ChBatchPO;
 import com.rpa.common.pojo.ChannelPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.ChBatchDTO;
 import com.rpa.common.pojo.BatchInfoPO;
@@ -20,11 +21,13 @@ import com.rpa.web.vo.ChannelVO;
 import com.rpa.web.vo.ComTypeVO;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -38,20 +41,21 @@ import java.util.*;
 @Service
 @EnableTransactionManagement
 public class ChBatchServiceImpl implements ChBatchService {
+    private final static Logger logger = LoggerFactory.getLogger(ChBatchServiceImpl.class);
 
-    @Autowired
+    @Resource
     private ChBatchMapper chBatchMapper;
 
-    @Autowired
+    @Resource
     private BatchInfoMapper batchInfoMapper;
 
-    @Autowired
+    @Resource
     private ComTypeMapper comTypeMapper;
 
-    @Autowired
+    @Resource
     private AdminUserMapper adminUserMapper;
 
-    @Autowired
+    @Resource
     private ChannelMapper channelMapper;
 
 
@@ -158,7 +162,10 @@ public class ChBatchServiceImpl implements ChBatchService {
         po.setaId(OperatorUtil.getOperatorId(httpSession));
         po.setUpdateAId(OperatorUtil.getOperatorId(httpSession));
 
-        this.chBatchMapper.insert(po);
+        int result1 = this.chBatchMapper.insert(po);
+        if (result1 == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
 
 
         /**
@@ -180,7 +187,10 @@ public class ChBatchServiceImpl implements ChBatchService {
             batchInfoPOs.add(batchInfoPO);
         }
 
-        this.batchInfoMapper.insertBatchInfo(batchInfoPOs);
+        int result2 = this.batchInfoMapper.insertBatchInfo(batchInfoPOs);
+        if (result2 == 0) {
+            LogUtil.log(logger, "insert", "插入batchInfoPOs失败", batchInfoPOs);
+        }
 
         return new ResultVO(1000);
     }
@@ -208,15 +218,20 @@ public class ChBatchServiceImpl implements ChBatchService {
         po.setUpdateTime(new Date());
         po.setUpdateAId(OperatorUtil.getOperatorId(httpSession));
 
-        chBatchMapper.updateByPrimaryKey(po);
-
+        int result1 = chBatchMapper.updateByPrimaryKey(po);
+        if (result1 == 0) {
+            LogUtil.log(logger, "updateStatus", "更新失败", po);
+        }
 
         /**
          * 根据t_ch_batch表中所修改的status，修改表t_batch_info中相应数据（根据batch_id）的状态值
          * t_batch_info表中，状态为已激活的（值为2），不用再管了
          */
 
-        this.batchInfoMapper.updateStatusByBatchId(status, batchId);
+        int result2 = this.batchInfoMapper.updateStatusByBatchId(status, batchId);
+        if (result2 == 0) {
+            LogUtil.log(logger, "updateStatus", "更新失败", status, batchId);
+        }
 
         return new ResultVO(1000);
     }

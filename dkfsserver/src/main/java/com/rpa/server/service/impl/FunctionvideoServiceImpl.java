@@ -8,7 +8,6 @@ import com.rpa.server.dto.FunctionvideoDTO;
 import com.rpa.server.service.FunctionvideoService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.FunctionvideoVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -25,10 +24,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class FunctionvideoServiceImpl implements FunctionvideoService {
 
-    @Autowired
+    @Resource
     private FunctionvideoMapper functionVideoMapper;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
     @Resource

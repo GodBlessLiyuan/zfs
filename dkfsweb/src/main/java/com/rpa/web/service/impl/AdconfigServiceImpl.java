@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.rpa.common.mapper.*;
 import com.rpa.common.pojo.AdconfigPO;
 import com.rpa.common.pojo.KeyValuePO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.AdconfigDTO;
@@ -13,12 +14,14 @@ import com.rpa.common.vo.ResultVO;
 import com.rpa.web.utils.OperatorUtil;
 import com.rpa.web.vo.AdconfigVO;
 import com.rpa.web.vo.KeyValueVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import java.util.*;
@@ -34,20 +37,21 @@ import static com.rpa.common.constant.Constant.SHOW_INTERVAL;
 
 @Service
 public class AdconfigServiceImpl implements AdconfigService {
+    private final static Logger logger = LoggerFactory.getLogger(AdconfigServiceImpl.class);
 
-    @Autowired
+    @Resource
     private AdconfigMapper adconfigMapper;
 
-    @Autowired
+    @Resource
     private KeyValueMapper keyValueMapper;
 
-    @Autowired
+    @Resource
     private AdminUserMapper adminUserMapper;
 
-    @Autowired
+    @Resource
     private AdChannelMapper adChannelMapper;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
     /**
@@ -149,7 +153,10 @@ public class AdconfigServiceImpl implements AdconfigService {
         po.setStatus((byte) 1);
         po.setDr((byte) 1);
 
-        this.adconfigMapper.insert(po);
+        int result = this.adconfigMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
         return new ResultVO(1000);
     }
 
@@ -175,8 +182,10 @@ public class AdconfigServiceImpl implements AdconfigService {
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
-        this.adconfigMapper.updateByPrimaryKey(po);
-
+        int result = this.adconfigMapper.updateByPrimaryKey(po);
+        if (result == 0) {
+            LogUtil.log(logger, "update","更新失败", po);
+        }
         //删除Redis
         this.deleteRedis();
 
@@ -207,12 +216,17 @@ public class AdconfigServiceImpl implements AdconfigService {
         po.setaId(OperatorUtil.getOperatorId(httpSession));
 
         //修改中间表t_ad_channel表中当前ad_id数据的状态值
-        this.adChannelMapper.update2(adId, status);
-
+        int result1 = this.adChannelMapper.update2(adId, status);
+        if (result1 == 0) {
+            LogUtil.log(logger, "updateStatus", "修改中间表t_ad_channel中当前ad_id数据的状态值失败", adId, status);
+        }
         //删除Redis
         this.deleteRedis();
 
-        this.adconfigMapper.updateByPrimaryKey(po);
+        int result2 = this.adconfigMapper.updateByPrimaryKey(po);
+        if (result2 == 0) {
+            LogUtil.log(logger, "updateStatus", "更新失败", po);
+        }
 
         return new ResultVO(1000);
     }
@@ -232,10 +246,14 @@ public class AdconfigServiceImpl implements AdconfigService {
 
         // 先查询下t_key_value表中是否有SHOW_INTERVAL数据
         KeyValuePO keyValuePO = this.keyValueMapper.selectByPrimaryKey(SHOW_INTERVAL);
+        int result;
         if (null == keyValuePO) {
-            this.keyValueMapper.insert(po);
+            result = this.keyValueMapper.insert(po);
         } else {
-            this.keyValueMapper.updateByPrimaryKey(po);
+            result = this.keyValueMapper.updateByPrimaryKey(po);
+        }
+        if (result == 0) {
+            LogUtil.log(logger, "updateStrategy", "插入或更新失败", po);
         }
 
         //删除Redis
@@ -253,7 +271,10 @@ public class AdconfigServiceImpl implements AdconfigService {
     @Override
     public ResultVO delete(int adId) {
 
-        this.adconfigMapper.deleteByPrimaryKey(adId);
+        int result = this.adconfigMapper.deleteByPrimaryKey(adId);
+        if (result == 0) {
+            LogUtil.log(logger, "delete", "删除失败", adId);
+        }
 
         //删除Redis
         this.deleteRedis();

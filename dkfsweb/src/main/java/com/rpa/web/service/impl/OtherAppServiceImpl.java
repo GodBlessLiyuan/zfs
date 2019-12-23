@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.rpa.common.bo.OtherAppBO;
 import com.rpa.common.mapper.OtherAppMapper;
 import com.rpa.common.pojo.OtherAppPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.vo.OtherAppVO;
@@ -11,6 +12,8 @@ import com.rpa.web.service.IOtherAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.common.vo.ResultVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -32,6 +35,7 @@ import java.util.Set;
  */
 @Service
 public class OtherAppServiceImpl implements IOtherAppService {
+    private final static Logger logger = LoggerFactory.getLogger(OtherAppServiceImpl.class);
 
     @Resource
     private OtherAppMapper otherAppMapper;
@@ -65,7 +69,10 @@ public class OtherAppServiceImpl implements IOtherAppService {
             po.setAppUrl(appUrl);
         }
         po.setCreateTime(new Date());
-        otherAppMapper.insert(po);
+        int result = otherAppMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
 
         this.deleteRedis();
         return new ResultVO(1000);
@@ -74,6 +81,9 @@ public class OtherAppServiceImpl implements IOtherAppService {
     @Override
     public int delete(int oId) {
         int first = otherAppMapper.deleteByPrimaryKey(oId);
+        if (first == 0) {
+            LogUtil.log(logger, "delete", "删除失败", oId);
+        }
         this.deleteRedis();
         return first;
     }

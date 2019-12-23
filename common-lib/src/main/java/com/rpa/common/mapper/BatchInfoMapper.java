@@ -13,8 +13,8 @@ import java.util.Map;
  */
 @Mapper
 public interface BatchInfoMapper extends BaseMapper<BatchInfoPO, Integer> {
-    void insertBatchInfo(List<BatchInfoPO> batchInfoPOs);
-    void updateStatusByBatchId(Byte status, Integer batchId);
+    int insertBatchInfo(List<BatchInfoPO> batchInfoPOs);
+    int updateStatusByBatchId(Byte status, Integer batchId);
 
     /**
      * 根据用户Id查询数据

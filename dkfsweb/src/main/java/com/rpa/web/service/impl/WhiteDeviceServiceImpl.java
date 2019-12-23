@@ -6,12 +6,15 @@ import com.rpa.common.mapper.DeviceImeiMapper;
 import com.rpa.common.mapper.WhiteDeviceMapper;
 import com.rpa.common.pojo.DeviceImeiPO;
 import com.rpa.common.pojo.WhiteDevicePO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.vo.WhiteDeviceVO;
 import com.rpa.web.service.IWhiteDeviceService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,7 @@ import java.util.Set;
  */
 @Service
 public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
+    private final static Logger logger = LoggerFactory.getLogger(WhiteDeviceServiceImpl.class);
 
     @Resource
     private WhiteDeviceMapper whiteDeviceMapper;
@@ -69,7 +73,10 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
         po.setCreateTime(new Date());
         po.setaId(aId);
 
-        whiteDeviceMapper.insert(po);
+        int result = whiteDeviceMapper.insert(po);
+        if (result == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
 
         this.deleteRedis();
 
@@ -79,6 +86,9 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
     @Override
     public int deleteByDeviceId(int deviceId) {
         int first = whiteDeviceMapper.deleteByDeviceId(deviceId);
+        if (first == 0) {
+            LogUtil.log(logger, "insert", "删除失败", deviceId);
+        }
         this.deleteRedis();
         return first;
     }

@@ -5,6 +5,7 @@ import com.rpa.common.mapper.AppPluChMapper;
 import com.rpa.common.mapper.PluginMapper;
 import com.rpa.common.pojo.AppPluChPO;
 import com.rpa.common.pojo.PluginPO;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.vo.PluginVO;
@@ -12,6 +13,8 @@ import com.rpa.web.service.IPluginService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.FileUtil;
 import com.rpa.common.vo.ResultVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -35,6 +38,7 @@ import java.util.*;
 @EnableTransactionManagement
 @Service
 public class PluginServiceImpl implements IPluginService {
+    private final static Logger logger = LoggerFactory.getLogger(PluginServiceImpl.class);
 
     @Resource
     private PluginMapper pluginMapper;
@@ -84,7 +88,10 @@ public class PluginServiceImpl implements IPluginService {
         pluginPO.setCreateTime(new Date());
         pluginPO.setDr((byte) 1);
 
-        pluginMapper.insert(pluginPO);
+        int result1 = pluginMapper.insert(pluginPO);
+        if (result1 == 0) {
+            LogUtil.log(logger, "insert", "插入pluginPO失败", pluginPO);
+        }
 
         List<AppPluChPO> appPluChPOs = new ArrayList<>();
         for (int chanId : softChannel) {
@@ -99,7 +106,10 @@ public class PluginServiceImpl implements IPluginService {
             appPluChPOs.add(appPluChPO);
         }
 
-        appPluChMapper.batchInsert(appPluChPOs);
+        int result2 = appPluChMapper.batchInsert(appPluChPOs);
+        if (result2 == 0) {
+            LogUtil.log(logger, "insert", "插入appPluChPOs失败", appPluChPOs);
+        }
 
         this.deleteRedis();
         return new ResultVO(1000);
@@ -116,6 +126,9 @@ public class PluginServiceImpl implements IPluginService {
         pluginPO.setExtra(extra);
         pluginPO.setUpdateTime(new Date());
         int frist = pluginMapper.updateByPrimaryKey(pluginPO);
+        if (frist == 0) {
+            LogUtil.log(logger, "update", "更新pluginPO失败", pluginPO);
+        }
 
         List<AppPluChPO> appPluChPOs = appPluChMapper.queryByIds(pluginId, appId);
         Map<Integer, AppPluChPO> map = new HashMap<>(appPluChPOs.size());
@@ -140,6 +153,9 @@ public class PluginServiceImpl implements IPluginService {
         int secend = 0;
         if (insApcPOs.size() != 0) {
             secend = appPluChMapper.batchInsert(insApcPOs);
+            if (secend == 0) {
+                LogUtil.log(logger, "update", "插入insApcPOs失败", insApcPOs);
+            }
         }
 
         int third = 0;
@@ -149,6 +165,9 @@ public class PluginServiceImpl implements IPluginService {
                 delApcIds.add(po.getApcId());
             }
             third = appPluChMapper.batchDelete(delApcIds);
+            if (third == 0) {
+                LogUtil.log(logger, "update", "删除delApcIds失败", delApcIds);
+            }
         }
 
         this.deleteRedis();
@@ -162,8 +181,14 @@ public class PluginServiceImpl implements IPluginService {
         pluginPO.setPublishTime(status == 2 ? new Date() : null);
         pluginPO.setStatus(status);
         int frist = pluginMapper.updateByPrimaryKey(pluginPO);
+        if (frist == 0) {
+            LogUtil.log(logger, "updateStatus", "更新pluginPO失败", pluginPO);
+        }
 
         int secend = appPluChMapper.updateStatus(pluginId, status);
+        if (secend == 0) {
+            LogUtil.log(logger, "updateStatus", "更新pluginId, status失败", pluginId, status);
+        }
 
         this.deleteRedis();
         return frist + secend;
@@ -173,8 +198,15 @@ public class PluginServiceImpl implements IPluginService {
     @Override
     public int delete(int pluginId) {
         int frist = appPluChMapper.deleteByAppId(pluginId);
+        if (frist == 0) {
+            LogUtil.log(logger, "delete", "删除pluginId失败", pluginId);
+        }
+
         // 插件表进行假删除
         int secend = pluginMapper.deleteByPrimaryKey(pluginId);
+        if (secend == 0) {
+            LogUtil.log(logger, "delete", "插件表进行假删除pluginId失败", pluginId);
+        }
 
         this.deleteRedis();
         return frist + secend;

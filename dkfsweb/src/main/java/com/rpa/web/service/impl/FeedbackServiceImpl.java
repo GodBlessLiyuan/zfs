@@ -9,10 +9,10 @@ import com.rpa.web.vo.FeedbackVO;
 import com.rpa.common.pojo.FeedbackPO;
 import com.rpa.web.service.FeedbackService;
 import com.rpa.web.utils.DTPageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -24,10 +24,10 @@ import java.util.*;
 @Service
 public class FeedbackServiceImpl implements FeedbackService {
 
-    @Autowired
+    @Resource
     private FeedbackMapper feedbackMapper;
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     @Value("${file.publicPath}")

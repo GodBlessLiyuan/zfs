@@ -8,7 +8,6 @@ import com.rpa.server.dto.WxsupportDTO;
 import com.rpa.server.service.WxsupportService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.WxsupportVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +24,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class WxsupportServiceImpl implements WxsupportService {
 
-    @Autowired
+    @Resource
     private WxsupportMapper wxSupportMapper;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
     @Resource
