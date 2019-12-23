@@ -268,6 +268,11 @@
   <select id="queryIdByVersioncode" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select app_id as appId
     from t_app
-    where versioncode = #{softv} and dr = 1;
+    where versioncode = #{softv} and dr = 1
+  </select>
+  <select id="queryVersionameByVersioncode" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select versionname
+    from t_app
+    where versioncode = #{versioncode}
   </select>
 </mapper>

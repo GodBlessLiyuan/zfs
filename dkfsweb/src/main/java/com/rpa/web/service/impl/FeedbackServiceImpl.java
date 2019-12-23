@@ -1,6 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.rpa.common.mapper.AppMapper;
 import com.rpa.common.mapper.FeedbackMapper;
 import com.rpa.common.mapper.UserMapper;
 import com.rpa.web.common.PageHelper;
@@ -29,6 +30,9 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private AppMapper appMapper;
 
     @Value("${file.publicPath}")
     private String publicPath;
@@ -61,7 +65,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         // 按照条件查询数据
         List<FeedbackPO> pos = this.feedbackMapper.query(map);
 
-        // 将查询到的PO 数据转换为 DTO
+        // po转换为vo
         List<FeedbackVO> vos = new ArrayList<>();
         for(FeedbackPO po: pos) {
             FeedbackVO vo = new FeedbackVO();
@@ -70,8 +74,8 @@ public class FeedbackServiceImpl implements FeedbackService {
             vo.setDeviceId(po.getDeviceId());
             vo.setManufacturer(po.getManufacturer());
             vo.setAndroidmodel(po.getAndroidmodel());
-            vo.setBuildversion(po.getBuildversion());
-            vo.setVersioncode(po.getVersioncode());
+            vo.setBuildrelease(po.getBuildrelease());
+            vo.setVersionname(queryVersionnameByVersioncode(po.getVersioncode()));
             vo.setCreateTime(po.getCreateTime());
             vo.setContact(po.getContact());
             vo.setContext(po.getContext());
@@ -106,5 +110,14 @@ public class FeedbackServiceImpl implements FeedbackService {
      */
     public String queryPhoneByUserId(Long userId) {
         return this.userMapper.queryPhoneByUserId(userId);
+    }
+
+    /**
+     * 根据版本序号查询版本号
+     * @param versioncode
+     * @return
+     */
+    private String queryVersionnameByVersioncode(int versioncode) {
+        return this.appMapper.queryVersionameByVersioncode(versioncode);
     }
 }

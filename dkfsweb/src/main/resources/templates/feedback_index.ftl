@@ -103,8 +103,8 @@
                                     <tr>
                                         <th>序号</th>
                                         <th>用户账号</th>
-                                        <th>厂商</th>
-                                        <th>型号</th>
+                                        <th>手机厂商</th>
+                                        <th>手机型号</th>
                                         <th>系统版本</th>
                                         <th>应用版本</th>
                                         <th>反馈时间</th>
@@ -238,8 +238,8 @@
                 {"data": "phone"},
                 {"data": "manufacturer"},
                 {"data": "androidmodel"},
-                {"data": "buildversion"},
-                {"data": "versioncode"},
+                {"data": "buildrelease"},
+                {"data": "versionname"},
                 {"data": "createTime"},
                 {"data": "contact"},
                 {"data": "context"},
