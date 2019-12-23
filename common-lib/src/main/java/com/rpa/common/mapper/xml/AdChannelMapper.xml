@@ -79,7 +79,7 @@
         <if test="appId != null and appId != ''">
             and app_id =  #{appId}
         </if>
-        order by versionname desc
+        order by app_id desc
     </select>
 
     <select id="queryByIds" resultType="com.rpa.common.bo.AdChannelBO">
