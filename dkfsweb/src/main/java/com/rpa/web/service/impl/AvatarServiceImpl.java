@@ -7,6 +7,7 @@ import com.rpa.common.mapper.AvatarMapper;
 import com.rpa.common.pojo.AppAvaChPO;
 import com.rpa.common.pojo.AvatarPO;
 import com.rpa.common.utils.LogUtil;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.service.IAvatarService;
@@ -15,9 +16,12 @@ import com.rpa.web.utils.FileUtil;
 import com.rpa.web.vo.AvatarVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,6 +43,8 @@ public class AvatarServiceImpl implements IAvatarService {
     private AvatarMapper avatarMapper;
     @Resource
     private AppAvaChMapper appAvaChMapper;
+    @Autowired
+    private StringRedisTemplate template;
 
     @Value("${file.avatarDir}")
     private String avatarDir;
@@ -133,6 +139,7 @@ public class AvatarServiceImpl implements IAvatarService {
             }
         }
 
+        this.deleteRedis();
         return new ResultVO(1000);
     }
 
@@ -195,6 +202,7 @@ public class AvatarServiceImpl implements IAvatarService {
             }
         }
 
+        this.deleteRedis();
         return new ResultVO(1000);
     }
 
@@ -228,6 +236,7 @@ public class AvatarServiceImpl implements IAvatarService {
             LogUtil.log(logger, "updateStatus", "更新状态失败", avatarId, status);
         }
 
+        this.deleteRedis();
         return new ResultVO(1000);
     }
 
@@ -244,6 +253,7 @@ public class AvatarServiceImpl implements IAvatarService {
             LogUtil.log(logger, "delete", "应用表进行假删除失败", avatarId);
         }
 
+        this.deleteRedis();
         return new ResultVO(1000);
     }
 
@@ -282,6 +292,16 @@ public class AvatarServiceImpl implements IAvatarService {
             avatarPO.setaId(aId);
             avatarPO.setCreateTime(new Date());
             avatarPO.setDr((byte) 1);
+        }
+    }
+
+    /**
+     * 删除对应的Redis
+     */
+    private void deleteRedis() {
+        Set<String> redisKeys = template.keys(RedisKeyUtil.genAvatarRedisKey("*"));
+        if (!CollectionUtils.isEmpty(redisKeys)) {
+            template.delete(redisKeys);
         }
     }
 }
