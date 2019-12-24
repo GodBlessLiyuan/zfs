@@ -29,7 +29,7 @@ public class AvatarServiceImpl implements IAvatarService {
     private RedisCacheUtil cache;
     @Override
     public ResultVO check(AvatarDTO dto, HttpServletRequest req) {
-        String redisKey = RedisKeyUtil.genAppRedisKey(dto.getSoftv(), dto.getChannel(), dto.getAvatarv());
+        String redisKey = RedisKeyUtil.genAvatarRedisKey(dto.getSoftv(), dto.getChannel(), dto.getAvatarv());
         String redisValue = cache.getCacheByKey(redisKey);
         if (null != redisValue) {
             AvatarVO vo = JSON.parseObject(redisValue, AvatarVO.class);
@@ -41,16 +41,17 @@ public class AvatarServiceImpl implements IAvatarService {
 
         // 从Redis中取出设备白名单
         int chanId = cache.getSoftChannelId(dto.getChannel());
-//        AvatarPO appPO = avatarMapper.queryMaxByVerId(dto.getSoftv(), chanId, dto.getAvatarv());
-//        if (null == appPO) {
-//            cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
-//            // 最新版本
-//            return new ResultVO(1008);
-//        }
+        AvatarPO avatarPO = avatarMapper.queryMaxByVerId(dto.getSoftv(), chanId, dto.getAvatarv());
+        if (null == avatarPO) {
+            cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
+            // 最新版本
+            return new ResultVO(1008);
+        }
 
         // 需要更新
         AvatarVO vo = new AvatarVO();
-//        vo.setType(appPO.getUpdateType());
+        vo.setType(avatarPO.getUpdateType());
+        vo.setId(avatarPO.getAvatarId());
 
         cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
 

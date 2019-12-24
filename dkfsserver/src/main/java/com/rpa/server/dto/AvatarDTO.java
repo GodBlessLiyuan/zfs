@@ -24,5 +24,5 @@ public class AvatarDTO extends VerifyDTO {
     /**
      * 分身版本
      */
-    private String avatarv;
+    private Integer avatarv;
 }

@@ -3,6 +3,7 @@ package com.rpa.common.mapper;
 import com.rpa.common.bo.AvatarBO;
 import com.rpa.common.pojo.AvatarPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -19,4 +20,6 @@ public interface AvatarMapper extends BaseMapper<AvatarPO, Long> {
     List<Integer> queryAvatarIds(Map<String, Object> reqData);
 
     List<AvatarBO> queryByAvatarId(long avatarId);
+
+    AvatarPO queryMaxByVerId(@Param("softv") Integer softv, @Param("chanId") int chanId, @Param("avatarv") Integer avatarv);
 }

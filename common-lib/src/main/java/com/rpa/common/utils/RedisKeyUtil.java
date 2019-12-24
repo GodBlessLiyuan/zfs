@@ -14,6 +14,10 @@ public class RedisKeyUtil {
         return RedisKeyUtil.genRedisKey(ModuleConstant.APP, params);
     }
 
+    public static String genAvatarRedisKey(Object... params) {
+        return RedisKeyUtil.genRedisKey(ModuleConstant.AVATAR, params);
+    }
+
     public static String genPluginRedisKey(Object... params) {
         return RedisKeyUtil.genRedisKey(ModuleConstant.PLUGIN, params);
     }
