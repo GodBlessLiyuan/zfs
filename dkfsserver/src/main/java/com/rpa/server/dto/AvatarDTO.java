@@ -5,12 +5,12 @@ import lombok.Data;
 
 /**
  * @author: xiahui
- * @date: Created in 2019/10/17 8:52
- * @description: 应用更新请求参数
+ * @date: Created in 2019/12/24 14:57
+ * @description: 分身更新
  * @version: 1.0
  */
 @Data
-public class AppDTO extends VerifyDTO {
+public class AvatarDTO extends VerifyDTO {
     /**
      * 应用版本
      */
@@ -20,4 +20,9 @@ public class AppDTO extends VerifyDTO {
      * 应用渠道
      */
     private String channel;
+
+    /**
+     * 分身版本
+     */
+    private String avatarv;
 }

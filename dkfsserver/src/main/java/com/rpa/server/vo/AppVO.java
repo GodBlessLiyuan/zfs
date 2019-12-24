@@ -23,7 +23,7 @@ public class AppVO implements Serializable {
      */
     private String md5;
     /**
-     * 跟新类型
+     * 更新类型
      */
     private Byte type;
     /**

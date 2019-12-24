@@ -1,9 +1,9 @@
 package com.rpa.server.utils;
 
 import com.auth0.jwt.JWT;
+import com.rpa.common.dto.TokenDTO;
 import com.rpa.server.constant.LoginConstant;
-import com.rpa.server.dto.base.TokenDTO;
-import com.rpa.server.dto.base.VerifyDTO;
+import com.rpa.common.dto.VerifyDTO;
 import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
