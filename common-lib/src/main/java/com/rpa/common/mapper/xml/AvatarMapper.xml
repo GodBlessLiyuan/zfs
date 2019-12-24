@@ -249,7 +249,7 @@
     inner join t_app_ava_ch aac on a.avatar_id = aac.avatar_id
     inner join t_app ap on aac.app_id = ap.app_id
     where a.dr = 1 and ap.versionCode = #{softv,jdbcType=INTEGER} and aac.soft_channel_id =
-    #{chanId,jdbcType=INTEGER} and a.version_code > #{avatarv,jdbcType=INTEGER}
+    #{chanId,jdbcType=INTEGER} and a.version_code > #{avatarv,jdbcType=INTEGER} and a.`status` = 2
     order by a.version_code desc
     limit 1
   </select>
