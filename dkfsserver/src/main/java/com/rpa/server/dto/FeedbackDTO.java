@@ -1,9 +1,7 @@
 package com.rpa.server.dto;
 
-import com.rpa.server.dto.base.VerifyDTO;
+import com.rpa.common.dto.VerifyDTO;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * @author: xiahui
