@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author: xiahui
  * @date: Created in 2019/12/24 14:56
@@ -26,11 +24,20 @@ public class AvatarController {
     private IAvatarService avatarService;
 
     @PostMapping("checkava")
-    public ResultVO check(@RequestBody AvatarDTO dto, HttpServletRequest req) {
+    public ResultVO check(@RequestBody AvatarDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
             return new ResultVO(2000);
         }
 
-        return avatarService.check(dto, req);
+        return avatarService.check(dto);
+    }
+
+    @PostMapping("make")
+    public ResultVO make(@RequestBody AvatarDTO dto) {
+        if (!VerifyUtil.checkDeviceId(dto)) {
+            return new ResultVO(2000);
+        }
+
+        return avatarService.make(dto);
     }
 }

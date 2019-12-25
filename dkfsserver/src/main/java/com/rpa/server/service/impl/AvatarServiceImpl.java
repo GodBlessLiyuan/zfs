@@ -12,7 +12,6 @@ import com.rpa.server.vo.AvatarVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,7 +27,7 @@ public class AvatarServiceImpl implements IAvatarService {
     @Resource
     private RedisCacheUtil cache;
     @Override
-    public ResultVO check(AvatarDTO dto, HttpServletRequest req) {
+    public ResultVO check(AvatarDTO dto) {
         String redisKey = RedisKeyUtil.genAvatarRedisKey(dto.getSoftv(), dto.getChannel(), dto.getAvatarv());
         String redisValue = cache.getCacheByKey(redisKey);
         if (null != redisValue) {
@@ -56,5 +55,10 @@ public class AvatarServiceImpl implements IAvatarService {
         cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
 
         return new ResultVO<>(1009, vo);
+    }
+
+    @Override
+    public ResultVO make(AvatarDTO dto) {
+        return null;
     }
 }
