@@ -58,6 +58,11 @@ public class RedisKeyUtil {
         return RedisKeyUtil.genRedisKey(ModuleConstant.HOMEPAGE, params);
     }
 
+    public static String genFeedbackRedisKey(Object... params) {
+        return RedisKeyUtil.genRedisKey(ModuleConstant.FEEDBACK, params);
+    }
+
+
     /**
      * 生成RedisKey
      *
