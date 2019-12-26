@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.rpa.common.mapper.AppMapper;
 import com.rpa.common.mapper.FeedbackMapper;
 import com.rpa.common.mapper.UserMapper;
+import com.rpa.common.pojo.AppPO;
+import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.utils.DateUtil;
 import com.rpa.web.vo.FeedbackVO;
@@ -11,10 +13,12 @@ import com.rpa.common.pojo.FeedbackPO;
 import com.rpa.web.service.FeedbackService;
 import com.rpa.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: dangyi
@@ -36,6 +40,9 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Value("${file.publicPath}")
     private String publicPath;
+
+    @Resource
+    private StringRedisTemplate template;
 
 
     /**
@@ -118,6 +125,25 @@ public class FeedbackServiceImpl implements FeedbackService {
      * @return
      */
     private String queryVersionnameByVersioncode(int versioncode) {
-        return this.appMapper.queryVersionameByVersioncode(versioncode);
+        //Redis的key
+        String key = RedisKeyUtil.genFeedbackRedisKey("versionname");
+        //先尝试从Redis中查询
+        String versionname;
+        versionname = (String) this.template.opsForHash().get(key, String.valueOf(versioncode));
+        if (null == versionname) {
+            //从数据库中查
+            versionname = this.appMapper.queryVersionameByVersioncode(versioncode);
+            //从表中查出所有的versioncode和versionname
+            List<AppPO> pos = this.appMapper.queryCodesAndNames();
+            //封装成map
+            Map<String, String> map = new HashMap<>();
+            for(AppPO po : pos) {
+                map.put(String.valueOf(po.getVersioncode()), po.getVersionname());
+            }
+            //存入Redis
+            this.template.opsForHash().putAll(key, map);
+            this.template.expire(key, 1, TimeUnit.HOURS);
+        }
+        return versionname;
     }
 }

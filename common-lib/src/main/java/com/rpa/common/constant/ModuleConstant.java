@@ -23,4 +23,5 @@ public class ModuleConstant {
     public static final String HOMEPAGE = "homepage";
     public static final String AVATAR = "avatar";
     public static final String VOICE = "voice";
+    public static final String FEEDBACK = "feedback";
 }

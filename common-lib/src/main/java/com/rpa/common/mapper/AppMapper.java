@@ -59,4 +59,6 @@ public interface AppMapper extends BaseMapper<AppPO, Integer> {
     Integer queryIdByVersioncode(Integer softv);
 
     String queryVersionameByVersioncode(int versioncode);
+
+    List<AppPO> queryCodesAndNames();
 }
