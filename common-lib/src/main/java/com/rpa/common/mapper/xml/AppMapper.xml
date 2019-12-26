@@ -271,7 +271,7 @@
     where versioncode = #{softv} and dr = 1
   </select>
   <select id="queryVersionameByVersioncode" parameterType="java.lang.Integer" resultType="java.lang.String">
-    select versionname
+    select distinct versionname
     from t_app
     where versioncode = #{versioncode}
   </select>
