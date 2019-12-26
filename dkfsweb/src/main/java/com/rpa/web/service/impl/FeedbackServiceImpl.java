@@ -142,7 +142,7 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
             //存入Redis
             this.template.opsForHash().putAll(key, map);
-            this.template.expire(key, 25, TimeUnit.HOURS);
+            this.template.expire(key, 1, TimeUnit.HOURS);
         }
         return versionname;
     }
