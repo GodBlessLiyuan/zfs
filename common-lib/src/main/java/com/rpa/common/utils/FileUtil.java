@@ -1,11 +1,13 @@
 package com.rpa.common.utils;
 
+import com.rpa.common.jna.Clibrary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * @author: xiahui
@@ -14,6 +16,7 @@ import java.io.IOException;
  * @version: 1.0
  */
 public class FileUtil {
+    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
     /**
      * Base64上传
@@ -90,5 +93,113 @@ public class FileUtil {
         sb.append(".");
         sb.append(suffix);
         return sb.toString();
+    }
+
+    /**
+     * 复制文件
+     *
+     * @param resource
+     * @param target
+     * @throws IOException
+     */
+    public static void copyFile(String resource, String target) throws IOException {
+        FileInputStream fis = new FileInputStream(resource);
+        FileOutputStream fos = new FileOutputStream(target);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+        byte[] bytes = new byte[1024];
+        int len = 0;
+        while ((len = fis.read(bytes)) != -1) {
+            bos.write(bytes, 0, len);
+        }
+        bos.flush();
+
+        bos.close();
+        fis.close();
+        fos.close();
+    }
+
+    /**
+     * 重新构建Apk
+     *
+     * @param oldUrl  应用原地址
+     * @param newPath 构建后应用新地址
+     * @param pkg     包名
+     * @param name    应用名
+     * @param pic     图标
+     */
+    public static void rebuildApk(String oldUrl, String newPath, String pkg, String name, String pic) {
+        logger.info("oldUrl: {}, newPath: {}", oldUrl, newPath);
+
+        String xmlPath = null;
+        try {
+            String newUrl = newPath + "/test.apk";
+            FileUtil.copyFile(oldUrl, newUrl);
+            ZipFile zf = new ZipFile(newUrl);
+            ZipEntry ze = zf.getEntry("AndroidManifest.xml");
+            InputStream is = zf.getInputStream(ze);
+            FileOutputStream fos = new FileOutputStream(xmlPath = newPath + "/" + ze.getName());
+            byte[] bytes = new byte[1024];
+            int len = 0;
+            while ((len = is.read(bytes)) != -1) {
+                fos.write(bytes, 0, len);
+            }
+            is.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // modifyIcon()
+        modifyApkName(xmlPath, name);
+        modifyApkPkg(xmlPath, pkg, newPath);
+    }
+
+    /**
+     * 修改应用包名
+     *
+     * @param xmlPath
+     * @param pkg
+     */
+    private static void modifyApkPkg(String xmlPath, String pkg, String newPath) {
+        if (null == pkg || "".equals(pkg)) {
+            return;
+        }
+
+        String newXmlPath = newPath + "/output.xml";
+
+        String[] CMD_STR = new String[]{
+                "./ameditor a --modify manifest -d 1 -n package -t 3 -v " + pkg + " -i " + xmlPath + " -o " + newXmlPath,
+                "./ameditor a --modify permission -d 1 -n name -t 3 -v " + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + newXmlPath,
+                "./ameditor a --modify permission -d 2 -n name -t 3 -v " + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + newXmlPath,
+                "./ameditor a --modify permission -d 3 -n name -t 3 -v " + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + newXmlPath,
+                "./ameditor a --modify uses-permission -d 86 -n name -t 3 -v " + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + newXmlPath,
+                "./ameditor a --modify uses-permission -d 87 -n name -t 3 -v " + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + newXmlPath,
+                "./ameditor a --modify uses-permission -d 88 -n name -t 3 -v " + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + newXmlPath,
+                "./ameditor a --modify provider -d 1 -n authorities -t 3 -v " + pkg + " -i " + xmlPath + " -o " + newXmlPath
+        };
+
+        try {
+            Runtime.getRuntime().exec(CMD_STR);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 修改应用名称
+     *
+     * @param xmlPath
+     * @param name
+     */
+    private static void modifyApkName(String xmlPath, String name) {
+        if (null == name || "".equals(name)) {
+            return;
+        }
+
+        Clibrary instance = Clibrary.INSTANTCE;
+        instance.modifyname(name.getBytes(), name.length() * 2 + 2 + 2, xmlPath);
+
+        logger.info("modify apk name complete.");
     }
 }
