@@ -2,6 +2,7 @@ package com.rpa.server.service;
 
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.AvatarDTO;
+import com.rpa.server.dto.AvatarMakeDTO;
 
 /**
  * @author: xiahui
@@ -25,5 +26,5 @@ public interface IAvatarService {
      * @param dto
      * @return
      */
-    ResultVO make(AvatarDTO dto);
+    ResultVO make(AvatarMakeDTO dto);
 }

@@ -6,6 +6,7 @@ import com.rpa.common.pojo.AvatarPO;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.AvatarDTO;
+import com.rpa.server.dto.AvatarMakeDTO;
 import com.rpa.server.service.IAvatarService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.AvatarVO;
@@ -58,7 +59,7 @@ public class AvatarServiceImpl implements IAvatarService {
     }
 
     @Override
-    public ResultVO make(AvatarDTO dto) {
+    public ResultVO make(AvatarMakeDTO dto) {
         return null;
     }
 }

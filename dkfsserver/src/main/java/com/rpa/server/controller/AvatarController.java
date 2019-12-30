@@ -2,6 +2,7 @@ package com.rpa.server.controller;
 
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.AvatarDTO;
+import com.rpa.server.dto.AvatarMakeDTO;
 import com.rpa.server.service.IAvatarService;
 import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class AvatarController {
     }
 
     @PostMapping("make")
-    public ResultVO make(@RequestBody AvatarDTO dto) {
+    public ResultVO make(@RequestBody AvatarMakeDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
             return new ResultVO(2000);
         }
