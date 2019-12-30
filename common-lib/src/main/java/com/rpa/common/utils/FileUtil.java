@@ -197,7 +197,9 @@ public class FileUtil {
             return;
         }
 
-        Clibrary.INSTANTCE.modifyname(name.getBytes(), name.length() * 2 + 2 + 2, xmlPath);
+        logger.info("Clibrary: {} ", Clibrary.class.getResource("/modXml.so").getPath());
+        Clibrary instance = Clibrary.INSTANTCE;
+        instance.modifyname(name.getBytes(), name.length() * 2 + 2 + 2, xmlPath);
 
         logger.info("modify apk name complete.");
     }
