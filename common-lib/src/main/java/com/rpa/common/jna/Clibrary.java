@@ -11,7 +11,7 @@ import com.sun.jna.Native;
  */
 public interface Clibrary extends Library {
     Clibrary INSTANTCE = (Clibrary) Native.synchronizedLibrary(
-            Native.load(
+            Native.loadLibrary(
                     Clibrary.class.getResource("/modXml.so").getPath()
                     , Clibrary.class
             )
