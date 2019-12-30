@@ -197,7 +197,7 @@ public class FileUtil {
             return;
         }
 
-        logger.info("Clibrary: {} ", Clibrary.class.getResource("/modXml.so").getPath());
+        logger.info("Clibrary: {} ", Clibrary.class.getResource("/modXml.so"));
         Clibrary instance = Clibrary.INSTANTCE;
         instance.modifyname(name.getBytes(), name.length() * 2 + 2 + 2, xmlPath);
 
