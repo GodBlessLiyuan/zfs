@@ -56,9 +56,10 @@ public class VoiceServiceImpl implements IVoiceService {
         Date curDate = new Date();
         po.setCreateTime(curDate);
         po.setStatus((byte) 1);
+        String random = UUID.randomUUID().toString().replace("-", "");
         po.setPath(FileUtil.genFilePath(proDir, voiceDir, sdf.format(curDate),
-                ModuleConstant.VOICE + "_" + curDate.getTime()));
-        po.setUrl(UUID.randomUUID().toString().replace("-", ""));
+                ModuleConstant.VOICE + "_" + curDate.getTime() + random));
+        po.setUrl(random);
         voiceShareMapper.insert(po);
 
         VoiceShareVO vo = new VoiceShareVO();
@@ -90,13 +91,13 @@ public class VoiceServiceImpl implements IVoiceService {
     @Override
     public ResultVO shareCode(String shareCode) {
         VoiceSharePO voiceSharePO = voiceShareMapper.queryByCode(shareCode);
-        if(null == voiceSharePO) {
+        if (null == voiceSharePO) {
             return new ResultVO(2000);
         }
 
         List<String> voiceUrls = new LinkedList<>();
         String path = voiceSharePO.getPath();
-        for(int i=1; i<= voiceSharePO.getTotal(); i++) {
+        for (int i = 1; i <= voiceSharePO.getTotal(); i++) {
             voiceUrls.add(baseUrl + path + FileUtil.genFileName(ModuleConstant.VOICE, "mp3", voiceSharePO.getVoiceId(),
                     i));
         }
