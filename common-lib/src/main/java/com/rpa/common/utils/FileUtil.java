@@ -147,6 +147,8 @@ public class FileUtil {
             }
             is.close();
             fos.close();
+
+            FileUtil.copyFile(xmlPath, zipPath + "/AndroidManifest2.xml");
         } catch (IOException e) {
             e.printStackTrace();
         }
