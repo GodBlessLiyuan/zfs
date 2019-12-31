@@ -168,21 +168,17 @@ public class FileUtil {
 
         String newXmlPath = newPath + "/output.xml";
 
-        String[] CMD_STR = new String[]{
-                "cd /data/project/dkfsbin/dkfsserver/",
-                "./ameditor a --modify manifest -d 1 -n package -t 3 -v " + pkg + " -i " + xmlPath + " -o " + newXmlPath,
-                "./ameditor a --modify permission -d 1 -n name -t 3 -v " + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + newXmlPath,
-                "./ameditor a --modify permission -d 2 -n name -t 3 -v " + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + newXmlPath,
-                "./ameditor a --modify permission -d 3 -n name -t 3 -v " + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + newXmlPath,
-                "./ameditor a --modify uses-permission -d 86 -n name -t 3 -v " + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + newXmlPath,
-                "./ameditor a --modify uses-permission -d 87 -n name -t 3 -v " + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + newXmlPath,
-                "./ameditor a --modify uses-permission -d 88 -n name -t 3 -v " + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + newXmlPath,
-                "./ameditor a --modify provider -d 1 -n authorities -t 3 -v " + pkg + " -i " + xmlPath + " -o " + newXmlPath
-        };
-
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/project/dkfsbin/dkfsserver/"};
         try {
-            Runtime.getRuntime().exec(CMD_STR);
+            Process process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify manifest -d 1 -n package -t 3 -v " + pkg + " -i " + xmlPath + " -o " + newXmlPath};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
