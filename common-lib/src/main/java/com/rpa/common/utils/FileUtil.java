@@ -122,23 +122,23 @@ public class FileUtil {
     /**
      * 重新构建Apk
      *
-     * @param oldUrl  应用原地址
-     * @param newPath 构建后应用新地址
-     * @param pkg     包名
-     * @param name    应用名
-     * @param pic     图标
+     * @param originUrl 应用原地址
+     * @param zipPath   构建后应用新地址
+     * @param pkg       包名
+     * @param name      应用名
+     * @param pic       图标
      */
-    public static void rebuildApk(String oldUrl, String newPath, String pkg, String name, String pic, String suffix) {
-        logger.info("oldUrl: {}, newPath: {}", oldUrl, newPath);
+    public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
+        logger.info("originUrl: {}, zipPath: {}", originUrl, zipPath);
 
         String xmlPath = null;
         try {
-            String newUrl = newPath + "/test.apk";
-            FileUtil.copyFile(oldUrl, newUrl);
-            ZipFile zf = new ZipFile(newUrl);
+            String zipUrl = zipPath + "/zip.apk";
+            FileUtil.copyFile(originUrl, zipUrl);
+            ZipFile zf = new ZipFile(zipUrl);
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             InputStream is = zf.getInputStream(ze);
-            FileOutputStream fos = new FileOutputStream(xmlPath = newPath + "/" + ze.getName());
+            FileOutputStream fos = new FileOutputStream(xmlPath = zipPath + "/" + ze.getName());
             byte[] bytes = new byte[1024];
             int len = 0;
             while ((len = is.read(bytes)) != -1) {
@@ -150,13 +150,13 @@ public class FileUtil {
             e.printStackTrace();
         }
 
-        modifyApkIcon(xmlPath, pic, suffix);
+        modifyApkIcon(zipPath, pic, suffix);
         modifyApkName(xmlPath, name);
-        modifyApkPkg(xmlPath, pkg, newPath);
+        modifyApkPkg(xmlPath, pkg, zipPath);
 
         try {
             // 压缩xml文件到zpk包中
-            String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + newPath};
+            String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + zipPath};
             Process process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
             CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m test.apk AndroidManifest.xml"};
@@ -172,7 +172,7 @@ public class FileUtil {
 
             // 重签名apk
             CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose"
-                    + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar test.apk " + oldUrl + " godArmor.keystore"};
+                    + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar test.apk " + originUrl + " godArmor.keystore"};
             logger.info("Resign cmd: {}", CMD_STR[2]);
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
@@ -199,13 +199,13 @@ public class FileUtil {
      * @param xmlPath
      * @param pkg
      */
-    private static void modifyApkPkg(String xmlPath, String pkg, String newPath) {
+    private static void modifyApkPkg(String xmlPath, String pkg, String zipPath) {
         if (null == pkg || "".equals(pkg)) {
             return;
         }
 
-        String newXmlPath = newPath + "/output.xml";
-        logger.info("newXmlPath: {}", newXmlPath);
+        String zipXmlPath = zipPath + "/output.xml";
+        logger.info("xmlPath: {}, zipXmlPath: {}", xmlPath, zipXmlPath);
 
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/project/dkfsbin/dkfsserver/"};
         try {
@@ -214,59 +214,59 @@ public class FileUtil {
 
             // 修改 package 部分
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify manifest -d 1 -n package -t 3 -v "
-                    + pkg + " -i " + xmlPath + " -o " + newXmlPath};
+                    + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
             // 修改 3 处 permission 部分
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 1 -n name -t 3 -v "
-                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + newXmlPath};
+                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 2 -n name -t 3 -v "
-                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + newXmlPath};
+                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 3 -n name -t 3 -v "
-                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + newXmlPath};
+                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
             // 修改3处 uses-permission 部分
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 86 -n name -t 3 -v "
-                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + newXmlPath};
+                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 87 -n name -t 3 -v "
-                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + newXmlPath};
+                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 88 -n name -t 3 -v "
-                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + newXmlPath};
+                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
             // 修改42处 taskAffinity
             for (int i = 6; i < 48; i++) {
                 CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify activity -d " + i + " -n taskAffinity -t 3 -v "
-                        + pkg + " -i " + xmlPath + " -o " + newXmlPath};
+                        + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
                 process = Runtime.getRuntime().exec(CMD_STR);
                 process.waitFor();
             }
 
             // 修改 22 处 authorities
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify provider -d 1 -n authorities -t 3 -v "
-                    + pkg + " -i " + xmlPath + " -o " + newXmlPath};
+                    + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
             for (int i = 2; i < 23; i++) {
                 CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify provider -d " + i + " -n authorities -t 3 -v "
-                        + pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2) + " -i " + xmlPath + " -o " + newXmlPath};
+                        + pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2) + " -i " + xmlPath + " -o " + zipXmlPath};
                 process = Runtime.getRuntime().exec(CMD_STR);
                 process.waitFor();
             }
