@@ -169,6 +169,7 @@ public class FileUtil {
         String newXmlPath = newPath + "/output.xml";
 
         String[] CMD_STR = new String[]{
+                "cd /data/project/dkfsbin/dkfsserver/",
                 "./ameditor a --modify manifest -d 1 -n package -t 3 -v " + pkg + " -i " + xmlPath + " -o " + newXmlPath,
                 "./ameditor a --modify permission -d 1 -n name -t 3 -v " + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + newXmlPath,
                 "./ameditor a --modify permission -d 2 -n name -t 3 -v " + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + newXmlPath,
