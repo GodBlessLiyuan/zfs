@@ -17,5 +17,5 @@ public interface Clibrary extends Library {
             )
     );
 
-    int modifyname(String rongrongtemp, int naonaoSize, byte[] axmlpath);
+    int modifyname(String rongrongtemp, int naonaoSize, String axmlpath);
 }
