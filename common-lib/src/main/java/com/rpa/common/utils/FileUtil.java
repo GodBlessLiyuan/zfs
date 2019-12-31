@@ -204,7 +204,7 @@ public class FileUtil {
             return;
         }
 
-        String zipXmlPath = zipPath + "/output.xml";
+        String zipXmlPath = zipPath + "/AndroidManifest.xml";
         logger.info("xmlPath: {}, zipXmlPath: {}", xmlPath, zipXmlPath);
 
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/project/dkfsbin/dkfsserver/"};
