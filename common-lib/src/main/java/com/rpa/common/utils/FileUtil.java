@@ -167,20 +167,78 @@ public class FileUtil {
         }
 
         String newXmlPath = newPath + "/output.xml";
+        logger.info("newXmlPath: {}", newXmlPath);
 
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/project/dkfsbin/dkfsserver/"};
         try {
             Process process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
-            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify manifest -d 1 -n package -t 3 -v " + pkg + " -i " + xmlPath + " -o " + newXmlPath};
+            // 修改 package 部分
+            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify manifest -d 1 -n package -t 3 -v "
+                    + pkg + " -i " + xmlPath + " -o " + newXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
+
+            // 修改 3 处 permission 部分
+            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 1 -n name -t 3 -v "
+                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + newXmlPath};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 2 -n name -t 3 -v "
+                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + newXmlPath};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 3 -n name -t 3 -v "
+                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + newXmlPath};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            // 修改3处 uses-permission 部分
+            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 86 -n name -t 3 -v "
+                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + newXmlPath};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 87 -n name -t 3 -v "
+                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + newXmlPath};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 88 -n name -t 3 -v "
+                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + newXmlPath};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            // 修改42处 taskAffinity
+            for (int i = 6; i < 48; i++) {
+                CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify activity -d " + i + " -n taskAffinity -t 3 -v "
+                        + pkg + " -i " + xmlPath + " -o " + newXmlPath};
+                process = Runtime.getRuntime().exec(CMD_STR);
+                process.waitFor();
+            }
+
+            // 修改 22 处 authorities
+            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify provider -d 1 -n authorities -t 3 -v "
+                    + pkg + " -i " + xmlPath + " -o " + newXmlPath};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            for (int i = 2; i < 23; i++) {
+                CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify provider -d " + i + " -n authorities -t 3 -v "
+                        + pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2) + " -i " + xmlPath + " -o " + newXmlPath};
+                process = Runtime.getRuntime().exec(CMD_STR);
+                process.waitFor();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        logger.info("Modify apk pkg complete.");
     }
 
     /**
@@ -198,6 +256,6 @@ public class FileUtil {
         Clibrary instance = Clibrary.INSTANTCE;
         instance.modifyname(name.getBytes(), name.length() * 2 + 2 + 2, xmlPath);
 
-        logger.info("modify apk name complete.");
+        logger.info("Modify apk name complete.");
     }
 }
