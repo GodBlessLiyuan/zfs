@@ -164,15 +164,15 @@ public class FileUtil {
             process.waitFor();
 
             // 删除apk之前的签名信息
-            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
+            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
             logger.info("Zip and del complete.");
 
             // 重签名apk
-            CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose"
-                    + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/zip.apk " + originUrl + " godArmor.keystore"};
+            CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
+                    + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/zip_signer.apk /data/ftp/dkfsftp/dkfsfile/zip.apk godArmor.keystore"};
             logger.info("Resign cmd: {}", CMD_STR[2]);
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
