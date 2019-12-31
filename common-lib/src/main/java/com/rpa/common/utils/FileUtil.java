@@ -147,15 +147,13 @@ public class FileUtil {
             }
             is.close();
             fos.close();
-
-            FileUtil.copyFile(xmlPath, zipPath + "/AndroidManifest2.xml");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         modifyApkIcon(zipPath, pic, suffix);
         modifyApkName(xmlPath, name);
-        modifyApkPkg(xmlPath, pkg, zipPath);
+//        modifyApkPkg(xmlPath, pkg, zipPath);
 
         try {
             // 压缩xml文件到zpk包中
