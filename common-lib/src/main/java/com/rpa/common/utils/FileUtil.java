@@ -130,6 +130,7 @@ public class FileUtil {
      */
     public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
         logger.info("originUrl: {}, zipPath: {}", originUrl, zipPath);
+        originUrl = "/data/ftp/dkfsftp/dkfsfile/test.apk";
 
         String xmlPath = null;
         try {
