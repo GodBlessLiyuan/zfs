@@ -128,7 +128,7 @@ public class FileUtil {
      * @param name    应用名
      * @param pic     图标
      */
-    public static void rebuildApk(String oldUrl, String newPath, String pkg, String name, String pic) {
+    public static void rebuildApk(String oldUrl, String newPath, String pkg, String name, String pic, String suffix) {
         logger.info("oldUrl: {}, newPath: {}", oldUrl, newPath);
 
         String xmlPath = null;
@@ -150,9 +150,39 @@ public class FileUtil {
             e.printStackTrace();
         }
 
-        // modifyIcon()
+        modifyApkIcon(xmlPath, pic, suffix);
         modifyApkName(xmlPath, name);
         modifyApkPkg(xmlPath, pkg, newPath);
+
+        try {
+            // 压缩xml文件到zpk包中
+            String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + newPath};
+            Process process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m test.apk AndroidManifest.xml"};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            // 删除apk之前的签名信息
+            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m test.apk META-INF/*"};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            logger.info("Zip and del complete.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 修改应用图标
+     *
+     * @param xmlPath
+     * @param pic
+     */
+    private static void modifyApkIcon(String xmlPath, String pic, String suffix) {
     }
 
     /**
@@ -252,7 +282,6 @@ public class FileUtil {
             return;
         }
 
-        logger.info("Clibrary: {} ", Clibrary.class.getResource("/modXml.so"));
         Clibrary instance = Clibrary.INSTANTCE;
         instance.modifyname(name.getBytes(), name.length() * 2 + 2 + 2, xmlPath);
 

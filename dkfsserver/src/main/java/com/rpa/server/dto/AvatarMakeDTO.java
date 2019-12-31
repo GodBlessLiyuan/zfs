@@ -27,4 +27,9 @@ public class AvatarMakeDTO extends VerifyDTO {
      * 分身应用名称
      */
     private String name;
+
+    /**
+     * 图标后缀
+     */
+    private String suffix;
 }

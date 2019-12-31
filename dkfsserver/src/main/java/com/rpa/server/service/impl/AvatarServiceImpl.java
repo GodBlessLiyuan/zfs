@@ -73,7 +73,7 @@ public class AvatarServiceImpl implements IAvatarService {
             return new ResultVO(2000);
         }
 
-        FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir + projectDir, dto.getPkg(), dto.getName(), dto.getPic());
+        FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir + projectDir, dto.getPkg(), dto.getName(), dto.getPic(), dto.getSuffix());
 
         AvatarMakeVO vo = new AvatarMakeVO();
         vo.setId(po.getAvatarId());
