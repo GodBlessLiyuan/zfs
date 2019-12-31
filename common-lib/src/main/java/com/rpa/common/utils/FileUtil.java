@@ -159,12 +159,12 @@ public class FileUtil {
             String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + zipPath};
             Process process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
-            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m test.apk AndroidManifest.xml"};
+            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
             // 删除apk之前的签名信息
-            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m test.apk META-INF/*"};
+            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
