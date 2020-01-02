@@ -135,14 +135,16 @@ public class FileUtil {
             ZipFile zf = new ZipFile(zipUrl);
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
+
+            modifyApkIcon(zipPath, pic, suffix);
+            modifyApkName(xmlUrl, name);
+            modifyApkPkg(xmlUrl, pkg);
+//        modifyApkSign(zipPath);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
-        modifyApkIcon(zipPath, pic, suffix);
-        modifyApkName(xmlUrl, name);
-        modifyApkPkg(xmlUrl, pkg);
-//        modifyApkSign(zipPath);
     }
 
     /**
@@ -175,21 +177,16 @@ public class FileUtil {
      * @param xmlPath
      * @param pkg
      */
-    private static void modifyApkPkg(String xmlPath, String pkg) {
+    private static void modifyApkPkg(String xmlPath, String pkg) throws IOException, InterruptedException {
         if (null == pkg || "".equals(pkg)) {
             return;
         }
 
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/project/dkfsbin/dkfsserver/"};
-        try {
-            Process process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-
-            // 修改 package 部分
-            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify manifest -d 1 -n package -t 3 -v "
-                    + pkg + " -i " + xmlPath + " -o " + xmlPath};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
+        // 修改 package 部分
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify manifest -d 1 -n package -t 3 -v "
+                + pkg + " -i " + xmlPath + " -o " + xmlPath};
+        Process process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
 
 //            // 修改 3 处 permission 部分
 //            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 1 -n name -t 3 -v "
@@ -243,11 +240,6 @@ public class FileUtil {
 //                process = Runtime.getRuntime().exec(CMD_STR);
 //                process.waitFor();
 //            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
