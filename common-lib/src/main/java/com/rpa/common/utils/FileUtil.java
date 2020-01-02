@@ -240,9 +240,13 @@ public class FileUtil {
      * @param zipPath
      */
     private static void modifyApkSign(String zipPath) throws IOException, InterruptedException {
-        // 压缩xml文件到zpk包中
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk /data/ftp/dkfsftp/dkfsfile/AndroidManifest.xml"};
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/ftp/dkfsftp/dkfsfile/"};
         Process process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
+
+        // 压缩xml文件到zpk包中
+        CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
+        process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
         // 删除apk之前的签名信息
