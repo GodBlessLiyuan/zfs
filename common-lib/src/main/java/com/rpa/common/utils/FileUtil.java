@@ -143,6 +143,7 @@ public class FileUtil {
             modifyApkPkg(xmlUrl, pkg, zipPath);
 //            modifyApkSign(zipPath);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
     }
