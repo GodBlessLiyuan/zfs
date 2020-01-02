@@ -217,6 +217,7 @@ public class FileUtil {
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify manifest -d 1 -n package -t 3 -v "
                     + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
+            new File(xmlPath).delete();
             new File(zipXmlPath).renameTo(new File(xmlPath));
             process.waitFor();
 
