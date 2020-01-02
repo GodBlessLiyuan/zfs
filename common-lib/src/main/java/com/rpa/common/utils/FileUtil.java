@@ -160,9 +160,9 @@ public class FileUtil {
             String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + zipPath};
             Process process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
-            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
+//            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
 
             // 删除apk之前的签名信息
             CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
@@ -217,8 +217,6 @@ public class FileUtil {
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify manifest -d 1 -n package -t 3 -v "
                     + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
-            new File(xmlPath).delete();
-            new File(zipXmlPath).renameTo(new File(xmlPath));
             process.waitFor();
 
 //            // 修改 3 处 permission 部分
