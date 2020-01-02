@@ -108,7 +108,7 @@ public class FileUtil {
         BufferedOutputStream bos = new BufferedOutputStream(fos);
 
         byte[] bytes = new byte[1024];
-        int len = 0;
+        int len;
         while ((len = fis.read(bytes)) != -1) {
             bos.write(bytes, 0, len);
         }
@@ -141,7 +141,7 @@ public class FileUtil {
             InputStream is = zf.getInputStream(ze);
             FileOutputStream fos = new FileOutputStream(xmlPath = zipPath + "/" + ze.getName());
             byte[] bytes = new byte[1024];
-            int len = 0;
+            int len;
             while ((len = is.read(bytes)) != -1) {
                 fos.write(bytes, 0, len);
             }
@@ -151,9 +151,9 @@ public class FileUtil {
             e.printStackTrace();
         }
 
-        modifyApkIcon(zipPath, pic, suffix);
-        modifyApkName(xmlPath, name);
-//        modifyApkPkg(xmlPath, pkg, zipPath);
+//        modifyApkIcon(zipPath, pic, suffix);
+//        modifyApkName(xmlPath, name);
+        modifyApkPkg(xmlPath, pkg, zipPath);
 
         try {
             // 压缩xml文件到zpk包中
@@ -219,58 +219,58 @@ public class FileUtil {
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
-            // 修改 3 处 permission 部分
-            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 1 -n name -t 3 -v "
-                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + zipXmlPath};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-
-            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 2 -n name -t 3 -v "
-                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + zipXmlPath};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-
-            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 3 -n name -t 3 -v "
-                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + zipXmlPath};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-
-            // 修改3处 uses-permission 部分
-            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 86 -n name -t 3 -v "
-                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + zipXmlPath};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-
-            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 87 -n name -t 3 -v "
-                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + zipXmlPath};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-
-            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 88 -n name -t 3 -v "
-                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + zipXmlPath};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-
-            // 修改42处 taskAffinity
-            for (int i = 6; i < 48; i++) {
-                CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify activity -d " + i + " -n taskAffinity -t 3 -v "
-                        + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
-                process = Runtime.getRuntime().exec(CMD_STR);
-                process.waitFor();
-            }
-
-            // 修改 22 处 authorities
-            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify provider -d 1 -n authorities -t 3 -v "
-                    + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-
-            for (int i = 2; i < 23; i++) {
-                CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify provider -d " + i + " -n authorities -t 3 -v "
-                        + pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2) + " -i " + xmlPath + " -o " + zipXmlPath};
-                process = Runtime.getRuntime().exec(CMD_STR);
-                process.waitFor();
-            }
+//            // 修改 3 处 permission 部分
+//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 1 -n name -t 3 -v "
+//                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + zipXmlPath};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
+//
+//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 2 -n name -t 3 -v "
+//                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + zipXmlPath};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
+//
+//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 3 -n name -t 3 -v "
+//                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + zipXmlPath};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
+//
+//            // 修改3处 uses-permission 部分
+//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 86 -n name -t 3 -v "
+//                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + zipXmlPath};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
+//
+//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 87 -n name -t 3 -v "
+//                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + zipXmlPath};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
+//
+//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 88 -n name -t 3 -v "
+//                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + zipXmlPath};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
+//
+//            // 修改42处 taskAffinity
+//            for (int i = 6; i < 48; i++) {
+//                CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify activity -d " + i + " -n taskAffinity -t 3 -v "
+//                        + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
+//                process = Runtime.getRuntime().exec(CMD_STR);
+//                process.waitFor();
+//            }
+//
+//            // 修改 22 处 authorities
+//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify provider -d 1 -n authorities -t 3 -v "
+//                    + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
+//
+//            for (int i = 2; i < 23; i++) {
+//                CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify provider -d " + i + " -n authorities -t 3 -v "
+//                        + pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2) + " -i " + xmlPath + " -o " + zipXmlPath};
+//                process = Runtime.getRuntime().exec(CMD_STR);
+//                process.waitFor();
+//            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
