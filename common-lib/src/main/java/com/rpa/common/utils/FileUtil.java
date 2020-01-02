@@ -128,7 +128,7 @@ public class FileUtil {
      */
     public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
         originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/aaaa.apk";
-        
+
         String zipUrl = zipPath + "/zip.apk";
         String xmlUrl = zipPath + "/AndroidManifest.xml";
 
@@ -140,7 +140,7 @@ public class FileUtil {
 
 //            modifyApkIcon(zipPath, pic, suffix);
 //            modifyApkName(xmlUrl, name);
-            modifyApkPkg(xmlUrl, pkg, zipPath);
+//            modifyApkPkg(xmlUrl, pkg, zipPath);
 //        modifyApkSign(zipPath);
         } catch (Exception e) {
             e.printStackTrace();
