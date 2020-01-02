@@ -140,7 +140,7 @@ public class FileUtil {
 
             modifyApkIcon(zipPath, pic, suffix);
             modifyApkName(xmlUrl, name);
-//            modifyApkPkg(xmlUrl, pkg, zipPath);
+            modifyApkPkg(xmlUrl, pkg, zipPath);
             modifyApkSign(zipPath);
         } catch (Exception e) {
             e.printStackTrace();
