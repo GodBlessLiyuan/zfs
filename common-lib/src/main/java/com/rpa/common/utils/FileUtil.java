@@ -127,6 +127,8 @@ public class FileUtil {
      * @param pic       图标
      */
     public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
+        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/aaaa.apk";
+        
         String zipUrl = zipPath + "/zip.apk";
         String xmlUrl = zipPath + "/AndroidManifest.xml";
 
@@ -204,8 +206,8 @@ public class FileUtil {
         // 修改 22 处 authorities
         FileUtil.modifyApkPkg("provider", 1, "authorities", pkg, xmlPath, outXml);
 
-        for (int i = 2; i < 45; i++) {
-            FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2), xmlPath, outXml);
+        for (int i = 3; i < 24; i++) {
+            FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 3), xmlPath, outXml);
         }
     }
 
