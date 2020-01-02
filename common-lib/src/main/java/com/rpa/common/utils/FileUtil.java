@@ -153,7 +153,7 @@ public class FileUtil {
 
 //        modifyApkIcon(zipPath, pic, suffix);
 //        modifyApkName(xmlPath, name);
-        modifyApkPkg(xmlPath, pkg);
+        modifyApkPkg(xmlPath, pkg, zipPath);
 
         try {
             // 压缩xml文件到zpk包中
@@ -197,10 +197,12 @@ public class FileUtil {
      * @param xmlPath
      * @param pkg
      */
-    private static void modifyApkPkg(String xmlPath, String pkg) {
+    private static void modifyApkPkg(String xmlPath, String pkg, String zipPath) {
         if (null == pkg || "".equals(pkg)) {
             return;
         }
+
+        String zipXmlPath = zipPath + "/AndroidManifest2.xml";
 
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/project/dkfsbin/dkfsserver/"};
         try {
@@ -209,9 +211,10 @@ public class FileUtil {
 
             // 修改 package 部分
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify manifest -d 1 -n package -t 3 -v "
-                    + pkg + " -i " + xmlPath + " -o " + xmlPath};
+                    + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
+            new File(zipXmlPath).renameTo(new File(xmlPath));
 
 //            // 修改 3 处 permission 部分
 //            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 1 -n name -t 3 -v "
