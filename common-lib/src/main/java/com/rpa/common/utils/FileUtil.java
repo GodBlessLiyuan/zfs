@@ -188,7 +188,6 @@ public class FileUtil {
                 + pkg + " -i " + xmlPath + " -o " + outXml};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         new File(xmlPath).delete();
-        new File(outXml).renameTo(new File(xmlPath));
         process.waitFor();
 
 //            // 修改 3 处 permission 部分
