@@ -241,7 +241,7 @@ public class FileUtil {
      */
     private static void modifyApkSign(String zipPath) throws IOException, InterruptedException {
         // 压缩xml文件到zpk包中
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk /data/ftp/dkfsftp/dkfsfile/AndroidManifest.xml"};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
