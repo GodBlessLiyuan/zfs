@@ -141,7 +141,7 @@ public class FileUtil {
             modifyApkIcon(zipPath, pic, suffix);
             modifyApkName(xmlUrl, name);
             modifyApkPkg(xmlUrl, pkg, zipPath);
-            modifyApkSign(zipPath);
+//            modifyApkSign(zipPath);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -209,8 +209,6 @@ public class FileUtil {
         for (int i = 3; i < 24; i++) {
             FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 3), xmlPath, outXml);
         }
-
-        FileUtil.copyFile(new FileInputStream(xmlPath), new FileOutputStream(outXml));
     }
 
     /**
