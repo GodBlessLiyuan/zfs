@@ -184,7 +184,7 @@ public class FileUtil {
 
         // 修改 package 部分
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify manifest -d 1 -n package -t 3 -v "
-                + pkg + " -i " + xmlPath + " -o " + zipPath + "AndroidManifest2.xml"};
+                + pkg + " -i " + xmlPath + " -o " + zipPath + "/AndroidManifest2.xml"};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
