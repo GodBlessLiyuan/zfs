@@ -136,13 +136,11 @@ public class FileUtil {
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
 
-            modifyApkIcon(zipPath, pic, suffix);
-            modifyApkName(xmlUrl, name);
-            modifyApkPkg(xmlUrl, pkg, zipPath);
+//            modifyApkIcon(zipPath, pic, suffix);
+//            modifyApkName(xmlUrl, name);
+//            modifyApkPkg(xmlUrl, pkg, zipPath);
 //        modifyApkSign(zipPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -188,62 +186,79 @@ public class FileUtil {
                 + pkg + " -i " + xmlPath + " -o " + outXml};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
-
         new File(xmlPath).delete();
         new File(outXml).renameTo(new File(xmlPath));
 
-//            // 修改 3 处 permission 部分
-//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 1 -n name -t 3 -v "
-//                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + zipXmlPath};
-//            process = Runtime.getRuntime().exec(CMD_STR);
-//            process.waitFor();
+        // 修改 3 处 permission 部分
+        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify permission -d 1 -n name -t 3 -v "
+                + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + outXml};
+        process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
+        new File(xmlPath).delete();
+        new File(outXml).renameTo(new File(xmlPath));
 //
-//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 2 -n name -t 3 -v "
-//                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + zipXmlPath};
-//            process = Runtime.getRuntime().exec(CMD_STR);
-//            process.waitFor();
+//        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify permission -d 2 -n name -t 3 -v "
+//                + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + outXml};
+//        process = Runtime.getRuntime().exec(CMD_STR);
+//        process.waitFor();
+//        new File(xmlPath).delete();
+//        new File(outXml).renameTo(new File(xmlPath));
 //
-//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 3 -n name -t 3 -v "
-//                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + zipXmlPath};
-//            process = Runtime.getRuntime().exec(CMD_STR);
-//            process.waitFor();
+//        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify permission -d 3 -n name -t 3 -v "
+//                + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + outXml};
+//        process = Runtime.getRuntime().exec(CMD_STR);
+//        process.waitFor();
+//        new File(xmlPath).delete();
+//        new File(outXml).renameTo(new File(xmlPath));
+
+        // 修改3处 uses-permission 部分
+//        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify uses-permission -d 86 -n name -t 3 -v "
+//                + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + outXml};
+//        process = Runtime.getRuntime().exec(CMD_STR);
+//        process.waitFor();
+//        new File(xmlPath).delete();
+//        new File(outXml).renameTo(new File(xmlPath));
 //
-//            // 修改3处 uses-permission 部分
-//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 86 -n name -t 3 -v "
-//                    + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + zipXmlPath};
-//            process = Runtime.getRuntime().exec(CMD_STR);
-//            process.waitFor();
+//        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify uses-permission -d 87 -n name -t 3 -v "
+//                + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + outXml};
+//        process = Runtime.getRuntime().exec(CMD_STR);
+//        process.waitFor();
+//        new File(xmlPath).delete();
+//        new File(outXml).renameTo(new File(xmlPath));
 //
-//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 87 -n name -t 3 -v "
-//                    + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + zipXmlPath};
-//            process = Runtime.getRuntime().exec(CMD_STR);
-//            process.waitFor();
-//
-//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify uses-permission -d 88 -n name -t 3 -v "
-//                    + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + zipXmlPath};
-//            process = Runtime.getRuntime().exec(CMD_STR);
-//            process.waitFor();
-//
-//            // 修改42处 taskAffinity
-//            for (int i = 6; i < 48; i++) {
-//                CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify activity -d " + i + " -n taskAffinity -t 3 -v "
-//                        + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
-//                process = Runtime.getRuntime().exec(CMD_STR);
-//                process.waitFor();
-//            }
-//
-//            // 修改 22 处 authorities
-//            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify provider -d 1 -n authorities -t 3 -v "
-//                    + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
-//            process = Runtime.getRuntime().exec(CMD_STR);
-//            process.waitFor();
-//
-//            for (int i = 2; i < 23; i++) {
-//                CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify provider -d " + i + " -n authorities -t 3 -v "
-//                        + pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2) + " -i " + xmlPath + " -o " + zipXmlPath};
-//                process = Runtime.getRuntime().exec(CMD_STR);
-//                process.waitFor();
-//            }
+//        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify uses-permission -d 88 -n name -t 3 -v "
+//                + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + outXml};
+//        process = Runtime.getRuntime().exec(CMD_STR);
+//        process.waitFor();
+//        new File(xmlPath).delete();
+//        new File(outXml).renameTo(new File(xmlPath));
+
+        // 修改42处 taskAffinity
+        for (int i = 6; i < 48; i++) {
+            CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify activity -d " + i + " -n taskAffinity -t 3 -v "
+                    + pkg + " -i " + xmlPath + " -o " + outXml};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+            new File(xmlPath).delete();
+            new File(outXml).renameTo(new File(xmlPath));
+        }
+
+        // 修改 22 处 authorities
+        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify provider -d 1 -n authorities -t 3 -v "
+                + pkg + " -i " + xmlPath + " -o " + outXml};
+        process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
+        new File(xmlPath).delete();
+        new File(outXml).renameTo(new File(xmlPath));
+
+        for (int i = 2; i < 23; i++) {
+            CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify provider -d " + i + " -n authorities -t 3 -v "
+                    + pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2) + " -i " + xmlPath + " -o " + outXml};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+            new File(xmlPath).delete();
+            new File(outXml).renameTo(new File(xmlPath));
+        }
     }
 
     /**
