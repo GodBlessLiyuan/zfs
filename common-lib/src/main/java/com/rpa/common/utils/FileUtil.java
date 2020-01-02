@@ -138,7 +138,7 @@ public class FileUtil {
 
             modifyApkIcon(zipPath, pic, suffix);
             modifyApkName(xmlUrl, name);
-            modifyApkPkg(xmlUrl, pkg);
+            modifyApkPkg(xmlUrl, pkg, zipPath);
 //        modifyApkSign(zipPath);
         } catch (IOException e) {
             e.printStackTrace();
@@ -177,14 +177,14 @@ public class FileUtil {
      * @param xmlPath
      * @param pkg
      */
-    private static void modifyApkPkg(String xmlPath, String pkg) throws IOException, InterruptedException {
+    private static void modifyApkPkg(String xmlPath, String pkg, String zipPath) throws IOException, InterruptedException {
         if (null == pkg || "".equals(pkg)) {
             return;
         }
 
         // 修改 package 部分
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify manifest -d 1 -n package -t 3 -v "
-                + pkg + " -i " + xmlPath + " -o " + xmlPath};
+                + pkg + " -i " + xmlPath + " -o " + zipPath + "AndroidManifest2.xml"};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
