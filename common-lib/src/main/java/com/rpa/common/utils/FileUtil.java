@@ -130,16 +130,16 @@ public class FileUtil {
      */
     public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
         logger.info("originUrl: {}, zipPath: {}", originUrl, zipPath);
+        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
 
-        String xmlPath = zipPath + "/AndroidManifest.xml";
+        String xmlPath = null;
         try {
             String zipUrl = zipPath + "/zip.apk";
             FileUtil.copyFile(originUrl, zipUrl);
             ZipFile zf = new ZipFile(zipUrl);
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             InputStream is = zf.getInputStream(ze);
-            FileOutputStream fos = new FileOutputStream(xmlPath);
-            logger.info("AndroidManifest.xml: {}", xmlPath);
+            FileOutputStream fos = new FileOutputStream(xmlPath = zipPath + "/" + ze.getName());
             byte[] bytes = new byte[1024];
             int len;
             while ((len = is.read(bytes)) != -1) {
@@ -160,14 +160,16 @@ public class FileUtil {
             String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + zipPath};
             Process process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
-            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk /data/ftp/dkfsftp/dkfsfile/AndroidManifest.xml"};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
+//            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk /data/ftp/dkfsftp/dkfsfile/AndroidManifest.xml"};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
 
             // 删除apk之前的签名信息
             CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
+
+            logger.info("Zip and del complete.");
 
             // 重签名apk
             CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
@@ -175,6 +177,7 @@ public class FileUtil {
             logger.info("Resign cmd: {}", CMD_STR[2]);
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
+            logger.info("Resign complete.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -202,7 +205,8 @@ public class FileUtil {
             return;
         }
 
-        String zipXmlPath = zipPath + "/AndroidManifest2.xml";
+        String zipXmlPath = zipPath + "/AndroidManifest.xml";
+        logger.info("xmlPath: {}, zipXmlPath: {}", xmlPath, zipXmlPath);
 
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/project/dkfsbin/dkfsserver/"};
         try {
@@ -214,7 +218,6 @@ public class FileUtil {
                     + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
-            new File(zipXmlPath).renameTo(new File(xmlPath));
 
 //            // 修改 3 处 permission 部分
 //            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 1 -n name -t 3 -v "
