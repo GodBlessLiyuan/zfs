@@ -129,17 +129,14 @@ public class FileUtil {
      * @param pic       图标
      */
     public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
-        logger.info("originUrl: {}, zipPath: {}", originUrl, zipPath);
-        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
-
-        String xmlPath = null;
+        String zipUrl = zipPath + "/zip.apk";
+        String xmlUrl = zipPath + "/AndroidManifest.xml";
         try {
-            String zipUrl = zipPath + "/zip.apk";
             FileUtil.copyFile(originUrl, zipUrl);
             ZipFile zf = new ZipFile(zipUrl);
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             InputStream is = zf.getInputStream(ze);
-            FileOutputStream fos = new FileOutputStream(xmlPath = zipPath + "/" + ze.getName());
+            FileOutputStream fos = new FileOutputStream(xmlUrl);
             byte[] bytes = new byte[1024];
             int len;
             while ((len = is.read(bytes)) != -1) {
@@ -151,33 +148,29 @@ public class FileUtil {
             e.printStackTrace();
         }
 
-//        modifyApkIcon(zipPath, pic, suffix);
-//        modifyApkName(xmlPath, name);
-        modifyApkPkg(xmlPath, pkg, zipPath);
+        modifyApkIcon(zipPath, pic, suffix);
+        modifyApkName(xmlUrl, name);
+        modifyApkPkg(xmlUrl, pkg, zipPath);
 
         try {
             // 压缩xml文件到zpk包中
             String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + zipPath};
             Process process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
-            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
+//            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
 
             // 删除apk之前的签名信息
             CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
-            logger.info("Zip and del complete.");
-
             // 重签名apk
             CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
                     + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/zip_signer.apk /data/ftp/dkfsftp/dkfsfile/zip.apk godArmor.keystore"};
-            logger.info("Resign cmd: {}", CMD_STR[2]);
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
-            logger.info("Resign complete.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -278,8 +271,6 @@ public class FileUtil {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        logger.info("Modify apk pkg complete.");
     }
 
     /**
@@ -295,7 +286,5 @@ public class FileUtil {
 
         Clibrary instance = Clibrary.INSTANTCE;
         instance.modifyname(name, name.length() * 2 + 2 + 2, xmlPath);
-
-        logger.info("Modify apk name complete.");
     }
 }
