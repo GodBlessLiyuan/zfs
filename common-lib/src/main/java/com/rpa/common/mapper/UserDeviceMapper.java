@@ -2,6 +2,7 @@ package com.rpa.common.mapper;
 
 import com.rpa.common.pojo.UserDevicePO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * UserDeviceMapper继承基类
@@ -29,6 +30,6 @@ public interface UserDeviceMapper extends BaseMapper<UserDevicePO, Integer> {
      * @param userId
      * @return
      */
-    UserDevicePO queryByDevIdAndUserId(Long deviceId, Long userId);
+    UserDevicePO queryByDevIdAndUserId(@Param("deviceId") Long deviceId,@Param("userId") Long userId);
 
 }
