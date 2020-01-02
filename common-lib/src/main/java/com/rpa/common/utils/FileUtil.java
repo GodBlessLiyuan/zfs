@@ -205,7 +205,7 @@ public class FileUtil {
             return;
         }
 
-        String zipXmlPath = zipPath + "/AndroidManifest.xml";
+        String zipXmlPath = zipPath + "/AndroidManifest2.xml";
         logger.info("xmlPath: {}, zipXmlPath: {}", xmlPath, zipXmlPath);
 
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/project/dkfsbin/dkfsserver/"};
@@ -217,6 +217,7 @@ public class FileUtil {
             CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify manifest -d 1 -n package -t 3 -v "
                     + pkg + " -i " + xmlPath + " -o " + zipXmlPath};
             process = Runtime.getRuntime().exec(CMD_STR);
+            new File(zipXmlPath).renameTo(new File(xmlPath));
             process.waitFor();
 
 //            // 修改 3 处 permission 部分
