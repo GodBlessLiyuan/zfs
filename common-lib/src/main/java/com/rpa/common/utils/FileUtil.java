@@ -138,10 +138,10 @@ public class FileUtil {
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
 
-//            modifyApkIcon(zipPath, pic, suffix);
-//            modifyApkName(xmlUrl, name);
+            modifyApkIcon(zipPath, pic, suffix);
+            modifyApkName(xmlUrl, name);
 //            modifyApkPkg(xmlUrl, pkg, zipPath);
-//        modifyApkSign(zipPath);
+            modifyApkSign(zipPath);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -209,8 +209,22 @@ public class FileUtil {
         for (int i = 3; i < 24; i++) {
             FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 3), xmlPath, outXml);
         }
+
+        FileUtil.copyFile(new FileInputStream(xmlPath), new FileOutputStream(outXml));
     }
 
+    /**
+     * 修改 AndroidManifest.xml 文件
+     *
+     * @param application
+     * @param index
+     * @param name
+     * @param value
+     * @param inputXml
+     * @param outXml
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private static void modifyApkPkg(String application, int index, String name, String value, String inputXml, String outXml) throws IOException, InterruptedException {
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify " + application + " -d " + index + " -n " + name + " -t 3 -v "
                 + value + " -i " + inputXml + " -o " + outXml};
@@ -225,30 +239,21 @@ public class FileUtil {
      *
      * @param zipPath
      */
-    private static void modifyApkSign(String zipPath) {
-        try {
-            // 压缩xml文件到zpk包中
-            String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + zipPath};
-            Process process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-//            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
-//            process = Runtime.getRuntime().exec(CMD_STR);
-//            process.waitFor();
+    private static void modifyApkSign(String zipPath) throws IOException, InterruptedException {
+        // 压缩xml文件到zpk包中
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
+        Process process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
 
-            // 删除apk之前的签名信息
-            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
+        // 删除apk之前的签名信息
+        CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
+        process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
 
-            // 重签名apk
-            CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
-                    + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/zip_signer.apk /data/ftp/dkfsftp/dkfsfile/zip.apk godArmor.keystore"};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // 重签名apk
+        CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
+                + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/zip_signer.apk /data/ftp/dkfsftp/dkfsfile/zip.apk godArmor.keystore"};
+        process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
     }
 }
