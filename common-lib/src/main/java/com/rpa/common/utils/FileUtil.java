@@ -130,16 +130,16 @@ public class FileUtil {
      */
     public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
         logger.info("originUrl: {}, zipPath: {}", originUrl, zipPath);
-//        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
 
-        String xmlPath = null;
+        String xmlPath = zipPath + "/AndroidManifest.xml";
         try {
             String zipUrl = zipPath + "/zip.apk";
             FileUtil.copyFile(originUrl, zipUrl);
             ZipFile zf = new ZipFile(zipUrl);
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             InputStream is = zf.getInputStream(ze);
-            FileOutputStream fos = new FileOutputStream(xmlPath = zipPath + "/" + ze.getName());
+            FileOutputStream fos = new FileOutputStream(xmlPath);
+            logger.info("AndroidManifest.xml: {}", xmlPath);
             byte[] bytes = new byte[1024];
             int len;
             while ((len = is.read(bytes)) != -1) {
@@ -151,7 +151,6 @@ public class FileUtil {
             e.printStackTrace();
         }
 
-        logger.info("AndroidManifest.xml path: {}", xmlPath);
 //        modifyApkIcon(zipPath, pic, suffix);
 //        modifyApkName(xmlPath, name);
         modifyApkPkg(xmlPath, pkg, zipPath);
@@ -170,15 +169,12 @@ public class FileUtil {
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
-            logger.info("Zip and del complete.");
-
             // 重签名apk
             CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
                     + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/zip_signer.apk /data/ftp/dkfsftp/dkfsfile/zip.apk godArmor.keystore"};
             logger.info("Resign cmd: {}", CMD_STR[2]);
             process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
-            logger.info("Resign complete.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -206,7 +202,7 @@ public class FileUtil {
             return;
         }
 
-        String zipXmlPath = zipPath + "/AndroidManifest.xml";
+        String zipXmlPath = zipPath + "/AndroidManifest2.xml";
         logger.info("xmlPath: {}, zipXmlPath: {}", xmlPath, zipXmlPath);
 
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/project/dkfsbin/dkfsserver/"};
