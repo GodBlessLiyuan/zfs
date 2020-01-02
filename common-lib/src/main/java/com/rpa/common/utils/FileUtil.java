@@ -151,6 +151,7 @@ public class FileUtil {
             e.printStackTrace();
         }
 
+        logger.info("AndroidManifest.xml path: {}", xmlPath);
 //        modifyApkIcon(zipPath, pic, suffix);
 //        modifyApkName(xmlPath, name);
         modifyApkPkg(xmlPath, pkg, zipPath);
