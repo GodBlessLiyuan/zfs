@@ -21,7 +21,7 @@
     delete from t_user_device
     where user_device_id = #{userDeviceId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.common.pojo.UserDevicePO">
+  <insert id="insert" parameterType="com.rpa.common.pojo.UserDevicePO" useGeneratedKeys="true" keyProperty="userDeviceId">
     insert into t_user_device (user_device_id, user_id, device_id, 
       `status`, create_time)
     values (#{userDeviceId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, 

@@ -138,7 +138,7 @@ public class FileUtil {
 
 //            modifyApkIcon(zipPath, pic, suffix);
 //            modifyApkName(xmlUrl, name);
-//            modifyApkPkg(xmlUrl, pkg, zipPath);
+            modifyApkPkg(xmlUrl, pkg, zipPath);
 //        modifyApkSign(zipPath);
         } catch (Exception e) {
             e.printStackTrace();
@@ -182,83 +182,38 @@ public class FileUtil {
 
         String outXml = zipPath + "/AndroidManifest2.xml";
         // 修改 package 部分
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify manifest -d 1 -n package -t 3 -v "
-                + pkg + " -i " + xmlPath + " -o " + outXml};
-        Process process = Runtime.getRuntime().exec(CMD_STR);
-        process.waitFor();
-        new File(xmlPath).delete();
-        new File(outXml).renameTo(new File(xmlPath));
+        FileUtil.modifyApkPkg("manifest", 1, "package", pkg, xmlPath, outXml);
 
         // 修改 3 处 permission 部分
-        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify permission -d 1 -n name -t 3 -v "
-                + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + outXml};
-        process = Runtime.getRuntime().exec(CMD_STR);
-        process.waitFor();
-        new File(xmlPath).delete();
-        new File(outXml).renameTo(new File(xmlPath));
-//
-//        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify permission -d 2 -n name -t 3 -v "
-//                + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + outXml};
-//        process = Runtime.getRuntime().exec(CMD_STR);
-//        process.waitFor();
-//        new File(xmlPath).delete();
-//        new File(outXml).renameTo(new File(xmlPath));
-//
-//        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify permission -d 3 -n name -t 3 -v "
-//                + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + outXml};
-//        process = Runtime.getRuntime().exec(CMD_STR);
-//        process.waitFor();
-//        new File(xmlPath).delete();
-//        new File(outXml).renameTo(new File(xmlPath));
+        FileUtil.modifyApkPkg("permission", 1, "name", pkg + ".virtual.permission.VIRTUAL_BROADCAST", xmlPath, outXml);
+        FileUtil.modifyApkPkg("permission", 2, "name", pkg + ".permission.C2D_MESSAGE", xmlPath, outXml);
+        FileUtil.modifyApkPkg("permission", 3, "name", pkg + ".Installing.WRITE_STATUS", xmlPath, outXml);
 
         // 修改3处 uses-permission 部分
-//        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify uses-permission -d 86 -n name -t 3 -v "
-//                + pkg + ".virtual.permission.VIRTUAL_BROADCAST" + " -i " + xmlPath + " -o " + outXml};
-//        process = Runtime.getRuntime().exec(CMD_STR);
-//        process.waitFor();
-//        new File(xmlPath).delete();
-//        new File(outXml).renameTo(new File(xmlPath));
-//
-//        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify uses-permission -d 87 -n name -t 3 -v "
-//                + pkg + ".permission.C2D_MESSAGE" + " -i " + xmlPath + " -o " + outXml};
-//        process = Runtime.getRuntime().exec(CMD_STR);
-//        process.waitFor();
-//        new File(xmlPath).delete();
-//        new File(outXml).renameTo(new File(xmlPath));
-//
-//        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify uses-permission -d 88 -n name -t 3 -v "
-//                + pkg + ".Installing.WRITE_STATUS" + " -i " + xmlPath + " -o " + outXml};
-//        process = Runtime.getRuntime().exec(CMD_STR);
-//        process.waitFor();
-//        new File(xmlPath).delete();
-//        new File(outXml).renameTo(new File(xmlPath));
+        FileUtil.modifyApkPkg("uses-permission", 86, "name", pkg + ".virtual.permission.VIRTUAL_BROADCAST", xmlPath, outXml);
+        FileUtil.modifyApkPkg("uses-permission", 87, "name", pkg + ".permission.C2D_MESSAGE", xmlPath, outXml);
+        FileUtil.modifyApkPkg("uses-permission", 88, "name", pkg + ".Installing.WRITE_STATUS", xmlPath, outXml);
 
         // 修改42处 taskAffinity
         for (int i = 6; i < 48; i++) {
-            CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify activity -d " + i + " -n taskAffinity -t 3 -v "
-                    + pkg + " -i " + xmlPath + " -o " + outXml};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-            new File(xmlPath).delete();
-            new File(outXml).renameTo(new File(xmlPath));
+            FileUtil.modifyApkPkg("activity", i, "taskAffinity", pkg, xmlPath, outXml);
         }
 
         // 修改 22 处 authorities
-        CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify provider -d 1 -n authorities -t 3 -v "
-                + pkg + " -i " + xmlPath + " -o " + outXml};
-        process = Runtime.getRuntime().exec(CMD_STR);
-        process.waitFor();
-        new File(xmlPath).delete();
-        new File(outXml).renameTo(new File(xmlPath));
+        FileUtil.modifyApkPkg("provider", 1, "authorities", pkg, xmlPath, outXml);
 
         for (int i = 2; i < 23; i++) {
-            CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify provider -d " + i + " -n authorities -t 3 -v "
-                    + pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2) + " -i " + xmlPath + " -o " + outXml};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-            new File(xmlPath).delete();
-            new File(outXml).renameTo(new File(xmlPath));
+            FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2), xmlPath, outXml);
         }
+    }
+
+    private static void modifyApkPkg(String application, int index, String name, String value, String inputXml, String outXml) throws IOException, InterruptedException {
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify " + application + " -d " + index + " -n " + name + " -t 3 -v "
+                + value + " -i " + inputXml + " -o " + outXml};
+        Process process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
+        new File(inputXml).delete();
+        new File(outXml).renameTo(new File(inputXml));
     }
 
     /**
