@@ -98,25 +98,23 @@ public class FileUtil {
     /**
      * 复制文件
      *
-     * @param resource
-     * @param target
+     * @param is
+     * @param os
      * @throws IOException
      */
-    public static void copyFile(String resource, String target) throws IOException {
-        FileInputStream fis = new FileInputStream(resource);
-        FileOutputStream fos = new FileOutputStream(target);
-        BufferedOutputStream bos = new BufferedOutputStream(fos);
+    public static void copyFile(InputStream is, OutputStream os) throws IOException {
+        BufferedOutputStream bos = new BufferedOutputStream(os);
 
         byte[] bytes = new byte[1024];
         int len;
-        while ((len = fis.read(bytes)) != -1) {
+        while ((len = is.read(bytes)) != -1) {
             bos.write(bytes, 0, len);
         }
         bos.flush();
 
         bos.close();
-        fis.close();
-        fos.close();
+        is.close();
+        os.close();
     }
 
     /**
@@ -131,19 +129,12 @@ public class FileUtil {
     public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
         String zipUrl = zipPath + "/zip.apk";
         String xmlUrl = zipPath + "/AndroidManifest.xml";
+
         try {
-            FileUtil.copyFile(originUrl, zipUrl);
+            FileUtil.copyFile(new FileInputStream(originUrl), new FileOutputStream(zipUrl));
             ZipFile zf = new ZipFile(zipUrl);
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
-            InputStream is = zf.getInputStream(ze);
-            FileOutputStream fos = new FileOutputStream(xmlUrl);
-            byte[] bytes = new byte[1024];
-            int len;
-            while ((len = is.read(bytes)) != -1) {
-                fos.write(bytes, 0, len);
-            }
-            is.close();
-            fos.close();
+            FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -151,31 +142,7 @@ public class FileUtil {
         modifyApkIcon(zipPath, pic, suffix);
         modifyApkName(xmlUrl, name);
         modifyApkPkg(xmlUrl, pkg);
-
-        try {
-            // 压缩xml文件到zpk包中
-            String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + zipPath};
-            Process process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-//            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
-//            process = Runtime.getRuntime().exec(CMD_STR);
-//            process.waitFor();
-
-            // 删除apk之前的签名信息
-            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-
-            // 重签名apk
-            CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
-                    + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/zip_signer.apk /data/ftp/dkfsftp/dkfsfile/zip.apk godArmor.keystore"};
-            process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        modifyApkSign(zipPath);
     }
 
     /**
@@ -185,6 +152,21 @@ public class FileUtil {
      * @param pic
      */
     private static void modifyApkIcon(String xmlPath, String pic, String suffix) {
+    }
+
+    /**
+     * 修改应用名称
+     *
+     * @param xmlPath
+     * @param name
+     */
+    private static void modifyApkName(String xmlPath, String name) {
+        if (null == name || "".equals(name)) {
+            return;
+        }
+
+        Clibrary instance = Clibrary.INSTANTCE;
+        instance.modifyname(name, name.length() * 2 + 2 + 2, xmlPath);
     }
 
     /**
@@ -269,17 +251,34 @@ public class FileUtil {
     }
 
     /**
-     * 修改应用名称
+     * 修改签名信息
      *
-     * @param xmlPath
-     * @param name
+     * @param zipPath
      */
-    private static void modifyApkName(String xmlPath, String name) {
-        if (null == name || "".equals(name)) {
-            return;
-        }
+    private static void modifyApkSign(String zipPath) {
+        try {
+            // 压缩xml文件到zpk包中
+            String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + zipPath};
+            Process process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+//            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
+//            process = Runtime.getRuntime().exec(CMD_STR);
+//            process.waitFor();
 
-        Clibrary instance = Clibrary.INSTANTCE;
-        instance.modifyname(name, name.length() * 2 + 2 + 2, xmlPath);
+            // 删除apk之前的签名信息
+            CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
+            // 重签名apk
+            CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
+                    + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/zip_signer.apk /data/ftp/dkfsftp/dkfsfile/zip.apk godArmor.keystore"};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
