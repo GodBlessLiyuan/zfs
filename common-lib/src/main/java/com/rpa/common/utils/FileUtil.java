@@ -187,8 +187,10 @@ public class FileUtil {
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/ameditor a --modify manifest -d 1 -n package -t 3 -v "
                 + pkg + " -i " + xmlPath + " -o " + outXml};
         Process process = Runtime.getRuntime().exec(CMD_STR);
-        new File(xmlPath).delete();
         process.waitFor();
+
+        new File(xmlPath).delete();
+        new File(outXml).renameTo(new File(xmlPath));
 
 //            // 修改 3 处 permission 部分
 //            CMD_STR = new String[]{"/bin/sh", "-c", "./ameditor a --modify permission -d 1 -n name -t 3 -v "
