@@ -140,7 +140,7 @@ public class FileUtil {
 
 //            modifyApkIcon(zipPath, pic, suffix);
             modifyApkName(xmlUrl, name, zipPath);
-//            modifyApkPkg(xmlUrl, pkg, zipPath);
+            modifyApkPkg(xmlUrl, pkg, zipPath);
             modifyApkSign(zipPath);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -240,7 +240,7 @@ public class FileUtil {
      * @param zipPath
      */
     private static void modifyApkSign(String zipPath) throws IOException, InterruptedException {
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/ftp/dkfsftp/dkfsfile/"};
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + zipPath};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
