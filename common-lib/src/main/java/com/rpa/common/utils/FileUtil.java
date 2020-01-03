@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -168,8 +171,57 @@ public class FileUtil {
             return;
         }
 
-        Clibrary instance = Clibrary.INSTANTCE;
-        instance.modifyname(name, name.length() * 2 + 2 + 2, xmlPath);
+        File file = new File(xmlPath);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
+        CharArrayWriter caw = new CharArrayWriter();
+
+        String line;
+        boolean matched = false;
+        while ((line = br.readLine()) != null) {
+            if (matched) {
+                caw.write(line);
+                caw.append("\n");
+                continue;
+            }
+
+            Matcher matcher = Pattern.compile("<application.*").matcher(line);
+            if (!matcher.find()) {
+                caw.write(line);
+                caw.append("\n");
+                continue;
+            }
+
+            caw.write(line);
+            caw.append("\n");
+
+            while ((line = br.readLine()) != null) {
+                matcher = Pattern.compile("android:label=\".*\"").matcher(line);
+                if (!matcher.find()) {
+                    caw.write(line);
+                    caw.append("\n");
+                    continue;
+                }
+
+                line = line.replace(matcher.group(0), "android:label=\"" + name + "\"");
+                matched = true;
+
+                caw.write(line);
+                caw.append("\n");
+
+                break;
+            }
+        }
+
+        br.close();
+
+        FileWriter fw = new FileWriter(file);
+        caw.writeTo(fw);
+        fw.close();
+
+
+//        Clibrary instance = Clibrary.INSTANTCE;
+//        instance.modifyname(name.getBytes("UTF-8"), name.length() * 2 + 2 + 2, xmlPath);
 //        String outXml = zipPath + "/AndroidManifest2.xml";
 //        // 修改 application 的 label 部分
 //        FileUtil.modifyApkPkg("application", 1, "label", new String(name.getBytes("UTF-8"), "UTF-8"), xmlPath, outXml);
