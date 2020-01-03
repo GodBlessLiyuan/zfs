@@ -127,7 +127,7 @@ public class FileUtil {
      * @param pic       图标
      */
     public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
-        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/aaaa.apk";
+//        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/aaaa.apk";
 
         String zipUrl = zipPath + "/zip.apk";
         String xmlUrl = zipPath + "/AndroidManifest.xml";
@@ -169,7 +169,7 @@ public class FileUtil {
         }
 
         Clibrary instance = Clibrary.INSTANTCE;
-        instance.modifyname(name, name.length() * 2 + 2 + 2, xmlPath);
+        instance.modifyname(name.getBytes(), name.length() * 2 + 2 + 2, xmlPath);
     }
 
     /**
