@@ -1,5 +1,6 @@
 package com.rpa.common.utils;
 
+import com.rpa.common.jna.Clibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
@@ -168,9 +169,11 @@ public class FileUtil {
             return;
         }
 
-        String outXml = zipPath + "/AndroidManifest2.xml";
-        // 修改 application 的 label 部分
-        FileUtil.modifyApkPkg("application", 1, "label", new String(name.getBytes("UTF-8"), "UTF-8"), xmlPath, outXml);
+        Clibrary instance = Clibrary.INSTANTCE;
+        instance.modifyname(name.toCharArray(), name.length() * 2 + 2 + 2, xmlPath);
+//        String outXml = zipPath + "/AndroidManifest2.xml";
+//        // 修改 application 的 label 部分
+//        FileUtil.modifyApkPkg("application", 1, "label", new String(name.getBytes("UTF-8"), "UTF-8"), xmlPath, outXml);
     }
 
     /**
