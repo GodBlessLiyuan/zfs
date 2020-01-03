@@ -169,7 +169,7 @@ public class FileUtil {
         }
 
         Clibrary instance = Clibrary.INSTANTCE;
-        instance.modifyname(name.getBytes("UTF-8"), name.length() * 2 + 2 + 2, xmlPath);
+        instance.modifyname(name.toCharArray(), name.length() * 2 + 2 + 2, xmlPath);
 //        String outXml = zipPath + "/AndroidManifest2.xml";
 //        // 修改 application 的 label 部分
 //        FileUtil.modifyApkPkg("application", 1, "label", new String(name.getBytes("UTF-8"), "UTF-8"), xmlPath, outXml);
