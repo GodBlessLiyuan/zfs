@@ -171,6 +171,13 @@ public class FileUtil {
             return;
         }
 
+        String outXml = zipPath + "/AndroidManifest2.xml";
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "java -jar /data/project/dkfsbin/dkfsserver/AXMLPrinter2.jar " + xmlPath + " > " + outXml};
+        Process process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
+        new File(xmlPath).delete();
+        new File(outXml).renameTo(new File(xmlPath));
+
         File file = new File(xmlPath);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
