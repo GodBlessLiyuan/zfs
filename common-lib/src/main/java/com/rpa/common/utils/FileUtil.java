@@ -127,7 +127,7 @@ public class FileUtil {
      * @param pic       图标
      */
     public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
-//        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/aaaa.apk";
+        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/aaaa.apk";
 
         String zipUrl = zipPath + "/zip.apk";
         String xmlUrl = zipPath + "/AndroidManifest.xml";
@@ -139,7 +139,7 @@ public class FileUtil {
             FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
 
 //            modifyApkIcon(zipPath, pic, suffix);
-            modifyApkName(xmlUrl, name);
+            modifyApkName(xmlUrl, name, zipPath);
 //            modifyApkPkg(xmlUrl, pkg, zipPath);
 //            modifyApkSign(zipPath);
         } catch (Exception e) {
@@ -163,13 +163,14 @@ public class FileUtil {
      * @param xmlPath
      * @param name
      */
-    private static void modifyApkName(String xmlPath, String name) {
+    private static void modifyApkName(String xmlPath, String name, String zipPath) throws IOException, InterruptedException {
         if (null == name || "".equals(name)) {
             return;
         }
 
-        Clibrary instance = Clibrary.INSTANTCE;
-        instance.modifyname(name.getBytes(), name.length() * 2 + 2 + 2, xmlPath);
+        String outXml = zipPath + "/AndroidManifest2.xml";
+        // 修改 application 的 label 部分
+        FileUtil.modifyApkPkg("application", 1, "label", name, xmlPath, outXml);
     }
 
     /**
