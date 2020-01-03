@@ -244,11 +244,6 @@ public class FileUtil {
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
-        // 删除apk之前的签名信息
-        CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
-        process = Runtime.getRuntime().exec(CMD_STR);
-        process.waitFor();
-
         // 压缩xml文件到zpk包中
         CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -m /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
         process = Runtime.getRuntime().exec(CMD_STR);
