@@ -144,7 +144,7 @@ public class FileUtil {
 //            modifyApkIcon(zipPath, pic, suffix);
             modifyApkName(xmlUrl, name, zipPath);
 //            modifyApkPkg(xmlUrl, pkg, zipPath);
-//            modifyApkSign(zipPath);
+            modifyApkSign(zipPath);
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
