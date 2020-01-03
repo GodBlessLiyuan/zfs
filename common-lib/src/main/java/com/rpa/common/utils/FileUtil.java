@@ -139,7 +139,7 @@ public class FileUtil {
 
 //            modifyApkIcon(zipPath, pic, suffix);
             modifyApkName(xmlUrl, name, zipPath);
-            modifyApkPkg(xmlUrl, pkg, zipPath);
+//            modifyApkPkg(xmlUrl, pkg, zipPath);
             modifyApkSign(zipPath);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -241,6 +241,11 @@ public class FileUtil {
     private static void modifyApkSign(String zipPath) throws IOException, InterruptedException {
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/ftp/dkfsftp/dkfsfile/"};
         Process process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
+
+        // 删除apk之前的签名信息
+        CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk AndroidManifest.xml"};
+        process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
         // 压缩xml文件到zpk包中
