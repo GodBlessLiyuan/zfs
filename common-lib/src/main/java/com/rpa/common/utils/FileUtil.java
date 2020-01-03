@@ -1,6 +1,5 @@
 package com.rpa.common.utils;
 
-import com.rpa.common.jna.Clibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
@@ -140,8 +139,8 @@ public class FileUtil {
 
 //            modifyApkIcon(zipPath, pic, suffix);
             modifyApkName(xmlUrl, name, zipPath);
-//            modifyApkPkg(xmlUrl, pkg, zipPath);
-//            modifyApkSign(zipPath);
+            modifyApkPkg(xmlUrl, pkg, zipPath);
+            modifyApkSign(zipPath);
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
