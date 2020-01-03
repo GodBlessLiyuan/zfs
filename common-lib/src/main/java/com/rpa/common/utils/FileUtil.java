@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -169,7 +170,7 @@ public class FileUtil {
 
         String outXml = zipPath + "/AndroidManifest2.xml";
         // 修改 application 的 label 部分
-        FileUtil.modifyApkPkg("application", 1, "label", name, xmlPath, outXml);
+        FileUtil.modifyApkPkg("application", 1, "label", new String(name.getBytes("UTF-8"), "UTF-8"), xmlPath, outXml);
     }
 
     /**
