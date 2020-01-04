@@ -134,6 +134,11 @@ public class FileUtil {
         String xmlUrl = avatarPath + "AndroidManifest.xml";
 
         try {
+            File targetFile = new File(avatarPath);
+            if (!targetFile.exists()) {
+                targetFile.mkdirs();
+            }
+
             FileUtil.copyFile(new FileInputStream(originUrl), new FileOutputStream(zipUrl));
             ZipFile zf = new ZipFile(zipUrl);
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
