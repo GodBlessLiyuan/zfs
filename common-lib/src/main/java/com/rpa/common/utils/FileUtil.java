@@ -129,8 +129,8 @@ public class FileUtil {
      * @param pic        图标
      */
     public static String rebuildApk(String originUrl, String avatarPath, String pkg, String name, String pic, String suffix) {
-//        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
-        originUrl = "E:/file/dkfsfile/test.apk";
+        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
+//        originUrl = "E:/file/dkfsfile/test.apk";
 
         String zipUrl = avatarPath + "avatar.apk";
         String xmlUrl = avatarPath + "AndroidManifest.xml";
