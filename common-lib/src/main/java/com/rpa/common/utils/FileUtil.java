@@ -164,7 +164,7 @@ public class FileUtil {
      */
     private static void modifyApkIcon(String xmlPath, String pic, String suffix, String avatarPath) {
         String picName = FileUtil.genFileName(ModuleConstant.AVATAR, suffix, System.currentTimeMillis());
-        String picPath = FileUtil.uploadBase64(null, avatarPath, picName, pic);
+        String picPath = FileUtil.uploadBase64(avatarPath, "", picName, pic);
         logger.info("picName: {}, picPath: {}.", picName, picPath);
     }
 
