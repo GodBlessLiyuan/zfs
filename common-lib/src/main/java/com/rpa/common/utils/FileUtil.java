@@ -148,7 +148,7 @@ public class FileUtil {
             modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
 //            modifyApkName(xmlUrl, name, avatarPath);
 //            modifyApkPkg(xmlUrl, pkg, avatarPath);
-            modifyApkSign(avatarPath);
+            modifyApkSign(zipUrl);
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
@@ -256,22 +256,22 @@ public class FileUtil {
     /**
      * 修改签名信息
      *
-     * @param zipPath
+     * @param zipUrl
      */
-    private static void modifyApkSign(String zipPath) throws IOException, InterruptedException {
+    private static void modifyApkSign(String zipUrl) throws IOException, InterruptedException {
         // 压缩xml文件到zpk包中
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/ftp/dkfsftp/dkfsfile; /usr/bin/zip -m zip.apk AndroidManifest.xml"};
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/ftp/dkfsftp/dkfsfile; /usr/bin/zip -m avatar.apk AndroidManifest.xml"};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
         // 删除apk之前的签名信息
-        CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d /data/ftp/dkfsftp/dkfsfile/zip.apk META-INF/*"};
+        CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d " + zipUrl + " META-INF/*"};
         process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
         // 重签名apk
         CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
-                + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/zip_signer.apk /data/ftp/dkfsftp/dkfsfile/zip.apk godArmor.keystore"};
+                + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/avatar_temp/zip_signer.apk " + zipUrl + "godArmor.keystore"};
         process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
     }
