@@ -186,6 +186,7 @@ public class FileUtil {
         }
 
         Clibrary instance = Clibrary.INSTANTCE;
+        name = new String(name.getBytes(),"utf-16");
         instance.modifyname(name.toCharArray(), name.length() * 2 + 2 + 2, xmlPath);
 //        String outXml = zipPath + "/AndroidManifest2.xml";
 //        // 修改 application 的 label 部分
