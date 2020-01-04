@@ -144,7 +144,7 @@ public class FileUtil {
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
 
-            modifyApkIcon(avatarPath, pic, suffix);
+            modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
 //            modifyApkName(xmlUrl, name, zipPath);
 //            modifyApkPkg(xmlUrl, pkg, zipPath);
 //            modifyApkSign(zipPath);
@@ -162,9 +162,9 @@ public class FileUtil {
      * @param xmlPath
      * @param pic
      */
-    private static void modifyApkIcon(String xmlPath, String pic, String suffix) {
+    private static void modifyApkIcon(String xmlPath, String pic, String suffix, String avatarPath) {
         String picName = FileUtil.genFileName(ModuleConstant.AVATAR, suffix, System.currentTimeMillis());
-        String picPath = FileUtil.uploadBase64(null, "/data/ftp/dkfsftp/dkfsfile/", picName, pic);
+        String picPath = FileUtil.uploadBase64(null, avatarPath, picName, pic);
         logger.info("picName: {}, picPath: {}.", picName, picPath);
     }
 
