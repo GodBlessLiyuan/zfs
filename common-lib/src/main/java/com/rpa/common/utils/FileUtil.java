@@ -145,10 +145,10 @@ public class FileUtil {
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
 
-            modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
-//            modifyApkName(xmlUrl, name, avatarPath);
+//            modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
+            modifyApkName(xmlUrl, name, avatarPath);
 //            modifyApkPkg(xmlUrl, pkg, avatarPath);
-            modifyApkSign(zipUrl);
+//            modifyApkSign(zipUrl);
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
