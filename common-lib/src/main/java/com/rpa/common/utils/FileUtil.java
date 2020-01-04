@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -128,8 +129,8 @@ public class FileUtil {
      * @param pic        图标
      */
     public static String rebuildApk(String originUrl, String avatarPath, String pkg, String name, String pic, String suffix) {
-        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
-//        originUrl = "E:/file/dkfsfile/test.apk";
+//        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
+        originUrl = "E:/file/dkfsfile/test.apk";
 
         String zipUrl = avatarPath + "avatar.apk";
         String xmlUrl = avatarPath + "AndroidManifest.xml";
@@ -184,22 +185,19 @@ public class FileUtil {
         if (null == name || "".equals(name)) {
             return;
         }
-
         Clibrary instance = Clibrary.INSTANTCE;
-        name = new String(name.getBytes(), "utf-16");
         instance.modifyname(str2CharArray(name), name.length() * 2 + 2 + 2, xmlPath);
     }
 
 
     public static char[] str2CharArray(String name) {
         char[] temp = new char[name.length() * 2 + 2 + 2];
+        Arrays.fill(temp, (char) 0);
+
         temp[0] = (char) name.length();
         for (int i = 0; i < name.length(); i++) {
             temp[i + 1] = name.charAt(i);
         }
-
-        temp[name.length() + 1] = 0;
-        temp[name.length() + 2] = 0;
 
         for (int i = 0; i < temp.length; i++) {
             logger.info("temp[{}] = {}", i, temp[i]);
