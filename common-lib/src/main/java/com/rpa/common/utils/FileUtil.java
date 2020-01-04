@@ -129,6 +129,7 @@ public class FileUtil {
      */
     public static String rebuildApk(String originUrl, String avatarPath, String pkg, String name, String pic, String suffix) {
         originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
+//        originUrl = "E:/file/dkfsfile/test.apk";
 
         String zipUrl = avatarPath + "avatar.apk";
         String xmlUrl = avatarPath + "AndroidManifest.xml";
@@ -164,7 +165,7 @@ public class FileUtil {
      */
     private static void modifyApkIcon(String xmlPath, String pic, String suffix, String avatarPath) {
         String picName = FileUtil.genFileName(ModuleConstant.AVATAR, suffix, System.currentTimeMillis());
-        String picPath = FileUtil.uploadBase64(avatarPath, "", picName, pic);
+        String picPath = FileUtil.uploadBase64("", avatarPath, picName, pic);
         logger.info("picName: {}, picPath: {}.", picName, picPath);
     }
 
