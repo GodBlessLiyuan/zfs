@@ -34,6 +34,8 @@ public class AvatarServiceImpl implements IAvatarService {
     private String rootDir;
     @Value("${file.projectDir}")
     private String projectDir;
+    @Value("${file.avatarDir}")
+    private String avatarDir;
 
     @Override
     public ResultVO check(AvatarDTO dto) {
@@ -73,12 +75,10 @@ public class AvatarServiceImpl implements IAvatarService {
             return new ResultVO(2000);
         }
 
-        FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir + projectDir, dto.getPkg(), dto.getName(), dto.getPic(), dto.getSuffix());
-
         AvatarMakeVO vo = new AvatarMakeVO();
         vo.setId(po.getAvatarId());
         vo.setType(po.getUpdateType());
-        vo.setUrl(null);
+        vo.setUrl(FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir + projectDir + avatarDir, dto.getPkg(), dto.getName(), dto.getPic(), dto.getSuffix()));
 
         return new ResultVO<>(1000, vo);
     }

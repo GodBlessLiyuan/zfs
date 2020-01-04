@@ -121,17 +121,17 @@ public class FileUtil {
     /**
      * 重新构建Apk
      *
-     * @param originUrl 应用原地址
-     * @param zipPath   构建后应用新地址
-     * @param pkg       包名
-     * @param name      应用名
-     * @param pic       图标
+     * @param originUrl  应用原地址
+     * @param avatarPath 构建后应用新地址
+     * @param pkg        包名
+     * @param name       应用名
+     * @param pic        图标
      */
-    public static void rebuildApk(String originUrl, String zipPath, String pkg, String name, String pic, String suffix) {
+    public static String rebuildApk(String originUrl, String avatarPath, String pkg, String name, String pic, String suffix) {
         originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
 
-        String zipUrl = zipPath + "/zip.apk";
-        String xmlUrl = zipPath + "/AndroidManifest.xml";
+        String zipUrl = avatarPath + "/avatar.apk";
+        String xmlUrl = avatarPath + "/AndroidManifest.xml";
 
         try {
             FileUtil.copyFile(new FileInputStream(originUrl), new FileOutputStream(zipUrl));
@@ -139,7 +139,7 @@ public class FileUtil {
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
 
-            modifyApkIcon(zipPath, pic, suffix);
+            modifyApkIcon(avatarPath, pic, suffix);
 //            modifyApkName(xmlUrl, name, zipPath);
 //            modifyApkPkg(xmlUrl, pkg, zipPath);
 //            modifyApkSign(zipPath);
@@ -147,6 +147,8 @@ public class FileUtil {
             logger.error(e.getMessage());
             e.printStackTrace();
         }
+
+        return avatarPath;
     }
 
     /**

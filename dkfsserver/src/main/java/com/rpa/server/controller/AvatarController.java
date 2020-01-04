@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AvatarController {
 
     @Autowired
-    private IAvatarService avatarService;
+    private IAvatarService service;
 
     @PostMapping("checkava")
     public ResultVO check(@RequestBody AvatarDTO dto) {
@@ -30,7 +30,7 @@ public class AvatarController {
             return new ResultVO(2000);
         }
 
-        return avatarService.check(dto);
+        return service.check(dto);
     }
 
     @PostMapping("make")
@@ -39,6 +39,6 @@ public class AvatarController {
             return new ResultVO(2000);
         }
 
-        return avatarService.make(dto);
+        return service.make(dto);
     }
 }
