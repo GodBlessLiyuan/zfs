@@ -146,9 +146,9 @@ public class FileUtil {
             FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
 
             modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
-//            modifyApkName(xmlUrl, name, zipPath);
-//            modifyApkPkg(xmlUrl, pkg, zipPath);
-//            modifyApkSign(zipPath);
+//            modifyApkName(xmlUrl, name, avatarPath);
+//            modifyApkPkg(xmlUrl, pkg, avatarPath);
+            modifyApkSign(avatarPath);
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
