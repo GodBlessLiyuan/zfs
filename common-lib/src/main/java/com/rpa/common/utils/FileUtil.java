@@ -165,7 +165,7 @@ public class FileUtil {
      */
     private static void modifyApkIcon(String xmlPath, String pic, String suffix, String avatarPath) throws IOException, InterruptedException {
         String picName = FileUtil.genFileName(ModuleConstant.AVATAR, suffix, System.currentTimeMillis());
-        String picPath = FileUtil.uploadBase64(avatarPath, "res/mipmap-xxhdpi-v4/", picName, pic);
+        String picPath = FileUtil.uploadBase64(avatarPath, "res/mipmap-xxhdpi-v4/", "x_avatar.png", pic);
         logger.info("picName: {}, picPath: {}.", picName, picPath);
 
         // 压缩xml文件到zpk包中
