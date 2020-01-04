@@ -130,8 +130,8 @@ public class FileUtil {
     public static String rebuildApk(String originUrl, String avatarPath, String pkg, String name, String pic, String suffix) {
         originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
 
-        String zipUrl = avatarPath + "/avatar.apk";
-        String xmlUrl = avatarPath + "/AndroidManifest.xml";
+        String zipUrl = avatarPath + "avatar.apk";
+        String xmlUrl = avatarPath + "AndroidManifest.xml";
 
         try {
             FileUtil.copyFile(new FileInputStream(originUrl), new FileOutputStream(zipUrl));
@@ -192,7 +192,7 @@ public class FileUtil {
             return;
         }
 
-        String outXml = zipPath + "/AndroidManifest2.xml";
+        String outXml = zipPath + "AndroidManifest2.xml";
         // 修改 package 部分
         FileUtil.modifyApkPkg("manifest", 1, "package", pkg, xmlPath, outXml);
 
