@@ -259,8 +259,9 @@ public class FileUtil {
      * @param zipUrl
      */
     private static void modifyApkSign(String zipUrl) throws IOException, InterruptedException {
+        logger.info("zipUrl: {}", zipUrl);
         // 压缩xml文件到zpk包中
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/ftp/dkfsftp/dkfsfile; /usr/bin/zip -m avatar.apk AndroidManifest.xml"};
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/ftp/dkfsftp/dkfsfile/avatar_temp; /usr/bin/zip -m avatar.apk AndroidManifest.xml"};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
