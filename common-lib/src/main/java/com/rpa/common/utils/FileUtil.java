@@ -1,5 +1,6 @@
 package com.rpa.common.utils;
 
+import com.rpa.common.constant.ModuleConstant;
 import com.rpa.common.jna.Clibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,8 +139,8 @@ public class FileUtil {
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
 
-//            modifyApkIcon(zipPath, pic, suffix);
-            modifyApkName(xmlUrl, name, zipPath);
+            modifyApkIcon(zipPath, pic, suffix);
+//            modifyApkName(xmlUrl, name, zipPath);
 //            modifyApkPkg(xmlUrl, pkg, zipPath);
 //            modifyApkSign(zipPath);
         } catch (Exception e) {
@@ -155,6 +156,9 @@ public class FileUtil {
      * @param pic
      */
     private static void modifyApkIcon(String xmlPath, String pic, String suffix) {
+        String picName = FileUtil.genFileName(ModuleConstant.AVATAR, suffix, System.currentTimeMillis());
+        String picPath = FileUtil.uploadBase64(null, xmlPath, picName, pic);
+        logger.info("picName: {}, picPath: {}.", picName, picPath);
     }
 
     /**
