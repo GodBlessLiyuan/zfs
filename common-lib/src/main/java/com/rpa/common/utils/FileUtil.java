@@ -272,7 +272,7 @@ public class FileUtil {
 
         // 重签名apk
         CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
-                + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/avatar_temp/zip_signer.apk " + zipUrl + "godArmor.keystore"};
+                + "-keystore /data/project/dkfsbin/dkfsserver/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/avatar_temp/zip_signer.apk " + zipUrl + " godArmor.keystore"};
         process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
     }
