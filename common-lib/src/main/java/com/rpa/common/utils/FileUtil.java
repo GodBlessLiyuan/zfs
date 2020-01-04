@@ -201,6 +201,10 @@ public class FileUtil {
         temp[name.length() + 1] = 0;
         temp[name.length() + 2] = 0;
 
+        for (int i = 0; i < temp.length; i++) {
+            logger.info("temp[{}] = {}", i, temp[i]);
+        }
+
         return temp;
     }
 
