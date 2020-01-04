@@ -186,11 +186,22 @@ public class FileUtil {
         }
 
         Clibrary instance = Clibrary.INSTANTCE;
-        name = new String(name.getBytes(),"utf-16");
-        instance.modifyname(name.toCharArray(), name.length() * 2 + 2 + 2, xmlPath);
-//        String outXml = zipPath + "/AndroidManifest2.xml";
-//        // 修改 application 的 label 部分
-//        FileUtil.modifyApkPkg("application", 1, "label", new String(name.getBytes("UTF-8"), "UTF-8"), xmlPath, outXml);
+        name = new String(name.getBytes(), "utf-16");
+        instance.modifyname(str2CharArray(name), name.length() * 2 + 2 + 2, xmlPath);
+    }
+
+
+    public static char[] str2CharArray(String name) {
+        char[] temp = new char[name.length() * 2 + 2 + 2];
+        temp[0] = (char) name.length();
+        for (int i = 0; i < name.length(); i++) {
+            temp[i + 1] = name.charAt(i);
+        }
+
+        temp[name.length() + 1] = 0;
+        temp[name.length() + 2] = 0;
+
+        return temp;
     }
 
     /**
