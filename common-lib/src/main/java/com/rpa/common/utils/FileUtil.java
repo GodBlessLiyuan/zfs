@@ -130,7 +130,6 @@ public class FileUtil {
      */
     public static String rebuildApk(String originUrl, String avatarPath, String pkg, String name, String pic, String suffix) {
         originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
-//        originUrl = "E:/file/dkfsfile/test.apk";
 
         String zipUrl = avatarPath + "avatar.apk";
         String xmlUrl = avatarPath + "AndroidManifest.xml";
@@ -146,10 +145,10 @@ public class FileUtil {
             ZipEntry ze = zf.getEntry("AndroidManifest.xml");
             FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
 
-//            modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
+            modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
             modifyApkName(xmlUrl, name, avatarPath);
 //            modifyApkPkg(xmlUrl, pkg, avatarPath);
-//            modifyApkSign(zipUrl);
+            modifyApkSign(zipUrl);
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
@@ -165,9 +164,9 @@ public class FileUtil {
      * @param pic
      */
     private static void modifyApkIcon(String xmlPath, String pic, String suffix, String avatarPath) throws IOException, InterruptedException {
-        String picName = FileUtil.genFileName(ModuleConstant.AVATAR, suffix, System.currentTimeMillis());
+//        String picName = FileUtil.genFileName(ModuleConstant.AVATAR, suffix, System.currentTimeMillis());
         String picPath = FileUtil.uploadBase64(avatarPath, "res/mipmap-xxhdpi-v4/", "x_avatar.png", pic);
-        logger.info("picName: {}, picPath: {}.", picName, picPath);
+        logger.info("picPath: {}.", picPath);
 
         // 压缩xml文件到zpk包中
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + avatarPath + "; /usr/bin/zip -m avatar.apk " + picPath};
@@ -190,17 +189,19 @@ public class FileUtil {
     }
 
 
-    public static char[] str2CharArray(String name) {
+    /**
+     * Java String 转 C++ unsigned char []
+     *
+     * @param name
+     * @return
+     */
+    private static char[] str2CharArray(String name) {
         char[] temp = new char[name.length() * 2 + 2 + 2];
         Arrays.fill(temp, (char) 0);
 
         temp[0] = (char) name.length();
         for (int i = 0; i < name.length(); i++) {
             temp[i + 1] = name.charAt(i);
-        }
-
-        for (int i = 0; i < temp.length; i++) {
-            logger.info("temp[{}] = {}", i, temp[i]);
         }
 
         return temp;
