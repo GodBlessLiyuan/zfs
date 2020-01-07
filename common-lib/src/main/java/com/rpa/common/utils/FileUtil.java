@@ -129,8 +129,6 @@ public class FileUtil {
      * @param pic        图标
      */
     public static String rebuildApk(String originUrl, String avatarPath, String pkg, String name, String pic, String suffix) {
-        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/test.apk";
-
         String zipUrl = avatarPath + "avatar.apk";
         String xmlUrl = avatarPath + "AndroidManifest.xml";
 
@@ -147,7 +145,7 @@ public class FileUtil {
 
             modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
             modifyApkName(xmlUrl, name, avatarPath);
-//            modifyApkPkg(xmlUrl, pkg, avatarPath);
+            modifyApkPkg(xmlUrl, pkg, avatarPath);
             modifyApkSign(zipUrl);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -168,7 +166,7 @@ public class FileUtil {
         String picPath = FileUtil.uploadBase64(avatarPath, "res/mipmap-xxhdpi-v4/", "x_avatar.png", pic);
         logger.info("picPath: {}.", picPath);
 
-        // 压缩xml文件到zpk包中
+        // 压缩xml文件到apk包中
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + avatarPath + "; /usr/bin/zip -m avatar.apk " + picPath};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();

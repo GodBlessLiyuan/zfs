@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 public class SessionFilter implements Filter {
 
-    private static final String CONTEXT_PATH = "/manager";
+    private static final String CONTEXT_PATH = "/dkfsmanager";
     // 不需要登录就可以访问的路径(比如:注册登录等)
     String[] includeUrls = new String[]{"/login", "/entry", "/login/get/checkcode", "/", "/favicon.ico"};
     List<String> excludeList = new ArrayList<>();
