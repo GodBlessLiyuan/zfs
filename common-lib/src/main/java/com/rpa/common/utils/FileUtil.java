@@ -162,14 +162,14 @@ public class FileUtil {
     /**
      * 修改应用图标
      *
-     * @param templatePath
+     * @param tempFilePath
      * @param pic
      */
-    private static void modifyApkIcon(String templatePath, String pic, String suffix) throws IOException, InterruptedException {
-        String picPath = FileUtil.uploadBase64(templatePath, "res/mipmap-xxhdpi-v4/", "x_avatar" + suffix, pic);
+    private static void modifyApkIcon(String tempFilePath, String pic, String suffix) throws IOException, InterruptedException {
+        String picPath = FileUtil.uploadBase64(tempFilePath, "res/mipmap-xxhdpi-v4/", "x_avatar." + suffix, pic);
 
         // 压缩xml文件到apk包中
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + templatePath + "; /usr/bin/zip -m " + TEMPLATE_APK_NAME + " " + picPath};
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + tempFilePath + "; /usr/bin/zip -m " + TEMPLATE_APK_NAME + " " + picPath};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
     }
