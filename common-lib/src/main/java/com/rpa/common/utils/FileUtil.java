@@ -146,7 +146,7 @@ public class FileUtil {
             modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
             modifyApkName(xmlUrl, name, avatarPath);
             modifyApkPkg(xmlUrl, pkg, avatarPath);
-//            modifyApkSign(zipUrl);
+            modifyApkSign(zipUrl);
         } catch (Exception e) {
             e.printStackTrace();
         }
