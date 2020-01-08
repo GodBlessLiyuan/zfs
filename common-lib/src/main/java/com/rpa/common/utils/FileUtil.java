@@ -153,6 +153,12 @@ public class FileUtil {
             boolean isModApkPkg = modifyApkPkg(tempXmlUrl, pkg, tempFilePath);
             String templateUrl = templatePath + ModuleConstant.AVATAR + random + ".apk";
             modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
+
+            // 清除临时文件夹
+            String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + templatePath + "; rm -rf " + random};
+            Process process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+
             return templateUrl;
         } catch (Exception e) {
             e.printStackTrace();

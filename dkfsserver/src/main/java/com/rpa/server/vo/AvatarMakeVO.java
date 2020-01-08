@@ -14,7 +14,5 @@ import java.io.Serializable;
 public class AvatarMakeVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-    private Byte type;
     private String url;
 }
