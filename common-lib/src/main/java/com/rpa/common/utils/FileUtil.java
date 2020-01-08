@@ -2,6 +2,8 @@ package com.rpa.common.utils;
 
 import com.rpa.common.constant.ModuleConstant;
 import com.rpa.common.jna.Clibrary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
 
 import java.io.*;
@@ -17,6 +19,7 @@ import java.util.zip.ZipFile;
  * @version: 1.0
  */
 public class FileUtil {
+    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
     /**
      * Base64上传
@@ -159,6 +162,7 @@ public class FileUtil {
             Process process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
+            logger.info("rm random: {}", CMD_STR[2]);
             return templateUrl;
         } catch (Exception e) {
             e.printStackTrace();
