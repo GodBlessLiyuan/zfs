@@ -1,6 +1,5 @@
 package com.rpa.common.utils;
 
-import com.rpa.common.constant.ModuleConstant;
 import com.rpa.common.jna.Clibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,6 +128,8 @@ public class FileUtil {
      * @param pic        图标
      */
     public static String rebuildApk(String originUrl, String avatarPath, String pkg, String name, String pic, String suffix) {
+        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/FrameworkApp-debug.apk";
+
         String zipUrl = avatarPath + "avatar.apk";
         String xmlUrl = avatarPath + "AndroidManifest.xml";
 
@@ -148,7 +149,6 @@ public class FileUtil {
             modifyApkPkg(xmlUrl, pkg, avatarPath);
             modifyApkSign(zipUrl);
         } catch (Exception e) {
-            logger.error(e.getMessage());
             e.printStackTrace();
         }
 

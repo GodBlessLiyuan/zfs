@@ -441,11 +441,11 @@
                 processData: false,
                 success: function (res) {
                     $('#preloader').hide();
-                    if (res.status !== 1000) {
-                        alert(res.msg);
-                    } else {
+                    if (res.status === 1000) {
                         document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
+                    } else if (res.status === 1013) {
+                        alert("上传的文件不是官方渠道包！");
                     }
                 }
             });
