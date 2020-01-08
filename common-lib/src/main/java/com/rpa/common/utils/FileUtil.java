@@ -132,43 +132,35 @@ public class FileUtil {
     private static final String TEMPLATE_APK_NAME = "template.apk";
     private static final String ANDROID_MANIFEST_NAME = "AndroidManifest.xml";
 
-    public static String rebuildApk(String avatarUrl, String rootDir, String templatePath, String pkg, String name, String pic, String suffix) {
-        avatarUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/FrameworkApp-debug.apk";
-
+    public static String rebuildApk(String avatarUrl, String rootDir, String templatePath, String pkg, String name, String pic, String suffix) throws IOException, InterruptedException {
         String random = UUID.randomUUID().toString().replace("-", "");
         String tempFilePath = FileUtil.genFilePath(rootDir, templatePath, random);
         String tempApkUrl = tempFilePath + TEMPLATE_APK_NAME;
         String tempXmlUrl = tempFilePath + ANDROID_MANIFEST_NAME;
 
-        try {
-            File targetFile = new File(tempFilePath);
-            if (!targetFile.exists()) {
-                targetFile.mkdirs();
-            }
-
-            FileUtil.copyFile(new FileInputStream(avatarUrl), new FileOutputStream(tempApkUrl));
-            ZipFile zf = new ZipFile(tempApkUrl);
-            ZipEntry ze = zf.getEntry(ANDROID_MANIFEST_NAME);
-            FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(tempXmlUrl));
-
-            modifyApkIcon(tempFilePath, pic, suffix);
-            boolean isModApkName = modifyApkName(tempXmlUrl, name);
-            boolean isModApkPkg = modifyApkPkg(tempXmlUrl, pkg, tempFilePath);
-            String templateUrl = templatePath + ModuleConstant.AVATAR + random + ".apk";
-            modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
-
-            // 清除临时文件夹
-            String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + rootDir + templatePath + "; rm -rf " + random};
-            Process process = Runtime.getRuntime().exec(CMD_STR);
-            process.waitFor();
-
-            logger.info("rm random: {}", CMD_STR[2]);
-            return templateUrl;
-        } catch (Exception e) {
-            e.printStackTrace();
+        File targetFile = new File(tempFilePath);
+        if (!targetFile.exists()) {
+            targetFile.mkdirs();
         }
 
-        return null;
+        FileUtil.copyFile(new FileInputStream(avatarUrl), new FileOutputStream(tempApkUrl));
+        ZipFile zf = new ZipFile(tempApkUrl);
+        ZipEntry ze = zf.getEntry(ANDROID_MANIFEST_NAME);
+        FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(tempXmlUrl));
+
+        modifyApkIcon(tempFilePath, pic, suffix);
+        boolean isModApkName = modifyApkName(tempXmlUrl, name);
+        boolean isModApkPkg = modifyApkPkg(tempXmlUrl, pkg, tempFilePath);
+        String templateUrl = templatePath + ModuleConstant.AVATAR + random + ".apk";
+        modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
+
+        // 清除临时文件夹
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + rootDir + templatePath + "; rm -rf " + random};
+        Process process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
+
+        logger.info("rm random: {}", CMD_STR[2]);
+        return templateUrl;
     }
 
     /**
