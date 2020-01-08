@@ -147,7 +147,7 @@ public class FileUtil {
             modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
 //            modifyApkName(xmlUrl, name, avatarPath);
             modifyApkPkg(xmlUrl, pkg, avatarPath);
-            modifyApkSign(zipUrl);
+//            modifyApkSign(zipUrl);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -258,6 +258,7 @@ public class FileUtil {
                 + value + " -i " + inputXml + " -o " + outXml};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
+        logger.info("modifyApkPkg cmd: {}", CMD_STR[2]);
         new File(inputXml).delete();
         new File(outXml).renameTo(new File(inputXml));
     }
