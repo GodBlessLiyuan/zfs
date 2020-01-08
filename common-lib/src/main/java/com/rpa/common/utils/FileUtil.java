@@ -1,12 +1,12 @@
 package com.rpa.common.utils;
 
+import com.rpa.common.constant.ModuleConstant;
 import com.rpa.common.jna.Clibrary;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -121,50 +121,55 @@ public class FileUtil {
      * 重新构建Apk
      *
      * @param originUrl  应用原地址
-     * @param avatarPath 构建后应用新地址
+     * @param templatePath 构建后应用新地址
      * @param pkg        包名
      * @param name       应用名
      * @param pic        图标
      */
-    public static String rebuildApk(String originUrl, String avatarPath, String pkg, String name, String pic, String suffix) {
-        originUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/FrameworkApp-debug.apk";
+    private static final String TEMPLATE_APK_NAME = "template.apk";
+    private static final String ANDROID_MANIFEST_NAME = "AndroidManifest.xml";
 
-        String zipUrl = avatarPath + "avatar.apk";
-        String xmlUrl = avatarPath + "AndroidManifest.xml";
+    public static String rebuildApk(String avatarUrl, String templatePath, String pkg, String name, String pic, String suffix) {
+        avatarUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/FrameworkApp-debug.apk";
+
+        String random = UUID.randomUUID().toString().replace("-", "");
+        String tempFilePath = FileUtil.genFilePath(templatePath, random);
+        String tempApkUrl = tempFilePath + TEMPLATE_APK_NAME;
+        String tempXmlUrl = tempFilePath + ANDROID_MANIFEST_NAME;
 
         try {
-            File targetFile = new File(avatarPath);
+            File targetFile = new File(tempFilePath);
             if (!targetFile.exists()) {
                 targetFile.mkdirs();
             }
 
-            FileUtil.copyFile(new FileInputStream(originUrl), new FileOutputStream(zipUrl));
-            ZipFile zf = new ZipFile(zipUrl);
-            ZipEntry ze = zf.getEntry("AndroidManifest.xml");
-            FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(xmlUrl));
+            FileUtil.copyFile(new FileInputStream(avatarUrl), new FileOutputStream(tempApkUrl));
+            ZipFile zf = new ZipFile(tempApkUrl);
+            ZipEntry ze = zf.getEntry(ANDROID_MANIFEST_NAME);
+            FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(tempXmlUrl));
 
-            modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
-            modifyApkName(xmlUrl, name, avatarPath);
-            modifyApkPkg(xmlUrl, pkg, avatarPath);
-            modifyApkSign(zipUrl);
+            modifyApkIcon(tempFilePath, pic, suffix);
+            boolean isModApkName = modifyApkName(tempXmlUrl, name);
+            boolean isModApkPkg = modifyApkPkg(tempXmlUrl, pkg, tempFilePath);
+            return modifyApkSign(templatePath + ModuleConstant.AVATAR + random + ".apk", tempFilePath, isModApkName || isModApkPkg);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return avatarPath;
+        return null;
     }
 
     /**
      * 修改应用图标
      *
-     * @param xmlPath
+     * @param templatePath
      * @param pic
      */
-    private static void modifyApkIcon(String xmlPath, String pic, String suffix, String avatarPath) throws IOException, InterruptedException {
-        String picPath = FileUtil.uploadBase64(avatarPath, "res/mipmap-xxhdpi-v4/", "x_avatar.png", pic);
+    private static void modifyApkIcon(String templatePath, String pic, String suffix) throws IOException, InterruptedException {
+        String picPath = FileUtil.uploadBase64(templatePath, "res/mipmap-xxhdpi-v4/", "x_avatar" + suffix, pic);
 
         // 压缩xml文件到apk包中
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + avatarPath + "; /usr/bin/zip -m avatar.apk " + picPath};
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + templatePath + "; /usr/bin/zip -m " + TEMPLATE_APK_NAME + " " + picPath};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
     }
@@ -175,12 +180,15 @@ public class FileUtil {
      * @param xmlPath
      * @param name
      */
-    private static void modifyApkName(String xmlPath, String name, String zipPath) throws IOException, InterruptedException {
+    private static boolean modifyApkName(String xmlPath, String name) {
         if (null == name || "".equals(name)) {
-            return;
+            return false;
         }
+
         Clibrary instance = Clibrary.INSTANTCE;
         instance.modifyname(str2CharArray(name), name.length() * 2 + 2 + 2, xmlPath);
+
+        return true;
     }
 
 
@@ -208,9 +216,9 @@ public class FileUtil {
      * @param xmlPath
      * @param pkg
      */
-    private static void modifyApkPkg(String xmlPath, String pkg, String zipPath) throws IOException, InterruptedException {
+    private static boolean modifyApkPkg(String xmlPath, String pkg, String zipPath) throws IOException, InterruptedException {
         if (null == pkg || "".equals(pkg)) {
-            return;
+            return false;
         }
 
         String outXml = zipPath + "AndroidManifest2.xml";
@@ -237,6 +245,8 @@ public class FileUtil {
         for (int i = 2; i <= 22; i++) {
             FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2), xmlPath, outXml);
         }
+
+        return true;
     }
 
     /**
@@ -256,6 +266,7 @@ public class FileUtil {
                 + value + " -i " + inputXml + " -o " + outXml};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
+
         new File(inputXml).delete();
         new File(outXml).renameTo(new File(inputXml));
     }
@@ -263,23 +274,34 @@ public class FileUtil {
     /**
      * 修改签名信息
      *
-     * @param zipUrl
+     * @param signApkUrl   签名生成的文件
+     * @param tempFilePath 临时文件路径
+     * @param isModXml     之前有无修改 Android Xml 文件
+     * @throws IOException
+     * @throws InterruptedException
      */
-    private static void modifyApkSign(String zipUrl) throws IOException, InterruptedException {
+    private static String modifyApkSign(String signApkUrl, String tempFilePath, boolean isModXml) throws IOException, InterruptedException {
         // 压缩xml文件到zpk包中
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/ftp/dkfsftp/dkfsfile/avatar_temp; /usr/bin/zip -m avatar.apk AndroidManifest.xml"};
-        Process process = Runtime.getRuntime().exec(CMD_STR);
-        process.waitFor();
+        String[] CMD_STR;
+        Process process;
+
+        if (isModXml) {
+            CMD_STR = new String[]{"/bin/sh", "-c", "cd " + tempFilePath + "; /usr/bin/zip -m " + TEMPLATE_APK_NAME + " " + ANDROID_MANIFEST_NAME};
+            process = Runtime.getRuntime().exec(CMD_STR);
+            process.waitFor();
+        }
 
         // 删除apk之前的签名信息
-        CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d " + zipUrl + " META-INF/*"};
+        CMD_STR = new String[]{"/bin/sh", "-c", "/usr/bin/zip -d " + tempFilePath + TEMPLATE_APK_NAME + " META-INF/*"};
         process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
         // 重签名apk
         CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
-                + "-keystore /data/project/dkfsbin/dkfsserver/library/godArmor.keystore -storepass 123456 -signedjar /data/ftp/dkfsftp/dkfsfile/avatar_temp/zip_signer.apk " + zipUrl + " godArmor.keystore"};
+                + "-keystore /data/project/dkfsbin/dkfsserver/library/godArmor.keystore -storepass 123456 -signedjar " + signApkUrl + " " + tempFilePath + TEMPLATE_APK_NAME + " godArmor.keystore"};
         process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
+
+        return signApkUrl;
     }
 }

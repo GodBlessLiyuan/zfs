@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,6 +28,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class AvatarServiceImpl implements IAvatarService {
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
     @Resource
     private AvatarMapper avatarMapper;
     @Resource
@@ -78,7 +82,7 @@ public class AvatarServiceImpl implements IAvatarService {
         AvatarMakeVO vo = new AvatarMakeVO();
         vo.setId(po.getAvatarId());
         vo.setType(po.getUpdateType());
-        vo.setUrl(FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir + projectDir + avatarDir, dto.getPkg(), dto.getName(), dto.getPic(), dto.getSuffix()));
+        vo.setUrl(FileUtil.rebuildApk(rootDir + po.getUrl(), FileUtil.genFilePath(rootDir + projectDir + avatarDir, sdf.format(new Date())), dto.getPkg(), dto.getName(), dto.getPic(), dto.getSuffix()));
 
         return new ResultVO<>(1000, vo);
     }
