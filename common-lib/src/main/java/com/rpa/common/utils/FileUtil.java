@@ -220,25 +220,25 @@ public class FileUtil {
         FileUtil.modifyApkPkg("manifest", 1, "package", pkg, xmlPath, outXml);
 
         // 修改 3 处 permission 部分
-        FileUtil.modifyApkPkg("permission", 1, "name", pkg + ".virtual.permission.VIRTUAL_BROADCAST", xmlPath, outXml);
-        FileUtil.modifyApkPkg("permission", 2, "name", pkg + ".permission.C2D_MESSAGE", xmlPath, outXml);
-        FileUtil.modifyApkPkg("permission", 3, "name", pkg + ".Installing.WRITE_STATUS", xmlPath, outXml);
+//        FileUtil.modifyApkPkg("permission", 1, "name", pkg + ".virtual.permission.VIRTUAL_BROADCAST", xmlPath, outXml);
+//        FileUtil.modifyApkPkg("permission", 2, "name", pkg + ".permission.C2D_MESSAGE", xmlPath, outXml);
+//        FileUtil.modifyApkPkg("permission", 3, "name", pkg + ".Installing.WRITE_STATUS", xmlPath, outXml);
 
         // 修改3处 uses-permission 部分
-        FileUtil.modifyApkPkg("uses-permission", 86, "name", pkg + ".virtual.permission.VIRTUAL_BROADCAST", xmlPath, outXml);
-        FileUtil.modifyApkPkg("uses-permission", 87, "name", pkg + ".permission.C2D_MESSAGE", xmlPath, outXml);
-        FileUtil.modifyApkPkg("uses-permission", 88, "name", pkg + ".Installing.WRITE_STATUS", xmlPath, outXml);
+//        FileUtil.modifyApkPkg("uses-permission", 86, "name", pkg + ".virtual.permission.VIRTUAL_BROADCAST", xmlPath, outXml);
+//        FileUtil.modifyApkPkg("uses-permission", 87, "name", pkg + ".permission.C2D_MESSAGE", xmlPath, outXml);
+//        FileUtil.modifyApkPkg("uses-permission", 88, "name", pkg + ".Installing.WRITE_STATUS", xmlPath, outXml);
 
         // 修改42处 taskAffinity
-        for (int i = 1; i <= 42; i++) {
-            FileUtil.modifyApkPkg("activity", i, "taskAffinity", pkg, xmlPath, outXml);
-        }
+//        for (int i = 1; i <= 42; i++) {
+//            FileUtil.modifyApkPkg("activity", i, "taskAffinity", pkg, xmlPath, outXml);
+//        }
         // 修改 22 处 authorities
-        FileUtil.modifyApkPkg("provider", 1, "authorities", pkg, xmlPath, outXml);
-
-        for (int i = 2; i <= 22; i++) {
-            FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2), xmlPath, outXml);
-        }
+//        FileUtil.modifyApkPkg("provider", 1, "authorities", pkg, xmlPath, outXml);
+//
+//        for (int i = 2; i <= 22; i++) {
+//            FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2), xmlPath, outXml);
+//        }
     }
 
     /**
