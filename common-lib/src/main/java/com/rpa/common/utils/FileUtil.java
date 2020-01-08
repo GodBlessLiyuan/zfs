@@ -158,7 +158,7 @@ public class FileUtil {
             modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
 
             // 清除临时文件夹
-            String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + templatePath + "; rm -rf " + random};
+            String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + tempFilePath + "; rm -rf " + random};
             Process process = Runtime.getRuntime().exec(CMD_STR);
             process.waitFor();
 
