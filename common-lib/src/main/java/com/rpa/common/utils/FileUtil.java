@@ -129,11 +129,11 @@ public class FileUtil {
     private static final String TEMPLATE_APK_NAME = "template.apk";
     private static final String ANDROID_MANIFEST_NAME = "AndroidManifest.xml";
 
-    public static String rebuildApk(String avatarUrl, String templatePath, String pkg, String name, String pic, String suffix) {
+    public static String rebuildApk(String avatarUrl, String rootDir, String templatePath, String pkg, String name, String pic, String suffix) {
         avatarUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/FrameworkApp-debug.apk";
 
         String random = UUID.randomUUID().toString().replace("-", "");
-        String tempFilePath = FileUtil.genFilePath(templatePath, random);
+        String tempFilePath = FileUtil.genFilePath(rootDir, templatePath, random);
         String tempApkUrl = tempFilePath + TEMPLATE_APK_NAME;
         String tempXmlUrl = tempFilePath + ANDROID_MANIFEST_NAME;
 
@@ -151,7 +151,9 @@ public class FileUtil {
             modifyApkIcon(tempFilePath, pic, suffix);
             boolean isModApkName = modifyApkName(tempXmlUrl, name);
             boolean isModApkPkg = modifyApkPkg(tempXmlUrl, pkg, tempFilePath);
-            return modifyApkSign(templatePath + ModuleConstant.AVATAR + random + ".apk", tempFilePath, isModApkName || isModApkPkg);
+            String templateUrl = templatePath + ModuleConstant.AVATAR + random + ".apk";
+            modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
+            return templateUrl;
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -82,7 +82,7 @@ public class AvatarServiceImpl implements IAvatarService {
         AvatarMakeVO vo = new AvatarMakeVO();
         vo.setId(po.getAvatarId());
         vo.setType(po.getUpdateType());
-        vo.setUrl(FileUtil.rebuildApk(rootDir + po.getUrl(), FileUtil.genFilePath(rootDir + projectDir + avatarDir, sdf.format(new Date())), dto.getPkg(), dto.getName(), dto.getPic(), dto.getSuffix()));
+        vo.setUrl(FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir, FileUtil.genFilePath(projectDir + avatarDir, sdf.format(new Date())), dto.getPkg(), dto.getName(), dto.getPic(), dto.getSuffix()));
 
         return new ResultVO<>(1000, vo);
     }
