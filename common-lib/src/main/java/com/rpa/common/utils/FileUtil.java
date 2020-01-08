@@ -274,7 +274,7 @@ public class FileUtil {
      * @throws InterruptedException
      */
     private static void modifyApkPkg(String application, int index, String name, String value, String inputXml, String outXml) throws IOException, InterruptedException {
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/library/ameditor a --modify " + application + " -d " + index + " -n " + name + " -t 3 -v "
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/tools/ameditor a --modify " + application + " -d " + index + " -n " + name + " -t 3 -v "
                 + value + " -i " + inputXml + " -o " + outXml};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
@@ -310,7 +310,7 @@ public class FileUtil {
 
         // 重签名apk
         CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
-                + "-keystore /data/project/dkfsbin/dkfsserver/library/godArmor.keystore -storepass 123456 -signedjar " + signApkUrl + " " + tempFilePath + TEMPLATE_APK_NAME + " godArmor.keystore"};
+                + "-keystore /data/project/dkfsbin/dkfsserver/tools/godArmor.keystore -storepass 123456 -signedjar " + signApkUrl + " " + tempFilePath + TEMPLATE_APK_NAME + " godArmor.keystore"};
         process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
