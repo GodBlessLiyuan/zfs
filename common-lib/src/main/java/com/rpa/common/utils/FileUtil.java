@@ -17,7 +17,6 @@ import java.util.zip.ZipFile;
  * @version: 1.0
  */
 public class FileUtil {
-    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
     /**
      * Base64上传
@@ -147,7 +146,7 @@ public class FileUtil {
             modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
             modifyApkName(xmlUrl, name, avatarPath);
             modifyApkPkg(xmlUrl, pkg, avatarPath);
-            modifyApkSign(zipUrl);
+//            modifyApkSign(zipUrl);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -163,7 +162,6 @@ public class FileUtil {
      */
     private static void modifyApkIcon(String xmlPath, String pic, String suffix, String avatarPath) throws IOException, InterruptedException {
         String picPath = FileUtil.uploadBase64(avatarPath, "res/mipmap-xxhdpi-v4/", "x_avatar.png", pic);
-        logger.info("picPath: {}.", picPath);
 
         // 压缩xml文件到apk包中
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + avatarPath + "; /usr/bin/zip -m avatar.apk " + picPath};
@@ -258,7 +256,6 @@ public class FileUtil {
                 + value + " -i " + inputXml + " -o " + outXml};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
-        logger.info("modifyApkPkg cmd: {}", CMD_STR[2]);
         new File(inputXml).delete();
         new File(outXml).renameTo(new File(inputXml));
     }
@@ -269,7 +266,6 @@ public class FileUtil {
      * @param zipUrl
      */
     private static void modifyApkSign(String zipUrl) throws IOException, InterruptedException {
-        logger.info("zipUrl: {}", zipUrl);
         // 压缩xml文件到zpk包中
         String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd /data/ftp/dkfsftp/dkfsfile/avatar_temp; /usr/bin/zip -m avatar.apk AndroidManifest.xml"};
         Process process = Runtime.getRuntime().exec(CMD_STR);
