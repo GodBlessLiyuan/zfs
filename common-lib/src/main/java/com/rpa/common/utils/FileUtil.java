@@ -146,7 +146,7 @@ public class FileUtil {
 
             modifyApkIcon(xmlUrl, pic, suffix, avatarPath);
             modifyApkName(xmlUrl, name, avatarPath);
-            modifyApkPkg(xmlUrl, pkg, avatarPath);
+//            modifyApkPkg(xmlUrl, pkg, avatarPath);
             modifyApkSign(zipUrl);
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,7 +162,6 @@ public class FileUtil {
      * @param pic
      */
     private static void modifyApkIcon(String xmlPath, String pic, String suffix, String avatarPath) throws IOException, InterruptedException {
-//        String picName = FileUtil.genFileName(ModuleConstant.AVATAR, suffix, System.currentTimeMillis());
         String picPath = FileUtil.uploadBase64(avatarPath, "res/mipmap-xxhdpi-v4/", "x_avatar.png", pic);
         logger.info("picPath: {}.", picPath);
 
