@@ -8,10 +8,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>免费领会员</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
 </head>
-<body style="background:  url(images/bg_evaluate.png) center center;background-size: cover;background-repeat: no-repeat;">
+
+
+<body style="background:  url(/images/bg_evaluate.png) center center;background-size: cover;background-repeat: no-repeat;">
 
     <div class="container">
         <div class="row">

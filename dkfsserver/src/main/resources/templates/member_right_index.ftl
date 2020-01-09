@@ -8,9 +8,10 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="format-detection" content="telephone=no">
 	<title>会员权益</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
-	<link rel="stylesheet" href="css/style.css" type="text/css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+	<link rel="stylesheet" href="/css/style.css" type="text/css" />
 </head>
+
 	<body style="background: #F8F8F8;">
 
 	<div class="container" style="margin-top: 20px;">
@@ -29,9 +30,8 @@
 						<td >会员权益</td>
 						<td >非会员</td>
 						<td >
-						<!--<img src="images/ico_membership.png" style="height: 20px;width: 20px;">-->
-							<span class="vip_span">VIP会员</span>
-							<!--VIP会员-->
+							<#--<span class="vip_span">VIP会员</span>-->
+							VIP会员
 						</td>
 					</tr>
 					</thead>
@@ -39,24 +39,24 @@
 					<tr>
 						<td >应用双开</td>
 						<td ><img
-								src="images/check_redbag_24.png"/></td>
+								src="/images/check_redbag_24.png"/></td>
 						<td ><img
-								src="images/check_redbag_24.png"/></td>
+								src="/images/check_redbag_24.png"/></td>
 					</tr>
 
 					<tr>
 						<td >应用多开</td>
 						<td ><img
-								src="images/check_redbag_24.png"/></td>
+								src="/images/check_redbag_24.png"/></td>
 						<td ><img
-								src="images/check_redbag_24.png"/></td>
+								src="/images/check_redbag_24.png"/></td>
 					</tr>
 					<tr>
 						<td >免广告</td>
 						<td ><img
-								src="images/ico_delete_youshang_24.png"/></td>
+								src="/images/ico_delete_youshang_24.png"/></td>
 						<td ><img
-								src="images/check_redbag_24.png"/></td>
+								src="/images/check_redbag_24.png"/></td>
 					</tr>
 
 					</tbody>

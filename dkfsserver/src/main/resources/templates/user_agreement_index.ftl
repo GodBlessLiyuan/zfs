@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html style="overflow-x: hidden">
 <head>
-    <base href="${basePath}">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>用户注册及使用APP隐私协议</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<!--background-color:#F8F8F8;-->
+
+
 <body style="overflow-x: hidden; background-color: #FFFFFF">
 
     <div class="agreement" >
