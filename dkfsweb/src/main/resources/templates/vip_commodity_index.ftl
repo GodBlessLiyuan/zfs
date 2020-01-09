@@ -473,11 +473,11 @@
                     discount,
                 dataType: 'json',
                 success: function (res) {
-                    if (res.status !== 1000) {
-                        alert(res.msg);
-                    } else {
+                    if (res.status === 1000) {
                         document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
+                    } else if(res.status === 1103) {
+                        alert("当前渠道-产品已存在！");
                     }
                 }
             });

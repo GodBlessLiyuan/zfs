@@ -126,8 +126,7 @@
     </where>
   </select>
   <select id="queryAll" resultType="com.rpa.common.bo.ComTypeBO">
-    select
-    <include refid="Base_Column_List"/>
+    select com_type_id as comTypeId, `name`, `days`, extra, a_id as aId, create_time as createTime, update_time as updateTime
     from t_com_type order by com_type_id asc
   </select>
   <select id="queryTypenameByTypeid" resultType="java.lang.String">
