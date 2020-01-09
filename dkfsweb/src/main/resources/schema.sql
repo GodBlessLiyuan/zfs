@@ -41,6 +41,8 @@ DROP TABLE IF EXISTS t_key_text;
 DROP TABLE IF EXISTS t_key_value;
 DROP TABLE IF EXISTS t_notice;
 DROP TABLE IF EXISTS t_other_app;
+DROP TABLE IF EXISTS t_phone_model;
+DROP TABLE IF EXISTS t_phone_type;
 DROP TABLE IF EXISTS t_plugin;
 DROP TABLE IF EXISTS t_promoter;
 DROP TABLE IF EXISTS t_revenue_user;
@@ -621,6 +623,32 @@ CREATE TABLE t_other_app
 );
 
 
+CREATE TABLE t_phone_model
+(
+	model_id bigint NOT NULL AUTO_INCREMENT,
+	type_id int NOT NULL,
+	name char(128),
+	picture char(255),
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
+	PRIMARY KEY (model_id),
+	UNIQUE (model_id)
+);
+
+
+CREATE TABLE t_phone_type
+(
+	type_id int NOT NULL AUTO_INCREMENT,
+	name char(32),
+	picture char(255),
+	-- 1 未删除  2删除
+	dr tinyint COMMENT '1 未删除  2删除',
+	PRIMARY KEY (type_id),
+	UNIQUE (type_id),
+	UNIQUE (name)
+);
+
+
 CREATE TABLE t_plugin
 (
 	plugin_id int NOT NULL AUTO_INCREMENT,
@@ -1190,7 +1218,15 @@ ALTER TABLE t_user_notice
 ;
 
 
-ALTER TABLE t_app_plu_ch
+ALTER TABLE t_phone_model
+	ADD FOREIGN KEY (type_id)
+	REFERENCES t_phone_type (type_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE t_ava_plu
 	ADD FOREIGN KEY (plugin_id)
 	REFERENCES t_plugin (plugin_id)
 	ON UPDATE RESTRICT
