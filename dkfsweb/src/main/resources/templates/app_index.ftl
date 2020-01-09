@@ -444,8 +444,10 @@
                     if (res.status === 1000) {
                         document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
-                    } else if (res.status === 1013) {
+                    } else if (res.status === 1103) {
                         alert("上传的文件不是官方渠道包！");
+                    } else {
+                        alert("服务器内部错误！")
                     }
                 }
             });
