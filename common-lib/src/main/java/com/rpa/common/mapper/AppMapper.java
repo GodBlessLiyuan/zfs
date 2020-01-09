@@ -55,7 +55,7 @@ public interface AppMapper extends BaseMapper<AppPO, Integer> {
      * @param status
      * @return
      */
-    AppPO queryMaxByVerId(@Param("versionCode") Integer versionCode,@Param("chanId") Integer chanId,@Param("status") Integer status);
+    AppPO queryMaxByVerId(@Param("versionCode") Integer versionCode, @Param("chanId") Integer chanId, @Param("status") Integer status);
 
     Integer queryIdByVersioncode(Integer softv);
 
