@@ -3,6 +3,7 @@ package com.rpa.common.mapper;
 import com.rpa.common.bo.UserActivityBO;
 import com.rpa.common.pojo.UserActivityPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ public interface UserActivityMapper extends BaseMapper<UserActivityPO, Integer> 
      * @param status
      * @return
      */
-    List<UserActivityPO> queryByUserIdAndStatus(Long userId, Byte status);
+    List<UserActivityPO> queryByUserIdAndStatus(@Param("userId") Long userId,@Param("status") Byte status);
 
     /**
      * 激活

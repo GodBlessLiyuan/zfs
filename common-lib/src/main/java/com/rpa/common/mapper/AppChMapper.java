@@ -2,6 +2,7 @@ package com.rpa.common.mapper;
 
 import com.rpa.common.pojo.AppChPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface AppChMapper extends BaseMapper<AppChPO, Integer> {
      * @param status
      * @return
      */
-    int updateStatus(int appId, int status);
+    int updateStatus(@Param("appId") int appId,@Param("status") int status);
 
     /**
      * 根据appId 删除数据

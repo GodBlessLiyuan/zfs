@@ -3,6 +3,7 @@ package com.rpa.common.mapper;
 import com.rpa.common.bo.AppBO;
 import com.rpa.common.pojo.AppPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,7 @@ public interface AppMapper extends BaseMapper<AppPO, Integer> {
      * @param status
      * @return
      */
-    AppPO queryMaxByVerId(Integer versionCode, Integer chanId, Integer status);
+    AppPO queryMaxByVerId(@Param("versionCode") Integer versionCode,@Param("chanId") Integer chanId,@Param("status") Integer status);
 
     Integer queryIdByVersioncode(Integer softv);
 

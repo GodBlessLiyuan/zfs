@@ -2,6 +2,7 @@ package com.rpa.common.mapper;
 
 import com.rpa.common.pojo.VipcommodityPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface VipcommodityMapper extends BaseMapper<VipcommodityPO, Integer> 
      * @param comTypeId     产品Id
      * @return
      */
-    VipcommodityPO queryByChanIdAndComTypeId(int softChannelId, int comTypeId);
+    VipcommodityPO queryByChanIdAndComTypeId(@Param("softChannelId") int softChannelId, @Param("comTypeId") int comTypeId);
 
     /**
      * 根据渠道Id查询数据

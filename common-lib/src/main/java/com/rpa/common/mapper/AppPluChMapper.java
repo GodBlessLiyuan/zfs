@@ -2,6 +2,7 @@ package com.rpa.common.mapper;
 
 import com.rpa.common.pojo.AppPluChPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface AppPluChMapper extends BaseMapper<AppPluChPO, Integer> {
      * @param status   状态
      * @return
      */
-    int updateStatus(int pluginId, byte status);
+    int updateStatus(@Param("pluginId") int pluginId,@Param("status") byte status);
 
     /**
      * 根据插件Id删除数据
@@ -43,7 +44,7 @@ public interface AppPluChMapper extends BaseMapper<AppPluChPO, Integer> {
      * @param appId    应用Id
      * @return
      */
-    List<AppPluChPO> queryByIds(int pluginId, int appId);
+    List<AppPluChPO> queryByIds(@Param("pluginId") int pluginId,@Param("appId") int appId);
 
     /**
      * 批量删除
