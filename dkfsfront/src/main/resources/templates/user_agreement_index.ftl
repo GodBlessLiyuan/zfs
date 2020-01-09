@@ -8,8 +8,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>用户注册及使用APP隐私协议</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${basePath}/css/style.css">
 </head>
 
 

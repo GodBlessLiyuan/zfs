@@ -8,12 +8,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>免费领会员</title>
-<#--    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="/css/style.css" type="text/css" />-->
-
-
     <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
-    <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="${basePath}/css/style.css">
 </head>
 
 
@@ -37,8 +33,6 @@
             </div>
         </div>
     </div>
-
-
 
 </body>
 
