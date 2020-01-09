@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rpa.common.mapper.PhoneTypeMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.common.pojo.PhoneTypePO">
+    <id column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="ename" jdbcType="CHAR" property="ename" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="picture" jdbcType="CHAR" property="picture" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    type_id, ename, `name`, picture, dr
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_phone_type
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_phone_type
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rpa.common.pojo.PhoneTypePO">
+    insert into t_phone_type (type_id, ename, `name`, 
+      picture, dr)
+    values (#{typeId,jdbcType=INTEGER}, #{ename,jdbcType=CHAR}, #{name,jdbcType=CHAR}, 
+      #{picture,jdbcType=CHAR}, #{dr,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rpa.common.pojo.PhoneTypePO">
+    insert into t_phone_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="ename != null">
+        ename,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="ename != null">
+        #{ename,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=CHAR},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.PhoneTypePO">
+    update t_phone_type
+    <set>
+      <if test="ename != null">
+        ename = #{ename,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=CHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=CHAR},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+    </set>
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.PhoneTypePO">
+    update t_phone_type
+    set ename = #{ename,jdbcType=CHAR},
+      `name` = #{name,jdbcType=CHAR},
+      picture = #{picture,jdbcType=CHAR},
+      dr = #{dr,jdbcType=TINYINT}
+    where type_id = #{typeId,jdbcType=INTEGER}
+  </update>
+</mapper>
