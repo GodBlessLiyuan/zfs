@@ -1,0 +1,198 @@
+.html body {
+    margin: 0;
+    padding: 0;
+}
+.div_spacing {
+    width: 100%;
+}
+
+.table_rights {
+    font-family: PingFang-SC-Medium;
+    font-size: 24px;
+    color: #333333;
+    letter-spacing: 0;
+    text-align: center;
+}
+
+.table_rights tr {
+    height: 40px;
+    vertical-align: middle;
+}
+
+.table_rights tr td:nth-child(3) {
+    background: rgba(255,223,172,0.20);
+}
+
+.table_rights tr td img {
+    width: 20px;
+    height: 20px;
+}
+
+.font_rule {
+    display: block;
+    font-family: PingFang-SC-Medium;
+    font-size: 15px;
+    color: #333333;
+    letter-spacing: 0;
+    font-weight: bolder;
+}
+.font_hope {
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #999999;
+    letter-spacing: 0;
+}
+
+.table_rights > thead > tr > td,
+.table_rights > tbody > tr > td{
+    vertical-align: middle;
+    text-align: center;
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 0;
+    text-align: center;
+    font-weight: bolder;
+}
+.vip_span:before {
+   /* content: url(/images/ico_membership.png);*/
+}
+
+.div_openmember {
+
+    width:80%;
+    height: 49px;
+    background-image: linear-gradient(90deg, #E8C78F 0%, #C6904A 100%);
+    border-radius: 24.5px;
+    border-radius: 24.5px;
+    text-align: center;
+    line-height: 49px;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+/*多开分身免费领会员 begin*/
+.div_participate {
+    margin: 0 auto;
+    width: 80%;
+    height: 50px;
+    border-radius: 25px;
+    background-image: linear-gradient(90deg, #FFECC1 0%, #FFC56D 100%);
+
+    font-family: PingFangSC-Semibold;
+    font-size: 20px;
+    line-height: 50px;
+    color: #D20F1C;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.div_pickuptips {
+    font-family: PingFangSC-Medium;
+    font-size: 15px;
+    line-height: 22px;
+    color: #FFEBBF;
+}
+
+/*多开分身免费领会员 end*/
+
+
+/*用户注册及使用APP隐私协议 begin*/
+
+.agreement {
+    width:100%;
+    padding: 0 5%;
+}
+.agreement h2 {
+    text-align: center;
+    font-family: PingFang-SC-Medium;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.agreement h4 {
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #222222;
+    letter-spacing: 0;
+    line-height: 22px;
+}
+
+.content_agreement {
+    margin-bottom: 30px;
+    margin: 0 auto;
+}
+
+.content_agreement p {
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #222222;
+    letter-spacing: 0;
+    line-height: 22px;
+}
+
+
+.content_agreement li {
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #222222;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-bottom: 20px;
+
+}
+/*用户注册及使用APP隐私协议 end*/
+
+
+
+
+
+
+/*下面的是语音盒子的样式文件*/
+.div_main {
+    margin-top:30px;
+    width: 100%;
+    background: #FFFFFF;
+
+}
+
+.div_tips {
+    background: #F8F8F8;
+    padding:20px 5%;
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #999999;
+    letter-spacing: 0;
+    line-height: 22px;
+}
+
+.div_a {
+    font-family: PingFangSC-Semibold;
+    font-size: 14px;
+    color: #3698E9;
+    letter-spacing: 0;
+    line-height: 22px;
+}
+
+.div_voice {
+    padding:20px 5%;
+}
+
+.content {
+    padding-left: 0px;
+}
+
+.content li {
+    margin-top:5px;
+    margin-bottom:5px;
+   /* box-shadow: 1px 1px 4px 4px #eeeeee;*/
+}
+
+.content li audio {
+    width: 100%;
+    height: 80px;
+    vertical-align:middle;
+    padding-bottom:30px;
+}
