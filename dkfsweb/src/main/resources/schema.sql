@@ -639,12 +639,14 @@ CREATE TABLE t_phone_model
 CREATE TABLE t_phone_type
 (
 	type_id int NOT NULL AUTO_INCREMENT,
+	ename char(32),
 	name char(32),
 	picture char(255),
 	-- 1 未删除  2删除
 	dr tinyint COMMENT '1 未删除  2删除',
 	PRIMARY KEY (type_id),
 	UNIQUE (type_id),
+	UNIQUE (ename),
 	UNIQUE (name)
 );
 
