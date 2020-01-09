@@ -90,4 +90,11 @@
       dr = #{dr,jdbcType=TINYINT}
     where model_id = #{modelId,jdbcType=BIGINT}
   </update>
+
+  <select id="queryAll" resultType="com.rpa.common.bo.PhoneModelBO">
+    select pm.`name`, pt.`name` as typeName
+    from t_phone_model pm
+    left join t_phone_type pt on pm.type_id = pt.type_id
+    where pm.dr = 1 and pt.dr = 1
+  </select>
 </mapper>
