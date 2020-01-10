@@ -153,12 +153,12 @@ public class FileUtil {
         boolean isModApkName = modifyApkName(tempXmlUrl, dto.getName());
         boolean isModApkPkg = modifyApkPkg(tempXmlUrl, dto, tempFilePath);
         String templateUrl = templatePath + ModuleConstant.AVATAR + random + ".apk";
-//        modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
+        modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
 
         // 清除临时文件夹
-//        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + rootDir + templatePath + "; rm -rf " + random};
-//        Process process = Runtime.getRuntime().exec(CMD_STR);
-//        process.waitFor();
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + rootDir + templatePath + "; rm -rf " + random};
+        Process process = Runtime.getRuntime().exec(CMD_STR);
+        process.waitFor();
 
         return templateUrl;
     }
@@ -280,7 +280,7 @@ public class FileUtil {
      * @throws InterruptedException
      */
     private static void modifyApkPkg(String application, int index, String name, String value, String inputXml, String outXml) throws IOException, InterruptedException {
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/project/dkfsbin/dkfsserver/tools/ameditor a --modify " + application + " -d " + index + " -n " + name + " -t 3 -v "
+        String[] CMD_STR = new String[]{"/bin/sh", "-c", "/data/smarthelper/dkfsbin/dkfsserver/tools/ameditor a --modify " + application + " -d " + index + " -n " + name + " -t 3 -v "
                 + value + " -i " + inputXml + " -o " + outXml};
         Process process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
@@ -316,7 +316,7 @@ public class FileUtil {
 
         // 重签名apk
         CMD_STR = new String[]{"/bin/sh", "-c", "jarsigner -digestalg SHA1 -sigalg MD5withRSA -verbose "
-                + "-keystore /data/project/dkfsbin/dkfsserver/tools/godArmor.keystore -storepass 123456 -signedjar " + signApkUrl + " " + tempFilePath + TEMPLATE_APK_NAME + " godArmor.keystore"};
+                + "-keystore /data/smarthelper/dkfsbin/dkfsserver/tools/godArmor.keystore -storepass 123456 -signedjar " + signApkUrl + " " + tempFilePath + TEMPLATE_APK_NAME + " godArmor.keystore"};
         process = Runtime.getRuntime().exec(CMD_STR);
         process.waitFor();
 
