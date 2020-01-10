@@ -11,5 +11,7 @@ import lombok.Data;
  */
 @Data
 public class PhoneModelBO extends PhoneModelPO {
+    private String typeEname;
     private String typeName;
+    private String typePicture;
 }

@@ -2,7 +2,10 @@ package com.rpa.server.service.impl;
 
 import com.rpa.common.bo.PhoneModelBO;
 import com.rpa.common.mapper.PhoneModelMapper;
+import com.rpa.common.pojo.PhoneModelPO;
+import com.rpa.common.pojo.PhoneTypePO;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.server.dto.PhoneModelDTO;
 import com.rpa.server.service.IPhoneModelService;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +27,33 @@ public class PhoneModelServiceImpl implements IPhoneModelService {
     @Override
     public ResultVO phoneModel() {
         List<PhoneModelBO> bos = phoneModelMapper.queryAll();
-        Map<String, List<String>> data = new LinkedHashMap<>();
-        for (PhoneModelBO bo : bos) {
-            if (data.containsKey(bo.getTypeName())) {
-                List<String> list = data.get(bo.getTypeName());
-                list.add(bo.getName());
-            } else {
-                List<String> list = new LinkedList<>();
-                list.add(bo.getName());
-                data.put(bo.getTypeName(), list);
+        Map<Integer, PhoneModelDTO> map = new LinkedHashMap<>();
+        for(PhoneModelBO bo: bos) {
+            if(map.containsKey(bo.getTypeId())) {
+                PhoneModelDTO dto = map.get(bo.getTypeId());
+                List<PhoneModelPO> pos = dto.getPhoneModels();
+                PhoneModelPO po = new PhoneModelPO();
+                po.setModelId(bo.getModelId());
+                po.setName(bo.getName());
+                pos.add(po);
+            }else {
+                PhoneModelDTO dto = new PhoneModelDTO();
+
+                PhoneTypePO typePO = new PhoneTypePO();
+                typePO.setName(bo.getTypeName());
+                dto.setPhoneType(typePO);
+
+                List<PhoneModelPO> pos = new LinkedList<>();
+                PhoneModelPO po = new PhoneModelPO();
+                po.setModelId(bo.getModelId());
+                po.setName(bo.getName());
+                pos.add(po);
+                dto.setPhoneModels(pos);
+
+                map.put(bo.getTypeId(), dto);
             }
         }
 
-        return new ResultVO<>(1000, data);
+        return new ResultVO<>(1000, map.values());
     }
 }
