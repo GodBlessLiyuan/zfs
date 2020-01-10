@@ -11,9 +11,12 @@ import com.sun.jna.Native;
  */
 public interface Clibrary extends Library {
     Clibrary INSTANTCE = (Clibrary) Native.synchronizedLibrary(
-            // ali: /data/smarthelper/dkfsbin/dkfsserver/tools/modXml.so
+            /**
+             * ali: /data/smarthelper/dkfsbin/dkfsserver/tools/modXml.so
+             * 10.3: /data/project/dkfsbin/dkfsserver/tools/modXml.so
+             */
             Native.loadLibrary(
-                    "/data/project/dkfsbin/dkfsserver/tools/modXml.so"
+                    "/data/smarthelper/dkfsbin/dkfsserver/tools/modXml.so"
                     , Clibrary.class
             )
     );
