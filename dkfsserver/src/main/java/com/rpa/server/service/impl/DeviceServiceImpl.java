@@ -12,6 +12,7 @@ import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.DeviceVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +39,9 @@ public class DeviceServiceImpl implements IDeviceService {
     @Resource
     private RedisCacheUtil cache;
 
+    @Value("${verify.config.salt}")
+    private String salt;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO queryDevice(DeviceDTO dto) {
@@ -55,8 +59,8 @@ public class DeviceServiceImpl implements IDeviceService {
         }
 
         // 过滤imei号长度<13
-        for(String imei : imeis) {
-            if(imei.length() < 13) {
+        for (String imei : imeis) {
+            if (imei.length() < 13) {
                 imeis.remove(imei);
             }
         }
@@ -139,7 +143,7 @@ public class DeviceServiceImpl implements IDeviceService {
     private ResultVO buildResultVO(Long deviceId) {
         DeviceVO vo = new DeviceVO();
         vo.setId(deviceId);
-        vo.setVerify(DigestUtils.md5DigestAsHex(deviceId.toString().getBytes()));
+        vo.setVerify(DigestUtils.md5DigestAsHex((salt + deviceId).getBytes()));
         return new ResultVO<>(1000, vo);
     }
 }

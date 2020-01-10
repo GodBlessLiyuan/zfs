@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.rpa.common.dto.TokenDTO;
 import com.rpa.server.constant.LoginConstant;
 import com.rpa.common.dto.VerifyDTO;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +18,19 @@ import java.util.regex.Matcher;
  * @description: 验证工具
  * @version: 1.0
  */
+@Component
 public class VerifyUtil {
+
+    private static String salt;
+
+    @Value("${verify.config.salt}")
+    private void setSalt(String salt) {
+        VerifyUtil.salt = salt;
+    }
 
     /**
      * 验证设备Id与设备Md5是否一致
+     *
      * @param dto
      * @return
      */
@@ -28,7 +39,7 @@ public class VerifyUtil {
             return false;
         }
 
-        return dto.getVerify().equals(DigestUtils.md5DigestAsHex(dto.getId().toString().getBytes()));
+        return dto.getVerify().equals(DigestUtils.md5DigestAsHex((salt + dto.getId()).getBytes()));
     }
 
     /**
