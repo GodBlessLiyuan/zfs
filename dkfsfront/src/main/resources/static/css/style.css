@@ -1,860 +1,148 @@
-body{
-  font-family: "微软雅黑";
-  background: #F8F8F8;
+.html body {
+    margin: 0;
+    padding: 0;
 }
-*{
-  /*padding: 0px;*/
-  padding-bottom: 5px;
-  margin-bottom: 5px;
-  box-sizing:border-box;
-  -webkit-box-sizing:border-box;   /* Safari 和 Chrome */
-  -moz-box-sizing:border-box;      /* Firefox */
+.div_spacing {
+    width: 100%;
 }
 
-.container {
-  width: 100%;
-}
-.user {
-  /* background-image: linear-gradient(-190deg, #FFC5A1 0%, #FD6D57 100%);*/
-  /*  padding:25px 30px 50px 30px;*/
-  padding:10px 20px 10px 20px;
-  text-align: center;
-}
-.user1{
-  background-color: #3496E8;
-  /* padding:25px 30px 50px 30px;*/
-  padding:10px 20px 10px 20px;
+.table_rights {
+    font-family: PingFang-SC-Medium;
+    font-size: 24px;
+    color: #333333;
+    letter-spacing: 0;
+    text-align: center;
 }
 
-/* 会员奖励比例表格详情 */
-.table_rat{
-  border:1px solid black;
-  text-align: center;
-  margin:auto;
-  border-collapse: collapse;
-  text-align: center;
+.table_rights tr {
+    height: 40px;
+    vertical-align: middle;
 }
 
-/* 会员奖励比例表格显示边线 */
-.table_rat td,th{
-  border:1px solid black;
+.table_rights tr td:nth-child(3) {
+    background: rgba(255,223,172,0.20);
 }
 
-.user .userinfo-avatar{
-  flex: 1;
-  display: inline-block;
-  border-radius: 80px;
-}
-.user .user-info{
-  flex: 5;
-  text-align: left;
-}
-.user .user-info text{
-  display: block;
-}
-.user .user-info .userinfo-nickname{
-  padding: 38px 0 0 0;
-  font-size: 15px;
-  color: #353535;
-}
-.user .user-info .edit{
-  font-size: 15px;
-  color: #bababa;
-  line-height: 34px;
+.table_rights tr td img {
+    width: 20px;
+    height: 20px;
 }
 
-.my_promote{
-  padding-top: 5px;
-  padding-bottom: 5px;
+.font_rule {
+    display: block;
+    font-family: PingFang-SC-Medium;
+    font-size: 15px;
+    color: #333333;
+    letter-spacing: 0;
+    font-weight: bolder;
+}
+.font_hope {
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #999999;
+    letter-spacing: 0;
 }
 
-.my_state{
-  background-color: #ffffff;
-  overflow: hidden;
-  border-radius: 6px;
-  /* box-shadow: 0px 4px 4px #eeeeee;*/
-  margin:10px 15px 10px 15px;
+.table_rights > thead > tr > td,
+.table_rights > tbody > tr > td{
+    vertical-align: middle;
+    text-align: center;
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 0;
+    text-align: center;
+    font-weight: bolder;
+}
+.vip_span:before {
+   /* content: url(/images/ico_membership.png);*/
 }
 
-.my_state.my_inv_details{
-  float: right;
-}
-.ad.ad_img{
+.div_openmember {
 
-}
-
-.reward{
-  width: 90%;
-  border: 1px solid;
-  margin:10px auto;
-  border-radius: 5px;
-}
-
-.my .my-item{
-  background: #ffffff;
-  padding: 0
-}
-.my .my-item .myitem-icon{
-  flex: 1;
-}
-.my .my-item .myitem-icon image{
-  width: 45px;
-  height: 45px;
-  padding: 37.5px 0;
-}
-.my .my-item .myitem-name{
-  flex: 5;
-  text-align: left;
-  font-size: 14px;
-  color: #6d6d6d;
-  line-height: 60px;
-  padding: 30px 0;
-  border-bottom: solid 1px #ebebeb;
-}
-.my .my-item:last-child .myitem-name{
-  border-bottom: none;
+    width:80%;
+    height: 49px;
+    background-image: linear-gradient(90deg, #E8C78F 0%, #C6904A 100%);
+    border-radius: 24.5px;
+    border-radius: 24.5px;
+    text-align: center;
+    line-height: 49px;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: center;
 }
 
-/* my-new */
-.my_top{
-  background-image: linear-gradient(-135deg, #FDD947 0%, #FFAD01 100%);
-  margin: 0px;
-}
-.user-space{
-  padding:0 34px;
-}
-.rows{
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  flex-direction:row;
-}
-.flex1{
-  flex: 1;
-  -ms-flex: 1;
-  -webkit-flex: 1;
-  -moz-box-flex: 1;
-  -webkit-box-flex: 1;
-  box-flex: 1;
-}
-.state_image {
-  width:30px;
-  height:25px;
-}
-.state_bottom {
-  text-align:center;
-  background:white;
-  font-size: 13px;
-  color: #353535;
-  /*padding-bottom:28px;
-  margin-top:26px;*/
+/*多开分身免费领会员 begin*/
+.div_participate {
+    margin: 0 auto;
+    width: 80%;
+    height: 50px;
+    border-radius: 25px;
+    background-image: linear-gradient(90deg, #FFECC1 0%, #FFC56D 100%);
 
-  padding-bottom:0px;
-  margin-top:26px;
-}
-.my_text{
-  font-size: 12px;
-  color: #B2B2B2;
-  text-align: left;
-}
-.all_orders{
-  font-size: 12px;
-  color: #FFAD01;
-  text-align: right;
-}
-.look_top{
-  padding:17px 15px;
-  margin-bottom:10px;
-}
-.my_manage{
-  overflow: hidden;
-  background-color: #ffffff;
-  padding:17px 15px;
-  vertical-align: middle;
-}
-.more_icon{
-  align-self:center;
-}
-.more_icon img{
-  width: 6px;
-  height: 10px;
-}
-.manage_text{
-  font-size: 14px;
-  color: #333333;
-  padding:3px;
-  background: none !important;
-  text-align:left !important;
-  line-height: 1.4 !important;
-  align-self:center;
-}
-button::after{
-  border: none;
-}
-/* new */
-.logo-xwyh{
-  width: 60px;
-  height: 60px;
-}
-/*提现首页*/
-.balance{
-  text-align: center;
+    font-family: PingFangSC-Semibold;
+    font-size: 20px;
+    line-height: 50px;
+    color: #D20F1C;
+    text-align: center;
+    font-weight: bolder;
 }
 
-/* 顶部背景图片*/
-.imag{
-  background-color: #5AAEF5;
+.div_pickuptips {
+    font-family: PingFangSC-Medium;
+    font-size: 15px;
+    line-height: 22px;
+    color: #FFEBBF;
 }
 
-/* 推广图片属性*/
-.bg_tuiguang{
-  width: 100%;
-  height: 100px;
-  align-content: center;
+/*多开分身免费领会员 end*/
+
+
+/*用户注册及使用APP隐私协议 begin*/
+
+.agreement {
+    width:100%;
+    padding: 0 5%;
+}
+.agreement h2 {
+    text-align: center;
+    font-family: PingFang-SC-Medium;
+    font-size: 20px;
+    font-weight: bolder;
 }
 
-.balanceNum{
-  font-size: 30px;
-  line-height: 30px;
-  color: #ffffff;
-  padding-bottom: 10px;
-}
-.balanceTitle{
-  font-size:14px;
-  color: #ffffff;
-  line-height: 20px;
-}
-.txBtn{
-  padding:12px 30px 10px 30px;
-  background: #ffffff;
-  border-radius:6px;
-  color: #F4795D;
-  font-size: 14px;
-  text-align: center;
-  border: none;
-  font-weight: bold;
-  margin: 10px 0px;
-  outline: none;
-  /*  -webkit-tap-highlight-color: rgba(0,0,0,0);
-    -webkit-tap-highlight-color: transparent;
-    -moz-tap-highlight-color: transparent;*/
-  display: block;
-  text-decoration: none;
-}
-.peopleNum{
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 25px;
-  color: #333333;
-  letter-spacing: 1.12px;
-  text-align: center;
-  padding-bottom: 11px;
-}
-.peopleTitle{
-  font-size: 13px;
-  color: #333333;
-  line-height: 18px;
-}
-.copyBtn{
-  padding:6px 15px;
-  background: #FD6D57;
-  border-radius:4px;
-  color: #ffffff;
-  font-size: 12px;
-  text-align: center;
-  border: none;
-  outline: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent;
-  -moz-tap-highlight-color: transparent;
-}
-.betweenB{
-  margin-bottom: 5px;
-}
-.explain{
-  padding: 10px 15px;
-  text-align: left;
-}
-.explainText{
-  font-size: 13px;
-  color: #AAAAAA;
-  line-height: 20px;
-  /*white-space: pre-wrap;*/
-  white-space:pre-line;
-  text-align: justify;
-}
-.urlText{
-  font-size: 14px;
-  color: #333333;
-  text-align: left;
-  border: none;
-  outline: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent;
-  -moz-tap-highlight-color: transparent;
-  display:block;
-  overflow:hidden;
-  word-break:keep-all;
-  white-space:nowrap;
-  height: 24px;
-  padding-top:6px;
-  margin-right: 10px;
-  resize:none;
-  letter-spacing:-1px;
-}
-.jumpA{
-  text-decoration: none;
-  outline: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent;
-  -moz-tap-highlight-color: transparent;
-}
-/*提现页面*/
-.total{
-  font-size: 14px;
-  line-height: 20px;
-  color: #333333;
-  letter-spacing: 1px;
-  text-align: left;
-  padding:15px;
-}
-.drawMoney{
-  background: #ffffff;
-  padding:10px 15px;
-  border:1px solid #F5F5F5;
-}
-.drawMoney p{
-  font-size: 12px;
-  line-height: 17px;
-  color: #333333;
-  text-align: left;
-  padding-bottom: 6px;
-}
-.drawInput{
-  vertical-align: middle;
-}
-.moneyIcon{
-  align-self:center;
+.agreement h4 {
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #222222;
+    letter-spacing: 0;
+    line-height: 22px;
 }
 
-.moneyInput{
-  align-self:center;
-  font-size: 20px;
-  line-height: 30px;
-  color: #333333;
-  letter-spacing: 1.83px;
-  text-align: left;
-  padding-left: 15px;
-  border:none;
-  outline: none;
-  -webkit-tap-highlight-color:transparent;
-  -webkit-tap-hightlight-color:#000000;
-  -webkit-tap-hightlight-color:rgba(0,0,0,0);
+.content_agreement {
+    margin-bottom: 30px;
+    margin: 0 auto;
 }
 
-.totalBtn{
-  font-size: 14px;
-  color: #FD6D57;
-  letter-spacing: 1.17px;
-  font-weight: bold;
-}
-.drawTitle{
-  overflow: hidden;
-  background: #ffffff;
-  padding:11px 15px;
-}
-.draw_text{
-  font-size: 12px;
-  color: #AAAAAA;
-  letter-spacing: 0.92px;
-  text-align: left;
-}
-.payTitle{
-  font-size: 12px;
-  color: #333333;
-  letter-spacing: 1px;
-  text-align: left;
-  padding: 10px 15px;
-}
-.Alipay_manage{
-  padding: 21px 15px;
-  background: #ffffff;
-}
-.Alipay_text{
-  font-size: 14px;
-  color: #333333;
-  letter-spacing: 1.17px;
-  text-align: left;
-}
-.AlipayInput{
-  font-size: 13px;
-  color: #AAAAAA;
-  letter-spacing: 0;
-  text-align: left;
-  padding-left: 10px;
-  border:none;
-  outline: none;
-  -webkit-tap-highlight-color:transparent;
-  -webkit-tap-hightlight-color:#000000;
-  -webkit-tap-hightlight-color:rgba(0,0,0,0);
-}
-.bottomLine{
-  border-bottom: 1px solid #F5F5F5;
-}
-.drawTip{
-  font-size: 13px;
-  line-height: 21px;
-  color: #AAAAAA;
-  letter-spacing: 1px;
-  text-align: left;
-  padding: 5px 15px 5px 15px;
-}
-.drawSubmit{
-  width: 80%;
-  margin-left: 10%;
-  padding:10px 0px;
-  background: #F46C53;
-  border-radius:20px;
-  color: #ffffff;
-  font-size: 16px;
-  letter-spacing:1.6px;
-  text-align: center;
-  border: none;
-  font-weight: bold;
-  outline: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent;
-  -moz-tap-highlight-color: transparent;
-  background-image: linear-gradient(90deg, #5AAEF5 0%, #3496E8 100%);
-}
-.drawSubmit3{
-  width: 80%;
-  margin-left: 10%;
-  padding:10px 0px;
-  background: #F46C53;
-  border-radius:20px;
-  color: #ffffff;
-  font-size: 16px;
-  letter-spacing:1.6px;
-  text-align: center;
-  border: none;
-  font-weight: bold;
-  outline: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent;
-  -moz-tap-highlight-color: transparent;
+.content_agreement p {
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #222222;
+    letter-spacing: 0;
+    line-height: 22px;
 }
 
-.drawSubmit1{
-  width: 80%;
-  margin-left: 10%;
-  padding:10px 0px;
-  border-radius:20px;
-  border-color: red;
-  font-size: 16px;
-  letter-spacing:1.6px;
-  text-align: center;
-  font-weight: bold;
-}
 
-.betweenLR{
-  margin:0px 15px;
-}
-/*遮罩层*/
-#zhezhaoa{
-  display:none;
-  position:fixed;
-  z-index:1;
-  left:0;
-  top:0;
-  background-color:#000;
-  width:100%;
-  height:100%;
-  min-height:100%;
-  opacity:0.5;
-  filter: alpha(opacity=50);
-  -moz-opacity: 0.5;
-}
-/*说明弹框*/
-.explain-box{
-  background: #ffffff;
-  border-radius: 12px;
-  width: 300px;
-  display: none;
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  margin-left:-150px;
-  margin-top: -80px;
-  text-align: center;
-}
-/*提现成功弹框*/
-.successBox{
-  background: #ffffff;
-  border-radius: 12px;
-  width: 300px;
-  display: none;
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  margin-left:-150px;
-  margin-top: -80px;
-  text-align: center;
-}
-/*请勿重复提现弹框*/
-.infoBox{
-  background: #ffffff;
-  border-radius: 12px;
-  width: 300px;
-  display: none;
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  margin-left:-150px;
-  margin-top: -80px;
-  text-align: center;
-}
-
-.loginTimeoutInfoBox{
-  background: #ffffff;
-  border-radius: 12px;
-  width: 300px;
-  display: none;
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  margin-left:-150px;
-  margin-top: -80px;
-  text-align: center;
-}
-
-.box-text2{
-  font-size: 15px;
-  line-height: 21px;
-  color: #333333;
-  letter-spacing: 0;
-  text-align: center;
-  padding-bottom: 12px;
-}
-.successBottom{
-  margin:0 auto;
-}
-.successBtn{
-  color: #ffffff;
-  font-size: 14px;
-  text-align: center;
-  padding: 15px 0px;
-  width: 49%;
-  background: #F46C53;
-  border-radius: 20px;
-  margin: 0px auto 15px;
-}
-.box-text{
-  font-size: 15px;
-  line-height: 10px;
-  color: #333333;
-  letter-spacing: 0;
-  text-align: left;
-  padding-bottom: 12px;
-}
-.box-top{
-  /* padding: 20px 24px 10px 24px;*/
-  padding: 10px 24px 0px 24px;
-}
-
-.box-top p {
-  color: red;
-  font-size: 18px;
-  font-weight: bolder
-}
-
-.box-btnL{
-  width: 100%;
-  font-size: 16px;
-  color: #333333;
-  letter-spacing: 0;
-  text-align: center;
-  padding: 14px 0px;
-  border-top:1px solid #F5F5F5;
-  background: #ffffff;
-  border-bottom-left-radius:100px;
-}
-.box-btnR{
-  width: 100%;
-  font-size: 16px;
-  color: #0091E7;
-  letter-spacing: 0;
-  text-align: center;
-  padding: 14px 0px;
-  border-top:1px solid #F5F5F5;
-  background: #ffffff;
-  border-bottom-right-radius:100px;
-}
-.box-title{
-  font-size: 16px;
-  color: #333333;
-  letter-spacing: 0;
-  text-align: center;
-  padding-top: 10px;
-  padding-bottom:15px;
-  font-weight:bold;
-}
-.explain-content{
-  padding: 0px 20px 15px 20px;
-}
-/*取消和确认之间的竖线*/
-.lineL{
-  border-right: 1px solid #F5F5F5;
-}
-.errorMsg{
-  font-size: 12px;
-  color: red;
-  letter-spacing: 1px;
-  text-align: left;
-  padding: 5px 15px 30px 15px;
-}
-
-/*提现记录页面设置*/
-.account{
-  font-weight: bold;
-  font-family: PingFangSC-Semibold;
-  font-size: 16px;
-  color: #333333;
-}
-.tx_money{
-  float: right;
-  font-family: DINCondensed-Bold;
-  font-size: 20px;
-  color: #FF6600;
-  text-align: right;
-}
-
-.tx_state{
-  float: right;
-  font-family: PingFang-SC-Medium;
-  font-size: 13px;
-  color: #999999;
-  text-align: right;
-}
-.name{
-  font-family: PingFang-SC-Medium;
-  font-size: 12px;
-  color: #999999;
-}
-
-.tx_time{
-  font-family: PingFang-SC-Medium;
-  font-size: 18px;
-  color: #999999;
-}
-.tx_title{
-  align-items:center;
-  display: block;
-  margin-top: 10px;
-  margin-bottom: 0px;
-  vertical-align: middle;
-  font-family: PingFangSC-Semibold;
-  font-size: 17px;
-  color: #333333;
-  letter-spacing: 0;
-  text-align: center;
-  font-weight: bold;
-}
-.back{
-  float: left;
-}
-
-/*
-修改版的CSS样式*/
-
-.backimag{
-  width: 100%;
-  height: 100px;
-  background: url("../images/bg_profit.png") no-repeat;
-  background-size:100% 100%;
-  -moz-background-size:100% 100%;
-}
-
-/* 单独提取*/
-.my_state1{
-  background-color: #ffffff;
-  overflow: hidden;
-  height: 120px;
-  border-radius: 6px;
-  box-shadow: 1px 1px 4px 4px #eeeeee;
-  margin:-85px 15px 10px 15px;
-}
-
-.bg_color{
-  background: #FFFFFF;
-  border-radius: 4px;
-}
-.left{
-  text-align: left;
-}
-
-.font_money{
-  font-family: DINCondensed-Bold;
-  font-size: 32px;
-  color: #0091E7;
-}
-.font_wdye{
-  font-family: PingFangSC-Regular;
-  font-size: 13px;
-  color: #666666;
-  text-align: center;
-}
-
-.my_state2{
-  background-color: #ffffff;
-  overflow: hidden;
-  height: 100px;
-  border-radius: 6px;
-  box-shadow: 1px 1px 4px 4px #eeeeee;
-  margin:10px 15px 10px 15px;
-}
-
-/*我的邀请详情 上边距*/
-.invation_top{
-  margin-top: 20px;
-  margin-left: 10px;
-}
-
-/*  邀请详情 sapn靠右*/
-.span_right{
-  float: right;
-  margin-right: 20px;
-}
-
-/* 邀请详情 公共部分字体*/
-.font_inva{
-  font-family: PingFang-SC-Medium;
-  font-size: 14px;
-  color: #999999;
-  text-align: center;
-}
-
-/* 奖励部分公共字体样式*/
-.font_reward{
-  font-family: PingFangSC-Medium;
-  color: #333333;
-}
-
-/* 细线长度*/
-.width_dotline{
-  width: 90%;
-}
-
-/* 奖励详情表格样式*/
-.reward_details{
-  text-align: -moz-center;
-  width: 90%;
-  margin:auto;
-  font-size: 15px;
-}
-
-.table_freemember tr td:nth-child(3){
-  background-color: #FFF4E0;
-}
-
-.reward_details td {
-  vertical-align: middle;
-  text-align: center
-}
-
-/* 奖励相关div间距*/
-.div_spacing{
-  margin-bottom: 5px;
-}
-
-.bg_image_beijing{
-  background-image: url("../images/bg_profit.png");
-  background-repeat:repeat-x;
-}
-
-/* 提现首页部分 单独的样式*/
-.input_com{
-  background: #EEEEEE;
-  border: 1px solid #EEEEEE;
-  border-radius: 2px;
-  border-radius: 2px;
-  height: 30pt;
-  width: 90%;
-}
-.font_placeholder{
-  font-family: PingFang-SC-Medium;
-  font-size: 15px;
-  color: #999999;
-  letter-spacing: 0;
-}
-
-.font_tishi{
-  font-family: PingFangSC-Medium;
-  font-size: 16px;
-  color: #333333;
-}
-
-/*所有的span标签距离左侧的距离*/
-.span_left{
-  margin-left: 10px;
-}
-.font_txtips{
-  font-family: PingFang-SC-Medium;
-  font-size: 15px;
-  color: #999999;
-  letter-spacing: 0;
-}
-
-/* 邀请详情页面*/
-
-.span_thead{
-  font-weight: bold;
-  font-family: PingFang-SC-Medium;
-  font-size: 15px;
-
-  color: #999999;
-  padding-top: 10px;
-  padding-left: 10px;
-}
-
-.padding_left{
-  padding-left: 15px;
-}
-
-/*推广页面*/
-.promote_state{
-  width: 100%;
-  margin-top: 0px;
-}
-
-.span-err {
-  color: red;
-}
-
-.icon-rmb{
-  position: absolute;
-  left: 30px;
-  z-index:5;
-  margin-top: 10px;
-  background-image: url("../images/rmb.png"); /*引入图片图片*/
-  background-repeat: no-repeat; /*设置图片不重复*/
-  background-position: 0px 0px; /*图片显示的位置*/
-  width: 20px; /*设置图片显示的宽*/
-  height: 20px; /*图片显示的高*/
-}
-.div_text {
+.content_agreement li {
+    font-family: PingFang-SC-Medium;
+    font-size: 14px;
+    color: #222222;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-bottom: 20px;
 
 }
+/*用户注册及使用APP隐私协议 end*/
 
-.div_text p {
-  color: #FFEBBF;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 26px;
-}
+
