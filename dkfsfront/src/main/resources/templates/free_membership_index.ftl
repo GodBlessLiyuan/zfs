@@ -13,11 +13,11 @@
 </head>
 
 
-<body style="background:  url(/images/bg_evaluate.png) center center;background-size: cover;background-repeat: no-repeat;">
+<body style="background:  url(${basePath}/images/bg_evaluate.png) center center;background-size: cover;background-repeat: no-repeat;">
 
     <div class="container">
         <div class="row">
-            <div class="div_participate" style="margin-top: 400px;">
+            <div class="div_participate" style="margin-top: 400px;" onclick="freememberClick()">
                 立即参与
             </div>
         </div>

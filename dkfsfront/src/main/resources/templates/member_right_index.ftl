@@ -39,24 +39,24 @@
 					<tr>
 						<td >应用双开</td>
 						<td ><img
-								src="/images/check_redbag_24.png"/></td>
+								src="${basePath}/images/check_redbag_24.png"/></td>
 						<td ><img
-								src="/images/check_redbag_24.png"/></td>
+								src="${basePath}/images/check_redbag_24.png"/></td>
 					</tr>
 
 					<tr>
 						<td >应用多开</td>
 						<td ><img
-								src="/images/check_redbag_24.png"/></td>
+								src="${basePath}/images/check_redbag_24.png"/></td>
 						<td ><img
-								src="/images/check_redbag_24.png"/></td>
+								src="${basePath}/images/check_redbag_24.png"/></td>
 					</tr>
 					<tr>
 						<td >免广告</td>
 						<td ><img
-								src="/images/ico_delete_youshang_24.png"/></td>
+								src="${basePath}/images/ico_delete_youshang_24.png"/></td>
 						<td ><img
-								src="/images/check_redbag_24.png"/></td>
+								src="${basePath}/images/check_redbag_24.png"/></td>
 					</tr>
 
 					</tbody>
@@ -70,11 +70,11 @@
 			</div>
 		</div>
 
-		<div class="row" style="margin-top: 250px;">
+<#--		<div class="row" style="margin-top: 250px;">
 			<div class="div_openmember" style="margin: 0 auto;">
 				开通会员
 			</div>
-		</div>
+		</div>-->
 
 	</div>
 
