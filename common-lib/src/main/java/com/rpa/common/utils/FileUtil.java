@@ -153,14 +153,13 @@ public class FileUtil {
         boolean isModApkName = modifyApkName(tempXmlUrl, dto.getName());
         boolean isModApkPkg = modifyApkPkg(tempXmlUrl, dto, tempFilePath);
         String templateUrl = templatePath + ModuleConstant.AVATAR + random + ".apk";
-        modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
+//        modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
+//
+//        // 清除临时文件夹
+//        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + rootDir + templatePath + "; rm -rf " + random};
+//        Process process = Runtime.getRuntime().exec(CMD_STR);
+//        process.waitFor();
 
-        // 清除临时文件夹
-        String[] CMD_STR = new String[]{"/bin/sh", "-c", "cd " + rootDir + templatePath + "; rm -rf " + random};
-        Process process = Runtime.getRuntime().exec(CMD_STR);
-        process.waitFor();
-
-        logger.info("rm random: {}", CMD_STR[2]);
         return templateUrl;
     }
 
