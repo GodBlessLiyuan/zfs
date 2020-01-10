@@ -92,7 +92,7 @@
   </update>
 
   <select id="queryAll" resultType="com.rpa.common.bo.PhoneModelBO">
-    select pm.`name`, pt.`name` as typeName
+    select pt.type_id as typeId, pt.ename as typeEname, pt.`name` as typeName, pt.picture as TypePicture, pm.model_id as modelId, pm.`name`, pm.picture
     from t_phone_model pm
     left join t_phone_type pt on pm.type_id = pt.type_id
     where pm.dr = 1 and pt.dr = 1
