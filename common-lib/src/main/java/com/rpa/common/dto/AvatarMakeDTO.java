@@ -31,4 +31,14 @@ public class AvatarMakeDTO extends VerifyDTO {
      * 图标后缀
      */
     private String suffix;
+
+    /**
+     * 应用包名
+     */
+    private String apppkg;
+
+    /**
+     * 是否隔离
+     */
+    private String isolation;
 }
