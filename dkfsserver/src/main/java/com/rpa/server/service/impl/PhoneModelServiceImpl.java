@@ -31,7 +31,7 @@ public class PhoneModelServiceImpl implements IPhoneModelService {
         for(PhoneModelBO bo: bos) {
             if(map.containsKey(bo.getTypeId())) {
                 PhoneModelDTO dto = map.get(bo.getTypeId());
-                List<PhoneModelPO> pos = dto.getPhoneModels();
+                List<PhoneModelPO> pos = dto.getModels();
                 PhoneModelPO po = new PhoneModelPO();
                 po.setModelId(bo.getModelId());
                 po.setName(bo.getName());
@@ -41,14 +41,14 @@ public class PhoneModelServiceImpl implements IPhoneModelService {
 
                 PhoneTypePO typePO = new PhoneTypePO();
                 typePO.setName(bo.getTypeName());
-                dto.setPhoneType(typePO);
+                dto.setType(typePO);
 
                 List<PhoneModelPO> pos = new LinkedList<>();
                 PhoneModelPO po = new PhoneModelPO();
                 po.setModelId(bo.getModelId());
                 po.setName(bo.getName());
                 pos.add(po);
-                dto.setPhoneModels(pos);
+                dto.setModels(pos);
 
                 map.put(bo.getTypeId(), dto);
             }

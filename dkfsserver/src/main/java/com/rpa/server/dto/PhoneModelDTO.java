@@ -17,6 +17,6 @@ import java.util.List;
 public class PhoneModelDTO implements Serializable {
     private static final long SerialVersionID = 1L;
 
-    private PhoneTypePO phoneType;
-    private List<PhoneModelPO> phoneModels;
+    private PhoneTypePO type;
+    private List<PhoneModelPO> models;
 }
