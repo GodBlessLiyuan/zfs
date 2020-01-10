@@ -151,7 +151,7 @@ public class FileUtil {
 
         modifyApkIcon(tempFilePath, dto.getPic(), dto.getSuffix());
         boolean isModApkName = modifyApkName(tempXmlUrl, dto.getName());
-//        boolean isModApkPkg = modifyApkPkg(tempXmlUrl, dto, tempFilePath);
+        boolean isModApkPkg = modifyApkPkg(tempXmlUrl, dto, tempFilePath);
         String templateUrl = templatePath + ModuleConstant.AVATAR + random + ".apk";
 //        modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
 
