@@ -1,6 +1,7 @@
 package com.rpa.common.utils;
 
 import com.rpa.common.constant.ModuleConstant;
+import com.rpa.common.dto.AvatarMakeDTO;
 import com.rpa.common.jna.Clibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,7 +133,7 @@ public class FileUtil {
     private static final String TEMPLATE_APK_NAME = "template.apk";
     private static final String ANDROID_MANIFEST_NAME = "AndroidManifest.xml";
 
-    public static String rebuildApk(String avatarUrl, String rootDir, String templatePath, String pkg, String name, String pic, String suffix) throws IOException, InterruptedException {
+    public static String rebuildApk(String avatarUrl, String rootDir, String templatePath, AvatarMakeDTO dto) throws IOException, InterruptedException {
         String random = UUID.randomUUID().toString().replace("-", "");
         String tempFilePath = FileUtil.genFilePath(rootDir, templatePath, random);
         String tempApkUrl = tempFilePath + TEMPLATE_APK_NAME;
@@ -148,9 +149,9 @@ public class FileUtil {
         ZipEntry ze = zf.getEntry(ANDROID_MANIFEST_NAME);
         FileUtil.copyFile(zf.getInputStream(ze), new FileOutputStream(tempXmlUrl));
 
-        modifyApkIcon(tempFilePath, pic, suffix);
-        boolean isModApkName = modifyApkName(tempXmlUrl, name);
-        boolean isModApkPkg = modifyApkPkg(tempXmlUrl, pkg, tempFilePath);
+        modifyApkIcon(tempFilePath, dto.getPic(), dto.getSuffix());
+        boolean isModApkName = modifyApkName(tempXmlUrl, dto.getName());
+        boolean isModApkPkg = modifyApkPkg(tempXmlUrl, dto.getPkg(), tempFilePath);
         String templateUrl = templatePath + ModuleConstant.AVATAR + random + ".apk";
         modifyApkSign(rootDir + templateUrl, tempFilePath, isModApkName || isModApkPkg);
 
@@ -249,6 +250,10 @@ public class FileUtil {
         for (int i = 2; i <= 22; i++) {
             FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2), xmlPath, outXml);
         }
+
+        // 修改2处 meta-data
+        FileUtil.modifyApkPkg("meta-data", 1, "value", "1111111111111111", xmlPath, outXml);
+        FileUtil.modifyApkPkg("meta-data", 2, "value", "2222222222222222", xmlPath, outXml);
 
         return true;
     }

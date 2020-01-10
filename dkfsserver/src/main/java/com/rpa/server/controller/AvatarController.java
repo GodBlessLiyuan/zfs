@@ -2,7 +2,7 @@ package com.rpa.server.controller;
 
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.AvatarDTO;
-import com.rpa.server.dto.AvatarMakeDTO;
+import com.rpa.common.dto.AvatarMakeDTO;
 import com.rpa.server.service.IAvatarService;
 import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;

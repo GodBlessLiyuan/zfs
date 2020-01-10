@@ -7,7 +7,7 @@ import com.rpa.common.utils.FileUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.AvatarDTO;
-import com.rpa.server.dto.AvatarMakeDTO;
+import com.rpa.common.dto.AvatarMakeDTO;
 import com.rpa.server.service.IAvatarService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.AvatarMakeVO;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -85,8 +84,7 @@ public class AvatarServiceImpl implements IAvatarService {
         try {
             String avatarUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/FrameworkApp-debug.apk";
             vo.setUrl(FileUtil.rebuildApk(avatarUrl, rootDir,
-                    FileUtil.genFilePath(projectDir + avatarDir, sdf.format(new Date())), dto.getPkg(),
-                    dto.getName(), dto.getPic(), dto.getSuffix()));
+                    FileUtil.genFilePath(projectDir + avatarDir, sdf.format(new Date())), dto));
         } catch (Exception e) {
             return new ResultVO(2000);
         }

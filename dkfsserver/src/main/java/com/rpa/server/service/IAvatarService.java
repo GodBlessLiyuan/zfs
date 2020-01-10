@@ -2,7 +2,7 @@ package com.rpa.server.service;
 
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.AvatarDTO;
-import com.rpa.server.dto.AvatarMakeDTO;
+import com.rpa.common.dto.AvatarMakeDTO;
 
 /**
  * @author: xiahui

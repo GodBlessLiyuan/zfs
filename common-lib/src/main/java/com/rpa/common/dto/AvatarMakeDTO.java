@@ -1,6 +1,5 @@
-package com.rpa.server.dto;
+package com.rpa.common.dto;
 
-import com.rpa.common.dto.VerifyDTO;
 import lombok.Data;
 
 /**
