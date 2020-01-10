@@ -252,8 +252,8 @@ public class FileUtil {
         }
 
         // 修改2处 meta-data
-        FileUtil.modifyApkPkg("meta-data", 1, "value", "1111111111111111", xmlPath, outXml);
-        FileUtil.modifyApkPkg("meta-data", 2, "value", "2222222222222222", xmlPath, outXml);
+//        FileUtil.modifyApkPkg("meta-data", 1, "value", "1111111111111111", xmlPath, outXml);
+//        FileUtil.modifyApkPkg("meta-data", 2, "value", "2222222222222222", xmlPath, outXml);
 
         return true;
     }
