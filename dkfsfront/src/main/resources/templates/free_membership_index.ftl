@@ -8,20 +8,16 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>免费领会员</title>
-<#--    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="/css/style.css" type="text/css" />-->
-
-
     <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
-    <script src="${basePath}/js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="${basePath}/css/style.css">
 </head>
 
 
-<body style="background:  url(/images/bg_evaluate.png) center center;background-size: cover;background-repeat: no-repeat;">
+<body style="background:  url(${basePath}/images/bg_evaluate.png) center center;background-size: cover;background-repeat: no-repeat;">
 
     <div class="container">
         <div class="row">
-            <div class="div_participate" style="margin-top: 400px;">
+            <div class="div_participate" style="margin-top: 400px;" onclick="freememberClick()">
                 立即参与
             </div>
         </div>
@@ -37,8 +33,6 @@
             </div>
         </div>
     </div>
-
-
 
 </body>
 

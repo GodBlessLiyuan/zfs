@@ -151,5 +151,23 @@ public class PageController {
         return "download_apk";
     }
 
+
+    @GetMapping("userAgreement")
+    public String userAgreement() {
+        return "user_agreement_index";
+    }
+
+    @GetMapping("member_right")
+    public String memberRight() {
+        return "member_right_index";
+    }
+
+    @GetMapping("free_membership_index")
+    public String freeMemberShip() {
+        return "free_membership_index";
+    }
+
+
+
 }
 
