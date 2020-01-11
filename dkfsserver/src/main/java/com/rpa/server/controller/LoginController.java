@@ -34,8 +34,12 @@ public class LoginController {
 
     @PostMapping("sms")
     public ResultVO sms(@RequestBody LoginDTO dto) {
-        if (!VerifyUtil.checkDeviceId(dto) || !VerifyUtil.checkPhone(dto.getPh())) {
+        if (!VerifyUtil.checkDeviceId(dto)) {
             return new ResultVO<>(2000);
+        }
+
+        if (!VerifyUtil.checkPhone(dto.getPh())) {
+            return new ResultVO(1026);
         }
 
         // 6位验证码
