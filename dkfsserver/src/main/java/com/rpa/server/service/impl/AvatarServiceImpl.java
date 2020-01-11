@@ -12,6 +12,8 @@ import com.rpa.server.service.IAvatarService;
 import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.vo.AvatarMakeVO;
 import com.rpa.server.vo.AvatarVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class AvatarServiceImpl implements IAvatarService {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private static final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
 
     @Resource
     private AvatarMapper avatarMapper;
@@ -81,6 +84,7 @@ public class AvatarServiceImpl implements IAvatarService {
 
         AvatarMakeVO vo = new AvatarMakeVO();
         try {
+            logger.info("avatarUrl：{}", rootDir + po.getUrl());
             vo.setUrl(FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir,
                     FileUtil.genFilePath(projectDir + avatarDir, sdf.format(new Date())), dto));
         } catch (Exception e) {
