@@ -74,16 +74,14 @@ public class AvatarServiceImpl implements IAvatarService {
 
     @Override
     public ResultVO make(AvatarMakeDTO dto) {
-//        AvatarPO po = avatarMapper.selectByPrimaryKey(dto.getAvaid());
-//        if (null == po) {
-//            return new ResultVO(2000);
-//        }
-//        avatarUrl = rootDir + po.getUrl()
+        AvatarPO po = avatarMapper.selectByPrimaryKey(dto.getAvaid());
+        if (null == po) {
+            return new ResultVO(2000);
+        }
 
         AvatarMakeVO vo = new AvatarMakeVO();
         try {
-            String avatarUrl = "/data/ftp/dkfsftp/dkfsfile/avatar/FrameworkApp-debug.apk";
-            vo.setUrl(FileUtil.rebuildApk(avatarUrl, rootDir,
+            vo.setUrl(FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir,
                     FileUtil.genFilePath(projectDir + avatarDir, sdf.format(new Date())), dto));
         } catch (Exception e) {
             return new ResultVO(2000);
