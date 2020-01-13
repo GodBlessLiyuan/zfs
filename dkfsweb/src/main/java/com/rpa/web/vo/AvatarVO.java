@@ -50,15 +50,21 @@ public class AvatarVO implements Serializable {
     public static List<AvatarVO> convert(List<AvatarBO> bos) {
         // 合并相同的 avatarId
         Map<Long, AvatarVO> map = new HashMap<>();
+        Set<Integer> appSet = new HashSet<>();
         for (AvatarBO bo : bos) {
             long avatarId = bo.getAvatarId();
             if (map.containsKey(avatarId)) {
                 AvatarVO dto = map.get(avatarId);
-                dto.setName(dto.getName() + "," + bo.getChanName());
+                if (appSet.contains(bo.getAppId())) {
+                    dto.setName(dto.getName() + "," + bo.getChanName());
+                } else {
+                    dto.setName(dto.getName() + "\n" + bo.getAppVersionName() + ":" + bo.getChanName());
+                }
                 dto.setIds(dto.getIds() + "," + bo.getAppId() + "|" + bo.getChanId());
             } else {
                 map.put(avatarId, AvatarVO.convert(bo));
             }
+            appSet.add(bo.getAppId());
         }
 
         return new ArrayList<>(map.values());
