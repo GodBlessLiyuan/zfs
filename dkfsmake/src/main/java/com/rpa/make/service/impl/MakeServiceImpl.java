@@ -1,7 +1,20 @@
 package com.rpa.make.service.impl;
 
+import com.rpa.common.dto.MakeDTO;
+import com.rpa.common.mapper.AvatarMapper;
+import com.rpa.common.pojo.AvatarPO;
+import com.rpa.common.utils.FileUtil;
+import com.rpa.common.vo.ResultVO;
 import com.rpa.make.service.IMakeService;
+import com.rpa.make.vo.MakeVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author: xiahui
@@ -12,7 +25,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MakeServiceImpl implements IMakeService {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    private static final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(MakeServiceImpl.class);
 
     @Resource
     private AvatarMapper avatarMapper;
@@ -24,13 +37,13 @@ public class MakeServiceImpl implements IMakeService {
     private String avatarDir;
 
     @Override
-    public ResultVO make(AvatarMakeDTO dto) {
+    public ResultVO make(MakeDTO dto) {
         AvatarPO po = avatarMapper.selectByPrimaryKey(dto.getAvaid());
         if (null == po) {
             return new ResultVO(2000);
         }
 
-        AvatarMakeVO vo = new AvatarMakeVO();
+        MakeVO vo = new MakeVO();
         try {
             logger.info("avatarUrl：{}", rootDir + po.getUrl());
             vo.setUrl(FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir,

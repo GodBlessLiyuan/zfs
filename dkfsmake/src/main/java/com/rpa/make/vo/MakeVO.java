@@ -1,4 +1,4 @@
-package com.rpa.server.vo;
+package com.rpa.make.vo;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @version: 1.0
  */
 @Data
-public class AvatarMakeVO implements Serializable {
+public class MakeVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String url;

@@ -34,6 +34,7 @@
         <module>dkfsrabbit</module>
         <module>dkfsdetect</module>
         <module>dkfsvoice</module>
+        <module>dkfsmake</module>
     </modules>
 
     <dependencyManagement>
