@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.rpa.common.mapper")
 @SpringBootApplication
 public class MakeApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(MakeApplication.class, args);
     }

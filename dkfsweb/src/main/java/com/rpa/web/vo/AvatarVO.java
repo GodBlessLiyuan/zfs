@@ -34,7 +34,7 @@ public class AvatarVO implements Serializable {
 
         vo.setAvatarId(bo.getAvatarId());
         vo.setName(bo.getVersionName() + "|" + bo.getChanName());
-        vo.setIds(bo.getAvatarId() + "|" + bo.getChanId());
+        vo.setIds(bo.getAppId() + "|" + bo.getChanId());
         vo.setContext(bo.getContext());
         vo.setExtra(bo.getExtra());
         vo.setPublishTime(bo.getPublishTime());
@@ -55,7 +55,7 @@ public class AvatarVO implements Serializable {
             if (map.containsKey(avatarId)) {
                 AvatarVO dto = map.get(avatarId);
                 dto.setName(dto.getName() + "," + bo.getVersionName() + "|" + bo.getChanName());
-                dto.setIds(dto.getIds() + "," + bo.getAvatarId() + "|" + bo.getChanId());
+                dto.setIds(dto.getIds() + "," + bo.getAppId() + "|" + bo.getChanId());
             } else {
                 map.put(avatarId, AvatarVO.convert(bo));
             }
