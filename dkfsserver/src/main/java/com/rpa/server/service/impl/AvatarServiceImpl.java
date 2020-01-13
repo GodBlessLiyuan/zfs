@@ -3,23 +3,15 @@ package com.rpa.server.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.rpa.common.mapper.AvatarMapper;
 import com.rpa.common.pojo.AvatarPO;
-import com.rpa.common.utils.FileUtil;
 import com.rpa.common.utils.RedisKeyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.AvatarDTO;
-import com.rpa.common.dto.AvatarMakeDTO;
 import com.rpa.server.service.IAvatarService;
 import com.rpa.server.utils.RedisCacheUtil;
-import com.rpa.server.vo.AvatarMakeVO;
 import com.rpa.server.vo.AvatarVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,19 +22,10 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class AvatarServiceImpl implements IAvatarService {
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    private static final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
-
     @Resource
     private AvatarMapper avatarMapper;
     @Resource
     private RedisCacheUtil cache;
-    @Value("${file.uploadFolder}")
-    private String rootDir;
-    @Value("${file.projectDir}")
-    private String projectDir;
-    @Value("${file.avatarDir}")
-    private String avatarDir;
 
     @Override
     public ResultVO check(AvatarDTO dto) {
@@ -73,24 +56,5 @@ public class AvatarServiceImpl implements IAvatarService {
         cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
 
         return new ResultVO<>(1009, vo);
-    }
-
-    @Override
-    public ResultVO make(AvatarMakeDTO dto) {
-        AvatarPO po = avatarMapper.selectByPrimaryKey(dto.getAvaid());
-        if (null == po) {
-            return new ResultVO(2000);
-        }
-
-        AvatarMakeVO vo = new AvatarMakeVO();
-        try {
-            logger.info("avatarUrl：{}", rootDir + po.getUrl());
-            vo.setUrl(FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir,
-                    FileUtil.genFilePath(projectDir + avatarDir, sdf.format(new Date())), dto));
-        } catch (Exception e) {
-            return new ResultVO(2000);
-        }
-
-        return new ResultVO<>(1000, vo);
     }
 }

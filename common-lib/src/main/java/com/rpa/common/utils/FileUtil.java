@@ -1,7 +1,7 @@
 package com.rpa.common.utils;
 
 import com.rpa.common.constant.ModuleConstant;
-import com.rpa.common.dto.AvatarMakeDTO;
+import com.rpa.common.dto.MakeDTO;
 import com.rpa.common.jna.Clibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,7 +133,7 @@ public class FileUtil {
     private static final String TEMPLATE_APK_NAME = "template.apk";
     private static final String ANDROID_MANIFEST_NAME = "AndroidManifest.xml";
 
-    public static String rebuildApk(String avatarUrl, String rootDir, String templatePath, AvatarMakeDTO dto) throws IOException, InterruptedException {
+    public static String rebuildApk(String avatarUrl, String rootDir, String templatePath, MakeDTO dto) throws IOException, InterruptedException {
         String random = UUID.randomUUID().toString().replace("-", "");
         String tempFilePath = FileUtil.genFilePath(rootDir, templatePath, random);
         String tempApkUrl = tempFilePath + TEMPLATE_APK_NAME;
@@ -220,7 +220,7 @@ public class FileUtil {
      * @param xmlPath
      * @param dto
      */
-    private static boolean modifyApkPkg(String xmlPath, AvatarMakeDTO dto, String zipPath) throws IOException, InterruptedException {
+    private static boolean modifyApkPkg(String xmlPath, MakeDTO dto, String zipPath) throws IOException, InterruptedException {
         String outXml = zipPath + "AndroidManifest2.xml";
 
         boolean flag = false;

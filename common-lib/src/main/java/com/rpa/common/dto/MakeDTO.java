@@ -9,7 +9,7 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-public class AvatarMakeDTO extends VerifyDTO {
+public class MakeDTO extends VerifyDTO {
     /**
      * 分身Id
      */
