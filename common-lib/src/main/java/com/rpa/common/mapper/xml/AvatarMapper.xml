@@ -242,7 +242,7 @@
     left join t_admin_user au on a.a_id = au.a_id where a.dr = 1 and a.avatar_id in (
     <foreach collection="list" item="avatarId" index="index" separator=",">
       #{avatarId,jdbcType=BIGINT}
-    </foreach>)
+    </foreach>) and app.dr = 1 order by a.avatar_id
   </select>
   <select id="queryMaxByVerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select a.avatar_id, a.update_type
