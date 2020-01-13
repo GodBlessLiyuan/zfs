@@ -234,7 +234,7 @@
   </select>
   <select id="queryByAvatarIds" resultType="com.rpa.common.bo.AvatarBO">
     select a.avatar_id as avatarId, a.publish_time as publishTime, au.username, a.version_name as versionName, a.size,
-    a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra
+    a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra, aac.app_id as appId
     from t_avatar a
     left join t_app_ava_ch aac on a.avatar_id = aac.avatar_id
     left join t_soft_channel s on aac.soft_channel_id = s.soft_channel_id
