@@ -48,25 +48,49 @@ public class AvatarVO implements Serializable {
     }
 
     public static List<AvatarVO> convert(List<AvatarBO> bos) {
-        // 合并相同的 avatarId
-        Map<Long, AvatarVO> map = new HashMap<>();
-        Set<Integer> appSet = new HashSet<>();
+        Map<Long, Map<String, String>> map = new HashMap<>();
         for (AvatarBO bo : bos) {
-            long avatarId = bo.getAvatarId();
+            Long avatarId = bo.getAvatarId();
             if (map.containsKey(avatarId)) {
-                AvatarVO dto = map.get(avatarId);
-                if (appSet.contains(bo.getAppId())) {
-                    dto.setName(dto.getName() + "," + bo.getChanName());
+                Map<String, String> sMap = map.get(avatarId);
+                String appName = bo.getAppVersionName();
+                if (sMap.containsKey(appName)) {
+                    sMap.put(appName, sMap.get(appName) + "," + bo.getChanName());
                 } else {
-                    dto.setName(dto.getName() + "\n" + bo.getAppVersionName() + ":" + bo.getChanName());
+                    sMap.put(appName, appName + ":" + bo.getChanName());
                 }
-                dto.setIds(dto.getIds() + "," + bo.getAppId() + "|" + bo.getChanId());
             } else {
-                map.put(avatarId, AvatarVO.convert(bo));
+                Map<String, String> sMap = new HashMap<>();
+                sMap.put(bo.getAppVersionName(), bo.getAppVersionName()+ ":" + bo.getChanName());
+                map.put(avatarId, sMap);
             }
-            appSet.add(bo.getAppId());
         }
 
-        return new ArrayList<>(map.values());
+        Map<Long, String> nameMap = new HashMap<>();
+        for(Map.Entry<Long, Map<String, String>> entry: map.entrySet()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("|");
+            for(Map.Entry<String, String> e: entry.getValue().entrySet()) {
+                sb.append(e.getValue());
+                sb.append("|");
+            }
+            nameMap.put(entry.getKey(), sb.toString());
+        }
+
+        // 合并相同的 avatarId
+        Map<Long, AvatarVO> res = new HashMap<>();
+        for (AvatarBO bo : bos) {
+            long avatarId = bo.getAvatarId();
+            if (res.containsKey(avatarId)) {
+                AvatarVO vo = res.get(avatarId);
+                vo.setIds(vo.getIds() + "," + bo.getAppId() + "|" + bo.getChanId());
+            } else {
+                AvatarVO vo = AvatarVO.convert(bo);
+                vo.setName(nameMap.get(avatarId));
+                res.put(avatarId, vo);
+            }
+        }
+
+        return new ArrayList<>(res.values());
     }
 }
