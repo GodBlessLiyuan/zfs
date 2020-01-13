@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="./images/logo.png"  />
+    <link rel="icon" type="image/x-icon" href="./images/logo.png"/>
     <title>智能移动社交营销平台管理系统</title>
     <!-- Favicon icon -->
 
@@ -92,8 +92,9 @@
 
                             <hr>
                             <div class="table-responsive">
-                                   <table id="datatab" class="table table-striped table-bordered zero-configuration"
-                                       style="table-layout: fixed; text-align: center; vertical-align: middle"><thead>
+                                <table id="datatab" class="table table-striped table-bordered zero-configuration"
+                                       style="table-layout: fixed; text-align: center; vertical-align: middle">
+                                    <thead>
                                     <tr>
                                         <th>序号</th>
                                         <th>imei</th>
@@ -208,6 +209,10 @@
                     if (data.status === 1000) {
                         document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
+                    } else if (data.status === 1101) {
+                        alert("输入的imei号有误！");
+                    } else if (data.status === 1102) {
+                        alert("imei号已存在在白名单里！");
                     } else {
                         alert("服务器内部错误！");
                     }
