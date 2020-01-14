@@ -365,7 +365,7 @@
                         document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
                     } else {
-                        alert(res.msg);
+                        alert("服务器内部错误！");
                     }
                 }
             });

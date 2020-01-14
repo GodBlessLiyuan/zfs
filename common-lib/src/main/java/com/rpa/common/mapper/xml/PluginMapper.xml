@@ -29,7 +29,7 @@
     update t_plugin set dr = 2
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
-  <insert id="insert" parameterType="com.rpa.common.pojo.PluginPO">
+  <insert id="insert" parameterType="com.rpa.common.pojo.PluginPO" useGeneratedKeys="true" keyProperty="pluginId">
     insert into t_plugin (plugin_id, `status`, context, 
       extra, a_id, create_time, 
       update_time, publish_time, `size`, 
