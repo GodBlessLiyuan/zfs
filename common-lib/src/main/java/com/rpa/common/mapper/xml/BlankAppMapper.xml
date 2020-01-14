@@ -112,4 +112,10 @@
       <if test="name!=null and name!=''">and package_name like '%' #{name} '%'</if>
     </where>
   </select>
+  <select id="queryById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from t_blank_app
+    where blank_id > #{bid} order by blank_id desc
+  </select>
 </mapper>
