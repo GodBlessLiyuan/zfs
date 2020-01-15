@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
-    <title>砖助多开分身会员协议</title>
+    <title>砖助多开分身服务使用协议及隐私条款</title>
 
     <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${basePath}/css/style.css">
@@ -19,10 +19,10 @@
     <div class="agreement">
 
         <h2>
-            砖助多开分身会员使用协议及隐私条款<br>
+            《砖助多开分身服务使用协议及隐私条款》<br>
         </h2>
 
-        <h4>
+        <h4 style="text-indent: 2em;">
             砖助多开分身严格遵守现行法律法规，制定《砖助多开分身软件服务许可使用协议》。为使用砖助多开分身软件（以下称“本软件”）
             ，砖助多开分身软件使用人（以下称“用户”）应当基于了解本协议全部内容，在独立思考的基础上认可、
             同意本协议的全部条款并按照页面上的提示完成对协议的确认后开始使用本软件。若用户对本声明的任何条款有异议，请停止使用砖助多开分身所提供的全部服务。
