@@ -1,6 +1,7 @@
 package com.rpa.server.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.rpa.common.mapper.SoftChannelMapper;
 import com.rpa.common.mapper.WhiteDeviceMapper;
 import com.rpa.common.utils.RedisKeyUtil;
@@ -121,5 +122,15 @@ public class RedisCacheUtil {
      */
     public void setCache(String key, Object value, long num, TimeUnit time) {
         template.opsForValue().set(key, JSON.toJSONString(value), num, time);
+    }
+
+    /**
+     * 在缓存中设置数据，数据中涵盖有日期
+     *
+     * @param key
+     * @param value
+     */
+    public void setCacheWithDate(String key, Object value, long num, TimeUnit time) {
+        template.opsForValue().set(key, JSON.toJSONStringWithDateFormat(value, "yyyy-MM-dd HH:mm:ss", SerializerFeature.WriteDateUseDateFormat), num, time);
     }
 }

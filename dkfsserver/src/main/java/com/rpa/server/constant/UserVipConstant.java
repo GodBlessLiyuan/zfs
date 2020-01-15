@@ -20,3 +20,5 @@ public class UserVipConstant {
      */
     public static final int YEAR_VIP = 20;
 }
+
+

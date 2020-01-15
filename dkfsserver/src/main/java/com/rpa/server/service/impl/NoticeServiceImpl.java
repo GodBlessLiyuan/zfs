@@ -50,7 +50,7 @@ public class NoticeServiceImpl implements INoticeService {
         String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
         //Redis中的key
-        String key = RedisKeyUtil.genNoticeRedisKey() + current_date;
+        String key = RedisKeyUtil.genNoticeRedisKey(current_date);
 
         //先从Redis中查询，若为null，再去查询数据库
         if (template.hasKey(key)) {
@@ -77,7 +77,7 @@ public class NoticeServiceImpl implements INoticeService {
             }
 
             //将对象用JSON序列化，存入Redis
-            cache.setCache(key, vos ,24, TimeUnit.HOURS);
+            cache.setCacheWithDate(key, vos ,24, TimeUnit.HOURS);
         }
         return new ResultVO<>(1000, vos);
     }
