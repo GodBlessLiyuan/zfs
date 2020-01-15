@@ -28,7 +28,7 @@ public class BlankAppVO implements Serializable {
     public static BlankAppVO convert(BlackAppPO po) {
         BlankAppVO vo = new BlankAppVO();
 
-        vo.setBlankId(po.getBlankId());
+        vo.setBlankId(po.getBlackId());
         vo.setPackageName(po.getPackageName());
         vo.setAppName(po.getAppName());
         vo.setCreateTime(po.getCreateTime());

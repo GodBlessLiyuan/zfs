@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS t_adconfig;
 DROP TABLE IF EXISTS t_admin_log;
 DROP TABLE IF EXISTS t_app_ava_ch;
 DROP TABLE IF EXISTS t_avatar;
-DROP TABLE IF EXISTS t_blank_app;
+DROP TABLE IF EXISTS t_black_app;
 DROP TABLE IF EXISTS t_new_user_record;
 DROP TABLE IF EXISTS t_user_gifts;
 DROP TABLE IF EXISTS t_order;
@@ -311,16 +311,16 @@ CREATE TABLE t_batch_info
 );
 
 
-CREATE TABLE t_blank_app
+CREATE TABLE t_black_app
 (
-	blank_id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,
+	black_id bigint unsigned zerofill NOT NULL AUTO_INCREMENT,
 	package_name char(32),
 	app_name char(32),
 	create_time datetime,
 	extra char(255),
 	a_id int NOT NULL,
-	PRIMARY KEY (blank_id),
-	UNIQUE (blank_id)
+	PRIMARY KEY (black_id),
+	UNIQUE (black_id)
 );
 
 
@@ -1052,7 +1052,7 @@ ALTER TABLE t_avatar
 ;
 
 
-ALTER TABLE t_blank_app
+ALTER TABLE t_black_app
 	ADD FOREIGN KEY (a_id)
 	REFERENCES t_admin_user (a_id)
 	ON UPDATE RESTRICT

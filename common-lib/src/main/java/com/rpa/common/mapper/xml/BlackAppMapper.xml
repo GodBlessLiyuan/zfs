@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rpa.common.mapper.BlackAppMapper">
   <resultMap id="BaseResultMap" type="com.rpa.common.pojo.BlackAppPO">
-    <id column="blank_id" jdbcType="BIGINT" property="blankId" />
+    <id column="black_id" jdbcType="BIGINT" property="blackId" />
     <result column="package_name" jdbcType="CHAR" property="packageName" />
     <result column="app_name" jdbcType="CHAR" property="appName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -10,31 +10,31 @@
     <result column="a_id" jdbcType="INTEGER" property="aId" />
   </resultMap>
   <sql id="Base_Column_List">
-    blank_id, package_name, app_name, create_time, extra, a_id
+    black_id, package_name, app_name, create_time, extra, a_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_blank_app
-    where blank_id = #{blankId,jdbcType=BIGINT}
+    from t_black_app
+    where black_id = #{blackId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_blank_app
-    where blank_id = #{blankId,jdbcType=BIGINT}
+    delete from t_black_app
+    where black_id = #{blackId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.rpa.common.pojo.BlackAppPO">
-    insert into t_blank_app (blank_id, package_name, app_name, 
+    insert into t_black_app (black_id, package_name, app_name, 
       create_time, extra, a_id
       )
-    values (#{blankId,jdbcType=BIGINT}, #{packageName,jdbcType=CHAR}, #{appName,jdbcType=CHAR}, 
+    values (#{blackId,jdbcType=BIGINT}, #{packageName,jdbcType=CHAR}, #{appName,jdbcType=CHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{extra,jdbcType=CHAR}, #{aId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.common.pojo.BlackAppPO">
-    insert into t_blank_app
+    insert into t_black_app
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="blankId != null">
-        blank_id,
+      <if test="blackId != null">
+        black_id,
       </if>
       <if test="packageName != null">
         package_name,
@@ -53,8 +53,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="blankId != null">
-        #{blankId,jdbcType=BIGINT},
+      <if test="blackId != null">
+        #{blackId,jdbcType=BIGINT},
       </if>
       <if test="packageName != null">
         #{packageName,jdbcType=CHAR},
@@ -74,7 +74,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.BlackAppPO">
-    update t_blank_app
+    update t_black_app
     <set>
       <if test="packageName != null">
         package_name = #{packageName,jdbcType=CHAR},
@@ -92,16 +92,16 @@
         a_id = #{aId,jdbcType=INTEGER},
       </if>
     </set>
-    where blank_id = #{blankId,jdbcType=BIGINT}
+    where black_id = #{blackId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.BlackAppPO">
-    update t_blank_app
+    update t_black_app
     set package_name = #{packageName,jdbcType=CHAR},
       app_name = #{appName,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       extra = #{extra,jdbcType=CHAR},
       a_id = #{aId,jdbcType=INTEGER}
-    where blank_id = #{blankId,jdbcType=BIGINT}
+    where black_id = #{blackId,jdbcType=BIGINT}
   </update>
 
   <select id="query" resultMap="BaseResultMap">

@@ -12,7 +12,7 @@ import java.util.Map;
  * @description: 应用黑名单
  * @version: 1.0
  */
-public interface IBlankAppService {
+public interface IBlackAppService {
     /**
      * 分页查询
      *

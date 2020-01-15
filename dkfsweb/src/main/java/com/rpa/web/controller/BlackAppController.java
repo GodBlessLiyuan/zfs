@@ -3,7 +3,7 @@ package com.rpa.web.controller;
 import com.rpa.common.constant.Constant;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.dto.AdminUserDTO;
-import com.rpa.web.service.IBlankAppService;
+import com.rpa.web.service.IBlackAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.BlankAppVO;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +23,9 @@ import java.util.Map;
  */
 @RequestMapping("blankapp")
 @RestController
-public class BlankAppController {
+public class BlackAppController {
     @Resource
-    private IBlankAppService service;
+    private IBlackAppService service;
 
     @RequestMapping("query")
     public DTPageInfo<BlankAppVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,

@@ -6,7 +6,7 @@ import com.rpa.common.pojo.BlackAppPO;
 import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.common.PageHelper;
-import com.rpa.web.service.IBlankAppService;
+import com.rpa.web.service.IBlackAppService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.vo.BlankAppVO;
 import org.slf4j.Logger;
@@ -25,16 +25,16 @@ import java.util.Map;
  * @version: 1.0
  */
 @Service
-public class BlankAppServiceImpl implements IBlankAppService {
-    private final static Logger logger = LoggerFactory.getLogger(BlankAppServiceImpl.class);
+public class BlackAppServiceImpl implements IBlackAppService {
+    private final static Logger logger = LoggerFactory.getLogger(BlackAppServiceImpl.class);
 
     @Resource
-    private BlackAppMapper blankAppMapper;
+    private BlackAppMapper blackAppMapper;
 
     @Override
     public DTPageInfo<BlankAppVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<BlackAppPO> page = PageHelper.startPage(pageNum, pageSize);
-        List<BlackAppPO> pos = blankAppMapper.query(reqData);
+        List<BlackAppPO> pos = blackAppMapper.query(reqData);
         return new DTPageInfo<>(draw, page.getTotal(), BlankAppVO.convert(pos));
     }
 
@@ -48,7 +48,7 @@ public class BlankAppServiceImpl implements IBlankAppService {
         po.setCreateTime(new Date());
         po.setaId(aId);
 
-        int result = blankAppMapper.insert(po);
+        int result = blackAppMapper.insert(po);
         if (result == 0) {
             LogUtil.log(logger, "insert", "插入失败", po);
         }
@@ -58,7 +58,7 @@ public class BlankAppServiceImpl implements IBlankAppService {
 
     @Override
     public ResultVO delete(long blankId) {
-        blankAppMapper.deleteByPrimaryKey(blankId);
+        blackAppMapper.deleteByPrimaryKey(blankId);
         return new ResultVO(1000);
     }
 }

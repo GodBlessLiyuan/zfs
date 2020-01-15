@@ -31,7 +31,7 @@ public class BlackServiceImpl implements IBlackAppService {
         }
 
         BlackAppVO vo = new BlackAppVO();
-        vo.setBid(pos.get(0).getBlankId());
+        vo.setBid(pos.get(0).getBlackId());
         List<String> pkgs = new ArrayList<>();
         for (BlackAppPO po : pos) {
             pkgs.add(po.getPackageName());

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * BlankAppMapper继承基类
+ * BlackAppMapper继承基类
  */
 @Mapper
 public interface BlackAppMapper extends BaseMapper<BlackAppPO, Long> {

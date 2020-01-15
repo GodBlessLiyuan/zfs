@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * t_blank_app
+ * t_black_app
  * @author 
  */
 public class BlackAppPO implements Serializable {
-    private Long blankId;
+    private Long blackId;
 
     private String packageName;
 
@@ -22,12 +22,12 @@ public class BlackAppPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Long getBlankId() {
-        return blankId;
+    public Long getBlackId() {
+        return blackId;
     }
 
-    public void setBlankId(Long blankId) {
-        this.blankId = blankId;
+    public void setBlackId(Long blackId) {
+        this.blackId = blackId;
     }
 
     public String getPackageName() {
@@ -82,7 +82,7 @@ public class BlackAppPO implements Serializable {
             return false;
         }
         BlackAppPO other = (BlackAppPO) that;
-        return (this.getBlankId() == null ? other.getBlankId() == null : this.getBlankId().equals(other.getBlankId()))
+        return (this.getBlackId() == null ? other.getBlackId() == null : this.getBlackId().equals(other.getBlackId()))
             && (this.getPackageName() == null ? other.getPackageName() == null : this.getPackageName().equals(other.getPackageName()))
             && (this.getAppName() == null ? other.getAppName() == null : this.getAppName().equals(other.getAppName()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -94,7 +94,7 @@ public class BlackAppPO implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getBlankId() == null) ? 0 : getBlankId().hashCode());
+        result = prime * result + ((getBlackId() == null) ? 0 : getBlackId().hashCode());
         result = prime * result + ((getPackageName() == null) ? 0 : getPackageName().hashCode());
         result = prime * result + ((getAppName() == null) ? 0 : getAppName().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
@@ -109,7 +109,7 @@ public class BlackAppPO implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", blankId=").append(blankId);
+        sb.append(", blackId=").append(blackId);
         sb.append(", packageName=").append(packageName);
         sb.append(", appName=").append(appName);
         sb.append(", createTime=").append(createTime);
