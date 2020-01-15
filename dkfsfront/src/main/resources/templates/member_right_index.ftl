@@ -47,7 +47,7 @@
 					<tr>
 						<td >应用多开</td>
 						<td ><img
-								src="${basePath}/images/check_redbag_24.png"/></td>
+								src="${basePath}/images/ico_delete_youshang_24.png"/></td>
 						<td ><img
 								src="${basePath}/images/check_redbag_24.png"/></td>
 					</tr>

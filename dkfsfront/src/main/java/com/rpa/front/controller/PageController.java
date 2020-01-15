@@ -34,8 +34,6 @@ public class PageController {
         return "free_membership_index";
     }
 
-
-
     @GetMapping("settingprotocol")
     public String settingProtocol() {
         return "use_service_protocol_index";
