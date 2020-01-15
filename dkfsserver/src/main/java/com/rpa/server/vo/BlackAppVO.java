@@ -12,7 +12,7 @@ import java.util.List;
  * @version: 1.0
  */
 @Data
-public class BlankAppVO implements Serializable {
+public class BlackAppVO implements Serializable {
     private static final long SerialVersionUID = 1L;
 
     private Long bid;

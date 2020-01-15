@@ -1,8 +1,8 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.rpa.common.mapper.BlankAppMapper;
-import com.rpa.common.pojo.BlankAppPO;
+import com.rpa.common.mapper.BlackAppMapper;
+import com.rpa.common.pojo.BlackAppPO;
 import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.common.PageHelper;
@@ -29,18 +29,18 @@ public class BlankAppServiceImpl implements IBlankAppService {
     private final static Logger logger = LoggerFactory.getLogger(BlankAppServiceImpl.class);
 
     @Resource
-    private BlankAppMapper blankAppMapper;
+    private BlackAppMapper blankAppMapper;
 
     @Override
     public DTPageInfo<BlankAppVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<BlankAppPO> page = PageHelper.startPage(pageNum, pageSize);
-        List<BlankAppPO> pos = blankAppMapper.query(reqData);
+        Page<BlackAppPO> page = PageHelper.startPage(pageNum, pageSize);
+        List<BlackAppPO> pos = blankAppMapper.query(reqData);
         return new DTPageInfo<>(draw, page.getTotal(), BlankAppVO.convert(pos));
     }
 
     @Override
     public ResultVO insert(String packageName, String appName, String extra, int aId) {
-        BlankAppPO po = new BlankAppPO();
+        BlackAppPO po = new BlackAppPO();
 
         po.setPackageName(packageName);
         po.setAppName(appName);

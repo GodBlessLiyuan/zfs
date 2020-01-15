@@ -10,6 +10,6 @@ import lombok.Data;
  * @version: 1.0
  */
 @Data
-public class BlankAppDTO extends VerifyDTO {
+public class BlackAppDTO extends VerifyDTO {
     private Long bid;
 }

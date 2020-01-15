@@ -1,11 +1,11 @@
 package com.rpa.server.service.impl;
 
-import com.rpa.common.mapper.BlankAppMapper;
-import com.rpa.common.pojo.BlankAppPO;
+import com.rpa.common.mapper.BlackAppMapper;
+import com.rpa.common.pojo.BlackAppPO;
 import com.rpa.common.vo.ResultVO;
-import com.rpa.server.dto.BlankAppDTO;
-import com.rpa.server.service.IBlankAppService;
-import com.rpa.server.vo.BlankAppVO;
+import com.rpa.server.dto.BlackAppDTO;
+import com.rpa.server.service.IBlackAppService;
+import com.rpa.server.vo.BlackAppVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,21 +19,21 @@ import java.util.List;
  * @version: 1.0
  */
 @Service
-public class BlankServiceImpl implements IBlankAppService {
+public class BlackServiceImpl implements IBlackAppService {
     @Resource
-    private BlankAppMapper blankAppMapper;
+    private BlackAppMapper blackAppMapper;
 
     @Override
-    public ResultVO getBlankPkgs(BlankAppDTO dto) {
-        List<BlankAppPO> pos = blankAppMapper.queryById(dto.getBid());
+    public ResultVO getBlankPkgs(BlackAppDTO dto) {
+        List<BlackAppPO> pos = blackAppMapper.queryById(dto.getBid());
         if (null == pos || pos.size() == 0) {
             return new ResultVO(1025);
         }
 
-        BlankAppVO vo = new BlankAppVO();
+        BlackAppVO vo = new BlackAppVO();
         vo.setBid(pos.get(0).getBlankId());
         List<String> pkgs = new ArrayList<>();
-        for (BlankAppPO po : pos) {
+        for (BlackAppPO po : pos) {
             pkgs.add(po.getPackageName());
         }
         vo.setPkgs(pkgs);

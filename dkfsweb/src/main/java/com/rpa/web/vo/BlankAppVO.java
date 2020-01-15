@@ -1,6 +1,6 @@
 package com.rpa.web.vo;
 
-import com.rpa.common.pojo.BlankAppPO;
+import com.rpa.common.pojo.BlackAppPO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -25,7 +25,7 @@ public class BlankAppVO implements Serializable {
     private Date createTime;
     private String extra;
 
-    public static BlankAppVO convert(BlankAppPO po) {
+    public static BlankAppVO convert(BlackAppPO po) {
         BlankAppVO vo = new BlankAppVO();
 
         vo.setBlankId(po.getBlankId());
@@ -37,10 +37,10 @@ public class BlankAppVO implements Serializable {
         return vo;
     }
 
-    public static List<BlankAppVO> convert(List<BlankAppPO> pos) {
+    public static List<BlankAppVO> convert(List<BlackAppPO> pos) {
         List<BlankAppVO> vos = new ArrayList<>();
 
-        for (BlankAppPO po : pos) {
+        for (BlackAppPO po : pos) {
             vos.add(BlankAppVO.convert(po));
         }
 

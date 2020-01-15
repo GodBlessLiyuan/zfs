@@ -1,8 +1,8 @@
 package com.rpa.server.controller;
 
 import com.rpa.common.vo.ResultVO;
-import com.rpa.server.dto.BlankAppDTO;
-import com.rpa.server.service.IBlankAppService;
+import com.rpa.server.dto.BlackAppDTO;
+import com.rpa.server.service.IBlackAppService;
 import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping("v1.0")
 @RestController
-public class BlankAppController {
+public class BlackAppController {
     @Autowired
-    private IBlankAppService service;
+    private IBlackAppService service;
 
-    @PostMapping("blankpkgs")
-    public ResultVO blankPkgs(@RequestBody BlankAppDTO dto) {
+    @PostMapping("blackpkgs")
+    public ResultVO blankPkgs(@RequestBody BlackAppDTO dto) {
         if(!VerifyUtil.checkDeviceId(dto)) {
             return new ResultVO(2000);
         }

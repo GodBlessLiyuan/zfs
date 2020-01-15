@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.common.mapper.BlankAppMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.common.pojo.BlankAppPO">
+<mapper namespace="com.rpa.common.mapper.BlackAppMapper">
+  <resultMap id="BaseResultMap" type="com.rpa.common.pojo.BlackAppPO">
     <id column="blank_id" jdbcType="BIGINT" property="blankId" />
     <result column="package_name" jdbcType="CHAR" property="packageName" />
     <result column="app_name" jdbcType="CHAR" property="appName" />
@@ -22,7 +22,7 @@
     delete from t_blank_app
     where blank_id = #{blankId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.common.pojo.BlankAppPO">
+  <insert id="insert" parameterType="com.rpa.common.pojo.BlackAppPO">
     insert into t_blank_app (blank_id, package_name, app_name, 
       create_time, extra, a_id
       )
@@ -30,7 +30,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{extra,jdbcType=CHAR}, #{aId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.common.pojo.BlankAppPO">
+  <insert id="insertSelective" parameterType="com.rpa.common.pojo.BlackAppPO">
     insert into t_blank_app
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="blankId != null">
@@ -73,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.BlankAppPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.BlackAppPO">
     update t_blank_app
     <set>
       <if test="packageName != null">
@@ -94,7 +94,7 @@
     </set>
     where blank_id = #{blankId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.BlankAppPO">
+  <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.BlackAppPO">
     update t_blank_app
     set package_name = #{packageName,jdbcType=CHAR},
       app_name = #{appName,jdbcType=CHAR},

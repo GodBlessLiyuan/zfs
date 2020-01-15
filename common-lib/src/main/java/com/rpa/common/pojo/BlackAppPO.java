@@ -7,7 +7,7 @@ import java.util.Date;
  * t_blank_app
  * @author 
  */
-public class BlankAppPO implements Serializable {
+public class BlackAppPO implements Serializable {
     private Long blankId;
 
     private String packageName;
@@ -81,7 +81,7 @@ public class BlankAppPO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        BlankAppPO other = (BlankAppPO) that;
+        BlackAppPO other = (BlackAppPO) that;
         return (this.getBlankId() == null ? other.getBlankId() == null : this.getBlankId().equals(other.getBlankId()))
             && (this.getPackageName() == null ? other.getPackageName() == null : this.getPackageName().equals(other.getPackageName()))
             && (this.getAppName() == null ? other.getAppName() == null : this.getAppName().equals(other.getAppName()))
