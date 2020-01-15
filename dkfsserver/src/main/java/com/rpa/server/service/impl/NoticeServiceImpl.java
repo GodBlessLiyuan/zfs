@@ -77,7 +77,8 @@ public class NoticeServiceImpl implements INoticeService {
             }
 
             //将对象用JSON序列化，存入Redis
-            cache.setCache(key, vos ,24, TimeUnit.HOURS);
+            //cache.setCache(key, vos ,24, TimeUnit.HOURS);
+            cache.setCacheWithDate(key, vos ,24, TimeUnit.HOURS);
         }
         return new ResultVO<>(1000, vos);
     }
