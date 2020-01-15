@@ -46,7 +46,6 @@ public class OrderServiceImpl implements IOrderService {
         // 购买
         List<OrderBO> orderBOs = orderMapper.queryByUserId(dto.getUd());
         for (OrderBO bo : orderBOs) {
-            logger.info("bo: {}", bo.toString());
             OrderVO vo = new OrderVO();
             vo.setType(1);
             vo.setPaytype(bo.getType());
@@ -57,7 +56,6 @@ public class OrderServiceImpl implements IOrderService {
                 vo.setPrice(String.valueOf(bo.getPay() / 100f));
             }
             orderVOs.add(vo);
-            logger.info("vo: {}", vo.toString());
         }
         // 好评活动赠送
         List<UserActivityPO> userActivityPOs = userActivityMapper.queryActivatedByUserId(dto.getUd());
