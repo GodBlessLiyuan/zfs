@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" type="image/x-icon" href="./images/logo.png"  />
-    <title>智能移动社交营销平台管理系统</title>
+    <title>智能营销-多开分身管理平台</title>
     <!-- Favicon icon -->
 
     <link href="css/style.css" rel="stylesheet">
