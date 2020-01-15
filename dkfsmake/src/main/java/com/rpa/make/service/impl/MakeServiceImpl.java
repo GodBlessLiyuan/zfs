@@ -35,6 +35,9 @@ public class MakeServiceImpl implements IMakeService {
     private String projectDir;
     @Value("${file.avatarDir}")
     private String avatarDir;
+    @Value("${file.publicPath}")
+    private String publicPath;
+
 
     @Override
     public ResultVO make(MakeDTO dto) {
@@ -46,8 +49,8 @@ public class MakeServiceImpl implements IMakeService {
         MakeVO vo = new MakeVO();
         try {
             logger.info("avatarUrl：{}", rootDir + po.getUrl());
-            vo.setUrl(FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir,
-                    FileUtil.genFilePath(projectDir + avatarDir, sdf.format(new Date())), dto));
+            vo.setUrl(publicPath + FileUtil.rebuildApk(rootDir + po.getUrl(), rootDir,
+                    projectDir + avatarDir + sdf.format(new Date()) + "/", dto));
         } catch (Exception e) {
             return new ResultVO(2000);
         }
