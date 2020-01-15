@@ -116,6 +116,6 @@
     select
     <include refid="Base_Column_List"></include>
     from t_black_app
-    where blank_id > #{bid} order by blank_id desc
+    where black_id > #{bid} order by black_id desc
   </select>
 </mapper>
