@@ -15,9 +15,9 @@
 	<body style="background: #F8F8F8;">
 
 	<div class="container" style="margin-top: 20px;">
-
+		<#--font_rule-->
 		<div class="row">
-			<div class="font_rule" style="margin-left: 10%;margin-bottom: 20px;">
+			<div style="margin-left: 10%;margin-bottom: 20px;">
 				会员规则如下，未勾选表示无权使用：
 			</div>
 		</div>
@@ -47,7 +47,7 @@
 					<tr>
 						<td >应用多开</td>
 						<td ><img
-								src="${basePath}/images/check_redbag_24.png"/></td>
+								src="${basePath}/images/ico_delete_youshang_24.png"/></td>
 						<td ><img
 								src="${basePath}/images/check_redbag_24.png"/></td>
 					</tr>
