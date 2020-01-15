@@ -1,5 +1,6 @@
 package com.rpa.front;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -10,6 +11,7 @@ import org.springframework.cache.annotation.EnableCaching;
  * @description: 前端
  * @version: 1.0
  */
+@MapperScan("com.rpa.common.mapper")
 @EnableCaching
 @SpringBootApplication
 public class FrontApplication {
