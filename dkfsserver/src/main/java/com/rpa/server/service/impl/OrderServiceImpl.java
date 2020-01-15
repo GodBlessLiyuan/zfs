@@ -10,6 +10,8 @@ import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.OrderDTO;
 import com.rpa.server.service.IOrderService;
 import com.rpa.server.vo.OrderVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +27,8 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements IOrderService {
+    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
+
     @Resource
     private OrderMapper orderMapper;
     @Resource
@@ -42,6 +46,7 @@ public class OrderServiceImpl implements IOrderService {
         // 购买
         List<OrderBO> orderBOs = orderMapper.queryByUserId(dto.getUd());
         for (OrderBO bo : orderBOs) {
+            logger.info("bo: {}", bo.toString());
             OrderVO vo = new OrderVO();
             vo.setType(1);
             vo.setPaytype(bo.getType());
@@ -52,6 +57,7 @@ public class OrderServiceImpl implements IOrderService {
                 vo.setPrice(String.valueOf(bo.getPay() / 100f));
             }
             orderVOs.add(vo);
+            logger.info("vo: {}", vo.toString());
         }
         // 好评活动赠送
         List<UserActivityPO> userActivityPOs = userActivityMapper.queryActivatedByUserId(dto.getUd());
