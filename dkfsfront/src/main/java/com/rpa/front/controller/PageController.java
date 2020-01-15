@@ -36,5 +36,12 @@ public class PageController {
 
 
 
+    @GetMapping("settingprotocol")
+    public String settingProtocol() {
+        return "setting_member_service_protocol_index";
+    }
+
+
+
 }
 
