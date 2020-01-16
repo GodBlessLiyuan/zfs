@@ -20,5 +20,5 @@ public interface AdChannelMapper extends BaseMapper<AdChannelPO, Integer> {
 
     AdChannelPO queryByIds2(@Param("adId")Integer adId, @Param("appId")Integer appId, @Param("softChannelId")Integer softChannelId);
 
-    List<Integer> queryAdIds(int softChannelId, int appId);
+    List<Integer> queryAdIds(@Param("softChannelId")int softChannelId, @Param("appId")int appId);
 }
