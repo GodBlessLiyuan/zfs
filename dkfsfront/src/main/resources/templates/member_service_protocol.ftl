@@ -18,10 +18,10 @@
 
     <div class="agreement" >
 
-        <h2>
+<#--        <h2>
             《砖助多开分身会员服务协议》
-        </h2>
-        <h4 style="text-indent: 2em;">
+        </h2>-->
+        <h4 style="text-indent: 2em;margin-top: 10px">
             砖助多开分身会员服务是有偿的增值服务，
             您必须在遵守砖助多开分身服务协议的基础上完全同意下列所有服务条款并完成付费，才能享受相关服务。
             <br>
