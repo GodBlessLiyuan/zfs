@@ -17,10 +17,19 @@
 
     <div class="container">
         <div class="row">
-            <div class="div_participate" style="margin-top: 400px;" onclick="freememberClick()">
-                立即参与
-            </div>
+
+            <#if null == status || status == 20>
+
+                <div class="div_participate" style="margin-top: 400px;" onclick="freememberClick()">
+                    立即参与
+                </div>
+            </#if>
         </div>
+
+        <div  style="margin-left: 20%;margin-right: 20%;border:none;">
+            <p style="text-align: center;vertical-align: middle; padding-top: 5px;">${msg}</p>
+        </div>
+
 
         <div class="row">
             <div class="div_pickuptips" style="margin-top: 40px;" >

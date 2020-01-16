@@ -219,7 +219,7 @@ public class NoticeServiceImpl implements NoticeService {
     private void deleteRedis() {
         String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         //Redis中的key
-        String key = RedisKeyUtil.genNoticeRedisKey() + current_date;
+        String key = RedisKeyUtil.genNoticeRedisKey(current_date);
         if (template.hasKey(key)) {
             template.delete(key);
         }

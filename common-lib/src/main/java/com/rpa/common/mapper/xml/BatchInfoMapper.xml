@@ -152,7 +152,7 @@
     </foreach>
   </insert>
 
-  <update id="updateStatusByBatchId">
+  <update id="updateStatusByBatchId" parameterType="com.rpa.common.pojo.BatchInfoPO">
     update t_batch_info
     set `status` = #{status,jdbcType=TINYINT}
     where batch_id = #{batchId,jdbcType=INTEGER} and `status` != 2
