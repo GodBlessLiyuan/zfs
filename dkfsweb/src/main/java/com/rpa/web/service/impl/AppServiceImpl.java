@@ -120,6 +120,7 @@ public class AppServiceImpl implements IAppService {
                 }
             }
 
+            this.deleteRedis();
             return new ResultVO(1000);
         }
 
@@ -147,7 +148,6 @@ public class AppServiceImpl implements IAppService {
         }
 
         this.deleteRedis();
-
         return new ResultVO(1000);
     }
 

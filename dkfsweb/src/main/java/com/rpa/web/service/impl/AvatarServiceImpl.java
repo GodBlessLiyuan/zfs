@@ -108,6 +108,7 @@ public class AvatarServiceImpl implements IAvatarService {
                 LogUtil.log(logger, "insert", "新增失败", aacPOs);
             }
 
+            this.deleteRedis();
             return new ResultVO(1000);
         }
 
