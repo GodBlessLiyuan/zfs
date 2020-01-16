@@ -118,5 +118,9 @@
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.rpa</groupId>
+            <artifactId>common-lib</artifactId>
+        </dependency>
     </dependencies>
 </project>

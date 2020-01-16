@@ -48,4 +48,11 @@ public interface UserActivityMapper extends BaseMapper<UserActivityPO, Integer> 
      * @param userId
      */
     void activate(Long userId);
+
+    /**
+     * dkfsfront 查询
+     * @param ud
+     * @return
+     */
+    Integer queryByUd(Long ud);
 }

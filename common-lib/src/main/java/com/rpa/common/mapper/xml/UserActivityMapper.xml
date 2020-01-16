@@ -176,6 +176,12 @@
       url = #{url,jdbcType=CHAR}
     where u_a_id = #{uAId,jdbcType=INTEGER}
   </update>
+  <select id="queryByUd" resultType="java.lang.Integer">
+    select status
+    from t_user_activity
+    where activity_id = 1 and user_id = #{ud}
+    order by u_a_id desc limit 1
+  </select>
   <select id="query" resultType="com.rpa.common.bo.UserActivityBO">
     select u.phone, ua.create_time as createTime, a.com_type_name as comTypeName, a.days, a.source, ua.status
     from t_user_activity ua
