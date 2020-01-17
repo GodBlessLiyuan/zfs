@@ -25,7 +25,7 @@ public class SmsController {
     @Autowired
     private ISmsService service;
 
-    @PostMapping("sendSms")
+    @PostMapping("sendsms")
     public ResultVO sendSms(@RequestBody TokenDTO dto, HttpServletRequest req) {
         if (VerifyUtil.checkToken(dto, req)) {
             return new ResultVO(2000);
@@ -34,7 +34,7 @@ public class SmsController {
         return service.sendSMS(dto.getUd());
     }
 
-    @PostMapping("validateSms")
+    @PostMapping("validatesms")
     public ResultVO validateSMS(@RequestBody SmsDTO dto, HttpServletRequest req) {
         if (VerifyUtil.checkToken(dto, req)) {
             return new ResultVO(2000);
