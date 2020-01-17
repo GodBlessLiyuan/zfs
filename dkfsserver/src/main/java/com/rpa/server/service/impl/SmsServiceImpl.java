@@ -1,9 +1,16 @@
 package com.rpa.server.service.impl;
 
+import com.rpa.common.mapper.UserMapper;
+import com.rpa.common.pojo.UserPO;
+import com.rpa.common.vo.ResultVO;
+import com.rpa.server.dto.SmsDTO;
 import com.rpa.server.service.ISmsService;
+import com.rpa.server.utils.RedisCacheUtil;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.Random;
 
 /**
  * @author: velve
@@ -24,18 +32,25 @@ import java.net.URL;
 @Service
 public class SmsServiceImpl implements ISmsService {
 
+    @Autowired
+    private RedisCacheUtil cache;
+    @Resource
+    private UserMapper userMapper;
+
     /**
-     *
-     * @param verifyCode
      * @return 1 成功 0 失敗
      */
     @Override
-    public int sendSMS(String phone,String verifyCode) {
+    public int sendSMS(String phone) {
+
+        // 6位验证码
+        String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
+        cache.cacheVerifyCode(phone, verifyCode);
 
         try {
-            String content = String.format("尊敬的用户，您本次的验证码是%s，请及时输入验证码完成操作。【砖助多开分身】",verifyCode);
+            String content = String.format("尊敬的用户，您本次的验证码是%s，请及时输入验证码完成操作。【砖助多开分身】", verifyCode);
 
-            String postData =  "sname=dlxinj00&spwd=admin123456&scorpid=&sprdid=1012818&sdst="+phone+"&smsg="+java.net.URLEncoder.encode(content,"utf-8");
+            String postData = "sname=dlxinj00&spwd=admin123456&scorpid=&sprdid=1012818&sdst=" + phone + "&smsg=" + java.net.URLEncoder.encode(content, "utf-8");
             //发送POST请求
             URL url = new URL("http://cf.51welink.com/submitdata/Service.asmx/g_Submit");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -63,12 +78,12 @@ public class SmsServiceImpl implements ISmsService {
                 result += line + "\n";
             }
             in.close();
-            if(result.contains("提交成功")){
+            if (result.contains("提交成功")) {
                 return 1;
-            }else {
+            } else {
                 return 0;
             }
-        }catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
             e.printStackTrace();
@@ -78,5 +93,38 @@ public class SmsServiceImpl implements ISmsService {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    @Override
+    public ResultVO sendSMS(Long ud) {
+        UserPO userPO = userMapper.selectByPrimaryKey(ud);
+        if (null == userPO) {
+            // 用户不存在
+            return new ResultVO(2000);
+        }
+
+        int res = this.sendSMS(userPO.getPhone());
+        if (res == 0) {
+            return new ResultVO(1010);
+        }
+
+        return new ResultVO(1000);
+    }
+
+    @Override
+    public ResultVO validateSMS(SmsDTO dto) {
+        UserPO userPO = userMapper.selectByPrimaryKey(dto.getUd());
+        if (null == userPO) {
+            // 用户不存在
+            return new ResultVO(2000);
+        }
+
+        // 短信码
+        int code = cache.checkSmsByCache(userPO.getPhone(), dto.getSms());
+        if (1000 != code) {
+            return new ResultVO(code);
+        }
+
+        return new ResultVO(1000);
     }
 }

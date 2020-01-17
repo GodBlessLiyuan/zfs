@@ -61,6 +61,12 @@ public class LoginServiceImpl implements ILoginService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO register(LoginDTO dto, HttpServletRequest req) {
+        // 短信码
+        int code = cache.checkSmsByCache(dto.getPh(), dto.getSms());
+        if (1000 != code) {
+            return new ResultVO(code);
+        }
+
         UserPO userPO = userMapper.queryByPhone(dto.getPh());
         // 前端是否出弹框
         byte gift = 0;

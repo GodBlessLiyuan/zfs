@@ -4,7 +4,6 @@ import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.LoginDTO;
 import com.rpa.server.service.ILoginService;
 import com.rpa.server.service.ISmsService;
-import com.rpa.server.utils.RedisCacheUtil;
 import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Random;
 
 /**
  * @author: xiahui
@@ -25,8 +23,6 @@ import java.util.Random;
 @RestController
 public class LoginController {
 
-    @Autowired
-    private RedisCacheUtil cache;
     @Autowired
     private ILoginService loginService;
     @Autowired
@@ -42,11 +38,9 @@ public class LoginController {
             return new ResultVO(1026);
         }
 
-        // 6位验证码
-        String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
-        cache.cacheVerifyCode(dto.getPh(), verifyCode);
 
-        if (smsService.sendSMS(dto.getPh(), verifyCode) == 1) {
+
+        if (smsService.sendSMS(dto.getPh()) == 1) {
             return new ResultVO(1000);
         } else {
             return new ResultVO<>(2000);
@@ -57,11 +51,6 @@ public class LoginController {
     public ResultVO register(@RequestBody LoginDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkDeviceId(dto) || !VerifyUtil.checkPhone(dto.getPh())) {
             return new ResultVO(2000);
-        }
-        // 短信码
-        int code = cache.checkSmsByCache(dto.getPh(), dto.getSms());
-        if (1000 != code) {
-            return new ResultVO(code);
         }
 
         return loginService.register(dto, req);
