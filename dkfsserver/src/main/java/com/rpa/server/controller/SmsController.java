@@ -27,7 +27,7 @@ public class SmsController {
 
     @PostMapping("sendsms")
     public ResultVO sendSms(@RequestBody TokenDTO dto, HttpServletRequest req) {
-        if (VerifyUtil.checkToken(dto, req)) {
+        if (!VerifyUtil.checkToken(dto, req)) {
             return new ResultVO(2000);
         }
 
