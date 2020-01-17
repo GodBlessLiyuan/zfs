@@ -93,7 +93,7 @@
   <delete id="deleteByAppId" parameterType="java.lang.Integer">
     delete from t_app_ch where app_id = #{appId,jdbcType=INTEGER}
   </delete>
-  <select id="queryByAppId" parameterType="java.lang.Integer" resultType="com.rpa.common.pojo.AppChPO">
+  <select id="queryByAppId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from t_app_ch where app_id = #{appId}
   </select>
   <delete id="batchDelete" parameterType="java.util.List">
