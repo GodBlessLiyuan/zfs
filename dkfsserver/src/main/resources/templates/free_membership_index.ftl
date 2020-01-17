@@ -17,7 +17,7 @@
 </head>
 
 
-<body style="background:  url(/images/bg_evaluate.png) center center;background-size: cover;background-repeat: no-repeat;">
+<body style="background-image:  url(${basePath}/images/bg_evaluate.png) ;background-size: contain;background-repeat: no-repeat;background-color: #FA524A">
 
     <div class="container">
         <div class="row">

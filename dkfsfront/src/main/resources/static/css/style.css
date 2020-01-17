@@ -146,3 +146,32 @@
 /*用户注册及使用APP隐私协议 end*/
 
 
+.btncanyu {
+    width: 80%;
+    margin-left: 10%;
+    padding:10px 0px;
+    background: #F46C53;
+    border-radius:20px;
+    color: #ffffff;
+    font-size: 16px;
+    letter-spacing:1.6px;
+    text-align: center;
+    border: none;
+    font-weight: bold;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+    -moz-tap-highlight-color: transparent;
+}
+
+.div_text p {
+    color: #FFEBBF;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 26px;
+}
+.betweenLR{
+    margin:0px 15px;
+}
+
+
