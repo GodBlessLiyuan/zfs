@@ -10,37 +10,29 @@
     <title>免费领会员</title>
     <link rel="stylesheet" href="${basePath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${basePath}/css/style.css">
+    <script src="${basePath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 </head>
 
 
-<body style="background:  url(${basePath}/images/bg_evaluate.png) center center;background-size: cover;background-repeat: no-repeat;">
+<body style="background:  url(${basePath}/images/bg_evaluate.png);background-size: contain;background-repeat: no-repeat;background-color: #FA7317">
 
-    <div class="container">
-        <div class="row">
+    <div class="betweenLR" style="margin-top: 400px">
+        <#if null == status || status == 20>
+            <button type="button" class="btncanyu" style="background-color: #FFE8B9;color:#D20f1C;font-size: 20px" onclick="freememberClick()">立即参与</button>
+        </#if>
+    </div>
 
-            <#if null == status || status == 20>
+    <div style="margin-left: 20%;margin-right: 20%;border:none;">
+        <p style="text-align: center;vertical-align: middle; padding-top: 5px;">${msg}</p>
+    </div>
 
-                <div class="div_participate" style="margin-top: 400px;" onclick="freememberClick()">
-                    立即参与
-                </div>
-            </#if>
-        </div>
-
-        <div  style="margin-left: 20%;margin-right: 20%;border:none;">
-            <p style="text-align: center;vertical-align: middle; padding-top: 5px;">${msg}</p>
-        </div>
-
-
-        <div class="row">
-            <div class="div_pickuptips" style="margin-top: 40px;" >
-                <p style="margin-left: 10%;margin-right: 10%">
-                    <b>领取提示：</b><br>
-                    1.每位用户只能领取一次奖励<br>
-                    2.将您在应用市场5星好评截图上传即可，审核通过后即可获得会员奖励<br>
-                    3.奖励为7天VIP
-                </p>
-            </div>
-        </div>
+    <div class="div_text" style="margin-top: 50px;" >
+        <p style="margin-left: 10%;margin-right: 5%">
+            <b>领取提示：</b><br>
+            1.每位用户只能领取一次奖励<br>
+            2.将您在应用市场5星好评截图上传即可，审核通过后即可获得会员奖励<br>
+            3.奖励为7天VIP
+        </p>
     </div>
 
 </body>
