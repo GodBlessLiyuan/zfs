@@ -240,7 +240,7 @@ public class FileUtil {
             FileUtil.modifyApkPkg("uses-permission", 88, "name", pkg + ".Installing.WRITE_STATUS", xmlPath, outXml);
 
             // 修改42处 taskAffinity
-            for (int i = 1; i <= 42; i++) {
+            for (int i = 1; i <= 48; i++) {
                 FileUtil.modifyApkPkg("activity", i, "taskAffinity", pkg, xmlPath, outXml);
             }
             // 修改 22 处 authorities
