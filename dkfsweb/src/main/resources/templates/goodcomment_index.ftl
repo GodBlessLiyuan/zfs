@@ -247,7 +247,7 @@
                     }
                 },
                 {
-                    "data": "uAId",
+                    "data": "uaid",
                     "render": function (data, type, full) {
 
                         var pass_button = "<button type='button' data-toggle='modal' data-target='#statusModal' data-whatever='@getbootstrap' " +

@@ -8,6 +8,7 @@ import java.util.Date;
  * @author 
  */
 public class UserActivityPO implements Serializable {
+
     private Integer uAId;
 
     private Integer activityId;
