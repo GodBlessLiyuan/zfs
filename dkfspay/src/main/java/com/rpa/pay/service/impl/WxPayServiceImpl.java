@@ -1,5 +1,6 @@
 package com.rpa.pay.service.impl;
 
+import com.rpa.common.utils.LogUtil;
 import com.rpa.pay.common.ResultVO;
 import com.rpa.pay.config.WxPayConfig;
 import com.rpa.pay.constant.WxPayConstant;
@@ -78,7 +79,10 @@ public class WxPayServiceImpl implements IWxPayService {
         orderPO.setDays(vipCommodityPO.getDays());
         orderPO.setPay(vipCommodityPO.getDiscount());
         orderPO.setStatus((byte) 1);
-        orderMapper.insert(orderPO);
+        int result = orderMapper.insert(orderPO);
+        if (result == 0) {
+            LogUtil.log(logger, "wxPayOrder", "创建订单失败", orderPO);
+        }
 
         // 微信支付请求参数
         String wxPayParam = WxPayUtil.createReqParam(orderPO, wxPayConfig, req);
@@ -137,10 +141,14 @@ public class WxPayServiceImpl implements IWxPayService {
         // 更新用户会员时间
         UserVipPO userVipPO = userVipMapper.queryByUserId(orderPO.getUserId());
         UserVipPO newUserVipVO = UserVipUtil.buildUserVipVO(userVipPO, orderPO.getUserId(), orderPO.getDays(), true);
+        int result1;
         if (null == userVipPO) {
-            userVipMapper.insert(newUserVipVO);
+            result1 = userVipMapper.insert(newUserVipVO);
         } else {
-            userVipMapper.updateByPrimaryKey(newUserVipVO);
+            result1 = userVipMapper.updateByPrimaryKey(newUserVipVO);
+        }
+        if (result1 == 0) {
+            LogUtil.log(logger, "wxPayNotify", "插入或更新用户会员数据失败", newUserVipVO);
         }
 
         Date endDate = newUserVipVO.getEndTime();
@@ -154,11 +162,17 @@ public class WxPayServiceImpl implements IWxPayService {
         orderPO.setStarttime(startDate);
         orderPO.setEndtime(endDate);
         orderPO.setStatus((byte) 2);
-        orderMapper.updateByPrimaryKey(orderPO);
+        int result2 = orderMapper.updateByPrimaryKey(orderPO);
+        if (result2 == 0) {
+            LogUtil.log(logger, "wxPayNotify", "更新订单数据失败", orderPO);
+        }
 
         // 新增微信支付反馈信息
         WxFeedbackPO po = WxPayUtil.convertMap2PO(wxPayMap);
-        wxFeedbackMapper.insert(po);
+        int result3 = wxFeedbackMapper.insert(po);
+        if (result3 == 0) {
+            LogUtil.log(logger, "wxPayNotify", "创建订单失败", orderPO);
+        }
         // 事务提交完成后，发送消息
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
                                                                       @Override
