@@ -7,6 +7,7 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.rpa.common.utils.LogUtil;
 import com.rpa.pay.common.ResultVO;
 import com.rpa.pay.dto.AlipayDTO;
 import com.rpa.pay.mapper.AliFeedbackMapper;
@@ -30,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,19 +47,19 @@ import java.util.*;
 public class AlipayServiceImpl implements AlipayService {
     private final static Logger logger = LoggerFactory.getLogger(AlipayServiceImpl.class);
 
-    @Autowired
+    @Resource
     private VipCommodityMapper vipCommodityMapper;
 
-    @Autowired
+    @Resource
     private OrderMapper orderMapper;
 
-    @Autowired
+    @Resource
     private UserVipMapper userVipMapper;
 
-    @Autowired
+    @Resource
     private AmqpTemplate template;
 
-    @Autowired
+    @Resource
     private AliFeedbackMapper aliFeedbackMapper;
 
     @Value("${alipayconfig.appid}")
@@ -103,9 +105,10 @@ public class AlipayServiceImpl implements AlipayService {
         orderPO.setStatus((byte)1);
         orderPO.setDays(vipCommodityPO.getDays());
         orderPO.setPay(vipCommodityPO.getDiscount());
-
-        this.orderMapper.insert(orderPO);
-
+        int res = orderMapper.insert(orderPO);
+        if (res == 0) {
+            LogUtil.log(logger, "alipayOrder", "创建订单失败", orderPO);
+        }
 
         String orderNumber = orderPO.getOrderNumber();
         Long totalAmount = vipCommodityPO.getDiscount();
@@ -303,7 +306,10 @@ public class AlipayServiceImpl implements AlipayService {
             po.setFundBillList(params.get("fund_bill_list"));
         }
 
-        this.aliFeedbackMapper.insert(po);
+        int res = aliFeedbackMapper.insert(po);
+        if (res == 0) {
+            LogUtil.log(logger, "storeInfo", "保存支付宝返回的通知信息失败", po);
+        }
     }
 
 
@@ -323,10 +329,14 @@ public class AlipayServiceImpl implements AlipayService {
         // 更新用户会员时间
         UserVipPO userVipPO = userVipMapper.queryByUserId(orderPO.getUserId());
         UserVipPO newUserVipVO = UserVipUtil.buildUserVipVO(userVipPO, orderPO.getUserId(), orderPO.getDays(), true);
+        int result1;
         if (null == userVipPO) {
-            userVipMapper.insert(newUserVipVO);
+            result1 = userVipMapper.insert(newUserVipVO);
         } else {
-            userVipMapper.updateByPrimaryKey(newUserVipVO);
+            result1 = userVipMapper.updateByPrimaryKey(newUserVipVO);
+        }
+        if (result1 == 0) {
+            LogUtil.log(logger, "updateInfo", "插入或更新用户会员数据失败", newUserVipVO);
         }
 
         Date endDate = newUserVipVO.getEndTime();
@@ -340,7 +350,10 @@ public class AlipayServiceImpl implements AlipayService {
         orderPO.setStarttime(startDate);
         orderPO.setEndtime(endDate);
         orderPO.setStatus((byte)2);
-        this.orderMapper.updateByPrimaryKey(orderPO);
+        int result2 = orderMapper.updateByPrimaryKey(orderPO);
+        if (result2 == 0) {
+            LogUtil.log(logger, "updateInfo", "更新订单信息失败", orderPO);
+        }
 
         // 事务提交完成后，使用RabbitMQ，对其他模块进行异步通知
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
