@@ -482,7 +482,12 @@
                 },
                 {"data": "startTime"},
                 {"data": "endTime"},
-                {"data": "url"},
+                {
+                    "data": "url",
+                    "render": function (data, type, full) {
+                        return "<a href='"+ data +"'>"+ data +"</a>";
+                    }
+                },
                 {
                     "data": "type",
                     "render": function (data, type, full) {
