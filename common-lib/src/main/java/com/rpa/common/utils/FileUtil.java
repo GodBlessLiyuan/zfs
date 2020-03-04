@@ -246,9 +246,11 @@ public class FileUtil {
             // 修改 22 处 authorities
             FileUtil.modifyApkPkg("provider", 1, "authorities", pkg, xmlPath, outXml);
 
-            for (int i = 2; i <= 23; i++) {
+            for (int i = 2; i <= 22; i++) {
                 FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2), xmlPath, outXml);
             }
+
+            FileUtil.modifyApkPkg("provider", 23, "authorities", pkg + ".fileprovider", xmlPath, outXml);
 
             flag = true;
         }
