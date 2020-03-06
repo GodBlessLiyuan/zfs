@@ -44,7 +44,7 @@ public class SmsServiceImpl implements ISmsService {
     public int sendSMS(String phone) {
         if ("15100000000".equals(phone)) {
             cache.cacheVerifyCode(phone, "000000");
-            return 0;
+            return 1;
         }
 
         // 6位验证码
