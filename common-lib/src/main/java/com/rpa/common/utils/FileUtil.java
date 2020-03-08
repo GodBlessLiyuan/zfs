@@ -250,6 +250,8 @@ public class FileUtil {
                 FileUtil.modifyApkPkg("provider", i, "authorities", pkg + ".rpa.robot.stub.ContentProviderProxy" + (i - 2), xmlPath, outXml);
             }
 
+            FileUtil.modifyApkPkg("provider", 23, "authorities", pkg + ".fileprovider", xmlPath, outXml);
+
             flag = true;
         }
 
