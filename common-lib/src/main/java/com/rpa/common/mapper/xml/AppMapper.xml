@@ -273,7 +273,7 @@
   <select id="queryVersionameByVersioncode" parameterType="java.lang.Integer" resultType="java.lang.String">
     select distinct versionname
     from t_app
-    where versioncode = #{versioncode}
+    where versioncode = #{versioncode} and dr=1
   </select>
   <select id="queryCodesAndNames" resultType="com.rpa.common.pojo.AppPO">
     select distinct versioncode, versionname
