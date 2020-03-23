@@ -245,7 +245,7 @@
     </foreach>) and app.dr = 1 order by a.avatar_id
   </select>
   <select id="queryMaxByVerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select a.avatar_id, a.update_type
+    select a.avatar_id, a.update_type, a.version_code
     from t_avatar a
     inner join t_app_ava_ch aac on a.avatar_id = aac.avatar_id
     inner join t_app ap on aac.app_id = ap.app_id
