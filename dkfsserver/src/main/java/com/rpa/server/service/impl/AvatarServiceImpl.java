@@ -56,6 +56,7 @@ public class AvatarServiceImpl implements IAvatarService {
         AvatarVO vo = new AvatarVO();
         vo.setType(avatarPO.getUpdateType());
         vo.setId(avatarPO.getAvatarId());
+        vo.setSoftv(avatarPO.getVersionCode());
 
         cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
 

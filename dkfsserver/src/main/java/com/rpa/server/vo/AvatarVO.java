@@ -23,4 +23,9 @@ public class AvatarVO implements Serializable {
      * 分身Id
      */
     private Long id;
+
+    /**
+     * 版本号
+     */
+    private Integer softv;
 }
