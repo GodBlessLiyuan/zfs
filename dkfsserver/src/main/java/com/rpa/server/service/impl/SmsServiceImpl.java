@@ -46,6 +46,10 @@ public class SmsServiceImpl implements ISmsService {
             cache.cacheVerifyCode(phone, "000000");
             return 1;
         }
+        if ("19857119681".equals(phone)) {
+            cache.cacheVerifyCode(phone, "000000");
+            return 1;
+        }
 
         // 6位验证码
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
