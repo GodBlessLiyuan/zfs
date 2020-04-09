@@ -1,5 +1,6 @@
 package com.rpa.server.service;
 
+import com.rpa.common.pojo.PhoneInfoPO;
 import com.rpa.common.vo.ResultVO;
 
 /**
@@ -15,4 +16,8 @@ public interface IPhoneModelService {
      * @return
      */
     ResultVO phoneModel();
+
+    ResultVO queryPhone(Long modelId);
+
+    void addModalInfo(PhoneInfoPO modalResPO);
 }
