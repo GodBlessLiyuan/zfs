@@ -1,12 +1,16 @@
 package com.rpa.server.service.impl;
 
 import com.rpa.common.bo.PhoneModelBO;
+import com.rpa.common.mapper.PhoneInfoMapper;
 import com.rpa.common.mapper.PhoneModelMapper;
+import com.rpa.common.pojo.PhoneInfoPO;
 import com.rpa.common.pojo.PhoneModelPO;
 import com.rpa.common.pojo.PhoneTypePO;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.PhoneModelDTO;
 import com.rpa.server.service.IPhoneModelService;
+import com.rpa.server.vo.PhoneInfoVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -56,4 +60,18 @@ public class PhoneModelServiceImpl implements IPhoneModelService {
 
         return new ResultVO<>(1000, map.values());
     }
+    @Autowired
+    private PhoneInfoMapper phoneInfoMapper;
+    @Override
+    public ResultVO queryPhone(Long modelId) {
+        PhoneInfoPO modalResPO=phoneInfoMapper.queryByModal(modelId);
+        PhoneInfoVO modalResVO = PhoneInfoVO.convert(modalResPO);
+        return new ResultVO(1000,modalResVO);
+    }
+
+    @Override
+    public void addModalInfo(PhoneInfoPO phoneInfoPO) {
+        phoneInfoMapper.insert(phoneInfoPO);
+    }
+
 }
