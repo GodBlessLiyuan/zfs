@@ -1,4 +1,4 @@
-package com.rpa.server.dto;
+package com.rpa.common.dto;
 
 import com.rpa.common.pojo.UserPO;
 import com.rpa.common.pojo.ViptypePO;

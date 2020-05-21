@@ -56,7 +56,7 @@ public class SessionFilter implements Filter {
             } else {
                 String requestType = request.getHeader("X-Requested-With");
                 //判断是否是ajax请求
-                if (requestType != null && "XMLHttpRequest".equals(requestType)) {
+                    if (requestType != null && "XMLHttpRequest".equals(requestType)) {
                     response.setContentType("application/json; charset=utf-8");
                     response.getWriter().write("{\"code\": 1008}");
                 } else {
@@ -74,7 +74,7 @@ public class SessionFilter implements Filter {
      * @param uri
      */
     public boolean isNeedFilter(String uri) {
-
+        if(uri.startsWith("/dkfsmanager")) return false;
         for (String exclude : excludeList) {
             exclude = CONTEXT_PATH + exclude;
             if (uri.startsWith(exclude)) {

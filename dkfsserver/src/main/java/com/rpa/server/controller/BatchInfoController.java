@@ -2,6 +2,7 @@ package com.rpa.server.controller;
 
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.BatchInfoDTO;
+import com.rpa.server.dto.BatchSycInfoDTO;
 import com.rpa.server.service.IBatchInfoService;
 import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,12 @@ public class BatchInfoController {
 
     @PostMapping("keyactivate")
     public ResultVO keyActivate(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
-        if (!VerifyUtil.checkToken(dto, req)) {
-            return new ResultVO(2000);
-        }
+//        if (!VerifyUtil.checkToken(dto, req)) {
+//            return new ResultVO(2000);
+//        }
 
         return service.activate(dto);
     }
+
 
 }

@@ -1,7 +1,7 @@
-package com.rpa.server.utils;
+package com.rpa.web.utils;
 
 import com.rpa.common.pojo.UserVipPO;
-import com.rpa.server.constant.UserVipConstant;
+import com.rpa.web.common.UserVipConstant;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -2,6 +2,7 @@ package com.rpa.server.service;
 
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.BatchInfoDTO;
+import com.rpa.server.dto.BatchSycInfoDTO;
 
 /**
  * @author: xiahui
@@ -17,4 +18,5 @@ public interface IBatchInfoService {
      * @return
      */
     ResultVO activate(BatchInfoDTO dto);
+
 }

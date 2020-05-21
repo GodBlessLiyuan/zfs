@@ -1,7 +1,9 @@
 package com.rpa.server.service.impl;
 
 import com.rpa.common.mapper.BatchInfoMapper;
+import com.rpa.common.mapper.UserMapper;
 import com.rpa.common.mapper.UserVipMapper;
+import com.rpa.common.mapper.ViptypeMapper;
 import com.rpa.common.pojo.BatchInfoPO;
 import com.rpa.common.pojo.UserVipPO;
 import com.rpa.common.utils.LogUtil;
@@ -12,6 +14,7 @@ import com.rpa.server.service.IBatchInfoService;
 import com.rpa.server.utils.UserVipUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +37,11 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     private BatchInfoMapper batchInfoMapper;
     @Resource
     private UserVipMapper userVipMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private ViptypeMapper vipTypeMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -68,9 +76,11 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         } else {
             result2 = userVipMapper.updateByPrimaryKey(newUserVipPO);
         }
-        if (result1 == 0) {
+        if (result2 == 0) {
             LogUtil.log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
         }
         return new ResultVO(1000);
     }
+
+
 }

@@ -1,4 +1,8 @@
 package com.rpa.web.service;
 
-public interface IBatchInfoService {
+import com.rpa.common.dto.BatchSycInfoDTO;
+import com.rpa.common.vo.ResultVO;
+
+public interface IBatchInfoRestService {
+    ResultVO activateSync(BatchSycInfoDTO dto);
 }
