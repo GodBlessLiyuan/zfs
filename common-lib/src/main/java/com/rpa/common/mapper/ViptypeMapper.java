@@ -9,4 +9,6 @@ import com.rpa.common.pojo.ViptypePO;
 @Mapper
 public interface ViptypeMapper extends BaseMapper<ViptypePO, Integer> {
     String queryVipnameByVipid(Integer viptypeId);
+
+    ViptypePO queryName(String vipname);
 }

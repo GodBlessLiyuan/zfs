@@ -42,17 +42,15 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
     public ResultVO activateSync(BatchSycInfoDTO dto) {
 
         //不需要更新卡信息，因为卡在对方库中
-        ViptypePO vipTypePO = vipTypeMapper.selectByPrimaryKey(dto.getVipTypePO().getViptypeId());
+        ViptypePO vipTypePO = vipTypeMapper.queryName(dto.getVipTypePO().getVipname());
         if(vipTypePO==null){
+            dto.getVipTypePO().setViptypeId(null);
             vipTypeMapper.insert(dto.getVipTypePO());
-        }else{
-            vipTypeMapper.updateByPrimaryKeySelective(dto.getVipTypePO());
         }
-        UserPO userPO = userMapper.selectByPrimaryKey(dto.getUserPO().getUserId());
+        UserPO userPO = userMapper.queryByPhone(dto.getUserPO().getPhone());
         if(userPO==null){
+            dto.getUserPO().setUserId(null);
             userMapper.insertSelective(dto.getUserPO());
-        }else{
-            userMapper.updateByPrimaryKeySelective(dto.getUserPO());
         }
         // 更新用户会员数据
         UserVipPO userVipPO = userVipMapper.queryByUserId(dto.getUd());

@@ -14,6 +14,12 @@
     from t_viptype
     where viptype_id = #{viptypeId,jdbcType=INTEGER}
   </select>
+  <select id="queryName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_viptype where vipname=#{vipname}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_viptype
     where viptype_id = #{viptypeId,jdbcType=INTEGER}
