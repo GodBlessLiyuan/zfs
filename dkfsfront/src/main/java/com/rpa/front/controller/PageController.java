@@ -43,6 +43,7 @@ public class PageController {
 
     /**
      * 会员中心——会员权益
+     *
      * @return
      */
     @GetMapping("memberright")
@@ -99,7 +100,14 @@ public class PageController {
         return "member_service_protocol";
     }
 
-
-
+    /**
+     * 隐私
+     *
+     * @return
+     */
+    @GetMapping("privacy")
+    public String privacy() {
+        return "privacy_index";
+    }
 }
 
