@@ -2,7 +2,6 @@ package com.rpa.server.controller;
 
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.BatchInfoDTO;
-import com.rpa.server.dto.BatchSycInfoDTO;
 import com.rpa.server.service.IBatchInfoService;
 import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +24,25 @@ public class BatchInfoController {
     @Autowired
     private IBatchInfoService service;
 
-    @PostMapping("keyactivate")
+    /**
+     * 原来激活多开分身业务代码
+     * */
+    @PostMapping("keyactivateOld")
     public ResultVO keyActivate(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
-//        if (!VerifyUtil.checkToken(dto, req)) {
-//            return new ResultVO(2000);
-//        }
+        if (!VerifyUtil.checkToken(dto, req)) {
+            return new ResultVO(2000);
+        }
 
         return service.activate(dto);
+    }
+
+    @PostMapping("keyactivate")
+    public ResultVO keyActivate2(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
+        if (!VerifyUtil.checkToken(dto, req)) {
+            return new ResultVO(2000);
+        }
+
+        return service.keyactivate2(dto);
     }
 
 

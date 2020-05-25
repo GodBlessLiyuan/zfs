@@ -42,6 +42,15 @@ public class ChBatchPO implements Serializable {
     private Integer updateAId;
 
     private Integer days;
+    private Byte activeSync;
+
+    public Byte getActiveSync() {
+        return activeSync;
+    }
+
+    public void setActiveSync(Byte activeSync) {
+        this.activeSync = activeSync;
+    }
 
     private static final long serialVersionUID = 1L;
 

@@ -44,17 +44,20 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         //不需要更新卡信息，因为卡在对方库中
         ViptypePO vipTypePO = vipTypeMapper.queryName(dto.getVipTypePO().getVipname());
         if(vipTypePO==null){
-            dto.getVipTypePO().setViptypeId(null);
-            vipTypeMapper.insert(dto.getVipTypePO());
+            vipTypePO=new ViptypePO();
+            vipTypePO=dto.getVipTypePO();
+            vipTypeMapper.insert(vipTypePO);
         }
         UserPO userPO = userMapper.queryByPhone(dto.getUserPO().getPhone());
         if(userPO==null){
-            dto.getUserPO().setUserId(null);
-            userMapper.insertSelective(dto.getUserPO());
+            userPO=new UserPO();
+            userPO=dto.getUserPO();
+            userMapper.insertSelective(userPO);
         }
+        long useID=userPO.getUserId();
         // 更新用户会员数据
-        UserVipPO userVipPO = userVipMapper.queryByUserId(dto.getUd());
-        UserVipPO newUserVipPO = UserVipUtil.buildUserVipVO(userVipPO, dto.getUd(), dto.getDay(), false);
+        UserVipPO userVipPO = userVipMapper.queryByUserId(useID);
+        UserVipPO newUserVipPO = UserVipUtil.buildUserVipVO(userVipPO, useID, dto.getDay(), false);
         int result2;
         if (userVipPO == null) {
             result2 = userVipMapper.insert(newUserVipPO);
@@ -66,4 +69,5 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         }
         return new ResultVO(1000);
     }
+
 }

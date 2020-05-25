@@ -1,6 +1,7 @@
 package com.rpa.web.service;
 
 import com.rpa.web.dto.ChBatchDTO;
+import com.rpa.web.dto.ChBatchSyncDTO;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.vo.ChBatchVO;
@@ -27,4 +28,6 @@ public interface ChBatchService {
     ResultVO updateStatus(Integer batchId, Byte status, HttpSession httpSession);
 
     void export(String chanNickname, Integer comTypeId, Byte status, String operator, HttpServletResponse response);
+
+    ResultVO insertSync(ChBatchSyncDTO chBatchDTO, HttpSession httpSession);
 }
