@@ -35,12 +35,12 @@
       com_type_id, chan_id, create_time, 
       update_time, `status`, com_type_name, 
       dr, extra, update_a_id, 
-      `days`)
+      `days`,active_sync)
     values (#{batchId,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, 
       #{comTypeId,jdbcType=INTEGER}, #{chanId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{comTypeName,jdbcType=CHAR}, 
       #{dr,jdbcType=TINYINT}, #{extra,jdbcType=CHAR}, #{updateAId,jdbcType=INTEGER}, 
-      #{days,jdbcType=INTEGER})
+      #{days,jdbcType=INTEGER},#{activeSync,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" keyProperty="batchId" useGeneratedKeys="true" parameterType="com.rpa.common.pojo.ChBatchPO">
     insert into t_ch_batch
@@ -84,6 +84,9 @@
       <if test="days != null">
         `days`,
       </if>
+      <if test="activeSync != null">
+        `active_sync`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="batchId != null">
@@ -125,6 +128,10 @@
       <if test="days != null">
         #{days,jdbcType=INTEGER},
       </if>
+      <if test="activeSync != null">
+        #{activeSync,jdbcType=INTEGER},
+      </if>
+
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.ChBatchPO">
@@ -231,4 +238,7 @@
     where com_type_id = #{comTypeId}
   </select>
 
+  <select id="queryActiveByPri" resultType="java.lang.Byte">
+    select active_sync from t_ch_batch where batch_id = #{batchId,jdbcType=INTEGER}
+  </select>
 </mapper>

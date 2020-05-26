@@ -1,6 +1,7 @@
 package com.rpa.web.controller;
 
 import com.rpa.web.dto.ChBatchDTO;
+import com.rpa.web.dto.ChBatchSyncDTO;
 import com.rpa.web.service.ChBatchService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.common.vo.ResultVO;
@@ -80,6 +81,11 @@ public class ChBatchController {
     @PostMapping("insert")
     public ResultVO insert(ChBatchDTO chBatchDTO, HttpSession httpSession) {
         return this.chBatchService.insert(chBatchDTO, httpSession);
+    }
+
+    @PostMapping("insertSync")
+    public ResultVO insertSync(ChBatchSyncDTO chBatchDTO, HttpSession httpSession) {
+        return this.chBatchService.insertSync(chBatchDTO, httpSession);
     }
 
     /**

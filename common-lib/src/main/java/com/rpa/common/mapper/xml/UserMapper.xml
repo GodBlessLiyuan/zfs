@@ -32,7 +32,7 @@
       #{ip,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{chanName,jdbcType=CHAR}, #{softChannelId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.common.pojo.UserPO">
+  <insert id="insertSelective" parameterType="com.rpa.common.pojo.UserPO" useGeneratedKeys="true" keyProperty="userId">
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">

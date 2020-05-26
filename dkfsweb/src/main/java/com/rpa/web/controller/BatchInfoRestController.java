@@ -1,9 +1,10 @@
-package com.rpa.server.controller;
+package com.rpa.web.controller;
 
+import com.rpa.common.dto.BatchSycInfoDTO;
+import com.rpa.common.utils.VerifyUtil;
 import com.rpa.common.vo.ResultVO;
-import com.rpa.server.dto.BatchInfoDTO;
-import com.rpa.server.service.IBatchInfoService;
-import com.rpa.server.utils.VerifyUtil;
+import com.rpa.web.dto.BatchInfoDTO;
+import com.rpa.web.service.IBatchInfoRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,29 +14,27 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author: xiahui
- * @date: Created in 2019/10/29 9:26
- * @description: 卡密表
- * @version: 1.0
+ * @Description:
+ * @author: liyuan
+ * @data 2020-05-21 12:36
  */
 @RequestMapping("v1.0")
 @RestController
-public class BatchInfoController {
+public class BatchInfoRestController {
     @Autowired
-    private IBatchInfoService service;
-
+    private IBatchInfoRestService service;
     /**
-     * 原来激活多开分身业务代码
+     * 向外暴露接口
      * */
-    @PostMapping("keyactivateOld")
-    public ResultVO keyActivate(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
-        if (!VerifyUtil.checkToken(dto, req)) {
-            return new ResultVO(2000);
-        }
+    @PostMapping("keySycActivate")
+    public ResultVO keySycActivate(@RequestBody BatchSycInfoDTO dto, HttpServletRequest req) {
 
-        return service.activate(dto);
+        return service.activateSync(dto);
     }
 
+    /***
+     * 向外暴露接口
+     * */
     @PostMapping("keyactivate")
     public ResultVO keyActivate2(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
 //        if (!VerifyUtil.checkToken(dto, req)) {
@@ -44,6 +43,4 @@ public class BatchInfoController {
 
         return service.keyactivate2(dto);
     }
-
-
 }

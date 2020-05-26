@@ -13,4 +13,5 @@ public interface ChBatchMapper extends BaseMapper<ChBatchPO, Integer> {
 
     Integer queryDaysByTypeId(Integer typeId);
 
+    Byte queryActiveByPri(Integer batchId);
 }

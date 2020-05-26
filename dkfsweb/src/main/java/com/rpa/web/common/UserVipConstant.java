@@ -16,4 +16,18 @@ public class UserVipConstant {
 
     /** 默认销售渠道值 **/
     public static final String DEFAULT_SALE_CHAN_NAME = "无";
+
+    /**
+     * 年会员天数
+     */
+    public static final int YEAR_VIP_DAY = 360;
+    /**
+     * 普通会员类型
+     */
+    public static final int COMM_VIP = 10;
+    /**
+     * 年会员类型
+     */
+    public static final int YEAR_VIP = 20;
+
 }

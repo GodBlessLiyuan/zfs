@@ -17,4 +17,6 @@ public interface IBatchInfoService {
      * @return
      */
     ResultVO activate(BatchInfoDTO dto);
+
+    ResultVO keyactivate2(BatchInfoDTO dto);
 }

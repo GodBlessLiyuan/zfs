@@ -10,6 +10,7 @@ import com.rpa.web.common.PageHelper;
 import com.rpa.web.dto.ChBatchDTO;
 import com.rpa.common.pojo.BatchInfoPO;
 import com.rpa.common.bo.ChBatchBO;
+import com.rpa.web.dto.ChBatchSyncDTO;
 import com.rpa.web.service.ChBatchService;
 import com.rpa.web.utils.DTPageInfo;
 import com.rpa.web.utils.DateUtil;
@@ -195,6 +196,62 @@ public class ChBatchServiceImpl implements ChBatchService {
         return new ResultVO(1000);
     }
 
+    /***
+     * 因为不想破坏源代码，所以写了一个，只多了一个setActiveSync()
+     * */
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public ResultVO insertSync(ChBatchSyncDTO dto, HttpSession httpSession) {
+
+        // 把 DTO 转换为 PO
+        ChBatchPO po = new ChBatchPO();
+        po.setChanId(dto.getChanId());
+        po.setNum(dto.getNum());
+        po.setComTypeId(dto.getComTypeId());
+        po.setComTypeName(queryTypenameByTypeid(dto.getComTypeId()));
+        po.setExtra(dto.getExtra());
+        po.setStatus((byte)1);
+        po.setDr((byte)1);
+        po.setCreateTime(new Date());
+        po.setUpdateTime(new Date());
+        po.setDays(chBatchMapper.queryDaysByTypeId(dto.getComTypeId()));
+        po.setActiveSync(dto.getActiveSync());
+        // 创建时，创建人和更操作新人一样，此后创建人ID便不再改变
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
+        po.setUpdateAId(OperatorUtil.getOperatorId(httpSession));
+
+        int result1 = this.chBatchMapper.insert(po);
+        if (result1 == 0) {
+            LogUtil.log(logger, "insert", "插入失败", po);
+        }
+
+
+        /**
+         * 根据t_ch_batch表中插入数据的num字段，往t_batch_info表中插入num条数据
+         */
+        List<BatchInfoPO> batchInfoPOs = new ArrayList<>(dto.getNum());
+        for(int i=0; i<dto.getNum(); i++) {
+            BatchInfoPO batchInfoPO = new BatchInfoPO();
+
+            //生成一个随机字符串作为卡密
+            String str = RandomStringUtils.randomAlphanumeric(16);
+
+            batchInfoPO.setVipkey(str);
+            batchInfoPO.setBatchId(po.getBatchId());
+            batchInfoPO.setStatus((byte)1);
+            batchInfoPO.setDays(queryDaysByBatchId(po.getBatchId()));
+            batchInfoPO.setUserId((long)0);
+
+            batchInfoPOs.add(batchInfoPO);
+        }
+
+        int result2 = this.batchInfoMapper.insertBatchInfo(batchInfoPOs);
+        if (result2 == 0) {
+            LogUtil.log(logger, "insert", "插入batchInfoPOs失败", batchInfoPOs);
+        }
+
+        return new ResultVO(1000);
+    }
 
     /**
      * 修改

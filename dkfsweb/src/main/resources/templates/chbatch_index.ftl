@@ -182,6 +182,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <span for="recipient-name" class="col-form-label">激活同步设置<span style="color: red"> *</span></span>
+                            <select id="active_sync" class="form-control">
+                                <option value="1" selected>仅限多开分身激活</option>
+                                <option value="2">智能助手与多开分身都能激活</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <span for="message-text" class="col-form-label">备注:</span>
                             <input id="insert_extra" class="form-control" type="text">
                         </div>
@@ -307,7 +315,7 @@
 
         // 先对上次查询的结果进行清空
         $('#insert_comTypeId').empty();
-
+        // $("#active_sync").empty();
         $.ajax({
             type: 'GET',
             url: 'chbatch/queryComTypes',
@@ -334,13 +342,14 @@
         var chanId = $('#insert_chanId').val();
         var num = $('#insert_num').val();
         var comTypeId = $('#insert_comTypeId').val();
+        var activeSync=$('#active_sync').val();
         var extra = $('#insert_extra').val();
 
         if (num == null) {
             alert("创建数量不能为空！");
         } else {
 
-            $.post("chbatch/insert", {chanId:chanId, num:num, comTypeId:comTypeId, extra:extra}, function (result) {
+            $.post("chbatch/insertSync", {chanId:chanId, num:num, comTypeId:comTypeId,activeSync:activeSync, extra:extra}, function (result) {
                 if (result.status === 1008) {
                     alert("登录超时，请重新登录！");
                     window.location.href = 'login';
