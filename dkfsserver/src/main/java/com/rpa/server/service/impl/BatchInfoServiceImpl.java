@@ -109,9 +109,9 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     @Override
     public ResultVO keyactivate2(BatchInfoDTO dto) {
         BatchInfoPO po = batchInfoMapper.queryByKey(dto.getKey());
-        UserPO userPOF=userMapper.selectByPrimaryKey(dto.getUd());
-        dto.setPhone(userPOF.getPhone());
         if (null == po) {
+            UserPO userPOF=userMapper.selectByPrimaryKey(dto.getUd());
+            dto.setPhone(userPOF.getPhone());
             LogUtil.log(logger,"activeDKSF","不存在",po);
             RestTemplate template=new RestTemplate();
             String tmp = template.postForObject(keyActivateUrl, dto, String.class);
