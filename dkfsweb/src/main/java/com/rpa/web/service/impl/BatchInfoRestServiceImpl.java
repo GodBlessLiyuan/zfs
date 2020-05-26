@@ -53,6 +53,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         if(userPO==null){
             userPO=new UserPO();
             userPO=dto.getUserPO();
+            userPO.setUserId(null);
             userMapper.insertSelective(userPO);
         }
         long useID=userPO.getUserId();
@@ -103,6 +104,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         if(userPO1==null){
             userPO1=new UserPO();
             userPO1.setPhone(dto.getPhone());
+            userPO1.setUserId(null);
             userMapper.insertSelective(userPO1);
         }
         po.setUserId(userPO1.getUserId());
@@ -135,11 +137,9 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         else if(activeSyc==2)
         {
             UserPO userPO= userMapper.selectByPrimaryKey(userVipPO.getUserId());
-            ViptypePO vipTypePO=vipTypeMapper.selectByPrimaryKey(userVipPO.getViptypeId());
             //用于发送到智能助手的对象batchSycInfoDTO
             BatchSycInfoDTO batchSycInfoDTO=new BatchSycInfoDTO();
             batchSycInfoDTO.setUserPO(userPO);
-            batchSycInfoDTO.setVipTypePO(vipTypePO);
             batchSycInfoDTO.setDay(po.getDays());
             return new ResultVO(999,batchSycInfoDTO);
         }

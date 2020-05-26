@@ -215,6 +215,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         if(userPO==null){
             userPO=new UserPO();
             userPO=dto.getUserPO();
+            userPO.setUserId(null);
             userMapper.insertSelective(userPO);
         }
         long useID=userPO.getUserId();
