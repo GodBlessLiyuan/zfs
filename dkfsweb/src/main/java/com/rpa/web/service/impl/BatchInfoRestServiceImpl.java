@@ -77,8 +77,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
     private BatchInfoMapper batchInfoMapper;
     @Autowired
     private ChBatchMapper chBatchMapper;
-    @Value("${ZnzjUrl.keySycActivateZnZJ}")
-    private String keySycActivateUrl;
+
     @Autowired
     private ActiveZnzsMapper znzsMapper;
 
@@ -136,6 +135,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         }
         else if(activeSyc==2)
         {
+            userVipPO=userVipMapper.queryByUserId(useID);
             UserPO userPO= userMapper.selectByPrimaryKey(userVipPO.getUserId());
             //用于发送到智能助手的对象batchSycInfoDTO
             BatchSycInfoDTO batchSycInfoDTO=new BatchSycInfoDTO();

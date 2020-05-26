@@ -184,16 +184,17 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             znzsPO.setPhone(userPO.getPhone());
             znzsPO.setTime(new Date());
             try{
-                Integer resultVO= template.postForObject(keySycActivateUrl,batchSycInfoDTO, Integer.class);
-
-                if(resultVO!=null&&resultVO==1000){
+                String tmp= template.postForObject(keySycActivateUrl,batchSycInfoDTO, String.class);
+                JSONObject jobj=JSON.parseObject(tmp,JSONObject.class);
+                ResultVO resultVO=new ResultVO((Integer)jobj.get("status"));
+                if(resultVO.getStatus()==1000){
                     znzsPO.setStatus((byte) 1);
                 }else{
                     LogUtil.log(logger,keySycActivateUrl, JSON.toJSONString(batchSycInfoDTO),JSON.toJSON(resultVO),"返回状态码不正确");
                     znzsPO.setStatus((byte) 2);
                 }
                 znzsMapper.insert(znzsPO);
-                return new ResultVO(2000);
+                return resultVO;
 
             }catch (Exception e){
                 e.printStackTrace();
