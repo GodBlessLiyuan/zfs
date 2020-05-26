@@ -77,8 +77,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
     private BatchInfoMapper batchInfoMapper;
     @Autowired
     private ChBatchMapper chBatchMapper;
-    @Value("${ZnzjUrl.keySycActivateZnZJ}")
-    private String keySycActivateUrl;
+
     @Autowired
     private ActiveZnzsMapper znzsMapper;
 
