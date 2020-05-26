@@ -196,7 +196,9 @@ public class ChBatchServiceImpl implements ChBatchService {
         return new ResultVO(1000);
     }
 
-
+    /***
+     * 因为不想破坏源代码，所以写了一个，只多了一个setActiveSync()
+     * */
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public ResultVO insertSync(ChBatchSyncDTO dto, HttpSession httpSession) {

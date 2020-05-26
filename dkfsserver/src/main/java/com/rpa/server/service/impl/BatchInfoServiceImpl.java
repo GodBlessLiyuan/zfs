@@ -1,6 +1,7 @@
 package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.rpa.common.mapper.BatchInfoMapper;
 import com.rpa.common.mapper.UserMapper;
 import com.rpa.common.mapper.UserVipMapper;
@@ -61,6 +62,9 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     private ActiveZnzsMapper znzsMapper;
     @Value("${ZnzjUrl.keySycActivate}")
     private String keySycActivateUrl;
+    @Value("${ZnzjUrl.keyactivateZnZj}")
+    private String keyActivateUrl;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO activate(BatchInfoDTO dto) {
@@ -105,8 +109,29 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     @Override
     public ResultVO keyactivate2(BatchInfoDTO dto) {
         BatchInfoPO po = batchInfoMapper.queryByKey(dto.getKey());
+        UserPO userPOF=userMapper.selectByPrimaryKey(dto.getUd());
+        dto.setPhone(userPOF.getPhone());
         if (null == po) {
-            return new ResultVO(1016);
+            LogUtil.log(logger,"activeDKSF","不存在",po);
+            RestTemplate template=new RestTemplate();
+            String tmp = template.postForObject(keyActivateUrl, dto, String.class);
+            JSONObject jobj = JSON.parseObject(tmp, JSONObject.class);
+            ResultVO resultVO=new ResultVO((Integer) jobj.get("status"));
+
+            ActiveZnzsPO znzsPO=new ActiveZnzsPO();
+            znzsPO.setPhone(dto.getPhone());
+            znzsPO.setTime(new Date());
+            znzsPO.setVipkey(dto.getKey());
+            znzsPO.setStatus((byte) 2);//默认返回状态码
+            if(resultVO.getStatus()==999){
+                BatchSycInfoDTO ba = jobj.getObject("data", BatchSycInfoDTO.class);
+                znzsPO.setStatus((byte)1);
+                resultVO=activeSelfDKFS(ba);
+            }else if(resultVO.getStatus()==1000){
+                znzsPO.setStatus((byte) 1);
+            }
+            znzsMapper.insert(znzsPO);
+            return resultVO;
         }
 
         if (BatchInfoConstant.FROZEN == po.getStatus()) {
@@ -153,7 +178,6 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             batchSycInfoDTO.setUserPO(userPO);
             batchSycInfoDTO.setVipTypePO(vipTypePO);
             batchSycInfoDTO.setDay(po.getDays());
-            batchSycInfoDTO.setUd(dto.getUd());
 
             ActiveZnzsPO znzsPO=new ActiveZnzsPO();
             znzsPO.setVipkey(po.getVipkey());
@@ -164,14 +188,12 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
 
                 if(resultVO!=null&&resultVO==1000){
                     znzsPO.setStatus((byte) 1);
-                    znzsMapper.insert(znzsPO);
-                    return new ResultVO(1000);
                 }else{
                     LogUtil.log(logger,keySycActivateUrl, JSON.toJSONString(batchSycInfoDTO),JSON.toJSON(resultVO),"返回状态码不正确");
                     znzsPO.setStatus((byte) 2);
-                    znzsMapper.insert(znzsPO);
-                    return new ResultVO(2000);
                 }
+                znzsMapper.insert(znzsPO);
+                return new ResultVO(2000);
 
             }catch (Exception e){
                 e.printStackTrace();
@@ -188,5 +210,27 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         }
     }
 
+    private ResultVO activeSelfDKFS(BatchSycInfoDTO dto) {
+        UserPO userPO = userMapper.queryByPhone(dto.getUserPO().getPhone());
+        if(userPO==null){
+            userPO=new UserPO();
+            userPO=dto.getUserPO();
+            userMapper.insertSelective(userPO);
+        }
+        long useID=userPO.getUserId();
+        // 更新用户会员数据
+        UserVipPO userVipPO = userVipMapper.queryByUserId(useID);
+        UserVipPO newUserVipPO = UserVipUtil.buildUserVipVO(userVipPO, useID, dto.getDay(), false);
+        int result2;
+        if (userVipPO == null) {
+            result2 = userVipMapper.insert(newUserVipPO);
+        } else {
+            result2 = userVipMapper.updateByPrimaryKey(newUserVipPO);
+        }
+        if (result2 == 0) {
+            LogUtil.log(logger, "activity", "插入或更新失败", dto);
+        }
+        return new ResultVO(1000);
+    }
 
 }

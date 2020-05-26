@@ -74,7 +74,8 @@ public class SessionFilter implements Filter {
      * @param uri
      */
     public boolean isNeedFilter(String uri) {
-        if(uri.startsWith("/dkfsmanager")) return false;
+        if(uri.equals("/dkfsmanager/v1.0/keySycActivate")) return false;
+        if(uri.equals("/dkfsmanager/v1.0/keyactivate")) return false;
         for (String exclude : excludeList) {
             exclude = CONTEXT_PATH + exclude;
             if (uri.startsWith(exclude)) {

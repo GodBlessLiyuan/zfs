@@ -17,7 +17,6 @@ public class BatchSycInfoDTO implements Serializable {
     /**
      * 用户唯一标识id
      */
-    private Long ud;
     private ViptypePO vipTypePO;
     private UserPO userPO;
 }
