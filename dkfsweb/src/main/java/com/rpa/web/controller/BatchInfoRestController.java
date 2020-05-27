@@ -1,9 +1,8 @@
 package com.rpa.web.controller;
 
-import com.rpa.common.dto.BatchSycInfoDTO;
-import com.rpa.common.utils.VerifyUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.dto.BatchInfoDTO;
+import com.rpa.web.dto.BatchSycInfoDTO;
 import com.rpa.web.service.IBatchInfoRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +34,7 @@ public class BatchInfoRestController {
      * 向外暴露接口
      * */
     @PostMapping("keyactivate")
-    public ResultVO keyActivate2(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
-        return service.keyactivate2(dto);
+    public ResultVO keyActivateZnzj(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
+        return service.keyActivateZnzj(dto);
     }
 }

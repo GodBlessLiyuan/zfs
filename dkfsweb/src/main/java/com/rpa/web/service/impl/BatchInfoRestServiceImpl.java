@@ -1,22 +1,20 @@
 package com.rpa.web.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.rpa.common.constant.BatchInfoConstant;
-import com.rpa.common.dto.BatchSycInfoDTO;
 import com.rpa.common.mapper.*;
 import com.rpa.common.pojo.*;
 import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.web.dto.BatchInfoDTO;
+import com.rpa.web.dto.BatchSycInfoDTO;
+import com.rpa.web.dto.UserDouDTO;
 import com.rpa.web.service.IBatchInfoRestService;
 import com.rpa.web.utils.UserVipUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -42,17 +40,11 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
     @Override
     public ResultVO activateSync(BatchSycInfoDTO dto) {
 
-        //不需要更新卡信息，因为卡在对方库中
-        ViptypePO vipTypePO = vipTypeMapper.queryName(dto.getVipTypePO().getVipname());
-        if(vipTypePO==null){
-            vipTypePO=new ViptypePO();
-            vipTypePO=dto.getVipTypePO();
-            vipTypeMapper.insert(vipTypePO);
-        }
-        UserPO userPO = userMapper.queryByPhone(dto.getUserPO().getPhone());
+        UserPO userPO = userMapper.queryByPhone(dto.getUserDTO().getPhone());
         if(userPO==null){
             userPO=new UserPO();
-            userPO=dto.getUserPO();
+            UserDouDTO userDTO = dto.getUserDTO();
+            UserDouDTO.convertPO(userDTO,userPO);
             userPO.setUserId(null);
             userMapper.insertSelective(userPO);
         }
@@ -86,7 +78,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
      * */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultVO keyactivate2(BatchInfoDTO dto) {
+    public ResultVO keyActivateZnzj(BatchInfoDTO dto) {
         BatchInfoPO po = batchInfoMapper.queryByKey(dto.getKey());
         if (null == po) {
             return new ResultVO(1016);
@@ -139,7 +131,9 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
             UserPO userPO= userMapper.selectByPrimaryKey(userVipPO.getUserId());
             //用于发送到智能助手的对象batchSycInfoDTO
             BatchSycInfoDTO batchSycInfoDTO=new BatchSycInfoDTO();
-            batchSycInfoDTO.setUserPO(userPO);
+            UserDouDTO userDTO=new UserDouDTO();
+            UserDouDTO.convertDTO(userDTO,userPO);
+            batchSycInfoDTO.setUserDTO(userDTO);
             batchSycInfoDTO.setDay(po.getDays());
             return new ResultVO(999,batchSycInfoDTO);
         }

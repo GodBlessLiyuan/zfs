@@ -2,7 +2,6 @@ package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.rpa.common.mapper.BatchInfoMapper;
 import com.rpa.common.mapper.UserMapper;
 import com.rpa.common.mapper.UserVipMapper;
@@ -19,7 +18,7 @@ import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.BatchInfoConstant;
 import com.rpa.server.dto.BatchInfoDTO;
 import com.rpa.server.dto.BatchSycInfoDTO;
-import com.rpa.server.dto.UserDTO;
+import com.rpa.server.dto.UserDouDTO;
 import com.rpa.server.service.IBatchInfoService;
 import com.rpa.server.utils.UserVipUtil;
 import com.rpa.server.vo.SycResultVO;
@@ -176,10 +175,11 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             ViptypePO vipTypePO=vipTypeMapper.selectByPrimaryKey(userVipPO.getViptypeId());
             //用于发送到智能助手的对象batchSycInfoDTO
             BatchSycInfoDTO batchSycInfoDTO=new BatchSycInfoDTO();
-            batchSycInfoDTO.setUserPO(userPO);
-            batchSycInfoDTO.setVipTypePO(vipTypePO);
+            UserDouDTO userDTO=new UserDouDTO();
+            UserDouDTO.convertDTO(userDTO,userPO);
+            batchSycInfoDTO.setUserDTO(userDTO);
             batchSycInfoDTO.setDay(po.getDays());
-
+            batchSycInfoDTO.setVipTypePO(vipTypePO);
             ActiveZnzsPO znzsPO=new ActiveZnzsPO();
             znzsPO.setVipkey(po.getVipkey());
             znzsPO.setPhone(userPO.getPhone());
@@ -215,13 +215,14 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     private ResultVO activeSelfDKFS(BatchSycInfoDTO dto) {
         UserPO userPO = userMapper.queryByPhone(dto.getUserDTO().getPhone());
         if(userPO==null){
-            UserDTO userDTO = dto.getUserDTO();
+            UserDouDTO userDTO = dto.getUserDTO();
             userPO=new UserPO();
             userPO.setChanName(userDTO.getChanName());
             userPO.setCreateTime(userDTO.getCreateTime());
             userPO.setIp(userDTO.getIp());
             userPO.setPhone(userDTO.getPhone());
-
+            userPO.setUpdateTime(userDTO.getUpdateTime());
+            userPO.setSoftChannelId(userDTO.getSoftChannelId());
             userPO.setUserId(null);
             userMapper.insertSelective(userPO);
         }
