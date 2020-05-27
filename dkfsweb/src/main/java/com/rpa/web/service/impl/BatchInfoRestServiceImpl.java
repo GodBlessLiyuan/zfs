@@ -39,6 +39,13 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO activateSync(BatchSycInfoDTO dto) {
+        //不需要更新卡信息，因为卡在对方库中
+        ViptypePO vipTypePO = vipTypeMapper.queryName(dto.getVipTypePO().getVipname());
+        if(vipTypePO==null){
+            vipTypePO=new ViptypePO();
+            vipTypePO=dto.getVipTypePO();
+            vipTypeMapper.insert(vipTypePO);
+        }
 
         UserPO userPO = userMapper.queryByPhone(dto.getUserDTO().getPhone());
         if(userPO==null){

@@ -1,7 +1,6 @@
 package com.rpa.server.dto;
 
 import com.rpa.common.dto.TokenDTO;
-import com.rpa.common.pojo.UserPO;
 import lombok.Data;
 
 /**

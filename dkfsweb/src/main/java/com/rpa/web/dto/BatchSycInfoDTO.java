@@ -1,5 +1,6 @@
 package com.rpa.web.dto;
 
+import com.rpa.common.pojo.ViptypePO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,6 +18,6 @@ public class BatchSycInfoDTO implements Serializable {
      */
     private Long ud;
     private UserDouDTO userDTO;
-
+    private ViptypePO vipTypePO;
 
 }
