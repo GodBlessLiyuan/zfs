@@ -2,6 +2,7 @@ package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.rpa.common.mapper.BatchInfoMapper;
 import com.rpa.common.mapper.UserMapper;
 import com.rpa.common.mapper.UserVipMapper;
@@ -114,6 +115,8 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             dto.setPhone(userPOF.getPhone());
             LogUtil.log(logger,"activeDKSF","不存在",po);
             RestTemplate template=new RestTemplate();
+            template.getMessageConverters().clear();
+            template.getMessageConverters().add(new FastJsonHttpMessageConverter());
             String tmp = template.postForObject(keyActivateUrl, dto, String.class);
             LogUtil.log(logger,"postForObject",tmp);
             JSONObject jobj = JSON.parseObject(tmp, JSONObject.class);
