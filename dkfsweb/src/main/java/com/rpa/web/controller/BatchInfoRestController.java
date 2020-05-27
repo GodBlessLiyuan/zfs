@@ -28,7 +28,6 @@ public class BatchInfoRestController {
      * */
     @PostMapping("keySycActivate")
     public ResultVO keySycActivate(@RequestBody BatchSycInfoDTO dto, HttpServletRequest req) {
-
         return service.activateSync(dto);
     }
 
@@ -37,7 +36,6 @@ public class BatchInfoRestController {
      * */
     @PostMapping("keyactivate")
     public ResultVO keyActivate2(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
-
         return service.keyactivate2(dto);
     }
 }
