@@ -115,7 +115,9 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             LogUtil.log(logger,"activeDKSF","不存在",po);
             RestTemplate template=new RestTemplate();
             String tmp = template.postForObject(keyActivateUrl, dto, String.class);
+            LogUtil.log(logger,"postForObject",tmp);
             JSONObject jobj = JSON.parseObject(tmp, JSONObject.class);
+            LogUtil.log(logger,"parseObject",jobj.toJSONString());
             ResultVO resultVO=new ResultVO((Integer) jobj.get("status"));
 
             ActiveZnzsPO znzsPO=new ActiveZnzsPO();
