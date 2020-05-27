@@ -41,7 +41,6 @@ public class BatchInfoController {
         if (!VerifyUtil.checkToken(dto, req)) {
             return new ResultVO(2000);
         }
-
         return service.keyactivate2(dto);
     }
 
