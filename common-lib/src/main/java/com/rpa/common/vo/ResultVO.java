@@ -18,6 +18,10 @@ public class ResultVO<T> implements Serializable {
 
     private T data;
 
+    public ResultVO(){
+        this(1000);
+    }
+
     public ResultVO(Integer status) {
         this(status, null);
     }

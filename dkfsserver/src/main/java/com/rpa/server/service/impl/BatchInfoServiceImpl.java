@@ -19,8 +19,10 @@ import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.BatchInfoConstant;
 import com.rpa.server.dto.BatchInfoDTO;
 import com.rpa.server.dto.BatchSycInfoDTO;
+import com.rpa.server.dto.UserDTO;
 import com.rpa.server.service.IBatchInfoService;
 import com.rpa.server.utils.UserVipUtil;
+import com.rpa.server.vo.SycResultVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,13 +117,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             dto.setPhone(userPOF.getPhone());
             LogUtil.log(logger,"activeDKSF","不存在",po);
             RestTemplate template=new RestTemplate();
-            template.getMessageConverters().clear();
-            template.getMessageConverters().add(new FastJsonHttpMessageConverter());
-            String tmp = template.postForObject(keyActivateUrl, dto, String.class);
-            LogUtil.log(logger,"postForObject",tmp);
-            JSONObject jobj = JSON.parseObject(tmp, JSONObject.class);
-            LogUtil.log(logger,"parseObject",jobj.toJSONString());
-            ResultVO resultVO=new ResultVO((Integer) jobj.get("status"));
+            ResultVO<BatchSycInfoDTO> resultVO = template.postForObject(keyActivateUrl, dto, SycResultVO.class);
 
             ActiveZnzsPO znzsPO=new ActiveZnzsPO();
             znzsPO.setPhone(dto.getPhone());
@@ -129,7 +125,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             znzsPO.setVipkey(dto.getKey());
             znzsPO.setStatus((byte) 2);//默认返回状态码
             if(resultVO.getStatus()==999){
-                BatchSycInfoDTO ba = jobj.getObject("data", BatchSycInfoDTO.class);
+                BatchSycInfoDTO ba = resultVO.getData();
                 znzsPO.setStatus((byte)1);
                 resultVO=activeSelfDKFS(ba);
             }else if(resultVO.getStatus()==1000){
@@ -217,10 +213,15 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     }
 
     private ResultVO activeSelfDKFS(BatchSycInfoDTO dto) {
-        UserPO userPO = userMapper.queryByPhone(dto.getUserPO().getPhone());
+        UserPO userPO = userMapper.queryByPhone(dto.getUserDTO().getPhone());
         if(userPO==null){
+            UserDTO userDTO = dto.getUserDTO();
             userPO=new UserPO();
-            userPO=dto.getUserPO();
+            userPO.setChanName(userDTO.getChanName());
+            userPO.setCreateTime(userDTO.getCreateTime());
+            userPO.setIp(userDTO.getIp());
+            userPO.setPhone(userDTO.getPhone());
+
             userPO.setUserId(null);
             userMapper.insertSelective(userPO);
         }
