@@ -2,24 +2,23 @@ package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.rpa.common.mapper.BatchInfoMapper;
 import com.rpa.common.mapper.UserMapper;
 import com.rpa.common.mapper.UserVipMapper;
-import com.rpa.common.mapper.ViptypeMapper;
 import com.rpa.common.mapper.ChBatchMapper;
 import com.rpa.common.mapper.ActiveZnzsMapper;
+
 import com.rpa.common.pojo.BatchInfoPO;
 import com.rpa.common.pojo.UserVipPO;
 import com.rpa.common.pojo.UserPO;
-import com.rpa.common.pojo.ViptypePO;
+
 import com.rpa.common.pojo.ActiveZnzsPO;
 import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
 import com.rpa.server.constant.BatchInfoConstant;
 import com.rpa.server.dto.BatchInfoDTO;
 import com.rpa.server.dto.BatchSycInfoDTO;
-import com.rpa.server.dto.UserDTO;
+import com.rpa.server.dto.UserDouDTO;
 import com.rpa.server.service.IBatchInfoService;
 import com.rpa.server.utils.UserVipUtil;
 import com.rpa.server.vo.SycResultVO;
@@ -56,8 +55,6 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private ViptypeMapper vipTypeMapper;
-    @Autowired
     private ChBatchMapper chBatchMapper;
     @Autowired
     private RestTemplateBuilder restTemplateBuilder;
@@ -67,6 +64,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     private String keySycActivateUrl;
     @Value("${ZnzjUrl.keyactivateZnZj}")
     private String keyActivateUrl;
+
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -112,12 +110,23 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     @Override
     public ResultVO keyactivate2(BatchInfoDTO dto) {
         BatchInfoPO po = batchInfoMapper.queryByKey(dto.getKey());
+        /**
+         * 没有用户，传批次和本用户
+         * */
         if (null == po) {
             UserPO userPOF=userMapper.selectByPrimaryKey(dto.getUd());
+            if(userPOF==null) return new ResultVO(2000);
             dto.setPhone(userPOF.getPhone());
-            LogUtil.log(logger,"activeDKSF","不存在",po);
+            UserDouDTO userDouDTO=new UserDouDTO();
+            UserDouDTO.convertDTO(userDouDTO,userPOF);
+            BatchSycInfoDTO baSyn=new BatchSycInfoDTO();
+            baSyn.setPhone(dto.getPhone());
+            baSyn.setUserDouDTO(userDouDTO);
+            baSyn.setKey(dto.getKey());
+            logger.info("activeDKSF","不存在",po);
             RestTemplate template=new RestTemplate();
-            ResultVO<BatchSycInfoDTO> resultVO = template.postForObject(keyActivateUrl, dto, SycResultVO.class);
+            //传用户信息，返回被激活的天数
+            ResultVO<BatchSycInfoDTO> resultVO = template.postForObject(keyActivateUrl, baSyn, SycResultVO.class);
 
             ActiveZnzsPO znzsPO=new ActiveZnzsPO();
             znzsPO.setPhone(dto.getPhone());
@@ -127,14 +136,16 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             if(resultVO.getStatus()==999){
                 BatchSycInfoDTO ba = resultVO.getData();
                 znzsPO.setStatus((byte)1);
-                resultVO=activeSelfDKFS(ba);
+                resultVO=activeSelfDKFS(ba,dto.getPhone());
             }else if(resultVO.getStatus()==1000){
                 znzsPO.setStatus((byte) 1);
             }
             znzsMapper.insert(znzsPO);
             return resultVO;
         }
-
+        /**
+         * 激活码都在多开分身的业务流程
+         * */
         if (BatchInfoConstant.FROZEN == po.getStatus()) {
             return new ResultVO(1017);
         } else if (BatchInfoConstant.ACTIVATED == po.getStatus()) {
@@ -171,18 +182,20 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         }
         else if(activeSyc==2)
         {
+            UserPO userPOF=userMapper.selectByPrimaryKey(dto.getUd());
+            dto.setPhone(userPOF.getPhone());
             RestTemplate template=restTemplateBuilder.build();
-            UserPO userPO= userMapper.selectByPrimaryKey(userVipPO.getUserId());
-            ViptypePO vipTypePO=vipTypeMapper.selectByPrimaryKey(userVipPO.getViptypeId());
-            //用于发送到智能助手的对象batchSycInfoDTO
+            //发送到智能助手，天数，手机号和用户
             BatchSycInfoDTO batchSycInfoDTO=new BatchSycInfoDTO();
-            batchSycInfoDTO.setUserPO(userPO);
-            batchSycInfoDTO.setVipTypePO(vipTypePO);
             batchSycInfoDTO.setDay(po.getDays());
+            batchSycInfoDTO.setPhone(dto.getPhone());
+            UserDouDTO userDouDTO=new UserDouDTO();
+            UserDouDTO.convertDTO(userDouDTO,userPOF);
+            batchSycInfoDTO.setUserDouDTO(userDouDTO);
 
             ActiveZnzsPO znzsPO=new ActiveZnzsPO();
             znzsPO.setVipkey(po.getVipkey());
-            znzsPO.setPhone(userPO.getPhone());
+            znzsPO.setPhone(dto.getPhone());
             znzsPO.setTime(new Date());
             try{
                 String tmp= template.postForObject(keySycActivateUrl,batchSycInfoDTO, String.class);
@@ -191,7 +204,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
                 if(resultVO.getStatus()==1000){
                     znzsPO.setStatus((byte) 1);
                 }else{
-                    LogUtil.log(logger,keySycActivateUrl, JSON.toJSONString(batchSycInfoDTO),JSON.toJSON(resultVO),"返回状态码不正确");
+                    logger.info(keySycActivateUrl, JSON.toJSONString(batchSycInfoDTO),JSON.toJSON(resultVO),"返回状态码不正确");
                     znzsPO.setStatus((byte) 2);
                 }
                 znzsMapper.insert(znzsPO);
@@ -212,19 +225,8 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         }
     }
 
-    private ResultVO activeSelfDKFS(BatchSycInfoDTO dto) {
-        UserPO userPO = userMapper.queryByPhone(dto.getUserDTO().getPhone());
-        if(userPO==null){
-            UserDTO userDTO = dto.getUserDTO();
-            userPO=new UserPO();
-            userPO.setChanName(userDTO.getChanName());
-            userPO.setCreateTime(userDTO.getCreateTime());
-            userPO.setIp(userDTO.getIp());
-            userPO.setPhone(userDTO.getPhone());
-
-            userPO.setUserId(null);
-            userMapper.insertSelective(userPO);
-        }
+    private ResultVO activeSelfDKFS(BatchSycInfoDTO dto,String phone) {
+        UserPO userPO = userMapper.queryByPhone(phone);
         long useID=userPO.getUserId();
         // 更新用户会员数据
         UserVipPO userVipPO = userVipMapper.queryByUserId(useID);

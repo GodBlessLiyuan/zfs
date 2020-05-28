@@ -11,6 +11,9 @@ import lombok.Data;
  */
 @Data
 public class BatchInfoDTO extends TokenDTO {
+    /**
+     * 特别注意：手机端传的参数没有手机号
+     * */
     private String phone;
     private String key;
 }
