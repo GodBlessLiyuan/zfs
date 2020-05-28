@@ -2,11 +2,18 @@ package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.rpa.common.mapper.*;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.rpa.common.mapper.BatchInfoMapper;
+import com.rpa.common.mapper.UserMapper;
+import com.rpa.common.mapper.UserVipMapper;
+import com.rpa.common.mapper.ViptypeMapper;
+import com.rpa.common.mapper.ChBatchMapper;
+import com.rpa.common.mapper.ActiveZnzsMapper;
+
 import com.rpa.common.pojo.BatchInfoPO;
 import com.rpa.common.pojo.UserVipPO;
 import com.rpa.common.pojo.UserPO;
-import com.rpa.common.pojo.ViptypePO;
+
 import com.rpa.common.pojo.ActiveZnzsPO;
 import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;

@@ -1,11 +1,22 @@
 package com.rpa.web.service.impl;
 
 import com.rpa.common.constant.BatchInfoConstant;
-import com.rpa.common.mapper.*;
-import com.rpa.common.pojo.*;
+
+import com.rpa.common.mapper.BatchInfoMapper;
+import com.rpa.common.mapper.UserMapper;
+import com.rpa.common.mapper.UserVipMapper;
+import com.rpa.common.mapper.ViptypeMapper;
+import com.rpa.common.mapper.ChBatchMapper;
+import com.rpa.common.mapper.ActiveZnzsMapper;
+import com.rpa.common.mapper.SoftChannelMapper;
+
+import com.rpa.common.pojo.SoftChannelPO;
+import com.rpa.common.pojo.UserPO;
+import com.rpa.common.pojo.UserVipPO;
+import com.rpa.common.pojo.BatchInfoPO;
+
 import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
-import com.rpa.web.dto.BatchInfoDTO;
 import com.rpa.web.dto.BatchSycInfoDTO;
 import com.rpa.web.dto.UserDouDTO;
 import com.rpa.web.service.IBatchInfoRestService;
@@ -17,7 +28,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.Date;
 
 /**
