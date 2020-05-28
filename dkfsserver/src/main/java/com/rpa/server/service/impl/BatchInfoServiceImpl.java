@@ -115,6 +115,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
          * */
         if (null == po) {
             UserPO userPOF=userMapper.selectByPrimaryKey(dto.getUd());
+            if(userPOF==null) return new ResultVO(2000);
             dto.setPhone(userPOF.getPhone());
             UserDouDTO userDouDTO=new UserDouDTO();
             UserDouDTO.convertDTO(userDouDTO,userPOF);
@@ -122,7 +123,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             baSyn.setPhone(dto.getPhone());
             baSyn.setUserDouDTO(userDouDTO);
             baSyn.setKey(dto.getKey());
-            LogUtil.log(logger,"activeDKSF","不存在",po);
+            logger.info("activeDKSF","不存在",po);
             RestTemplate template=new RestTemplate();
             //传用户信息，返回被激活的天数
             ResultVO<BatchSycInfoDTO> resultVO = template.postForObject(keyActivateUrl, baSyn, SycResultVO.class);
@@ -203,7 +204,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
                 if(resultVO.getStatus()==1000){
                     znzsPO.setStatus((byte) 1);
                 }else{
-                    LogUtil.log(logger,keySycActivateUrl, JSON.toJSONString(batchSycInfoDTO),JSON.toJSON(resultVO),"返回状态码不正确");
+                    logger.info(keySycActivateUrl, JSON.toJSONString(batchSycInfoDTO),JSON.toJSON(resultVO),"返回状态码不正确");
                     znzsPO.setStatus((byte) 2);
                 }
                 znzsMapper.insert(znzsPO);
