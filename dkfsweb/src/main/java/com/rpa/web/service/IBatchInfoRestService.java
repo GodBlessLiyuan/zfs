@@ -7,5 +7,5 @@ import com.rpa.web.dto.BatchSycInfoDTO;
 public interface IBatchInfoRestService {
     ResultVO activateSync(BatchSycInfoDTO dto);
 
-    ResultVO keyActivateZnzj(BatchInfoDTO dto);
+    ResultVO keyActivateZnzj(BatchSycInfoDTO dto);
 }

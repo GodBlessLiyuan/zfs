@@ -13,11 +13,12 @@ import java.io.Serializable;
 @Data
 public class BatchSycInfoDTO implements Serializable {
     private Integer day;
-    /**
-     * 用户唯一标识id
-     */
-    private Long ud;
-    private UserDouDTO userDTO;
-    private ViptypePO vipTypePO;
 
+    private String phone;
+
+    /***
+     * 可能需要将用户的一些信息接收和传输，
+     * */
+    private String key;
+    private UserDouDTO userDouDTO;
 }

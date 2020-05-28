@@ -34,7 +34,7 @@ public class BatchInfoRestController {
      * 向外暴露接口
      * */
     @PostMapping("keyactivate")
-    public ResultVO keyActivateZnzj(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
+    public ResultVO keyActivateZnzj(@RequestBody BatchSycInfoDTO dto, HttpServletRequest req) {
         return service.keyActivateZnzj(dto);
     }
 }

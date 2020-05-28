@@ -42,7 +42,7 @@ public class UserDouDTO extends TokenDTO {
         userDTO.setCreateTime(userPO.getCreateTime());
         userDTO.setUpdateTime(userPO.getUpdateTime());
         userDTO.setPhone(userPO.getPhone());
-        userDTO.setSoftChannelId(userPO.getSoftChannelId());
+//        userDTO.setSoftChannelId(userPO.getSoftChannelId());
         userDTO.setUsername(userPO.getUsername());
         userDTO.setIp(userPO.getIp());
     }
