@@ -2,11 +2,9 @@ package com.rpa.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.rpa.common.mapper.BatchInfoMapper;
 import com.rpa.common.mapper.UserMapper;
 import com.rpa.common.mapper.UserVipMapper;
-import com.rpa.common.mapper.ViptypeMapper;
 import com.rpa.common.mapper.ChBatchMapper;
 import com.rpa.common.mapper.ActiveZnzsMapper;
 
@@ -56,8 +54,6 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
 
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private ViptypeMapper vipTypeMapper;
     @Autowired
     private ChBatchMapper chBatchMapper;
     @Autowired
@@ -114,12 +110,12 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     @Override
     public ResultVO keyactivate2(BatchInfoDTO dto) {
         BatchInfoPO po = batchInfoMapper.queryByKey(dto.getKey());
-        UserPO userPOF=userMapper.selectByPrimaryKey(dto.getUd());
-        dto.setPhone(userPOF.getPhone());
         /**
          * 没有用户，传批次和本用户
          * */
         if (null == po) {
+            UserPO userPOF=userMapper.selectByPrimaryKey(dto.getUd());
+            dto.setPhone(userPOF.getPhone());
             UserDouDTO userDouDTO=new UserDouDTO();
             UserDouDTO.convertDTO(userDouDTO,userPOF);
             BatchSycInfoDTO baSyn=new BatchSycInfoDTO();
@@ -185,6 +181,8 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         }
         else if(activeSyc==2)
         {
+            UserPO userPOF=userMapper.selectByPrimaryKey(dto.getUd());
+            dto.setPhone(userPOF.getPhone());
             RestTemplate template=restTemplateBuilder.build();
             //发送到智能助手，天数，手机号和用户
             BatchSycInfoDTO batchSycInfoDTO=new BatchSycInfoDTO();
