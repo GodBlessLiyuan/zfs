@@ -124,6 +124,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             baSyn.setUserDouDTO(userDouDTO);
             baSyn.setKey(dto.getKey());
             logger.info("activeDKSF","不存在",po);
+
             RestTemplate template=new RestTemplate();
             //传用户信息，返回被激活的天数
             ResultVO<BatchSycInfoDTO> resultVO = template.postForObject(keyActivateUrl, baSyn, SycResultVO.class);
