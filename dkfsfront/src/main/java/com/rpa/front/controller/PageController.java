@@ -108,6 +108,7 @@ public class PageController {
     @GetMapping("privacy")
     public String privacy() {
         return "privacy_index";
+        
     }
 }
 
