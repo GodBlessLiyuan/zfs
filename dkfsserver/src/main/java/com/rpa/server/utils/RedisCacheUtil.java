@@ -131,7 +131,6 @@ public class RedisCacheUtil {
      * @param value
      */
     public void setCacheWithDate(String key, Object value, long num, TimeUnit time) {
-        String string = JSON.toJSONStringWithDateFormat("", "yyyy-mm-dd", SerializerFeature.WriteDateUseDateFormat);
         template.opsForValue().set(key, JSON.toJSONStringWithDateFormat(value, "yyyy-MM-dd HH:mm:ss", SerializerFeature.WriteDateUseDateFormat), num, time);
     }
 }
