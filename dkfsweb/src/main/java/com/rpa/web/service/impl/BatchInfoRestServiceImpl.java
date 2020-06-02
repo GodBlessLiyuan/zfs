@@ -83,6 +83,20 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         if (result2 == 0) {
             LogUtil.log(logger, "activity", "插入或更新失败", dto);
         }
+        BatchInfoPO batchInfoPO=new BatchInfoPO();
+        batchInfoPO.setVipkey(dto.getKey());
+        //虛擬的外鍵
+        batchInfoPO.setBatchId(1);
+        batchInfoPO.setStatus((byte) 2);
+        batchInfoPO.setDays(dto.getDay());
+        batchInfoPO.setUpdateTime(new Date());
+        batchInfoPO.setUserId(newUserVipPO.getUserId());
+        int result1 = batchInfoMapper.insert(batchInfoPO);
+        if (result1 == 0) {
+            LogUtil.log(logger, "activity", "更新失败", batchInfoPO);
+            return new ResultVO(2000);
+        }
+        
         return new ResultVO(1000);
     }
 

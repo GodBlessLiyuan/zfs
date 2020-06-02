@@ -90,7 +90,23 @@ public class OrderServiceImpl implements IOrderService {
         for (BatchInfoBO bo : batchInfoBOs) {
             OrderVO vo = new OrderVO();
             vo.setType(5);
-            vo.setComname(bo.getComTypeName());
+            String name="";
+            if(bo.getBatchId()==1){
+                switch(bo.getDays()){
+                    case 1:{name="日卡";break;}
+                    case 7:{name="周卡";break;}
+                    case 31:
+                    case 30:{name="月卡";break;}
+                    case 90:{name="季卡";break;}
+                    case 180:{name="半年卡";break;}
+                    case 365:{name="年卡";break;}
+                    case 36500:{name="终身卡";break;}
+                }
+                vo.setComname(name);
+            }else{
+                vo.setComname(bo.getComTypeName());
+            }
+
             vo.setOrdernumber(bo.getVipkey());
             vo.setPaytime(bo.getUpdateTime());
             orderVOs.add(vo);

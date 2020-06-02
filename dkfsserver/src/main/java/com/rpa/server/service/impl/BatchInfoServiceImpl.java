@@ -136,7 +136,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             if(resultVO.getStatus()==999){
                 BatchSycInfoDTO ba = resultVO.getData();
                 znzsPO.setStatus((byte)1);
-                resultVO=activeSelfDKFS(ba,dto.getPhone());
+                resultVO=activeSelfDKFS(ba,dto.getPhone(),dto.getKey());
             }else if(resultVO.getStatus()==1000){
                 znzsPO.setStatus((byte) 1);
             }
@@ -192,6 +192,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             UserDouDTO userDouDTO=new UserDouDTO();
             UserDouDTO.convertDTO(userDouDTO,userPOF);
             batchSycInfoDTO.setUserDouDTO(userDouDTO);
+            batchSycInfoDTO.setKey(dto.getKey());
 
             ActiveZnzsPO znzsPO=new ActiveZnzsPO();
             znzsPO.setVipkey(po.getVipkey());
@@ -225,7 +226,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         }
     }
 
-    private ResultVO activeSelfDKFS(BatchSycInfoDTO dto,String phone) {
+    private ResultVO activeSelfDKFS(BatchSycInfoDTO dto,String phone,String key) {
         UserPO userPO = userMapper.queryByPhone(phone);
         long useID=userPO.getUserId();
         // 更新用户会员数据
@@ -239,6 +240,18 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         }
         if (result2 == 0) {
             LogUtil.log(logger, "activity", "插入或更新失败", dto);
+        }
+        BatchInfoPO batchInfoPO=new BatchInfoPO();
+        batchInfoPO.setVipkey(key);
+        batchInfoPO.setBatchId(1);
+        batchInfoPO.setStatus((byte) 2);
+        batchInfoPO.setDays(dto.getDay());
+        batchInfoPO.setUpdateTime(new Date());
+        batchInfoPO.setUserId(useID);
+        int result1 = batchInfoMapper.insert(batchInfoPO);
+        if (result1 == 0) {
+            LogUtil.log(logger, "activity", "更新失败", batchInfoPO);
+            return new ResultVO(2000);
         }
         return new ResultVO(1000);
     }

@@ -174,7 +174,7 @@
   </select>
 
   <select id="queryByUserId2" parameterType="java.lang.Long" resultType="com.rpa.common.bo.BatchInfoBO">
-    select cb.com_type_name as comTypeName, bi.vipkey, bi.update_time as updateTime
+    select cb.com_type_name as comTypeName, bi.vipkey, bi.update_time as updateTime,bi.days,bi.batch_id as batchId
     from t_batch_info bi left join t_ch_batch cb on bi.batch_id = cb.batch_id
     where bi.user_id = #{userId} and bi.`status` = 2
   </select>
