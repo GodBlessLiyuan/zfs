@@ -22,4 +22,9 @@ public class LogUtil {
         logger.error("逻辑错误：time={}, methodName = {}, description = {}, parameters = {}", current_date, methodName, description, JSON.toJSONString(params));
     }
 
+    public static void info_log(Logger logger, String methodName, String description, Object... params) {
+        String current_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        logger.info("信息日志：time={}, methodName = {}, description = {}, parameters = {}", current_date, methodName, description, JSON.toJSONString(params));
+    }
+
 }
