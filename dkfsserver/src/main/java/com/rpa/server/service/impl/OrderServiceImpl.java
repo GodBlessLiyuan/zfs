@@ -12,6 +12,7 @@ import com.rpa.server.service.IOrderService;
 import com.rpa.server.vo.OrderVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,7 +40,8 @@ public class OrderServiceImpl implements IOrderService {
     private GodinsecUserMapper godinsecUserMapper;
     @Resource
     private BatchInfoMapper batchInfoMapper;
-
+    @Autowired
+    private ComTypeMapper comTypeMapper;
     @Override
     public ResultVO getOrders(OrderDTO dto) {
         List<OrderVO> orderVOs = new ArrayList<>();
@@ -90,7 +92,11 @@ public class OrderServiceImpl implements IOrderService {
         for (BatchInfoBO bo : batchInfoBOs) {
             OrderVO vo = new OrderVO();
             vo.setType(5);
-            vo.setComname(bo.getComTypeName());
+            if(bo.getBatchId()==1){
+                vo.setComname(comTypeMapper.queryNameDays(bo.getDays()));
+            }else{
+                vo.setComname(bo.getComTypeName());
+            }
             vo.setOrdernumber(bo.getVipkey());
             vo.setPaytime(bo.getUpdateTime());
             orderVOs.add(vo);
