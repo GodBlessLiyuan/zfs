@@ -84,7 +84,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         }
         BatchInfoPO batchInfoPO=new BatchInfoPO();
         batchInfoPO.setVipkey(dto.getKey());
-        //虛擬的外鍵
+        //虚拟的外键
         batchInfoPO.setBatchId(1);
         batchInfoPO.setStatus((byte) 2);
         batchInfoPO.setDays(dto.getDay());
@@ -107,7 +107,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
 
 
     /**
-     * 助手調用多開分身
+     * 助手调用多开分身
      * */
     @Transactional(rollbackFor = Exception.class)
     @Override
