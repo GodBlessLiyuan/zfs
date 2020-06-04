@@ -43,6 +43,5 @@ public class BatchInfoController {
         }
         return service.keyactivate2(dto);
     }
-
-
+    
 }
