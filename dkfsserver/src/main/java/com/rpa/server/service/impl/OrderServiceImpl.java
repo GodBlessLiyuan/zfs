@@ -1,7 +1,6 @@
 package com.rpa.server.service.impl;
 
 import com.rpa.common.bo.BatchInfoBO;
-import com.rpa.common.bo.ComTypeBO;
 import com.rpa.common.bo.OrderBO;
 import com.rpa.common.mapper.*;
 import com.rpa.common.pojo.GodinsecUserPO;
@@ -11,7 +10,6 @@ import com.rpa.common.vo.ResultVO;
 import com.rpa.server.dto.OrderDTO;
 import com.rpa.server.service.IOrderService;
 import com.rpa.server.vo.OrderVO;
-import org.modelmapper.internal.bytebuddy.asm.Advice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
