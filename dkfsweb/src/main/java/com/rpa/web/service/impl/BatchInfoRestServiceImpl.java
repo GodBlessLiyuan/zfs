@@ -80,7 +80,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
             result2 = userVipMapper.updateByPrimaryKey(newUserVipPO);
         }
         if (result2 == 0) {
-            LogUtil.info_log(logger, "activity", "插入或更新失败", dto);
+            LogUtil.log(logger, "activity", "插入或更新失败", dto);
         }
         BatchInfoPO batchInfoPO=new BatchInfoPO();
         batchInfoPO.setVipkey(dto.getKey());
@@ -92,7 +92,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         batchInfoPO.setUserId(newUserVipPO.getUserId());
         int result1 = batchInfoMapper.insert(batchInfoPO);
         if (result1 == 0) {
-            LogUtil.info_log(logger, "activity", "更新失败", batchInfoPO);
+            LogUtil.log(logger, "activity", "更新失败", batchInfoPO);
             return new ResultVO(2000);
         }
         
