@@ -5,7 +5,7 @@ spring:
     name: dkfsrabbit
   rabbitmq:
     host: 192.168.10.3
-    port: 15672
+    port: 5672
     username: root
     password: 123456
     connection-timeout: 10000

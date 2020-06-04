@@ -152,7 +152,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         po.setUpdateTime(new Date());
         int result1 = batchInfoMapper.updateByPrimaryKey(po);
         if (result1 == 0) {
-            LogUtil.info_log(logger, "activate", "更新失败", po);
+            LogUtil.log(logger, "activate", "更新失败", po);
             return new ResultVO(2000);
         }
 
@@ -167,7 +167,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
             result2 = userVipMapper.updateByPrimaryKey(newUserVipPO);
         }
         if (result2 == 0) {
-            LogUtil.info_log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
+            LogUtil.log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
             return new ResultVO(2000);
         }
 
