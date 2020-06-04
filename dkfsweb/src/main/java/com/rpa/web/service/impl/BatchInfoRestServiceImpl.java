@@ -113,10 +113,14 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
     @Override
     public ResultVO keyActivateZnzj(BatchSycInfoDTO dto) {
         BatchInfoPO po = batchInfoMapper.queryByKey(dto.getKey());
-        if (null == po) {
+        Byte activeSyc=chBatchMapper.queryActiveByPri(po.getBatchId());
+        if (null == po||activeSyc==null||activeSyc==1) {
             return new ResultVO(1016);
         }
-
+        else if(activeSyc!=2){
+            return new ResultVO(2000);
+        }
+        //activeSyc==2的流程
         if (BatchInfoConstant.FROZEN == po.getStatus()) {
             return new ResultVO(1017);
         } else if (BatchInfoConstant.ACTIVATED == po.getStatus()) {
@@ -124,6 +128,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         } else if (BatchInfoConstant.EXPIRED == po.getStatus()) {
             return new ResultVO(1021);
         }
+
         UserPO userPO1 = userMapper.queryByPhone(dto.getPhone());
         if(userPO1==null){
            userPO1=new UserPO();
@@ -165,11 +170,8 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
             LogUtil.info_log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
             return new ResultVO(2000);
         }
-        Byte activeSyc=chBatchMapper.queryActiveByPri(po.getBatchId());
-        if(activeSyc==null||activeSyc==1){
-            return new ResultVO(1000);
-        }
-        else if(activeSyc==2)
+
+        if(activeSyc==2)
         {
             //激活助手，传输参数：天数
             BatchSycInfoDTO batchSycInfoDTO=new BatchSycInfoDTO();

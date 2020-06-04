@@ -123,7 +123,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             baSyn.setPhone(dto.getPhone());
             baSyn.setUserDouDTO(userDouDTO);
             baSyn.setKey(dto.getKey());
-            LogUtil.info_log(logger,"activeDKSF","不存在",po);
+            logger.info("多开分身不存在激活码："+dto.getKey());
             RestTemplate template=new RestTemplate();
             //传用户信息，返回被激活的天数
             ResultVO<BatchSycInfoDTO> resultVO = template.postForObject(keyActivateUrl, baSyn, SycResultVO.class);
@@ -137,9 +137,9 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
                 BatchSycInfoDTO ba = resultVO.getData();
                 znzsPO.setStatus((byte)1);
                 resultVO=activeSelfDKFS(ba,dto.getPhone(),dto.getKey());
-            }else if(resultVO.getStatus()==1000){
-                znzsPO.setStatus((byte) 1);
             }
+            //返回的1000不会出现
+
             znzsMapper.insert(znzsPO);
             return resultVO;
         }
@@ -159,7 +159,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         po.setUpdateTime(new Date());
         int result1 = batchInfoMapper.updateByPrimaryKey(po);
         if (result1 == 0) {
-            LogUtil.info_log(logger, "activate", "更新失败", po);
+            LogUtil.log(logger, "activate", "多开分身更新失败", po);
             return new ResultVO(2000);
         }
 
@@ -173,7 +173,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             result2 = userVipMapper.updateByPrimaryKey(newUserVipPO);
         }
         if (result2 == 0) {
-            LogUtil.info_log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
+            LogUtil.log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
             return new ResultVO(2000);
         }
         Byte activeSyc=chBatchMapper.queryActiveByPri(po.getBatchId());
@@ -205,7 +205,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
                 if(resultVO.getStatus()==1000){
                     znzsPO.setStatus((byte) 1);
                 }else{
-                    LogUtil.info_log(logger,keySycActivateUrl, JSON.toJSONString(batchSycInfoDTO),JSON.toJSON(resultVO),"返回状态码不正确");
+                    logger.info(keySycActivateUrl,  "返回状态码:"+resultVO.getStatus());
                     znzsPO.setStatus((byte) 2);
                 }
                 znzsMapper.insert(znzsPO);
@@ -213,7 +213,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
 
             }catch (Exception e){
                 e.printStackTrace();
-                LogUtil.log(logger,keySycActivateUrl,JSON.toJSONString(batchSycInfoDTO),"出现异常");
+                LogUtil.log(logger,keySycActivateUrl,JSON.toJSONString(batchSycInfoDTO),"restTemplate出现异常");
                 znzsPO.setStatus((byte) 3);
                 znzsMapper.insert(znzsPO);
                 return new ResultVO(2000);
@@ -239,7 +239,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             result2 = userVipMapper.updateByPrimaryKey(newUserVipPO);
         }
         if (result2 == 0) {
-            LogUtil.info_log(logger, "activity", "插入或更新失败", dto);
+            LogUtil.log(logger, "activity", "插入或更新失败", dto);
         }
         BatchInfoPO batchInfoPO=new BatchInfoPO();
         batchInfoPO.setVipkey(key);
@@ -250,7 +250,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         batchInfoPO.setUserId(useID);
         int result1 = batchInfoMapper.insert(batchInfoPO);
         if (result1 == 0) {
-            LogUtil.info_log(logger, "activity", "更新失败", batchInfoPO);
+            LogUtil.log(logger, "activity", "更新失败", batchInfoPO);
             return new ResultVO(2000);
         }
         return new ResultVO(1000);

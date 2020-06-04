@@ -19,6 +19,9 @@
     from t_com_type
     where com_type_id = #{comTypeId,jdbcType=INTEGER}
   </select>
+  <select id="queryNameDays" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select name from t_com_type where days=#{days}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_com_type
     where com_type_id = #{comTypeId,jdbcType=INTEGER}
