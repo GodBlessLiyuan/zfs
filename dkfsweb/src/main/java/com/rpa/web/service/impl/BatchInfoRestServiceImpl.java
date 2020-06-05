@@ -113,8 +113,11 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
     @Override
     public ResultVO keyActivateZnzj(BatchSycInfoDTO dto) {
         BatchInfoPO po = batchInfoMapper.queryByKey(dto.getKey());
+        if (null == po){
+            return new ResultVO(1016);
+        }
         Byte activeSyc=chBatchMapper.queryActiveByPri(po.getBatchId());
-        if (null == po||activeSyc==null||activeSyc==1) {
+        if (activeSyc==null||activeSyc==1) {
             return new ResultVO(1016);
         }
         else if(activeSyc!=2){
