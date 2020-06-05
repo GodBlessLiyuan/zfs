@@ -3,6 +3,7 @@ package com.rpa.common.mapper;
 import com.rpa.common.bo.AdminUserBO;
 import com.rpa.common.pojo.AdminUserPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.Map;
 @Mapper
 public interface AdminUserMapper extends BaseMapper<AdminUserPO, Integer> {
 
-    int updatePassword(int aId, String newPassword);
+    int updatePassword(@Param("aId") int aId,@Param("newPassword") String newPassword);
 
     String queryPassword(int aId);
 
