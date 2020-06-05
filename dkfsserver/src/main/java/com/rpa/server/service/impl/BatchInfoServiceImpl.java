@@ -133,10 +133,21 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             znzsPO.setTime(new Date());
             znzsPO.setVipkey(dto.getKey());
             znzsPO.setStatus((byte) 2);//默认返回状态码
-            if(resultVO.getStatus()==999){
+
+            if(resultVO.getStatus()==1016) {
+                return resultVO;
+            } else if(resultVO.getStatus()==999){
                 BatchSycInfoDTO ba = resultVO.getData();
                 znzsPO.setStatus((byte)1);
                 resultVO=activeSelfDKFS(ba,dto.getPhone(),dto.getKey());
+            } else if(resultVO.getStatus()==2000) {
+                return resultVO;
+            } else if (BatchInfoConstant.FROZEN == po.getStatus()) {
+                return resultVO;
+            } else if (BatchInfoConstant.ACTIVATED == po.getStatus()) {
+                return resultVO;
+            } else if (BatchInfoConstant.EXPIRED == po.getStatus()) {
+                return resultVO;
             }
             //返回的1000不会出现
 
