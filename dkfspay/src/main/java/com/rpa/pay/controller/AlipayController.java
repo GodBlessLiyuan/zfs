@@ -4,9 +4,12 @@ import com.rpa.pay.common.ResultVO;
 import com.rpa.pay.dto.AlipayDTO;
 import com.rpa.pay.service.AlipayService;
 import com.rpa.pay.utils.VerifyUtil;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
