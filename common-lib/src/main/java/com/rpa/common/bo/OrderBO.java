@@ -21,4 +21,5 @@ public class OrderBO extends OrderPO {
     private Float price;
     private String showDiscount;
     private Float discount;
+    private Byte commAttr;
 }

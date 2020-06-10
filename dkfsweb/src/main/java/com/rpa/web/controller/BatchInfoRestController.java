@@ -40,7 +40,7 @@ public class BatchInfoRestController {
     }
 
     @PostMapping("buy_zj_douOrder")
-    public String bugZJDouOrder(@RequestBody UserToBO dto, HttpServletRequest req) {
+    public ResultVO bugZJDouOrder(@RequestBody UserToBO dto, HttpServletRequest req) {
         return service.bugZJDouOrder(dto);
     }
 

@@ -192,7 +192,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
     }
 
     @Override
-    public String bugZJDouOrder(UserToBO dto) {
+    public ResultVO bugZJDouOrder(UserToBO dto) {
         logger.info("用户手机号："+dto.getPhone()+",支付类型（1：微信，2：支付宝）："+dto.getType());
         UserPO userPO1 = userMapper.queryByPhone(dto.getPhone());
         if(userPO1==null){
@@ -244,9 +244,9 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         }
         if (result2 == 0) {
             LogUtil.log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
-            return "2000";
+            return new ResultVO(2000);
         }
         logger.info("赠送给多开分身成功");
-        return "1000";
+        return new ResultVO(1000);
     }
 }

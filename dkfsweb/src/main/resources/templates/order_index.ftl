@@ -140,6 +140,7 @@
                                         <th>购买账号</th>
                                         <th>发起时间</th>
                                         <th>支付时间</th>
+                                        <th>商品属性</th>
                                         <th>产品类型</th>
                                         <th>会员天数</th>
                                         <th>原价</th>
@@ -268,6 +269,7 @@
                 {"data": "phone"},
                 {"data": "createTime"},
                 {"data": "payTime"},
+                {"data":"commAttr"},
                 {"data": "comName"},
                 {"data": "days"},
                 {"data": "price"},

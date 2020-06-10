@@ -64,7 +64,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     }
 
     @Override
-    public ResultVO insert(int channelId, int comTypeId, String comName, String description, String price, String showDiscount,
+    public ResultVO insert(int commAttr,int channelId, int comTypeId, String comName, String description, String price, String showDiscount,
                            float discount, int aId) {
         VipcommodityPO po = vipcommodityMapper.queryByChanIdAndComTypeId(channelId, comTypeId);
         if (po != null) {
@@ -73,6 +73,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         }
 
         VipcommodityPO vipCommodityPO = new VipcommodityPO();
+        vipCommodityPO.setCommAttr((byte) commAttr);
         vipCommodityPO.setSoftChannelId(channelId);
         vipCommodityPO.setComTypeId(comTypeId);
         vipCommodityPO.setComName(comName);

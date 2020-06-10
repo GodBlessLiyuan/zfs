@@ -10,5 +10,5 @@ public interface IBatchInfoRestService {
 
     ResultVO keyActivateZnzj(BatchSycInfoDTO dto);
 
-    String bugZJDouOrder(UserToBO dto);
+    ResultVO bugZJDouOrder(UserToBO dto);
 }

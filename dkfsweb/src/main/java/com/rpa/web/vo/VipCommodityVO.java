@@ -33,7 +33,7 @@ public class VipCommodityVO implements Serializable {
     private Byte istop;
     private Date createTime;
     private String username;
-
+    private String commAttr;
     public static VipCommodityVO convert(VipcommodityPO po) {
         VipCommodityVO vo = new VipCommodityVO();
 
@@ -58,7 +58,12 @@ public class VipCommodityVO implements Serializable {
     public static VipCommodityVO convert(VipcommodityBO bo) {
         VipCommodityVO vo = VipCommodityVO.convert((VipcommodityPO) bo);
         vo.setUsername(bo.getUsername());
-
+        if(bo.getCommAttr()==null||bo.getCommAttr()==1){
+            vo.setCommAttr("独立商品");
+        }
+        else if(bo.getCommAttr()==2){
+            vo.setCommAttr("通用商品");
+        }
         return vo;
     }
 
