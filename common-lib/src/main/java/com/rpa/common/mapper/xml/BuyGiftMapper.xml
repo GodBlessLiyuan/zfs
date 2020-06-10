@@ -27,6 +27,7 @@
          select  u.chan_name as userChanName, bg.cmdy_name as saleChanName, bg.type, bg.create_time as createTime, bg.com_type_name
      as comTypeName,bg.days, bg.com_name as comName   from t_buy_gift bg
     left join t_user u on bg.user_id = u.user_id
+    where u.user_id=#{ud,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_buy_gift

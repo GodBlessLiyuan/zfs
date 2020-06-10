@@ -4,12 +4,12 @@ import com.rpa.pay.common.ResultVO;
 import com.rpa.pay.dto.AlipayDTO;
 import com.rpa.pay.service.AlipayService;
 import com.rpa.pay.utils.VerifyUtil;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,7 +44,13 @@ public class AlipayController {
 
         return this.alipayService.alipayOrder(dto, req);
     }
-
+    /***
+     * 测试用的
+     * */
+    @PostMapping("updateInfo_test")
+    public String updateInfo(@RequestParam(value = "orderNum") String orderNum, HttpServletRequest req) {
+        return this.alipayService.updateInfo(orderNum, req);
+    }
 
     /**
      * 获取支付宝服务器发送来的支付完成通知（异步）

@@ -17,7 +17,7 @@ public class ResultVO<T> implements Serializable {
     private Integer status;
 
     private T data;
-
+    public ResultVO(){}
     public ResultVO(Integer status) {
         this(status, null);
     }
