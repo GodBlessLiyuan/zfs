@@ -5,18 +5,19 @@ import com.rpa.common.constant.BatchInfoConstant;
 import com.rpa.common.mapper.BatchInfoMapper;
 import com.rpa.common.mapper.UserMapper;
 import com.rpa.common.mapper.UserVipMapper;
-import com.rpa.common.mapper.ViptypeMapper;
+import com.rpa.common.mapper.BuyGiftMapper;
 import com.rpa.common.mapper.ChBatchMapper;
-import com.rpa.common.mapper.ActiveZnzsMapper;
 import com.rpa.common.mapper.SoftChannelMapper;
 
 import com.rpa.common.pojo.SoftChannelPO;
 import com.rpa.common.pojo.UserPO;
 import com.rpa.common.pojo.UserVipPO;
 import com.rpa.common.pojo.BatchInfoPO;
+import com.rpa.common.pojo.BuyGiftPO;
 
 import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.bo.UserToBO;
 import com.rpa.web.dto.BatchSycInfoDTO;
 import com.rpa.web.dto.UserDouDTO;
 import com.rpa.web.service.IBatchInfoRestService;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -47,6 +49,9 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
 
     @Autowired
     private SoftChannelMapper softChannelMapper;
+    @Autowired
+    private BuyGiftMapper giftMapper;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO activateSync(BatchSycInfoDTO dto) {
@@ -186,5 +191,62 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         }
     }
 
+    @Override
+    public String bugZJDouOrder(UserToBO dto) {
+        logger.info("用户手机号："+dto.getPhone()+",支付类型（1：微信，2：支付宝）："+dto.getType());
+        UserPO userPO1 = userMapper.queryByPhone(dto.getPhone());
+        if(userPO1==null){
+            userPO1=new UserPO();
+            userPO1.setUsername(dto.getUsername());
+            userPO1.setPhone(dto.getPhone());
+            userPO1.setIp(dto.getIp());
+            userPO1.setCreateTime(new Date());
+            userPO1.setChanName(dto.getChanName());
+            //通道信息
+            Integer id = softChannelMapper.queryIdbyName(dto.getChanName());
+            if(id==null){
+                SoftChannelPO softChannelPO=new SoftChannelPO();
+                softChannelPO.setName(dto.getChanName());
+                softChannelPO.setCreateTime(new Date());
+                softChannelPO.setExtra("智能助手创建");
+                softChannelMapper.insertSelective(softChannelPO);
+                id = softChannelMapper.queryIdbyName(userPO1.getChanName());
+                userPO1.setSoftChannelId(id);
+            }
+            userMapper.insertSelective(userPO1);
+        }
+        //更新赠送会员表，之后再server和web服务查询到
+        BuyGiftPO buyGiftPO=new BuyGiftPO();
+        buyGiftPO.setUserId(userPO1.getUserId());
+        buyGiftPO.setType(dto.getType());//1微信2支付宝
+        buyGiftPO.setCmdyName(dto.getCmdyName());
+        buyGiftPO.setComTypeName(dto.getComTypeName());
+        buyGiftPO.setCreateTime(new Date());
+        buyGiftPO.setDays(dto.getDay());
+        buyGiftPO.setComName(dto.getComName());
+        // 更新用户会员数据
+        long useID=userPO1.getUserId();
+        UserVipPO userVipPO = userVipMapper.queryByUserId(useID);
+        buyGiftPO.setStarttime(userVipPO.getEndTime());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(userVipPO.getEndTime());
+        calendar.add(Calendar.DATE, dto.getDay());
+        Date endDate = calendar.getTime();
+        buyGiftPO.setEndtime(endDate);
+        giftMapper.insertSelective(buyGiftPO);
 
+        UserVipPO newUserVipPO = UserVipUtil.buildUserVipVO(userVipPO, useID, dto.getDay(), false);
+        int result2;
+        if (userVipPO == null) {
+            result2 = userVipMapper.insert(newUserVipPO);
+        } else {
+            result2 = userVipMapper.updateByPrimaryKey(newUserVipPO);
+        }
+        if (result2 == 0) {
+            LogUtil.log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
+            return "2000";
+        }
+        logger.info("赠送给多开分身成功");
+        return "1000";
+    }
 }

@@ -1,8 +1,10 @@
 package com.rpa.server.service.impl;
 
 import com.rpa.common.bo.BatchInfoBO;
+import com.rpa.common.bo.BuyGiftBO;
 import com.rpa.common.bo.OrderBO;
 import com.rpa.common.mapper.*;
+import com.rpa.common.pojo.BuyGiftPO;
 import com.rpa.common.pojo.GodinsecUserPO;
 import com.rpa.common.pojo.NewUserRecordPO;
 import com.rpa.common.pojo.UserActivityPO;
@@ -42,6 +44,9 @@ public class OrderServiceImpl implements IOrderService {
     private BatchInfoMapper batchInfoMapper;
     @Autowired
     private ComTypeMapper comTypeMapper;
+    @Autowired
+    private BuyGiftMapper giftMapper;
+
     @Override
     public ResultVO getOrders(OrderDTO dto) {
         List<OrderVO> orderVOs = new ArrayList<>();
@@ -101,7 +106,16 @@ public class OrderServiceImpl implements IOrderService {
             vo.setPaytime(bo.getUpdateTime());
             orderVOs.add(vo);
         }
-
+        //助手购买赠送
+        List<BuyGiftBO> buyGiftBOS=giftMapper.queryByUserId(dto.getUd());
+        for(BuyGiftBO bo:buyGiftBOS){
+            OrderVO vo = new OrderVO();
+            vo.setType(6);//类型：写死
+            vo.setPaytype(bo.getType());//付款类型
+            vo.setComname(bo.getComName());//商品名称
+            vo.setPaytime(bo.getCreateTime());
+            orderVOs.add(vo);
+        }
         // 根据购买时间降序排序
         Collections.sort(orderVOs);
 

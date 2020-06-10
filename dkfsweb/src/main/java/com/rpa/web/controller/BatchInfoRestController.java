@@ -1,6 +1,7 @@
 package com.rpa.web.controller;
 
 import com.rpa.common.vo.ResultVO;
+import com.rpa.web.bo.UserToBO;
 import com.rpa.web.dto.BatchInfoDTO;
 import com.rpa.web.dto.BatchSycInfoDTO;
 import com.rpa.web.service.IBatchInfoRestService;
@@ -37,4 +38,10 @@ public class BatchInfoRestController {
     public ResultVO keyActivateZnzj(@RequestBody BatchSycInfoDTO dto, HttpServletRequest req) {
         return service.keyActivateZnzj(dto);
     }
+
+    @PostMapping("buy_zj_douOrder")
+    public String bugZJDouOrder(@RequestBody UserToBO dto, HttpServletRequest req) {
+        return service.bugZJDouOrder(dto);
+    }
+
 }
