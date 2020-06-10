@@ -1,7 +1,12 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.rpa.common.bo.*;
+import com.rpa.common.bo.BatchInfoBO;
+import com.rpa.common.bo.NewUserRecordBO;
+import com.rpa.common.bo.OrderBO;
+import com.rpa.common.bo.UserActivityBO;
+import com.rpa.common.bo.UserVipBO;
+import com.rpa.common.bo.BuyGiftBO;
 import com.rpa.common.mapper.*;
 import com.rpa.common.pojo.GodinsecUserPO;
 import com.rpa.web.common.PageHelper;

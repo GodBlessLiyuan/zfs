@@ -2,9 +2,18 @@ package com.rpa.web.service.impl;
 
 import com.rpa.common.constant.BatchInfoConstant;
 
-import com.rpa.common.mapper.*;
+import com.rpa.common.mapper.BatchInfoMapper;
+import com.rpa.common.mapper.UserMapper;
+import com.rpa.common.mapper.UserVipMapper;
+import com.rpa.common.mapper.BuyGiftMapper;
+import com.rpa.common.mapper.ChBatchMapper;
+import com.rpa.common.mapper.SoftChannelMapper;
 
-import com.rpa.common.pojo.*;
+import com.rpa.common.pojo.SoftChannelPO;
+import com.rpa.common.pojo.UserPO;
+import com.rpa.common.pojo.UserVipPO;
+import com.rpa.common.pojo.BatchInfoPO;
+import com.rpa.common.pojo.BuyGiftPO;
 
 import com.rpa.common.utils.LogUtil;
 import com.rpa.common.vo.ResultVO;
