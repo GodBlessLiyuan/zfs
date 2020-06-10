@@ -31,7 +31,7 @@ public class OrderVO implements Serializable {
     private Float price;
     private String showDiscount;
     private Float discount;
-
+    private String commAttr;
     /**
      * do 转 dto
      *
@@ -53,7 +53,12 @@ public class OrderVO implements Serializable {
         vo.setPrice(bo.getPrice());
         vo.setShowDiscount(bo.getShowDiscount());
         vo.setDiscount(bo.getDiscount() / 100);
-
+        if(bo.getCommAttr()==null||bo.getCommAttr()==1){
+            vo.setCommAttr("独立商品");
+        }
+        else if(bo.getCommAttr()==2){
+            vo.setCommAttr("通用商品");
+        }
         return vo;
     }
 

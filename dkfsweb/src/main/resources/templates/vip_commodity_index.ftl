@@ -111,6 +111,7 @@
                                        style="table-layout: fixed; text-align: center; vertical-align: middle"><thead>
                                     <tr>
                                         <th>序号</th>
+                                        <th>商品属性</th>
                                         <th>销售渠道</th>
                                         <th>产品类型</th>
                                         <th>会员天数</th>
@@ -142,6 +143,13 @@
                                         </div>
                                         <div class="modal-body">
                                             <form>
+                                                <div class="form-group">
+                                                    <span for="recipient-name" class="col-form-label">商品属性:</span>
+                                                    <select id="commAttr" class="form-control">
+                                                        <option value="1" selected>独立商品（仅赠送多开分身会员）</option>
+                                                        <option value="2">通用商品（赠送助手与多开会员）</option>
+                                                    </select>
+                                                </div>
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">销售渠道:</span>
                                                     <select id="iChannelId" class="form-control">
@@ -374,6 +382,7 @@
             },
             "columns": [
                 {"data": null, "targets": 0},
+                {"data":"commAttr"},
                 {"data": "name"},
                 {"data": "comTypeName"},
                 {"data": "days"},
@@ -447,6 +456,7 @@
      * 确认上架点击事件
      */
     function insertClick() {
+        let commAttr=$("#commAttr").val();
         let channelId = $('#iChannelId').val();
         let comTypeId = $('#iComTypeId').val();
         let comName = $('#comName').val();
@@ -468,7 +478,7 @@
         } else {
             $.ajax({
                 type: 'GET',
-                url: "vipcommodity/insert?channelId=" + channelId + "&comTypeId=" + comTypeId + "&comName=" + comName +
+                url: "vipcommodity/insert?commAttr="+commAttr+"&channelId=" + channelId + "&comTypeId=" + comTypeId + "&comName=" + comName +
                     "&description=" + description + "&price=" + price + "&showDiscount=" + showDiscount + "&discount=" +
                     discount,
                 dataType: 'json',

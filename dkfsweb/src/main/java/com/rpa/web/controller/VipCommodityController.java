@@ -50,13 +50,15 @@ public class VipCommodityController {
     }
 
     @RequestMapping("insert")
-    public ResultVO insert(@RequestParam(value = "channelId") int channelId,
-                           @RequestParam(value = "comTypeId") int comTypeId,
-                           @RequestParam(value = "comName") String comName,
-                           @RequestParam(value = "description") String description,
-                           @RequestParam(value = "price") String price,
-                           @RequestParam(value = "showDiscount") String showDiscount,
-                           @RequestParam(value = "discount") float discount, HttpServletRequest req) {
+    public ResultVO insert(
+            @RequestParam(value = "commAttr") int commAttr,
+            @RequestParam(value = "channelId") int channelId,
+            @RequestParam(value = "comTypeId") int comTypeId,
+            @RequestParam(value = "comName") String comName,
+            @RequestParam(value = "description") String description,
+            @RequestParam(value = "price") String price,
+            @RequestParam(value = "showDiscount") String showDiscount,
+            @RequestParam(value = "discount") float discount, HttpServletRequest req) {
 
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
@@ -64,7 +66,7 @@ public class VipCommodityController {
             return new ResultVO(1001);
         }
 
-        return service.insert(channelId, comTypeId, comName, description, price, showDiscount,
+        return service.insert(commAttr,channelId, comTypeId, comName, description, price, showDiscount,
                 discount, admin.getaId());
 
     }

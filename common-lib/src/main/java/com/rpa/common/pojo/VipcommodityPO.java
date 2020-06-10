@@ -53,7 +53,17 @@ public class VipcommodityPO implements Serializable {
      */
     private Byte istop;
 
+    private Byte commAttr;
+
     private static final long serialVersionUID = 1L;
+
+    public Byte getCommAttr() {
+        return commAttr;
+    }
+
+    public void setCommAttr(Byte commAttr) {
+        this.commAttr = commAttr;
+    }
 
     public Integer getCmdyId() {
         return cmdyId;

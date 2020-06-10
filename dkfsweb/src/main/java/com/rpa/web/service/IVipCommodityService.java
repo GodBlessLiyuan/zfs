@@ -46,7 +46,7 @@ public interface IVipCommodityService {
      * @param aId          管理员Id
      * @return
      */
-    ResultVO insert(int channelId, int comTypeId, String comName, String description, String price, String showDiscount, float discount, int aId);
+    ResultVO insert(int commAttr,int channelId, int comTypeId, String comName, String description, String price, String showDiscount, float discount, int aId);
 
     /**
      * 更新
