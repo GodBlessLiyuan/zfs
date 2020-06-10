@@ -16,7 +16,7 @@ public class UserVipConstant {
 
     /** 默认销售渠道值 **/
     public static final String DEFAULT_SALE_CHAN_NAME = "无";
-
+    public static final String ZNZJ_VIP_GIFTS = "智能助手赠送";
     /**
      * 年会员天数
      */

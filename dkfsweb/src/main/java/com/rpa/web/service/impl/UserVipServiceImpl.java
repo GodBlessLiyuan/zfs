@@ -1,11 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
-import com.rpa.common.bo.BatchInfoBO;
-import com.rpa.common.bo.NewUserRecordBO;
-import com.rpa.common.bo.OrderBO;
-import com.rpa.common.bo.UserActivityBO;
-import com.rpa.common.bo.UserVipBO;
+import com.rpa.common.bo.*;
 import com.rpa.common.mapper.*;
 import com.rpa.common.pojo.GodinsecUserPO;
 import com.rpa.web.common.PageHelper;
@@ -48,7 +44,8 @@ public class UserVipServiceImpl implements IUserVipService {
 
     @Resource
     private GodinsecUserMapper godinsecUserMapper;
-
+    @Resource
+    private BuyGiftMapper giftMapper;
     @Override
     public DTPageInfo<UserVipVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<UserVipBO> page = PageHelper.startPage(pageNum, pageSize);
@@ -121,7 +118,19 @@ public class UserVipServiceImpl implements IUserVipService {
             dto.setDays(batchInfoBO.getDays());
             detailsVOs.add(dto);
         }
-
+        //助手购买赠送
+        List<BuyGiftBO> buyGiftBOS=giftMapper.queryByUserId(userId);
+        for(BuyGiftBO bo:buyGiftBOS){
+            UserVipDetailsVO vo = new UserVipDetailsVO();
+            vo.setVipType(UserVipConstant.ZNZJ_VIP_GIFTS);//类型：写死
+            vo.setUserChanName(bo.getUserChanName());//用户
+            vo.setSaleChanName(bo.getSaleChanName());
+            vo.setType(bo.getType());
+            vo.setCreateTime(bo.getCreateTime());
+            vo.setComTypeName(bo.getComTypeName());
+            vo.setDays(bo.getDays());
+            detailsVOs.add(vo);
+        }
         // 根据购买时间降序排序
         Collections.sort(detailsVOs);
 
