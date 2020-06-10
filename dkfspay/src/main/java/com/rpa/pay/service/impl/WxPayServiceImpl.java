@@ -1,14 +1,12 @@
 package com.rpa.pay.service.impl;
 
 import com.rpa.common.utils.LogUtil;
+import com.rpa.pay.bo.UserToBO;
 import com.rpa.pay.common.ResultVO;
 import com.rpa.pay.config.WxPayConfig;
 import com.rpa.pay.constant.WxPayConstant;
 import com.rpa.pay.dto.WxPayDTO;
-import com.rpa.pay.mapper.OrderMapper;
-import com.rpa.pay.mapper.UserVipMapper;
-import com.rpa.pay.mapper.VipCommodityMapper;
-import com.rpa.pay.mapper.WxFeedbackMapper;
+import com.rpa.pay.mapper.*;
 import com.rpa.pay.pojo.OrderPO;
 import com.rpa.pay.pojo.UserVipPO;
 import com.rpa.pay.pojo.VipCommodityPO;
@@ -21,11 +19,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +56,10 @@ public class WxPayServiceImpl implements IWxPayService {
     private AmqpTemplate template;
     @Autowired
     private WxPayConfig wxPayConfig;
-
+    @Autowired
+    private UserMapper userMapper;
+    @Value("${ZnzsUrl.dkfs_buy}")
+    private String dkfs_buy;
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO wxPayOrder(WxPayDTO dto, HttpServletRequest req) {
@@ -182,7 +185,24 @@ public class WxPayServiceImpl implements IWxPayService {
                                                                       }
                                                                   }
         );
+        VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(orderPO.getCmdyId());
+        if(vipCommodityPO.getCommAttr()==2){
+            UserToBO userToBO = userMapper.selPri(orderPO.getUserId());
+            userToBO.setDay(orderPO.getDays());
+            userToBO.setCmdyName(vipCommodityPO.getName());//渠道名
+            userToBO.setComTypeName(vipCommodityPO.getComTypeName());//商品类型名称
+            userToBO.setComName(vipCommodityPO.getComName());
+            userToBO.setType((byte) 1);
+            RestTemplate restTemplate=new RestTemplate();
+            ResultVO s = restTemplate.postForObject(dkfs_buy, userToBO, ResultVO.class);
+            logger.info("测试返回对象："+s.toString());
+            if(s!=null&&s.getStatus()==1000){
+                logger.info("多开分身使用微信购买商品的赠送助手业务成功");
+            }else{
+                logger.info("多开分身使用微信购买商品的赠送助手业务失败");
+            }
 
+        }
         return WxPayUtil.successWxPay();
     }
 }

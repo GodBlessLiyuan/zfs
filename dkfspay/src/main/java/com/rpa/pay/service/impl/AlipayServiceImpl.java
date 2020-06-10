@@ -7,13 +7,13 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
+
+
 import com.rpa.common.utils.LogUtil;
+import com.rpa.pay.bo.UserToBO;
 import com.rpa.pay.common.ResultVO;
 import com.rpa.pay.dto.AlipayDTO;
-import com.rpa.pay.mapper.AliFeedbackMapper;
-import com.rpa.pay.mapper.OrderMapper;
-import com.rpa.pay.mapper.UserVipMapper;
-import com.rpa.pay.mapper.VipCommodityMapper;
+import com.rpa.pay.mapper.*;
 import com.rpa.pay.pojo.AliFeedbackPO;
 import com.rpa.pay.pojo.OrderPO;
 import com.rpa.pay.pojo.UserVipPO;
@@ -24,12 +24,12 @@ import com.rpa.pay.utils.WxPayUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +62,8 @@ public class AlipayServiceImpl implements AlipayService {
     @Resource
     private AliFeedbackMapper aliFeedbackMapper;
 
+    @Resource
+    private UserMapper userMapper;
     @Value("${alipayconfig.appid}")
     private String APP_ID;
 
@@ -76,7 +78,8 @@ public class AlipayServiceImpl implements AlipayService {
 
     @Value("${alipayconfig.alipay_notify}")
     private String ALIPAY_NOTIFY;
-
+    @Value("${ZnzsUrl.dkfs_buy}")
+    private String dkfs_buy;
     /**
      * 客户端携带商品ID访问服务端，生成订单信息，并加签返回给客户端
      * @param dto
@@ -312,7 +315,13 @@ public class AlipayServiceImpl implements AlipayService {
         }
     }
 
-
+    /***
+     * 测试用的
+     * */
+    @Override
+    public String updateInfo(String orderNum, HttpServletRequest req) {
+        return updateInfo(orderNum);
+    }
 
     /**
      * 验签通过且交易成功，更新相关信息
@@ -363,6 +372,24 @@ public class AlipayServiceImpl implements AlipayService {
                                                                       }
                                                                   }
         );
+        VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(orderPO.getCmdyId());
+        vipCommodityPO.setCommAttr((byte) 2);
+        if(vipCommodityPO.getCommAttr()==2) {
+            UserToBO userToBO = userMapper.selPri(orderPO.getUserId());
+            userToBO.setDay(orderPO.getDays());
+            userToBO.setCmdyName(vipCommodityPO.getName());//渠道名
+            userToBO.setComTypeName(vipCommodityPO.getComTypeName());//商品类型名称
+            userToBO.setComName(vipCommodityPO.getComName());
+            userToBO.setType((byte) 2);
+            RestTemplate restTemplate = new RestTemplate();
+            ResultVO s = restTemplate.postForObject(dkfs_buy, userToBO, ResultVO.class);
+            logger.info(s.toString());
+            if (s != null && s.getStatus()==1000) {
+                logger.info("多开分身使用支付宝购买商品的赠送助手业务成功");
+            } else {
+                logger.info("多开分身使用支付宝购买商品的赠送助手业务失败");
+            }
+        }
         logger.info("更新相关信息成功");
         return "success";
     }

@@ -18,4 +18,6 @@ public interface AlipayService {
     ResultVO paystatus(AlipayDTO dto);
 
     String alipayNotify(Map<String, String> conversionParams);
+
+    String updateInfo(String orderNum, HttpServletRequest req);
 }
