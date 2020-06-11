@@ -381,8 +381,10 @@ public class AlipayServiceImpl implements AlipayService {
                                                                   }
         );
         VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(orderPO.getCmdyId());
-        vipCommodityPO.setCommAttr((byte) 2);
-        if(vipCommodityPO.getCommAttr()==2) {
+        if(vipCommodityPO.getCommAttr()==null||vipCommodityPO.getCommAttr()==1){
+            return "success";
+        }
+        else if(vipCommodityPO.getCommAttr()==2) {
             UserToBO userToBO = userMapper.selPri(orderPO.getUserId());
             userToBO.setDay(orderPO.getDays());
             userToBO.setCmdyName(vipCommodityPO.getName());//渠道名

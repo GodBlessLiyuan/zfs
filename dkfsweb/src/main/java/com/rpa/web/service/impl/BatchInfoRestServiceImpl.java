@@ -239,6 +239,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         calendar.add(Calendar.DATE, dto.getDay());
         Date endDate = calendar.getTime();
         buyGiftPO.setEndtime(endDate);
+        buyGiftPO.setOrderNumber(dto.getOrderNumber());
         giftMapper.insertSelective(buyGiftPO);
 
         UserVipPO newUserVipPO = UserVipUtil.buildUserVipVO(userVipPO, useID, dto.getDay(), false);
