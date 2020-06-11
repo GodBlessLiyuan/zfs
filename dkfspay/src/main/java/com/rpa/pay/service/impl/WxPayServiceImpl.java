@@ -123,73 +123,72 @@ public class WxPayServiceImpl implements IWxPayService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String wxPayNotify(HttpServletRequest req) {
-//        Map<String, String> wxPayMap = WxPayUtil.parseReq(req);
-//        if (null == wxPayMap || 0 == wxPayMap.size()) {
-//            return WxPayUtil.failWxPay();
-//        }
-//        if (!WxPayConstant.SUCCESS.equals(wxPayMap.get(WxPayConstant.RETURN_CODE))) {
-//            return WxPayUtil.failWxPay();
-//        }
-//        logger.info("WxPayNotify: " + wxPayMap.toString());
-        // 签名验证
-//        if (!WxPayUtil.checkSign(wxPayMap, wxPayConfig.getKey())) {
-//            return WxPayUtil.failWxPay();
-//        }
+        Map<String, String> wxPayMap = WxPayUtil.parseReq(req);
+        if (null == wxPayMap || 0 == wxPayMap.size()) {
+            return WxPayUtil.failWxPay();
+        }
+        if (!WxPayConstant.SUCCESS.equals(wxPayMap.get(WxPayConstant.RETURN_CODE))) {
+            return WxPayUtil.failWxPay();
+        }
+        logger.info("WxPayNotify: " + wxPayMap.toString());
+//         签名验证
+        if (!WxPayUtil.checkSign(wxPayMap, wxPayConfig.getKey())) {
+            return WxPayUtil.failWxPay();
+        }
 
-//        OrderPO orderPO = orderMapper.queryByOrderNumber(wxPayMap.get(WxPayConstant.OUT_TRADE_NO));
-//        if (null == orderPO || orderPO.getPay() != Long.parseLong(wxPayMap.get(WxPayConstant.TOTAL_FEE))) {
-//            return WxPayUtil.failWxPay();
-//        }
-//        if (null != orderPO.getPayTime()) {
-//            // 当前订单已完成
-//            return WxPayUtil.successWxPay();
-//        }
+        OrderPO orderPO = orderMapper.queryByOrderNumber(wxPayMap.get(WxPayConstant.OUT_TRADE_NO));
+        if (null == orderPO || orderPO.getPay() != Long.parseLong(wxPayMap.get(WxPayConstant.TOTAL_FEE))) {
+            return WxPayUtil.failWxPay();
+        }
+        if (null != orderPO.getPayTime()) {
+            // 当前订单已完成
+            return WxPayUtil.successWxPay();
+        }
 
-        // 更新用户会员时间
-//        UserVipPO userVipPO = userVipMapper.queryByUserId(orderPO.getUserId());
-//        UserVipPO newUserVipVO = UserVipUtil.buildUserVipVO(userVipPO, orderPO.getUserId(), orderPO.getDays(), true);
-//        int result1;
-//        if (null == userVipPO) {
-//            result1 = userVipMapper.insert(newUserVipVO);
-//        } else {
-//            result1 = userVipMapper.updateByPrimaryKey(newUserVipVO);
-//        }
-//        if (result1 == 0) {
-//            LogUtil.log(logger, "wxPayNotify", "插入或更新用户会员数据失败", newUserVipVO);
-//        }
-//
-//        Date endDate = newUserVipVO.getEndTime();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(endDate);
-//        calendar.add(Calendar.DATE, -orderPO.getDays());
-//        Date startDate = calendar.getTime();
-//
-//        // 更新支付时间、开始时间、结束时间
-//        orderPO.setPayTime(new Date());
-//        orderPO.setStarttime(startDate);
-//        orderPO.setEndtime(endDate);
-//        orderPO.setStatus((byte) 2);
-//        int result2 = orderMapper.updateByPrimaryKey(orderPO);
-//        if (result2 == 0) {
-//            LogUtil.log(logger, "wxPayNotify", "更新订单数据失败", orderPO);
-//        }
+//         更新用户会员时间
+        UserVipPO userVipPO = userVipMapper.queryByUserId(orderPO.getUserId());
+        UserVipPO newUserVipVO = UserVipUtil.buildUserVipVO(userVipPO, orderPO.getUserId(), orderPO.getDays(), true);
+        int result1;
+        if (null == userVipPO) {
+            result1 = userVipMapper.insert(newUserVipVO);
+        } else {
+            result1 = userVipMapper.updateByPrimaryKey(newUserVipVO);
+        }
+        if (result1 == 0) {
+            LogUtil.log(logger, "wxPayNotify", "插入或更新用户会员数据失败", newUserVipVO);
+        }
+
+        Date endDate = newUserVipVO.getEndTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(endDate);
+        calendar.add(Calendar.DATE, -orderPO.getDays());
+        Date startDate = calendar.getTime();
+
+        // 更新支付时间、开始时间、结束时间
+        orderPO.setPayTime(new Date());
+        orderPO.setStarttime(startDate);
+        orderPO.setEndtime(endDate);
+        orderPO.setStatus((byte) 2);
+        int result2 = orderMapper.updateByPrimaryKey(orderPO);
+        if (result2 == 0) {
+            LogUtil.log(logger, "wxPayNotify", "更新订单数据失败", orderPO);
+        }
 
         // 新增微信支付反馈信息
-//        WxFeedbackPO po = WxPayUtil.convertMap2PO(wxPayMap);
-//        int result3 = wxFeedbackMapper.insert(po);
-//        if (result3 == 0) {
-//            LogUtil.log(logger, "wxPayNotify", "创建订单失败", orderPO);
-//        }
+        WxFeedbackPO po = WxPayUtil.convertMap2PO(wxPayMap);
+        int result3 = wxFeedbackMapper.insert(po);
+        if (result3 == 0) {
+            LogUtil.log(logger, "wxPayNotify", "创建订单失败", orderPO);
+        }
         // 事务提交完成后，发送消息
-//        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
-//                                                                      @Override
-//                                                                      public void afterCommit() {
-//                                                                          // RabbitMQ
-//                                                                          template.convertAndSend("pay-notify", po.getOutTradeNo());
-//                                                                      }
-//                                                                  }
-//        );
-        OrderPO orderPO = orderMapper.queryByOrderNumber("vip202006101813306751f990b3a");
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+                                                                      @Override
+                                                                      public void afterCommit() {
+                                                                          // RabbitMQ
+                                                                          template.convertAndSend("pay-notify", po.getOutTradeNo());
+                                                                      }
+                                                                  }
+        );
         VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(orderPO.getCmdyId());
         if(vipCommodityPO.getCommAttr()==null||vipCommodityPO.getCommAttr()==1){
             return WxPayUtil.successWxPay();
