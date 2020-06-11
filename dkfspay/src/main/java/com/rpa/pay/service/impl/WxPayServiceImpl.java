@@ -197,14 +197,24 @@ public class WxPayServiceImpl implements IWxPayService {
             userToBO.setComTypeName(vipCommodityPO.getComTypeName());//商品类型名称
             userToBO.setComName(vipCommodityPO.getComName());
             userToBO.setType((byte) 1);
-            RestTemplate restTemplate=new RestTemplate();
-            ResultVO s = restTemplate.postForObject(dkfs_buy, userToBO, ResultVO.class);
-            logger.info("测试返回对象："+s.toString());
-            if(s!=null&&s.getStatus()==1000){
-                logger.info("多开分身使用微信购买商品的赠送助手业务成功");
-            }else{
-                logger.info("多开分身使用微信购买商品的赠送助手业务失败");
+            userToBO.setOrderNumber(orderPO.getOrderNumber());
+            try{
+                RestTemplate restTemplate=new RestTemplate();
+                ResultVO s = restTemplate.postForObject(dkfs_buy, userToBO, ResultVO.class);
+                logger.info("测试返回对象："+s.toString());
+                if(s!=null&&s.getStatus()==1000){
+                    logger.info("多开分身使用微信购买商品的赠送助手业务成功");
+                }
+                else if(s.getStatus()==2001){
+                    LogUtil.log(logger,"wxPayNotify","多开使用微信赠送给助手出现重复调用",userToBO.toString());
+                }else{
+                    logger.info("多开分身使用微信购买商品的赠送助手业务失败");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                LogUtil.log(logger,"wxPayNotify","多开微信RestTemplate调用异常",userToBO.toString());
             }
+
 
         }
         return WxPayUtil.successWxPay();

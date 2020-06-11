@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.rpa.common.pojo.BuyGiftPO">
     <id column="bg_id" jdbcType="BIGINT" property="bgId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="order_number" jdbcType="CHAR" property="orderNumber"/>
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="cmdy_name" jdbcType="CHAR" property="cmdyName" />
     <result column="com_type_name" jdbcType="CHAR" property="comTypeName" />
@@ -14,7 +15,7 @@
     <result column="days" jdbcType="INTEGER" property="days" />
   </resultMap>
   <sql id="Base_Column_List">
-    bg_id, user_id, `type`, cmdy_name, com_type_name, create_time, starttime, endtime, 
+    bg_id, user_id,order_number, `type`, cmdy_name, com_type_name, create_time, starttime, endtime,
     `days`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -29,16 +30,22 @@
     left join t_user u on bg.user_id = u.user_id
     where u.user_id=#{ud,jdbcType=BIGINT}
   </select>
+  <select id="queryOrder" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_buy_gift
+    where order_number=#{orderNumber,jdbcType=CHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_buy_gift
     where bg_id = #{bgId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.rpa.common.pojo.BuyGiftPO">
-    insert into t_buy_gift (bg_id, user_id, `type`, 
+    insert into t_buy_gift (bg_id, user_id,order_number, `type`,
       cmdy_name, com_type_name, create_time, 
       starttime, endtime, `days`
       )
-    values (#{bgId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{type,jdbcType=TINYINT}, 
+    values (#{bgId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},#{orderNumber,jdbcType=CHAR}, #{type,jdbcType=TINYINT},
       #{cmdyName,jdbcType=CHAR}, #{comTypeName,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{days,jdbcType=INTEGER}
       )
@@ -51,6 +58,9 @@
       </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="orderNumber!=null">
+        order_number,
       </if>
       <if test="type != null">
         `type`,
@@ -83,6 +93,9 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNumber!=null">
+        #{orderNumber,jdbcType=CHAR},
       </if>
       <if test="type != null">
         #{type,jdbcType=TINYINT},

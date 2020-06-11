@@ -339,6 +339,10 @@ public class AlipayServiceImpl implements AlipayService {
             logger.info("未查出订单信息");
             return "fail";
         }
+        if(orderPO.getPayTime()!=null){
+            logger.info("多开支付宝已经支付");
+            return "success";
+        }
         // 更新用户会员时间
         UserVipPO userVipPO = userVipMapper.queryByUserId(orderPO.getUserId());
         UserVipPO newUserVipVO = UserVipUtil.buildUserVipVO(userVipPO, orderPO.getUserId(), orderPO.getDays(), true);
@@ -385,14 +389,24 @@ public class AlipayServiceImpl implements AlipayService {
             userToBO.setComTypeName(vipCommodityPO.getComTypeName());//商品类型名称
             userToBO.setComName(vipCommodityPO.getComName());
             userToBO.setType((byte) 2);
-            RestTemplate restTemplate = new RestTemplate();
-            ResultVO s = restTemplate.postForObject(dkfs_buy, userToBO, ResultVO.class);
-            logger.info(s.toString());
-            if (s != null && s.getStatus()==1000) {
-                logger.info("多开分身使用支付宝购买商品的赠送助手业务成功");
-            } else {
-                logger.info("多开分身使用支付宝购买商品的赠送助手业务失败");
+            userToBO.setOrderNumber(orderNumber);
+            try{
+                RestTemplate restTemplate = new RestTemplate();
+                ResultVO s = restTemplate.postForObject(dkfs_buy, userToBO, ResultVO.class);
+                logger.info(s.toString());
+                if (s != null && s.getStatus()==1000) {
+                    logger.info("多开分身使用支付宝购买商品的赠送助手业务成功");
+                }
+                else if(s.getStatus()==2001){
+                    LogUtil.log(logger,"updateInfo","多开支付宝重复赠送商品给助手",userToBO.toString());
+                } else {
+                    logger.info("多开分身使用支付宝购买商品的赠送助手业务失败");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                LogUtil.log(logger,"updateInfo","多开支付宝RestTemplate异常",userToBO.toString());
             }
+
         }
         logger.info("更新相关信息成功");
         return "success";

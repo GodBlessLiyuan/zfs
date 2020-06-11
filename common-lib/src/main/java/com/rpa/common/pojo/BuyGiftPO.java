@@ -12,6 +12,16 @@ public class BuyGiftPO implements Serializable {
 
     private Long userId;
 
+    private String orderNumber;
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
     /**
      * 1：微信；2：支付宝
      */
