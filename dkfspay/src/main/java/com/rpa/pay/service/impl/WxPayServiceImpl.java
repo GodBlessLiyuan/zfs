@@ -211,7 +211,7 @@ public class WxPayServiceImpl implements IWxPayService {
                 else if(s.getStatus()==2001){
                     LogUtil.log(logger,"wxPayNotify","多开使用微信赠送给助手出现重复调用",userToBO.toString());
                 }else{
-                    logger.info("多开分身使用微信购买商品的赠送助手业务失败");
+                    LogUtil.log(logger,"wxPayNotify","多开分身使用微信购买商品的赠送助手返回状态码错误");
                 }
             }catch (Exception e){
                 e.printStackTrace();
