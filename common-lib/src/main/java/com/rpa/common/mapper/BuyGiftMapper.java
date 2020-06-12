@@ -13,4 +13,6 @@ import java.util.List;
 @Mapper
 public interface BuyGiftMapper extends BaseMapper<BuyGiftPO, Long> {
     List<BuyGiftBO> queryByUserId(Long ud);
+
+    BuyGiftPO queryOrder(String orderNumber);
 }

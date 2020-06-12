@@ -16,6 +16,7 @@ public class UserToBO implements Serializable {
     private String ip;
     private String chanName;
 
+    private String orderNumber;
     private Byte type;
     private int day;
     private String cmdyName;

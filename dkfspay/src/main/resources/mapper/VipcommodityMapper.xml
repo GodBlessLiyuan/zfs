@@ -20,11 +20,12 @@
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="com_type_name" jdbcType="CHAR" property="comTypeName" />
     <result column="istop" jdbcType="TINYINT" property="istop" />
+    <result column="comm_attr" jdbcType="TINYINT" property="commAttr"/>
   </resultMap>
   <sql id="Base_Column_List">
     cmdy_id, viptype_id, com_type_id, com_name, price, discount, `position`, create_time, 
     soft_channel_id, `name`, update_time, `days`, a_id, description, show_discount, `status`, 
-    com_type_name, istop
+    com_type_name, istop,comm_attr
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

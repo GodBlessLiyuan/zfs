@@ -215,8 +215,13 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
             }
             userMapper.insertSelective(userPO1);
         }
+        BuyGiftPO buyGiftPO=giftMapper.queryOrder(dto.getOrderNumber());
+        if(buyGiftPO!=null){
+            LogUtil.log(logger,"bugZJDouOrder","多开分身出现重复调用",dto.toString());
+            return new ResultVO(2001);
+        }
         //更新赠送会员表，之后再server和web服务查询到
-        BuyGiftPO buyGiftPO=new BuyGiftPO();
+        buyGiftPO=new BuyGiftPO();
         buyGiftPO.setUserId(userPO1.getUserId());
         buyGiftPO.setType(dto.getType());//1微信2支付宝
         buyGiftPO.setCmdyName(dto.getCmdyName());
@@ -224,6 +229,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         buyGiftPO.setCreateTime(new Date());
         buyGiftPO.setDays(dto.getDay());
         buyGiftPO.setComName(dto.getComName());
+
         // 更新用户会员数据
         long useID=userPO1.getUserId();
         UserVipPO userVipPO = userVipMapper.queryByUserId(useID);
@@ -233,6 +239,7 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
         calendar.add(Calendar.DATE, dto.getDay());
         Date endDate = calendar.getTime();
         buyGiftPO.setEndtime(endDate);
+        buyGiftPO.setOrderNumber(dto.getOrderNumber());
         giftMapper.insertSelective(buyGiftPO);
 
         UserVipPO newUserVipPO = UserVipUtil.buildUserVipVO(userVipPO, useID, dto.getDay(), false);
