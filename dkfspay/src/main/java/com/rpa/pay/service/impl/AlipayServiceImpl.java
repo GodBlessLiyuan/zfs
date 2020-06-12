@@ -402,7 +402,7 @@ public class AlipayServiceImpl implements AlipayService {
                 else if(s.getStatus()==2001){
                     LogUtil.log(logger,"updateInfo","多开支付宝重复赠送商品给助手",userToBO.toString());
                 } else {
-                    logger.info("多开分身使用支付宝购买商品的赠送助手业务失败");
+                    LogUtil.log(logger,"updateInfo","多开分身使用支付宝购买商品的赠送助手业务返回状态码出错");
                 }
             }catch (Exception e){
                 e.printStackTrace();
