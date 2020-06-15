@@ -42,6 +42,7 @@ public class UserVipDetailsVO implements Serializable, Comparable<UserVipDetails
      * 支付方式：1-微信；2-支付宝
      */
     private Integer type;
+    private String  commAttr;
 
     @Override
     public int compareTo(UserVipDetailsVO vo) {
