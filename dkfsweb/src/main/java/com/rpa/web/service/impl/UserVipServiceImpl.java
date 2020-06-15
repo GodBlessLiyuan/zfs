@@ -67,6 +67,11 @@ public class UserVipServiceImpl implements IUserVipService {
             UserVipDetailsVO dto = new UserVipDetailsVO();
             dto.setVipType(UserVipConstant.USER_VIP_ORDER);
             dto.setUserChanName(bo.getUserChanName());
+            if(bo.getCommAttr()==null||bo.getCommAttr()==1){
+                dto.setCommAttr("独立商品");
+            }else if(bo.getCommAttr()==2){
+                dto.setCommAttr("通用商品");
+            }
             dto.setSaleChanName(bo.getSaleChanName());
             dto.setType(bo.getType());
             dto.setCreateTime(bo.getCreateTime());
@@ -80,6 +85,7 @@ public class UserVipServiceImpl implements IUserVipService {
             UserVipDetailsVO dto = new UserVipDetailsVO();
             dto.setVipType(UserVipConstant.USER_VIP_ACTIVITY);
             dto.setUserChanName(bo.getUserChanName());
+            dto.setCommAttr("无");
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(bo.getCreateTime());
             dto.setComTypeName(bo.getComTypeName());
@@ -92,6 +98,7 @@ public class UserVipServiceImpl implements IUserVipService {
             UserVipDetailsVO dto = new UserVipDetailsVO();
             dto.setVipType(UserVipConstant.USER_VIP_GIFTS);
             dto.setUserChanName(bo.getUserChanName());
+            dto.setCommAttr("无");
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(bo.getCreateTime());
             dto.setComTypeName(bo.getComTypeName());
@@ -104,6 +111,7 @@ public class UserVipServiceImpl implements IUserVipService {
             UserVipDetailsVO dto = new UserVipDetailsVO();
             dto.setVipType(UserVipConstant.USER_VIP_V);
             dto.setUserChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
+            dto.setCommAttr("无");
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(godinsecUserPO.getUpdateTime());
             dto.setComTypeName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
@@ -117,6 +125,7 @@ public class UserVipServiceImpl implements IUserVipService {
             UserVipDetailsVO dto = new UserVipDetailsVO();
             dto.setVipType(UserVipConstant.USER_VIP_BATCH);
             dto.setUserChanName(batchInfoBO.getUserChanName());
+            dto.setCommAttr("无");
             dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
             dto.setCreateTime(batchInfoBO.getUpdateTime());
             dto.setComTypeName(batchInfoBO.getComTypeName());
@@ -129,6 +138,7 @@ public class UserVipServiceImpl implements IUserVipService {
             UserVipDetailsVO vo = new UserVipDetailsVO();
             vo.setVipType(UserVipConstant.ZNZJ_VIP_GIFTS);//类型：写死
             vo.setUserChanName(bo.getUserChanName());//用户
+            vo.setCommAttr("通用商品");
             vo.setSaleChanName(bo.getSaleChanName());
             vo.setType(bo.getType());
             vo.setCreateTime(bo.getCreateTime());

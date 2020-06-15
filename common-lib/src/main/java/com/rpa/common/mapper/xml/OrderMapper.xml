@@ -228,7 +228,7 @@
     order by o.pay_time desc
   </select>
   <select id="queryByUserId" resultType="com.rpa.common.bo.OrderBO">
-    select  u.chan_name as userChanName, v.name as saleChanName, o.type, o.create_time as createTime, v.com_type_name
+    select  u.chan_name as userChanName,v.comm_attr as commAttr, v.name as saleChanName, o.type, o.create_time as createTime, v.com_type_name
      as comTypeName,v.days, v.com_name as comName, o.order_number as orderNumber, o.pay_time as payTime, o.pay
     from t_order o
     left join t_vipcommodity v on o.cmdy_id = v.cmdy_id

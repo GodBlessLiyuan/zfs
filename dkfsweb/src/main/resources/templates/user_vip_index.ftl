@@ -134,6 +134,7 @@
                                                         <th>序号</th>
                                                         <th>会员获取方式</th>
                                                         <th>用户渠道</th>
+                                                        <th>商品属性</th>
                                                         <th>销售渠道</th>
                                                         <th>支付方式</th>
                                                         <th>获得会员时间</th>
@@ -279,6 +280,7 @@
                 {"data": null, "targets": 0},
                 {"data": "vipType"},
                 {"data": "userChanName"},
+                {"data":"commAttr"},
                 {"data": "saleChanName"},
                 {
                     "data": "type",
