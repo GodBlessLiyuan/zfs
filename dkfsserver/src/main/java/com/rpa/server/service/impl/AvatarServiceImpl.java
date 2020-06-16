@@ -47,7 +47,7 @@ public class AvatarServiceImpl implements IAvatarService {
         int chanId = cache.getSoftChannelId(dto.getChannel());
         AvatarPO avatarPO = avatarMapper.queryMaxByVerId(dto.getSoftv(), chanId, dto.getAvatarv(), dto.getOs_version(),status);
         if (null == avatarPO) {
-//            cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
+            cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
             // 最新版本
             return new ResultVO(1008);
         }
@@ -58,7 +58,7 @@ public class AvatarServiceImpl implements IAvatarService {
         vo.setId(avatarPO.getAvatarId());
         vo.setSoftv(avatarPO.getVersionCode());
 
-//        cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
+        cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
 
         return new ResultVO<>(1009, vo);
     }
