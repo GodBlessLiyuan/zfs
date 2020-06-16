@@ -82,7 +82,7 @@ public class AvatarServiceImpl implements IAvatarService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultVO insert(MultipartFile file, byte updateType, int appId, int[] softChannel, String context, String extra,
+    public ResultVO insert(MultipartFile file, int osVersion,byte updateType, int appId, int[] softChannel, String context, String extra,
                            int aId) {
         // 解析Apk
         Map<String, Object> apkInfo = FileUtil.resolveApk(file, avatarDir, ModuleConstant.AVATAR);
@@ -90,13 +90,13 @@ public class AvatarServiceImpl implements IAvatarService {
             // 上传应用非官方渠道！
             return new ResultVO(1103);
         }
-
         // 查询是否已存在
-        AvatarPO avatarPO = avatarMapper.queryByVersionCode(apkInfo.get("versioncode"));
+        AvatarPO avatarPO = avatarMapper.queryByVersionCode(apkInfo.get("versioncode"),osVersion);
         if (null == avatarPO) {
             // 新增
             avatarPO = new AvatarPO();
             this.buildAvatarPO(file, updateType, context, extra, apkInfo, avatarPO, aId);
+            avatarPO.setOsVersion(osVersion);
             avatarMapper.insert(avatarPO);
 
             List<AppAvaChPO> aacPOs = new ArrayList<>();
