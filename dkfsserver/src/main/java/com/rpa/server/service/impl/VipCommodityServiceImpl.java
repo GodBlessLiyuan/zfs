@@ -72,10 +72,22 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
             vo.setShowdiscount(po.getShowDiscount());
             vo.setTypename(po.getComName());
             vo.setDays(po.getDays());
+            /**
+             *  置顶值为4，通用值为2，普通值为1
+             * 置顶：
+             * */
+            if(po.getIstop()==2){//置顶
+                po.setIstop((byte) 4);
+            }else {
+                po.setIstop((byte) 0);
+            }
+            //通用商品
             if(po.getCommAttr()==2){
-                vo.setIstop((byte) 3);
-            }else{
-                vo.setIstop(po.getIstop());
+                vo.setIstop((byte) (vo.getIstop()+ 2));
+            }
+            //独立商品
+            else{
+                vo.setIstop((byte) (vo.getIstop()+1));
             }
             vos.add(vo);
         }

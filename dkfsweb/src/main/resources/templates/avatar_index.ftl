@@ -104,6 +104,7 @@
                                         <th>序号</th>
                                         <th>发布时间</th>
                                         <th>发布人</th>
+                                        <th>分身类型</th>
                                         <th>分身版本</th>
                                         <th>文件大小</th>
                                         <th>更新方式</th>
@@ -135,6 +136,15 @@
                                                                 style="color: red">*</span>:</span>
                                                     <input id="iFile" type="file"/>
                                                 </div>
+                                                <div class="form-group">
+                                                    <span for="message-text" class="col-form-label">分身类型<span
+                                                                style="color: red">*</span>:</span>
+                                                    <select id="os_version" class="form-control">
+                                                        <option value="0" selected>普通分身</option>
+                                                        <option value="10">安卓10分身</option>
+                                                    </select>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <span for="recipient-name" class="col-form-label">更新方式<span
                                                                 style="color: red">*</span>:</span>
@@ -361,6 +371,7 @@
     function insertClick() {
         let reqData = new FormData();
         reqData.append("file", $('#iFile')[0].files[0]);
+        reqData.append("osVersion",$("os_version").val());
         reqData.append("updateType", $('#iUpdateType').val());
         reqData.append("appId", $('#iAppId').val());
         reqData.append("softChannel", $('#iSoftChannel').val());
