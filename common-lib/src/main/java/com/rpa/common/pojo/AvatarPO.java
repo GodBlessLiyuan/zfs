@@ -52,6 +52,10 @@ public class AvatarPO implements Serializable {
         this.osVersion = osVersion;
     }
 
+    public Integer getOsVersion() {
+        return osVersion;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Long getAvatarId() {

@@ -34,7 +34,7 @@
     where avatar_id = #{avatarId,jdbcType=BIGINT}
   </update>
   <insert id="insert" parameterType="com.rpa.common.pojo.AvatarPO" useGeneratedKeys="true" keyProperty="avatarId">
-    insert into t_avatar (avatar_id, version_name, version_code,
+     insert into t_avatar (avatar_id, version_name, version_code,
       create_time, update_time, url, 
       `status`, update_type, `size`, 
       extra, context, publish_time, 
