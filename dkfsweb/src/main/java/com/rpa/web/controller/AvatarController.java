@@ -57,6 +57,7 @@ public class AvatarController {
 
     @PostMapping("insert")
     public ResultVO insert(@RequestParam(value = "file") MultipartFile file,
+                           @RequestParam(value = "osVersion")int osVersion,
                            @RequestParam(value = "updateType") byte updateType,
                            @RequestParam(value = "appId") byte appId,
                            @RequestParam(value = "softChannel") int[] softChannel,
@@ -67,7 +68,7 @@ public class AvatarController {
             return new ResultVO(1001);
         }
 
-        return service.insert(file, updateType, appId, softChannel, context, extra, admin.getaId());
+        return service.insert(file,osVersion, updateType, appId, softChannel, context, extra, admin.getaId());
     }
 
     @PostMapping("update")

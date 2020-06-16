@@ -48,7 +48,7 @@ public interface IAvatarService {
      * @param aId         管理员
      * @return
      */
-    ResultVO insert(MultipartFile file, byte updateType, int appId, int[] softChannel, String context, String extra, int aId);
+    ResultVO insert(MultipartFile file, int osVersion,byte updateType, int appId, int[] softChannel, String context, String extra, int aId);
 
     /**
      * 更新状态（发布&取消发布）

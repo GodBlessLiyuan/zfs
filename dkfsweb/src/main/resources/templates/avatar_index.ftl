@@ -371,7 +371,7 @@
     function insertClick() {
         let reqData = new FormData();
         reqData.append("file", $('#iFile')[0].files[0]);
-        reqData.append("osVersion",$("os_version").val());
+        reqData.append("osVersion",$("#os_version").val());
         reqData.append("updateType", $('#iUpdateType').val());
         reqData.append("appId", $('#iAppId').val());
         reqData.append("softChannel", $('#iSoftChannel').val());
@@ -492,6 +492,7 @@
                 {"data": null, "targets": 0},
                 {"data": "publishTime"},
                 {"data": "username"},
+                {"data":"osVersion"},
                 {"data": "versionName"},
                 {"data": "size"},
                 {"data": "updateType"},

@@ -17,4 +17,5 @@ public class AvatarBO extends AvatarPO {
     private int chanId;
     private String chanName;
     private int appId;
+    private Integer osVersion;
 }

@@ -46,6 +46,15 @@ public class AvatarPO implements Serializable {
     private String md5;
 
     private Integer aId;
+    private Integer osVersion;
+
+    public void setOsVersion(Integer osVersion) {
+        this.osVersion = osVersion;
+    }
+
+    public Integer getOsVersion() {
+        return osVersion;
+    }
 
     private static final long serialVersionUID = 1L;
 

@@ -17,6 +17,7 @@
     <result column="dr" jdbcType="TINYINT" property="dr" />
     <result column="md5" jdbcType="CHAR" property="md5" />
     <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="os_version" jdbcType="INTEGER" property="osVersion" />
   </resultMap>
   <sql id="Base_Column_List">
     avatar_id, version_name, version_code, create_time, update_time, url, `status`, update_type, 
@@ -33,16 +34,16 @@
     where avatar_id = #{avatarId,jdbcType=BIGINT}
   </update>
   <insert id="insert" parameterType="com.rpa.common.pojo.AvatarPO" useGeneratedKeys="true" keyProperty="avatarId">
-    insert into t_avatar (avatar_id, version_name, version_code, 
+     insert into t_avatar (avatar_id, version_name, version_code,
       create_time, update_time, url, 
       `status`, update_type, `size`, 
       extra, context, publish_time, 
-      dr, md5, a_id)
-    values (#{avatarId,jdbcType=BIGINT}, #{versionName,jdbcType=CHAR}, #{versionCode,jdbcType=INTEGER}, 
+      dr, md5, a_id,os_version)
+    values (#{avatarId,jdbcType=BIGINT}, #{versionName,jdbcType=CHAR}, #{versionCode,jdbcType=INTEGER},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{url,jdbcType=CHAR}, 
       #{status,jdbcType=TINYINT}, #{updateType,jdbcType=TINYINT}, #{size,jdbcType=INTEGER}, 
       #{extra,jdbcType=CHAR}, #{context,jdbcType=CHAR}, #{publishTime,jdbcType=TIMESTAMP}, 
-      #{dr,jdbcType=TINYINT}, #{md5,jdbcType=CHAR}, #{aId,jdbcType=INTEGER})
+      #{dr,jdbcType=TINYINT}, #{md5,jdbcType=CHAR}, #{aId,jdbcType=INTEGER},#{osVersion,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.common.pojo.AvatarPO">
     insert into t_avatar
@@ -211,7 +212,7 @@
   <select id="queryByVersionCode" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from t_avatar
-    where dr = 1 and version_code = #{versionCode}
+    where dr = 1 and version_code = #{versionCode} and os_version=#{osVersion,jdbcType=INTEGER}
     order by avatar_id
     limit 1
   </select>
@@ -233,7 +234,7 @@
     where a.avatar_id = #{avatarId,jdbcType=BIGINT} and a.dr = 1
   </select>
   <select id="queryByAvatarIds" resultType="com.rpa.common.bo.AvatarBO">
-    select a.avatar_id as avatarId, a.publish_time as publishTime, au.username, a.version_name as versionName, a.size,
+    select a.avatar_id as avatarId, a.os_version as osVersion, a.publish_time as publishTime, au.username, a.version_name as versionName, a.size,
     a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra, aac.app_id as appId, app.versionname as appVersionName
     from t_avatar a
     left join t_app_ava_ch aac on a.avatar_id = aac.avatar_id

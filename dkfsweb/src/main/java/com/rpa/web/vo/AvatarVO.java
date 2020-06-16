@@ -28,7 +28,7 @@ public class AvatarVO implements Serializable {
     private String name;
     private Byte status;
     private String extra;
-
+    private String osVersion;
     public static AvatarVO convert(AvatarBO bo) {
         AvatarVO vo = new AvatarVO();
 
@@ -43,6 +43,11 @@ public class AvatarVO implements Serializable {
         vo.setUpdateType(bo.getUpdateType());
         vo.setUsername(bo.getUsername());
         vo.setVersionName(bo.getVersionName());
+        if(bo.getOsVersion()==null||bo.getOsVersion()==0){
+            vo.setOsVersion("普通分身");
+        }else {
+            vo.setOsVersion("安卓10分身");
+        }
 
         return vo;
     }

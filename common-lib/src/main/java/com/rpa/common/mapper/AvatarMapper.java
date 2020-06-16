@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @Mapper
 public interface AvatarMapper extends BaseMapper<AvatarPO, Long> {
-    AvatarPO queryByVersionCode(Object versionCode);
+    AvatarPO queryByVersionCode(@Param("versionCode") Object versionCode,@Param("osVersion") int osVersion);
 
     List<AvatarBO> queryByAvatarIds(List<Integer> avatarIds);
 
