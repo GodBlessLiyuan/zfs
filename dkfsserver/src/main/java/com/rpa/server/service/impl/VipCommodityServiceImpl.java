@@ -72,7 +72,11 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
             vo.setShowdiscount(po.getShowDiscount());
             vo.setTypename(po.getComName());
             vo.setDays(po.getDays());
-            vo.setIstop(po.getIstop());
+            if(po.getCommAttr()==2){
+                vo.setIstop((byte) 3);
+            }else{
+                vo.setIstop(po.getIstop());
+            }
             vos.add(vo);
         }
 
