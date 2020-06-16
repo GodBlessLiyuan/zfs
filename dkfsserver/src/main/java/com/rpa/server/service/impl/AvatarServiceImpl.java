@@ -33,7 +33,7 @@ public class AvatarServiceImpl implements IAvatarService {
     @Override
     public ResultVO check(AvatarDTO dto) {
         int status = this.gray || cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
-        String redisKey = RedisKeyUtil.genAvatarRedisKey(dto.getSoftv(), dto.getChannel(), dto.getAvatarv(), status);
+        String redisKey = RedisKeyUtil.genAvatarRedisKey(dto.getSoftv(), dto.getChannel(), dto.getOs_version(),dto.getAvatarv(), status);
         String redisValue = cache.getCacheByKey(redisKey);
         if (null != redisValue) {
             AvatarVO vo = JSON.parseObject(redisValue, AvatarVO.class);
@@ -45,9 +45,9 @@ public class AvatarServiceImpl implements IAvatarService {
 
         // 从Redis中取出设备白名单
         int chanId = cache.getSoftChannelId(dto.getChannel());
-        AvatarPO avatarPO = avatarMapper.queryMaxByVerId(dto.getSoftv(), chanId, dto.getAvatarv(), status);
+        AvatarPO avatarPO = avatarMapper.queryMaxByVerId(dto.getSoftv(), chanId, dto.getAvatarv(), dto.getOs_version(),status);
         if (null == avatarPO) {
-            cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
+//            cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
             // 最新版本
             return new ResultVO(1008);
         }
@@ -58,7 +58,7 @@ public class AvatarServiceImpl implements IAvatarService {
         vo.setId(avatarPO.getAvatarId());
         vo.setSoftv(avatarPO.getVersionCode());
 
-        cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
+//        cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
 
         return new ResultVO<>(1009, vo);
     }
