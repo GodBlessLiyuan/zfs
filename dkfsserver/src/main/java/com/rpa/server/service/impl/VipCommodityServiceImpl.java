@@ -78,6 +78,8 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
              * */
             if(po.getIstop()==2){//置顶
                 po.setIstop((byte) 4);
+            }else {
+                po.setIstop((byte) 0);
             }
             //通用商品
             if(po.getCommAttr()==2){
