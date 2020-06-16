@@ -527,13 +527,13 @@
             ],
             "columnDefs": [
                 {
-                    "targets": [5],
+                    "targets": [6],
                     "render": function (data, type, full) {
                         return data === 1 ? "普通更新" : "强制更新";
                     }
                 },
                 {
-                    "targets": [8],
+                    "targets": [9],
                     "render": function (data, type, full) {
                         return data === 1 ? "未发布" : "已发布";
                     }
