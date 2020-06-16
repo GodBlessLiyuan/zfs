@@ -271,6 +271,7 @@
     select <include refid="Base_Column_List" />
     from t_vipcommodity
     where soft_channel_id = #{softChannelId,jdbcType=INTEGER} and com_type_id = #{comTypeId,jdbcType=INTEGER}
+      and  comm_attr=#{commAttr,jdbcType=INTEGER}
   </select>
   <select id="queryDayRevenue" resultType="java.lang.Float">
     select sum(v.discount)
