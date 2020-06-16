@@ -21,5 +21,6 @@ public interface AvatarMapper extends BaseMapper<AvatarPO, Long> {
 
     List<AvatarBO> queryByAvatarId(long avatarId);
 
-    AvatarPO queryMaxByVerId(@Param("softv") Integer softv, @Param("chanId") Integer chanId, @Param("avatarv") Integer avatarv, @Param("status") Integer status);
+    AvatarPO queryMaxByVerId(@Param("softv") Integer softv, @Param("chanId") Integer chanId, @Param("avatarv") Integer avatarv,
+                             @Param("osVersion") Integer osVersion,@Param("status") Integer status);
 }

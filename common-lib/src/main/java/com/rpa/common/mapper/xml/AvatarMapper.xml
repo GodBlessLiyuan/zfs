@@ -250,7 +250,7 @@
     from t_avatar a
     inner join t_app_ava_ch aac on a.avatar_id = aac.avatar_id
     inner join t_app ap on aac.app_id = ap.app_id
-    where a.dr = 1 and ap.dr = 1 and ap.versionCode = #{softv,jdbcType=INTEGER} and aac.soft_channel_id =
+    where a.dr = 1 and a.os_version=#{osVersion,jdbcType=INTEGER} and ap.dr = 1 and ap.versionCode = #{softv,jdbcType=INTEGER} and aac.soft_channel_id =
     #{chanId,jdbcType=INTEGER} and a.version_code > #{avatarv,jdbcType=INTEGER}
     <if test="status == 2">
       and a.`status` = #{status,jdbcType=INTEGER}
