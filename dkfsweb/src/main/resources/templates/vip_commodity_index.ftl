@@ -487,7 +487,7 @@
                         document.getElementById("iModalX").click();
                         $('#datatab').DataTable().draw(false);
                     } else if(res.status === 1103) {
-                        alert("当前渠道-产品已存在！");
+                        alert("当前商品属性-销售渠道-产品类型已存在！");
                     } else {
                         alert("服务器内部错误！")
                     }
