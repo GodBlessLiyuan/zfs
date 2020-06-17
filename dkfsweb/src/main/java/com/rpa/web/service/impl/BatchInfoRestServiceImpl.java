@@ -211,8 +211,8 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
                 softChannelPO.setExtra("智能助手创建");
                 softChannelMapper.insertSelective(softChannelPO);
                 id = softChannelMapper.queryIdbyName(userPO1.getChanName());
-                userPO1.setSoftChannelId(id);
             }
+            userPO1.setSoftChannelId(id);
             userMapper.insertSelective(userPO1);
         }
         BuyGiftPO buyGiftPO=giftMapper.queryOrder(dto.getOrderNumber());
@@ -220,28 +220,10 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
             LogUtil.log(logger,"bugZJDouOrder","多开分身出现重复调用",dto.toString());
             return new ResultVO(2001);
         }
-        //更新赠送会员表，之后再server和web服务查询到
-        buyGiftPO=new BuyGiftPO();
-        buyGiftPO.setUserId(userPO1.getUserId());
-        buyGiftPO.setType(dto.getType());//1微信2支付宝
-        buyGiftPO.setCmdyName(dto.getCmdyName());
-        buyGiftPO.setComTypeName(dto.getComTypeName());
-        buyGiftPO.setCreateTime(new Date());
-        buyGiftPO.setDays(dto.getDay());
-        buyGiftPO.setComName(dto.getComName());
 
         // 更新用户会员数据
         long useID=userPO1.getUserId();
         UserVipPO userVipPO = userVipMapper.queryByUserId(useID);
-        buyGiftPO.setStarttime(userVipPO.getEndTime());
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(userVipPO.getEndTime());
-        calendar.add(Calendar.DATE, dto.getDay());
-        Date endDate = calendar.getTime();
-        buyGiftPO.setEndtime(endDate);
-        buyGiftPO.setOrderNumber(dto.getOrderNumber());
-        giftMapper.insertSelective(buyGiftPO);
-
         UserVipPO newUserVipPO = UserVipUtil.buildUserVipVO(userVipPO, useID, dto.getDay(), false);
         int result2;
         if (userVipPO == null) {
@@ -253,6 +235,25 @@ public class BatchInfoRestServiceImpl implements IBatchInfoRestService{
             LogUtil.log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
             return new ResultVO(2000);
         }
+        userVipPO=userVipMapper.queryByUserId(useID);
+        //更新赠送会员表，之后再server和web服务查询到
+        buyGiftPO=new BuyGiftPO();
+        buyGiftPO.setUserId(userPO1.getUserId());
+        buyGiftPO.setType(dto.getType());//1微信2支付宝
+        buyGiftPO.setCmdyName(dto.getCmdyName());
+        buyGiftPO.setComTypeName(dto.getComTypeName());
+        buyGiftPO.setCreateTime(new Date());
+        buyGiftPO.setDays(dto.getDay());
+        buyGiftPO.setComName(dto.getComName());
+        buyGiftPO.setStarttime(userVipPO.getEndTime());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(userVipPO.getEndTime());
+        calendar.add(Calendar.DATE, dto.getDay());
+        Date endDate = calendar.getTime();
+        buyGiftPO.setEndtime(endDate);
+        buyGiftPO.setOrderNumber(dto.getOrderNumber());
+        giftMapper.insertSelective(buyGiftPO);
         logger.info("赠送给多开分身成功");
         return new ResultVO(1000);
     }
