@@ -5,7 +5,6 @@ import com.rpa.server.dto.VipCommodityDTO;
 import com.rpa.server.service.IVipCommodityService;
 import com.rpa.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +25,7 @@ public class VipCommodityController {
 
     @PostMapping("getcommodity")
     public ResultVO getCommodity(@RequestBody VipCommodityDTO dto) {
-        if (dto.getId() == null || dto.getVerify() == null) {
-            return new ResultVO(2000);
-        }
-        if(!dto.getVerify().equals(DigestUtils.md5DigestAsHex(("vbooster@123" + dto.getId()).getBytes()))){
+        if (!VerifyUtil.checkDeviceId(dto)) {
             return new ResultVO(2000);
         }
 
