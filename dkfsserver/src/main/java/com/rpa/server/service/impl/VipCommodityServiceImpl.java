@@ -46,14 +46,14 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         }
 
         List<VipcommodityPO> vcPOs = vipCommodityMapper.queryByChanId(CommonConstant.CHAN_DEF);
-        Map<Integer, VipcommodityPO> vcMap = new HashMap<>(vcPOs.size());
+        Map<String, VipcommodityPO> vcMap = new HashMap<>(vcPOs.size());
         for (VipcommodityPO po : vcPOs) {
-            vcMap.put(po.getComTypeId(), po);
+            vcMap.put(po.getComTypeId()+"_"+po.getCommAttr()+"_"+po.getSoftChannelId(), po);
         }
 
         List<VipcommodityPO> pos = vipCommodityMapper.queryByChanId(cache.getSoftChannelId(dto.getChannel()));
         for (VipcommodityPO po : pos) {
-            vcMap.put(po.getComTypeId(), po);
+            vcMap.put(po.getComTypeId()+"_"+po.getCommAttr()+"_"+po.getSoftChannelId(), po);
         }
         if (vcMap.size() == 0) {
             cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
