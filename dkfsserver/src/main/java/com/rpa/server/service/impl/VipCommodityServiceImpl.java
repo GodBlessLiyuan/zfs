@@ -83,11 +83,11 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
             }
             //通用商品
             if(po.getCommAttr()==2){
-                vo.setIstop((byte) (vo.getIstop()+ 2));
+                vo.setIstop((byte) (po.getIstop()+ 2));
             }
             //独立商品
             else{
-                vo.setIstop((byte) (vo.getIstop()+1));
+                vo.setIstop((byte) (po.getIstop()+1));
             }
             vos.add(vo);
         }
