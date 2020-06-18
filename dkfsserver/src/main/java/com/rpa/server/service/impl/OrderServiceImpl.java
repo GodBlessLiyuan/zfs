@@ -112,7 +112,8 @@ public class OrderServiceImpl implements IOrderService {
             OrderVO vo = new OrderVO();
             vo.setType(6);//类型：写死
             vo.setPaytype(bo.getType());//付款类型
-            vo.setComname(bo.getComName());//商品名称
+            //标题由商品名称改为智能助手赠送（X天会员）
+            vo.setComname("智能助手赠送（"+bo.getDays()+"天会员）");
             vo.setPaytime(bo.getCreateTime());
             orderVOs.add(vo);
         }
