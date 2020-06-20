@@ -16,5 +16,5 @@ public interface IVipCommodityService {
      * @param dto
      * @return
      */
-    ResultVO getCommodity(VipCommodityDTO dto);
+    ResultVO getCommodity(VipCommodityDTO dto,int version);
 }

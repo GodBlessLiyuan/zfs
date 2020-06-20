@@ -48,7 +48,7 @@ public class OrderServiceImpl implements IOrderService {
     private BuyGiftMapper giftMapper;
 
     @Override
-    public ResultVO getOrders(OrderDTO dto) {
+    public ResultVO getOrders(OrderDTO dto, int version) {
         List<OrderVO> orderVOs = new ArrayList<>();
         // 购买
         List<OrderBO> orderBOs = orderMapper.queryByUserId(dto.getUd());
@@ -59,7 +59,7 @@ public class OrderServiceImpl implements IOrderService {
             vo.setComname(bo.getComName());
             vo.setOrdernumber(bo.getOrderNumber());
             vo.setPaytime(bo.getPayTime());
-            if(null != bo.getPay()) {
+            if (null != bo.getPay()) {
                 vo.setPrice(String.valueOf(bo.getPay() / 100f));
             }
             orderVOs.add(vo);
@@ -97,25 +97,28 @@ public class OrderServiceImpl implements IOrderService {
         for (BatchInfoBO bo : batchInfoBOs) {
             OrderVO vo = new OrderVO();
             vo.setType(5);
-            if(bo.getBatchId()==1){
+            if (bo.getBatchId() == 1) {
                 vo.setComname(comTypeMapper.queryNameDays(bo.getDays()));
-            }else{
+            } else {
                 vo.setComname(bo.getComTypeName());
             }
             vo.setOrdernumber(bo.getVipkey());
             vo.setPaytime(bo.getUpdateTime());
             orderVOs.add(vo);
         }
-        //助手购买赠送
-        List<BuyGiftBO> buyGiftBOS=giftMapper.queryByUserId(dto.getUd());
-        for(BuyGiftBO bo:buyGiftBOS){
-            OrderVO vo = new OrderVO();
-            vo.setType(6);//类型：写死
-            vo.setPaytype(bo.getType());//付款类型
-            //标题由商品名称改为智能助手赠送（X天会员）
-            vo.setComname("智能助手赠送（"+bo.getDays()+"天会员）");
-            vo.setPaytime(bo.getCreateTime());
-            orderVOs.add(vo);
+        if (version > 0) {
+            //助手购买赠送
+            List<BuyGiftBO> buyGiftBOS = giftMapper.queryByUserId(dto.getUd());
+            for (BuyGiftBO bo : buyGiftBOS) {
+                OrderVO vo = new OrderVO();
+                vo.setType(6);//类型：写死
+                vo.setPaytype(bo.getType());//付款类型
+                //标题由商品名称改为智能助手赠送（X天会员）
+                vo.setComname("智能助手赠送（" + bo.getDays() + "天会员）");
+                vo.setPaytime(bo.getCreateTime());
+                orderVOs.add(vo);
+            }
+
         }
         // 根据购买时间降序排序
         Collections.sort(orderVOs);

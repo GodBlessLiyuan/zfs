@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletRequest;
  * @description: 订单
  * @version: 1.0
  */
-@RequestMapping("v1.0")
+@RequestMapping("v1.1")
 @RestController
-public class OrderController {
+public class OrderControllerV1 {
 
     @Autowired
     private IOrderService service;
@@ -31,6 +31,6 @@ public class OrderController {
 //            return new ResultVO(2000);
 //        }
 
-        return service.getOrders(dto,0);
+        return service.getOrders(dto,1);
     }
 }
