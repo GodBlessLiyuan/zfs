@@ -62,7 +62,16 @@ public class OrderServiceImpl implements IOrderService {
             if (null != bo.getPay()) {
                 vo.setPrice(String.valueOf(bo.getPay() / 100f));
             }
-            orderVOs.add(vo);
+            //旧版本
+            if(version==0){
+                //独立商品
+                if(bo.getCommAttr()==null||bo.getCommAttr()==1){
+                    orderVOs.add(vo);
+                }
+            }else{
+                orderVOs.add(vo);
+            }
+
         }
         // 好评活动赠送
         List<UserActivityPO> userActivityPOs = userActivityMapper.queryActivatedByUserId(dto.getUd());
