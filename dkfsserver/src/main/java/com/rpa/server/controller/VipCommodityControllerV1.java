@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @description: 商品列表
  * @version: 1.0
  */
-@RequestMapping("v1.0")
+@RequestMapping("v1.1")
 @RestController
-public class VipCommodityController {
+public class VipCommodityControllerV1 {
 
     @Autowired
     private IVipCommodityService vipCommodityService;
@@ -29,7 +29,7 @@ public class VipCommodityController {
             return new ResultVO(2000);
         }
 
-        return vipCommodityService.getCommodity(dto,0);
+        return vipCommodityService.getCommodity(dto,1);
     }
 
     @PostMapping("buycommodity")

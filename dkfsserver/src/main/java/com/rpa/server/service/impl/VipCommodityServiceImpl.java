@@ -34,8 +34,8 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     private RedisCacheUtil cache;
 
     @Override
-    public ResultVO getCommodity(VipCommodityDTO dto) {
-        String redisKey = RedisKeyUtil.genVipCommodityRedisKey(dto.getSoftv(), dto.getChannel());
+    public ResultVO getCommodity(VipCommodityDTO dto,int version) {
+        String redisKey = RedisKeyUtil.genVipCommodityRedisKey(dto.getSoftv(), dto.getChannel(),String.valueOf(version));
         String redisValue = cache.getCacheByKey(redisKey);
         if (null != redisValue) {
             List<VipCommodityVO> vos = JSON.parseObject(redisValue, List.class);
@@ -89,7 +89,13 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
             else{
                 vo.setIstop((byte) (po.getIstop()+1));
             }
-            vos.add(vo);
+            //低版本接口 不可以获取到通用商品
+            if(version == 0 && po.getCommAttr() == 2){
+
+            } else {
+                vos.add(vo);
+            }
+
         }
 
         cache.setCache(redisKey, vos, 1, TimeUnit.DAYS);

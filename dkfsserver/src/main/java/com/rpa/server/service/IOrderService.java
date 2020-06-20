@@ -16,5 +16,5 @@ public interface IOrderService {
      * @param dto
      * @return
      */
-    ResultVO getOrders(OrderDTO dto);
+    ResultVO getOrders(OrderDTO dto,int version);
 }
