@@ -2,7 +2,7 @@ package com.rpa.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.rpa.common.bo.UserBO;
-import com.rpa.common.mapper.UserMapper;
+import com.rpa.common.mapper.RegisterUserMapper;
 import com.rpa.web.common.PageHelper;
 import com.rpa.web.vo.UserVO;
 import com.rpa.web.service.IUserService;
@@ -22,13 +22,13 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements IUserService {
 
-    @Resource
-    private UserMapper userMapper;
 
+    @Resource
+    private RegisterUserMapper registerUserMapper;
     @Override
     public DTPageInfo<UserVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<UserBO> page = PageHelper.startPage(pageNum, pageSize);
-        List<UserBO> dos = userMapper.query(reqData);
+        List<UserBO> dos = registerUserMapper.query(reqData);
         return new DTPageInfo<>(draw, page.getTotal(), UserVO.convert(dos));
     }
 }

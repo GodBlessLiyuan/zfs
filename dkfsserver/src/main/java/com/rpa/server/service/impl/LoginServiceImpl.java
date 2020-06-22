@@ -1,5 +1,6 @@
 package com.rpa.server.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.rpa.common.mapper.*;
@@ -54,7 +55,10 @@ public class LoginServiceImpl implements ILoginService {
     private UserVipMapper userVipMapper;
     @Resource
     private GodinsecUserMapper godinsecUserMapper;
-
+    @Autowired
+    private DeviceMapper deviceMapper;
+    @Autowired
+    private RegisterUserMapper registerUserMapper;
     @Autowired
     private AmqpTemplate template;
 
@@ -85,6 +89,23 @@ public class LoginServiceImpl implements ILoginService {
             if (result1 == 0) {
                 LogUtil.log(logger, "insert", "新增用户失败", po);
             }
+            RegisterUserPO registerUserPO=new RegisterUserPO();
+            registerUserPO.setPhone(po.getPhone());
+            registerUserPO.setCreateTime(new Date());
+            registerUserPO.setChanName(dto.getChannel());
+            DevicePO devicePO = deviceMapper.selectByPrimaryKey(dto.getId());//设备信息
+            if(devicePO!=null){
+                registerUserPO.setVersionname(devicePO.getVersionname());
+                registerUserPO.setBuildrelease(devicePO.getBuildrelease());
+                registerUserPO.setManufacturer(devicePO.getManufacturer());
+                registerUserPO.setAndroidmodel(devicePO.getAndroidmodel());
+                registerUserMapper.insertSelective(registerUserPO);
+            }else{
+                devicePO=null;
+                registerUserPO=null;
+                logger.info("注册用户设备时数据库不存在该设备号："+JSON.toJSONString(dto));
+            }
+
             // 登出当前设备所有在线用户
             userDeviceMapper.signOutByDevId(dto.getId());
 

@@ -4,6 +4,7 @@
 助手端和多开端的t_vipcommodity:
     增加字段（商品属性）：comm_attr tinyint DEFAULT 1,
 新增加了购买赠送表：t_buy_gift
+新增了注册用户表：m_register_user
 ## 更新模块 ##
 
 1. dkfspay
@@ -15,11 +16,13 @@
     添加了接口v1.0/buy_zj_douOrder，查询或者新增数据到了用户表t_user、销售渠道表t_soft_channel，新增数据到购买赠送表t_buy_gift,修改了用户会员表
  t_user_vip,
     修改了商品列表的后台,接口为vipcommodity/insert;
-    
+    修改了接口：userinfo/query，从表m_register_user查用户设备号（即注册时的用户设备号）
+    增加了接口：get/post请求：history/createUserHistory；在RegisterUserHistoryController类文件下
 3. dkfsserver
     改动了商品列表接口：v1.0/getcommodity，判断商品类别是否通用
     改动了订单接口：v1.0/order里面的内容
     修改了接口：v1.0/config：具体为ConfigServiceImpl类的queryConfigInfo()方法,下载链接存在数据库中：INSERT into `t_key_value` (key_name,value) VALUES (20,'http://39.97.253.38/dkfsserver/v1.0/clearfans');
     修改了接口：v1.0/checkava，修改了表t_avatar，增加了字段os_version int DEFAULT 0,该字段os_version在表t_avatar中必须有值：0或者10，也可以参见：v1.0md的api:28号. 分身更新
-
+    改动了用户登录接口：v1.0/register,因为只记录用户注册的设备，增加了表m_register_user，当用户不存在时，将用户和设备号写到这个m_register_user；
+ 当用户不存在，设备号也不存在，则记录日志；不影响原来的业务逻辑：将用户设备关系写到表用户设备表t_user_device
    

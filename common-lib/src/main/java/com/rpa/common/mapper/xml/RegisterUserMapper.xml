@@ -17,15 +17,28 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_register_user
+    from m_register_user
     where re_uid = #{reUid,jdbcType=BIGINT}
   </select>
+  <select id="query" resultType="com.rpa.common.bo.UserBO">
+    select
+    u.phone, u.create_time as createTime, u.chan_name as chanName, u.versionname as versionName, u.buildrelease
+    as buildRelease, u.manufacturer, u.androidmodel as androidModel
+    from m_register_user u
+    <where>
+      <if test="phone!=null and phone!=''">AND u.phone like '%' #{phone} '%'</if>
+    </where>
+    order by u.create_time desc
+  </select>
+  <select id="queryAllPhone" resultType="java.lang.String">
+  select phone from m_register_user
+</select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_register_user
+    delete from m_register_user
     where re_uid = #{reUid,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.rpa.common.pojo.RegisterUserPO">
-    insert into t_register_user (re_uid, phone, create_time, 
+    insert into m_register_user (re_uid, phone, create_time,
       chan_name, versionname, buildrelease, 
       manufacturer, androidmodel)
     values (#{reUid,jdbcType=BIGINT}, #{phone,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
@@ -33,7 +46,7 @@
       #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.rpa.common.pojo.RegisterUserPO">
-    insert into t_register_user
+    insert into m_register_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="reUid != null">
         re_uid,
@@ -88,7 +101,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.rpa.common.pojo.RegisterUserPO">
-    update t_register_user
+    update m_register_user
     <set>
       <if test="phone != null">
         phone = #{phone,jdbcType=CHAR},
@@ -115,7 +128,7 @@
     where re_uid = #{reUid,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.rpa.common.pojo.RegisterUserPO">
-    update t_register_user
+    update m_register_user
     set phone = #{phone,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       chan_name = #{chanName,jdbcType=CHAR},
@@ -125,4 +138,13 @@
       androidmodel = #{androidmodel,jdbcType=CHAR}
     where re_uid = #{reUid,jdbcType=BIGINT}
   </update>
+  <insert id="batchInsert" parameterType="java.util.Collection">
+    insert into m_register_user ( phone, create_time,chan_name, versionname, buildrelease,
+    manufacturer, androidmodel)  values
+    <foreach collection="collection" item="po" separator=",">
+        (#{po.phone,jdbcType=CHAR}, #{po.createTime,jdbcType=TIMESTAMP},
+      #{po.chanName,jdbcType=CHAR}, #{po.versionName,jdbcType=CHAR}, #{po.buildRelease,jdbcType=CHAR},
+      #{po.manufacturer,jdbcType=CHAR}, #{po.androidModel,jdbcType=CHAR})
+    </foreach>
+  </insert>
 </mapper>
