@@ -1,5 +1,6 @@
 package com.rpa.common.mapper;
 
+import com.rpa.common.bo.UserBO;
 import com.rpa.common.pojo.UserPO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,4 +22,6 @@ public interface UserMapper extends BaseMapper<UserPO, Long> {
      * @return
      */
     UserPO queryByPhone(String ph);
+
+    List<UserBO> selUserDeivce();
 }
