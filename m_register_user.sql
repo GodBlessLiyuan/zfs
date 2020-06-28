@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS m_register_user;
 
 CREATE TABLE m_register_user
 (
-	re_uid bigint NOT NULL,
+	re_uid bigint NOT NULL AUTO_INCREMENT,
 	phone char(11),
 	create_time datetime,
 	chan_name char(64),
