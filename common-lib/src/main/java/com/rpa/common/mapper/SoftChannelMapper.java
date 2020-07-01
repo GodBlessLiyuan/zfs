@@ -11,4 +11,6 @@ import java.util.List;
 @Mapper
 public interface SoftChannelMapper extends BaseMapper<SoftChannelPO, Integer> {
     Integer queryIdbyName(String chanName);
+
+    List<Integer> queryIDS();
 }

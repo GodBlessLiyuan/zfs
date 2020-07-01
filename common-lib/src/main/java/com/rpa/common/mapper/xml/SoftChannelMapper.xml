@@ -109,4 +109,7 @@
         from t_soft_channel
         where `name` = #{name}
     </select>
+    <select id="queryIDS" resultType="java.lang.Integer">
+        select soft_channel_id from t_soft_channel
+    </select>
 </mapper>

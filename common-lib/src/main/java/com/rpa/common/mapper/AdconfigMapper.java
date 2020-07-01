@@ -13,4 +13,6 @@ import java.util.Map;
 public interface AdconfigMapper extends BaseMapper<AdconfigPO, Integer> {
     List<AdconfigPO> query(Map<String, Object> map);
     List<AdconfigPO> queryById(List<Integer> adIds);
+
+    List<Integer> queryIDS();
 }

@@ -201,4 +201,7 @@
     )
     and status = 2 and dr = 1
   </select>
+  <select id="queryIDS" resultType="java.lang.Integer">
+    select ad_id from t_adconfig where dr=1
+  </select>
 </mapper>
