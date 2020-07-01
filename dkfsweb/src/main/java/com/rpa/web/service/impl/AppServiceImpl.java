@@ -1,9 +1,7 @@
 package com.rpa.web.service.impl;
 
 import com.rpa.common.bo.AppBO;
-import com.rpa.common.mapper.AdChannelMapper;
-import com.rpa.common.mapper.AppChMapper;
-import com.rpa.common.mapper.AppMapper;
+import com.rpa.common.mapper.*;
 import com.rpa.common.pojo.AdChannelPO;
 import com.rpa.common.pojo.AppChPO;
 import com.rpa.common.pojo.AppPO;
@@ -51,6 +49,10 @@ public class AppServiceImpl implements IAppService {
     private StringRedisTemplate template;
     @Autowired
     private AdChannelMapper adChannelMapper;
+    @Autowired
+    private AdconfigMapper adconfigMapper;
+    @Autowired
+    private SoftChannelMapper softChannelMapper;
     @Value("${file.appDir}")
     private String appDir;
 
@@ -122,14 +124,33 @@ public class AppServiceImpl implements IAppService {
                     LogUtil.log(logger, "insert", "新增应用渠道失败", insAppChPOs);
                 }
             }
-            //更新t_ad_channel广告渠道的type值
+            /***
+             * 更新t_ad_channel广告渠道
+             * 有数据则更新type和update_time字段
+             * 没有数据则将广告id和渠道id组合之后和app_id关联
+             * */
             List<AdChannelPO> adChannelPOS=adChannelMapper.queryByAppId(appPO.getAppId());
             if(adChannelPOS!=null&&adChannelPOS.size()>0){
-                for(AdChannelPO adChannelPO:adChannelPOS){
-                    adChannelPO.setType((byte) 2);//勾选开启广告
-                    adChannelPO.setUpdateTime(new Date());
-                }
                 adChannelMapper.batchUpdate(adChannelPOS);
+            }else{
+                int appID=appPO.getAppId();
+                List<Integer> adIDS=adconfigMapper.queryIDS();
+                List<Integer> softIDS=softChannelMapper.queryIDS();
+                boolean b1=adIDS!=null&&adIDS.size()>0;
+                boolean b2=softIDS!=null&&softIDS.size()>0;
+                if(b1&&b2){
+                    List<AdChannelPO> insertAdChannelPOS=new ArrayList<>();
+                    for(Integer adID:adIDS){
+                        for(Integer softID:softIDS){
+                            AdChannelPO po=new AdChannelPO();
+                            buildAdChannelPO(po,adID,softID,appID);
+                            insertAdChannelPOS.add(po);
+                        }
+                    }
+                    adChannelMapper.batchInsert(insertAdChannelPOS);
+                }else{
+                    logger.info("t_adconfig和t_soft_channel不存在数据");
+                }
             }
             this.deleteRedis();
             return new ResultVO(1000);
@@ -157,18 +178,47 @@ public class AppServiceImpl implements IAppService {
         if (result2 == 0) {
             LogUtil.log(logger, "insert", "新增appChPOs失败", appChPOs);
         }
-        //更新t_ad_channel广告渠道的type值
+        /***
+         * 更新t_ad_channel广告渠道
+         * 有数据则更新type和update_time字段
+         * 没有数据则将广告id和渠道id组合之后和app_id关联
+         * */
         List<AdChannelPO> adChannelPOS=adChannelMapper.queryByAppId(appPO.getAppId());
         if(adChannelPOS!=null&&adChannelPOS.size()>0){
-            for(AdChannelPO adChannelPO:adChannelPOS){
-                adChannelPO.setType((byte) 2);//勾选开启广告
-                adChannelPO.setUpdateTime(new Date());
-            }
             adChannelMapper.batchUpdate(adChannelPOS);
+        }else{
+            int appID=appPO.getAppId();
+            List<Integer> adIDS=adconfigMapper.queryIDS();
+            List<Integer> softIDS=softChannelMapper.queryIDS();
+            boolean b1=adIDS!=null&&adIDS.size()>0;
+            boolean b2=softIDS!=null&&softIDS.size()>0;
+            if(b1&&b2){
+                List<AdChannelPO> insertAdChannelPOS=new ArrayList<>();
+                for(Integer adID:adIDS){
+                    for(Integer softID:softIDS){
+                        AdChannelPO po=new AdChannelPO();
+                        buildAdChannelPO(po,adID,softID,appID);
+                        insertAdChannelPOS.add(po);
+                    }
+                }
+                adChannelMapper.batchInsert(insertAdChannelPOS);
+            }else{
+                logger.info("t_adconfig和t_soft_channel不存在数据");
+            }
         }
         this.deleteRedis();
         return new ResultVO(1000);
     }
+
+    private void buildAdChannelPO(AdChannelPO po, Integer adID, Integer softID, int appID) {
+        po.setAdId(adID);
+        po.setSoftChannelId(softID);
+        po.setCreateTime(new Date());
+        po.setType((byte) 2);//开启广告
+        po.setAppId(appID);
+        po.setDr((byte) 1);//不删除
+    }
+
 
     @Transactional(rollbackFor = {})
     @Override

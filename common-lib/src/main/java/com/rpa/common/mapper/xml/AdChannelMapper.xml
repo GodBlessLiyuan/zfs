@@ -133,4 +133,14 @@
     from t_ad_channel
     where soft_channel_id = #{softChannelId} and app_id = #{appId} and type = 2;
   </select>
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into t_ad_channel (ad_id, soft_channel_id, create_time,
+            update_time, `type`, app_id, dr) values
+      <foreach collection="list" item="po" separator=",">
+          (#{po.adId,jdbcType=INTEGER}, #{po.softChannelId,jdbcType=INTEGER}, #{po.createTime,jdbcType=TIMESTAMP},
+          #{po.updateTime,jdbcType=TIMESTAMP}, #{po.type,jdbcType=TINYINT}, #{po.appId,jdbcType=INTEGER},
+          #{po.dr,jdbcType=TINYINT})
+      </foreach>
+
+    </insert>
 </mapper>
