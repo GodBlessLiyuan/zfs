@@ -1,8 +1,10 @@
 package com.rpa.web.service.impl;
 
 import com.rpa.common.bo.AppBO;
+import com.rpa.common.mapper.AdChannelMapper;
 import com.rpa.common.mapper.AppChMapper;
 import com.rpa.common.mapper.AppMapper;
+import com.rpa.common.pojo.AdChannelPO;
 import com.rpa.common.pojo.AppChPO;
 import com.rpa.common.pojo.AppPO;
 import com.rpa.common.utils.LogUtil;
@@ -47,7 +49,8 @@ public class AppServiceImpl implements IAppService {
     private AppChMapper appChMapper;
     @Autowired
     private StringRedisTemplate template;
-
+    @Autowired
+    private AdChannelMapper adChannelMapper;
     @Value("${file.appDir}")
     private String appDir;
 
@@ -119,7 +122,15 @@ public class AppServiceImpl implements IAppService {
                     LogUtil.log(logger, "insert", "新增应用渠道失败", insAppChPOs);
                 }
             }
-
+            //更新t_ad_channel广告渠道的type值
+            List<AdChannelPO> adChannelPOS=adChannelMapper.queryByAppId(appPO.getAppId());
+            if(adChannelPOS!=null&&adChannelPOS.size()>0){
+                for(AdChannelPO adChannelPO:adChannelPOS){
+                    adChannelPO.setType((byte) 2);//勾选开启广告
+                    adChannelPO.setUpdateTime(new Date());
+                }
+                adChannelMapper.batchUpdate(adChannelPOS);
+            }
             this.deleteRedis();
             return new ResultVO(1000);
         }
@@ -146,7 +157,15 @@ public class AppServiceImpl implements IAppService {
         if (result2 == 0) {
             LogUtil.log(logger, "insert", "新增appChPOs失败", appChPOs);
         }
-
+        //更新t_ad_channel广告渠道的type值
+        List<AdChannelPO> adChannelPOS=adChannelMapper.queryByAppId(appPO.getAppId());
+        if(adChannelPOS!=null&&adChannelPOS.size()>0){
+            for(AdChannelPO adChannelPO:adChannelPOS){
+                adChannelPO.setType((byte) 2);//勾选开启广告
+                adChannelPO.setUpdateTime(new Date());
+            }
+            adChannelMapper.batchUpdate(adChannelPOS);
+        }
         this.deleteRedis();
         return new ResultVO(1000);
     }
@@ -309,6 +328,11 @@ public class AppServiceImpl implements IAppService {
         Set<String> redisKeys = template.keys(RedisKeyUtil.genAppRedisKey("*"));
         if (!CollectionUtils.isEmpty(redisKeys)) {
             template.delete(redisKeys);
+        }
+        //删除配置开启广告的缓存
+        Set<String> redisAdConfigKeys = template.keys(RedisKeyUtil.genAdconfigRedisKey("*"));
+        if (!CollectionUtils.isEmpty(redisKeys)) {
+            template.delete(redisAdConfigKeys);
         }
     }
 }

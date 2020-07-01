@@ -103,7 +103,11 @@
         AND soft_channel_id = #{softChannelId}
         AND dr = 1
     </select>
-
+    <select id="queryByAppId" parameterType="java.lang.Integer" resultType="com.rpa.common.pojo.AdChannelPO">
+         select ad_id as adId, soft_channel_id as softChannelId, create_time as createTime,
+          update_time as updateTime, type,  app_id as appId,dr  from t_ad_channel
+        where app_id = #{appId,jdbcType=INTEGER}  AND dr = 1
+    </select>
     <update id="update" parameterType="com.rpa.common.pojo.AdChannelPO">
         update t_ad_channel
         set type = #{type,jdbcType=TINYINT}
@@ -117,7 +121,13 @@
         set type = #{status}
         where ad_id = #{adId}
     </update>
-
+    <update id="batchUpdate" parameterType="java.util.List">
+        update t_ad_channel set update_time=now(),type=2
+        where app_id in (
+        <foreach collection="list" separator="," item="po">
+            #{po.appId,jdbcType=INTEGER}
+        </foreach> )
+    </update>
     <select id="queryAdIds" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select ad_id as adId
     from t_ad_channel
