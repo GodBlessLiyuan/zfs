@@ -1,6 +1,0 @@
-server:
-  port: 8008
-spring:
-  application: zfsdetect
-logging:
-  config: classpath:logback-spring-test.xml

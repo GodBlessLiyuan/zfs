@@ -8,7 +8,7 @@
     <artifactId>rpa-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
-    <name>rpa project</name>
+    <name>zfenshen project</name>
     <url></url>
  
     <properties>
@@ -17,8 +17,6 @@
         <spring.boot.version>2.1.2.RELEASE</spring.boot.version>
         <spring.cloud.version>Greenwich.SR4</spring.cloud.version>
     </properties>
-
-
 
     <modules>
         <module>common-lib</module>
@@ -29,12 +27,8 @@
         <module>zfskafka</module>
         <module>zfsfront</module>
         <module>zfspay</module>
-        <module>zfscache</module>
         <module>zfszipkin</module>
         <module>zfsrabbit</module>
-        <module>zfsdetect</module>
-        <module>zfsvoice</module>
-        <module>zfsmake</module>
     </modules>
 
     <dependencyManagement>
