@@ -61,7 +61,7 @@ public class LoginController {
      */
     @PostMapping("regettoken")
     public ResultVO regettoken(@RequestBody LoginDTO dto, HttpServletRequest req) {
-        if (!VerifyUtil.checkDeviceId(dto) || !VerifyUtil.checkPhone(dto.getPh())) {
+        if (!VerifyUtil.checkDeviceId(dto)) {
             return ResultVO.paramsError();
         }
         return loginService.regettoken(dto, req);
