@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.AdconfigMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.AdconfigPO">
+    <id column="ad_id" jdbcType="INTEGER" property="adId" />
+    <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="ad_number" jdbcType="VARCHAR" property="adNumber" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="priority" jdbcType="TINYINT" property="priority" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="contacts" jdbcType="CHAR" property="contacts" />
+    <result column="total" jdbcType="TINYINT" property="total" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ad_id, a_id, ad_number, `name`, priority, phone, create_time, update_time, contacts, 
+    total, `status`, dr
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_adconfig
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_adconfig
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.AdconfigPO">
+    insert into t_adconfig (ad_id, a_id, ad_number, 
+      `name`, priority, phone, 
+      create_time, update_time, contacts, 
+      total, `status`, dr)
+    values (#{adId,jdbcType=INTEGER}, #{aId,jdbcType=INTEGER}, #{adNumber,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{priority,jdbcType=TINYINT}, #{phone,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{contacts,jdbcType=CHAR}, 
+      #{total,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{dr,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.AdconfigPO">
+    insert into t_adconfig
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adId != null">
+        ad_id,
+      </if>
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="adNumber != null">
+        ad_number,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="contacts != null">
+        contacts,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adId != null">
+        #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="adNumber != null">
+        #{adNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contacts != null">
+        #{contacts,jdbcType=CHAR},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.AdconfigPO">
+    update t_adconfig
+    <set>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="adNumber != null">
+        ad_number = #{adNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contacts != null">
+        contacts = #{contacts,jdbcType=CHAR},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+    </set>
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.AdconfigPO">
+    update t_adconfig
+    set a_id = #{aId,jdbcType=INTEGER},
+      ad_number = #{adNumber,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=TINYINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      contacts = #{contacts,jdbcType=CHAR},
+      total = #{total,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=TINYINT},
+      dr = #{dr,jdbcType=TINYINT}
+    where ad_id = #{adId,jdbcType=INTEGER}
+  </update>
+
+  <select id="query" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_adconfig
+    <where>
+      <if test="adId != null and adId != ''">
+        AND ad_id = #{adId}
+      </if>
+      <if test="name != null and name != ''">
+        AND name like '%' #{name} '%'
+      </if>
+      <if test="status != 0">
+        AND status = #{status}
+      </if>
+    </where>
+  </select>
+
+  <select id="queryById" parameterType="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_adconfig
+    where ad_id in (
+    <foreach collection="list" item="item" index="index" separator=",">
+      #{item}
+    </foreach>
+    )
+    and status = 2 and dr = 1
+  </select>
+  <select id="queryIDS" resultType="java.lang.Integer">
+    select ad_id from t_adconfig where dr=1
+  </select>
+</mapper>

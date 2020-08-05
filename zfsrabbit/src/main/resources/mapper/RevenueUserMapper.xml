@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.rabbit.mapper.RevenueUserMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.rabbit.pojo.RevenueUserPO">
+<mapper namespace="com.zfs.rabbit.mapper.RevenueUserMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.rabbit.pojo.RevenueUserPO">
     <id column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="invite_count" jdbcType="INTEGER" property="inviteCount" />
     <result column="pay_count" jdbcType="INTEGER" property="payCount" />
@@ -26,7 +26,7 @@
     delete from t_revenue_user
     where user_id = #{userId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.rabbit.pojo.RevenueUserPO">
+  <insert id="insert" parameterType="com.zfs.rabbit.pojo.RevenueUserPO">
     insert into t_revenue_user (user_id, invite_count, pay_count, 
       register_count, total_revenue, withdraw, 
       withdraw_time, remaining, sharecode
@@ -36,7 +36,7 @@
       #{withdrawTime,jdbcType=INTEGER}, #{remaining,jdbcType=BIGINT}, #{sharecode,jdbcType=CHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.rabbit.pojo.RevenueUserPO">
+  <insert id="insertSelective" parameterType="com.zfs.rabbit.pojo.RevenueUserPO">
     insert into t_revenue_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -97,7 +97,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.rabbit.pojo.RevenueUserPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.rabbit.pojo.RevenueUserPO">
     update t_revenue_user
     <set>
       <if test="inviteCount != null">
@@ -127,7 +127,7 @@
     </set>
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.rabbit.pojo.RevenueUserPO">
+  <update id="updateByPrimaryKey" parameterType="com.zfs.rabbit.pojo.RevenueUserPO">
     update t_revenue_user
     set invite_count = #{inviteCount,jdbcType=INTEGER},
       pay_count = #{payCount,jdbcType=INTEGER},

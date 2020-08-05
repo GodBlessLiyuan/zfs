@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.rabbit.mapper.InviteUserMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.rabbit.pojo.InviteUserPO">
+<mapper namespace="com.zfs.rabbit.mapper.InviteUserMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.rabbit.pojo.InviteUserPO">
     <id column="invite_id" jdbcType="INTEGER" property="inviteId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="invite_phone" jdbcType="CHAR" property="invitePhone" />
@@ -22,7 +22,7 @@
     delete from t_invite_user
     where invite_id = #{inviteId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.rabbit.pojo.InviteUserPO">
+  <insert id="insert" parameterType="com.zfs.rabbit.pojo.InviteUserPO">
     insert into t_invite_user (invite_id, user_id, invite_phone, 
       create_time, update_time, ip
       )
@@ -30,7 +30,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{ip,jdbcType=CHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.rabbit.pojo.InviteUserPO">
+  <insert id="insertSelective" parameterType="com.zfs.rabbit.pojo.InviteUserPO">
     insert into t_invite_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="inviteId != null">
@@ -73,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.rabbit.pojo.InviteUserPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.rabbit.pojo.InviteUserPO">
     update t_invite_user
     <set>
       <if test="userId != null">
@@ -94,7 +94,7 @@
     </set>
     where invite_id = #{inviteId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.rabbit.pojo.InviteUserPO">
+  <update id="updateByPrimaryKey" parameterType="com.zfs.rabbit.pojo.InviteUserPO">
     update t_invite_user
     set user_id = #{userId,jdbcType=BIGINT},
       invite_phone = #{invitePhone,jdbcType=CHAR},
@@ -104,7 +104,7 @@
     where invite_id = #{inviteId,jdbcType=INTEGER}
   </update>
 
-  <select id="queryByInviteeId" parameterType="java.lang.Long" resultType="com.rpa.rabbit.bo.InviteUserBO">
+  <select id="queryByInviteeId" parameterType="java.lang.Long" resultType="com.zfs.rabbit.bo.InviteUserBO">
     select iu.user_id as userId, u.user_id as inviteeId, uv.viptype_id as vipTypeId, iu.invite_id as inviteId
     from t_invite_user iu
     left join t_user u on iu.invite_phone = u.phone

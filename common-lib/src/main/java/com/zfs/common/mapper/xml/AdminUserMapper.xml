@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.AdminUserMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.AdminUserPO">
+    <id column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="username" jdbcType="CHAR" property="username" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="email" jdbcType="CHAR" property="email" />
+    <result column="is_lock" jdbcType="TINYINT" property="isLock" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="relation_a_id" jdbcType="INTEGER" property="relationAId" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="extra" jdbcType="CHAR" property="extra" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    a_id, username, `password`, email, is_lock, create_time, last_time, dr, role_id, 
+    relation_a_id, `name`, extra, phone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_admin_user
+    where a_id = #{aId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_admin_user
+    where a_id = #{aId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.AdminUserPO">
+    insert into t_admin_user (a_id, username, `password`, 
+      email, is_lock, create_time, 
+      last_time, dr, role_id, 
+      relation_a_id, `name`, extra, 
+      phone)
+    values (#{aId,jdbcType=INTEGER}, #{username,jdbcType=CHAR}, #{password,jdbcType=CHAR}, 
+      #{email,jdbcType=CHAR}, #{isLock,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastTime,jdbcType=TIMESTAMP}, #{dr,jdbcType=TINYINT}, #{roleId,jdbcType=INTEGER}, 
+      #{relationAId,jdbcType=INTEGER}, #{name,jdbcType=CHAR}, #{extra,jdbcType=CHAR}, 
+      #{phone,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.AdminUserPO">
+    insert into t_admin_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="isLock != null">
+        is_lock,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="relationAId != null">
+        relation_a_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="extra != null">
+        extra,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=CHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=CHAR},
+      </if>
+      <if test="isLock != null">
+        #{isLock,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="relationAId != null">
+        #{relationAId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="extra != null">
+        #{extra,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.AdminUserPO">
+    update t_admin_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=CHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=CHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=CHAR},
+      </if>
+      <if test="isLock != null">
+        is_lock = #{isLock,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="relationAId != null">
+        relation_a_id = #{relationAId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=CHAR},
+      </if>
+      <if test="extra != null">
+        extra = #{extra,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=CHAR},
+      </if>
+    </set>
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.AdminUserPO">
+    update t_admin_user
+    set username = #{username,jdbcType=CHAR},
+      `password` = #{password,jdbcType=CHAR},
+      email = #{email,jdbcType=CHAR},
+      is_lock = #{isLock,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      dr = #{dr,jdbcType=TINYINT},
+      role_id = #{roleId,jdbcType=INTEGER},
+      relation_a_id = #{relationAId,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=CHAR},
+      extra = #{extra,jdbcType=CHAR},
+      phone = #{phone,jdbcType=CHAR}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryBy" resultType="com.zfs.common.bo.AdminUserBO">
+    select
+    au.a_id as aId, username as userName, `password`, email, is_lock as isLock, au.create_time as createTime,
+    last_time as lastTime, dr, au.role_id as roleId, relation_a_id as relationAId, `name`, extra, phone,
+    r.role_name as roleName
+    from t_admin_user au
+    left join t_role r on au.role_id = r.role_id
+    <where>
+      <if test="phone != null and phone != ''">
+        AND phone = #{phone}
+      </if>
+      <if test="extra != null and extra != ''">
+        AND extra like '%' #{extra} '%'
+      </if>
+    </where>
+  </select>
+
+  <select id="queryById" resultType="com.zfs.common.bo.AdminUserBO">
+    select
+    au.a_id as aId, username as userName, `password`, email, is_lock as isLock, au.create_time as createTime,
+    last_time as lastTime, dr, au.role_id as roleId, relation_a_id as relationAId, `name`, extra, phone,
+    r.role_name as roleName
+    from t_admin_user au
+    left join t_role r on au.role_id = r.role_id
+    where au.a_id = #{aId}
+  </select>
+
+  <select id="queryPassword" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select password
+    from t_admin_user
+    where a_id = #{aId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select username
+    from t_admin_user
+    where a_id = #{aId}
+  </select>
+
+  <select id="queryPhoneByAid" resultType="java.lang.String">
+    select phone
+    from t_admin_user
+    where a_id = #{aId}
+  </select>
+
+  <select id="queryUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_admin_user
+    where username = #{username}
+  </select>
+
+
+  <update id="updatePassword">
+    update t_admin_user
+    set `password` = #{newPassword,jdbcType=CHAR}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.pay.mapper.AliFeedbackMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.pay.pojo.AliFeedbackPO">
+<mapper namespace="com.zfs.pay.mapper.AliFeedbackMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.pay.pojo.AliFeedbackPO">
     <result column="notify_time" jdbcType="TIMESTAMP" property="notifyTime" />
     <result column="notify_type" jdbcType="CHAR" property="notifyType" />
     <result column="notify_id" jdbcType="CHAR" property="notifyId" />
@@ -30,7 +30,7 @@
     <result column="gmt_close" jdbcType="TIMESTAMP" property="gmtClose" />
     <result column="fund_bill_list" jdbcType="CHAR" property="fundBillList" />
   </resultMap>
-  <insert id="insert" parameterType="com.rpa.pay.pojo.AliFeedbackPO">
+  <insert id="insert" parameterType="com.zfs.pay.pojo.AliFeedbackPO">
     insert into t_ali_feedback (notify_time, notify_type, notify_id, 
       app_id, version, sign_type, trade_no, 
       out_trade_no, out_biz_no, buyer_id, 
@@ -50,7 +50,7 @@
       #{gmtPayment,jdbcType=TIMESTAMP}, #{gmtRefund,jdbcType=TIMESTAMP}, #{gmtClose,jdbcType=TIMESTAMP}, 
       #{fundBillList,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.pay.pojo.AliFeedbackPO">
+  <insert id="insertSelective" parameterType="com.zfs.pay.pojo.AliFeedbackPO">
     insert into t_ali_feedback
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="notifyTime != null">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.rabbit.mapper.UserVipMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.rabbit.pojo.UserVipPO">
+<mapper namespace="com.zfs.rabbit.mapper.UserVipMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.rabbit.pojo.UserVipPO">
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="viptype_id" jdbcType="INTEGER" property="viptypeId" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
@@ -14,7 +14,7 @@
     <result column="first_time" jdbcType="TIMESTAMP" property="firstTime" />
     <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
   </resultMap>
-  <insert id="insert" parameterType="com.rpa.rabbit.pojo.UserVipPO">
+  <insert id="insert" parameterType="com.zfs.rabbit.pojo.UserVipPO">
     insert into t_user_vip (user_id, viptype_id, start_time, 
       end_time, `status`, create_time, 
       update_time, vcreate_time, vend_time, 
@@ -24,7 +24,7 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{vcreateTime,jdbcType=TIMESTAMP}, #{vendTime,jdbcType=TIMESTAMP}, 
       #{firstTime,jdbcType=TIMESTAMP}, #{lastTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.rabbit.pojo.UserVipPO">
+  <insert id="insertSelective" parameterType="com.zfs.rabbit.pojo.UserVipPO">
     insert into t_user_vip
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">

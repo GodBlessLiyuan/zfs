@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.ActiveZnzsMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.ActiveZnzsPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="vipkey" jdbcType="CHAR" property="vipkey" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, vipkey, phone, `time`, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_active_znzs
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_active_znzs
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.ActiveZnzsPO">
+    insert into t_active_znzs (id, vipkey, phone, 
+      `time`, `status`)
+    values (#{id,jdbcType=INTEGER}, #{vipkey,jdbcType=CHAR}, #{phone,jdbcType=CHAR}, 
+      #{time,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.ActiveZnzsPO">
+    insert into t_active_znzs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="vipkey != null">
+        vipkey,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="vipkey != null">
+        #{vipkey,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.ActiveZnzsPO">
+    update t_active_znzs
+    <set>
+      <if test="vipkey != null">
+        vipkey = #{vipkey,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.ActiveZnzsPO">
+    update t_active_znzs
+    set vipkey = #{vipkey,jdbcType=CHAR},
+      phone = #{phone,jdbcType=CHAR},
+      `time` = #{time,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

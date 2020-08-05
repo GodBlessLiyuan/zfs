@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.rabbit.mapper.OrderMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.rabbit.pojo.OrderPO">
+<mapper namespace="com.zfs.rabbit.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.rabbit.pojo.OrderPO">
     <id column="order_id" jdbcType="INTEGER" property="orderId" />
     <id column="order_number" jdbcType="CHAR" property="orderNumber" />
     <result column="user_device_id" jdbcType="INTEGER" property="userDeviceId" />
@@ -22,7 +22,7 @@
     order_id, order_number, user_device_id, cmdy_id, user_id, device_id, create_time, 
     starttime, endtime, pay_time, `type`, `days`, pay, `status`, revenue
   </sql>
-  <select id="selectByPrimaryKey" parameterType="com.rpa.rabbit.pojo.OrderPOKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.zfs.rabbit.pojo.OrderPOKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_order
@@ -48,12 +48,12 @@
     where pay_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="com.rpa.rabbit.pojo.OrderPOKey">
+  <delete id="deleteByPrimaryKey" parameterType="com.zfs.rabbit.pojo.OrderPOKey">
     delete from t_order
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=CHAR}
   </delete>
-  <insert id="insert" parameterType="com.rpa.rabbit.pojo.OrderPO">
+  <insert id="insert" parameterType="com.zfs.rabbit.pojo.OrderPO">
     insert into t_order (order_id, order_number, user_device_id, 
       cmdy_id, user_id, device_id, 
       create_time, starttime, endtime, 
@@ -65,7 +65,7 @@
       #{payTime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, #{days,jdbcType=INTEGER}, 
       #{pay,jdbcType=BIGINT}, #{status,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.rabbit.pojo.OrderPO">
+  <insert id="insertSelective" parameterType="com.zfs.rabbit.pojo.OrderPO">
     insert into t_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
@@ -156,7 +156,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.rabbit.pojo.OrderPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.rabbit.pojo.OrderPO">
     update t_order
     <set>
       <if test="userDeviceId != null">
@@ -202,7 +202,7 @@
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=CHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.rabbit.pojo.OrderPO">
+  <update id="updateByPrimaryKey" parameterType="com.zfs.rabbit.pojo.OrderPO">
     update t_order
     set user_device_id = #{userDeviceId,jdbcType=INTEGER},
       cmdy_id = #{cmdyId,jdbcType=INTEGER},
@@ -221,7 +221,7 @@
       and order_number = #{orderNumber,jdbcType=CHAR}
   </update>
 
-  <select id="queryByOrderNumber" parameterType="java.lang.String" resultType="com.rpa.rabbit.bo.OrderBO">
+  <select id="queryByOrderNumber" parameterType="java.lang.String" resultType="com.zfs.rabbit.bo.OrderBO">
     select o.order_id as orderId, o.order_number as orderNumber, v.com_type_id as comTypeId, v.com_name as comTypeName,
     o.pay, o.pay_time as
     payTime, o.user_id as userId

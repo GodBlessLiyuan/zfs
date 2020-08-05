@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.VoiceShareMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.VoiceSharePO">
+    <id column="voice_id" jdbcType="BIGINT" property="voiceId" />
+    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_device_id" jdbcType="INTEGER" property="userDeviceId" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="url" jdbcType="CHAR" property="url" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="path" jdbcType="CHAR" property="path" />
+    <result column="extra" jdbcType="CHAR" property="extra" />
+    <result column="title" jdbcType="CHAR" property="title" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    voice_id, device_id, user_id, user_device_id, total, create_time, url, `status`, 
+    `path`, extra, title
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_voice_share
+    where voice_id = #{voiceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_voice_share
+    where voice_id = #{voiceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.VoiceSharePO">
+    insert into t_voice_share (voice_id, device_id, user_id, 
+      user_device_id, total, create_time, 
+      url, `status`, `path`, extra, 
+      title)
+    values (#{voiceId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{userDeviceId,jdbcType=INTEGER}, #{total,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{url,jdbcType=CHAR}, #{status,jdbcType=TINYINT}, #{path,jdbcType=CHAR}, #{extra,jdbcType=CHAR}, 
+      #{title,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.VoiceSharePO">
+    insert into t_voice_share
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="voiceId != null">
+        voice_id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userDeviceId != null">
+        user_device_id,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="path != null">
+        `path`,
+      </if>
+      <if test="extra != null">
+        extra,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="voiceId != null">
+        #{voiceId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userDeviceId != null">
+        #{userDeviceId,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=CHAR},
+      </if>
+      <if test="extra != null">
+        #{extra,jdbcType=CHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.VoiceSharePO">
+    update t_voice_share
+    <set>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userDeviceId != null">
+        user_device_id = #{userDeviceId,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="path != null">
+        `path` = #{path,jdbcType=CHAR},
+      </if>
+      <if test="extra != null">
+        extra = #{extra,jdbcType=CHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=CHAR},
+      </if>
+    </set>
+    where voice_id = #{voiceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.VoiceSharePO">
+    update t_voice_share
+    set device_id = #{deviceId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_device_id = #{userDeviceId,jdbcType=INTEGER},
+      total = #{total,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      url = #{url,jdbcType=CHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      `path` = #{path,jdbcType=CHAR},
+      extra = #{extra,jdbcType=CHAR},
+      title = #{title,jdbcType=CHAR}
+    where voice_id = #{voiceId,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_voice_share
+    where url = #{shareCode,jdbcType=CHAR}
+  </select>
+</mapper>

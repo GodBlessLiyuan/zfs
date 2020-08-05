@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.GodinsecUserMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.GodinsecUserPO">
+    <id column="phone" jdbcType="CHAR" property="phone" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="days" jdbcType="INTEGER" property="days" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    phone, create_time, update_time, `status`, `name`, end_time, `days`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_godinsec_user
+    where phone = #{phone,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_godinsec_user
+    where phone = #{phone,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.GodinsecUserPO">
+    insert into t_godinsec_user (phone, create_time, update_time, 
+      `status`, `name`, end_time, 
+      `days`)
+    values (#{phone,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{name,jdbcType=CHAR}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{days,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.GodinsecUserPO">
+    insert into t_godinsec_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="days != null">
+        `days`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="phone != null">
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="days != null">
+        #{days,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.GodinsecUserPO">
+    update t_godinsec_user
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=CHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="days != null">
+        `days` = #{days,jdbcType=INTEGER},
+      </if>
+    </set>
+    where phone = #{phone,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.GodinsecUserPO">
+    update t_godinsec_user
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},
+      `name` = #{name,jdbcType=CHAR},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      `days` = #{days,jdbcType=INTEGER}
+    where phone = #{phone,jdbcType=CHAR}
+  </update>
+
+  <select id="queryByUserId" parameterType="java.lang.Long" resultType="com.zfs.common.pojo.GodinsecUserPO">
+    select gu.update_time as updateTime, gu.name, gu.days
+    from t_godinsec_user gu left join t_user u on gu.phone = u.phone
+    where gu.`status` = 2 and user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="queryByUserId2" parameterType="java.lang.Long" resultType="com.zfs.common.pojo.GodinsecUserPO">
+    select gu.create_time as createTime, gu.name, gu.end_time as endTime
+    from t_godinsec_user gu left join t_user u on gu.phone = u.phone
+    where gu.`status` = 2 and user_id = #{userId,jdbcType=BIGINT}
+  </select>
+</mapper>

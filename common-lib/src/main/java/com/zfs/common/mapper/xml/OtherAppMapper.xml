@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.OtherAppMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.OtherAppPO">
+    <id column="o_id" jdbcType="INTEGER" property="oId" />
+    <result column="o_name" jdbcType="CHAR" property="oName" />
+    <result column="icon_url" jdbcType="CHAR" property="iconUrl" />
+    <result column="app_url" jdbcType="CHAR" property="appUrl" />
+    <result column="download_type" jdbcType="TINYINT" property="downloadType" />
+    <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="extra" jdbcType="CHAR" property="extra" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    o_id, o_name, icon_url, app_url, download_type, a_id, create_time, update_time, extra
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_other_app
+    where o_id = #{oId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_other_app
+    where o_id = #{oId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.OtherAppPO">
+    insert into t_other_app (o_id, o_name, icon_url, 
+      app_url, download_type, a_id, 
+      create_time, update_time, extra
+      )
+    values (#{oId,jdbcType=INTEGER}, #{oName,jdbcType=CHAR}, #{iconUrl,jdbcType=CHAR}, 
+      #{appUrl,jdbcType=CHAR}, #{downloadType,jdbcType=TINYINT}, #{aId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{extra,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.OtherAppPO">
+    insert into t_other_app
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        o_id,
+      </if>
+      <if test="oName != null">
+        o_name,
+      </if>
+      <if test="iconUrl != null">
+        icon_url,
+      </if>
+      <if test="appUrl != null">
+        app_url,
+      </if>
+      <if test="downloadType != null">
+        download_type,
+      </if>
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="extra != null">
+        extra,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="oName != null">
+        #{oName,jdbcType=CHAR},
+      </if>
+      <if test="iconUrl != null">
+        #{iconUrl,jdbcType=CHAR},
+      </if>
+      <if test="appUrl != null">
+        #{appUrl,jdbcType=CHAR},
+      </if>
+      <if test="downloadType != null">
+        #{downloadType,jdbcType=TINYINT},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extra != null">
+        #{extra,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.OtherAppPO">
+    update t_other_app
+    <set>
+      <if test="oName != null">
+        o_name = #{oName,jdbcType=CHAR},
+      </if>
+      <if test="iconUrl != null">
+        icon_url = #{iconUrl,jdbcType=CHAR},
+      </if>
+      <if test="appUrl != null">
+        app_url = #{appUrl,jdbcType=CHAR},
+      </if>
+      <if test="downloadType != null">
+        download_type = #{downloadType,jdbcType=TINYINT},
+      </if>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extra != null">
+        extra = #{extra,jdbcType=CHAR},
+      </if>
+    </set>
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.OtherAppPO">
+    update t_other_app
+    set o_name = #{oName,jdbcType=CHAR},
+      icon_url = #{iconUrl,jdbcType=CHAR},
+      app_url = #{appUrl,jdbcType=CHAR},
+      download_type = #{downloadType,jdbcType=TINYINT},
+      a_id = #{aId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      extra = #{extra,jdbcType=CHAR}
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+
+  <select id="query" resultType="com.zfs.common.bo.OtherAppBO">
+    select o.o_id as oid, o.o_name as oName, o.icon_url as iconUrl, o.app_url as appUrl, o.download_type
+    as downloadType, o.extra, o.create_time as createTime, o.update_time as updateTime, u.username
+    from t_other_app o
+    left join t_admin_user u on o.a_id = u.a_id
+    <where>
+      <if test="name!=null and name!=''">AND o.o_name like '%' #{name} '%'</if>
+    </where>
+  </select>
+  <select id="queryAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from t_other_app
+  </select>
+</mapper>

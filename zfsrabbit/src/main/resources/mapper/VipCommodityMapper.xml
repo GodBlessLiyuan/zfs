@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.rabbit.mapper.VipCommodityMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.rabbit.pojo.VipCommodityPO">
+<mapper namespace="com.zfs.rabbit.mapper.VipCommodityMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.rabbit.pojo.VipCommodityPO">
     <id column="cmdy_id" jdbcType="INTEGER" property="cmdyId" />
     <result column="viptype_id" jdbcType="INTEGER" property="viptypeId" />
     <result column="com_type_id" jdbcType="INTEGER" property="comTypeId" />
@@ -36,7 +36,7 @@
     delete from t_vipcommodity
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.rabbit.pojo.VipCommodityPO">
+  <insert id="insert" parameterType="com.zfs.rabbit.pojo.VipCommodityPO">
     insert into t_vipcommodity (cmdy_id, viptype_id, com_type_id, 
       com_name, price, discount, 
       `position`, create_time, soft_channel_id, 
@@ -52,7 +52,7 @@
       #{status,jdbcType=TINYINT}, #{comTypeName,jdbcType=CHAR}, #{istop,jdbcType=TINYINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.rabbit.pojo.VipCommodityPO">
+  <insert id="insertSelective" parameterType="com.zfs.rabbit.pojo.VipCommodityPO">
     insert into t_vipcommodity
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="cmdyId != null">
@@ -167,7 +167,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.rabbit.pojo.VipCommodityPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.rabbit.pojo.VipCommodityPO">
     update t_vipcommodity
     <set>
       <if test="viptypeId != null">
@@ -224,7 +224,7 @@
     </set>
     where cmdy_id = #{cmdyId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.rabbit.pojo.VipCommodityPO">
+  <update id="updateByPrimaryKey" parameterType="com.zfs.rabbit.pojo.VipCommodityPO">
     update t_vipcommodity
     set viptype_id = #{viptypeId,jdbcType=INTEGER},
       com_type_id = #{comTypeId,jdbcType=INTEGER},

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.AppPluChMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.AppPluChPO">
+    <id column="apc_id" jdbcType="INTEGER" property="apcId" />
+    <result column="app_id" jdbcType="INTEGER" property="appId" />
+    <result column="soft_channel_id" jdbcType="INTEGER" property="softChannelId" />
+    <result column="plugin_id" jdbcType="INTEGER" property="pluginId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    apc_id as apcId, app_id as appId, soft_channel_id as softChannelId, plugin_id as pluginId, `status`, create_time
+    as createTime, update_time as updateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_app_plu_ch
+    where apc_id = #{apcId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_app_plu_ch
+    where apc_id = #{apcId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.AppPluChPO">
+    insert into t_app_plu_ch (apc_id, app_id, soft_channel_id, 
+      plugin_id, `status`, create_time, 
+      update_time)
+    values (#{apcId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{softChannelId,jdbcType=INTEGER}, 
+      #{pluginId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.AppPluChPO">
+    insert into t_app_plu_ch
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="apcId != null">
+        apc_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="softChannelId != null">
+        soft_channel_id,
+      </if>
+      <if test="pluginId != null">
+        plugin_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="apcId != null">
+        #{apcId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="softChannelId != null">
+        #{softChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="pluginId != null">
+        #{pluginId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.AppPluChPO">
+    update t_app_plu_ch
+    <set>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="softChannelId != null">
+        soft_channel_id = #{softChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="pluginId != null">
+        plugin_id = #{pluginId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where apc_id = #{apcId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.AppPluChPO">
+    update t_app_plu_ch
+    set app_id = #{appId,jdbcType=INTEGER},
+      soft_channel_id = #{softChannelId,jdbcType=INTEGER},
+      plugin_id = #{pluginId,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where apc_id = #{apcId,jdbcType=INTEGER}
+  </update>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into t_app_plu_ch (apc_id, app_id, soft_channel_id, plugin_id, `status`, create_time, update_time) values
+    <foreach collection="list" item="appPluChPO" index="index" separator=",">
+      (#{appPluChPO.apcId,jdbcType=INTEGER}, #{appPluChPO.appId,jdbcType=INTEGER},
+      #{appPluChPO.softChannelId,jdbcType=INTEGER},
+      #{appPluChPO.pluginId,jdbcType=INTEGER}, #{appPluChPO.status,jdbcType=TINYINT},
+      #{appPluChPO.createTime,jdbcType=TIMESTAMP},
+      #{appPluChPO.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <update id="updateStatus">
+    update t_app_plu_ch set `status` = #{status,jdbcType=TINYINT} where plugin_id = #{pluginId}
+  </update>
+  <delete id="deleteByAppId" parameterType="java.lang.Integer">
+    delete from t_app_plu_ch where plugin_id = #{pluginId,jdbcType=INTEGER}
+  </delete>
+  <select id="queryByIds" parameterType="java.lang.Integer" resultType="com.zfs.common.pojo.AppPluChPO">
+    select <include refid="Base_Column_List" /> from t_app_plu_ch where plugin_id = #{pluginId} and app_id = #{appId};
+  </select>
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from t_app_plu_ch where apc_id in (
+    <foreach collection="list" item="apcId" index="index" separator=",">
+      #{apcId,jdbcType=INTEGER}
+    </foreach>
+    )
+  </delete>
+</mapper>

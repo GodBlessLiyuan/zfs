@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.UserActivityMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.UserActivityPO">
+    <id column="u_a_id" jdbcType="INTEGER" property="uAId" />
+    <result column="activity_id" jdbcType="INTEGER" property="activityId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="time" jdbcType="TIME" property="time" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="user_device_id" jdbcType="INTEGER" property="userDeviceId" />
+    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="url" jdbcType="CHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    u_a_id, activity_id, user_id, `time`, `status`, create_time, update_time, user_device_id, 
+    device_id, a_id, url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_activity
+    where u_a_id = #{uAId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user_activity
+    where u_a_id = #{uAId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.UserActivityPO">
+    insert into t_user_activity (u_a_id, activity_id, user_id, 
+      `time`, `status`, create_time, 
+      update_time, user_device_id, device_id, 
+      a_id, url)
+    values (#{uAId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
+      #{time,jdbcType=TIME}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{userDeviceId,jdbcType=INTEGER}, #{deviceId,jdbcType=BIGINT}, 
+      #{aId,jdbcType=INTEGER}, #{url,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.UserActivityPO">
+    insert into t_user_activity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uAId != null">
+        u_a_id,
+      </if>
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="userDeviceId != null">
+        user_device_id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uAId != null">
+        #{uAId,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null">
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIME},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userDeviceId != null">
+        #{userDeviceId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.UserActivityPO">
+    update t_user_activity
+    <set>
+      <if test="activityId != null">
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=TIME},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userDeviceId != null">
+        user_device_id = #{userDeviceId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=CHAR},
+      </if>
+    </set>
+    where u_a_id = #{uAId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.UserActivityPO">
+    update t_user_activity
+    set activity_id = #{activityId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      `time` = #{time,jdbcType=TIME},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_device_id = #{userDeviceId,jdbcType=INTEGER},
+      device_id = #{deviceId,jdbcType=BIGINT},
+      a_id = #{aId,jdbcType=INTEGER},
+      url = #{url,jdbcType=CHAR}
+    where u_a_id = #{uAId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateStatus" parameterType="com.zfs.common.pojo.UserActivityPO">
+    update t_user_activity
+    set activity_id = #{activityId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      `time` = #{time,jdbcType=TIME},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_device_id = #{userDeviceId,jdbcType=INTEGER},
+      device_id = #{deviceId,jdbcType=BIGINT},
+      a_id = #{aId,jdbcType=INTEGER},
+      url = #{url,jdbcType=CHAR}
+    where u_a_id = #{uAId,jdbcType=INTEGER}
+  </update>
+  <select id="queryByUd" resultType="java.lang.Integer">
+    select status
+    from t_user_activity
+    where activity_id = 1 and user_id = #{ud}
+    order by u_a_id desc limit 1
+  </select>
+  <select id="query" resultType="com.zfs.common.bo.UserActivityBO">
+    select u.phone, ua.create_time as createTime, a.com_type_name as comTypeName, a.days, a.source, ua.status
+    from t_user_activity ua
+    left join t_activity a on ua.activity_id = a.activity_id
+    left join t_user u on ua.user_id = u.user_id
+    where ua.`status` in (10, 30)
+    <if test="phone != null and phone != ''"> and u.phone like '%' #{phone} '%'</if>
+  </select>
+  <select id="queryByUserId" resultType="com.zfs.common.bo.UserActivityBO">
+    select u.chan_name as userChanName, ua.create_time as createTime, a.com_type_name as comTypeName, a.days
+    from t_user_activity ua
+    left join t_activity a on ua.activity_id = a.activity_id
+    left join t_user u on ua.user_id = u.user_id
+    where ua.user_id = #{userId} and ua.`status` = 10
+  </select>
+  <select id="goodCommentQuery" resultType="com.zfs.common.bo.UserActivityBO">
+    select ua.u_a_id as uAId, u.phone, ua.create_time as createTime, ua.url, a.com_type_name as comTypeName, ua.status, ua.a_id as aId
+    from t_user_activity ua
+    left join t_activity a on ua.activity_id = a.activity_id
+    left join t_user u on ua.user_id = u.user_id
+    <where>
+      <if test="phone != null and phone != ''">
+        u.phone like '%' #{phone} '%'
+      </if>
+    </where>
+    order by ua.status asc
+  </select>
+
+  <select id="queryActivatedByUserId" parameterType="java.lang.Long" resultType="com.zfs.common.pojo.UserActivityPO">
+    select update_time as updateTime from t_user_activity
+    where user_id = #{userId} and `status` = 30
+  </select>
+  <select id="queryByUserIdAndStatus" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_user_activity
+    where user_id = #{userId}
+    <if test="status != null and status != 0">
+      and `status` = #{status,jdbcType=TINYINT}
+    </if>
+  </select>
+  <update id="activate" parameterType="java.lang.Long">
+    update t_user_activity set `status` = 30 where user_id = #{userId} and `status` = 10;
+  </update>
+</mapper>

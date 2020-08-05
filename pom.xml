@@ -4,8 +4,8 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.rpa</groupId>
-    <artifactId>rpa-parent</artifactId>
+    <groupId>com.zfs</groupId>
+    <artifactId>zfs-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
     <name>zfenshen project</name>
@@ -81,7 +81,7 @@
 
             <!-- Common -->
             <dependency>
-                <groupId>com.rpa</groupId>
+                <groupId>com.zfs</groupId>
                 <artifactId>common-lib</artifactId>
                 <version>1.0.1</version>
             </dependency>
@@ -124,7 +124,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.rpa</groupId>
+            <groupId>com.zfs</groupId>
             <artifactId>common-lib</artifactId>
         </dependency>
     </dependencies>

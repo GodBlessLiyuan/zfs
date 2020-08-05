@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.pay.mapper.WxFeedbackMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.pay.pojo.WxFeedbackPO">
+<mapper namespace="com.zfs.pay.mapper.WxFeedbackMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.pay.pojo.WxFeedbackPO">
     <id column="wxpayid" jdbcType="BIGINT" property="wxpayid" />
     <result column="return_code" jdbcType="CHAR" property="returnCode" />
     <result column="return_msg" jdbcType="CHAR" property="returnMsg" />
@@ -44,7 +44,7 @@
     delete from t_wx_feedback
     where wxpayid = #{wxpayid,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.pay.pojo.WxFeedbackPO">
+  <insert id="insert" parameterType="com.zfs.pay.pojo.WxFeedbackPO">
     insert into t_wx_feedback (wxpayid, return_code, return_msg, 
       appid, mch_id, device_info, nonce_str, 
       sign, result_code, err_code, err_code_des, 
@@ -62,7 +62,7 @@
       #{couponCount,jdbcType=INTEGER}, #{transactionId,jdbcType=CHAR}, #{outTradeNo,jdbcType=CHAR}, 
       #{attach,jdbcType=CHAR}, #{timeEnd,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.pay.pojo.WxFeedbackPO">
+  <insert id="insertSelective" parameterType="com.zfs.pay.pojo.WxFeedbackPO">
     insert into t_wx_feedback
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="wxpayid != null">
@@ -219,7 +219,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.pay.pojo.WxFeedbackPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.pay.pojo.WxFeedbackPO">
     update t_wx_feedback
     <set>
       <if test="returnCode != null">
@@ -297,7 +297,7 @@
     </set>
     where wxpayid = #{wxpayid,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.pay.pojo.WxFeedbackPO">
+  <update id="updateByPrimaryKey" parameterType="com.zfs.pay.pojo.WxFeedbackPO">
     update t_wx_feedback
     set return_code = #{returnCode,jdbcType=CHAR},
       return_msg = #{returnMsg,jdbcType=CHAR},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.rabbit.mapper.InviteDetailMapper">
-    <resultMap id="BaseResultMap" type="com.rpa.rabbit.pojo.InviteDetailPO">
+<mapper namespace="com.zfs.rabbit.mapper.InviteDetailMapper">
+    <resultMap id="BaseResultMap" type="com.zfs.rabbit.pojo.InviteDetailPO">
         <id column="inde_id" jdbcType="BIGINT" property="indeId"/>
         <result column="order_id" jdbcType="INTEGER" property="orderId"/>
         <result column="com_type_id" jdbcType="INTEGER" property="comTypeId"/>
@@ -29,7 +29,7 @@
     delete from t_invite_detail
     where inde_id = #{indeId,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="com.rpa.rabbit.pojo.InviteDetailPO">
+    <insert id="insert" parameterType="com.zfs.rabbit.pojo.InviteDetailPO">
     insert into t_invite_detail (inde_id, order_id, com_type_id, 
       com_type_name, pay, earnings, 
       proportion, user_id, invitee_id, 
@@ -41,7 +41,7 @@
       #{viptypeId,jdbcType=INTEGER}, #{payTime,jdbcType=TIMESTAMP}, #{inviteId,jdbcType=INTEGER}
       )
   </insert>
-    <insert id="insertSelective" parameterType="com.rpa.rabbit.pojo.InviteDetailPO">
+    <insert id="insertSelective" parameterType="com.zfs.rabbit.pojo.InviteDetailPO">
         insert into t_invite_detail
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="indeId != null">
@@ -120,7 +120,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.rpa.rabbit.pojo.InviteDetailPO">
+    <update id="updateByPrimaryKeySelective" parameterType="com.zfs.rabbit.pojo.InviteDetailPO">
         update t_invite_detail
         <set>
             <if test="orderId != null">
@@ -159,7 +159,7 @@
         </set>
         where inde_id = #{indeId,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.rpa.rabbit.pojo.InviteDetailPO">
+    <update id="updateByPrimaryKey" parameterType="com.zfs.rabbit.pojo.InviteDetailPO">
     update t_invite_detail
     set order_id = #{orderId,jdbcType=INTEGER},
       com_type_id = #{comTypeId,jdbcType=INTEGER},

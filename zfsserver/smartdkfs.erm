@@ -96,7 +96,7 @@
 			</export_image_setting>
 			<export_java_setting>
 				<java_output>mapper</java_output>
-				<package_name>com.rpa.web.mapper</package_name>
+				<package_name>com.zfs.web.mapper</package_name>
 				<class_name_suffix></class_name_suffix>
 				<src_file_encoding>UTF-8</src_file_encoding>
 				<with_hibernate>false</with_hibernate>

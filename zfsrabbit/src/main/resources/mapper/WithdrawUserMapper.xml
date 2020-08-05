@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.rabbit.mapper.WithdrawUserMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.rabbit.pojo.WithdrawUserPO">
+<mapper namespace="com.zfs.rabbit.mapper.WithdrawUserMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.rabbit.pojo.WithdrawUserPO">
     <id column="withdraw_id" jdbcType="INTEGER" property="withdrawId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
@@ -31,7 +31,7 @@
     delete from t_withdraw_user
     where withdraw_id = #{withdrawId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rpa.rabbit.pojo.WithdrawUserPO">
+  <insert id="insert" parameterType="com.zfs.rabbit.pojo.WithdrawUserPO">
     insert into t_withdraw_user (withdraw_id, create_time, user_id, 
       device_id, user_device_id, withdraw, 
       remaining, ali_account, ali_name, 
@@ -43,7 +43,7 @@
       #{withdrawTime,jdbcType=INTEGER}, #{auditTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=TINYINT}, #{aId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.rabbit.pojo.WithdrawUserPO">
+  <insert id="insertSelective" parameterType="com.zfs.rabbit.pojo.WithdrawUserPO">
     insert into t_withdraw_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="withdrawId != null">
@@ -134,7 +134,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.rabbit.pojo.WithdrawUserPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.rabbit.pojo.WithdrawUserPO">
     update t_withdraw_user
     <set>
       <if test="createTime != null">
@@ -179,7 +179,7 @@
     </set>
     where withdraw_id = #{withdrawId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.rabbit.pojo.WithdrawUserPO">
+  <update id="updateByPrimaryKey" parameterType="com.zfs.rabbit.pojo.WithdrawUserPO">
     update t_withdraw_user
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       user_id = #{userId,jdbcType=BIGINT},

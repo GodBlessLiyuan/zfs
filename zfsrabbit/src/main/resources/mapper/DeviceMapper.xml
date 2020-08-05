@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.rabbit.mapper.DeviceMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.rabbit.pojo.DevicePO">
+<mapper namespace="com.zfs.rabbit.mapper.DeviceMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.rabbit.pojo.DevicePO">
     <id column="device_id" jdbcType="BIGINT" property="deviceId" />
     <result column="utdid" jdbcType="CHAR" property="utdid" />
     <result column="androidid" jdbcType="CHAR" property="androidid" />
@@ -31,7 +31,7 @@
     delete from t_device
     where device_id = #{deviceId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.rabbit.pojo.DevicePO">
+  <insert id="insert" parameterType="com.zfs.rabbit.pojo.DevicePO">
     insert into t_device (device_id, utdid, androidid, 
       buildversion, soft_channel_id, chan_name, 
       create_time, update_time, versioncode, 
@@ -43,7 +43,7 @@
       #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR}, #{uuid,jdbcType=CHAR}, 
       #{buildrelease,jdbcType=CHAR}, #{versionname,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.rabbit.pojo.DevicePO">
+  <insert id="insertSelective" parameterType="com.zfs.rabbit.pojo.DevicePO">
     insert into t_device
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="deviceId != null">
@@ -134,7 +134,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.rabbit.pojo.DevicePO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.rabbit.pojo.DevicePO">
     update t_device
     <set>
       <if test="utdid != null">
@@ -179,7 +179,7 @@
     </set>
     where device_id = #{deviceId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.rabbit.pojo.DevicePO">
+  <update id="updateByPrimaryKey" parameterType="com.zfs.rabbit.pojo.DevicePO">
     update t_device
     set utdid = #{utdid,jdbcType=CHAR},
       androidid = #{androidid,jdbcType=CHAR},

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.DeviceStatisticsMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.DeviceStatisticsPO">
+    <id column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="visit_time" jdbcType="TIMESTAMP" property="visitTime" />
+    <result column="ip" jdbcType="CHAR" property="ip" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sid, device_id, visit_time, ip
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_device_statistics
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_device_statistics
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.DeviceStatisticsPO">
+    insert into t_device_statistics (sid, device_id, visit_time, 
+      ip)
+    values (#{sid,jdbcType=INTEGER}, #{deviceId,jdbcType=BIGINT}, #{visitTime,jdbcType=TIMESTAMP}, 
+      #{ip,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.DeviceStatisticsPO">
+    insert into t_device_statistics
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="visitTime != null">
+        visit_time,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="visitTime != null">
+        #{visitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.DeviceStatisticsPO">
+    update t_device_statistics
+    <set>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="visitTime != null">
+        visit_time = #{visitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=CHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.DeviceStatisticsPO">
+    update t_device_statistics
+    set device_id = #{deviceId,jdbcType=BIGINT},
+      visit_time = #{visitTime,jdbcType=TIMESTAMP},
+      ip = #{ip,jdbcType=CHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryDayActiveUser" resultType="java.lang.Integer">
+    select count(distinct device_id)
+    from t_device_statistics
+    where visit_time >= (SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s'))
+  </select>
+
+  <select id="queryMonthActiveUser" resultType="java.lang.Integer">
+    select count(distinct device_id)
+    from t_device_statistics
+    where visit_time >= (select timestamp(date_add(curdate(), interval - day(curdate()) + 1 day)))
+  </select>
+</mapper>

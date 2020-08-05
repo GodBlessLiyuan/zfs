@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rpa.pay.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.rpa.pay.pojo.UserPO">
+<mapper namespace="com.zfs.pay.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.pay.pojo.UserPO">
     <id column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="username" jdbcType="CHAR" property="username" />
     <result column="phone" jdbcType="CHAR" property="phone" />
@@ -20,7 +20,7 @@
     from t_user
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
-  <select id="selPri" parameterType="java.lang.Long" resultType="com.rpa.pay.bo.UserToBO">
+  <select id="selPri" parameterType="java.lang.Long" resultType="com.zfs.pay.bo.UserToBO">
     select username,phone,ip,chan_name as chanName  from t_user
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
@@ -29,7 +29,7 @@
     delete from t_user
     where user_id = #{userId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.rpa.pay.pojo.UserPO" useGeneratedKeys="true" keyProperty="userId">
+  <insert id="insert" parameterType="com.zfs.pay.pojo.UserPO" useGeneratedKeys="true" keyProperty="userId">
     insert into t_user (user_id, username, phone, 
       ip, create_time, update_time, 
       chan_name, soft_channel_id)
@@ -37,7 +37,7 @@
       #{ip,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{chanName,jdbcType=CHAR}, #{softChannelId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.rpa.pay.pojo.UserPO" useGeneratedKeys="true" keyProperty="userId">
+  <insert id="insertSelective" parameterType="com.zfs.pay.pojo.UserPO" useGeneratedKeys="true" keyProperty="userId">
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -92,7 +92,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rpa.pay.pojo.UserPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.pay.pojo.UserPO">
     update t_user
     <set>
       <if test="username != null">
@@ -119,7 +119,7 @@
     </set>
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rpa.pay.pojo.UserPO">
+  <update id="updateByPrimaryKey" parameterType="com.zfs.pay.pojo.UserPO">
     update t_user
     set username = #{username,jdbcType=CHAR},
       phone = #{phone,jdbcType=CHAR},

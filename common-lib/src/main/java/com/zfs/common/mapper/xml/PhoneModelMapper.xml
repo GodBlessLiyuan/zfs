@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.PhoneModelMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.PhoneModelPO">
+    <id column="model_id" jdbcType="BIGINT" property="modelId" />
+    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="picture" jdbcType="CHAR" property="picture" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    model_id, type_id, `name`, picture, dr
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_phone_model
+    where model_id = #{modelId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_phone_model
+    where model_id = #{modelId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.PhoneModelPO">
+    insert into t_phone_model (model_id, type_id, `name`, 
+      picture, dr)
+    values (#{modelId,jdbcType=BIGINT}, #{typeId,jdbcType=INTEGER}, #{name,jdbcType=CHAR}, 
+      #{picture,jdbcType=CHAR}, #{dr,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.PhoneModelPO">
+    insert into t_phone_model
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="modelId != null">
+        model_id,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="modelId != null">
+        #{modelId,jdbcType=BIGINT},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=CHAR},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.PhoneModelPO">
+    update t_phone_model
+    <set>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=CHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=CHAR},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+    </set>
+    where model_id = #{modelId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.PhoneModelPO">
+    update t_phone_model
+    set type_id = #{typeId,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=CHAR},
+      picture = #{picture,jdbcType=CHAR},
+      dr = #{dr,jdbcType=TINYINT}
+    where model_id = #{modelId,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryAll" resultType="com.zfs.common.bo.PhoneModelBO">
+    select pt.type_id as typeId, pt.ename as typeEname, pt.`name` as typeName, pt.picture as TypePicture, pm.model_id as modelId, pm.`name`, pm.picture
+    from t_phone_model pm
+    left join t_phone_type pt on pm.type_id = pt.type_id
+    where pm.dr = 1 and pt.dr = 1
+  </select>
+</mapper>
