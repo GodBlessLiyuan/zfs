@@ -23,6 +23,15 @@ public class UserPO implements Serializable {
     private String chanName;
 
     private Integer softChannelId;
+    private String randomStr;
+
+    public String getRandomStr() {
+        return randomStr;
+    }
+
+    public void setRandomStr(String randomStr) {
+        this.randomStr = randomStr;
+    }
 
     private static final long serialVersionUID = 1L;
 

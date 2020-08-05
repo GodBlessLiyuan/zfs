@@ -1,14 +1,14 @@
-package com.rpa.common.vo;
+package com.rpa.pay.common;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
- * @author: xiahui
- * @date: Created in 2019/10/15 15:44
- * @description: 返回结果
- * @version: 1.0
+ * @author: dangyi
+ * @date: Created in 17:41 2019/11/6
+ * @version: 1.0.0
+ * @description:
  */
 @Data
 public class ResultVO<T> implements Serializable {
@@ -17,11 +17,7 @@ public class ResultVO<T> implements Serializable {
     private Integer status;
 
     private T data;
-
-    public ResultVO(){
-        this(1000);
-    }
-
+    public ResultVO(){}
     public ResultVO(Integer status) {
         this(status, null);
     }
@@ -30,16 +26,12 @@ public class ResultVO<T> implements Serializable {
         this.status = status;
         this.data = data;
     }
-    /**
-     * 参数
-     * */
+
     public static ResultVO paramsError(){
         return new ResultVO(1003);
     }
-    /***
-     * token失效
-     * */
     public static ResultVO logOut(){
         return new ResultVO(2001);
     }
+
 }

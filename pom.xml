@@ -22,19 +22,19 @@
 
     <modules>
         <module>common-lib</module>
-        <module>dkfsweb</module>
-        <module>dkfsserver</module>
-        <module>dkfseureka</module>
-        <module>dkfszuul</module>
-        <module>dkfskafka</module>
-        <module>dkfsfront</module>
-        <module>dkfspay</module>
-        <module>dkfscache</module>
-        <module>dkfszipkin</module>
-        <module>dkfsrabbit</module>
-        <module>dkfsdetect</module>
-        <module>dkfsvoice</module>
-        <module>dkfsmake</module>
+        <module>zfsweb</module>
+        <module>zfsserver</module>
+        <module>zfseureka</module>
+        <module>zfszuul</module>
+        <module>zfskafka</module>
+        <module>zfsfront</module>
+        <module>zfspay</module>
+        <module>zfscache</module>
+        <module>zfszipkin</module>
+        <module>zfsrabbit</module>
+        <module>zfsdetect</module>
+        <module>zfsvoice</module>
+        <module>zfsmake</module>
     </modules>
 
     <dependencyManagement>
