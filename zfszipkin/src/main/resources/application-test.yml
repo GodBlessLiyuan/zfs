@@ -1,0 +1,19 @@
+server:
+  port: 9411
+spring:
+  application:
+    name: zfszipkin
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+zipkin:
+  collector:
+    rabbitmq:
+      addresses: 192.168.10.3:5672
+      username: root
+      password: 123456
+      queue: zfszipkin  #修改了mq：name
+logging:
+  config: classpath:logback-spring-test.xml
