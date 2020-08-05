@@ -1,0 +1,905 @@
+## Z分身接口文档 ##
+
+***
+- 所有的请求消息都是JSON格式
+
+***
+
+***
+### 错误码 ###
+	- 1000 返回正确结果
+	- 1001 json格式不合法
+	- 1002 app版本不支持
+	- 1003 参数缺失
+	- 1004 用户token过期
+	- 1005 用户非VIP
+	- 1006 VIP用户
+	- 1007 年费VIP用户
+	- 1008 最新版本
+	- 1009 需要更新
+	- 1010 短信验证码发送失败
+	- 1011 购买账单无效
+	- 1012 用户登出
+	- 1013 短信码过期
+	- 1014 验证码错误
+	- 1015 未存在需要激活的活动
+	- 1016 卡密错误，请重新输入（无卡密）
+	- 1017 卡密已被冻结
+	- 1018 短信验证码已经发送（暂时未用）
+	- 1019 基础信息已经是最新数据
+	- 1020 卡密已被使用，请重新输入
+	- 1021 卡密已过期，无法使用
+	- 1022 订单支付失败
+	- 1023 订单不存在
+	- 1024 图片已上传，请不要再次上传
+	- 1025 尚未查到黑名单信息
+	- 2000 服务器内部错误
+	- 2001 token失效
+***
+
+### 接口说明 ###
+
+#### 1. 设备请求接口 ####
+	- url: http://server_addr/dkfsserver/v1.0/device 
+	- method:POST
+	- 请求消息示例：
+	```
+		{
+			"androidid":"",
+			"utdid":"",
+			"osv":int,
+			"osre":"",
+			"channel":"",
+			"factory":"",
+			"model":"",
+			"softv":1,
+			"uuid":"",
+			"imei":["imei1","imei2","meid"],
+			"softn":""
+		}	
+	```
+	参数说明：
+	```
+		androidid：androidid唯一标识
+		utdid：阿里唯一标识
+		osv：系统版本号 Build.VERSION.SDK_INT
+		osre: 系统版本号 Build.VERSION.RELEASE
+		channel：应用渠道
+		factory：手机厂商 Build.MANUFACTURER
+		model：手机型号 Build.MODEL
+		softv：应用版本号versioncode
+		softn: 应用名称versionname
+		uuid: Android端随机生成的字符串
+		imei：设备imei或meid
+	```
+	响应消息及错误码：
+	```
+		 {
+			"status":1000,
+			"data":{
+				"id":"deviceid",
+				"verify":"deviceid md5"
+			}
+		}
+	```
+	参数说明：
+	```
+		status: 返回状态
+		id: 设备唯一标识
+		verify: 设备唯一标识的md5值
+	```
+
+#### 2. 获取短信验证码接口 ####
+	- url: http://server_addr/dkfsserver/v1.0/sms  
+	- 请求消息示例：
+	```
+		{
+			"id":int,
+			"ph":"188****2717",
+			"verify":"deviceid md5"
+		}	
+	```
+	参数说明：
+	```
+		id: 设备唯一标识
+		ph: 手机号码
+		verify: 设备唯一标识的md5值
+	```
+	响应消息及错误码：
+	```
+		{
+			"status":1000 1018
+		}
+	```
+#### 3. 用户注册接口 （有修改）####
+	- url: http://server_addr/dkfsserver/v1.0/register 
+	- method: POST
+	- 请求消息示例：
+	```
+		{
+			"sms":"",
+			"id":int,
+			"verify":"",
+			"ph":"",
+			"channel":"",
+			"randomStr":""
+			
+		}
+	```
+	参数说明：
+	```
+		sms：短信验证码
+		id：设备唯一标识
+		verify：设备唯一标识md5
+		ph: 手机号码
+		channel:应用渠道
+		randomStr：随机数字符串（长度在32位以内）。详细为：用户使用手机号登录时的时候，从客户端生成一个随机数，传给服务器端。
+	```
+	相应消息及错误码：
+	```
+		{
+			"status":1000,
+			data:{
+				"ud":1,
+				"um":"********"，
+				"udd":int,
+				"token":"****"
+				"gift":int,
+				"days":int
+			}
+			
+		}
+	```
+	参数说明：
+	```
+		status：返回码 1000 正常  1013 短信码过期
+		ud：用户唯一标识int类型
+		um：用户唯一标识的变种md5
+		udd: 用户设备唯一标识
+		token: 用户签名验证
+		gift: 0不弹出赠送弹框  1弹出赠送弹框
+		days: 用户赠送天数
+	```
+
+#### 4. 用户反馈信息接口 ####
+- url: http://server_addr/dkfsserver/v1.0/feedback  
+- method:POST
+- 请求消息示例：
+	```markdown
+		{
+			"ud":int,
+			"id":int,
+			"um":"",
+			"udd":"",
+			"verify":"",
+			"context":""，
+			"picdata1":"",
+	 			"picdata2":"",
+	 			"picdata3":"",
+			"ph":"",
+			"factory":"",
+			"model":"",
+			"softv":1,
+			"osv":int,
+            "osre":""
+		}	
+	```
+	
+	参数说明：
+	
+	```markdown
+		ud: 用户唯一标识id
+		um: 用户唯一标识id的md5
+		id: 设备唯一标识
+		verify: 设备唯一标识md5
+		context: 反馈内容
+		picdata1: 图片数据的base64
+        picdata2: 图片数据的base64
+        picdata3: 图片数据的base64
+		ph: 联系方式
+		factory：手机厂商 Build.MANUFACTURER
+		model：手机型号   Build.MODEL
+		softv：应用版本号 
+		osv：系统版本号  Build.VERSION.SDK_INT
+        osre: 系统版本号 Build.VERSION.RELEASE
+	```
+	
+	响应消息及错误码：
+	
+	```
+		{
+			"status":1000
+		}
+	```
+	
+
+#### 5. 上传异常log ####
+	- url: http://server_addr/dkfsserver/v1.0/exception
+	- method:POST
+	- 请求消息示例：
+	```
+		{
+			"id":int,
+			"verify":"",
+			"osv":int,
+			"osre":"",
+			"softv":int,
+			"model":"",
+			"exception":"",
+			"pkg":""
+		}	
+	```
+		参数说明：
+	```
+		id: 设备唯一标识
+		verify: 设备唯一标识md5
+		osv: android系统版本    Build.VERSION.SDK_INT
+		osre: 系统版本号 Build.VERSION.RELEASE
+		softv: 软件版本号
+		model: 手机型号  Build.MODEL
+		exception: 异常日志
+		pkg: 应用包名
+	```
+	响应消息及错误码：
+	```
+		{
+			"status":1000
+		}
+	```
+
+#### 6. 验证vip状态 ####
+	- url: http://server_addr/dkfsserver/v1.0/validate 
+	- method:POST
+	- 请求消息示例：
+
+```
+	header  token:token
+	{
+		"id":int,
+		"ud":int,
+		"udd":int
+	}	
+```
+参数说明：
+```
+	id: 设备唯一标识
+	ud: 用户唯一标识id
+	udd: 用户设备唯一标识
+```
+响应消息及错误码：
+```
+	{
+		"status":1007,
+		"data":{
+			"vip":"2017-09-08 16:36:20",
+			"advanced":"2017-09-08 16:36:20"
+		}
+	}
+```
+参数说明：
+```
+	status: 返回状态码 1005 非VIP、1006 VIP用户、1007 年费VIP用户 1012 用户登出
+	vip: 用户vip过期时间
+	advanced: 年费会员vip过期时间
+```
+
+
+#### 7. 应用更新 ####
+	- url: http://server_addr/dkfsserver/v1.0/check 
+	
+	- method:POST
+	- 请求消息示例：
+
+```
+	{
+		"id":int,
+		"verify":"",
+		"softv":int,
+        "channel": ""
+	}	
+```
+参数说明：
+```
+	id: 设备唯一标识
+	verify: 设备唯一标识md5
+	softv: 应用版本
+    channel：应用渠道
+    
+```
+响应消息及错误码：
+```
+	{
+		"status":1008
+	}
+	
+	{
+		"status":1009,
+		"data":{
+            "type":byte,
+			"url":"",
+			"md5":"",
+            "content":"",
+            "code":int,
+            "versionname":""
+		}
+	}
+```
+参数说明：
+```
+	status: 返回状态码 1008 最新版本、1009 需要更新 
+    type: 1 普通更新 2 强制更新
+	url: 更新应用下载链接地址
+	md5: 下载应用的md5值
+    content：更新内容
+    code: 应用的版本号versioncode
+    versionname：应用的版本名称
+```
+
+
+#### 8. 插件更新 ####
+	- url: http://server_addr/dkfsserver/v1.0/checkplugin  
+	- method:POST
+	- 请求消息示例：
+
+```
+	{
+		"id":int,
+		"verify":"",
+		"pluginv":int
+		"pluginpkg":""
+	}	
+```
+参数说明：
+```
+	id: 设备唯一标识
+	verify: 设备唯一标识md5
+	pluginv: 插件版本
+	pluginpkg:插件包名
+```
+响应消息及错误码：
+```
+	{
+		"status":1008
+	}
+	
+	{
+		"status":1009,
+		"data":{
+			"pluginv":int
+			"url":""，
+			"md5":""
+		}
+	}
+```
+参数说明：
+```
+	status: 返回状态码 1008 最新版本、1009 需要更新 
+	pluginv: 插件的版本id
+	url: 更新应用下载链接地址
+	md5: 插件的md5值
+```
+
+#### 9. 获取商品列表 ####     
+
+	- url: http://server_addr/dkfsserver/v1.0/getcommodity 
+	- method:POST
+	- 请求消息示例：
+
+```
+	{
+		"id":int,
+		"verify":"",
+		"softv":int,
+		"channel":"huawei"
+	}	
+```
+
+参数说明：
+
+```
+	id: 设备唯一标识
+	verify: 设备唯一标识md5
+	softv: 应用版本
+	channel: 应用渠道
+```
+
+响应消息及错误码：
+
+```
+	{
+		"status":1000,
+		"data":[{
+                "cmdid": 1，
+                "description": "",
+                "price":"",
+                "showdiscount":"",
+                "discount":"",
+                "typename":"",
+                "days":int,
+                "istop":int
+		}]
+	}
+```
+
+参数说明：
+
+```
+	status: 返回状态码 1000
+	cmdid: 商品id
+	price: 原价
+	showdiscount: 显示折扣
+	discount: 显示价格
+	typename: 商品类型名称   日卡 月卡 年卡
+	days: 天数
+	istop: 是否置顶
+```
+
+#### 10. 订单查询order ####  
+
+- url: http://server_addr/dkfsserver/v1.0/order
+	- method:POST
+	- 请求消息示例：
+
+```
+	token:token
+	{
+		"id":int,
+		"verify":"",
+		"ud":int,
+		"um":int,
+		"udd":""
+	}
+```
+
+参数说明：
+
+```
+	id: 设备唯一标识
+	ud: 用户唯一标识id
+    um: 用户唯一标识id的md5
+	udd: 用户设备唯一标识
+```
+
+响应消息及错误码：
+
+```
+	{
+		"status":1000,
+		"data":[{
+			 "type": int,  1 购买 2 新用户赠送 3 卡密激活
+             "paytype":int,
+             "comname": "",
+             "ordernumber": "kw20180816193256iyk7as3AtbcWHqJg",
+             "paytime": "2019-10-24 16:24:05",
+             "price": "金额"
+		}]
+	}
+```
+
+参数说明：
+
+```
+     type:  1 购买 2 新用户赠送 3 卡密激活
+     paytype: 0 缺省  1 微信  2 支付宝
+     comname: 商品名称  年卡 月卡  365天送会员 活动赠送
+     ordernumber: 订单编号，会员卡密
+     paytime: 购买时间
+     price: 购买金额，字符串类型
+```
+
+#### 11. 微信购买商品wxpayorder ####         
+	- url: http://server_addr/dkfspay/v1.0/wxpayorder
+	- method:POST
+	- 请求消息示例：
+
+```
+	token:token
+	{
+		"id":int,
+		"verify":"",
+		"cmdyid":int,
+		"ud":int,
+		"um":"",
+        "udd":int
+	}
+```
+
+参数说明：
+
+```
+	id: 设备唯一标识
+	verify: 设备唯一标识md5
+	softv: 应用版本
+	channel: 应用渠道
+```
+
+响应消息及错误码：
+
+```
+	{
+		"status":1000,
+		"data":{
+			 "appid": "wx7a54c43b8eb67489",
+             "noncestr": "TXuzi5UR1ZHmx6KjkLGn2DYbA7esN8oQ",
+             "order_number": "kw20180816193256iyk7as3AtbcWHqJg",
+             "pkg": "Sign=WXPay",
+             "partnerid": "1492581822",
+             "prepayid": "wx161932565358659f71d7dd972103033394",
+             "price": 120,
+             "sign": "463CFD086BE1B030465DCE8E74968E0F",
+             "timestamp": "1534419176"
+		]
+	}
+```
+
+参数说明：
+
+```
+     appid: 微信支付账号的应用id
+     noncestr: 随机字符串
+     pkg: 该字段固定使用"Sign=WXPay"
+     partnerid: 商户号
+     prepayid: 预支付编号
+     sign: 签名
+     timestamp: 时间戳
+     order_number: 订单号
+     price: 商品的价格，单位为分
+```
+
+#### 12. 获取通知消息 ####           
+	- url: http://server_addr/dkfsserver/v1.0/notice 
+	- method:POST
+	- 请求消息示例：
+
+```
+	{
+		"id":int,
+		"verify":"",
+		"ud":int,
+		"um":"",
+		"udd":int
+	}	
+```
+
+参数说明：
+
+```
+	id: 设备唯一标识
+	verify: 设备唯一标识md5
+	ud: 用户唯一标识id
+	um: 用户唯一标识id的md5
+	udd: 用户设备唯一标识
+```
+
+响应消息及错误码：
+
+```
+	{
+		"status":1000,
+		"data":[{
+			"noticeid":int,
+            "type":int,
+            "title":"",
+            "text":"",
+            "showtime":"",
+            "url":"",
+            "picurl":""
+		}]
+	}
+```
+
+参数说明：
+
+```
+	noticeid: 通知id
+	status: 返回状态码 1000
+	type: 广告类型  1 文字  2 图片 3 
+	title: 标题
+	text: 文字内容
+	showtime: 通知每天展示时间
+	url: 跳转链接
+    picurl: 图片路径
+```
+
+
+#### 13. 统计上传接口 ####
+- url: http://server_addr/data/v1.0/__s_data__
+	- method:POST
+	- 请求消息示例：
+
+```
+	{
+		"id":int,
+		"verify":"",
+		"data":""
+	}	
+```
+
+参数说明：
+
+```
+	id: 设备唯一标识
+	verify: 设备唯一标识md5
+```
+
+响应消息及错误码：
+
+```
+	{
+		"status":1000,
+	}
+	{
+		"status":2000,
+	}
+```
+
+参数说明：
+
+```
+	status: 返回状态码 1000  正常  2000 异常  
+```
+
+
+#### 14. 卡密激活表 ####    
+- url: http://server_addr/dkfsserver/v1.0/keyactivate
+	- method:POST
+	- 请求消息示例：
+
+```
+	token:token
+	{
+		"id":int,
+		"ud":int,
+		"udd":int,
+        "key":""
+	}
+```
+
+参数说明：
+
+```
+	id: 设备唯一标识
+	ud: 用户唯一标识id
+	udd: 用户设备唯一标识
+    key: 用户输入的卡密字符串
+```
+
+响应消息及错误码：
+
+```
+	{
+		"status":1000
+	}
+```
+
+参数说明：
+
+```
+     status: 返回状态码 1000 激活成功 1016 卡密错误，请重新输入（无卡密） 1017 卡密已被冻结  2000 异常  
+                       1020 卡密已被使用，请重新输入  1021 卡密已过期，无法使用
+                                                          	
+```
+
+
+#### 15. 获取应用的基础信息 （有修改，只需后台做） ####    
+- url: http://server_addr/dkfsserver/v1.0/config 
+	- method:POST
+	- 请求消息示例：
+
+```
+	{
+		"id":int,
+		"verify":"",
+		"softv":int,
+		"channel":"huawei"
+        "index":int
+	}	
+```
+
+参数说明：
+
+```
+	id: 设备唯一标识
+	verify: 设备注册接口返回的md5值
+	softv: 应用版本
+	channel: 应用渠道
+    index: 当前基础信息的检索索引
+```
+
+响应消息及错误码：
+
+```
+	{
+		"status":1000,  1019
+		"data":{
+            "index":int,
+			"qq":"",
+            "joinqqcode":"",
+            "problemurl":"",
+            "freevip":"",
+            "protocol":"",
+            "vipprotocol":"",
+            "memberrights":"",
+			"privacyprotocol":""
+		}
+	}
+```
+
+参数说明：
+
+```
+	status: 返回状态码 1000 更新   1019 已经是最新数据
+    index: 此字段为索引值，每次服务器端修改下列属性都需要自增+1，保存到数据库中
+	qq：联系我们中的qq群信息
+    joinqqcode: 加入qq群的链接
+    problemurl: 常见问题-webviewe的url
+    protocol: 个人中心-设置-用户服务协议-webview的url
+    memberrights: 会员中心 - 会员服务协议
+	privacyprotocol：个人中心-设置-隐私协议-webview的url
+	vipprotocol: 会员中心 - 会员权益
+```
+
+
+
+#### 16. 支付宝购买商品alipayorder ####  
+	- url: http://server_addr/dkfspay/v1.0/alipayorder
+	- method:POST
+	- 请求消息示例：
+
+```
+	token:token
+	{
+		"id":int,
+		"verify":"",
+		"cmdyid":int,
+		"ud":int,
+		"um":"",
+        "udd":int
+	}
+```
+
+参数说明：
+
+```
+	id: 设备唯一标识
+	verify: 设备注册接口返回的md5值
+    cmdyid: 商品id
+	ud: 用户唯一标识id
+    um: 用户唯一标识id的md5
+	udd: 用户设备唯一标识
+```
+
+响应消息及错误码：
+
+```
+	{
+		"status":1000,
+		"data":{
+			 "appid": "wx7a54c43b8eb67489",
+             "orderString": "orderString",
+             "order_number": "kw20180816193256iyk7as3AtbcWHqJg",
+		]
+	}
+```
+
+参数说明：
+
+```
+     status: 1000成功  2000 异常
+     orderString: 支付宝返回结果
+     order_number: 订单号
+```
+
+
+#### 17. 订单查询状态paystatus #### 
+   	- url: http://server_addr/dkfspay/v1.0/paystatus
+            	- method:POST
+            	- 请求消息示例：
+
+   ```
+   	token:token
+   	{
+   		"id":int,
+   		"verify":"",
+   		"order_number":"order_number",
+   		"ud":int,
+   		"um":"",
+        "udd":int
+   	}
+   ```
+
+   参数说明：
+
+   ```
+   	id: 设备唯一标识
+   	verify: 设备注册接口返回的md5值
+       order_number: 订单号
+   	ud: 用户唯一标识id
+       um: 用户唯一标识id的md5
+   	udd: 用户设备唯一标识
+   ```
+
+   响应消息及错误码：
+
+   ```
+   	{
+   		"status":1000
+   	}
+   ```
+
+   参数说明：
+
+   ```
+        status: 1000 支付成功 1022 订单支付失败 1023 订单不存在
+   ```
+#### 18.  重新获取token接口（新增的接口） ####
+	- url: http://server_addr/dkfsserver/v1.0/regettoken
+	- method:POST
+	- 请求消息示例：（多加的字段）
+	```
+		{
+			"id":int,
+			"verify":"",
+			"ph":"",
+			"randomStr":"",
+		}	
+	```
+	参数说明：
+	```
+		id：设备唯一标识
+		verify：设备唯一标识md5，设备接口返回数据
+		ph: 手机号码
+		arandomStr：随机数字符串（长度在32位以内）。详细为：用户使用手机号登录时的时候，从客户端生成一个随机数，传给服务器端。
+	```
+	相应消息及错误码：
+	```
+		{
+			"status":1000,
+			data:{
+				"ud":1,
+				"um":"********"，
+				"udd":int,
+				"token":"****"
+				"gift":int,
+				"days":int
+			}
+			
+		}
+	```
+	参数说明：
+	```
+		status：返回码 1000 正常  1013 短信码过期
+		ud：用户唯一标识int类型
+		um：用户唯一标识的变种md5
+		udd: 用户设备唯一标识
+		token: 用户签名验证
+		gift: 0不弹出赠送弹框  1弹出赠送弹框（可忽略，为了写代码方便，因为共用了一个方法。）
+		days: 会员天数（可忽略，为了写代码方便，因为共用了一个方法。）
+	```
+#### 19.  用户退出接口（新增的接口） ####
+	- url: http://server_addr/dkfsserver/v1.0/regettoken
+	- method:POST
+	- 请求消息示例：（多加的字段）
+	```
+		{
+			"id":int,
+			"verify":"",
+			"ud":long
+		}	
+	```
+	参数说明：
+	```
+		id：设备唯一标识
+		verify：设备唯一标识md5，设备接口返回数据
+		ud:用户id
+	```
+	相应消息及错误码：
+	```
+		{
+			"status":1000,		
+		}
+	```
+	参数说明：
+	```
+		status：返回码 
+	```
