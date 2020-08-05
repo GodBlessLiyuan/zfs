@@ -1,7 +1,8 @@
 package com.zfs.pay.service.impl;
 
 import com.zfs.common.utils.LogUtil;
-import com.zfs.pay.common.ResultVO;
+
+import com.zfs.common.vo.ResultVO;
 import com.zfs.pay.config.WxPayConfig;
 import com.zfs.pay.constant.WxPayConstant;
 import com.zfs.pay.dto.WxPayDTO;

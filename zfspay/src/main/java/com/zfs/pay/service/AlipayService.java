@@ -1,6 +1,7 @@
 package com.zfs.pay.service;
 
-import com.zfs.pay.common.ResultVO;
+
+import com.zfs.common.vo.ResultVO;
 import com.zfs.pay.dto.AlipayDTO;
 
 import javax.servlet.http.HttpServletRequest;

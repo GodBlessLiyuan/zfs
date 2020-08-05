@@ -2,7 +2,8 @@ package com.zfs.kafka.service;
 
 import com.alibaba.fastjson.JSON;
 import com.zfs.common.utils.RequestUtil;
-import com.zfs.kafka.common.ResultVO;
+
+import com.zfs.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

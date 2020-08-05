@@ -1,21 +1,18 @@
 package com.zfs.web.service.impl;
 
+import com.zfs.common.constant.Constant;
 import com.zfs.common.mapper.KeyValueMapper;
 import com.zfs.common.pojo.KeyValuePO;
-import com.zfs.common.constant.Constant;
 import com.zfs.common.utils.LogUtil;
-import com.zfs.web.feign.CacheFeignClient;
-import com.zfs.web.service.AccountTutorialService;
 import com.zfs.common.vo.ResultVO;
+import com.zfs.web.service.AccountTutorialService;
 import com.zfs.web.vo.KeyValueVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-import static com.zfs.common.constant.Constant.REDIS_KEY;
 import static com.zfs.common.constant.Constant.TUTORIAL_URL;
 
 /**
@@ -30,8 +27,6 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
 
     @Resource
     private KeyValueMapper keyValueMapper;
-    @Autowired
-    private CacheFeignClient cacheFeignClient;
 
     /**
      * 查询
@@ -93,11 +88,6 @@ public class AccountTutorialServiceImpl implements AccountTutorialService {
             LogUtil.log(logger, "insert", "插入或修改失败", tutorial_po);
         }
 
-        /**
-         * @author: xiahui
-         * @description: 清除基础信息Redis缓存
-         */
-        cacheFeignClient.delete(REDIS_KEY);
 
         return new ResultVO(1000);
     }

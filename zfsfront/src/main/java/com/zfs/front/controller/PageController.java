@@ -1,8 +1,9 @@
 package com.zfs.front.controller;
 
 import com.zfs.common.utils.VerifyUtil;
-import com.zfs.front.common.ErrorCode;
-import com.zfs.front.common.ResultVO;
+import com.zfs.common.vo.ResultVO;
+import com.zfs.common.constant.ErrorCode;
+
 import com.zfs.front.constant.IncomeConstant;
 import com.zfs.front.dto.UserActivityDTO;
 import com.zfs.front.service.UserActivityService;

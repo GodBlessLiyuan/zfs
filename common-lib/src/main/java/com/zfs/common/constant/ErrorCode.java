@@ -1,4 +1,4 @@
-package com.zfs.front.common;
+package com.zfs.common.constant;
 
 /**
  * @author: xiahui

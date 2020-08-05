@@ -1,6 +1,6 @@
 package com.zfs.pay.controller;
 
-import com.zfs.pay.common.ResultVO;
+import com.zfs.common.vo.ResultVO;
 import com.zfs.pay.dto.AlipayDTO;
 import com.zfs.pay.service.AlipayService;
 import com.zfs.pay.utils.VerifyUtil;

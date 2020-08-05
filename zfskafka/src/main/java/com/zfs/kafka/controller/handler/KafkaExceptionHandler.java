@@ -1,6 +1,7 @@
 package com.zfs.kafka.controller.handler;
 
-import com.zfs.kafka.common.ResultVO;
+
+import com.zfs.common.vo.ResultVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;

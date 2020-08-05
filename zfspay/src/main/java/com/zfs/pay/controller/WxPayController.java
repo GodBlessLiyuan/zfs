@@ -1,6 +1,7 @@
 package com.zfs.pay.controller;
 
-import com.zfs.pay.common.ResultVO;
+
+import com.zfs.common.vo.ResultVO;
 import com.zfs.pay.dto.WxPayDTO;
 import com.zfs.pay.service.IWxPayService;
 import com.zfs.pay.utils.VerifyUtil;

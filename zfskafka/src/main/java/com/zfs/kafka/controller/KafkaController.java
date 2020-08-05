@@ -1,6 +1,7 @@
 package com.zfs.kafka.controller;
 
-import com.zfs.kafka.common.ResultVO;
+
+import com.zfs.common.vo.ResultVO;
 import com.zfs.kafka.dto.KafkaDTO;
 import com.zfs.kafka.service.KafkaService;
 import org.springframework.beans.factory.annotation.Autowired;

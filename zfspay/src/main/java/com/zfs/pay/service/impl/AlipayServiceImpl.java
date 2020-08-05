@@ -10,7 +10,8 @@ import com.alipay.api.response.AlipayTradeAppPayResponse;
 
 
 import com.zfs.common.utils.LogUtil;
-import com.zfs.pay.common.ResultVO;
+
+import com.zfs.common.vo.ResultVO;
 import com.zfs.pay.dto.AlipayDTO;
 import com.zfs.pay.mapper.AliFeedbackMapper;
 import com.zfs.pay.mapper.OrderMapper;
