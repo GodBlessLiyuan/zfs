@@ -28,8 +28,13 @@ public class VerifyUtil {
     private static Integer TokenExpire;
 
     @Value("${token.expireTime}")
-    private void setTokenExpire(Integer tokenExpire) {
-        TokenExpire = tokenExpire;
+    private void setTokenExpire(String tokenExpire) {
+        String[] tokens=tokenExpire.split("\\*");
+        Integer result=1;
+        for(String tmp:tokens){
+            result*=Integer.parseInt(tmp);
+        }
+        TokenExpire = result;
     }
 
     public static Date geneTokenExpire() {

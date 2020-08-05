@@ -3,6 +3,7 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 /* Drop Tables */
 
 DROP TABLE IF EXISTS m_register_user;
+DROP TABLE IF EXISTS t_service_number;
 
 
 
@@ -20,6 +21,20 @@ CREATE TABLE m_register_user
 	manufacturer char(128),
 	androidmodel char(64),
 	PRIMARY KEY (re_uid)
+);
+
+
+CREATE TABLE t_service_number
+(
+	svnm_id bigint NOT NULL AUTO_INCREMENT,
+	kf char(32),
+	create_time datetime,
+	update_time datetime,
+	a_id bigint unsigned,
+	username char(32),
+	-- 1£º²»É¾³ý£¬2£ºÉ¾³ý
+	dr tinyint COMMENT '1£º²»É¾³ý£¬2£ºÉ¾³ý',
+	PRIMARY KEY (svnm_id)
 );
 
 

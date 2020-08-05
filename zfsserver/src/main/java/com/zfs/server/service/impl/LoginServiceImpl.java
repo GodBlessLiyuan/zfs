@@ -240,7 +240,7 @@ public class LoginServiceImpl implements ILoginService {
 
     @Override
     public ResultVO regettoken(LoginDTO dto, HttpServletRequest req) {
-        UserPO userPO = userMapper.queryByPhone(dto.getPh());
+        UserPO userPO = userMapper.selectByPrimaryKey(dto.getUd());
         if(userPO==null||userPO.getUserId()==null){
             return ResultVO.paramsError();
         }
