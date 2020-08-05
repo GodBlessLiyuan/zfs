@@ -88,7 +88,7 @@ public class AppServiceImpl implements IAppService {
      */
     private void mqForDeviceInfo(AppDTO dto, HttpServletRequest req) {
         // 创建map集合，封装用户设备访问信息
-        Map<String, Object> deviceInfo = new HashMap<>();
+        Map<String, Object> deviceInfo = new HashMap<>(3);
         deviceInfo.put("deviceId", dto.getId());
         deviceInfo.put("visitTime", new Date());
         deviceInfo.put("ip", RequestUtil.getIpAddr(req));

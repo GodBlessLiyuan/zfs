@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Data
 public class BlackAppVO implements Serializable {
-    private static final long SerialVersionUID = 1L;
 
     private Long bid;
     private List<String> pkgs;

@@ -15,7 +15,6 @@ import java.util.List;
  */
 @Data
 public class PhoneModelDTO implements Serializable {
-    private static final long SerialVersionID = 1L;
 
     private PhoneTypePO type;
     private List<PhoneModelPO> models;
