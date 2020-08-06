@@ -2,6 +2,7 @@ package com.zfs.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.zfs.common.utils.LogUtil;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.vo.SoftChannelVO;
 import com.zfs.common.mapper.SoftChannelMapper;
@@ -32,10 +33,10 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
     private SoftChannelMapper softChannelMapper;
 
     @Override
-    public DTPageInfo<SoftChannelVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<SoftChannelPO> page = PageHelper.startPage(pageNum, pageSize);
         List<SoftChannelPO> pos = softChannelMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), SoftChannelVO.convert(pos));
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), SoftChannelVO.convert(pos)));
     }
 
     @Override
@@ -46,6 +47,10 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
 
     @Override
     public ResultVO insert(String channelName, String extra) {
+        Integer tmp = softChannelMapper.queryIdbyName(channelName);
+        if(tmp==null||tmp==0){
+            return ResultVO.softNameDup();
+        }
         SoftChannelPO po = new SoftChannelPO();
 
         po.setName(channelName);
@@ -55,6 +60,7 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
         int result = softChannelMapper.insert(po);
         if (result == 0) {
             LogUtil.log(logger, "insert", "插入失败", po);
+            return ResultVO.serverInnerError();
         }
 
         return new ResultVO(1000);

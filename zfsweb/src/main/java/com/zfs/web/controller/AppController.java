@@ -69,7 +69,7 @@ public class AppController {
     }
 
     @PostMapping("update")
-    public int update(@RequestParam(value = "appId") int appId,
+    public ResultVO update(@RequestParam(value = "appId") int appId,
                       @RequestParam(value = "file", required = false) MultipartFile file,
                       @RequestParam(value = "updateType") byte updateType,
                       @RequestParam(value = "softChannel") int[] softChannel,
@@ -78,14 +78,14 @@ public class AppController {
         return service.update(appId, file, updateType, softChannel, context, extra);
     }
 
-    @RequestMapping("updateStatus")
-    public int updateStatus(@RequestParam(value = "appId") int appId,
+    @PostMapping("updateStatus")
+    public ResultVO updateStatus(@RequestParam(value = "appId") int appId,
                             @RequestParam(value = "status") int status) {
         return service.updateStatus(appId, status);
     }
 
-    @RequestMapping("delete")
-    public int delete(@RequestParam(value = "appId") int appId) {
+    @PostMapping("delete")
+    public ResultVO delete(@RequestParam(value = "appId") int appId) {
         return service.delete(appId);
     }
 }

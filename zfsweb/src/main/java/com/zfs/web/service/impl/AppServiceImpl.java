@@ -128,6 +128,7 @@ public class AppServiceImpl implements IAppService {
                 int result = appChMapper.batchInsert(insAppChPOs);
                 if (result == 0) {
                     LogUtil.log(logger, "insert", "新增应用渠道失败", insAppChPOs);
+                    return ResultVO.serverInnerError();
                 }
             }
             /***
@@ -169,6 +170,7 @@ public class AppServiceImpl implements IAppService {
         int result1 = appMapper.insert(appPO);
         if (result1 == 0) {
             LogUtil.log(logger, "insert", "新增appPO失败", appPO);
+            return ResultVO.serverInnerError();
         }
 
         List<AppChPO> appChPOs = new ArrayList<>();
@@ -183,6 +185,7 @@ public class AppServiceImpl implements IAppService {
         int result2 = appChMapper.batchInsert(appChPOs);
         if (result2 == 0) {
             LogUtil.log(logger, "insert", "新增appChPOs失败", appChPOs);
+            return ResultVO.serverInnerError();
         }
         /***
          * 更新t_ad_channel广告渠道
@@ -228,7 +231,7 @@ public class AppServiceImpl implements IAppService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra) {
+    public ResultVO update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra) {
         AppPO appPO = appMapper.selectByPrimaryKey(appId);
         if (file != null && !"".equals(file)) {
             // 根据url对应的apk获取版本名称、版本号、文件大小
@@ -241,6 +244,7 @@ public class AppServiceImpl implements IAppService {
         int frist = appMapper.updateByPrimaryKey(appPO);
         if (frist == 0) {
             LogUtil.log(logger, "update", "更新appChPOs失败", appPO);
+            return ResultVO.serverInnerError();
         }
 
         // 根据appId查询应用渠道数据
@@ -271,6 +275,7 @@ public class AppServiceImpl implements IAppService {
             secend = appChMapper.batchInsert(insAppChPOs);
             if (secend == 0) {
                 LogUtil.log(logger, "update", "新增应用渠道数据失败", insAppChPOs);
+                return ResultVO.serverInnerError();
             }
         }
 
@@ -289,7 +294,7 @@ public class AppServiceImpl implements IAppService {
 
         this.deleteRedis();
 
-        return frist + secend + third;
+        return new ResultVO(1000);
     }
 
     private void setAppPObyFile(MultipartFile file, AppPO appPO) {
@@ -308,41 +313,45 @@ public class AppServiceImpl implements IAppService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int updateStatus(int appId, int status) {
+    public ResultVO updateStatus(int appId, int status) {
         AppPO appPO = appMapper.selectByPrimaryKey(appId);
         appPO.setPublishTime(status == 2 ? new Date() : null);
         appPO.setStatus(status);
         int frist = appMapper.updateByPrimaryKey(appPO);
         if (frist == 0) {
             LogUtil.log(logger, "updateStatus", "删除appPO失败", appPO);
+            return ResultVO.serverInnerError();
         }
 
         int secend = appChMapper.updateStatus(appId, status);
         if (secend == 0) {
             LogUtil.log(logger, "updateStatus", "更新失败", appId, status);
+            return ResultVO.serverInnerError();
         }
 
         this.deleteRedis();
 
-        return frist + secend;
+        return new ResultVO(1000);
     }
 
     @Transactional(rollbackFor = {})
     @Override
-    public int delete(int appId) {
+    public ResultVO delete(int appId) {
         int frist = appChMapper.deleteByAppId(appId);
         if (frist == 0) {
             LogUtil.log(logger, "delete", "删除失败", appId);
+            return ResultVO.serverInnerError();
         }
         // 应用表进行假删除
         int secend = appMapper.deleteByPrimaryKey(appId);
         if (secend == 0) {
             LogUtil.log(logger, "delete", "应用表假删除失败", appId);
+            return ResultVO.serverInnerError();
         }
 
         this.deleteRedis();
 
-        return frist + secend;
+        return ResultVO.serverInnerError();
     }
 
     /**
