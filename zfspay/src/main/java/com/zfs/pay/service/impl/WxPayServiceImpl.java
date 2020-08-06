@@ -67,6 +67,7 @@ public class WxPayServiceImpl implements IWxPayService {
         // 获取商品
         VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(dto.getCmdyid());
         if (null == vipCommodityPO) {
+            logger.error("没有商品号：{}",dto.getCmdyid());
             return ResultVO.serverInnerError();
         }
 
