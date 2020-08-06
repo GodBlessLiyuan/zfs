@@ -67,7 +67,8 @@ public class WxPayServiceImpl implements IWxPayService {
         // 获取商品
         VipCommodityPO vipCommodityPO = vipCommodityMapper.selectByPrimaryKey(dto.getCmdyid());
         if (null == vipCommodityPO) {
-            return ResultVO.paramsError();
+            logger.error("没有商品号：{}",dto.getCmdyid());
+            return ResultVO.serverInnerError();
         }
 
         // 创建订单
@@ -95,12 +96,12 @@ public class WxPayServiceImpl implements IWxPayService {
         String wxPayRes = WxPayUtil.httpsRequest(wxPayConfig.getOrder_url(), wxPayParam);
         Map<String, String> wxPayMap = WxPayUtil.parseXML(wxPayRes);
         if (null == wxPayMap || 0 == wxPayMap.size()) {
-            return new ResultVO(2000);
+            return ResultVO.serverInnerError();
         }
 
         if (!WxPayConstant.SUCCESS.equals(wxPayMap.get(WxPayConstant.RETURN_CODE))) {
             logger.warn(wxPayMap.get(WxPayConstant.RETURN_MSG));
-            return new ResultVO<>(2000);
+            return ResultVO.serverInnerError();
         }
 
         WxPayVO vo = new WxPayVO();

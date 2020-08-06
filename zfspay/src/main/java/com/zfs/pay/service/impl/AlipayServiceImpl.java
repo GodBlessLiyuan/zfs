@@ -94,7 +94,8 @@ public class AlipayServiceImpl implements AlipayService {
         // 根据商品ID，获取商品详情
         VipCommodityPO vipCommodityPO = this.vipCommodityMapper.selectByPrimaryKey(dto.getCmdyid());
         if (null == vipCommodityPO) {
-            return new ResultVO(2000);
+            logger.error("没有商品号：{}",dto.getCmdyid());
+            return ResultVO.serverInnerError();
         }
 
         // 创建订单
@@ -334,7 +335,7 @@ public class AlipayServiceImpl implements AlipayService {
         //根据订单号，查询出订单
         OrderPO orderPO = this.orderMapper.queryByOrderNumber(orderNumber);
         if (null == orderPO) {
-            logger.info("未查出订单信息");
+            logger.error("未查出订单信息：{}",orderNumber);
             return "fail";
         }
         if(orderPO.getPayTime()!=null){

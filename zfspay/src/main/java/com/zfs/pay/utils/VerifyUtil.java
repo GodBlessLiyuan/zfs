@@ -45,12 +45,18 @@ public class VerifyUtil {
         if (token == null) {
             return false;
         }
-
-        List<String> audience = JWT.decode(token).getAudience();
+        DecodedJWT decode = JWT.decode(token);
+        Date expiresAt = decode.getExpiresAt();
+        //存活时间失效
+        if(expiresAt.before(new Date())){
+            return false;
+        }
+        List<String> audience = decode.getAudience();
         return dto.getUd().toString().equals(audience.get(0)) && dto.getId().toString().equals(audience.get(1))
                 && dto.getUdd().toString().equals(audience.get(2));
     }
 
+    @Deprecated
     public static boolean expire(TokenDTO dto, HttpServletRequest req) {
         String token = req.getHeader("token");
         if (token == null) {
