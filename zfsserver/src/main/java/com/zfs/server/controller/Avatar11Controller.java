@@ -24,7 +24,7 @@ public class Avatar11Controller {
     @PostMapping("checkava")
     public ResultVO check(@RequestBody AvatarDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return new ResultVO(2000);
+            return ResultVO.varifyDevice();
         }
 
         return service.check(dto);

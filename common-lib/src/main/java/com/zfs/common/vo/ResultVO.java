@@ -37,6 +37,14 @@ public class ResultVO<T> implements Serializable {
         return new ResultVO(1003);
     }
     /***
+     * 验证设备的状态码
+     * 万一还有改的，所以预留一个状态码
+     * */
+    public static ResultVO varifyDevice(){
+        return new ResultVO(2003);
+    }
+
+    /***
      * token失效，验证不通过，
      * 比如验证和token生存时间过期。
      * */

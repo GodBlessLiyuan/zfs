@@ -241,11 +241,16 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public ResultVO regettoken(LoginDTO dto, HttpServletRequest req) {
         UserPO userPO = userMapper.selectByPrimaryKey(dto.getUd());
+        //内部出错
         if(userPO==null||userPO.getUserId()==null){
-            return ResultVO.paramsError();
+            LogUtil.log(logger,"regettoken","没有用户号",dto.getUd());
+            return ResultVO.serverInnerError();
         }
+        //随机数不同，则不再发送token；登出状态
         if(!userPO.getRandomStr().equals(dto.getRandomStr())){
-            return ResultVO.paramsError();//随机数不同，则不再发送token
+            LogUtil.log(logger,"regettoken","随机数不匹配!!!，用户:{}，参数:{}",
+                    userPO.getRandomStr(),dto.getRandomStr());
+            return ResultVO.logOut();
         }
         // 前端是否出弹框
         Byte gift = null;
@@ -253,7 +258,9 @@ public class LoginServiceImpl implements ILoginService {
         Integer days = null;
         UserDevicePO userDevicePO = userDeviceMapper.queryByDevIdAndUserId(dto.getId(), userPO.getUserId());
         if(userDevicePO==null){
-            return ResultVO.paramsError();
+            LogUtil.log(logger,"regettoken","没查询出用户设备，用户:{}，设备:{}",
+                    userPO.getUserId(),dto.getId());
+            return ResultVO.serverInnerError();
         }
         return this.buildResultVO(userDevicePO, gift, days);
     }
@@ -262,7 +269,9 @@ public class LoginServiceImpl implements ILoginService {
     public ResultVO logout(LoginDTO dto, HttpServletRequest req) {
         UserPO userPO = userMapper.selectByPrimaryKey(dto.getUd());
         if(userPO==null){
-            return ResultVO.paramsError();
+            LogUtil.log(logger,"logout","没查询出用户：{}",
+                    dto.getUd());
+            return ResultVO.serverInnerError();
         }
         // 登出当前设备所有在线用户
         userDeviceMapper.signOutByDevId(dto.getId());
