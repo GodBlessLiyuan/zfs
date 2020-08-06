@@ -43,15 +43,15 @@ public class AppController {
     }
 
     @PostMapping("queryAll")
-    public List<AppVO> queryAll() {
+    public ResultVO queryAll() {
         List<AppVO> datas = service.queryAll();
-        return datas;
+        return new ResultVO(1000,datas);
     }
 
-    @RequestMapping("queryById")
-    public AppVO queryById(@RequestParam(value = "appId") int appId) {
-        List<AppVO> dtos = service.queryById(appId);
-        return dtos.get(0);
+    @PostMapping("queryById")
+    public ResultVO queryById(@RequestParam(value = "appId") int appId) {
+        AppVO appVO = service.queryById(appId);
+        return new ResultVO(1000,appVO);
     }
 
     @PostMapping("insert")

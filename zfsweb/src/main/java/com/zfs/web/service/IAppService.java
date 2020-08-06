@@ -66,7 +66,7 @@ public interface IAppService {
      * @param appId
      * @return
      */
-    List<AppVO> queryById(int appId);
+    AppVO queryById(int appId);
 
     /**
      * 更新
