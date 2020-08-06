@@ -79,8 +79,12 @@ public class AppServiceImpl implements IAppService {
     @Override
     public AppVO queryById(int appId) {
         List<AppBO> pos = appMapper.queryById(appId);
-        //取第一个
-        return AppVO.convert(pos).get(0);
+        if(AppVO.convert(pos)!=null&&AppVO.convert(pos).size()>0){
+            //取第一个数据
+            return  AppVO.convert(pos).get(0);
+        }else{
+            return null;
+        }
     }
 
     @Transactional(rollbackFor = {})
