@@ -65,4 +65,22 @@ public class ResultVO<T> implements Serializable {
     public static ResultVO serverInnerError(){
         return new ResultVO(2002);
     }
+    /**
+     * web服务的增删改的失败状态
+     * */
+    public static ResultVO addFailure(){
+        return new ResultVO(2002);
+    }
+    /**
+     * web服务的用户名重名状态
+     * */
+    public static ResultVO adminUserDupliName(){
+        return new ResultVO(3001);
+    }
+    /**
+     * 渠道名重复
+     * */
+    public static ResultVO softNameDup(){
+        return new ResultVO(3003);
+    }
 }

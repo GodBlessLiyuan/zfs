@@ -1,7 +1,6 @@
 package com.zfs.web.service;
 
 import com.zfs.web.vo.SoftChannelVO;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 
 import java.util.List;
@@ -17,13 +16,12 @@ public interface ISoftChannelService {
 
     /**
      * 分页查询
-     * @param draw
      * @param pageNum
      * @param pageSize
      * @param reqData
      * @return
      */
-    DTPageInfo<SoftChannelVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 查询全部数据

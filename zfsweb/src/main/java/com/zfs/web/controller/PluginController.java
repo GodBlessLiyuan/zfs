@@ -31,7 +31,7 @@ public class PluginController {
     private IPluginService service;
 
 
-    @RequestMapping("/plugin/query")
+    @PostMapping("/plugin/query")
     public DTPageInfo<PluginVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,

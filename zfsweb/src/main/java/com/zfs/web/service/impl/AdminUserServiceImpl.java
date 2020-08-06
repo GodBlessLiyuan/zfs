@@ -76,7 +76,10 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     public ResultVO insert(AdminUserDTO dto, HttpSession httpSession) {
-
+        AdminUserPO adminUserPO = adminUserMapper.queryUserByUsername(dto.getUsername());
+        if(adminUserPO!=null){
+            return ResultVO.adminUserDupliName();
+        }
         //准备一个对象
         AdminUserPO po = new AdminUserPO();
 
@@ -88,6 +91,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         int result = this.adminUserMapper.insert(po);
         if (result == 0) {
             LogUtil.log(logger, "insert", "插入失败", po);
+            return ResultVO.addFailure();
         }
 
         return new ResultVO(1000);
@@ -157,6 +161,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         int result = adminUserMapper.updateByPrimaryKey(po);
         if (result == 0) {
             LogUtil.log(logger, "update", "修改失败", po);
+            return ResultVO.addFailure();
         }
 
         return new ResultVO(1000);
@@ -172,6 +177,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         int result = this.adminUserMapper.deleteByPrimaryKey(aId);
         if (result == 0) {
             LogUtil.log(logger, "delete", "删除失败", aId);
+            return ResultVO.adminUserDupliName();
         }
         return new ResultVO(1000);
     }

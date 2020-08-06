@@ -43,7 +43,7 @@ public interface IAppService {
      * @param status
      * @return
      */
-    int updateStatus(int appId, int status);
+    ResultVO updateStatus(int appId, int status);
 
     /**
      * 删除
@@ -51,7 +51,7 @@ public interface IAppService {
      * @param appId
      * @return
      */
-    int delete(int appId);
+    ResultVO delete(int appId);
 
     /**
      * 从应用渠道表查询所有AppId数据
@@ -79,5 +79,5 @@ public interface IAppService {
      * @param extra       备注
      * @return
      */
-    int update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra);
+    ResultVO update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra);
 }

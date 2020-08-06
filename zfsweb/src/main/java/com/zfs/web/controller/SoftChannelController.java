@@ -1,16 +1,13 @@
 package com.zfs.web.controller;
-
-import com.zfs.web.vo.SoftChannelVO;
 import com.zfs.web.service.ISoftChannelService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,25 +23,25 @@ public class SoftChannelController {
     @Autowired
     private ISoftChannelService service;
 
-    @RequestMapping("query")
-    public DTPageInfo<SoftChannelVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                           @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                           @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                           @RequestParam(value = "channelName") String channelName) {
+    @PostMapping("query")
+    public ResultVO query(
+               @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+               @RequestParam(value = "channelName") String channelName) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("name", channelName);
 
-        return service.query(draw, pageNum, pageSize, reqData);
+        return service.query(pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("queryAll")
-    public List<SoftChannelVO> queryAll() {
-        return service.queryAll();
+    @PostMapping("queryAll")
+    public ResultVO queryAll() {
+        return new ResultVO(1000,service.queryAll());
     }
 
-    @RequestMapping("insert")
+    @PostMapping("insert")
     public ResultVO insert(@RequestParam(value = "channelName") String channelName,
                            @RequestParam(value = "extra") String extra) {
-        return service.insert(channelName, extra);
+        return new ResultVO(1000,service.insert(channelName, extra));
     }
 }
