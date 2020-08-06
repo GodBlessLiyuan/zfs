@@ -1,6 +1,4 @@
 package com.zfs.web.service;
-
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.vo.AppVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,14 +16,12 @@ public interface IAppService {
 
     /**
      * 分页查询
-     *
-     * @param draw
      * @param pageNum
      * @param pageSize
      * @param reqData
      * @return
      */
-    DTPageInfo<AppVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    ResultVO query( int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 插入

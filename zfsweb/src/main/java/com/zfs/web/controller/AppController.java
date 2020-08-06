@@ -3,7 +3,6 @@ package com.zfs.web.controller;
 import com.zfs.common.constant.Constant;
 import com.zfs.web.dto.AdminUserDTO;
 import com.zfs.web.service.IAppService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.vo.AppVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +30,19 @@ public class AppController {
     @Autowired
     private IAppService service;
 
-    @RequestMapping("query")
-    public DTPageInfo<AppVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                   @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                   @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                   @RequestParam(value = "updateType") byte updateType) {
+    @PostMapping("query")
+    public ResultVO query(
+           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+           @RequestParam(value = "updateType") byte updateType) {
 
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("updateType", updateType);
 
-        return service.query(draw, pageNum, pageSize, reqData);
+        return service.query( pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("queryAll")
+    @PostMapping("queryAll")
     public List<AppVO> queryAll() {
         List<AppVO> datas = service.queryAll();
         return datas;

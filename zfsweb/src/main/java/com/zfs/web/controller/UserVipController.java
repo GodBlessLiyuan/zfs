@@ -1,10 +1,9 @@
 package com.zfs.web.controller;
 
-import com.zfs.web.vo.UserVipVO;
-import com.zfs.web.vo.UserVipDetailsVO;
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.service.IUserVipService;
-import com.zfs.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,24 +24,22 @@ public class UserVipController {
     @Autowired
     private IUserVipService service;
 
-    @RequestMapping("query")
-    public DTPageInfo<UserVipVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                       @RequestParam(value = "phone") String phone,
-                                       @RequestParam(value = "isPay") byte isPay) {
+    @PostMapping("query")
+    public ResultVO query(
+           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+           @RequestParam(value = "phone") String phone,
+           @RequestParam(value = "isPay") byte isPay) {
         Map<String, Object> reqData = new HashMap<>(2);
         reqData.put("phone", phone);
         reqData.put("isPay", isPay);
 
-        return service.query(draw, pageNum, pageSize, reqData);
+        return service.query(pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("queryDetails")
-    public DTPageInfo<UserVipDetailsVO> queryDetails(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                                     @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                                     @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                                     @RequestParam(value = "userId") int userId) {
-        return service.queryDetails(draw, pageNum, pageSize, userId);
+    @PostMapping("queryDetails")
+    public ResultVO queryDetails(
+         @RequestParam(value = "userId") int userId) {
+        return service.queryDetails(userId);
     }
 }

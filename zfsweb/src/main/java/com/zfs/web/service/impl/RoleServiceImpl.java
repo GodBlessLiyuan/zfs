@@ -2,10 +2,11 @@ package com.zfs.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.zfs.common.mapper.RoleMapper;
+import com.zfs.common.vo.PageInfoVO;
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.common.pojo.RolePO;
 import com.zfs.web.service.RoleService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.web.vo.RoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,16 +28,15 @@ public class RoleServiceImpl implements RoleService {
     /**
      * 查询
      *
-     * @param draw
-     * @param start
-     * @param length
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     @Override
-    public DTPageInfo<RoleVO> query(int draw, int start, int length) {
+    public ResultVO query(int pageNum, int pageSize) {
 
         // 分页
-        Page<RoleVO> page = PageHelper.startPage(start, length);
+        Page<RoleVO> page = PageHelper.startPage(pageNum, pageSize);
 
         // 按照条件查询数据
         List<RolePO> pos = roleMapper.query();
@@ -53,6 +53,6 @@ public class RoleServiceImpl implements RoleService {
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), vos);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(),vos));
     }
 }

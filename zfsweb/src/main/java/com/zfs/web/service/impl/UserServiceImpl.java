@@ -3,10 +3,11 @@ package com.zfs.web.service.impl;
 import com.github.pagehelper.Page;
 import com.zfs.common.bo.UserBO;
 import com.zfs.common.mapper.RegisterUserMapper;
+import com.zfs.common.vo.PageInfoVO;
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.vo.UserVO;
 import com.zfs.web.service.IUserService;
-import com.zfs.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,9 +27,9 @@ public class UserServiceImpl implements IUserService {
     @Resource
     private RegisterUserMapper registerUserMapper;
     @Override
-    public DTPageInfo<UserVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public ResultVO query( int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<UserBO> page = PageHelper.startPage(pageNum, pageSize);
         List<UserBO> dos = registerUserMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), UserVO.convert(dos));
+        return new ResultVO(1000, new PageInfoVO<>(page.getTotal(), UserVO.convert(dos)));
     }
 }
