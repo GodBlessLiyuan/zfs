@@ -24,9 +24,6 @@ public class BlackAppController {
 
     @PostMapping("blackpkgs")
     public ResultVO blankPkgs(@RequestBody BlackAppDTO dto) {
-        if(!VerifyUtil.checkDeviceId(dto)) {
-            return ResultVO.validDevice();
-        }
 
         return service.getBlankPkgs(dto);
     }

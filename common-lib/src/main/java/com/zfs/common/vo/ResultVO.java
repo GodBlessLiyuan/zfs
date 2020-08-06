@@ -40,8 +40,8 @@ public class ResultVO<T> implements Serializable {
      * 验证设备的状态码
      * 万一还有改的，所以预留一个状态码
      * */
-    public static ResultVO validDevice(){
-        return new ResultVO(2000);
+    public static ResultVO varifyDevice(){
+        return new ResultVO(2003);
     }
 
     /***
