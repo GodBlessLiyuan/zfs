@@ -32,7 +32,7 @@ public class WxPayController {
     @PostMapping("wxpayorder")
     public ResultVO wxPayOrder(@RequestBody WxPayDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return ResultVO.tokenLoseEfficacy();
+            return ResultVO.tokenInvalid();
         }
         return service.wxPayOrder(dto, req);
     }

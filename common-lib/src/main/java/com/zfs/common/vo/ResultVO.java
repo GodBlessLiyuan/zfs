@@ -40,7 +40,7 @@ public class ResultVO<T> implements Serializable {
      * token失效，验证不通过，
      * 比如验证和token生存时间过期。
      * */
-    public static ResultVO tokenLoseEfficacy(){
+    public static ResultVO tokenInvalid(){
         return new ResultVO(2000);
     }
     /****

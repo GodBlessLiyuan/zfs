@@ -27,10 +27,7 @@ public class ActivityController {
     @PostMapping("checkactivity")
     public ResultVO check(@RequestBody ActivityDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return new ResultVO(2000);
-        }
-        if(!VerifyUtil.expire(dto,req)){
-            return ResultVO.logOut();
+            return ResultVO.tokenLoseEfficacy();
         }
         return service.check(dto);
     }
@@ -38,10 +35,7 @@ public class ActivityController {
     @PostMapping("activate")
     public ResultVO activate(@RequestBody ActivityDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return new ResultVO(2000);
-        }
-        if(!VerifyUtil.expire(dto,req)){
-            return ResultVO.logOut();
+            return ResultVO.tokenLoseEfficacy();
         }
         return service.activate(dto);
     }
