@@ -78,10 +78,10 @@ public class AppServiceImpl implements IAppService {
 
     @Override
     public AppVO queryById(int appId) {
-        List<AppBO> pos = appMapper.queryById(appId);
-        if(AppVO.convert(pos)!=null&&AppVO.convert(pos).size()>0){
+        List<AppVO> resultS = AppVO.convert(appMapper.queryById(appId));
+        if(resultS!=null&&resultS.size()>0){
             //取第一个数据
-            return  AppVO.convert(pos).get(0);
+            return resultS.get(0);
         }else{
             return null;
         }

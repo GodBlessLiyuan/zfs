@@ -48,6 +48,9 @@ public class AppVO implements Serializable {
     }
 
     public static List<AppVO> convert(List<AppBO> bos) {
+        if(bos==null||bos.size()==0){
+            return null;
+        }
         // 合并相同的appId
         Map<Integer, AppVO> dtos = new HashMap<>();
         for (AppBO bo : bos) {
