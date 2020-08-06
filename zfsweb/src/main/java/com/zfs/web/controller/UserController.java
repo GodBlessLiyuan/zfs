@@ -1,9 +1,8 @@
 package com.zfs.web.controller;
 
 import com.zfs.common.vo.ResultVO;
-import com.zfs.web.vo.UserVO;
 import com.zfs.web.service.IUserService;
-import com.zfs.web.utils.DTPageInfo;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +23,7 @@ public class UserController {
     @Resource
     private IUserService service;
 
-    @RequestMapping("query")
+    @PostMapping("query")
     public ResultVO query(
            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,

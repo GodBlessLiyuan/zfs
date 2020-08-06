@@ -6,9 +6,7 @@ import com.zfs.common.bo.NewUserRecordBO;
 import com.zfs.common.bo.OrderBO;
 import com.zfs.common.bo.UserActivityBO;
 import com.zfs.common.bo.UserVipBO;
-import com.zfs.common.bo.BuyGiftBO;
 import com.zfs.common.mapper.*;
-import com.zfs.common.pojo.GodinsecUserPO;
 import com.zfs.common.vo.PageInfoVO;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
@@ -16,7 +14,6 @@ import com.zfs.web.common.UserVipConstant;
 import com.zfs.web.vo.UserVipVO;
 import com.zfs.web.vo.UserVipDetailsVO;
 import com.zfs.web.service.IUserVipService;
-import com.zfs.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -49,10 +46,6 @@ public class UserVipServiceImpl implements IUserVipService {
     @Resource
     private BatchInfoMapper infoMapper;
 
-    @Resource
-    private GodinsecUserMapper godinsecUserMapper;
-    @Resource
-    private BuyGiftMapper giftMapper;
     @Override
     public ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<UserVipBO> page = PageHelper.startPage(pageNum, pageSize);

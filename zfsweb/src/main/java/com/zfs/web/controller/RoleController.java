@@ -25,7 +25,7 @@ public class RoleController {
      * @param pageSize
      * @return
      */
-    @GetMapping("query")
+    @PostMapping("query")
     public ResultVO query(
             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize

@@ -12,7 +12,6 @@ import com.zfs.common.mapper.AdminUserMapper;
 import com.zfs.common.pojo.AdminUserPO;
 import com.zfs.common.pojo.RolePO;
 import com.zfs.web.service.AdminUserService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.web.utils.Md5Util;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.utils.OperatorUtil;
@@ -39,7 +38,6 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     /**
      * 账号管理——查询
-     * @param draw
      * @param start
      * @param length
      * @param phone

@@ -2,9 +2,7 @@ package com.zfs.web.controller;
 
 import com.zfs.web.dto.AdminUserDTO;
 import com.zfs.web.service.AdminUserService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
-import com.zfs.web.vo.AdminUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +23,7 @@ public class AdminUserController {
      * @param extra
      * @return
      */
-    @GetMapping("query")
+    @PostMapping("query")
     public ResultVO query(
          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
@@ -42,7 +40,7 @@ public class AdminUserController {
      * 查询所有角色
      * @return
      */
-    @GetMapping("queryAllRoles")
+    @PostMapping("queryAllRoles")
     public ResultVO queryAllRoles() {
         return this.adminUserService.queryAllRoles();
     }
@@ -53,7 +51,7 @@ public class AdminUserController {
      * @param aId
      * @return
      */
-    @GetMapping("queryById")
+    @PostMapping("queryById")
     public ResultVO queryById(@RequestParam(value = "aId")Integer aId) {
         return this.adminUserService.queryById(aId);
     }

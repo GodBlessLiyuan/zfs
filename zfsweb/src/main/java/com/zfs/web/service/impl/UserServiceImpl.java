@@ -8,7 +8,6 @@ import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.vo.UserVO;
 import com.zfs.web.service.IUserService;
-import com.zfs.web.utils.DTPageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
