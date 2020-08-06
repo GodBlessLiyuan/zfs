@@ -52,7 +52,7 @@ public class AppVO implements Serializable {
             return null;
         }
         // 合并相同的appId
-        Map<Integer, AppVO> dtos = new HashMap<>();
+        Map<Integer, AppVO> dtos = new HashMap<>(bos.size());
         for (AppBO bo : bos) {
             int appId = bo.getAppId();
             if (dtos.containsKey(appId)) {

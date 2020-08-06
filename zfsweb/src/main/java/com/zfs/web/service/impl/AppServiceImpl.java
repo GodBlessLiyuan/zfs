@@ -63,11 +63,11 @@ public class AppServiceImpl implements IAppService {
         List<Integer> appIds = appMapper.queryAppId(reqData);
 
         List<AppBO> bos = new ArrayList<>();
-        if(null != appIds && appIds.size() > 0) {
+        if (null != appIds && appIds.size() > 0) {
             bos = appMapper.queryByIds(appIds);
         }
         List<AppVO> dto = AppVO.convert(bos);
-        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), dto));
+        return new ResultVO(1000, new PageInfoVO<>(page.getTotal(), dto));
     }
 
     @Override
@@ -79,10 +79,10 @@ public class AppServiceImpl implements IAppService {
     @Override
     public AppVO queryById(int appId) {
         List<AppVO> resultS = AppVO.convert(appMapper.queryById(appId));
-        if(resultS!=null&&resultS.size()>0){
+        if (resultS != null && resultS.size() > 0) {
             //取第一个数据
             return resultS.get(0);
-        }else{
+        } else {
             return null;
         }
     }
@@ -135,26 +135,26 @@ public class AppServiceImpl implements IAppService {
              * 有数据则更新type和update_time字段
              * 没有数据则将广告id和渠道id组合之后和app_id关联
              * */
-            List<AdChannelPO> adChannelPOS=adChannelMapper.queryByAppId(appPO.getAppId());
-            if(adChannelPOS!=null&&adChannelPOS.size()>0){
+            List<AdChannelPO> adChannelPOS = adChannelMapper.queryByAppId(appPO.getAppId());
+            if (adChannelPOS != null && adChannelPOS.size() > 0) {
                 adChannelMapper.batchUpdate(adChannelPOS);
-            }else{
-                int appID=appPO.getAppId();
-                List<Integer> adIDS=adconfigMapper.queryIDS();
-                List<Integer> softIDS=softChannelMapper.queryIDS();
-                boolean b1=adIDS!=null&&adIDS.size()>0;
-                boolean b2=softIDS!=null&&softIDS.size()>0;
-                if(b1&&b2){
-                    List<AdChannelPO> insertAdChannelPOS=new ArrayList<>();
-                    for(Integer adID:adIDS){
-                        for(Integer softID:softIDS){
-                            AdChannelPO po=new AdChannelPO();
-                            buildAdChannelPO(po,adID,softID,appID);
+            } else {
+                int appID = appPO.getAppId();
+                List<Integer> adIDS = adconfigMapper.queryIDS();
+                List<Integer> softIDS = softChannelMapper.queryIDS();
+                boolean b1 = adIDS != null && adIDS.size() > 0;
+                boolean b2 = softIDS != null && softIDS.size() > 0;
+                if (b1 && b2) {
+                    List<AdChannelPO> insertAdChannelPOS = new ArrayList<>();
+                    for (Integer adID : adIDS) {
+                        for (Integer softID : softIDS) {
+                            AdChannelPO po = new AdChannelPO();
+                            buildAdChannelPO(po, adID, softID, appID);
                             insertAdChannelPOS.add(po);
                         }
                     }
                     adChannelMapper.batchInsert(insertAdChannelPOS);
-                }else{
+                } else {
                     logger.info("t_adconfig和t_soft_channel不存在数据");
                 }
             }
@@ -189,26 +189,26 @@ public class AppServiceImpl implements IAppService {
          * 有数据则更新type和update_time字段
          * 没有数据则将广告id和渠道id组合之后和app_id关联
          * */
-        List<AdChannelPO> adChannelPOS=adChannelMapper.queryByAppId(appPO.getAppId());
-        if(adChannelPOS!=null&&adChannelPOS.size()>0){
+        List<AdChannelPO> adChannelPOS = adChannelMapper.queryByAppId(appPO.getAppId());
+        if (adChannelPOS != null && adChannelPOS.size() > 0) {
             adChannelMapper.batchUpdate(adChannelPOS);
-        }else{
-            int appID=appPO.getAppId();
-            List<Integer> adIDS=adconfigMapper.queryIDS();
-            List<Integer> softIDS=softChannelMapper.queryIDS();
-            boolean b1=adIDS!=null&&adIDS.size()>0;
-            boolean b2=softIDS!=null&&softIDS.size()>0;
-            if(b1&&b2){
-                List<AdChannelPO> insertAdChannelPOS=new ArrayList<>();
-                for(Integer adID:adIDS){
-                    for(Integer softID:softIDS){
-                        AdChannelPO po=new AdChannelPO();
-                        buildAdChannelPO(po,adID,softID,appID);
+        } else {
+            int appID = appPO.getAppId();
+            List<Integer> adIDS = adconfigMapper.queryIDS();
+            List<Integer> softIDS = softChannelMapper.queryIDS();
+            boolean b1 = adIDS != null && adIDS.size() > 0;
+            boolean b2 = softIDS != null && softIDS.size() > 0;
+            if (b1 && b2) {
+                List<AdChannelPO> insertAdChannelPOS = new ArrayList<>();
+                for (Integer adID : adIDS) {
+                    for (Integer softID : softIDS) {
+                        AdChannelPO po = new AdChannelPO();
+                        buildAdChannelPO(po, adID, softID, appID);
                         insertAdChannelPOS.add(po);
                     }
                 }
                 adChannelMapper.batchInsert(insertAdChannelPOS);
-            }else{
+            } else {
                 logger.info("t_adconfig和t_soft_channel不存在数据");
             }
         }
