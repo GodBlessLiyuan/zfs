@@ -32,8 +32,8 @@ CREATE TABLE t_service_number
 	update_time datetime,
 	a_id bigint unsigned,
 	username char(32),
-	-- 1£º²»É¾³ı£¬2£ºÉ¾³ı
-	dr tinyint COMMENT '1£º²»É¾³ı£¬2£ºÉ¾³ı',
+	-- 1ï¼šä¸åˆ é™¤ï¼Œ2ï¼šåˆ é™¤
+	dr tinyint COMMENT '1ï¼šä¸åˆ é™¤ï¼Œ2ï¼šåˆ é™¤',
 	PRIMARY KEY (svnm_id)
 );
 
