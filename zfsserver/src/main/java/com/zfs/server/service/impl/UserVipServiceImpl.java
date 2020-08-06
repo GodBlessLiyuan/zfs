@@ -1,5 +1,6 @@
 package com.zfs.server.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.zfs.common.mapper.UserDeviceMapper;
 import com.zfs.common.mapper.UserVipMapper;
 import com.zfs.common.pojo.UserDevicePO;
@@ -46,9 +47,8 @@ public class UserVipServiceImpl implements IUserVipService {
 
         if (!userDevicePO.getDeviceId().equals(dto.getId()) || !userDevicePO.getUserId().equals(dto.getUd())) {
             // 数据有误
-            LogUtil.log(logger,"UserVipServiceImpl--validate","设备用户不匹配：用户信息{}，设备信息{}",
-                    userDevicePO.getDeviceId()+","+userDevicePO.getUserId(),
-                    dto.getId()+","+dto.getUd());
+            LogUtil.log(logger,"UserVipServiceImpl--validate","设备用户不匹配：用户信息;参数信息为{}",
+                    userDevicePO.getDeviceId()+","+userDevicePO.getUserId()+";"+dto.getId()+","+dto.getUd());
             return ResultVO.serverInnerError();
         }
 
