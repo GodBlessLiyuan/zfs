@@ -38,10 +38,7 @@ public class AlipayController {
     @PostMapping("alipayorder")
     public ResultVO alipayOrder(@RequestBody AlipayDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return new ResultVO(2000);
-        }
-        if(!VerifyUtil.expire(dto,req)){
-            return ResultVO.logOut();
+            return ResultVO.tokenLoseEfficacy();
         }
         return this.alipayService.alipayOrder(dto, req);
     }
@@ -92,11 +89,8 @@ public class AlipayController {
     @PostMapping("paystatus")
     public ResultVO paystatus(@RequestBody AlipayDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return new ResultVO(2000);
+            return ResultVO.tokenLoseEfficacy();
         }
-//        if(!VerifyUtil.expire(dto,req)){
-//            return ResultVO.logOut();
-//        }
         return this.alipayService.paystatus(dto);
     }
 }

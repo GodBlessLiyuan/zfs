@@ -37,9 +37,24 @@ public class ResultVO<T> implements Serializable {
         return new ResultVO(1003);
     }
     /***
-     * token失效
+     * token失效，验证不通过，
+     * 比如验证和token生存时间过期。
+     * */
+    public static ResultVO tokenLoseEfficacy(){
+        return new ResultVO(2000);
+    }
+    /****
+     * 登出：登录退出
+     * 这里仅仅用在重新获取token时候使用。
+     *
      * */
     public static ResultVO logOut(){
         return new ResultVO(2001);
+    }
+    /***
+     * 服务器内部错误
+     * */
+    public static ResultVO serverInnerError(){
+        return new ResultVO(2002);
     }
 }

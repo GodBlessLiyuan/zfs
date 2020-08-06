@@ -1,7 +1,7 @@
 insert into t_viptype(viptype_id,vipname) values(1,'非会员');
 insert into t_viptype(viptype_id,vipname) values(10,'会员');
 insert into t_viptype(viptype_id,vipname) values(20,'年费会员');
-
+insert into t_soft_channel(soft_channel_id,name,extra) values(1,"所有","所有");
 INSERT INTO smartzfs.t_role (role_id, role_name, create_time, update_time, a_id, role_num) VALUES (1, '管理员', null, null, null, null);
 INSERT INTO smartzfs.t_role (role_id, role_name, create_time, update_time, a_id, role_num) VALUES (2, '项目经理', null, null, null, null);
 INSERT INTO smartzfs.t_role (role_id, role_name, create_time, update_time, a_id, role_num) VALUES (3, '产品', null, null, null, null);
@@ -15,7 +15,7 @@ INSERT INTO smartzfs.t_activity (activity_id, activityname, position, status, a_
 
 INSERT INTO smartzfs.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (1, '所有', '所有', null, null);
 INSERT INTO smartzfs.t_soft_channel (soft_channel_id, name, extra, create_time, update_time) VALUES (2, 'vbooster', '官网', null, null);
-
+INSERT INTO smartzfs.t_wxsupport (w_id, package_name, create_time, update_time, a_id, extra) VALUES (1, 'com.tencent.mm', '2019-10-29 18:25:55', null, 1, '微信');
 INSERT INTO smartzfs.t_key_value (key_name, value) VALUES (1, '4');
 INSERT INTO smartzfs.t_key_value (key_name, value) VALUES (2, 'https://mp.weixin.qq.com/s/an1ZP4Zop1ifr2Xbh4pD7Q');
 INSERT INTO smartzfs.t_key_value (key_name, value) VALUES (10, '12');

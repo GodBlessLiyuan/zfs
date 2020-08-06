@@ -94,7 +94,7 @@ public class AlipayServiceImpl implements AlipayService {
         // 根据商品ID，获取商品详情
         VipCommodityPO vipCommodityPO = this.vipCommodityMapper.selectByPrimaryKey(dto.getCmdyid());
         if (null == vipCommodityPO) {
-            return new ResultVO(2000);
+            return ResultVO.serverInnerError();
         }
 
         // 创建订单
