@@ -28,7 +28,7 @@ public class OrderControllerV1 {
     @PostMapping("order")
     public ResultVO order(@RequestBody OrderDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return ResultVO.varifyDevice();
+            return ResultVO.tokenInvalid();
         }
         return service.getOrders(dto,1);
     }

@@ -129,7 +129,7 @@ public class SmsServiceImpl implements ISmsService {
         if (null == userPO) {
             // 用户不存在
             LogUtil.log(logger,"validateSMS","没查询到用户:{}",dto.getUd());
-            return new ResultVO(2000);
+            return ResultVO.serverInnerError();
         }
 
         // 短信码
