@@ -1,5 +1,6 @@
 package com.zfs.web.service;
 
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.vo.UserVO;
 import com.zfs.web.utils.DTPageInfo;
 
@@ -15,11 +16,10 @@ public interface IUserService {
 
     /**
      * 分页查询
-     * @param draw
      * @param pageNum
      * @param pageSize
      * @param reqData
      * @return
      */
-    DTPageInfo<UserVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData);
 }

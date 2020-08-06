@@ -19,24 +19,22 @@ public class AdminUserController {
 
     /**
      * 账号管理——查询
-     * @param draw
-     * @param start
-     * @param length
+     * @param pageNum
+     * @param pageSize
      * @param phone
      * @param extra
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<AdminUserVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                         @RequestParam(value = "start", defaultValue = "1") int start,
-                                         @RequestParam(value = "length", defaultValue = "10") int length,
-                                         @RequestParam(value = "phone", required = false) String phone,
-                                         @RequestParam(value = "extra", required = false) String extra
+    public ResultVO query(
+         @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+         @RequestParam(value = "phone", required = false) String phone,
+         @RequestParam(value = "extra", required = false) String extra
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<AdminUserVO> dTPageInfo = adminUserService.query(draw, start, length, phone, extra);
-        return dTPageInfo;
+        return adminUserService.query(pageNum, pageSize, phone, extra);
     }
 
 

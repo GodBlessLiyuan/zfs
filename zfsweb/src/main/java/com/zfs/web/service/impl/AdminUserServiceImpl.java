@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.zfs.common.constant.Constant;
 import com.zfs.common.mapper.RoleMapper;
 import com.zfs.common.utils.LogUtil;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.common.bo.AdminUserBO;
 import com.zfs.web.dto.AdminUserDTO;
@@ -46,7 +47,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @return
      */
     @Override
-    public DTPageInfo<AdminUserVO> query(int draw, int start, int length, String phone, String extra) {
+    public ResultVO query(int start, int length, String phone, String extra) {
 
         // 分页
         Page<AdminUserVO> page = PageHelper.startPage(start, length);
@@ -66,7 +67,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), vos);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(),vos));
     }
 
     /**

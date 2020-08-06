@@ -32,15 +32,15 @@ public class AppController {
     private IAppService service;
 
     @RequestMapping("query")
-    public DTPageInfo<AppVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                   @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                   @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                   @RequestParam(value = "updateType") byte updateType) {
+    public ResultVO query(
+           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+           @RequestParam(value = "updateType") byte updateType) {
 
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("updateType", updateType);
 
-        return service.query(draw, pageNum, pageSize, reqData);
+        return service.query( pageNum, pageSize, reqData);
     }
 
     @RequestMapping("queryAll")

@@ -1,8 +1,7 @@
 package com.zfs.web.controller;
 
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.service.RoleService;
-import com.zfs.web.utils.DTPageInfo;
-import com.zfs.web.vo.RoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,18 +21,16 @@ public class RoleController {
     /**
      * 查询
      *
-     * @param draw
-     * @param start
-     * @param length
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<RoleVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                    @RequestParam(value = "start", defaultValue = "1") int start,
-                                    @RequestParam(value = "length", defaultValue = "10") int length
+    public ResultVO query(
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
     ) {
         // 调用业务层，返回页面结果
-        DTPageInfo<RoleVO> dTPageInfo = roleService.query(draw, start, length);
-        return dTPageInfo;
+        return roleService.query(pageNum, pageSize);
     }
 }

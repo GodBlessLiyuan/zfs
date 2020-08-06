@@ -9,6 +9,8 @@ import com.zfs.common.bo.UserVipBO;
 import com.zfs.common.bo.BuyGiftBO;
 import com.zfs.common.mapper.*;
 import com.zfs.common.pojo.GodinsecUserPO;
+import com.zfs.common.vo.PageInfoVO;
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.common.UserVipConstant;
 import com.zfs.web.vo.UserVipVO;
@@ -52,14 +54,14 @@ public class UserVipServiceImpl implements IUserVipService {
     @Resource
     private BuyGiftMapper giftMapper;
     @Override
-    public DTPageInfo<UserVipVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<UserVipBO> page = PageHelper.startPage(pageNum, pageSize);
         List<UserVipBO> dos = userVipMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), UserVipVO.convert(dos));
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), UserVipVO.convert(dos)));
     }
 
     @Override
-    public DTPageInfo<UserVipDetailsVO> queryDetails(int draw, int pageNum, int pageSize, long userId) {
+    public ResultVO queryDetails(long userId) {
         List<UserVipDetailsVO> detailsVOs = new ArrayList<>();
         // 购买
         List<OrderBO> orderBOs = orderMapper.queryByUserId(userId);
@@ -105,19 +107,6 @@ public class UserVipServiceImpl implements IUserVipService {
             dto.setDays(bo.getDays());
             detailsVOs.add(dto);
         }
-        // V商神器赠送
-        List<GodinsecUserPO> godinsecUserPOs = godinsecUserMapper.queryByUserId(userId);
-        for (GodinsecUserPO godinsecUserPO : godinsecUserPOs) {
-            UserVipDetailsVO dto = new UserVipDetailsVO();
-            dto.setVipType(UserVipConstant.USER_VIP_V);
-            dto.setUserChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
-            dto.setCommAttr("无");
-            dto.setSaleChanName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
-            dto.setCreateTime(godinsecUserPO.getUpdateTime());
-            dto.setComTypeName(UserVipConstant.DEFAULT_SALE_CHAN_NAME);
-            dto.setDays(godinsecUserPO.getDays());
-            detailsVOs.add(dto);
-        }
 
         // 卡密激活
         List<BatchInfoBO> batchInfoBOS = infoMapper.queryByUserId(userId);
@@ -132,23 +121,10 @@ public class UserVipServiceImpl implements IUserVipService {
             dto.setDays(batchInfoBO.getDays());
             detailsVOs.add(dto);
         }
-        //助手购买赠送
-        List<BuyGiftBO> buyGiftBOS=giftMapper.queryByUserId(userId);
-        for(BuyGiftBO bo:buyGiftBOS){
-            UserVipDetailsVO vo = new UserVipDetailsVO();
-            vo.setVipType(UserVipConstant.ZNZJ_VIP_GIFTS);//类型：写死
-            vo.setUserChanName(bo.getUserChanName());//用户
-            vo.setCommAttr("通用商品");
-            vo.setSaleChanName(bo.getSaleChanName());
-            vo.setType(bo.getType());
-            vo.setCreateTime(bo.getCreateTime());
-            vo.setComTypeName(bo.getComTypeName());
-            vo.setDays(bo.getDays());
-            detailsVOs.add(vo);
-        }
+
         // 根据购买时间降序排序
         Collections.sort(detailsVOs);
 
-        return new DTPageInfo<>(draw, detailsVOs.size(), detailsVOs);
+        return new ResultVO(1000,  detailsVOs);
     }
 }

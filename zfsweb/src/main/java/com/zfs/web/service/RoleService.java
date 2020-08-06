@@ -1,8 +1,6 @@
 package com.zfs.web.service;
 
-import com.zfs.web.utils.DTPageInfo;
-import com.zfs.web.vo.RoleVO;
-
+import com.zfs.common.vo.ResultVO;
 /**
  * @author: dangyi
  * @date: Created in 9:52 2019/10/11
@@ -10,5 +8,5 @@ import com.zfs.web.vo.RoleVO;
  * @description:
  */
 public interface RoleService {
-    DTPageInfo<RoleVO> query(int draw, int start, int length);
+    ResultVO query(int pageNum, int pageSize);
 }

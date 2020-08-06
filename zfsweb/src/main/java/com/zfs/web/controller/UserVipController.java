@@ -1,5 +1,6 @@
 package com.zfs.web.controller;
 
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.vo.UserVipVO;
 import com.zfs.web.vo.UserVipDetailsVO;
 import com.zfs.web.service.IUserVipService;
@@ -26,23 +27,21 @@ public class UserVipController {
     private IUserVipService service;
 
     @RequestMapping("query")
-    public DTPageInfo<UserVipVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                       @RequestParam(value = "phone") String phone,
-                                       @RequestParam(value = "isPay") byte isPay) {
+    public ResultVO query(
+           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+           @RequestParam(value = "phone") String phone,
+           @RequestParam(value = "isPay") byte isPay) {
         Map<String, Object> reqData = new HashMap<>(2);
         reqData.put("phone", phone);
         reqData.put("isPay", isPay);
 
-        return service.query(draw, pageNum, pageSize, reqData);
+        return service.query(pageNum, pageSize, reqData);
     }
 
     @RequestMapping("queryDetails")
-    public DTPageInfo<UserVipDetailsVO> queryDetails(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                                     @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                                     @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                                     @RequestParam(value = "userId") int userId) {
-        return service.queryDetails(draw, pageNum, pageSize, userId);
+    public ResultVO queryDetails(
+         @RequestParam(value = "userId") int userId) {
+        return service.queryDetails(userId);
     }
 }

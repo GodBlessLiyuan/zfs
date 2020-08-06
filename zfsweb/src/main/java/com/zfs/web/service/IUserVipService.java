@@ -1,5 +1,6 @@
 package com.zfs.web.service;
 
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.vo.UserVipVO;
 import com.zfs.web.vo.UserVipDetailsVO;
 import com.zfs.web.utils.DTPageInfo;
@@ -16,21 +17,17 @@ public interface IUserVipService {
 
     /**
      * 分页查询
-     * @param draw
      * @param pageNum
      * @param pageSize
      * @param reqData
      * @return
      */
-    DTPageInfo<UserVipVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
-     * 分页查询用户会用详细信息
-     * @param draw
-     * @param pageNum
-     * @param pageSize
+     * 查询用户会用详细信息
      * @param userId
      * @return
      */
-    DTPageInfo<UserVipDetailsVO> queryDetails(int draw, int pageNum, int pageSize, long userId);
+    ResultVO queryDetails(long userId);
 }

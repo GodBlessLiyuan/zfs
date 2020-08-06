@@ -1,5 +1,6 @@
 package com.zfs.web.service.impl;
 
+import com.github.pagehelper.Page;
 import com.zfs.common.bo.AppBO;
 import com.zfs.common.mapper.*;
 import com.zfs.common.pojo.AdChannelPO;
@@ -7,6 +8,7 @@ import com.zfs.common.pojo.AppChPO;
 import com.zfs.common.pojo.AppPO;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.service.IAppService;
 import com.zfs.web.utils.DTPageInfo;
@@ -57,8 +59,8 @@ public class AppServiceImpl implements IAppService {
     private String appDir;
 
     @Override
-    public DTPageInfo<AppVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        PageHelper.startPage(pageNum, pageSize);
+    public ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData) {
+        Page<Object> page = PageHelper.startPage(pageNum, pageSize);
         List<Integer> appIds = appMapper.queryAppId(reqData);
 
         List<AppBO> bos = new ArrayList<>();
@@ -66,7 +68,7 @@ public class AppServiceImpl implements IAppService {
             bos = appMapper.queryByIds(appIds);
         }
         List<AppVO> dto = AppVO.convert(bos);
-        return new DTPageInfo<>(draw, dto.size(), dto);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), dto));
     }
 
     @Override
