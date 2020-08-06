@@ -27,10 +27,7 @@ public class UserVipController {
     @PostMapping("validate")
     public ResultVO validate(@RequestBody UserVipDTO dto, HttpServletRequest req) {
         if(!VerifyUtil.checkToken(dto, req)) {
-            return ResultVO.paramsError();
-        }
-        if(!VerifyUtil.expire(dto,req)){
-            return ResultVO.logOut();
+            return ResultVO.tokenInvalid();
         }
         return userVipService.validate(dto);
     }

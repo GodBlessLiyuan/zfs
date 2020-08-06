@@ -26,7 +26,7 @@ public class WxsupportController {
     @PostMapping("support")
     public ResultVO query(@RequestBody WxsupportDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return new ResultVO(2000);
+            return ResultVO.varifyDevice();
         }
 
         return this.wxsupportService.query(dto);
