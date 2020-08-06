@@ -27,7 +27,7 @@ public class ActivityController {
     @PostMapping("checkactivity")
     public ResultVO check(@RequestBody ActivityDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return ResultVO.tokenLoseEfficacy();
+            return ResultVO.tokenInvalid();
         }
         return service.check(dto);
     }
@@ -35,7 +35,7 @@ public class ActivityController {
     @PostMapping("activate")
     public ResultVO activate(@RequestBody ActivityDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return ResultVO.tokenLoseEfficacy();
+            return ResultVO.tokenInvalid();
         }
         return service.activate(dto);
     }

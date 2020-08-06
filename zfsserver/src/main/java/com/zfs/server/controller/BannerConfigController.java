@@ -25,7 +25,7 @@ public class BannerConfigController {
     @PostMapping("bannerconfig")
     public ResultVO bannerConfig(@RequestBody BannerConfigDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return new ResultVO(2000);
+            return ResultVO.validDevice();
         }
 
         return service.queryBanConf(dto);

@@ -25,7 +25,7 @@ public class FeedbackController {
     @PostMapping("feedback")
     public ResultVO feedback(@RequestBody FeedbackDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return ResultVO.paramsError();
+            return ResultVO.validDevice();
         }
 
         return service.insert(dto);

@@ -26,7 +26,7 @@ public class FunctionvideoController {
     @PostMapping("functionvideo")
     public ResultVO query(@RequestBody FunctionvideoDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return new ResultVO(2000);
+            return ResultVO.validDevice();
         }
 
         return this.functionvideoService.query(dto);

@@ -31,7 +31,7 @@ public class LoginController {
     @PostMapping("sms")
     public ResultVO sms(@RequestBody LoginDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return ResultVO.paramsError();
+            return ResultVO.validDevice();
         }
 
         if (!VerifyUtil.checkPhone(dto.getPh())) {
@@ -50,7 +50,7 @@ public class LoginController {
     @PostMapping("register")
     public ResultVO register(@RequestBody LoginDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkDeviceId(dto) || !VerifyUtil.checkPhone(dto.getPh())) {
-            return ResultVO.paramsError();
+            return ResultVO.validDevice();
         }
 
         return loginService.register(dto, req);
@@ -62,14 +62,14 @@ public class LoginController {
     @PostMapping("regettoken")
     public ResultVO regettoken(@RequestBody LoginDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return ResultVO.paramsError();
+            return ResultVO.validDevice();
         }
         return loginService.regettoken(dto, req);
     }
     @PostMapping("logout")
     public ResultVO logout(@RequestBody LoginDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return ResultVO.paramsError();
+            return ResultVO.validDevice();
         }
         return loginService.logout(dto, req);
     }

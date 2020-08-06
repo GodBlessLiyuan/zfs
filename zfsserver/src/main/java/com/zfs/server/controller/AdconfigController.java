@@ -26,7 +26,7 @@ public class AdconfigController {
     @PostMapping("adconfig")
     public ResultVO query(@RequestBody AdconfigDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return new ResultVO(2000);
+            return ResultVO.validDevice();
         }
 
         return this.adconfigServcie.query(dto);

@@ -25,7 +25,7 @@ public class ConfigController {
     @PostMapping("config")
     public ResultVO config(@RequestBody ConfigDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return ResultVO.paramsError();
+            return ResultVO.validDevice();
         }
 
         return service.queryConfigInfo(dto);
