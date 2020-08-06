@@ -28,10 +28,7 @@ public class SmsController {
     @PostMapping("sendsms")
     public ResultVO sendSms(@RequestBody TokenDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return new ResultVO(2000);
-        }
-        if(!VerifyUtil.expire(dto,req)){
-            return ResultVO.logOut();
+            return ResultVO.tokenInvalid();
         }
         return service.sendSMS(dto.getUd());
     }
@@ -39,10 +36,7 @@ public class SmsController {
     @PostMapping("validatesms")
     public ResultVO validateSMS(@RequestBody SmsDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return new ResultVO(2000);
-        }
-        if(!VerifyUtil.expire(dto,req)){
-            return ResultVO.logOut();
+            return ResultVO.tokenInvalid();
         }
         return service.validateSMS(dto);
     }

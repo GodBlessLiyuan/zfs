@@ -28,10 +28,7 @@ public class OrderControllerV1 {
     @PostMapping("order")
     public ResultVO order(@RequestBody OrderDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return new ResultVO(2000);
-        }
-        if(!VerifyUtil.expire(dto,req)){
-            return ResultVO.logOut();
+            return ResultVO.varifyDevice();
         }
         return service.getOrders(dto,1);
     }

@@ -25,9 +25,6 @@ public class VipCommodityController {
 
     @PostMapping("getcommodity")
     public ResultVO getCommodity(@RequestBody VipCommodityDTO dto) {
-        if (!VerifyUtil.checkDeviceId(dto)) {
-            return new ResultVO(2000);
-        }
 
         return vipCommodityService.getCommodity(dto,0);
     }

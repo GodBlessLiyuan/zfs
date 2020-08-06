@@ -24,9 +24,6 @@ public class OtherAppController {
 
     @PostMapping("otherapp")
     public ResultVO otherApp(@RequestBody OtherAppDTO dto) {
-        if (!VerifyUtil.checkDeviceId(dto)) {
-            return new ResultVO(2000);
-        }
 
         return service.query(dto);
     }

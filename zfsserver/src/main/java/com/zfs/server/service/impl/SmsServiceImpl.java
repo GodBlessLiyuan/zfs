@@ -2,11 +2,14 @@ package com.zfs.server.service.impl;
 
 import com.zfs.common.mapper.UserMapper;
 import com.zfs.common.pojo.UserPO;
+import com.zfs.common.utils.LogUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.dto.SmsDTO;
 import com.zfs.server.service.ISmsService;
 import com.zfs.server.utils.RedisCacheUtil;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +39,7 @@ public class SmsServiceImpl implements ISmsService {
     private RedisCacheUtil cache;
     @Resource
     private UserMapper userMapper;
-
+    private final static Logger logger= LoggerFactory.getLogger(SmsServiceImpl.class);
     /**
      * @return 1 成功 0 失敗
      */
@@ -108,7 +111,8 @@ public class SmsServiceImpl implements ISmsService {
         UserPO userPO = userMapper.selectByPrimaryKey(ud);
         if (null == userPO) {
             // 用户不存在
-            return new ResultVO(2000);
+            LogUtil.log(logger,"sendSMS","没查询到用户:{}",ud);
+            return ResultVO.serverInnerError();
         }
 
         int res = this.sendSMS(userPO.getPhone());
@@ -124,6 +128,7 @@ public class SmsServiceImpl implements ISmsService {
         UserPO userPO = userMapper.selectByPrimaryKey(dto.getUd());
         if (null == userPO) {
             // 用户不存在
+            LogUtil.log(logger,"validateSMS","没查询到用户:{}",dto.getUd());
             return new ResultVO(2000);
         }
 

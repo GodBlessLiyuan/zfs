@@ -27,7 +27,7 @@ public class PhoneModelController {
     @PostMapping("phonemodel")
     public ResultVO checkPlugin(@RequestBody VerifyDTO dto) {
         if (!VerifyUtil.checkDeviceId(dto)) {
-            return new ResultVO(2000);
+            return ResultVO.varifyDevice();
         }
 
         return service.phoneModel();

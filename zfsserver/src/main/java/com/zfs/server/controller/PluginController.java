@@ -25,10 +25,8 @@ public class PluginController {
 
     @PostMapping("checkplugin")
     public ResultVO checkPlugin(@RequestBody PluginDTO dto) {
-        if (!VerifyUtil.checkDeviceId(dto)) {
-            return ResultVO.paramsError();
-        }
 
         return pluginService.check(dto);
     }
+
 }

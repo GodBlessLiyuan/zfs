@@ -36,7 +36,8 @@ public class UserVipServiceImpl implements IUserVipService {
     public ResultVO validate(UserVipDTO dto) {
         UserDevicePO userDevicePO = userDeviceMapper.selectByPrimaryKey(dto.getUdd());
         if (null == userDevicePO) {
-            return ResultVO.paramsError();
+            LogUtil.log(logger,"UserVipServiceImpl--validate","没查询到用户设备:{}",dto.getUdd());
+            return ResultVO.serverInnerError();
         }
         if (CommonConstant.SIGN_OUT == userDevicePO.getStatus()) {
             // 登出
@@ -45,7 +46,10 @@ public class UserVipServiceImpl implements IUserVipService {
 
         if (!userDevicePO.getDeviceId().equals(dto.getId()) || !userDevicePO.getUserId().equals(dto.getUd())) {
             // 数据有误
-            return ResultVO.paramsError();
+            LogUtil.log(logger,"UserVipServiceImpl--validate","设备用户不匹配：用户信息{}，设备信息{}",
+                    userDevicePO.getDeviceId()+","+userDevicePO.getUserId(),
+                    dto.getId()+","+dto.getUd());
+            return ResultVO.serverInnerError();
         }
 
         UserVipPO userVipPO = userVipMapper.queryByUserId(dto.getUd());

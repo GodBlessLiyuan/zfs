@@ -25,9 +25,6 @@ public class ShareactivityController {
 
     @PostMapping("share")
     public ResultVO query(@RequestBody ShareactivityDTO dto) {
-        if (!VerifyUtil.checkDeviceId(dto)) {
-            return new ResultVO(2000);
-        }
 
         return this.shareactivityService.query(dto);
     }
