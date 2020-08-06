@@ -199,36 +199,3 @@ INSERT INTO smartzfs.t_phone_model (type_id, name, dr) VALUES
 (8, 'OnePlus 7T Pro迈凯伦限定版', 1),
 (8, '一加7T', 1),
 (8, '一加7T Pro', 1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
