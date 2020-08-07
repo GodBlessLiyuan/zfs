@@ -2,9 +2,7 @@ package com.zfs.web.controller;
 
 import com.zfs.web.dto.PromoterDTO;
 import com.zfs.web.service.PromoterService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
-import com.zfs.web.vo.PromoterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,23 +24,19 @@ public class PromoterController {
 
     /**
      * 查询
-     * @param draw
-     * @param start
-     * @param length
      * @param proName
      * @param phone
      * @return
      */
     @GetMapping("query")
-    public DTPageInfo<PromoterVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                          @RequestParam(value = "start", defaultValue = "1") int start,
-                                          @RequestParam(value = "length", defaultValue = "10") int length,
-                                          @RequestParam(value = "proName", required = false) String proName,
-                                          @RequestParam(value = "phone", required = false) String phone
+    public ResultVO query(
+          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+          @RequestParam(value = "proName", required = false) String proName,
+          @RequestParam(value = "phone", required = false) String phone
     ) {
         // 调用业务层，返回页面结果
-        DTPageInfo<PromoterVO> dTPageInfo = promoterService.query(draw, start, length, proName, phone);
-        return dTPageInfo;
+        return promoterService.query(pageNum, pageSize, proName, phone);
     }
 
     /**

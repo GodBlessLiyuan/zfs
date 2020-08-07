@@ -2,9 +2,7 @@ package com.zfs.web.service;
 
 import com.zfs.web.dto.ChBatchDTO;
 import com.zfs.web.dto.ChBatchSyncDTO;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
-import com.zfs.web.vo.ChBatchVO;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,7 +15,7 @@ import javax.servlet.http.HttpSession;
  */
 public interface ChBatchService {
 
-    DTPageInfo<ChBatchVO> query(int draw, int start, int length, String chanNickname, Integer comTypeId, Byte status, String operator);
+    ResultVO query(int start, int length, String chanNickname, Integer comTypeId, Byte status, String operator);
 
     ResultVO insert(ChBatchDTO chBatchDTO, HttpSession httpSession);
 

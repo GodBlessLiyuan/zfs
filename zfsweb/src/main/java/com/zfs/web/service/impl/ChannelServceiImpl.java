@@ -5,6 +5,7 @@ import com.zfs.common.bo.ChannelBO;
 import com.zfs.common.mapper.PromoterMapper;
 import com.zfs.common.pojo.ChannelPO;
 import com.zfs.common.utils.LogUtil;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.dto.ChannelDTO;
 import com.zfs.web.dto.PromoterDTO;
@@ -12,7 +13,6 @@ import com.zfs.common.mapper.AdminUserMapper;
 import com.zfs.common.mapper.ChannelMapper;
 import com.zfs.common.pojo.PromoterPO;
 import com.zfs.web.service.ChannelService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.utils.OperatorUtil;
 import com.zfs.web.vo.ChannelVO;
@@ -45,7 +45,6 @@ public class ChannelServceiImpl implements ChannelService {
 
     /**
      * 查询
-     * @param draw
      * @param start
      * @param length
      * @param chanNickname
@@ -53,7 +52,7 @@ public class ChannelServceiImpl implements ChannelService {
      * @return
      */
     @Override
-    public DTPageInfo<ChannelVO> query(int draw, int start, int length, String chanNickname, Integer proId) {
+    public ResultVO query(int start, int length, String chanNickname, Integer proId) {
 
         // 分页
         Page<ChannelVO> page = PageHelper.startPage(start, length);
@@ -82,7 +81,7 @@ public class ChannelServceiImpl implements ChannelService {
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), vos);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), vos));
     }
 
 
@@ -149,6 +148,7 @@ public class ChannelServceiImpl implements ChannelService {
         int result = this.channelMapper.insert(po);
         if (result == 0) {
             LogUtil.log(logger, "insert", "插入失败", po);
+            return ResultVO.serverInnerError();
         }
         return new ResultVO(1000);
     }

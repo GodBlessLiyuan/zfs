@@ -3,12 +3,12 @@ package com.zfs.web.service.impl;
 import com.github.pagehelper.Page;
 import com.zfs.common.mapper.PromoterMapper;
 import com.zfs.common.utils.LogUtil;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.dto.PromoterDTO;
 import com.zfs.common.mapper.AdminUserMapper;
 import com.zfs.common.pojo.PromoterPO;
 import com.zfs.web.service.PromoterService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.utils.OperatorUtil;
 import com.zfs.web.vo.PromoterVO;
@@ -38,7 +38,6 @@ public class PromoterServiceImpl implements PromoterService {
 
     /**
      * 查询
-     * @param draw
      * @param start
      * @param length
      * @param proName
@@ -46,7 +45,7 @@ public class PromoterServiceImpl implements PromoterService {
      * @return
      */
     @Override
-    public DTPageInfo<PromoterVO> query(int draw, int start, int length, String proName, String phone) {
+    public ResultVO query(int start, int length, String proName, String phone) {
 
         // 分页
         Page<PromoterVO> page = PageHelper.startPage(start, length);
@@ -76,7 +75,7 @@ public class PromoterServiceImpl implements PromoterService {
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), vos);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), vos));
     }
 
     /**
@@ -100,6 +99,7 @@ public class PromoterServiceImpl implements PromoterService {
         int result = this.promoterMapper.insert(po);
         if (result == 0) {
             LogUtil.log(logger, "insert", "插入失败", po);
+            return ResultVO.serverInnerError();
         }
         return new ResultVO(1000);
     }
@@ -130,6 +130,7 @@ public class PromoterServiceImpl implements PromoterService {
         int result = promoterMapper.updateByPrimaryKey(po);
         if (result == 0) {
             LogUtil.log(logger, "update", "更新失败", po);
+            return ResultVO.serverInnerError();
         }
         return new ResultVO(1000);
 

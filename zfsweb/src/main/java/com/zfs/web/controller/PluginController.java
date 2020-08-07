@@ -4,7 +4,6 @@ import com.zfs.common.constant.Constant;
 import com.zfs.web.dto.AdminUserDTO;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.web.service.IPluginService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,27 +31,26 @@ public class PluginController {
 
 
     @PostMapping("/plugin/query")
-    public DTPageInfo<PluginVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                      @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                      @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                      @RequestParam(value = "username") String username) {
+    public ResultVO query(
+          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+          @RequestParam(value = "username") String username) {
 
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("username", username);
-
-        return service.query(draw, pageNum, pageSize, reqData);
+        return service.query(pageNum, pageSize, reqData);
     }
 
-    @RequestMapping("/plugin/queryById")
-    public PluginVO queryById(@RequestParam(value = "pluginId") int pluginId) {
+    @PostMapping("/plugin/queryById")
+    public ResultVO queryById(@RequestParam(value = "pluginId") int pluginId) {
         List<PluginVO> dtos = service.queryById(pluginId);
-        return dtos.get(0);
+        return new ResultVO<>(1000,dtos.get(0));
     }
 
-    @RequestMapping("/plugin/querySoftChannelByIds")
-    public List<Integer> querySoftChannelByIds(@RequestParam(value = "pluginId") int pluginId, @RequestParam(value =
+    @PostMapping("/plugin/querySoftChannelByIds")
+    public ResultVO querySoftChannelByIds(@RequestParam(value = "pluginId") int pluginId, @RequestParam(value =
             "appId") int appId) {
-        return service.querySoftChannelByIds(pluginId, appId);
+        return new ResultVO(1000,service.querySoftChannelByIds(pluginId, appId));
     }
 
     @PostMapping("/plugin/insert")

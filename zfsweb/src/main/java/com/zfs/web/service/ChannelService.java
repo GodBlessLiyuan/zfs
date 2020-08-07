@@ -1,9 +1,7 @@
 package com.zfs.web.service;
 
 import com.zfs.web.dto.ChannelDTO;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
-import com.zfs.web.vo.ChannelVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +13,7 @@ import javax.servlet.http.HttpSession;
  */
 public interface ChannelService {
 
-    DTPageInfo<ChannelVO> query(int draw, int start, int length, String chanNickname, Integer proId);
+    ResultVO query(int start, int length, String chanNickname, Integer proId);
 
     ResultVO insert(ChannelDTO channelDTO, HttpSession httpSession);
 

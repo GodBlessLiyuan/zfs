@@ -2,6 +2,8 @@ package com.zfs.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.zfs.common.bo.BatchInfoBO;
+import com.zfs.common.vo.PageInfoVO;
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.common.mapper.BatchInfoMapper;
 import com.zfs.web.service.BatchInfoService;
@@ -31,14 +33,13 @@ public class BatchInfoServiceImpl implements BatchInfoService {
 
     /**
      * 查询
-     * @param draw
      * @param start
      * @param length
      * @param vipkey
      * @return
      */
     @Override
-    public DTPageInfo<BatchInfoVO> query(int draw, int start, int length, String vipkey) {
+    public ResultVO query( int start, int length, String vipkey) {
 
         // 分页
         Page<BatchInfoVO> page = PageHelper.startPage(start, length);
@@ -65,7 +66,7 @@ public class BatchInfoServiceImpl implements BatchInfoService {
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), vos);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), vos));
     }
 
 
