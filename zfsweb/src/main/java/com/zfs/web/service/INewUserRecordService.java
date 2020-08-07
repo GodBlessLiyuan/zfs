@@ -1,7 +1,6 @@
 package com.zfs.web.service;
 
-import com.zfs.web.vo.NewUserRecordVO;
-import com.zfs.web.utils.DTPageInfo;
+import com.zfs.common.vo.ResultVO;
 
 import java.util.Map;
 
@@ -16,11 +15,10 @@ public interface INewUserRecordService {
     /**
      * 分页查询
      *
-     * @param draw
      * @param pageNum
      * @param pageSize
      * @param reqData
      * @return
      */
-    DTPageInfo<NewUserRecordVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    ResultVO query(Integer pageNum, Integer pageSize, Map<String, Object> reqData);
 }

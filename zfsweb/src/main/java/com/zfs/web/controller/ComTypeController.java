@@ -1,11 +1,9 @@
 package com.zfs.web.controller;
 
 import com.zfs.common.constant.Constant;
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.dto.AdminUserDTO;
 import com.zfs.web.service.IComTypeService;
-import com.zfs.web.utils.DTPageInfo;
-import com.zfs.common.vo.ResultVO;
-import com.zfs.web.vo.ComTypeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,19 +27,18 @@ public class ComTypeController {
     private IComTypeService service;
 
     @RequestMapping("query")
-    public DTPageInfo<ComTypeVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                       @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                       @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                       @RequestParam(value = "username") String username) {
+    public ResultVO query(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                          @RequestParam(value = "username", required = false) String username) {
 
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("username", username);
 
-        return service.query(draw, pageNum, pageSize, reqData);
+        return service.query(pageNum, pageSize, reqData);
     }
 
     @RequestMapping("queryAll")
-    public List<ComTypeVO> queryAll() {
+    public ResultVO queryAll() {
         return service.queryAll();
     }
 

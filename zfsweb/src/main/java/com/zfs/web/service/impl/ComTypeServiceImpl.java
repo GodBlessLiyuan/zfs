@@ -4,11 +4,11 @@ import com.github.pagehelper.Page;
 import com.zfs.common.bo.ComTypeBO;
 import com.zfs.common.mapper.ComTypeMapper;
 import com.zfs.common.pojo.ComTypePO;
-import com.zfs.web.common.PageHelper;
-import com.zfs.web.vo.ComTypeVO;
-import com.zfs.web.service.IComTypeService;
-import com.zfs.web.utils.DTPageInfo;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.common.vo.ResultVO;
+import com.zfs.web.common.PageHelper;
+import com.zfs.web.service.IComTypeService;
+import com.zfs.web.vo.ComTypeVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -43,17 +43,16 @@ public class ComTypeServiceImpl implements IComTypeService {
     }
 
     @Override
-    public DTPageInfo<ComTypeVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public ResultVO query(Integer pageNum, Integer pageSize, Map<String, Object> reqData) {
 
         Page<ComTypeBO> page = PageHelper.startPage(pageNum, pageSize);
         List<ComTypeBO> data = mapper.query(reqData);
-
-        return new DTPageInfo<>(draw, page.getTotal(), ComTypeVO.convert(data));
+        return new ResultVO(1000, new PageInfoVO<>(page.getTotal(), ComTypeVO.convert(data)));
     }
 
     @Override
-    public List<ComTypeVO> queryAll() {
+    public ResultVO queryAll() {
         List<ComTypeBO> bos = mapper.queryAll();
-        return ComTypeVO.convert(bos);
+        return new ResultVO(1000, ComTypeVO.convert(bos));
     }
 }

@@ -1,8 +1,7 @@
 package com.zfs.web.controller;
 
-import com.zfs.web.vo.OrderVO;
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.service.IOrderService;
-import com.zfs.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +29,6 @@ public class OrderController {
     /**
      * 订单查询
      *
-     * @param draw      draw
      * @param pageNum   页号
      * @param pageSize  页大小
      * @param startDate 支付时间
@@ -44,20 +42,19 @@ public class OrderController {
      * @return 一页数据
      */
     @RequestMapping("query")
-    public DTPageInfo<OrderVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                     @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                     @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                     @RequestParam(value = "startDate") String startDate,
-                                     @RequestParam(value = "endDate") String endDate,
-                                     @RequestParam(value = "comTypeId") int comTypeId,
-                                     @RequestParam(value = "type") int type,
-                                     @RequestParam(value = "uChanId") int uChanId,
-                                     @RequestParam(value = "sChanId") int sChanId,
-                                     @RequestParam(value = "phone") String phone,
-                                     @RequestParam(value = "number") String number) throws ParseException {
+    public ResultVO query(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                          @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                          @RequestParam(value = "startDate", required = false) String startDate,
+                          @RequestParam(value = "endDate", required = false) String endDate,
+                          @RequestParam(value = "comTypeId", required = false) Integer comTypeId,
+                          @RequestParam(value = "type", required = false) Integer type,
+                          @RequestParam(value = "uChanId", required = false) Integer uChanId,
+                          @RequestParam(value = "sChanId", required = false) Integer sChanId,
+                          @RequestParam(value = "phone", required = false) String phone,
+                          @RequestParam(value = "number", required = false) String number) throws ParseException {
         Map<String, Object> reqData = new HashMap<>(8);
         reqData.put("startDate", startDate);
-        if(null != endDate && !"".equals(endDate)) {
+        if (null != endDate && !"".equals(endDate)) {
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             calendar.setTime(df.parse(endDate));
@@ -72,6 +69,6 @@ public class OrderController {
         reqData.put("phone", phone);
         reqData.put("number", number);
 
-        return service.query(draw, pageNum, pageSize, reqData);
+        return service.query(pageNum, pageSize, reqData);
     }
 }

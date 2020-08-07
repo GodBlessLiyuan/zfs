@@ -3,10 +3,11 @@ package com.zfs.web.service.impl;
 import com.github.pagehelper.Page;
 import com.zfs.common.bo.NewUserRecordBO;
 import com.zfs.common.mapper.NewUserRecordMapper;
+import com.zfs.common.vo.PageInfoVO;
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
-import com.zfs.web.vo.NewUserRecordVO;
 import com.zfs.web.service.INewUserRecordService;
-import com.zfs.web.utils.DTPageInfo;
+import com.zfs.web.vo.NewUserRecordVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,10 +27,9 @@ public class NewUserRecordServiceImpl implements INewUserRecordService {
     private NewUserRecordMapper newUserRecordMapper;
 
     @Override
-    public DTPageInfo<NewUserRecordVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public ResultVO query(Integer pageNum, Integer pageSize, Map<String, Object> reqData) {
         Page<NewUserRecordBO> page = PageHelper.startPage(pageNum, pageSize);
         List<NewUserRecordBO> pos = newUserRecordMapper.query(reqData);
-
-        return new DTPageInfo<>(draw, page.getTotal(), NewUserRecordVO.convert(pos));
+        return new ResultVO(1000, new PageInfoVO<>(page.getTotal(), NewUserRecordVO.convert(pos)));
     }
 }

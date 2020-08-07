@@ -19,11 +19,11 @@
     <result column="url3" jdbcType="CHAR" property="url3" />
   </resultMap>
   <sql id="Base_Column_List">
-    feedback_id, user_id, device_id, user_device_id, context, contact, create_time, manufacturer, 
+    feedback_id, user_id, device_id, user_device_id, context, contact, create_time, manufacturer,
     androidmodel, buildversion, versioncode, buildrelease, url1, url2, url3
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_feedback
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
@@ -33,15 +33,15 @@
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zfs.common.pojo.FeedbackPO">
-    insert into t_feedback (feedback_id, user_id, device_id, 
-      user_device_id, context, contact, 
-      create_time, manufacturer, androidmodel, 
-      buildversion, versioncode, buildrelease, 
+    insert into t_feedback (feedback_id, user_id, device_id,
+      user_device_id, context, contact,
+      create_time, manufacturer, androidmodel,
+      buildversion, versioncode, buildrelease,
       url1, url2, url3)
-    values (#{feedbackId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, 
-      #{userDeviceId,jdbcType=INTEGER}, #{context,jdbcType=CHAR}, #{contact,jdbcType=CHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR}, 
-      #{buildversion,jdbcType=TINYINT}, #{versioncode,jdbcType=INTEGER}, #{buildrelease,jdbcType=CHAR}, 
+    values (#{feedbackId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT},
+      #{userDeviceId,jdbcType=INTEGER}, #{context,jdbcType=CHAR}, #{contact,jdbcType=CHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR},
+      #{buildversion,jdbcType=TINYINT}, #{versioncode,jdbcType=INTEGER}, #{buildrelease,jdbcType=CHAR},
       #{url1,jdbcType=CHAR}, #{url2,jdbcType=CHAR}, #{url3,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zfs.common.pojo.FeedbackPO">
@@ -208,24 +208,27 @@
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </update>
 
-  <select id="query" resultMap="BaseResultMap">
+  <select id="query" resultType="com.zfs.common.bo.FeedbackBO">
     select
-    <include refid="Base_Column_List" />
-    from t_feedback
+    tf.feedback_id as feedbackId, tf.user_id as userId, tf.user_device_id as userDeviceId,
+    tf.context as context, tf.contact as contact, tf.create_time as createTime,
+    tf.url1 as url1, tf.url2 as url2, tf.url3 as url3, tf.manufacturer as manufacturer, tf.androidmodel = androidmodel,
+    tf.buildversion as buildversion, tf.versioncode as versioncode,
+    tf.buildrelease as buildrelease, tu.phone as phone
+    from t_feedback tf
+    left join t_user tu
+    on tf.user_id = tu.user_id
     <where>
       <if test="(startTime != null and startTime != '') and (endTime != null and endTime != '')">
-        AND create_time between #{startTime} AND #{endTime}
+        AND tf.create_time between #{startTime} AND #{endTime}
       </if>
-      <if test="userId != null and userId != ''">
-        AND user_id =  #{userId}
+      <if test="phone != null and phone != ''">
+        AND tf.phone like #{phone} '%'
       </if>
       <if test="contact != null and contact != ''">
-        AND contact = #{contact}
-      </if>
-      <if test="funName != null and funName != ''">
-        AND fun_name like '%' #{funName} '%'
+        AND tf.contact like #{contact} '%'
       </if>
     </where>
-    order by create_time desc
+    order by tf.create_time desc
   </select>
 </mapper>

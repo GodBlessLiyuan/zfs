@@ -7,11 +7,11 @@ import com.zfs.common.mapper.UserGiftsMapper;
 import com.zfs.common.pojo.ComTypePO;
 import com.zfs.common.pojo.UserGiftsPO;
 import com.zfs.common.utils.LogUtil;
-import com.zfs.web.common.PageHelper;
-import com.zfs.web.vo.UserGiftsVO;
-import com.zfs.web.service.IUserGiftsSercive;
-import com.zfs.web.utils.DTPageInfo;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.common.vo.ResultVO;
+import com.zfs.web.common.PageHelper;
+import com.zfs.web.service.IUserGiftsSercive;
+import com.zfs.web.vo.UserGiftsVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,11 +38,11 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
     private ComTypeMapper comTypeMapper;
 
     @Override
-    public DTPageInfo<UserGiftsVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public ResultVO query(Integer pageNum, Integer pageSize, Map<String, Object> reqData) {
         Page<UserGiftsBO> page = PageHelper.startPage(pageNum, pageSize);
         List<UserGiftsBO> pos = userGiftsMapper.query(reqData);
 
-        return new DTPageInfo<>(draw, page.getTotal(), UserGiftsVO.convert(pos));
+        return new ResultVO(1000, new PageInfoVO<>(page.getTotal(), UserGiftsVO.convert(pos)));
     }
 
     @Override
@@ -62,6 +62,7 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
         int result = userGiftsMapper.insert(userGiftsPO);
         if (result == 0) {
             LogUtil.log(logger, "insert", "插入失败", userGiftsPO);
+            return ResultVO.serverInnerError();
         }
 
         return new ResultVO(1000);
@@ -83,6 +84,7 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
         int result = userGiftsMapper.updateByPrimaryKey(po);
         if (result == 0) {
             LogUtil.log(logger, "insert", "修改失败", po);
+            return ResultVO.serverInnerError();
         }
 
         return new ResultVO(1000);
@@ -93,6 +95,7 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
         int result = userGiftsMapper.deleteByPrimaryKey(nugId);
         if (result == 0) {
             LogUtil.log(logger, "delete", "删除失败", nugId);
+            return ResultVO.serverInnerError();
         }
         return new ResultVO(1000);
     }
