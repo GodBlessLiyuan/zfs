@@ -27,9 +27,9 @@
     from t_device
     where device_id = #{deviceId,jdbcType=BIGINT}
   </select>
-  <select id="queryByUUID" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="queryByUtdID" parameterType="java.lang.String" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
-    from t_device where uuid=#{uuid} limit 1
+    from t_device where utdid=#{utdid} limit 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_device

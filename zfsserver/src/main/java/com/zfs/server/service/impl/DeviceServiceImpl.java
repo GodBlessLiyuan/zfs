@@ -47,7 +47,7 @@ public class DeviceServiceImpl implements IDeviceService {
     public ResultVO queryDevice(DeviceDTO dto) {
         List<String> imeis = dto.getImei();
         if (null == imeis || imeis.size() == 0) {
-            DevicePO devicePO=deviceMapper.queryByUUID(dto.getUuid());
+            DevicePO devicePO=deviceMapper.queryByUtdID(dto.getUtdid());
             if(devicePO!=null){
                 return new ResultVO(1000,this.buildResultVO(devicePO.getDeviceId()));
             }
@@ -75,7 +75,7 @@ public class DeviceServiceImpl implements IDeviceService {
         if (null == deviceIds || deviceIds.size() == 0) {
             logger.warn("DeviceIds size: " + (null == deviceIds ? null : deviceIds.size()));
             // 没有查询到相关设备信息
-            DevicePO devicePO=deviceMapper.queryByUUID(dto.getUuid());
+            DevicePO devicePO=deviceMapper.queryByUtdID(dto.getUtdid());
             if(devicePO!=null){
                 return new ResultVO(1000,this.buildResultVO(devicePO.getDeviceId()));
             }

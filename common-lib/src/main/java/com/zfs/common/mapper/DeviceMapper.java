@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface DeviceMapper extends BaseMapper<DevicePO, Long> {
     int queryTodayNewUser();
 
-    DevicePO queryByUUID(String uuid);
+    DevicePO queryByUtdID(String utdid);
 }
