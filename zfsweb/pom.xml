@@ -13,7 +13,7 @@
 
     <artifactId>zfsweb</artifactId>
     <name>zfsweb</name>
-    <version>1.0.1</version>
+    <version>1.0</version>
 
     <build>
         <plugins>
