@@ -36,8 +36,6 @@ public class OrderServiceImpl implements IOrderService {
     @Resource
     private NewUserRecordMapper newUserRecordMapper;
     @Resource
-    private GodinsecUserMapper godinsecUserMapper;
-    @Resource
     private BatchInfoMapper batchInfoMapper;
     @Autowired
     private ComTypeMapper comTypeMapper;

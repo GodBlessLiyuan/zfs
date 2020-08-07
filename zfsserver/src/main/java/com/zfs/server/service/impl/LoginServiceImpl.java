@@ -5,7 +5,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.zfs.common.mapper.*;
 import com.zfs.common.pojo.*;
-import com.zfs.common.utils.DateUtil;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.dto.LoginDTO;
@@ -54,8 +53,6 @@ public class LoginServiceImpl implements ILoginService {
     private NewUserRecordMapper newUserRecordMapper;
     @Resource
     private UserVipMapper userVipMapper;
-    @Resource
-    private GodinsecUserMapper godinsecUserMapper;
     @Autowired
     private DeviceMapper deviceMapper;
     @Autowired
@@ -141,24 +138,9 @@ public class LoginServiceImpl implements ILoginService {
                 gift = 1;
                 days = userGiftsPO.getDays();
             }
-
-            // 微商神器送会员
-            GodinsecUserPO godinsecUserPO = godinsecUserMapper.selectByPrimaryKey(dto.getPh());
-            int godDays = 0;
-            if (null != godinsecUserPO) {
-                godDays = DateUtil.daysApart(new Date(), godinsecUserPO.getEndTime());
-                godinsecUserPO.setUpdateTime(new Date());
-                godinsecUserPO.setDays(godDays);
-                godinsecUserPO.setStatus((byte) 2);
-                int result4 = godinsecUserMapper.updateByPrimaryKey(godinsecUserPO);
-                if (result4 == 0) {
-                    LogUtil.log(logger, "insert", "微商神器送会员新增失败", godinsecUserPO);
-                }
-            }
-
-            if (days + godDays > 0) {
+            if (days > 0) {
                 // 更新会员天数
-                UserVipPO userVipPO = UserVipUtil.buildUserVipVO(null, po.getUserId(), days + godDays, false);
+                UserVipPO userVipPO = UserVipUtil.buildUserVipVO(null, po.getUserId(), days, false);
                 int result5 = userVipMapper.insert(userVipPO);
                 if (result5 == 0) {
                     LogUtil.log(logger, "insert", "更新会员天数失败", userVipPO);
