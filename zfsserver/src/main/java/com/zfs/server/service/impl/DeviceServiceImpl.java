@@ -47,6 +47,10 @@ public class DeviceServiceImpl implements IDeviceService {
     public ResultVO queryDevice(DeviceDTO dto) {
         List<String> imeis = dto.getImei();
         if (null == imeis || imeis.size() == 0) {
+            DevicePO devicePO=deviceMapper.queryByUtdID(dto.getUtdid());
+            if(devicePO!=null){
+                return new ResultVO(1000,this.buildResultVO(devicePO.getDeviceId()));
+            }
             // 新增设备信息
             DevicePO po = this.buildDevicePO(new DevicePO(), dto);
             po.setCreateTime(new Date());
@@ -71,6 +75,10 @@ public class DeviceServiceImpl implements IDeviceService {
         if (null == deviceIds || deviceIds.size() == 0) {
             logger.warn("DeviceIds size: " + (null == deviceIds ? null : deviceIds.size()));
             // 没有查询到相关设备信息
+            DevicePO devicePO=deviceMapper.queryByUtdID(dto.getUtdid());
+            if(devicePO!=null){
+                return new ResultVO(1000,this.buildResultVO(devicePO.getDeviceId()));
+            }
             // 新增设备信息
             DevicePO po = this.buildDevicePO(new DevicePO(), dto);
             po.setCreateTime(new Date());
@@ -101,6 +109,8 @@ public class DeviceServiceImpl implements IDeviceService {
             // 查询出一条设备信息
             DevicePO po = deviceMapper.selectByPrimaryKey(deviceIds.get(0));
             this.buildDevicePO(po, dto);
+            //解决了更新的bug： Duplicate entry 'uuid' for key 'uuid'
+            po.setUuid(null);
             po.setUpdateTime(new Date());
             int result3 = deviceMapper.updateByPrimaryKeySelective(po);
             if (result3 == 0) {
