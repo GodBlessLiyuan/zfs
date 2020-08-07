@@ -1,13 +1,11 @@
 package com.zfs.web.controller;
 
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.service.BatchInfoService;
 import com.zfs.web.utils.DTPageInfo;
 import com.zfs.web.vo.BatchInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,21 +25,17 @@ public class BatchInfoController {
 
     /**
      * 查询
-     * @param draw
-     * @param start
-     * @param length
      * @param vipkey
      * @return
      */
-    @GetMapping("query")
-    public DTPageInfo<BatchInfoVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                         @RequestParam(value = "start", defaultValue = "1") int start,
-                                         @RequestParam(value = "length", defaultValue = "10") int length,
-                                         @RequestParam(value = "vipkey", required = false) String vipkey
+    @PostMapping("query")
+    public ResultVO query(
+          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+          @RequestParam(value = "vipkey", required = false) String vipkey
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<BatchInfoVO> dTPageInfo = batchInfoService.query(draw, start, length, vipkey);
-        return dTPageInfo;
+        return batchInfoService.query(pageNum, pageSize, vipkey);
     }
 
 

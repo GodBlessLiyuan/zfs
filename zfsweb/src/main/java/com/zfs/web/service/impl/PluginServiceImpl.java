@@ -1,5 +1,6 @@
 package com.zfs.web.service.impl;
 
+import com.github.pagehelper.Page;
 import com.zfs.common.bo.PluginBO;
 import com.zfs.common.mapper.AppPluChMapper;
 import com.zfs.common.mapper.PluginMapper;
@@ -7,10 +8,10 @@ import com.zfs.common.pojo.AppPluChPO;
 import com.zfs.common.pojo.PluginPO;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.web.service.IPluginService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.web.utils.FileUtil;
 import com.zfs.common.vo.ResultVO;
 import org.slf4j.Logger;
@@ -51,11 +52,11 @@ public class PluginServiceImpl implements IPluginService {
     private String pluginDir;
 
     @Override
-    public DTPageInfo<PluginVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
-        PageHelper.startPage(pageNum, pageSize);
+    public ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData) {
+        Page<Object> page = PageHelper.startPage(pageNum, pageSize);
         List<PluginBO> pos = pluginMapper.query(reqData);
         List<PluginVO> dtos = PluginVO.convert(pos);
-        return new DTPageInfo<>(draw, dtos.size(), dtos);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), dtos));
     }
 
     @Override

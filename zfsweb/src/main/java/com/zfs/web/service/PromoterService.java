@@ -1,9 +1,7 @@
 package com.zfs.web.service;
 
 import com.zfs.web.dto.PromoterDTO;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
-import com.zfs.web.vo.PromoterVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +12,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface PromoterService {
-    DTPageInfo<PromoterVO> query(int draw, int start, int length, String proName, String phone);
+    ResultVO query(int start, int length, String proName, String phone);
 
     ResultVO insert(PromoterDTO promoterDTO, HttpSession httpSession);
 

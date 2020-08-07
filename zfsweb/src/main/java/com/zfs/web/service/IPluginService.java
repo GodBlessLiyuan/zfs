@@ -1,7 +1,6 @@
 package com.zfs.web.service;
 
 import com.zfs.web.vo.PluginVO;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,13 +18,12 @@ public interface IPluginService {
     /**
      * 分页查询
      *
-     * @param draw
      * @param pageNum
      * @param pageSize
      * @param reqData
      * @return
      */
-    DTPageInfo<PluginVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 根据插件Id 查询数据

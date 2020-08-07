@@ -6,6 +6,7 @@ import com.zfs.common.mapper.*;
 import com.zfs.common.pojo.ChBatchPO;
 import com.zfs.common.pojo.ChannelPO;
 import com.zfs.common.utils.LogUtil;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.dto.ChBatchDTO;
 import com.zfs.common.pojo.BatchInfoPO;
@@ -62,7 +63,6 @@ public class ChBatchServiceImpl implements ChBatchService {
 
     /**
      * 分页查询
-     * @param draw
      * @param start
      * @param length
      * @param chanNickname
@@ -72,7 +72,7 @@ public class ChBatchServiceImpl implements ChBatchService {
      * @return
      */
     @Override
-    public DTPageInfo<ChBatchVO> query(int draw, int start, int length, String chanNickname, Integer comTypeId, Byte status, String operator) {
+    public ResultVO query( int start, int length, String chanNickname, Integer comTypeId, Byte status, String operator) {
 
         // 分页
         Page<ChBatchVO> page = PageHelper.startPage(start, length);
@@ -81,7 +81,7 @@ public class ChBatchServiceImpl implements ChBatchService {
         List<ChBatchVO> vos = this.query(chanNickname, comTypeId, status, operator);
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), vos);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), vos));
     }
 
 
@@ -166,6 +166,7 @@ public class ChBatchServiceImpl implements ChBatchService {
         int result1 = this.chBatchMapper.insert(po);
         if (result1 == 0) {
             LogUtil.log(logger, "insert", "插入失败", po);
+            return ResultVO.serverInnerError();
         }
 
 
@@ -191,6 +192,7 @@ public class ChBatchServiceImpl implements ChBatchService {
         int result2 = this.batchInfoMapper.insertBatchInfo(batchInfoPOs);
         if (result2 == 0) {
             LogUtil.log(logger, "insert", "插入batchInfoPOs失败", batchInfoPOs);
+            return ResultVO.serverInnerError();
         }
 
         return new ResultVO(1000);
@@ -278,6 +280,7 @@ public class ChBatchServiceImpl implements ChBatchService {
         int result1 = chBatchMapper.updateByPrimaryKey(po);
         if (result1 == 0) {
             LogUtil.log(logger, "updateStatus", "更新失败", po);
+            return ResultVO.serverInnerError();
         }
 
         /**
@@ -288,6 +291,7 @@ public class ChBatchServiceImpl implements ChBatchService {
         int result2 = this.batchInfoMapper.updateStatusByBatchId(status, batchId);
         if (result2 == 0) {
             LogUtil.log(logger, "updateStatus", "更新失败", status, batchId);
+            return ResultVO.serverInnerError();
         }
 
         return new ResultVO(1000);

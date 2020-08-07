@@ -1,5 +1,6 @@
 package com.zfs.web.service;
 
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.utils.DTPageInfo;
 import com.zfs.web.vo.BatchInfoVO;
 
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * @description: TODO
  */
 public interface BatchInfoService {
-    DTPageInfo<BatchInfoVO> query(int draw, int start, int length, String vipkey);
+    ResultVO query( int start, int length, String vipkey);
 
     DTPageInfo<BatchInfoVO> queryByBatchid(int draw, int start, int length, Integer batchId, Byte status);
 

@@ -2,9 +2,7 @@ package com.zfs.web.controller;
 
 import com.zfs.web.dto.ChannelDTO;
 import com.zfs.web.service.ChannelService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
-import com.zfs.web.vo.ChannelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,23 +24,19 @@ public class ChannelController {
 
     /**
      * 查询
-     * @param draw
-     * @param start
-     * @param length
      * @param chanNickname
      * @param proId
      * @return
      */
-    @GetMapping("query")
-    public DTPageInfo<ChannelVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                       @RequestParam(value = "start", defaultValue = "1") int start,
-                                       @RequestParam(value = "length", defaultValue = "10") int length,
-                                       @RequestParam(value = "chanNickname", required = false) String chanNickname,
-                                       @RequestParam(value = "proId", required = false) Integer proId
+    @PostMapping("query")
+    public ResultVO query(
+           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+           @RequestParam(value = "chanNickname", required = false) String chanNickname,
+           @RequestParam(value = "proId", required = false) Integer proId
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<ChannelVO> dTPageInfo = channelService.query(draw, start, length, chanNickname, proId);
-        return dTPageInfo;
+        return channelService.query(pageNum, pageSize, chanNickname, proId);
     }
 
 
@@ -59,7 +53,7 @@ public class ChannelController {
      * 查询t_promoter表所有的推广负责人
      * @return
      */
-    @GetMapping("queryAllProNames")
+    @PostMapping("queryAllProNames")
     public ResultVO queryAllProNames() {
         return this.channelService.queryAllProNames();
     }
