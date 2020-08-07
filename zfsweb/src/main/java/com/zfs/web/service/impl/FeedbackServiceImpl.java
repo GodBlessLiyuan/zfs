@@ -1,23 +1,28 @@
 package com.zfs.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.zfs.common.bo.FeedbackBO;
 import com.zfs.common.mapper.AppMapper;
 import com.zfs.common.mapper.FeedbackMapper;
 import com.zfs.common.mapper.UserMapper;
 import com.zfs.common.pojo.AppPO;
+import com.zfs.common.pojo.FeedbackPO;
 import com.zfs.common.utils.RedisKeyUtil;
+import com.zfs.common.vo.PageInfoVO;
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
+import com.zfs.web.service.FeedbackService;
 import com.zfs.web.utils.DateUtil;
 import com.zfs.web.vo.FeedbackVO;
-import com.zfs.common.pojo.FeedbackPO;
-import com.zfs.web.service.FeedbackService;
-import com.zfs.web.utils.DTPageInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,17 +52,17 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     /**
      * 查询
-     * @param draw
+     *
      * @param start
      * @param length
      * @param startTime
      * @param endTime
-     * @param userId
+     * @param phone
      * @param contact
      * @return
      */
     @Override
-    public DTPageInfo<FeedbackVO> query(int draw, int start, int length, String startTime, String endTime, String userId, String contact) {
+    public ResultVO query(Integer start, Integer length, String startTime, String endTime, String phone, String contact) {
 
         // 分页
         Page<FeedbackVO> page = PageHelper.startPage(start, length);
@@ -66,52 +71,58 @@ public class FeedbackServiceImpl implements FeedbackService {
         Map<String, Object> map = new HashMap<>(4);
         map.put("startTime", startTime);
         map.put("endTime", DateUtil.str2str1(endTime));
-        map.put("userId", userId);
+        map.put("phone", phone);
         map.put("contact", contact);
 
         // 按照条件查询数据
-        List<FeedbackPO> pos = this.feedbackMapper.query(map);
+        List<FeedbackBO> bos = this.feedbackMapper.query(map);
 
         // po转换为vo
         List<FeedbackVO> vos = new ArrayList<>();
-        for(FeedbackPO po: pos) {
+        for (FeedbackBO bo : bos) {
             FeedbackVO vo = new FeedbackVO();
-            vo.setFeedbackId(po.getFeedbackId());
-            vo.setPhone(queryPhoneByUserId(po.getUserId()));
-            vo.setDeviceId(po.getDeviceId());
-            vo.setManufacturer(po.getManufacturer());
-            vo.setAndroidmodel(po.getAndroidmodel());
-            vo.setBuildrelease(po.getBuildrelease());
-            vo.setVersionname(queryVersionnameByVersioncode(po.getVersioncode()));
-            vo.setCreateTime(po.getCreateTime());
-            vo.setContact(po.getContact());
-            vo.setContext(po.getContext());
-            if (null == po.getUrl1()) {
-                vo.setUrl1(po.getUrl1());
+            vo.setFeedbackId(bo.getFeedbackId());
+            vo.setContext(bo.getContext());
+            vo.setContact(bo.getContact());
+            vo.setCreateTime(bo.getCreateTime());
+            vo.setManufacturer(bo.getManufacturer());
+            vo.setAndroidmodel(bo.getAndroidmodel());
+            vo.setBuildrelease(bo.getBuildrelease());
+            vo.setVersionname(queryVersionnameByVersioncode(bo.getVersioncode()));
+            vo.setPhone(bo.getPhone());
+            vo.setUserId(bo.getUserId());
+            vo.setDeviceId(bo.getDeviceId());
+            vo.setUserDeviceId(bo.getUserDeviceId());
+            vo.setVersioncode(bo.getVersioncode());
+
+
+            if (null == bo.getUrl1()) {
+                vo.setUrl1(bo.getUrl1());
             } else {
-                vo.setUrl1(publicPath + po.getUrl1());
+                vo.setUrl1(publicPath + bo.getUrl1());
             }
-            if (null == po.getUrl2()) {
-                vo.setUrl2(po.getUrl2());
+            if (null == bo.getUrl2()) {
+                vo.setUrl2(bo.getUrl2());
             } else {
-                vo.setUrl2(publicPath + po.getUrl2());
+                vo.setUrl2(publicPath + bo.getUrl2());
             }
-            if (null == po.getUrl3()) {
-                vo.setUrl3(po.getUrl3());
+            if (null == bo.getUrl3()) {
+                vo.setUrl3(bo.getUrl3());
             } else {
-                vo.setUrl3(publicPath + po.getUrl3());
+                vo.setUrl3(publicPath + bo.getUrl3());
             }
 
             vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), vos);
+        return new ResultVO(1000, new PageInfoVO<>(page.getTotal(), vos));
     }
 
 
     /**
      * 根据ID，从t_user表中查询出手机号码（账号）
+     *
      * @param userId
      * @return
      */
@@ -121,6 +132,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     /**
      * 根据版本序号查询版本号
+     *
      * @param versioncode
      * @return
      */
@@ -137,7 +149,7 @@ public class FeedbackServiceImpl implements FeedbackService {
             List<AppPO> pos = this.appMapper.queryCodesAndNames();
             //封装成map
             Map<String, String> map = new HashMap<>();
-            for(AppPO po : pos) {
+            for (AppPO po : pos) {
                 map.put(String.valueOf(po.getVersioncode()), po.getVersionname());
             }
             //存入Redis

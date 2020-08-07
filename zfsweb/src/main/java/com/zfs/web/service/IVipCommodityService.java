@@ -17,13 +17,12 @@ public interface IVipCommodityService {
     /**
      * 查询
      *
-     * @param draw     draw
      * @param pageNum  页面下标
      * @param pageSize 页面大小
      * @param reqData  请求数据
      * @return
      */
-    DTPageInfo<VipCommodityVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    ResultVO query(Integer pageNum, Integer pageSize, Map<String, Object> reqData);
 
     /**
      * 根据主键查询数据
@@ -31,7 +30,7 @@ public interface IVipCommodityService {
      * @param cmdyId 主键
      * @return
      */
-    VipCommodityVO queryById(int cmdyId);
+    ResultVO queryById(Integer cmdyId);
 
     /**
      * 新增
@@ -59,7 +58,7 @@ public interface IVipCommodityService {
      * @param discount     售价
      * @return
      */
-    int update(int cmdyId, String comName, String description, String price, String showDiscount, float discount);
+    ResultVO update(Integer cmdyId, String comName, String description, String price, String showDiscount, Float discount);
 
     /**
      * 更新是否上架
@@ -68,7 +67,7 @@ public interface IVipCommodityService {
      * @param status
      * @return
      */
-    int updateStatus(int cmdyId, byte status);
+    ResultVO updateStatus(Integer cmdyId, Byte status);
 
     /**
      * 更新是否置顶
@@ -77,5 +76,5 @@ public interface IVipCommodityService {
      * @param isTop
      * @return
      */
-    int updateIsTop(int cmdyId, byte isTop);
+    ResultVO updateIsTop(Integer cmdyId, Byte isTop);
 }

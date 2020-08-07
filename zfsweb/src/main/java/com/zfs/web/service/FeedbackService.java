@@ -1,7 +1,6 @@
 package com.zfs.web.service;
 
-import com.zfs.web.vo.FeedbackVO;
-import com.zfs.web.utils.DTPageInfo;
+import com.zfs.common.vo.ResultVO;
 
 /**
  * @author: dangyi
@@ -10,5 +9,5 @@ import com.zfs.web.utils.DTPageInfo;
  * @description:
  */
 public interface FeedbackService {
-    DTPageInfo<FeedbackVO> query(int draw, int start, int length, String startTime, String endTime, String userId, String contact);
+    ResultVO query(Integer start, Integer length, String startTime, String endTime, String phone, String contact);
 }
