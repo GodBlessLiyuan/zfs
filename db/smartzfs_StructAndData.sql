@@ -1232,6 +1232,7 @@ CREATE TABLE `t_user` (
   `update_time` datetime DEFAULT NULL,
   `chan_name` char(64) DEFAULT NULL,
   `soft_channel_id` int DEFAULT NULL,
+    `random_str` char(32) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
