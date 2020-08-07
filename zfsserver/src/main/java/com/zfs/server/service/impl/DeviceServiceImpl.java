@@ -82,7 +82,7 @@ public class DeviceServiceImpl implements IDeviceService {
             // 新增设备imei号，需去重
             List<DeviceImeiPO> imeiPOs = new ArrayList<>();
 
-            for (String imei : new HashSet<>(imeis)) {
+            for (String imei : new HashSet<>(resultImei)) {
                 DeviceImeiPO imeiPO = new DeviceImeiPO();
                 imeiPO.setDeviceId(po.getDeviceId());
                 imeiPO.setImei(imei);
