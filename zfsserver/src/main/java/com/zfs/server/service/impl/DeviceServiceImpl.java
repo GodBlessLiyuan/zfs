@@ -49,7 +49,7 @@ public class DeviceServiceImpl implements IDeviceService {
         if (null == imeis || imeis.size() == 0) {
             DevicePO devicePO=deviceMapper.queryByUUID(dto.getUuid());
             if(devicePO!=null){
-                return new ResultVO(1000,devicePO);
+                return new ResultVO(1000,this.buildResultVO(devicePO.getDeviceId()));
             }
             // 新增设备信息
             DevicePO po = this.buildDevicePO(new DevicePO(), dto);
@@ -77,7 +77,7 @@ public class DeviceServiceImpl implements IDeviceService {
             // 没有查询到相关设备信息
             DevicePO devicePO=deviceMapper.queryByUUID(dto.getUuid());
             if(devicePO!=null){
-                return new ResultVO(1000,devicePO);
+                return new ResultVO(1000,this.buildResultVO(devicePO.getDeviceId()));
             }
             // 新增设备信息
             DevicePO po = this.buildDevicePO(new DevicePO(), dto);
