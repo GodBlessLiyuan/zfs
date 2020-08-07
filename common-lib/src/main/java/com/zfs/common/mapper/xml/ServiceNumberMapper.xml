@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.ServiceNumberMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.ServiceNumberPO">
+    <id column="svnm_id" jdbcType="BIGINT" property="svnmId" />
+    <result column="kf" jdbcType="CHAR" property="kf" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="a_id" jdbcType="BIGINT" property="aId" />
+    <result column="username" jdbcType="CHAR" property="username" />
+    <result column="dr" jdbcType="TINYINT" property="dr" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    svnm_id, kf, create_time, update_time, a_id, username, dr
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_service_number
+    where svnm_id = #{svnmId,jdbcType=BIGINT}
+  </select>
+  <select id="queryNumbers" resultType="java.lang.String">
+    select kf from t_service_number order by svnm_id desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_service_number
+    where svnm_id = #{svnmId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.ServiceNumberPO">
+    insert into t_service_number (svnm_id, kf, create_time, 
+      update_time, a_id, username, 
+      dr)
+    values (#{svnmId,jdbcType=BIGINT}, #{kf,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{aId,jdbcType=BIGINT}, #{username,jdbcType=CHAR}, 
+      #{dr,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.ServiceNumberPO">
+    insert into t_service_number
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="svnmId != null">
+        svnm_id,
+      </if>
+      <if test="kf != null">
+        kf,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="dr != null">
+        dr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="svnmId != null">
+        #{svnmId,jdbcType=BIGINT},
+      </if>
+      <if test="kf != null">
+        #{kf,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aId != null">
+        #{aId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=CHAR},
+      </if>
+      <if test="dr != null">
+        #{dr,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.ServiceNumberPO">
+    update t_service_number
+    <set>
+      <if test="kf != null">
+        kf = #{kf,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aId != null">
+        a_id = #{aId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=CHAR},
+      </if>
+      <if test="dr != null">
+        dr = #{dr,jdbcType=TINYINT},
+      </if>
+    </set>
+    where svnm_id = #{svnmId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.ServiceNumberPO">
+    update t_service_number
+    set kf = #{kf,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      a_id = #{aId,jdbcType=BIGINT},
+      username = #{username,jdbcType=CHAR},
+      dr = #{dr,jdbcType=TINYINT}
+    where svnm_id = #{svnmId,jdbcType=BIGINT}
+  </update>
+</mapper>
