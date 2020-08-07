@@ -68,7 +68,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         VipcommodityPO po = vipcommodityMapper.queryByChanIdAndComTypeId(channelId, comTypeId, commAttr);
         if (po != null) {
             // 当前渠道-产品已存在！
-            return new ResultVO(1103);
+            return new ResultVO(3009);
         }
 
         VipcommodityPO vipCommodityPO = new VipcommodityPO();
