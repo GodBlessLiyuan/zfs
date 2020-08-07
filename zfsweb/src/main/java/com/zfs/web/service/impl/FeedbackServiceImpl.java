@@ -14,6 +14,7 @@ import com.zfs.web.common.PageHelper;
 import com.zfs.web.service.FeedbackService;
 import com.zfs.web.utils.DateUtil;
 import com.zfs.web.vo.FeedbackVO;
+import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -96,17 +97,17 @@ public class FeedbackServiceImpl implements FeedbackService {
             vo.setVersioncode(bo.getVersioncode());
 
 
-            if (null == bo.getUrl1()) {
+            if (StringUtils.isEmpty(bo.getUrl1())) {
                 vo.setUrl1(bo.getUrl1());
             } else {
                 vo.setUrl1(publicPath + bo.getUrl1());
             }
-            if (null == bo.getUrl2()) {
+            if (StringUtils.isEmpty(bo.getUrl2())) {
                 vo.setUrl2(bo.getUrl2());
             } else {
                 vo.setUrl2(publicPath + bo.getUrl2());
             }
-            if (null == bo.getUrl3()) {
+            if (StringUtils.isEmpty(bo.getUrl3())) {
                 vo.setUrl3(bo.getUrl3());
             } else {
                 vo.setUrl3(publicPath + bo.getUrl3());
