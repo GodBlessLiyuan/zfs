@@ -7,7 +7,8 @@ package com.zfs.common.constant;
  * @version: 1.0
  */
 public class ModuleConstant {
-    public static final String PROJECT = "smartdkfs";
+    //根据项目进行修改
+    public static final String PROJECT = "smartzfs";
 
     public static final String APP = "app";
     public static final String PLUGIN = "plugin";

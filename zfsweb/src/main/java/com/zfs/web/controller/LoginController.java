@@ -5,12 +5,14 @@ import com.zfs.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
@@ -52,8 +54,9 @@ public class LoginController {
      * @param session
      * @throws IOException
      */
+    @ResponseBody
     @RequestMapping("/login/get/checkcode")
-    public void getCheckcode(HttpServletResponse response, HttpSession session) throws IOException {
+    public ResultVO getCheckcode(HttpServletResponse response, HttpSession session) throws IOException {
         //服务器通知浏览器不要缓存
         response.setHeader("pragma","no-cache");
         response.setHeader("cache-control","no-cache");
@@ -90,7 +93,15 @@ public class LoginController {
         //参数一：图片对象
         //参数二：图片的格式，如PNG,JPG,GIF
         //参数三：图片输出到哪里去
-        ImageIO.write(image,"PNG",response.getOutputStream());
+        response.setContentType("image/png");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //输出验证码图片文件流
+        ImageIO.write(image,"PNG",baos);
+        byte[] bytes = baos.toByteArray();
+        BASE64Encoder encoder = new BASE64Encoder();
+        String png_base64 = encoder.encodeBuffer(bytes).trim();
+        png_base64 = png_base64.replaceAll("\n", "").replaceAll("\r", "");
+        return new ResultVO(1000,png_base64);
     }
 
     /**
