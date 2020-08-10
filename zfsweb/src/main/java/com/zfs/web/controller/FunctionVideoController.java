@@ -1,8 +1,6 @@
 package com.zfs.web.controller;
 
-import com.zfs.web.vo.FunctionVideoVO;
 import com.zfs.web.service.FunctionVideoService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,22 +24,20 @@ public class FunctionVideoController {
 
     /**
      * 查询
-     * @param draw
-     * @param start
-     * @param length
+     * @param pageNum
+     * @param pageSize
      * @param funName
      * @return
      */
-    @GetMapping("query")
-    public DTPageInfo<FunctionVideoVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                             @RequestParam(value = "start", defaultValue = "1") int start,
-                                             @RequestParam(value = "length", defaultValue = "10") int length,
-                                             @RequestParam(value = "funName", required = false) String funName
+    @PostMapping("query")
+    public ResultVO query(
+             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+             @RequestParam(value = "funName", required = false) String funName
     ) {
 
         // 调用业务层，返回页面结果
-        DTPageInfo<FunctionVideoVO> dTPageInfo = this.functionVideoService.query(draw, start, length, funName);
-        return dTPageInfo;
+        return this.functionVideoService.query(pageNum, pageSize, funName);
     }
 
     /**
@@ -49,7 +45,7 @@ public class FunctionVideoController {
      * @param functionId
      * @return
      */
-    @GetMapping("queryById")
+    @PostMapping("queryById")
     public ResultVO queryById(@RequestParam(value = "functionId") Integer functionId) {
         return this.functionVideoService.queryById(functionId);
     }

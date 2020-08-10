@@ -28,7 +28,7 @@
     <where>
       <if test="phone!=null and phone!=''">AND u.phone like '%' #{phone} '%'</if>
     </where>
-    order by u.create_time desc
+    order by u.re_uid desc
   </select>
   <select id="queryAllPhone" resultType="java.lang.String">
   select phone from m_register_user
