@@ -23,7 +23,7 @@ import java.util.Random;
  * @version: 1.0.0
  * @description:
  */
-@Controller
+@RestController
 public class LoginController {
 
     @Autowired
@@ -36,15 +36,13 @@ public class LoginController {
      * @return
      */
     @PostMapping("entry")
-    public String login(HttpSession session,
+    public ResultVO login(HttpSession session,
                         HttpServletResponse response,
-                        Map<String, Object> result,
                         @RequestParam(value = "username", required = false) String username,
                         @RequestParam(value = "password", required = false) String password,
                         @RequestParam(value = "checkcode",required = false) String checkcode
                         ) {
-      String res = this.loginService.login(session, response, result, username, password, checkcode);
-      return res;
+      return  this.loginService.login(session, response,  username, password, checkcode);
     }
 
 
@@ -54,7 +52,6 @@ public class LoginController {
      * @param session
      * @throws IOException
      */
-    @ResponseBody
     @RequestMapping("/login/get/checkcode")
     public ResultVO getCheckcode(HttpServletResponse response, HttpSession session) throws IOException {
         //服务器通知浏览器不要缓存
@@ -131,7 +128,6 @@ public class LoginController {
      * @param httpSession
      * @return
      */
-    @ResponseBody
     @PostMapping("updatePassword")
     public ResultVO updatePassword (HttpSession httpSession,
                                     @RequestParam("oldPassword") String oldPassword,
@@ -141,7 +137,7 @@ public class LoginController {
 
 
     @GetMapping("logout")
-    public String logout (HttpSession httpSession){
+    public ResultVO logout (HttpSession httpSession){
         return this.loginService.logout(httpSession);
     }
 

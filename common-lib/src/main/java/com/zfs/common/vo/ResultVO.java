@@ -83,4 +83,10 @@ public class ResultVO<T> implements Serializable {
     public static ResultVO softNameDup(){
         return new ResultVO(3003);
     }
+    public static ResultVO UserNameError(){
+        return new ResultVO(2004);
+    }
+    public static ResultVO PasswordError(){
+        return new ResultVO(2005);
+    }
 }
