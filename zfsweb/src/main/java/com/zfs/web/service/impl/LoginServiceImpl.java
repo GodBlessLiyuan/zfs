@@ -60,7 +60,7 @@ public class LoginServiceImpl implements LoginService {
 
         else if (!serverCheckcode.equalsIgnoreCase(checkcode)) {
             // 验证码校验失败
-            return new ResultVO(2006,"msg_checkcode\", \"验证码输入错误！");
+            return new ResultVO(2006,"验证码输入错误！");
         }
 
         //判断密码是否正确
