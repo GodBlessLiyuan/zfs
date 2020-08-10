@@ -16,4 +16,5 @@ public class FunctionvideoDTO extends VerifyDTO {
      * 视频模块名称
      */
     private String function;
+    private Integer softv;
 }
