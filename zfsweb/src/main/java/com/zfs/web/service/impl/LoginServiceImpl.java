@@ -35,44 +35,37 @@ public class LoginServiceImpl implements LoginService {
     private AdminUserMapper adminUserMapper;
 
     @Override
-    public String login(HttpSession session, HttpServletResponse response, Map<String, Object> result,
+    public ResultVO login(HttpSession session, HttpServletResponse response,
                         String username, String password, String checkcode) {
 
         // 先校验验证码，从session中获取服务器端生成并传递给前端的验证码
         String serverCheckcode = (String) session.getAttribute("CHECKCODE_SERVER");
 
         AdminUserPO po = adminUserMapper.queryUserByUsername(username);
-
+        if(po==null){
+            return ResultVO.UserNameError();
+        }
         try {
             // 对密码加密，之后再去数据库对比
             password = Md5Util.encodeByMd5(Constant.SALT + password);
         } catch (Exception e) {
             e.printStackTrace();
-            return "forward:login";
+            return ResultVO.serverInnerError();
         }
 
         // 将用户输入的验证码与服务器生成的进行比对
         if (null == serverCheckcode) {
-            result.put("msg_checkcode", "服务器获取验证码异常，请重试！");
-            return "forward:/login";
+            return new ResultVO(2006,"服务器获取验证码异常，请重试！");
         }
 
         else if (!serverCheckcode.equalsIgnoreCase(checkcode)) {
             // 验证码校验失败
-            result.put("msg_checkcode", "验证码输入错误！");
-            return "forward:/login";
-        }
-
-        //判断用户名是否存在
-        else if (null == po) {
-            result.put("msg_username", "用户名不存在！");
-            return "forward:/login";
+            return new ResultVO(2006,"验证码输入错误！");
         }
 
         //判断密码是否正确
         else if (!po.getPassword().equals(password)) {
-            result.put("msg_password", "密码输入错误！");
-            return "forward:/login";
+            return ResultVO.PasswordError();
         }
 
         else {
@@ -117,7 +110,7 @@ public class LoginServiceImpl implements LoginService {
                 userInfo = Md5Util.encodeByMd5(username + password);
             } catch (Exception e) {
                 e.printStackTrace();
-                return "forward:/login";
+                return ResultVO.serverInnerError();
             }
             Cookie userInfoCookie = new Cookie("userInfo", userInfo);
             userInfoCookie.setMaxAge(60 * 60 * 2);
@@ -125,7 +118,7 @@ public class LoginServiceImpl implements LoginService {
             response.addCookie(cookie);
             response.addCookie(userInfoCookie);
 
-            return "redirect:/main";
+            return new ResultVO(1000);
         }
     }
 
@@ -174,11 +167,11 @@ public class LoginServiceImpl implements LoginService {
      * @return
      */
     @Override
-    public String logout(HttpSession httpSession) {
+    public ResultVO logout(HttpSession httpSession) {
 
         httpSession.setAttribute(ADMIN_USER, null);
 
-        return "redirect:/login";
+        return new ResultVO(1000);
     }
 
 }
