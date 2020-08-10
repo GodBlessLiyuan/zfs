@@ -90,5 +90,11 @@
             <groupId>org.springframework.amqp</groupId>
             <artifactId>spring-rabbit</artifactId>
         </dependency>
+        <!-- Common -->
+        <dependency>
+            <groupId>com.zfs</groupId>
+            <artifactId>common-lib</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>
