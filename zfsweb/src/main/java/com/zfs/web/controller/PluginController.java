@@ -34,7 +34,7 @@ public class PluginController {
     public ResultVO query(
           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-          @RequestParam(value = "username") String username) {
+          @RequestParam(value = "username",required = false) String username) {
 
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("username", username);

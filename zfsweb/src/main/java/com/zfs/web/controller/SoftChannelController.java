@@ -27,7 +27,7 @@ public class SoftChannelController {
     public ResultVO query(
                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-               @RequestParam(value = "channelName") String channelName) {
+               @RequestParam(value = "channelName",required = false) String channelName) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("name", channelName);
 
