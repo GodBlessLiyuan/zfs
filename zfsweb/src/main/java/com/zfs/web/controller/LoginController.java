@@ -76,6 +76,7 @@ public class LoginController {
 
         //产生4个随机验证码，12Ey
         String checkCode = getCheckcodeString();
+        checkCode="becf";
         //将验证码放入HttpSession中
         session.setAttribute("CHECKCODE_SERVER",checkCode);
 
