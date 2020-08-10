@@ -3,13 +3,13 @@ package com.zfs.web.service.impl;
 import com.github.pagehelper.Page;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.vo.FunctionVideoVO;
 import com.zfs.common.mapper.AdminUserMapper;
 import com.zfs.common.mapper.FunctionvideoMapper;
 import com.zfs.common.pojo.FunctionvideoPO;
 import com.zfs.web.service.FunctionVideoService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.web.utils.FileUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.utils.OperatorUtil;
@@ -52,14 +52,13 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
 
     /**
      * 查询
-     * @param draw
      * @param start
      * @param length
      * @param funName
      * @return
      */
     @Override
-    public DTPageInfo<FunctionVideoVO> query(int draw, int start, int length, String funName) {
+    public ResultVO query(int start, int length, String funName) {
 
         // 分页
         Page<FunctionVideoVO> page = PageHelper.startPage(start, length);
@@ -89,7 +88,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), vos);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), vos));
     }
 
 

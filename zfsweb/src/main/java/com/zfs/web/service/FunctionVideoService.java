@@ -1,7 +1,5 @@
 package com.zfs.web.service;
 
-import com.zfs.web.vo.FunctionVideoVO;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +12,7 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public interface FunctionVideoService {
-    DTPageInfo<FunctionVideoVO> query(int draw, int start, int length, String funName);
+    ResultVO query(int start, int length, String funName);
 
     ResultVO queryById(Integer functionId);
 
