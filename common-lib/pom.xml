@@ -5,12 +5,17 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>com.zfs</groupId>
+        <artifactId>zfs-parent</artifactId>
+        <version>1.0</version>
+    </parent>
 
     <groupId>com.zfs</groupId>
     <artifactId>common-lib</artifactId>
     <name>Library</name>
     <version>1.0</version>
-
+    <description>common-lib of zfenshen</description>
     <build>
         <resources>
             <resource>

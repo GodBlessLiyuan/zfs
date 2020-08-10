@@ -79,13 +79,6 @@
                 <version>1.7.17</version>
             </dependency>
 
-            <!-- Common -->
-            <dependency>
-                <groupId>com.zfs</groupId>
-                <artifactId>common-lib</artifactId>
-                <version>1.0</version>
-            </dependency>
-
             <!-- Eureka -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -123,10 +116,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>com.zfs</groupId>
-            <artifactId>common-lib</artifactId>
-        </dependency>
+
     </dependencies>
 
     <build>

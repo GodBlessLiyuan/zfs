@@ -124,6 +124,12 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.1.0</version>
         </dependency>
+        <!-- Common -->
+        <dependency>
+            <groupId>com.zfs</groupId>
+            <artifactId>common-lib</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 </project>
