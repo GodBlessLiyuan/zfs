@@ -28,7 +28,7 @@ public class UserVipController {
     public ResultVO query(
            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-           @RequestParam(value = "phone") String phone,
+           @RequestParam(value = "phone",required = false) String phone,
            @RequestParam(value = "isPay") byte isPay) {
         Map<String, Object> reqData = new HashMap<>(2);
         reqData.put("phone", phone);
