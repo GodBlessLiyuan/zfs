@@ -18,11 +18,11 @@
     <result column="versionname" jdbcType="CHAR" property="versionname" />
   </resultMap>
   <sql id="Base_Column_List">
-    device_id, utdid, androidid, buildversion, soft_channel_id, chan_name, create_time, 
+    device_id, utdid, androidid, buildversion, soft_channel_id, chan_name, create_time,
     update_time, versioncode, manufacturer, androidmodel, uuid, buildrelease, versionname
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_device
     where device_id = #{deviceId,jdbcType=BIGINT}
@@ -36,15 +36,15 @@
     where device_id = #{deviceId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.zfs.common.pojo.DevicePO" useGeneratedKeys="true" keyProperty="deviceId">
-    insert into t_device (device_id, utdid, androidid, 
-      buildversion, soft_channel_id, chan_name, 
-      create_time, update_time, versioncode, 
-      manufacturer, androidmodel, uuid, 
+    insert into t_device (device_id, utdid, androidid,
+      buildversion, soft_channel_id, chan_name,
+      create_time, update_time, versioncode,
+      manufacturer, androidmodel, uuid,
       buildrelease, versionname)
-    values (#{deviceId,jdbcType=BIGINT}, #{utdid,jdbcType=CHAR}, #{androidid,jdbcType=CHAR}, 
-      #{buildversion,jdbcType=TINYINT}, #{softChannelId,jdbcType=INTEGER}, #{chanName,jdbcType=CHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{versioncode,jdbcType=INTEGER}, 
-      #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR}, #{uuid,jdbcType=CHAR}, 
+    values (#{deviceId,jdbcType=BIGINT}, #{utdid,jdbcType=CHAR}, #{androidid,jdbcType=CHAR},
+      #{buildversion,jdbcType=TINYINT}, #{softChannelId,jdbcType=INTEGER}, #{chanName,jdbcType=CHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{versioncode,jdbcType=INTEGER},
+      #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR}, #{uuid,jdbcType=CHAR},
       #{buildrelease,jdbcType=CHAR}, #{versionname,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zfs.common.pojo.DevicePO">

@@ -2,6 +2,7 @@ package com.zfs.web.service;
 
 import com.zfs.common.vo.ResultVO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -14,6 +15,7 @@ public interface IUserVipService {
 
     /**
      * 分页查询
+     *
      * @param pageNum
      * @param pageSize
      * @param reqData
@@ -23,8 +25,17 @@ public interface IUserVipService {
 
     /**
      * 查询用户会用详细信息
+     *
      * @param userId
      * @return
      */
     ResultVO queryDetails(long userId);
+
+    /**
+     * 导出
+     *
+     * @param response
+     * @return
+     */
+    ResultVO export(HttpServletResponse response);
 }
