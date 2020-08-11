@@ -44,7 +44,7 @@ public class ComTypeController {
 
     @RequestMapping("insert")
     public ResultVO insert(@RequestParam(value = "name") String name,
-                           @RequestParam(value = "days") int days,
+                           @RequestParam(value = "days") Integer days,
                            @RequestParam(value = "extra") String extra, HttpServletRequest req) {
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {
