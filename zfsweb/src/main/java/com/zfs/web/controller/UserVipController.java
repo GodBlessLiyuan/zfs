@@ -29,7 +29,7 @@ public class UserVipController {
            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
            @RequestParam(value = "phone",required = false) String phone,
-           @RequestParam(value = "isPay") byte isPay) {
+           @RequestParam(value = "isPay",required = false) Byte isPay) {
         Map<String, Object> reqData = new HashMap<>(2);
         reqData.put("phone", phone);
         reqData.put("isPay", isPay);

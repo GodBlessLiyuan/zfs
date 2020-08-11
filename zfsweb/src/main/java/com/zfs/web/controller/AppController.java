@@ -34,7 +34,7 @@ public class AppController {
     public ResultVO query(
            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-           @RequestParam(value = "updateType") byte updateType) {
+           @RequestParam(value = "updateType",required = false) Byte updateType) {
 
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("updateType", updateType);
