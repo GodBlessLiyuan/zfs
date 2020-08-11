@@ -43,5 +43,5 @@ public interface BatchInfoMapper extends BaseMapper<BatchInfoPO, Integer> {
      */
     BatchInfoPO queryByKey(String key);
     //查询批次下的状态值的主键
-    List<Integer> queryStatus(@Param("batchId") Integer batchId,@Param("originStatu") Byte originStatu);
+    List<Integer> queryStatus(@Param("batchId") Integer batchId,@Param("originStatu") Integer originStatu);
 }
