@@ -89,7 +89,12 @@ public class FeedbackServiceImpl implements FeedbackService {
             vo.setManufacturer(bo.getManufacturer());
             vo.setAndroidmodel(bo.getAndroidmodel());
             vo.setBuildrelease(bo.getBuildrelease());
-            vo.setVersionname(queryVersionnameByVersioncode(bo.getVersioncode()));
+
+            if (bo.getVersioncode() == null) {
+                vo.setVersioncode(null);
+            } else {
+                vo.setVersionname(queryVersionnameByVersioncode(bo.getVersioncode()));
+            }
             vo.setPhone(bo.getPhone());
             vo.setUserId(bo.getUserId());
             vo.setDeviceId(bo.getDeviceId());

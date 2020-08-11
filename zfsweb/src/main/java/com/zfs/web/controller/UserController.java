@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,12 +26,17 @@ public class UserController {
 
     @PostMapping("query")
     public ResultVO query(
-           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-           @RequestParam(value = "phone",required = false) String phone) {
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+            @RequestParam(value = "phone", required = false) String phone) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("phone", phone);
 
         return service.query(pageNum, pageSize, reqData);
+    }
+
+    @RequestMapping("export")
+    public ResultVO export(HttpServletResponse response) {
+        return service.export(response);
     }
 }

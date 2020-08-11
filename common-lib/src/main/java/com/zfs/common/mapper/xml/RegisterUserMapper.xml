@@ -15,7 +15,7 @@
     re_uid, phone, create_time, chan_name, versionname, buildrelease, manufacturer, androidmodel
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from m_register_user
     where re_uid = #{reUid,jdbcType=BIGINT}
@@ -39,10 +39,10 @@
   </delete>
   <insert id="insert" parameterType="com.zfs.common.pojo.RegisterUserPO">
     insert into m_register_user (re_uid, phone, create_time,
-      chan_name, versionname, buildrelease, 
+      chan_name, versionname, buildrelease,
       manufacturer, androidmodel)
-    values (#{reUid,jdbcType=BIGINT}, #{phone,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{chanName,jdbcType=CHAR}, #{versionname,jdbcType=CHAR}, #{buildrelease,jdbcType=CHAR}, 
+    values (#{reUid,jdbcType=BIGINT}, #{phone,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{chanName,jdbcType=CHAR}, #{versionname,jdbcType=CHAR}, #{buildrelease,jdbcType=CHAR},
       #{manufacturer,jdbcType=CHAR}, #{androidmodel,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zfs.common.pojo.RegisterUserPO">
