@@ -22,7 +22,7 @@ public interface BatchInfoMapper extends BaseMapper<BatchInfoPO, Integer> {
      * @return
      */
     List<BatchInfoBO> queryByUserId(Long userId);
-
+    //统计批次下状态的总数
     Integer queryStatusById(@Param("batchId")int batchId, @Param("status")int status);
 
     List<BatchInfoBO> queryByBatchid(Map<String, Object> map);
@@ -42,4 +42,6 @@ public interface BatchInfoMapper extends BaseMapper<BatchInfoPO, Integer> {
      * @return
      */
     BatchInfoPO queryByKey(String key);
+    //查询批次下的状态值的主键
+    List<Integer> queryStatus(@Param("batchId") Integer batchId,@Param("originStatu") Byte originStatu);
 }

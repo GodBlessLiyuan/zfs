@@ -183,5 +183,8 @@
     from t_batch_info
     where binary vipkey = #{key,jdbcType=CHAR}
   </select>
-
+  <select id="queryStatus" resultType="java.lang.Integer">
+    select id from t_batch_info
+    where batch_id=#{batchId} and status=#{originStatu}
+  </select>
 </mapper>
