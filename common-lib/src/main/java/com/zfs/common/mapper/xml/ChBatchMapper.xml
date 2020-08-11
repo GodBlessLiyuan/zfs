@@ -241,4 +241,11 @@
   <select id="queryActiveByPri" resultType="java.lang.Byte">
     select active_sync from t_ch_batch where batch_id = #{batchId,jdbcType=INTEGER}
   </select>
+  <select id="getListStatus" resultType="java.util.Map">
+    select cb.batch_id as batchId,status
+    from t_ch_batch as cb
+    WHERE  cb.`status` in (1,2,3,4) and
+    NOW()> DATE_FORMAT(DATE_ADD(cb.create_time,INTERVAL cb.days DAY),'%Y-%m-%d 23:59:59')
+    and cb.dr=1
+  </select>
 </mapper>
