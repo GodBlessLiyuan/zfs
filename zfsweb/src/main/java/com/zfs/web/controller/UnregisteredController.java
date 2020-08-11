@@ -1,5 +1,6 @@
 package com.zfs.web.controller;
 
+import com.zfs.common.vo.ResultVO;
 import com.zfs.web.vo.DeviceVO;
 import com.zfs.web.service.IUnregisteredService;
 import com.zfs.web.utils.DTPageInfo;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,13 +27,17 @@ public class UnregisteredController {
     private IUnregisteredService service;
 
     @RequestMapping("query")
-    public DTPageInfo<DeviceVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                      @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                      @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                      @RequestParam(value = "channelId") int channelId) {
+    public ResultVO query(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                          @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                          @RequestParam(value = "channelId", required = false) Integer channelId) {
         Map<String, Object> reqData = new HashMap<>(1);
         reqData.put("channelId", channelId);
 
-        return service.query(draw, pageNum, pageSize, reqData);
+        return service.query(pageNum, pageSize, reqData);
+    }
+
+    @RequestMapping("export")
+    protected ResultVO export(HttpServletResponse response){
+        return service.export(response);
     }
 }

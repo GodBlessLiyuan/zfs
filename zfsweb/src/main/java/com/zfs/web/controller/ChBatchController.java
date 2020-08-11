@@ -29,8 +29,8 @@ public class ChBatchController {
      * @param pageNum
      * @param pageSize
      * @param chanNickname
-     * @param comTypeId
-     * @param status
+     * @param comTypeId 商品类型名称
+     * @param status 状态
      * @param operator
      * @return
      */

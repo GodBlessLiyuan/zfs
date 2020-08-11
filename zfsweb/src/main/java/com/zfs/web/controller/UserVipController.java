@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,10 +27,10 @@ public class UserVipController {
 
     @PostMapping("query")
     public ResultVO query(
-           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-           @RequestParam(value = "phone",required = false) String phone,
-           @RequestParam(value = "isPay",required = false) Byte isPay) {
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "isPay", required = false) Byte isPay) {
         Map<String, Object> reqData = new HashMap<>(2);
         reqData.put("phone", phone);
         reqData.put("isPay", isPay);
@@ -39,7 +40,12 @@ public class UserVipController {
 
     @PostMapping("queryDetails")
     public ResultVO queryDetails(
-         @RequestParam(value = "userId") int userId) {
+            @RequestParam(value = "userId") int userId) {
         return service.queryDetails(userId);
+    }
+
+    @RequestMapping("export")
+    public ResultVO export(HttpServletResponse response) {
+        return service.export(response);
     }
 }
