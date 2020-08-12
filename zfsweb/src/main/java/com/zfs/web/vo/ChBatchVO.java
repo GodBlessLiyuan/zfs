@@ -37,10 +37,18 @@ public class ChBatchVO implements Serializable {
     private Byte status;
 
     private Date updateTime;
-
+    private String validityTime;
     private String operator;
 
     private static final long serialVersionUID = 1L;
+
+    public String getValidityTime() {
+        return validityTime;
+    }
+
+    public void setValidityTime(String validityTime) {
+        this.validityTime = validityTime;
+    }
 
     public Integer getBatchId() {
         return batchId;

@@ -72,14 +72,13 @@ public class BatchInfoServiceImpl implements BatchInfoService {
 
     /**
      * 根据batchId，查询详情，分页展示
-     * @param draw
      * @param start
      * @param length
      * @param batchId
      * @return
      */
     @Override
-    public DTPageInfo<BatchInfoVO> queryByBatchid(int draw, int start, int length, Integer batchId, Byte status) {
+    public ResultVO queryByBatchid( int start, int length, Integer batchId, Byte status) {
 
         // 分页
         Page<BatchInfoVO> page = PageHelper.startPage(start, length);
@@ -88,7 +87,7 @@ public class BatchInfoServiceImpl implements BatchInfoService {
         List<BatchInfoVO> vos = this.query(batchId, status);
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), vos);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), vos));
     }
 
     /**
@@ -145,7 +144,12 @@ public class BatchInfoServiceImpl implements BatchInfoService {
         BatchInfoVO vo = new BatchInfoVO();
         vo.setVipkey(bo.getVipkey());
         vo.setStatus(bo.getStatus());
-        vo.setUpdateTime(bo.getUpdateTime());
+        /***
+         * 只有激活才有激活时间，其他没有
+         * */
+        if(bo.getStatus()==2){
+            vo.setUpdateTime(bo.getUpdateTime());
+        }
         vo.setPhone(bo.getPhone());
         return vo;
     }
@@ -175,6 +179,12 @@ public class BatchInfoServiceImpl implements BatchInfoService {
                 status = "已冻结";
             } else if (vo.getStatus() == 4) {
                 status = "已失效";
+            } else if (vo.getStatus() == 5) {
+                status = "已结束";
+            } else if(vo.getStatus()==6){
+                status="过期失效";
+            } else if(vo.getStatus()==7){
+                status="冻结失效";
             }
             content[i][1] = status;
             if (null == vo.getUpdateTime()) {
