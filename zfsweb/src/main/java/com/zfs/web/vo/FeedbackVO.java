@@ -27,7 +27,7 @@ public class FeedbackVO implements Serializable {
     private String url2;
 
     private String url3;
-
+    private String[] urls;
     /**
      * 手机厂商
      */
@@ -137,6 +137,14 @@ public class FeedbackVO implements Serializable {
 
     public String getUrl3() {
         return url3;
+    }
+
+    public String[] getUrls() {
+        return urls;
+    }
+
+    public void setUrls(String[] urls) {
+        this.urls = urls;
     }
 
     public void setUrl3(String url3) {
