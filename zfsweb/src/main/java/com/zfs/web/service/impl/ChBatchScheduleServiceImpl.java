@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class ChBatchScheduleServiceImpl {
     private BatchInfoMapper batchInfoMapper;
 
     @Scheduled(cron = "${chBatchSchedule.time}")
+    @Transactional
     public void overLineCount() {
         //联合表查询，创建时间+天数小于现在时刻，从数据库构造时间
         List<Map<String, Integer>> chBatchIdS = chBatchMapper.getListStatus();
@@ -61,7 +63,7 @@ public class ChBatchScheduleServiceImpl {
                 minLineCount(infoS1, map.get("batchId"), (byte) 6);
             }
         }
-        logger.info("更新了t_ch_batch表主键为{}的状态:，t_batch_info表的主键为{}的状态：", JSON.toJSONString(chBatchIdS));
+        logger.info("更新了t_ch_batch表主键为{}的状态:", JSON.toJSONString(chBatchIdS));
     }
 
     private void minLineCount(List<Integer> infoS, Integer chBatch, Byte toStatu) {
