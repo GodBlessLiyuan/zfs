@@ -5,6 +5,7 @@ import com.zfs.common.bo.ComTypeBO;
 import com.zfs.common.mapper.*;
 import com.zfs.common.pojo.ChBatchPO;
 import com.zfs.common.pojo.ChannelPO;
+import com.zfs.common.utils.DateUtilCard;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
@@ -370,6 +371,10 @@ public class ChBatchServiceImpl implements ChBatchService {
         vo.setStatus(po.getStatus());
         vo.setUpdateTime(po.getUpdateTime());
         vo.setOperator(queryUsernameByAid(po.getUpdateAId()));
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(po.getCreateTime());
+        calendar.add(Calendar.DATE,po.getDays());
+        vo.setValidityTime(DateUtilCard.date2Str(calendar.getTime(),DateUtilCard.YMD));
         return vo;
     }
 
@@ -420,7 +425,7 @@ public class ChBatchServiceImpl implements ChBatchService {
     private HSSFWorkbook toExcel(List<ChBatchVO> vos) {
         //表头
         String[] title = {"渠道标识", "渠道名称", "创建时间", "创建人", "产品类型", "创建数量", "已激活",
-                "未激活", "备注", "状态", "操作时间", "操作人"};
+                "激活有效期至", "备注", "状态", "操作时间", "操作人"};
         //sheet表名
         String sheetname = "会员卡配置";
 
@@ -440,7 +445,8 @@ public class ChBatchServiceImpl implements ChBatchService {
             content[i][4] = vo.getComTypeName();
             content[i][5] = vo.getNum().toString();
             content[i][6] = vo.getActivity().toString();
-            content[i][7] = vo.getNonActivity().toString();
+            //由未激活数量getNonActivity().toString();改为有效期至
+            content[i][7] = vo.getValidityTime();
             content[i][8] = vo.getExtra();
             if (vo.getStatus() == 1) {
                 status = "正常";
@@ -450,6 +456,10 @@ public class ChBatchServiceImpl implements ChBatchService {
                 status = "已失效";
             } else if (vo.getStatus() == 5) {
                 status = "已结束";
+            } else if(vo.getStatus()==6){
+                status="过期失效";
+            } else if(vo.getStatus()==7){
+                status="冻结失效";
             }
             content[i][9] = status;
             if (null == vo.getUpdateTime()) {

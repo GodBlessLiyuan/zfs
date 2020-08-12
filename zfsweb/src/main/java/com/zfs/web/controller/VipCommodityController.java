@@ -49,7 +49,7 @@ public class VipCommodityController {
     @RequestMapping("insert")
     public ResultVO insert(
             @RequestParam(value = "commAttr") int commAttr,
-            @RequestParam(value = "channelId") int channelId,
+            @RequestParam(value = "channelId",defaultValue = "1") Integer channelId,
             @RequestParam(value = "comTypeId") int comTypeId,
             @RequestParam(value = "comName") String comName,
             @RequestParam(value = "description") String description,
@@ -62,7 +62,9 @@ public class VipCommodityController {
         if (admin == null) {
             return new ResultVO(1001);
         }
-
+        /**
+         * 商品跟渠道没有关系，构造虚假数据为了跟原来的业务代码一致。
+         * */
         return service.insert(commAttr, channelId, comTypeId, comName, description, price, showDiscount,
                 discount, admin.getaId());
 

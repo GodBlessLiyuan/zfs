@@ -2,8 +2,6 @@ package com.zfs.web.controller;
 
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.service.BatchInfoService;
-import com.zfs.web.utils.DTPageInfo;
-import com.zfs.web.vo.BatchInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,22 +39,20 @@ public class BatchInfoController {
 
     /**
      * 查询
-     * @param draw
      * @param start
      * @param length
      * @param batchId
      * @return
      */
-    @GetMapping("queryByBatchid")
-    public DTPageInfo<BatchInfoVO> queryByBatchid(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                                   @RequestParam(value = "start", defaultValue = "1") int start,
-                                                   @RequestParam(value = "length", defaultValue = "10") int length,
-                                                   @RequestParam(value = "batchId") Integer batchId,
-                                                   @RequestParam(value = "status") Byte status
+    @PostMapping("queryByBatchid")
+    public ResultVO queryByBatchid(
+           @RequestParam(value = "start", defaultValue = "1") int start,
+           @RequestParam(value = "length", defaultValue = "10") int length,
+           @RequestParam(value = "batchId") Integer batchId,
+           @RequestParam(value = "status",required = false) Byte status
     ){
         // 调用业务层，返回页面结果
-        DTPageInfo<BatchInfoVO> dTPageInfo = batchInfoService.queryByBatchid(draw, start, length, batchId, status);
-        return dTPageInfo;
+        return batchInfoService.queryByBatchid(start, length, batchId, status);
     }
 
     /**
@@ -66,9 +62,10 @@ public class BatchInfoController {
      * @param response
      */
     @GetMapping("export")
-    public void export(@RequestParam(value = "batchId") Integer batchId,
-                       @RequestParam(value = "status") Byte status,
+    public ResultVO export(@RequestParam(value = "batchId") Integer batchId,
+                       @RequestParam(value = "status",required = false) Byte status,
                        HttpServletResponse response) {
         this.batchInfoService.export(batchId, status, response);
+        return new ResultVO(1000);
     }
 }
