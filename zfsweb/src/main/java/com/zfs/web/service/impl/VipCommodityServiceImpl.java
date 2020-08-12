@@ -66,8 +66,8 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     @Override
     public ResultVO insert(int commAttr, int channelId, int comTypeId, String comName, String description, String price, String showDiscount,
                            float discount, int aId) {
-        VipcommodityPO po = vipcommodityMapper.queryByChanIdAndComTypeId(channelId, comTypeId, commAttr);
-        if (po != null) {
+        List<VipcommodityPO> pos = vipcommodityMapper.queryByChanIdAndComTypeId(channelId, comTypeId, commAttr);
+        if (pos != null&&pos.size()>0) {
             // 当前渠道-产品已存在！
             return new ResultVO(3009);
         }

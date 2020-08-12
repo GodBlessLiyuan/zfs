@@ -18,7 +18,7 @@ public interface VipcommodityMapper extends BaseMapper<VipcommodityPO, Integer> 
      * @param comTypeId     产品Id
      * @return
      */
-    VipcommodityPO queryByChanIdAndComTypeId(@Param("softChannelId") int softChannelId, @Param("comTypeId") int comTypeId,
+    List<VipcommodityPO> queryByChanIdAndComTypeId(@Param("softChannelId") int softChannelId, @Param("comTypeId") int comTypeId,
                                              @Param("commAttr") int commAttr);
 
     /**
