@@ -48,7 +48,7 @@ public class VipCommodityController {
 
     @RequestMapping("insert")
     public ResultVO insert(
-            @RequestParam(value = "commAttr") int commAttr,
+            @RequestParam(value = "commAttr",defaultValue = "1") Integer commAttr,
             @RequestParam(value = "channelId",defaultValue = "1") Integer channelId,
             @RequestParam(value = "comTypeId") int comTypeId,
             @RequestParam(value = "comName") String comName,
@@ -64,6 +64,7 @@ public class VipCommodityController {
         }
         /**
          * 商品跟渠道没有关系，构造虚假数据为了跟原来的业务代码一致。
+         * commAttr:为1表示独立商品
          * */
         return service.insert(commAttr, channelId, comTypeId, comName, description, price, showDiscount,
                 discount, admin.getaId());
@@ -73,9 +74,9 @@ public class VipCommodityController {
     @RequestMapping("update")
     public ResultVO update(@RequestParam(value = "cmdyId") Integer cmdyId,
                            @RequestParam(value = "comName") String comName,
-                           @RequestParam(value = "description") String description,
-                           @RequestParam(value = "price") String price,
-                           @RequestParam(value = "showDiscount") String showDiscount,
+                           @RequestParam(value = "description",required = false) String description,
+                           @RequestParam(value = "price",required = false) String price,
+                           @RequestParam(value = "showDiscount",required = false) String showDiscount,
                            @RequestParam(value = "discount") Float discount) {
 
         return service.update(cmdyId, comName, description, price, showDiscount, discount);
