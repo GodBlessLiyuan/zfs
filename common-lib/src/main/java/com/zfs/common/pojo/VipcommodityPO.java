@@ -52,7 +52,9 @@ public class VipcommodityPO implements Serializable {
      * 1 未置顶  2 置顶
      */
     private Byte istop;
-
+    /***
+     * 1:独立商品，2是通用商品（可以激活其他应用的），
+     * */
     private Byte commAttr;
 
     private static final long serialVersionUID = 1L;

@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -115,9 +116,19 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
     public ResultVO update(Integer cmdyId, String comName, String description, String price, String showDiscount, Float discount) {
         VipcommodityPO vipCommodityPO = vipcommodityMapper.selectByPrimaryKey(cmdyId);
         vipCommodityPO.setComName(comName);
-        vipCommodityPO.setDescription(description);
-        vipCommodityPO.setPrice(price);
-        vipCommodityPO.setShowDiscount(showDiscount);
+        //备注
+        if(!StringUtils.isEmpty(description)){
+            vipCommodityPO.setDescription(description);
+        }
+        //原价
+        if(!StringUtils.isEmpty(price)){
+            vipCommodityPO.setPrice(price);
+        }
+        //折扣价
+        if(!StringUtils.isEmpty(showDiscount)){
+            vipCommodityPO.setShowDiscount(showDiscount);
+        }
+        //售价
         BigDecimal bd = new BigDecimal(Float.toString(discount));
         vipCommodityPO.setDiscount(bd.multiply(new BigDecimal("100")).longValue());
         vipCommodityPO.setUpdateTime(new Date());
