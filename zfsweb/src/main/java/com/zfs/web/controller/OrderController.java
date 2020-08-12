@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -70,5 +71,10 @@ public class OrderController {
         reqData.put("number", number);
 
         return service.query(pageNum, pageSize, reqData);
+    }
+
+    @RequestMapping("export")
+    public ResultVO export(HttpServletResponse response) {
+        return service.export(response);
     }
 }

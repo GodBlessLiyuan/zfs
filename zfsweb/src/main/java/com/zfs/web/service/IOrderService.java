@@ -2,6 +2,7 @@ package com.zfs.web.service;
 
 import com.zfs.common.vo.ResultVO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -19,4 +20,10 @@ public interface IOrderService {
      * @return
      */
     ResultVO query(Integer pageNum, Integer pageSize, Map<String, Object> reqData);
+
+    /**
+     * 导出
+     * @return
+     */
+    ResultVO export(HttpServletResponse response);
 }
