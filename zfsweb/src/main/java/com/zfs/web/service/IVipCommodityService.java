@@ -4,6 +4,7 @@ import com.zfs.web.vo.VipCommodityVO;
 import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -77,4 +78,9 @@ public interface IVipCommodityService {
      * @return
      */
     ResultVO updateIsTop(Integer cmdyId, Byte isTop);
+
+    /**
+     * 导出
+     */
+    ResultVO export(HttpServletResponse response);
 }

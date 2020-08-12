@@ -1,6 +1,7 @@
 package com.zfs.web.service.impl;
 
 import com.github.pagehelper.Page;
+import com.zfs.common.bo.OrderBO;
 import com.zfs.common.bo.VipcommodityBO;
 import com.zfs.common.mapper.ComTypeMapper;
 import com.zfs.common.mapper.SoftChannelMapper;
@@ -15,7 +16,10 @@ import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.common.VipCommodityConstant;
 import com.zfs.web.service.IVipCommodityService;
+import com.zfs.web.utils.DateUtil;
+import com.zfs.web.utils.ExcelUtil;
 import com.zfs.web.vo.VipCommodityVO;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +29,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author: xiahui
@@ -175,5 +177,66 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         if (!CollectionUtils.isEmpty(redisKeys)) {
             template.delete(redisKeys);
         }
+    }
+
+    /**
+     * 导出
+     * @param response
+     * @return
+     */
+    @Override
+    public ResultVO export(HttpServletResponse response) {
+        List<VipcommodityBO> bos = vipcommodityMapper.query(new HashMap<>());
+        List<VipCommodityVO> vos = VipCommodityVO.convert(bos);
+        HSSFWorkbook wb = this.toExcel(vos);
+        ExcelUtil.sendToClient(wb, response);
+        return new ResultVO(1000);
+    }
+
+    /**
+     * 生成Excel表格
+     *
+     * @param vos
+     */
+    private HSSFWorkbook toExcel(List<VipCommodityVO> vos) {
+        //表头
+        String[] title = {"序号", "产品类型", "会员天数", "商品名称", "原价", "折扣", "售价", "是否上架", "是否置顶", "创建时间", "操作人"};
+        //sheet表名
+        String sheetname = "商品信息";
+
+        String[][] content = new String[vos.size()][title.length];
+        for (int i = 0; i < vos.size(); i++) {
+            VipCommodityVO vo = vos.get(i);
+            content[i][0] = String.valueOf(i + 1);
+            content[i][1] = vo.getComTypeName();
+            content[i][2] = String.valueOf(vo.getDays());
+            content[i][3] = vo.getComName();
+            content[i][4] = vo.getPrice();
+            content[i][5] = vo.getShowDiscount();
+            content[i][6] = String.valueOf(vo.getDiscount());
+            switch (vo.getStatus()) {
+                case 1:
+                    content[i][7] = "未上架";
+                    break;
+                case 2:
+                    content[i][7] = "已上架";
+                    break;
+            }
+
+            switch (vo.getIstop()) {
+                case 1:
+                    content[i][8] = "未置顶";
+                    break;
+                case 2:
+                    content[i][8] = "已置顶";
+                    break;
+            }
+            content[i][9] = DateUtil.date2str(vo.getCreateTime());
+            content[i][10] = vo.getUsername();
+        }
+
+        //创建HSSFWorkbook
+        HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetname, title, content, null);
+        return wb;
     }
 }
