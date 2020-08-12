@@ -22,6 +22,7 @@ public class VipCommodityVO implements Serializable {
 
     private Integer cmdyId;
     private String name;
+    private Integer comTypeId;
     private String comTypeName;
     private Integer days;
     private String comName;
@@ -44,6 +45,7 @@ public class VipCommodityVO implements Serializable {
         vo.setComName(po.getComName());
         vo.setDescription(po.getDescription());
         vo.setPrice(po.getPrice());
+        vo.setComTypeId(po.getComTypeId());
         vo.setShowDiscount(po.getShowDiscount());
         if (null != po.getDiscount()) {
             vo.setDiscount(po.getDiscount() / 100F);
