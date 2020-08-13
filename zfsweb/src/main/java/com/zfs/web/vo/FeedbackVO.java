@@ -2,6 +2,7 @@ package com.zfs.web.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * t_feedback
@@ -27,7 +28,7 @@ public class FeedbackVO implements Serializable {
     private String url2;
 
     private String url3;
-    private String[] urls;
+    private List<String> urls;
     /**
      * 手机厂商
      */
@@ -139,11 +140,11 @@ public class FeedbackVO implements Serializable {
         return url3;
     }
 
-    public String[] getUrls() {
+    public List<String> getUrls() {
         return urls;
     }
 
-    public void setUrls(String[] urls) {
+    public void setUrls(List<String> urls) {
         this.urls = urls;
     }
 

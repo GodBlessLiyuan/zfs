@@ -19,6 +19,8 @@ public class UserVipConstant {
      * 年会员类型
      */
     public static final int YEAR_VIP = 20;
+    //非会员
+    public static final int NOT_VIP = 1;
 }
 
 
