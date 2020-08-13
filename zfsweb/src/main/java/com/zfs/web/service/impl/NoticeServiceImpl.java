@@ -2,8 +2,10 @@ package com.zfs.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.zfs.common.mapper.NoticeMapper;
+import com.zfs.common.utils.DateUtilCard;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.utils.DateUtil;
 import com.zfs.web.utils.OperatorUtil;
@@ -11,9 +13,9 @@ import com.zfs.web.vo.NoticeVO;
 import com.zfs.common.mapper.AdminUserMapper;
 import com.zfs.common.pojo.NoticePO;
 import com.zfs.web.service.NoticeService;
-import com.zfs.web.utils.DTPageInfo;
 import com.zfs.web.utils.FileUtil;
 import com.zfs.common.vo.ResultVO;
+import io.micrometer.core.instrument.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,7 +57,6 @@ public class NoticeServiceImpl implements NoticeService {
     /**
      * 查询
      *
-     * @param draw
      * @param start
      * @param length
      * @param startTime
@@ -66,7 +67,7 @@ public class NoticeServiceImpl implements NoticeService {
      * @return
      */
     @Override
-    public DTPageInfo<NoticeVO> query(int draw, int start, int length, String startTime, String endTime, Integer status, Byte type, String title) {
+    public ResultVO query(int start, int length, String startTime, String endTime, Integer status, Byte type, String title) {
 
         // 分页
         Page<NoticeVO> page = PageHelper.startPage(start, length);
@@ -90,7 +91,10 @@ public class NoticeServiceImpl implements NoticeService {
             vo.setType(po.getType());
             vo.setTitle(po.getTitle());
             vo.setCreateTime(po.getCreateTime());
-            vo.setShowTime(po.getShowTime());
+            vo.setShowTime(DateUtilCard.date2Str(po.getShowTime(),DateUtilCard.HM));
+            vo.setEndShowTime(DateUtilCard.date2Str(po.getEndShowTime(),DateUtilCard.HM));
+            //通知时间段
+            vo.setNoticeShowTime(vo.getShowTime()+"-"+vo.getEndShowTime());
             vo.setStartTime(po.getStartTime());
             vo.setEndTime(po.getEndTime());
             vo.setUrl(po.getUrl());
@@ -107,7 +111,7 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
         //根据分页查询的结果，封装最终的返回结果
-        return new DTPageInfo<>(draw, page.getTotal(), vos);
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), vos));
     }
 
     /**
@@ -126,7 +130,7 @@ public class NoticeServiceImpl implements NoticeService {
      */
     @Override
     public ResultVO insert(Byte type, String text, MultipartFile picurl, String title, String url, String showTime,
-                           String startTime, String endTime, HttpSession httpSession) {
+                     String endShowTime, String startTime, String endTime,String menbers, HttpSession httpSession) {
 
         NoticePO po = new NoticePO();
         po.setType(type);
@@ -139,12 +143,14 @@ public class NoticeServiceImpl implements NoticeService {
         po.setTitle(title);
         po.setUrl(url);
         po.setShowTime(DateUtil.str2time(showTime));
+        po.setEndShowTime(DateUtil.str2time(endShowTime));
         po.setStartTime(DateUtil.str2date1(startTime));
         po.setEndTime(DateUtil.str2date2(endTime));
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
         po.setStatus(1);
-
+        //会员类别数组
+        po.setMenbers(menbers);
         int result = this.noticeMapper.insert(po);
         if (result == 0) {
             LogUtil.log(logger, "insert", "插入失败", po);
@@ -201,6 +207,37 @@ public class NoticeServiceImpl implements NoticeService {
         return new ResultVO(1000);
     }
 
+    @Override
+    public ResultVO queryById(Integer noticeId) {
+        NoticePO po = this.noticeMapper.selectByPrimaryKey(noticeId);
+        if(po==null){
+            return new ResultVO(3010);
+        }
+        NoticeVO vo = new NoticeVO();
+        vo.setNoticeId(po.getNoticeId());
+        vo.setType(po.getType());
+        vo.setTitle(po.getTitle());
+        vo.setCreateTime(po.getCreateTime());
+        vo.setShowTime(DateUtilCard.date2Str(po.getShowTime(),DateUtilCard.HM));
+        vo.setEndShowTime(DateUtilCard.date2Str(po.getEndShowTime(),DateUtilCard.HM));
+        //通知时间段
+        vo.setNoticeShowTime(vo.getShowTime()+"-"+vo.getEndShowTime());
+        vo.setStartTime(po.getStartTime());
+        vo.setEndTime(po.getEndTime());
+        vo.setUrl(po.getUrl());
+        vo.setText(po.getText());
+        if(!StringUtils.isEmpty(po.getMenbers())){
+            vo.setMenbers(po.getMenbers().split(","));
+        }
+        if (null == po.getPicurl()) {
+            vo.setPicurl(po.getPicurl());
+        } else {
+            vo.setPicurl(publicPath + po.getPicurl());
+        }
+        vo.setStatus(po.getStatus());
+        vo.setOperator(queryUsernameByAid(po.getaId()));
+        return new ResultVO(1000,vo);
+    }
 
     /**
      * 根据aId，从t_admin_user表中查询username

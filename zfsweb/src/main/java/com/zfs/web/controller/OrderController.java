@@ -74,7 +74,32 @@ public class OrderController {
     }
 
     @RequestMapping("export")
-    public ResultVO export(HttpServletResponse response) {
-        return service.export(response);
+    public ResultVO export(@RequestParam(value = "startDate", required = false) String startDate,
+                           @RequestParam(value = "endDate", required = false) String endDate,
+                           @RequestParam(value = "comTypeId", required = false) Integer comTypeId,
+                           @RequestParam(value = "type", required = false) Integer type,
+                           @RequestParam(value = "uChanId", required = false) Integer uChanId,
+                           @RequestParam(value = "sChanId", required = false) Integer sChanId,
+                           @RequestParam(value = "phone", required = false) String phone,
+                           @RequestParam(value = "number", required = false) String number,
+                           HttpServletResponse response) throws ParseException {
+        Map<String, Object> reqData = new HashMap<>(8);
+        reqData.put("startDate", startDate);
+        if (null != endDate && !"".equals(endDate)) {
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            calendar.setTime(df.parse(endDate));
+            calendar.add(Calendar.DATE, 1);
+            endDate = df.format(calendar.getTime());
+        }
+        reqData.put("endDate", endDate);
+        reqData.put("comTypeId", comTypeId);
+        reqData.put("type", type);
+        reqData.put("uChanId", uChanId);
+        reqData.put("sChanId", sChanId);
+        reqData.put("phone", phone);
+        reqData.put("number", number);
+
+        return service.export(reqData,response);
     }
 }

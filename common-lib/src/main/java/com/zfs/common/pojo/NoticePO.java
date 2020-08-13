@@ -20,7 +20,7 @@ public class NoticePO implements Serializable {
     private Byte type;
 
     private Date showTime;
-
+    private Date endShowTime;
     private Date startTime;
 
     /**
@@ -39,6 +39,23 @@ public class NoticePO implements Serializable {
     private Integer aId;
 
     private String url;
+    private String menbers;
+
+    public String getMenbers() {
+        return menbers;
+    }
+
+    public void setMenbers(String menbers) {
+        this.menbers = menbers;
+    }
+
+    public Date getEndShowTime() {
+        return endShowTime;
+    }
+
+    public void setEndShowTime(Date endShowTime) {
+        this.endShowTime = endShowTime;
+    }
 
     private static final long serialVersionUID = 1L;
 

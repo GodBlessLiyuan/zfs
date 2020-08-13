@@ -1,5 +1,7 @@
 package com.zfs.web.vo;
 
+import com.zfs.web.utils.DateUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,8 +21,9 @@ public class NoticeVO implements Serializable {
      */
     private Byte type;
 
-    private Date showTime;
-
+    private String showTime;
+    private String endShowTime;
+    private String noticeShowTime;
     private Date startTime;
 
     /**
@@ -37,8 +40,32 @@ public class NoticeVO implements Serializable {
     private String picurl;
 
     private String operator;
-
+    private String[] menbers;
     private static final long serialVersionUID = 1L;
+
+    public String getEndShowTime() {
+        return endShowTime;
+    }
+
+    public void setEndShowTime(String endShowTime) {
+        this.endShowTime = endShowTime;
+    }
+
+    public String[] getMenbers() {
+        return menbers;
+    }
+
+    public void setMenbers(String[] menbers) {
+        this.menbers = menbers;
+    }
+
+    public String getNoticeShowTime() {
+        return noticeShowTime;
+    }
+
+    public void setNoticeShowTime(String noticeShowTime) {
+        this.noticeShowTime = noticeShowTime;
+    }
 
     public Integer getNoticeId() {
         return noticeId;
@@ -72,11 +99,11 @@ public class NoticeVO implements Serializable {
         this.type = type;
     }
 
-    public Date getShowTime() {
+    public String getShowTime() {
         return showTime;
     }
 
-    public void setShowTime(Date showTime) {
+    public void setShowTime(String showTime) {
         this.showTime = showTime;
     }
 

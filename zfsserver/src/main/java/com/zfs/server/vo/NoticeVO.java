@@ -32,9 +32,15 @@ public class NoticeVO implements Serializable {
      */
     private String text;
     /**
-     * 通知每天展示时间
+     * 通知每天展示时间,格式为 时分 HH:MM
      */
-    private Date showtime;
+    private String showtime;
+    private String endShowTime;
+    /***
+     * 通知的日期：单位是：年月日
+     * */
+    private String startTime;
+    private String endTime;
     /**
      * 跳转链接
      */
