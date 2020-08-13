@@ -4,16 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.zfs.common.mapper.NoticeMapper;
 import com.zfs.common.mapper.UserMapper;
 import com.zfs.common.mapper.UserVipMapper;
-import com.zfs.common.mapper.ViptypeMapper;
 import com.zfs.common.pojo.NoticePO;
 import com.zfs.common.pojo.UserPO;
 import com.zfs.common.pojo.UserVipPO;
-import com.zfs.common.pojo.ViptypePO;
-import com.zfs.common.utils.DateUtil;
 import com.zfs.common.utils.DateUtilCard;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.ResultVO;
-import com.zfs.server.constant.NoticeTypeConstant;
 import com.zfs.server.constant.UserVipConstant;
 import com.zfs.server.dto.NoticeDTO;
 import com.zfs.server.service.INoticeService;
@@ -22,7 +18,6 @@ import com.zfs.server.vo.NoticeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.TimeoutUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -59,25 +54,24 @@ public class NoticeServiceImpl implements INoticeService {
      * 可以将数据缓存起来，则应该查询通知结束时间之前的通知数据。
      * 缓存时间久了则App端存在大量的过期数据，App端加判断，可以保证通知的正确性，这里缓存前缀加上时间
      * */
-    //缓存前缀加的时间格式
-    private static final String current_time = DateUtilCard.date2Str(new Date(), DateUtilCard.YMD_HM);
-    //所有用户的键值
-    private static final String All = RedisKeyUtil.genNoticeRedisKey(current_time, "ALL_USER");
-    private static final String NOT_MEMBER = RedisKeyUtil.genNoticeRedisKey(current_time, "NOT_MEMBER");
-    private static final String MEMBER = RedisKeyUtil.genNoticeRedisKey(current_time, "MEMBER");
-    private static final String HALF_YEAR_REGISTER = RedisKeyUtil.genNoticeRedisKey(current_time, "HALF_YEAR_REGISTER");
-    private static final String ONE_MONTH_REGISTER = RedisKeyUtil.genNoticeRedisKey(current_time, "ONE_MONTH_REGISTER");
+
     @Autowired
     private UserMapper userMapper;
     @Autowired
     private UserVipMapper userVipMapper;
-    @Autowired
-    private ViptypeMapper viptypeMapper;
     @Value("${notice.cacheTime}")
     private Integer cacheTime;
 
     @Override
     public ResultVO queryNotice(NoticeDTO dto) {
+        //缓存前缀加的时间格式
+        String current_time = DateUtilCard.date2Str(new Date(), DateUtilCard.YMD_HM);
+        //所有用户的键值
+        String All = RedisKeyUtil.genNoticeRedisKey(current_time, "ALL_USER");
+        String NOT_MEMBER = RedisKeyUtil.genNoticeRedisKey(current_time, "NOT_MEMBER");
+        String MEMBER = RedisKeyUtil.genNoticeRedisKey(current_time, "MEMBER");
+        String HALF_YEAR_REGISTER = RedisKeyUtil.genNoticeRedisKey(current_time, "HALF_YEAR_REGISTER");
+        String ONE_MONTH_REGISTER = RedisKeyUtil.genNoticeRedisKey(current_time, "ONE_MONTH_REGISTER");
         //先查数据、之后存起来
         List<NoticeVO> allVOS = new ArrayList<>();
         List<NoticeVO> notMembers = new ArrayList<>();
