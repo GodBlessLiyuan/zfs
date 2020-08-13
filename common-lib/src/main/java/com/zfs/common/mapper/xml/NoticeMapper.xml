@@ -14,13 +14,15 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="a_id" jdbcType="INTEGER" property="aId" />
+    <result column="end_show_time" jdbcType="TIMESTAMP" property="endShowTime"/>
+    <result column="menbers" jdbcType="CHAR" property="menbers"/>
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zfs.common.pojo.NoticePO">
     <result column="url" jdbcType="LONGVARCHAR" property="url" />
   </resultMap>
   <sql id="Base_Column_List">
     notice_id, title, `text`, `type`, show_time, start_time, `status`, end_time, picurl, 
-    create_time, update_time, a_id
+    create_time, update_time, a_id,end_show_time,menbers
   </sql>
   <sql id="Blob_Column_List">
     url
@@ -42,12 +44,12 @@
       `type`, show_time, start_time, 
       `status`, end_time, picurl, 
       create_time, update_time, a_id, 
-      url)
+      url,end_show_time,menbers)
     values (#{noticeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, 
       #{type,jdbcType=TINYINT}, #{showTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, #{picurl,jdbcType=CHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{aId,jdbcType=INTEGER}, 
-      #{url,jdbcType=LONGVARCHAR})
+      #{url,jdbcType=LONGVARCHAR},#{endShowTime,jdbcType=TIMESTAMP},#{menbers,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zfs.common.pojo.NoticePO">
     insert into t_notice
@@ -91,6 +93,12 @@
       <if test="url != null">
         url,
       </if>
+      <if test="endShowTime!=null">
+        end_show_time,
+      </if>
+      <if test="menbers!=null">
+        menbers,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="noticeId != null">
@@ -131,6 +139,12 @@
       </if>
       <if test="url != null">
         #{url,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="endShowTime!=null">
+        #{endShowTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menbers!=null">
+        #{menbers,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -173,6 +187,12 @@
       <if test="url != null">
         url = #{url,jdbcType=LONGVARCHAR},
       </if>
+      <if test="endShowTime!=null">
+        end_show_time=#{endShowTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menbers!=null">
+        menbers=#{menbers,jdbcType=CHAR},
+      </if>
     </set>
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
@@ -189,7 +209,9 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       a_id = #{aId,jdbcType=INTEGER},
-      url = #{url,jdbcType=LONGVARCHAR}
+      url = #{url,jdbcType=LONGVARCHAR},
+      end_show_time=#{endShowTime,jdbcType=TIMESTAMP},
+      menbers=#{menbers,jdbcType=CHAR}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.NoticePO">
@@ -204,7 +226,9 @@
       picurl = #{picurl,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      a_id = #{aId,jdbcType=INTEGER}
+      a_id = #{aId,jdbcType=INTEGER},
+      end_show_time=#{endShowTime,jdbcType=TIMESTAMP},
+      menbers=#{menbers,jdbcType=CHAR}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
 
@@ -217,10 +241,10 @@
       <if test="(startTime != null and startTime != '') and (endTime != null and endTime != '')">
         AND start_time &gt;= #{startTime} AND end_time &lt;= #{endTime}
       </if>
-      <if test="status != 0">
+      <if test="status!=null and status != 0">
         AND status =  #{status}
       </if>
-      <if test="type != 0">
+      <if test="type!=null and type != 0">
         AND type = #{type}
       </if>
       <if test="title != null and title != ''">

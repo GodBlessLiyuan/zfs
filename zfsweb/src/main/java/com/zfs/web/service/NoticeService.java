@@ -14,12 +14,16 @@ import javax.servlet.http.HttpSession;
  * @description: TODO
  */
 public interface NoticeService {
-    DTPageInfo<NoticeVO> query(int draw, int start, int length, String startTime, String endTime, Integer status, Byte type, String title);
+    ResultVO query(int start, int length, String startTime, String endTime, Integer status, Byte type, String title);
 
 
     ResultVO delete(Integer noticeId);
 
     ResultVO updateStatus(Integer noticeId, Integer status, HttpSession httpSession);
 
-    ResultVO insert(Byte type, String text, MultipartFile picurl, String title, String url, String showTime, String startTime, String endTime, HttpSession httpSession);
+    ResultVO insert(Byte type, String text, MultipartFile picurl, String title, String url,
+                    String endShowTime,String showTime, String startTime, String endTime,
+                    String menbers,HttpSession httpSession);
+
+    ResultVO queryById(Integer noticeId);
 }

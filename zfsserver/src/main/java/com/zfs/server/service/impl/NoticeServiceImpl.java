@@ -3,6 +3,7 @@ package com.zfs.server.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.zfs.common.mapper.NoticeMapper;
 import com.zfs.common.pojo.NoticePO;
+import com.zfs.common.utils.DateUtilCard;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.dto.NoticeDTO;
@@ -43,7 +44,6 @@ public class NoticeServiceImpl implements INoticeService {
 
     @Override
     public ResultVO queryNotice(NoticeDTO dto) {
-
         //准备要返回数据的对象
         List<NoticeVO> vos;
 
@@ -63,12 +63,13 @@ public class NoticeServiceImpl implements INoticeService {
 
             vos = new ArrayList<>();
             for (NoticePO po : noticePOs) {
+
                 NoticeVO vo = new NoticeVO();
                 vo.setNoticeid(po.getNoticeId());
                 vo.setType(po.getType());
                 vo.setTitle(po.getTitle());
                 vo.setText(po.getText());
-                vo.setShowtime(po.getShowTime());
+                vo.setShowtime(DateUtilCard.date2Str(po.getShowTime(),DateUtilCard.HM));
                 vo.setUrl(po.getUrl());
                 if (null != po.getPicurl()) {
                     vo.setPicurl(filePublicPath + po.getPicurl());

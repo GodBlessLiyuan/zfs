@@ -25,5 +25,5 @@ public interface IOrderService {
      * 导出
      * @return
      */
-    ResultVO export(HttpServletResponse response);
+    ResultVO export(Map<String,Object> reqData,HttpServletResponse response);
 }

@@ -41,8 +41,8 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public ResultVO export(HttpServletResponse response) {
-        List<OrderBO> bos = orderMapper.query(new HashMap<>());
+    public ResultVO export(Map<String,Object> reqData,HttpServletResponse response) {
+        List<OrderBO> bos = orderMapper.query(reqData);
 
         HSSFWorkbook wb = this.toExcel(bos);
         ExcelUtil.sendToClient(wb, response);
