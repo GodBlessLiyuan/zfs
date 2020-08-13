@@ -2,6 +2,7 @@ package com.zfs.web.controller;
 
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.service.IOrderService;
+import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +56,7 @@ public class OrderController {
                           @RequestParam(value = "number", required = false) String number) throws ParseException {
         Map<String, Object> reqData = new HashMap<>(8);
         reqData.put("startDate", startDate);
-        if (null != endDate && !"".equals(endDate)) {
+        if (!StringUtils.isEmpty(endDate)) {
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             calendar.setTime(df.parse(endDate));
@@ -85,7 +86,7 @@ public class OrderController {
                            HttpServletResponse response) throws ParseException {
         Map<String, Object> reqData = new HashMap<>(8);
         reqData.put("startDate", startDate);
-        if (null != endDate && !"".equals(endDate)) {
+        if (!StringUtils.isEmpty(endDate)) {
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             calendar.setTime(df.parse(endDate));
