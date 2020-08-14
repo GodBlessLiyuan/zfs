@@ -28,5 +28,4 @@ public interface NoticeService {
 
     ResultVO queryById(Integer noticeId);
 
-    ResultVO upload(HttpServletRequest request, MultipartFile file);
 }

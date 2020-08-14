@@ -248,11 +248,7 @@ public class NoticeServiceImpl implements NoticeService {
         return this.adminUserMapper.queryUsernameByAid(aId);
     }
 
-    @Override
-    public ResultVO upload(HttpServletRequest request, MultipartFile file) {
-        String picture = publicPath + FileUtil.uploadFile(file, iconDir, "notice");
-        return new ResultVO(1000,picture);
-    }
+
 
     /**
      * 删除Redis

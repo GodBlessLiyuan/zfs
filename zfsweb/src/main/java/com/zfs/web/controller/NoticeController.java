@@ -120,8 +120,5 @@ public class NoticeController {
     public ResultVO queryById(@RequestParam(value = "noticeId") Integer noticeId){
         return this.noticeService.queryById(noticeId);
     }
-    @RequestMapping("upload")
-    public ResultVO upload(HttpServletRequest request, @Param("file") MultipartFile file) {
-        return noticeService.upload(request, file);
-    }
+
 }
