@@ -22,7 +22,7 @@ public class FileUploadController {
     @Autowired
     private IFileUploadService fileUploadService;
     @RequestMapping("upload")
-    public ResultVO upload(HttpServletRequest request, @Param("file") MultipartFile file,@RequestParam("moduleName") String moduleName) {
-        return fileUploadService.upload(request, file,moduleName);
+    public ResultVO upload(HttpServletRequest request, @Param("file") MultipartFile file,@RequestParam("projectName") String projectName) {
+        return fileUploadService.upload(request, file,projectName);
     }
 }
