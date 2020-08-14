@@ -55,13 +55,13 @@ public class NoticeController {
     /**
      *
      * @param noticeDTO
-     * @param httpSession
+     * @param request
      * @return
      */
 
     @PostMapping("insert")
     public ResultVO insert(@RequestBody NoticeDTO noticeDTO,
-                           HttpSession httpSession) {
+                           HttpServletRequest request) {
         if(noticeDTO.getNotificationperiod()==null||noticeDTO.getNotificationperiod().length!=2){
             return new ResultVO(1003);
         }
@@ -78,7 +78,7 @@ public class NoticeController {
         String menber = JSON.toJSONString(noticeDTO.getMenbers());
         menber=menber.substring(1,menber.length()-1);
         return this.noticeService.insert(noticeDTO.getType(),noticeDTO.getText(),noticeDTO.getPicurl(),noticeDTO.getTitle(),
-                noticeDTO.getUrl(),endShowTime, showTime, startTime, endTime,menber, httpSession);
+                noticeDTO.getUrl(),endShowTime, showTime, startTime, endTime,menber, request.getSession());
     }
 
 
