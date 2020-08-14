@@ -52,18 +52,13 @@ public class NoticeController {
         return noticeService.query(pageNum, pageSize, startTime, endTime, status, type, title);
     }
 
-
     /**
-     * 插入
-     * @param type
-     * @param text
-     * @param picurl
-     * @param title
-     * @param url
-     * @param menbers:1,2,3,是个数组
+     *
+     * @param noticeDTO
      * @param httpSession
      * @return
      */
+
     @PostMapping("insert")
     public ResultVO insert(@RequestBody NoticeDTO noticeDTO,
                            HttpSession httpSession) {
