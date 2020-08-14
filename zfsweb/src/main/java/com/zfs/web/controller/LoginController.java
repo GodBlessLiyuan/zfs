@@ -78,7 +78,7 @@ public class LoginController {
         String checkCode = getCheckcodeString();
         //将验证码放入HttpSession中
         session.setAttribute("CHECKCODE_SERVER",checkCode);
-
+        System.out.println(checkCode);
         //设置画笔颜色为黄色
         g.setColor(Color.YELLOW);
         //设置字体的小大

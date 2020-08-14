@@ -1,4 +1,4 @@
-package com.zfs.server.constant;
+package com.zfs.common.constant;
 
 /**
  * @author: xiahui
@@ -19,6 +19,12 @@ public class UserVipConstant {
      * 年会员类型
      */
     public static final int YEAR_VIP = 20;
+    //非会员
+    public static final int NOT_VIP = 1;
+    public static final String UserID="userId";
+    public static final String USERVIP="USERVIP";
+    public static final String UserPO="UserPO";
+
 }
 
 

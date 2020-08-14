@@ -1,7 +1,9 @@
 package com.zfs.pay.service.impl;
 
+import com.zfs.common.constant.UserVipConstant;
 import com.zfs.common.utils.LogUtil;
 
+import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.pay.config.WxPayConfig;
 import com.zfs.pay.constant.WxPayConstant;
@@ -10,12 +12,12 @@ import com.zfs.pay.mapper.OrderMapper;
 import com.zfs.pay.mapper.UserVipMapper;
 import com.zfs.pay.mapper.VipCommodityMapper;
 import com.zfs.pay.mapper.WxFeedbackMapper;
-import com.zfs.pay.mapper.UserMapper;
 import com.zfs.pay.pojo.OrderPO;
 import com.zfs.pay.pojo.UserVipPO;
 import com.zfs.pay.pojo.VipCommodityPO;
 import com.zfs.pay.pojo.WxFeedbackPO;
 import com.zfs.pay.service.IWxPayService;
+import com.zfs.pay.utils.RedisMapUtil;
 import com.zfs.pay.utils.UserVipUtil;
 import com.zfs.pay.utils.WxPayUtil;
 import com.zfs.pay.vo.WxPayVO;
@@ -23,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,8 +62,7 @@ public class WxPayServiceImpl implements IWxPayService {
     @Autowired
     private WxPayConfig wxPayConfig;
     @Autowired
-    private UserMapper userMapper;
-
+    private RedisMapUtil redisMapUtil;
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO wxPayOrder(WxPayDTO dto, HttpServletRequest req) {
@@ -155,7 +157,9 @@ public class WxPayServiceImpl implements IWxPayService {
         if (result1 == 0) {
             LogUtil.log(logger, "wxPayNotify", "插入或更新用户会员数据失败", newUserVipVO);
         }
-
+        //删除缓存
+        String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userVipPO.getUserId());
+        redisMapUtil.hdel(key);
         Date endDate = newUserVipVO.getEndTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(endDate);

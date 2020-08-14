@@ -3,9 +3,12 @@ package com.zfs.server.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.zfs.common.constant.UserVipConstant;
 import com.zfs.common.mapper.*;
 import com.zfs.common.pojo.*;
 import com.zfs.common.utils.LogUtil;
+import com.zfs.common.utils.RedisKeyUtil;
+import com.zfs.server.utils.RedisMapUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.dto.LoginDTO;
 import com.zfs.server.service.ILoginService;
@@ -18,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +63,10 @@ public class LoginServiceImpl implements ILoginService {
     private RegisterUserMapper registerUserMapper;
     @Autowired
     private AmqpTemplate template;
-
+    @Autowired
+    private RedisMapUtil redisMapUtil;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO register(LoginDTO dto, HttpServletRequest req) {
@@ -174,7 +181,9 @@ public class LoginServiceImpl implements ILoginService {
         if (result6 == 0) {
             LogUtil.log(logger, "insert", "更新当前用户信息失败", userPO);
         }
-
+        //删除缓存
+        String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userPO.getUserId());
+        redisMapUtil.hdel(key);
         UserDevicePO userDevicePO = userDeviceMapper.queryByDevIdAndUserId(dto.getId(), userPO.getUserId());
         int result7;
         if (userDevicePO == null) {
@@ -261,6 +270,9 @@ public class LoginServiceImpl implements ILoginService {
         userDeviceMapper.signOutByUserId(userPO.getUserId());
         userPO.setRandomStr("");//
         userMapper.updateByPrimaryKey(userPO);
+        //删除缓存
+        String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userPO.getUserId());
+        redisMapUtil.hdel(key);
         return new ResultVO(1000);
     }
 }

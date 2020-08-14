@@ -223,12 +223,12 @@
         AND tf.create_time between #{startTime} AND #{endTime}
       </if>
       <if test="phone != null and phone != ''">
-        AND tf.phone like #{phone} '%'
+        AND tu.phone like #{phone} '%'
       </if>
       <if test="contact != null and contact != ''">
         AND tf.contact like #{contact} '%'
       </if>
     </where>
-    order by tf.create_time desc
+    order by tf.feedback_id desc
   </select>
 </mapper>

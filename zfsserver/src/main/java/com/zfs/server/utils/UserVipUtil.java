@@ -1,7 +1,7 @@
 package com.zfs.server.utils;
 
 import com.zfs.common.pojo.UserVipPO;
-import com.zfs.server.constant.UserVipConstant;
+import com.zfs.common.constant.UserVipConstant;
 
 import java.util.Calendar;
 import java.util.Date;

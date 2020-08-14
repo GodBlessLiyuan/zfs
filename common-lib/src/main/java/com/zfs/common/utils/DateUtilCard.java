@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class DateUtilCard {
     public static final SimpleDateFormat YMD_HMS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final SimpleDateFormat YMD_HM = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     public static final SimpleDateFormat YMD_000 = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
     public static final SimpleDateFormat YMD = new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat YHM = new SimpleDateFormat("yyyy-MM");

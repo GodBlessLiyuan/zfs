@@ -101,29 +101,22 @@ public class FeedbackServiceImpl implements FeedbackService {
             vo.setUserDeviceId(bo.getUserDeviceId());
             vo.setVersioncode(bo.getVersioncode());
 
-            String[] urls=new String[3];
-            if (StringUtils.isEmpty(bo.getUrl1())) {
-                vo.setUrl1(bo.getUrl1());
-                urls[0]=bo.getUrl1();
-            } else {
+            List<String> urls=new ArrayList<>(3);
+            if (!StringUtils.isEmpty(bo.getUrl1())) {
                 vo.setUrl1(publicPath + bo.getUrl1());
-                urls[0]=publicPath + bo.getUrl1();
+                urls.add(publicPath + bo.getUrl1());
             }
-            if (StringUtils.isEmpty(bo.getUrl2())) {
-                vo.setUrl2(bo.getUrl2());
-                urls[1]=bo.getUrl2();
-            } else {
+            if (!StringUtils.isEmpty(bo.getUrl2())) {
                 vo.setUrl2(publicPath + bo.getUrl2());
-                urls[1]=publicPath + bo.getUrl2();
+                urls.add(publicPath + bo.getUrl2());
             }
-            if (StringUtils.isEmpty(bo.getUrl3())) {
-                vo.setUrl3(bo.getUrl3());
-                urls[2]=bo.getUrl3();
-            } else {
+            if (!StringUtils.isEmpty(bo.getUrl3())) {
                 vo.setUrl3(publicPath + bo.getUrl3());
-                urls[2]=publicPath+bo.getUrl3();
+                urls.add(publicPath+bo.getUrl3());
             }
-            vo.setUrls(urls);
+            if(urls.size()>0){
+                vo.setUrls(urls);
+            }
             vos.add(vo);
         }
 
