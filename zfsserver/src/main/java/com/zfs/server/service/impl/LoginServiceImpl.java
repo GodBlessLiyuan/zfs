@@ -184,7 +184,7 @@ public class LoginServiceImpl implements ILoginService {
         //删除缓存
         String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userPO.getUserId());
 //        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
-        stringRedisTemplate.opsForHash().delete(key,UserVipConstant.USERVIP);
+        stringRedisTemplate.opsForHash().delete(key,UserVipConstant.UserPO);
         UserDevicePO userDevicePO = userDeviceMapper.queryByDevIdAndUserId(dto.getId(), userPO.getUserId());
         int result7;
         if (userDevicePO == null) {
@@ -274,7 +274,7 @@ public class LoginServiceImpl implements ILoginService {
         //删除缓存
         String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userPO.getUserId());
 //        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
-        stringRedisTemplate.opsForHash().delete(key,UserVipConstant.USERVIP);
+        stringRedisTemplate.opsForHash().delete(key,UserVipConstant.UserPO);
         return new ResultVO(1000);
     }
 }
