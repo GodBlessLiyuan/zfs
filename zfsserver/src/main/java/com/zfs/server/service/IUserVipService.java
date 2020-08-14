@@ -1,5 +1,7 @@
 package com.zfs.server.service;
 
+import com.zfs.common.pojo.UserPO;
+import com.zfs.common.pojo.UserVipPO;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.dto.UserVipDTO;
 
@@ -16,4 +18,18 @@ public interface IUserVipService {
      * @return
      */
     ResultVO validate(UserVipDTO dto);
+
+    /**
+     * 获取用户信息
+     * @param uid
+     * @return
+     */
+    UserVipPO queryByUserId(long uid);
+
+    /**
+     * 获取用户信息
+     * @param uid
+     * @return
+     */
+    UserPO selectByPrimaryKey(long uid);
 }

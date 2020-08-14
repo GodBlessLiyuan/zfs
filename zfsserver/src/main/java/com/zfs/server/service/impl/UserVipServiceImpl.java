@@ -1,22 +1,30 @@
 package com.zfs.server.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.zfs.common.mapper.UserDeviceMapper;
+import com.zfs.common.mapper.UserMapper;
 import com.zfs.common.mapper.UserVipMapper;
 import com.zfs.common.pojo.UserDevicePO;
+import com.zfs.common.pojo.UserPO;
 import com.zfs.common.pojo.UserVipPO;
 import com.zfs.common.utils.LogUtil;
+import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.constant.CommonConstant;
+import com.zfs.common.constant.UserVipConstant;
 import com.zfs.server.dto.UserVipDTO;
 import com.zfs.server.service.IUserVipService;
+import com.zfs.common.utils.RedisMapUtil;
+import com.zfs.common.utils.StringToObjUtil;
 import com.zfs.server.vo.UserVipVO;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: xiahui
@@ -32,6 +40,10 @@ public class UserVipServiceImpl implements IUserVipService {
     private UserVipMapper userVipMapper;
     @Resource
     private UserDeviceMapper userDeviceMapper;
+    @Autowired
+    private UserMapper userMapper;
+    @Resource
+    private RedisMapUtil cache;
 
     @Override
     public ResultVO validate(UserVipDTO dto) {
@@ -52,7 +64,7 @@ public class UserVipServiceImpl implements IUserVipService {
             return ResultVO.serverInnerError();
         }
 
-        UserVipPO userVipPO = userVipMapper.queryByUserId(dto.getUd());
+        UserVipPO userVipPO = queryByUserId(dto.getUd());
         if (null == userVipPO || CommonConstant.NONE_VIP == userVipPO.getViptypeId()) {
             // 非会员
             return new ResultVO(1005);
@@ -91,5 +103,36 @@ public class UserVipServiceImpl implements IUserVipService {
         }
 
         return new ResultVO(1005);
+    }
+
+    @Override
+    public UserVipPO queryByUserId(long uid){
+        String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,uid);
+        String s_userVip = cache.hget(key, UserVipConstant.USERVIP);
+        if(!StringUtils.isEmpty(s_userVip)){
+            UserVipPO userVipPO = StringToObjUtil.strToObj(s_userVip,UserVipPO.class);
+            if(userVipPO != null){
+                return userVipPO;
+            }
+        }
+        UserVipPO userVipPO = userVipMapper.queryByUserId(uid);
+        cache.hset(key, UserVipConstant.USERVIP,userVipPO,1, TimeUnit.HOURS);
+        return userVipPO;
+    }
+
+    @Override
+    public UserPO selectByPrimaryKey(long uid) {
+        String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,uid);
+        String s_userPO = cache.hget(key, UserVipConstant.UserPO);
+        if(!StringUtils.isEmpty(s_userPO)){
+            UserPO userPO = StringToObjUtil.strToObj(s_userPO,UserPO.class);
+            if(userPO != null){
+                return userPO;
+            }
+        }
+
+        UserPO userPO = userMapper.selectByPrimaryKey(uid);
+        cache.hset(key, UserVipConstant.UserPO,userPO,1, TimeUnit.HOURS);
+        return userPO;
     }
 }

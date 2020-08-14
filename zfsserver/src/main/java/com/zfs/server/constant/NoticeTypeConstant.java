@@ -16,5 +16,5 @@ public class NoticeTypeConstant {
     public static final String MEMBER="MEMBER";
     public static final String HALF_YEAR_REGISTER="HALF_YEAR_REGISTER";
     public static final String ONE_MONTH_REGISTER="ONE_MONTH_REGISTER";
-
+    public static final String NOTICE_HASH_KEY="NOTICE_HASH_KEY";
 }

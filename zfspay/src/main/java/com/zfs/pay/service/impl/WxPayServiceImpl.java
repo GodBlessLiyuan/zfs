@@ -2,8 +2,11 @@ package com.zfs.pay.service.impl;
 
 import com.zfs.common.utils.LogUtil;
 
+import com.zfs.common.utils.RedisKeyUtil;
+import com.zfs.common.utils.RedisMapUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.pay.config.WxPayConfig;
+import com.zfs.pay.constant.UserVipConstant;
 import com.zfs.pay.constant.WxPayConstant;
 import com.zfs.pay.dto.WxPayDTO;
 import com.zfs.pay.mapper.OrderMapper;
@@ -59,8 +62,7 @@ public class WxPayServiceImpl implements IWxPayService {
     @Autowired
     private WxPayConfig wxPayConfig;
     @Autowired
-    private UserMapper userMapper;
-
+    private RedisMapUtil redisMapUtil;
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO wxPayOrder(WxPayDTO dto, HttpServletRequest req) {
@@ -155,7 +157,9 @@ public class WxPayServiceImpl implements IWxPayService {
         if (result1 == 0) {
             LogUtil.log(logger, "wxPayNotify", "插入或更新用户会员数据失败", newUserVipVO);
         }
-
+        //删除缓存
+        String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userVipPO.getUserId());
+        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
         Date endDate = newUserVipVO.getEndTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(endDate);
