@@ -1,11 +1,16 @@
 package com.zfs.web.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.zfs.web.dto.NoticeDTO;
 import com.zfs.web.service.NoticeService;
 import com.zfs.common.vo.ResultVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -55,26 +60,30 @@ public class NoticeController {
      * @param picurl
      * @param title
      * @param url
-     * @param showTime
-     * @param startTime
-     * @param endTime
      * @param menbers:1,2,3,是个数组
      * @param httpSession
      * @return
      */
     @PostMapping("insert")
-    public ResultVO insert(@RequestParam(value = "type") Byte type,
-                           @RequestParam(value = "text", required = false) String text,
-                           @RequestParam(value = "picurl", required = false)MultipartFile picurl,
-                           @RequestParam(value = "title") String title,
-                           @RequestParam(value = "url", required = false) String url,
-                           @RequestParam(value = "showTime") String showTime,
-                           @RequestParam(value = "endShowTime") String endShowTime,
-                           @RequestParam(value = "startTime") String startTime,
-                           @RequestParam(value = "endTime") String endTime,
-                           @RequestParam(value = "menbers")String menbers,
+    public ResultVO insert(@RequestBody NoticeDTO noticeDTO,
                            HttpSession httpSession) {
-        return this.noticeService.insert(type, text, picurl, title, url,endShowTime, showTime, startTime, endTime,menbers, httpSession);
+        if(noticeDTO.getNotificationperiod()==null||noticeDTO.getNotificationperiod().length!=2){
+            return new ResultVO(1003);
+        }
+        if(noticeDTO.getEffectivetime()==null||noticeDTO.getEffectivetime().length!=2){
+            return new ResultVO(1003);
+        }
+        if(noticeDTO.getMenbers()==null&&noticeDTO.getMenbers().length==0){
+            return new ResultVO(1003);
+        }
+        String showTime=noticeDTO.getNotificationperiod()[0];
+        String endShowTime=noticeDTO.getNotificationperiod()[1];
+        String startTime=noticeDTO.getEffectivetime()[0];
+        String endTime=noticeDTO.getEffectivetime()[1];
+        String menber = JSON.toJSONString(noticeDTO.getMenbers());
+        menber=menber.substring(1,menber.length()-1);
+        return this.noticeService.insert(noticeDTO.getType(),noticeDTO.getText(),noticeDTO.getPicurl(),noticeDTO.getTitle(),
+                noticeDTO.getUrl(),endShowTime, showTime, startTime, endTime,menber, httpSession);
     }
 
 
@@ -111,4 +120,5 @@ public class NoticeController {
     public ResultVO queryById(@RequestParam(value = "noticeId") Integer noticeId){
         return this.noticeService.queryById(noticeId);
     }
+
 }
