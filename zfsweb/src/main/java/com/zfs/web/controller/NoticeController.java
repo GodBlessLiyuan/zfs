@@ -68,7 +68,7 @@ public class NoticeController {
         if(noticeDTO.getEffectivetime()==null||noticeDTO.getEffectivetime().length!=2){
             return new ResultVO(1003);
         }
-        if(noticeDTO.getMenbers()==null&&noticeDTO.getMenbers().length==0){
+        if(noticeDTO.getMenbers()==null||noticeDTO.getMenbers().length==0){
             return new ResultVO(1003);
         }
         String showTime=noticeDTO.getNotificationperiod()[0];

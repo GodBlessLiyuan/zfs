@@ -2,6 +2,7 @@ package com.zfs.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.zfs.common.bo.FeedbackBO;
+import com.zfs.common.bo.UserBO;
 import com.zfs.common.mapper.AppMapper;
 import com.zfs.common.mapper.FeedbackMapper;
 import com.zfs.common.mapper.UserMapper;
@@ -13,13 +14,16 @@ import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.service.FeedbackService;
 import com.zfs.web.utils.DateUtil;
+import com.zfs.web.utils.ExcelUtil;
 import com.zfs.web.vo.FeedbackVO;
 import io.micrometer.core.instrument.util.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,34 +54,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Resource
     private StringRedisTemplate template;
 
-
-    /**
-     * 查询
-     *
-     * @param start
-     * @param length
-     * @param startTime
-     * @param endTime
-     * @param phone
-     * @param contact
-     * @return
-     */
-    @Override
-    public ResultVO query(Integer start, Integer length, String startTime, String endTime, String phone, String contact) {
-
-        // 分页
-        Page<FeedbackVO> page = PageHelper.startPage(start, length);
-
-        // 创建map对象，封装查询条件，作为动态sql语句的参数
-        Map<String, Object> map = new HashMap<>(4);
-        map.put("startTime", startTime);
-        map.put("endTime", DateUtil.str2str1(endTime));
-        map.put("phone", phone);
-        map.put("contact", contact);
-
-        // 按照条件查询数据
-        List<FeedbackBO> bos = this.feedbackMapper.query(map);
-
+    private List<FeedbackVO> queryPos2Vos(List<FeedbackBO> bos){
         // po转换为vo
         List<FeedbackVO> vos = new ArrayList<>();
         for (FeedbackBO bo : bos) {
@@ -119,11 +96,79 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
             vos.add(vo);
         }
+        return vos;
+    }
+    /**
+     * 查询
+     *
+     * @param start
+     * @param length
+     * @param startTime
+     * @param endTime
+     * @param phone
+     * @param contact
+     * @return
+     */
+    @Override
+    public ResultVO query(Integer start, Integer length, String startTime, String endTime, String phone, String contact) {
 
+        // 分页
+        Page<FeedbackVO> page = PageHelper.startPage(start, length);
+
+        // 创建map对象，封装查询条件，作为动态sql语句的参数
+        Map<String, Object> map = new HashMap<>(4);
+        map.put("startTime", startTime);
+        map.put("endTime", DateUtil.str2str1(endTime));
+        map.put("phone", phone);
+        map.put("contact", contact);
+
+        // 按照条件查询数据
+        List<FeedbackBO> bos = this.feedbackMapper.query(map);
+        List<FeedbackVO> vos=queryPos2Vos(bos);
         //根据分页查询的结果，封装最终的返回结果
         return new ResultVO(1000, new PageInfoVO<>(page.getTotal(), vos));
     }
 
+    @Override
+    public ResultVO export(HttpServletResponse response, String startTime, String endTime, String phone, String contact) {
+        // 创建map对象，封装查询条件，作为动态sql语句的参数
+        Map<String, Object> map = new HashMap<>(4);
+        map.put("startTime", startTime);
+        map.put("endTime", DateUtil.str2str1(endTime));
+        map.put("phone", phone);
+        map.put("contact", contact);
+
+        // 按照条件查询数据
+        List<FeedbackBO> bos = this.feedbackMapper.query(map);
+        List<FeedbackVO> vos=queryPos2Vos(bos);
+        HSSFWorkbook wb = this.toExcel(vos);
+        ExcelUtil.sendToClient(wb, response);
+        return new ResultVO(1000);
+    }
+
+    private HSSFWorkbook toExcel(List<FeedbackVO> vos) {
+        //表头
+        String[] title = {"序号", "用户账号", "厂商", "型号", "系统版本", "应用版本", "提交时间","联系方式", "反馈内容"};
+        //sheet表名
+        String sheetname = "问题反馈信息";
+
+        String[][] content = new String[vos.size()][title.length];
+        for (int i = 0; i < vos.size(); i++) {
+            FeedbackVO vo = vos.get(i);
+//            content[i][0] = String.valueOf(i + 1);
+//            content[i][1] = vo.getPhone();
+//            content[i][2] = vo.getManufacturer();
+//            content[i][3] = vo.getAndroidmodel();
+//            content[i][4] = vo.getBuildrelease();
+//            content[i][5] = vo.getVersioncode().toString();
+//            content[i][6] = vo.get;
+//            content[i][7] = bo.getAndroidModel();
+        }
+
+        //创建HSSFWorkbook
+        HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetname, title, content, null);
+        return wb;
+    }
 
     /**
      * 根据ID，从t_user表中查询出手机号码（账号）
