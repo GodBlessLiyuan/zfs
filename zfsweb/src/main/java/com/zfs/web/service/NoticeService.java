@@ -5,6 +5,7 @@ import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -21,9 +22,11 @@ public interface NoticeService {
 
     ResultVO updateStatus(Integer noticeId, Integer status, HttpSession httpSession);
 
-    ResultVO insert(Byte type, String text, MultipartFile picurl, String title, String url,
+    ResultVO insert(Byte type, String text, String picurl, String title, String url,
                     String endShowTime,String showTime, String startTime, String endTime,
                     String menbers,HttpSession httpSession);
 
     ResultVO queryById(Integer noticeId);
+
+    ResultVO upload(HttpServletRequest request, MultipartFile file);
 }

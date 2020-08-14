@@ -16,14 +16,17 @@ import com.zfs.web.service.NoticeService;
 import com.zfs.web.utils.FileUtil;
 import com.zfs.common.vo.ResultVO;
 import io.micrometer.core.instrument.util.StringUtils;
+import org.aspectj.weaver.ast.Not;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -53,7 +56,6 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Value("${file.publicPath}")
     private String publicPath;
-
     /**
      * 查询
      *
@@ -129,16 +131,14 @@ public class NoticeServiceImpl implements NoticeService {
      * @return
      */
     @Override
-    public ResultVO insert(Byte type, String text, MultipartFile picurl, String title, String url, String showTime,
+    public ResultVO insert(Byte type, String text, String picurl, String title, String url, String showTime,
                      String endShowTime, String startTime, String endTime,String menbers, HttpSession httpSession) {
 
         NoticePO po = new NoticePO();
         po.setType(type);
         po.setText(text);
-        if (null == picurl) {
-            po.setPicurl(null);
-        } else {
-            po.setPicurl(FileUtil.uploadFile(picurl, iconDir, "notice"));
+        if(!StringUtils.isEmpty(picurl)){
+            po.setPicurl(picurl.split(publicPath)[1]);
         }
         po.setTitle(title);
         po.setUrl(url);
@@ -147,7 +147,7 @@ public class NoticeServiceImpl implements NoticeService {
         po.setStartTime(DateUtil.str2date1(startTime));
         po.setEndTime(DateUtil.str2date2(endTime));
         po.setUpdateTime(new Date());
-        po.setaId(OperatorUtil.getOperatorId(httpSession));
+        po.setaId(1);
         po.setStatus(1);
         //会员类别数组
         po.setMenbers(menbers);
@@ -160,7 +160,6 @@ public class NoticeServiceImpl implements NoticeService {
 
         return new ResultVO(1000);
     }
-
 
     /**
      * 修改状态
@@ -249,6 +248,11 @@ public class NoticeServiceImpl implements NoticeService {
         return this.adminUserMapper.queryUsernameByAid(aId);
     }
 
+    @Override
+    public ResultVO upload(HttpServletRequest request, MultipartFile file) {
+        String picture = publicPath + FileUtil.uploadFile(file, iconDir, "notice");
+        return new ResultVO(1000,picture);
+    }
 
     /**
      * 删除Redis
