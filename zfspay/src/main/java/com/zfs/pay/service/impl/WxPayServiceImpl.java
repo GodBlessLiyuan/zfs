@@ -17,6 +17,7 @@ import com.zfs.pay.pojo.UserVipPO;
 import com.zfs.pay.pojo.VipCommodityPO;
 import com.zfs.pay.pojo.WxFeedbackPO;
 import com.zfs.pay.service.IWxPayService;
+import com.zfs.pay.utils.RedisMapUtil;
 import com.zfs.pay.utils.UserVipUtil;
 import com.zfs.pay.utils.WxPayUtil;
 import com.zfs.pay.vo.WxPayVO;
@@ -61,7 +62,7 @@ public class WxPayServiceImpl implements IWxPayService {
     @Autowired
     private WxPayConfig wxPayConfig;
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisMapUtil redisMapUtil;
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO wxPayOrder(WxPayDTO dto, HttpServletRequest req) {
@@ -158,8 +159,7 @@ public class WxPayServiceImpl implements IWxPayService {
         }
         //删除缓存
         String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userVipPO.getUserId());
-//        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
-        stringRedisTemplate.opsForHash().delete(key, UserVipConstant.USERVIP);
+        redisMapUtil.hdel(key);
         Date endDate = newUserVipVO.getEndTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(endDate);

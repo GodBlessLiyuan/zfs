@@ -25,6 +25,7 @@ import com.zfs.pay.pojo.OrderPO;
 import com.zfs.pay.pojo.UserVipPO;
 import com.zfs.pay.pojo.VipCommodityPO;
 import com.zfs.pay.service.AlipayService;
+import com.zfs.pay.utils.RedisMapUtil;
 import com.zfs.pay.utils.UserVipUtil;
 import com.zfs.pay.utils.WxPayUtil;
 import org.slf4j.Logger;
@@ -86,7 +87,7 @@ public class AlipayServiceImpl implements AlipayService {
     @Value("${alipayconfig.alipay_notify}")
     private String ALIPAY_NOTIFY;
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisMapUtil redisMapUtil;
     /**
      * 客户端携带商品ID访问服务端，生成订单信息，并加签返回给客户端
      * @param dto
@@ -361,8 +362,7 @@ public class AlipayServiceImpl implements AlipayService {
         }
         //删除缓存
         String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userVipPO.getUserId());
-//        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
-        stringRedisTemplate.opsForHash().delete(key, UserVipConstant.USERVIP);
+        redisMapUtil.hdel(key);
         Date endDate = newUserVipVO.getEndTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(endDate);
