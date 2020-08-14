@@ -16,7 +16,7 @@ import com.zfs.server.dto.NoticeDTO;
 import com.zfs.server.service.INoticeService;
 import com.zfs.server.service.IUserVipService;
 import com.zfs.server.utils.RedisCacheUtil;
-import com.zfs.common.utils.RedisMapUtil;
+import com.zfs.server.utils.RedisMapUtil;
 import com.zfs.server.vo.NoticeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,11 +60,6 @@ public class NoticeServiceImpl implements INoticeService {
      * 可以将数据缓存起来，则应该查询通知结束时间之前的通知数据。
      * 缓存时间久了则App端存在大量的过期数据，App端加判断，可以保证通知的正确性，这里缓存前缀加上时间
      * */
-
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private UserVipMapper userVipMapper;
     @Value("${notice.cacheTime}")
     private Integer cacheTime;
 

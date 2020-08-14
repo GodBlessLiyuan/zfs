@@ -8,7 +8,7 @@ import com.zfs.common.mapper.*;
 import com.zfs.common.pojo.*;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
-import com.zfs.common.utils.RedisMapUtil;
+import com.zfs.server.utils.RedisMapUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.dto.LoginDTO;
 import com.zfs.server.service.ILoginService;
@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,6 +65,8 @@ public class LoginServiceImpl implements ILoginService {
     private AmqpTemplate template;
     @Autowired
     private RedisMapUtil redisMapUtil;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVO register(LoginDTO dto, HttpServletRequest req) {
@@ -180,8 +183,8 @@ public class LoginServiceImpl implements ILoginService {
         }
         //删除缓存
         String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userPO.getUserId());
-        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
-
+//        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
+        stringRedisTemplate.opsForHash().delete(key,UserVipConstant.USERVIP);
         UserDevicePO userDevicePO = userDeviceMapper.queryByDevIdAndUserId(dto.getId(), userPO.getUserId());
         int result7;
         if (userDevicePO == null) {
@@ -270,7 +273,8 @@ public class LoginServiceImpl implements ILoginService {
         userMapper.updateByPrimaryKey(userPO);
         //删除缓存
         String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userPO.getUserId());
-        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
+//        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
+        stringRedisTemplate.opsForHash().delete(key,UserVipConstant.USERVIP);
         return new ResultVO(1000);
     }
 }

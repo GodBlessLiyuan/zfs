@@ -9,12 +9,11 @@ import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 
 
+import com.zfs.common.constant.UserVipConstant;
 import com.zfs.common.utils.LogUtil;
 
 import com.zfs.common.utils.RedisKeyUtil;
-import com.zfs.common.utils.RedisMapUtil;
 import com.zfs.common.vo.ResultVO;
-import com.zfs.pay.constant.UserVipConstant;
 import com.zfs.pay.dto.AlipayDTO;
 import com.zfs.pay.mapper.AliFeedbackMapper;
 import com.zfs.pay.mapper.OrderMapper;
@@ -33,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
@@ -86,8 +86,7 @@ public class AlipayServiceImpl implements AlipayService {
     @Value("${alipayconfig.alipay_notify}")
     private String ALIPAY_NOTIFY;
     @Autowired
-    private RedisMapUtil redisMapUtil;
-
+    private StringRedisTemplate stringRedisTemplate;
     /**
      * 客户端携带商品ID访问服务端，生成订单信息，并加签返回给客户端
      * @param dto
@@ -362,8 +361,8 @@ public class AlipayServiceImpl implements AlipayService {
         }
         //删除缓存
         String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userVipPO.getUserId());
-        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
-
+//        redisMapUtil.hdel(key,UserVipConstant.USERVIP);
+        stringRedisTemplate.opsForHash().delete(key, UserVipConstant.USERVIP);
         Date endDate = newUserVipVO.getEndTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(endDate);

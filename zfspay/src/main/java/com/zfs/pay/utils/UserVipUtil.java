@@ -1,6 +1,6 @@
 package com.zfs.pay.utils;
 
-import com.zfs.pay.constant.UserVipConstant;
+import com.zfs.common.constant.UserVipConstant;
 import com.zfs.pay.pojo.UserVipPO;
 
 import java.util.Calendar;

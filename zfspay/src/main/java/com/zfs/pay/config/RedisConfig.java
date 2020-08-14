@@ -1,4 +1,4 @@
-package com.zfs.server.config;
+package com.zfs.pay.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

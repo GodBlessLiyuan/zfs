@@ -1,4 +1,4 @@
-package com.zfs.server.config;
+package com.zfs.server.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

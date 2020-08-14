@@ -3,7 +3,6 @@ package com.zfs.server.controller;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.dto.NoticeDTO;
 import com.zfs.server.service.INoticeService;
-import com.zfs.server.utils.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

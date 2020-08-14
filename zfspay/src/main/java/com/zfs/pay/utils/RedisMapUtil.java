@@ -1,4 +1,4 @@
-package com.zfs.server.utils;
+package com.zfs.pay.utils;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.data.redis.core.RedisTemplate;

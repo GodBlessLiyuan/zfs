@@ -49,9 +49,9 @@ public class LoginController {
 
     @PostMapping("register")
     public ResultVO register(@RequestBody LoginDTO dto, HttpServletRequest req) {
-        if (!VerifyUtil.checkDeviceId(dto) || !VerifyUtil.checkPhone(dto.getPh())) {
-            return ResultVO.varifyDevice();
-        }
+//        if (!VerifyUtil.checkDeviceId(dto) || !VerifyUtil.checkPhone(dto.getPh())) {
+//            return ResultVO.varifyDevice();
+//        }
 
         return loginService.register(dto, req);
     }
