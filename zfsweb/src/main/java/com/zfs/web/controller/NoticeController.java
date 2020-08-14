@@ -70,7 +70,7 @@ public class NoticeController {
         if(noticeDTO.getNotificationperiod()==null||noticeDTO.getNotificationperiod().length!=2){
             return new ResultVO(1003);
         }
-        if(noticeDTO.getEffectivetime()==null||noticeDTO.getEffectivetime().length==2){
+        if(noticeDTO.getEffectivetime()==null||noticeDTO.getEffectivetime().length!=2){
             return new ResultVO(1003);
         }
         if(noticeDTO.getMenbers()==null&&noticeDTO.getMenbers().length==0){
