@@ -67,13 +67,19 @@ public class NoticeController {
     @PostMapping("insert")
     public ResultVO insert(@RequestBody NoticeDTO noticeDTO,
                            HttpSession httpSession) {
+        if(noticeDTO.getNotificationperiod()==null||noticeDTO.getNotificationperiod().length!=2){
+            return new ResultVO(1003);
+        }
+        if(noticeDTO.getEffectivetime()==null||noticeDTO.getEffectivetime().length==2){
+            return new ResultVO(1003);
+        }
+        if(noticeDTO.getMenbers()==null&&noticeDTO.getMenbers().length==0){
+            return new ResultVO(1003);
+        }
         String showTime=noticeDTO.getNotificationperiod()[0];
         String endShowTime=noticeDTO.getNotificationperiod()[1];
         String startTime=noticeDTO.getEffectivetime()[0];
         String endTime=noticeDTO.getEffectivetime()[1];
-        if(noticeDTO.getMenbers()==null&&noticeDTO.getMenbers().length==0){
-          return new ResultVO(1003);
-        }
         String menber = JSON.toJSONString(noticeDTO.getMenbers());
         menber=menber.substring(1,menber.length()-1);
         return this.noticeService.insert(noticeDTO.getType(),noticeDTO.getText(),noticeDTO.getPicurl(),noticeDTO.getTitle(),

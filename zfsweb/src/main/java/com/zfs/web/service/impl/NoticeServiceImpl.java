@@ -147,7 +147,7 @@ public class NoticeServiceImpl implements NoticeService {
         po.setStartTime(DateUtil.str2date1(startTime));
         po.setEndTime(DateUtil.str2date2(endTime));
         po.setUpdateTime(new Date());
-        po.setaId(1);
+        po.setaId(OperatorUtil.getOperatorId(httpSession));
         po.setStatus(1);
         //会员类别数组
         po.setMenbers(menbers);
