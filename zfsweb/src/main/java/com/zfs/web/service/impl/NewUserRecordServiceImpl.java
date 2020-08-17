@@ -51,7 +51,7 @@ public class NewUserRecordServiceImpl implements INewUserRecordService {
         //表头
         String[] title = {"序号", "手机号", "赠送时间", "赠送产品类型", "赠送产品天数"};
         //sheet表名
-        String sheetname = "问题反馈信息";
+        String sheetname = "新用户赠送记录";
 
         String[][] content = new String[pos.size()][title.length];
         for (int i = 0; i < pos.size(); i++) {
