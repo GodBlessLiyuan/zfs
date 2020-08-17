@@ -58,7 +58,8 @@ public class PluginController {
                            @RequestParam(value = "appId") int appId,
                            @RequestParam(value = "softChannel") int[] softChannel,
                            @RequestParam(value = "context") String context,
-                           @RequestParam(value = "extra") String extra, HttpServletRequest req) {
+                           @RequestParam(value = "extra") String extra,
+                           HttpServletRequest req) {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {

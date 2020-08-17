@@ -15,4 +15,5 @@ public class PluginDTO extends VerifyDTO {
      * 插件版本
      */
     private Integer pluginv;
+    private String pluginpkg;
 }

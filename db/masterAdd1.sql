@@ -3,6 +3,7 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 /* Drop Tables */
 
 DROP TABLE IF EXISTS m_register_user;
+DROP TABLE IF EXISTS t_phone_brand;
 DROP TABLE IF EXISTS t_service_number;
 
 
@@ -24,6 +25,18 @@ CREATE TABLE m_register_user
 );
 
 
+CREATE TABLE t_phone_brand
+(
+	pm_id bigint unsigned NOT NULL AUTO_INCREMENT,
+	model char(16),
+	manufacturer char(16),
+	name char(16),
+	brand char(16),
+	PRIMARY KEY (pm_id),
+	UNIQUE (pm_id)
+);
+
+
 CREATE TABLE t_service_number
 (
 	svnm_id bigint NOT NULL AUTO_INCREMENT,
@@ -32,8 +45,8 @@ CREATE TABLE t_service_number
 	update_time datetime,
 	a_id bigint unsigned,
 	username char(32),
-	-- 1ï¼šä¸åˆ é™¤ï¼Œ2ï¼šåˆ é™¤
-	dr tinyint COMMENT '1ï¼šä¸åˆ é™¤ï¼Œ2ï¼šåˆ é™¤',
+	-- 1£º²»É¾³ı£¬2£ºÉ¾³ı
+	dr tinyint COMMENT '1£º²»É¾³ı£¬2£ºÉ¾³ı',
 	PRIMARY KEY (svnm_id)
 );
 

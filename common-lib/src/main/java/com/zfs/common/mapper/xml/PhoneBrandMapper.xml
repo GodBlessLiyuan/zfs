@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfs.common.mapper.PhoneBrandMapper">
+  <resultMap id="BaseResultMap" type="com.zfs.common.pojo.PhoneBrandPO">
+    <id column="pm_id" jdbcType="BIGINT" property="pmId" />
+    <result column="model" jdbcType="CHAR" property="model" />
+    <result column="manufacturer" jdbcType="CHAR" property="manufacturer" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="brand" jdbcType="CHAR" property="brand" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pm_id, model, manufacturer, `name`, brand
+  </sql>
+  <select id="queryAll"  resultMap="BaseResultMap">
+    select  model, manufacturer, `name`, brand
+    from t_phone_brand
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_phone_brand
+    where pm_id = #{pmId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_phone_brand
+    where pm_id = #{pmId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zfs.common.pojo.PhoneBrandPO">
+    insert into t_phone_brand (pm_id, model, manufacturer, 
+      `name`, brand)
+    values (#{pmId,jdbcType=BIGINT}, #{model,jdbcType=CHAR}, #{manufacturer,jdbcType=CHAR}, 
+      #{name,jdbcType=CHAR}, #{brand,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zfs.common.pojo.PhoneBrandPO">
+    insert into t_phone_brand
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pmId != null">
+        pm_id,
+      </if>
+      <if test="model != null">
+        model,
+      </if>
+      <if test="manufacturer != null">
+        manufacturer,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pmId != null">
+        #{pmId,jdbcType=BIGINT},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=CHAR},
+      </if>
+      <if test="manufacturer != null">
+        #{manufacturer,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.PhoneBrandPO">
+    update t_phone_brand
+    <set>
+      <if test="model != null">
+        model = #{model,jdbcType=CHAR},
+      </if>
+      <if test="manufacturer != null">
+        manufacturer = #{manufacturer,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=CHAR},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=CHAR},
+      </if>
+    </set>
+    where pm_id = #{pmId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zfs.common.pojo.PhoneBrandPO">
+    update t_phone_brand
+    set model = #{model,jdbcType=CHAR},
+      manufacturer = #{manufacturer,jdbcType=CHAR},
+      `name` = #{name,jdbcType=CHAR},
+      brand = #{brand,jdbcType=CHAR}
+    where pm_id = #{pmId,jdbcType=BIGINT}
+  </update>
+</mapper>
