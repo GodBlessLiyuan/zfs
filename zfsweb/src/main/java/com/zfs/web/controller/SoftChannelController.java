@@ -42,6 +42,6 @@ public class SoftChannelController {
     @PostMapping("insert")
     public ResultVO insert(@RequestParam(value = "channelName") String channelName,
                            @RequestParam(value = "extra") String extra) {
-        return new ResultVO(1000,service.insert(channelName, extra));
+        return service.insert(channelName, extra);
     }
 }
