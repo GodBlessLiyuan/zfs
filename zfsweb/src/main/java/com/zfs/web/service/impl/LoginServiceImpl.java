@@ -118,7 +118,7 @@ public class LoginServiceImpl implements LoginService {
             response.addCookie(cookie);
             response.addCookie(userInfoCookie);
 
-            return new ResultVO(1000);
+            return new ResultVO(1000,dto);
         }
     }
 
