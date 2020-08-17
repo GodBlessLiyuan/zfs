@@ -3,6 +3,7 @@ package com.zfs.web.service;
 import com.zfs.web.vo.SoftChannelVO;
 import com.zfs.common.vo.ResultVO;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -35,5 +36,5 @@ public interface ISoftChannelService {
      * @param extra 备注
      * @return
      */
-    ResultVO insert(String channelName, String extra);
+    ResultVO insert(String channelName, String extra, HttpSession session);
 }

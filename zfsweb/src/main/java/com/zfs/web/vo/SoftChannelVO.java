@@ -24,7 +24,7 @@ public class SoftChannelVO implements Serializable {
     private String extra;
     private Date createTime;
     private Date updateTime;
-
+    private String opsName;
     public static SoftChannelVO convert(SoftChannelPO po) {
         SoftChannelVO vo = new SoftChannelVO();
 
@@ -33,7 +33,7 @@ public class SoftChannelVO implements Serializable {
         vo.setExtra(po.getExtra());
         vo.setCreateTime(po.getCreateTime());
         vo.setUpdateTime(po.getUpdateTime());
-
+        vo.setOpsName(po.getOpsName());
         return vo;
     }
 

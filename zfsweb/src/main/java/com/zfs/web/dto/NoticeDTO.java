@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class NoticeDTO implements Serializable {
      private Byte type;
      private String text;
-     private String picurl;
+     private String avatar;
      private String title;
      private String url;
      private String[] effectivetime;

@@ -77,7 +77,7 @@ public class NoticeController {
         String endTime=noticeDTO.getEffectivetime()[1];
         String menber = JSON.toJSONString(noticeDTO.getMenbers());
         menber=menber.substring(1,menber.length()-1);
-        return this.noticeService.insert(noticeDTO.getType(),noticeDTO.getText(),noticeDTO.getPicurl(),noticeDTO.getTitle(),
+        return this.noticeService.insert(noticeDTO.getType(),noticeDTO.getText(),noticeDTO.getAvatar(),noticeDTO.getTitle(),
                 noticeDTO.getUrl(),endShowTime, showTime, startTime, endTime,menber, request.getSession());
     }
 

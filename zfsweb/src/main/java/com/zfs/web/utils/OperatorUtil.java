@@ -22,4 +22,8 @@ public class OperatorUtil {
         int aId = adminUserDTO.getaId();
         return aId;
     }
+    public static AdminUserDTO getOperatorPO(HttpSession httpSession) {
+        AdminUserDTO adminUserDTO = (AdminUserDTO) httpSession.getAttribute(Constant.ADMIN_USER);
+        return adminUserDTO;
+    }
 }
