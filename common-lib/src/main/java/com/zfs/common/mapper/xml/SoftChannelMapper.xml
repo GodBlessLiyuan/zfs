@@ -7,9 +7,11 @@
         <result column="extra" jdbcType="CHAR" property="extra"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="ops_id" jdbcType="INTEGER" property="opsID"/>
+        <result column="ops_name" jdbcType="CHAR" property="opsName"/>
     </resultMap>
     <sql id="Base_Column_List">
-    soft_channel_id as softChannelId, `name`, extra, create_time as createTime, update_time as updateTime
+    soft_channel_id, `name`, extra, create_time , update_time,ops_id,ops_name
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -23,9 +25,10 @@
   </delete>
     <insert id="insert" parameterType="com.zfs.common.pojo.SoftChannelPO">
     insert into t_soft_channel (soft_channel_id, `name`, extra, 
-      create_time, update_time)
+      create_time, update_time,ops_id,ops_name)
     values (#{softChannelId,jdbcType=INTEGER}, #{name,jdbcType=CHAR}, #{extra,jdbcType=CHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{opsID,jdbcType=INTEGER},
+     #{opsName,jdbcType=CHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.zfs.common.pojo.SoftChannelPO">
         insert into t_soft_channel
@@ -91,7 +94,7 @@
     where soft_channel_id = #{softChannelId,jdbcType=INTEGER}
   </update>
 
-    <select id="query" resultType="com.zfs.common.pojo.SoftChannelPO">
+    <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_soft_channel
@@ -99,7 +102,7 @@
             <if test="name!=null and name!=''">AND `name` like '%' #{name} '%'</if>
         </where>
     </select>
-    <select id="queryAll" resultType="com.zfs.common.pojo.SoftChannelPO">
+    <select id="queryAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_soft_channel order by soft_channel_id asc

@@ -17,6 +17,23 @@ public class SoftChannelPO implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+    private String opsName;
+    private Integer opsID;
+    public String getOpsName() {
+        return opsName;
+    }
+
+    public void setOpsName(String opsName) {
+        this.opsName = opsName;
+    }
+
+    public Integer getOpsID() {
+        return opsID;
+    }
+
+    public void setOpsID(Integer opsID) {
+        this.opsID = opsID;
+    }
 
     private static final long serialVersionUID = 1L;
 

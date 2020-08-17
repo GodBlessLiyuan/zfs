@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
+import com.zfs.web.dto.AdminUserDTO;
+import com.zfs.web.utils.OperatorUtil;
 import com.zfs.web.vo.SoftChannelVO;
 import com.zfs.common.mapper.SoftChannelMapper;
 import com.zfs.common.pojo.SoftChannelPO;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +49,7 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
     }
 
     @Override
-    public ResultVO insert(String channelName, String extra) {
+    public ResultVO insert(String channelName, String extra, HttpSession session) {
         Integer tmp = softChannelMapper.queryIdbyName(channelName);
         if(tmp!=null&&tmp>0){
             return ResultVO.softNameDup();
@@ -56,7 +59,11 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
         po.setName(channelName);
         po.setExtra(extra);
         po.setCreateTime(new Date());
-
+        AdminUserDTO adminUserDTO = OperatorUtil.getOperatorPO(session);
+        if(adminUserDTO!=null){
+            po.setOpsName(adminUserDTO.getUsername());
+            po.setOpsID(adminUserDTO.getaId());
+        }
         int result = softChannelMapper.insert(po);
         if (result == 0) {
             LogUtil.log(logger, "insert", "插入失败", po);

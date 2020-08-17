@@ -21,9 +21,6 @@ public class PhoneBrandController {
     private IPhoneBrandService phoneBrandService;
     @PostMapping("getPhoneInfo")
     public ResultVO getPhoneInfo(VerifyDTO verifyDTO){
-        if (!VerifyUtil.checkDeviceId(verifyDTO)) {
-            return ResultVO.varifyDevice();
-        }
         return phoneBrandService.phoneBrand();
     }
 }
