@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,5 +33,10 @@ public class NewUserRecordController {
         reqData.put("phone", phone);
 
         return service.query(pageNum, pageSize, reqData);
+    }
+    @RequestMapping("export")
+    public ResultVO export(HttpServletResponse response){
+        Map<String, Object> reqData = new HashMap<>(1);
+        return service.export(reqData,response);
     }
 }
