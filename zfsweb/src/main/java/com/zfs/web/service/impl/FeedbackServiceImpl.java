@@ -8,6 +8,7 @@ import com.zfs.common.mapper.FeedbackMapper;
 import com.zfs.common.mapper.UserMapper;
 import com.zfs.common.pojo.AppPO;
 import com.zfs.common.pojo.FeedbackPO;
+import com.zfs.common.utils.DateUtilCard;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.PageInfoVO;
 import com.zfs.common.vo.ResultVO;
@@ -21,6 +22,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.unit.DataUnit;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -155,14 +157,15 @@ public class FeedbackServiceImpl implements FeedbackService {
         String[][] content = new String[vos.size()][title.length];
         for (int i = 0; i < vos.size(); i++) {
             FeedbackVO vo = vos.get(i);
-//            content[i][0] = String.valueOf(i + 1);
-//            content[i][1] = vo.getPhone();
-//            content[i][2] = vo.getManufacturer();
-//            content[i][3] = vo.getAndroidmodel();
-//            content[i][4] = vo.getBuildrelease();
-//            content[i][5] = vo.getVersioncode().toString();
-//            content[i][6] = vo.get;
-//            content[i][7] = bo.getAndroidModel();
+            content[i][0] = String.valueOf(i + 1);
+            content[i][1] = vo.getPhone();
+            content[i][2] = vo.getManufacturer();
+            content[i][3] = vo.getAndroidmodel();
+            content[i][4] = vo.getBuildrelease();
+            content[i][5] = vo.getVersioncode().toString();
+            content[i][6] = DateUtilCard.date2Str(vo.getCreateTime(),DateUtilCard.YMD_HMS);
+            content[i][7] = vo.getContact();
+            content[i][8]=vo.getContext();
         }
 
         //创建HSSFWorkbook
