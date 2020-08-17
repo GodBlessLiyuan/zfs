@@ -48,7 +48,7 @@ public class SoftChannelServiceImpl implements ISoftChannelService {
     @Override
     public ResultVO insert(String channelName, String extra) {
         Integer tmp = softChannelMapper.queryIdbyName(channelName);
-        if(tmp==null||tmp==0){
+        if(tmp!=null&&tmp>0){
             return ResultVO.softNameDup();
         }
         SoftChannelPO po = new SoftChannelPO();
