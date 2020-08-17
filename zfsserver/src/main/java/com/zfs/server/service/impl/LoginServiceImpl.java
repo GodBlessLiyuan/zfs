@@ -266,8 +266,6 @@ public class LoginServiceImpl implements ILoginService {
         }
         // 登出当前设备所有在线用户
         userDeviceMapper.signOutByDevId(dto.getId());
-        // 登出当前用户所有在线设备
-        userDeviceMapper.signOutByUserId(userPO.getUserId());
         userPO.setRandomStr("");//
         userMapper.updateByPrimaryKey(userPO);
         //删除缓存

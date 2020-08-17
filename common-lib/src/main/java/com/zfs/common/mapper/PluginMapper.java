@@ -3,6 +3,7 @@ package com.zfs.common.mapper;
 import com.zfs.common.bo.PluginBO;
 import com.zfs.common.pojo.PluginPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,5 +26,5 @@ public interface PluginMapper extends BaseMapper<PluginPO, Integer> {
      * @param pluginv 插件Id
      * @return
      */
-    PluginPO queryMaxByPluId(Integer pluginv);
+    PluginPO queryMaxByPluId(@Param("pluginv") Integer pluginv,@Param("pluginpkg")String pluginpkg);
 }

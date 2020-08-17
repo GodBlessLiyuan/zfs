@@ -9,6 +9,7 @@ import com.zfs.server.dto.PluginDTO;
 import com.zfs.server.service.IPluginService;
 import com.zfs.server.utils.RedisCacheUtil;
 import com.zfs.server.vo.PluginVO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,10 +28,11 @@ public class PluginServiceImpl implements IPluginService {
     private PluginMapper pluginMapper;
     @Resource
     private RedisCacheUtil cache;
-
+    @Value("${file.uploadFolder}")
+    private String publicPath;
     @Override
     public ResultVO check(PluginDTO dto) {
-        String redisKey = RedisKeyUtil.genPluginRedisKey(dto.getPluginv());
+        String redisKey = RedisKeyUtil.genPluginRedisKey(dto.getPluginv(),dto.getPluginpkg());
         String redisValue = cache.getCacheByKey(redisKey);
         if (null != redisValue) {
             PluginVO vo = JSON.parseObject(redisValue, PluginVO.class);
@@ -40,7 +42,7 @@ public class PluginServiceImpl implements IPluginService {
             return new ResultVO<>(1009, vo);
         }
 
-        PluginPO pluginPO = pluginMapper.queryMaxByPluId(dto.getPluginv());
+        PluginPO pluginPO = pluginMapper.queryMaxByPluId(dto.getPluginv(),dto.getPluginpkg());
         if(pluginPO == null) {
             cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
             return new ResultVO(1008);
@@ -48,7 +50,7 @@ public class PluginServiceImpl implements IPluginService {
 
         PluginVO vo = new PluginVO();
         vo.setPluginv(pluginPO.getPluginId());
-        vo.setUrl(pluginPO.getUrl());
+        vo.setUrl(publicPath+pluginPO.getUrl());
         vo.setMd5(pluginPO.getMd5());
 
         cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);

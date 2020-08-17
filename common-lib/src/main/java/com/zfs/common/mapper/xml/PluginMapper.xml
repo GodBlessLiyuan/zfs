@@ -195,7 +195,8 @@
   <select id="queryMaxByPluId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from t_plugin
-    where dr = 1 and plugin_id > #{pluginId,jdbcType=INTEGER}
+    where dr = 1 and pluginv = #{pluginv,jdbcType=TINYINT}
+    and pluginpkg=#{pluginpkg,jdbcType=CHAR} and status=2
     order by plugin_id desc
     limit 1
   </select>
