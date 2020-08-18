@@ -37,6 +37,36 @@ public class PluginPO implements Serializable {
     private Byte dr;
 
     private String url;
+    //插件版本，zfs新增
+    private Byte pluginv;
+    //插件包名
+    private String pluginpkg;
+    //插件类型
+    private Byte type;
+
+    public Byte getPluginv() {
+        return pluginv;
+    }
+
+    public void setPluginv(Byte pluginv) {
+        this.pluginv = pluginv;
+    }
+
+    public String getPluginpkg() {
+        return pluginpkg;
+    }
+
+    public void setPluginpkg(String pluginpkg) {
+        this.pluginpkg = pluginpkg;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
 
     private static final long serialVersionUID = 1L;
 
