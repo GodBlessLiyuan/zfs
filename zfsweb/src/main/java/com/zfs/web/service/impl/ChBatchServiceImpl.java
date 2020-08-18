@@ -286,14 +286,12 @@ public class ChBatchServiceImpl implements ChBatchService {
 
         /**
          * 根据t_ch_batch表中所修改的status，修改表t_batch_info中相应数据（根据batch_id）的状态值
-         * t_batch_info表中，状态为已激活的（值为2），不用再管了
+         * t_batch_info表中，状态为已激活的（值为2），不用再管了,
+         * 如果批次是冻结，解冻下；存在卡密都是2，也就是使用了的激活的卡密的情况。
          */
 
         int result2 = this.batchInfoMapper.updateStatusByBatchId(status, batchId);
-        if (result2 == 0) {
-            LogUtil.log(logger, "updateStatus", "更新失败", status, batchId);
-            return ResultVO.serverInnerError();
-        }
+
 
         return new ResultVO(1000);
     }

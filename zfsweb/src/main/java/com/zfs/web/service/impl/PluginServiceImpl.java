@@ -98,9 +98,9 @@ public class PluginServiceImpl implements IPluginService {
         for (int chanId : softChannel) {
             AppPluChPO appPluChPO = new AppPluChPO();
 
-            appPluChPO.setAppId(appId);
-            appPluChPO.setSoftChannelId(chanId);
-            appPluChPO.setPluginId(pluginPO.getPluginId());
+            appPluChPO.setAppId(appId);//支持版本
+            appPluChPO.setSoftChannelId(chanId);//支持渠道
+            appPluChPO.setPluginId(pluginPO.getPluginId());//插件
             appPluChPO.setCreateTime(new Date());
             appPluChPO.setStatus((byte) 1);
 

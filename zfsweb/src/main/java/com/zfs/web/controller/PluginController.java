@@ -52,7 +52,9 @@ public class PluginController {
             "appId") int appId) {
         return new ResultVO(1000,service.querySoftChannelByIds(pluginId, appId));
     }
-
+    /***
+     * 这段的数据库应该以为智能助手的为准。
+     * */
     @PostMapping("/plugin/insert")
     public ResultVO insert(@RequestParam(value = "file") String file,
                            @RequestParam(value = "appId") int appId,
