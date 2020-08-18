@@ -10,9 +10,9 @@ import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
+import com.zfs.web.utils.FileUtil;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.web.service.IPluginService;
-import com.zfs.web.utils.FileUtil;
 import com.zfs.common.vo.ResultVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +27,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -48,8 +49,7 @@ public class PluginServiceImpl implements IPluginService {
     @Autowired
     private StringRedisTemplate template;
 
-    @Value("${file.pluginDir}")
-    private String pluginDir;
+
 
     @Override
     public ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData) {
@@ -78,7 +78,7 @@ public class PluginServiceImpl implements IPluginService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public ResultVO insert(MultipartFile file, int appId, int[] softChannel, String context, String extra, int aId) {
+    public ResultVO insert(String file, int appId, int[] softChannel, String context, String extra, int aId) {
         PluginPO pluginPO = new PluginPO();
         this.setPluginPObyFile(file, pluginPO);
 
@@ -118,7 +118,7 @@ public class PluginServiceImpl implements IPluginService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int update(int pluginId, MultipartFile file, int appId, int[] softChannel, String context, String extra) {
+    public int update(int pluginId, String file, int appId, int[] softChannel, String context, String extra) {
         PluginPO pluginPO = pluginMapper.selectByPrimaryKey(pluginId);
         if (file != null && !"".equals(file)) {
             this.setPluginPObyFile(file, pluginPO);
@@ -216,14 +216,16 @@ public class PluginServiceImpl implements IPluginService {
     /**
      * 根据上传文件更新PluginPO
      *
-     * @param file     文件
+     * @param tmp     文件名，相对路径
      * @param pluginPO 插件PO
      */
-    private void setPluginPObyFile(MultipartFile file, PluginPO pluginPO) {
-        pluginPO.setUrl(FileUtil.uploadFile(file, pluginDir, "plugin"));
-        pluginPO.setSize((int) file.getSize());
+    private void setPluginPObyFile(String tmp, PluginPO pluginPO) {
+        pluginPO.setUrl(tmp);
+        File file=new File(FileUtil.rootPath+tmp);
+        pluginPO.setSize((int) file.length());
         try {
-            pluginPO.setMd5(DigestUtils.md5DigestAsHex(file.getBytes()));
+            String s = DigestUtils.md5DigestAsHex(com.zfs.common.utils.FileUtil.readFile(FileUtil.rootPath + tmp));
+            pluginPO.setMd5(s);
         } catch (IOException e) {
             e.printStackTrace();
         }

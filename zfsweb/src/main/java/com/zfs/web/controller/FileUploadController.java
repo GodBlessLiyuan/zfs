@@ -37,5 +37,8 @@ public class FileUploadController {
     public ResultVO videoUpload(@RequestParam(value = "file") MultipartFile file){
         return fileUploadService.videoUpload(file);
     }
-
+    @PostMapping("pluginUpload")
+    public ResultVO pluginUpload(@RequestParam(value = "file")MultipartFile file){
+        return fileUploadService.pluginUpload(file);
+    }
 }

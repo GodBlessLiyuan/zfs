@@ -12,4 +12,6 @@ public interface IFileUploadService {
     ResultVO appDirUpload(MultipartFile file) throws IOException;
 
     ResultVO videoUpload(MultipartFile file);
+
+    ResultVO pluginUpload(MultipartFile file);
 }
