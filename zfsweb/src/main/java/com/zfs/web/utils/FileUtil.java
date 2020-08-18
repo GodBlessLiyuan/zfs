@@ -59,8 +59,8 @@ public class FileUtil {
                 e.printStackTrace();
             }
         }
-
-        return filePath;
+        //相对路径
+        return projectDir + dir + fileName;
     }
 
     /**
@@ -106,7 +106,7 @@ public class FileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        //map结构
         return apkInfo;
     }
     /**

@@ -235,7 +235,7 @@ public class AppServiceImpl implements IAppService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public ResultVO update(int appId, String file, byte updateType, int[] softChannel, String context, String extra) {
+    public ResultVO update(Integer appId, String file, Byte updateType, Integer[] softChannel, String context, String extra) {
         AppPO appPO = appMapper.selectByPrimaryKey(appId);
         if (file != null && !"".equals(file)) {
             // 根据url对应的apk获取版本名称、版本号、文件大小

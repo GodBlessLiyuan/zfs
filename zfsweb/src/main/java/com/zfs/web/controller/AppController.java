@@ -55,21 +55,17 @@ public class AppController {
     @PostMapping("insert")
     public ResultVO insert(@RequestBody AppVersionDTO appVersionDTO, HttpServletRequest req) {
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
-//        if (admin == null) {
-//            return new ResultVO(1001);
-//        }
+        if (admin == null) {
+            return new ResultVO(1001);
+        }
         return service.insert(appVersionDTO.getProjectName(),appVersionDTO.getUpdateType(),appVersionDTO.getSoftChannel(),appVersionDTO.getContext()
-                ,appVersionDTO.getExtra(), 1);
+                ,appVersionDTO.getExtra(), admin.getaId());
     }
 
     @PostMapping("update")
-    public ResultVO update(@RequestParam(value = "appId") int appId,
-                      @RequestParam(value = "projectName", required = false) String projectName,
-                      @RequestParam(value = "updateType") byte updateType,
-                      @RequestParam(value = "softChannel") int[] softChannel,
-                      @RequestParam(value = "context") String context,
-                      @RequestParam(value = "extra") String extra) {
-        return service.update(appId, projectName, updateType, softChannel, context, extra);
+    public ResultVO update(@RequestBody AppVersionDTO appVersionDTO) {
+        return service.update(appVersionDTO.getAppId(), appVersionDTO.getProjectName(),appVersionDTO.getUpdateType(),appVersionDTO.getSoftChannel(),
+                appVersionDTO.getContext(), appVersionDTO.getExtra());
     }
 
     @PostMapping("updateStatus")

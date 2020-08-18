@@ -11,6 +11,8 @@ import java.io.Serializable;
  */
 @Data
 public class AppVersionDTO implements Serializable {
+    //主键
+    private Integer appId;
     private String projectName;
     private Byte updateType;
     private Integer[] softChannel;

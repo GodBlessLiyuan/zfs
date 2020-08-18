@@ -36,10 +36,10 @@ public class FileUploadServiceImpl implements IFileUploadService {
     private String appDir;
     @Override
     public ResultVO appDirUpload(MultipartFile file,String moduleName) throws IOException {
-        // 上传apk文件,都是绝对路径
+        // 这是相对路径
         String filePath = FileUtil.uploadFile(file, appDir, moduleName);
         // 上传apk文件
-        ApkFile apkFile = new ApkFile( filePath);
+        ApkFile apkFile = new ApkFile(FileUtil.rootPath+ filePath);
         ApkMeta apkMeta = apkFile.getApkMeta();
         // 重命名
         String newFile =FileUtil.projectDir + appDir + apkMeta.getPackageName() + "_" + apkMeta.getVersionCode() +

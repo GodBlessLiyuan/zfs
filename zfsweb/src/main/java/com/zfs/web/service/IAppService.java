@@ -72,13 +72,12 @@ public interface IAppService {
      * 更新
      *
      * @param appId       应用Id
-     * @param file        链接地址
      * @param updateType  更新类型
      * @param softChannel 渠道
      * @param context     内容
      * @param extra       备注
      * @return
      */
-    ResultVO update(int appId, String projectName, byte updateType, int[] softChannel, String context, String extra);
+    ResultVO update(Integer appId, String projectName, Byte updateType, Integer[] softChannel, String context, String extra);
 
 }
