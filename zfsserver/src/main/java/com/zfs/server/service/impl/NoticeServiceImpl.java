@@ -154,6 +154,11 @@ public class NoticeServiceImpl implements INoticeService {
          判断用户类型，返回vo数据，还有去重操作才对；用户肯定是全体用户，但是通知记录可能不是全体的，所以思路对；
          找集合之后缓存起来，也可以每次去数据库判断一遍；因为集合数据大，所以去数据库验证。
          * */
+        //未登录用户直接给全体通知
+        if(dto.getUd()==0||dto.getUdd()==0||dto.getMd()==null){
+            allVOS.addAll(notMembers);
+            return new ResultVO(1000,allVOS);
+        }
         //判断是会员和非会员
         UserVipPO userVipPO = userVipService.queryByUserId(dto.getUd());
         if (userVipPO != null) {
