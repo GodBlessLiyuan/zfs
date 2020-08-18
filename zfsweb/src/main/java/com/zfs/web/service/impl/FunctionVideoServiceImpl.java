@@ -13,6 +13,7 @@ import com.zfs.web.service.FunctionVideoService;
 import com.zfs.web.utils.FileUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.utils.OperatorUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,8 +44,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
     @Resource
     private StringRedisTemplate template;
 
-    @Value("${file.videoDir}")
-    private String videoDir;
+
 
     @Value("${file.publicPath}")
     private String publicPath;
@@ -122,7 +122,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
      * @return
      */
     @Override
-    public ResultVO insert(HttpSession httpSession, String funName, MultipartFile url, String extra) {
+    public ResultVO insert(HttpSession httpSession, String funName, String url, String extra) {
 
         FunctionvideoPO po = new FunctionvideoPO();
 
@@ -134,10 +134,10 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
             return new ResultVO(1003);
         }
 
-        if (null == url) {
-            po.setUrl(null);
+        if (StringUtils.isEmpty(url)) {
+            po.setUrl("");
         } else {
-            po.setUrl(FileUtil.uploadFile(url, videoDir, "functionvideo"));
+            po.setUrl(url.split(publicPath)[1]);
         }
         po.setExtra(extra);
         po.setUpdateTime(new Date());
@@ -162,7 +162,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
      * @return
      */
     @Override
-    public ResultVO update(HttpSession httpSession, Integer functionId, String funName, MultipartFile url, String extra) {
+    public ResultVO update(HttpSession httpSession, Integer functionId, String funName, String url, String extra) {
 
         // 从数据库中查询出要修改的数据
         FunctionvideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
@@ -172,8 +172,8 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         }
 
         po.setFunName(funName);
-        if (null != url) {
-            po.setUrl(FileUtil.uploadFile(url, videoDir, "functionvideo"));
+        if (!StringUtils.isEmpty(url)) {
+            po.setUrl(url.split(publicPath)[1]);
         }
         po.setExtra(extra);
         po.setUpdateTime(new Date());

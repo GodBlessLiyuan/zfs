@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
  */
 public interface ChannelService {
 
-    ResultVO query(int start, int length, String chanNickname, Integer proId);
+    ResultVO query(int start, int length, String chanName, String proName);
 
     ResultVO insert(ChannelDTO channelDTO, HttpSession httpSession);
 
