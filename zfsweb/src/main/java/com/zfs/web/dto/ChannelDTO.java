@@ -9,15 +9,15 @@ import java.util.Date;
  */
 public class ChannelDTO implements Serializable {
     private Integer chanId;
-
+    //渠道名称
     private String chanNickname;
-
+    //渠道标识
     private String chanName;
 
     private String proName;
-
+    //负责人Id
     private Integer proId;
-
+    //手机号
     private String phone;
 
     private String extra;

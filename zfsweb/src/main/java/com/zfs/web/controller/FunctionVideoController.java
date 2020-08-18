@@ -3,6 +3,7 @@ package com.zfs.web.controller;
 import com.zfs.web.service.FunctionVideoService;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -62,7 +63,7 @@ public class FunctionVideoController {
     @PostMapping("insert")
     public ResultVO insert(HttpSession httpSession,
                            @RequestParam(value = "funName") String funName,
-                           @RequestParam(value = "url") MultipartFile url,
+                           @RequestParam(value = "url") String url,
                            @RequestParam(value = "extra", required = false) String extra) {
         return this.functionVideoService.insert(httpSession, funName, url, extra);
     }
@@ -80,7 +81,7 @@ public class FunctionVideoController {
     public ResultVO update(HttpSession httpSession,
                            @RequestParam(value = "functionId") Integer functionId,
                            @RequestParam(value = "funName", required = false) String funName,
-                           @RequestParam(value = "url", required = false) MultipartFile url,
+                           @RequestParam(value = "url", required = false) String url,
                            @RequestParam(value = "extra", required = false) String extra) {
         return this.functionVideoService.update(httpSession, functionId, funName, url, extra);
     }

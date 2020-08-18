@@ -24,12 +24,18 @@ public class FileUploadController {
     @Autowired
     private IFileUploadService fileUploadService;
     @RequestMapping("upload")
-    public ResultVO upload(HttpServletRequest request, @Param("file") MultipartFile file,@RequestParam("projectName") String projectName) {
+    public ResultVO upload(HttpServletRequest request, @Param("file") MultipartFile file,
+                           @RequestParam(value = "projectName",required = false) String projectName) {
         return fileUploadService.upload(request, file,projectName);
     }
 
     @PostMapping("appDirUpload")
-    public ResultVO upload(@RequestParam(value = "file") MultipartFile file,@RequestParam("projectName")String projectName) throws IOException {
-        return fileUploadService.appDirUpload(file,projectName);
+    public ResultVO upload(@RequestParam(value = "file") MultipartFile file) throws IOException {
+        return fileUploadService.appDirUpload(file);
     }
+    @RequestMapping("videoUpload")
+    public ResultVO videoUpload(@RequestParam(value = "file") MultipartFile file){
+        return fileUploadService.videoUpload(file);
+    }
+
 }

@@ -3,9 +3,11 @@ package com.zfs.web.controller;
 import com.zfs.web.dto.ChannelDTO;
 import com.zfs.web.service.ChannelService;
 import com.zfs.common.vo.ResultVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -24,19 +26,20 @@ public class ChannelController {
 
     /**
      * 查询
-     * @param chanNickname
-     * @param proId
      * @return
      */
     @PostMapping("query")
     public ResultVO query(
            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-           @RequestParam(value = "chanNickname", required = false) String chanNickname,
-           @RequestParam(value = "proId", required = false) Integer proId
+           @RequestParam(value = "chanName", required = false) String chanName,
+           @RequestParam(value = "proName", required = false) String proName
     ){
         // 调用业务层，返回页面结果
-        return channelService.query(pageNum, pageSize, chanNickname, proId);
+        if(!StringUtils.isEmpty(proName)){
+            proName=proName.replace(" ","");
+        }
+        return channelService.query(pageNum, pageSize, chanName, proName);
     }
 
 
@@ -65,7 +68,7 @@ public class ChannelController {
      * @return
      */
     @PostMapping("insert")
-    public ResultVO insert(ChannelDTO channelDTO, HttpSession httpSession) {
-        return this.channelService.insert(channelDTO, httpSession);
+    public ResultVO insert(ChannelDTO channelDTO, HttpServletRequest request) {
+        return this.channelService.insert(channelDTO, request.getSession());
     }
 }

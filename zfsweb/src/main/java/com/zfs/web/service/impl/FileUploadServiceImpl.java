@@ -28,16 +28,19 @@ public class FileUploadServiceImpl implements IFileUploadService {
 
     @Override
     public ResultVO upload(HttpServletRequest request, MultipartFile file,String moduleName) {
-        String picture = publicPath + FileUtil.uploadFile(file, iconDir, moduleName);
+        String picture = publicPath + FileUtil.uploadFile(file, iconDir, "notice");
         return new ResultVO(1000,picture);
     }
 
     @Value("${file.appDir}")
     private String appDir;
+    @Value("${file.videoDir}")
+    private String videoDir;
+
     @Override
-    public ResultVO appDirUpload(MultipartFile file,String moduleName) throws IOException {
+    public ResultVO appDirUpload(MultipartFile file) throws IOException {
         // 这是相对路径
-        String filePath = FileUtil.uploadFile(file, appDir, moduleName);
+        String filePath = FileUtil.uploadFile(file, appDir, "app");
         // 上传apk文件
         ApkFile apkFile = new ApkFile(FileUtil.rootPath+ filePath);
         ApkMeta apkMeta = apkFile.getApkMeta();
@@ -48,5 +51,11 @@ public class FileUploadServiceImpl implements IFileUploadService {
         new File(filePath).renameTo(new File(FileUtil.rootPath+  newFile));
         //返回相对路径
         return new ResultVO(1000, newFile);
+    }
+
+    @Override
+    public ResultVO videoUpload(MultipartFile file) {
+        String functionvideo = FileUtil.uploadFile(file, videoDir, "functionvideo");
+        return new ResultVO(1000,  publicPath + functionvideo);
     }
 }

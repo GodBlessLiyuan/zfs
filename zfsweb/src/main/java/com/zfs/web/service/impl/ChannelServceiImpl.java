@@ -52,15 +52,15 @@ public class ChannelServceiImpl implements ChannelService {
      * @return
      */
     @Override
-    public ResultVO query(int start, int length, String chanNickname, Integer proId) {
+    public ResultVO query(int start, int length, String chanName, String proName) {
 
         // 分页
         Page<ChannelVO> page = PageHelper.startPage(start, length);
 
         // 创建map对象，封装查询条件，作为动态sql语句的参数
         Map<String, Object> map = new HashMap<>(2);
-        map.put("chanNickname", chanNickname);
-        map.put("proId", proId);
+        map.put("chanName", chanName);
+        map.put("proName", proName);
 
         // 按照条件查询数据
         List<ChannelBO> bos = channelMapper.query(map);
