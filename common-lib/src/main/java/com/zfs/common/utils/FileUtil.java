@@ -113,5 +113,24 @@ public class FileUtil {
         is.close();
         os.close();
     }
+    /***
+     * 读取文件字节流
+     * */
+    public static byte[] readFile(String filename) throws IOException {
+        if(filename==null || filename.equals(""))
+        {
+            throw new NullPointerException();
+        }
+        File file =new File(filename);
+        long len = file.length();
+        byte[] bytes = new byte[(int)len];
 
+        BufferedInputStream bufferedInputStream=new BufferedInputStream(new FileInputStream(file));
+        int r = bufferedInputStream.read( bytes );
+        if (r != len) {
+            throw new IOException();
+        }
+        bufferedInputStream.close();
+        return bytes;
+    }
 }

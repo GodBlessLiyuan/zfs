@@ -37,8 +37,9 @@ public class PhoneBrandMapperTest {
 
         List<PhoneBrandPO> brandPOS = JSON.parseArray(result.toString(), PhoneBrandPO.class);
         for(PhoneBrandPO phoneBrandPO:brandPOS){
-            phoneBrandMapper.insert(phoneBrandPO);
+//            phoneBrandMapper.insert(phoneBrandPO);
         }
+        System.out.println(brandPOS.size());
     }
     @Test
     @Deprecated
