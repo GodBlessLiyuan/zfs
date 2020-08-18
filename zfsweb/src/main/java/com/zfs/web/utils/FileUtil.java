@@ -110,7 +110,7 @@ public class FileUtil {
         return apkInfo;
     }
     /**
-     * filePath是绝对路径
+     * filePath是相对路径
      * */
     public static Map<String, Object> resolveApk(String filePath) {
         Map<String, Object> apkInfo = new HashMap<>(8);
