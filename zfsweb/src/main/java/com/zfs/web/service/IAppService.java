@@ -34,7 +34,7 @@ public interface IAppService {
      * @param aId         管理员
      * @return
      */
-    ResultVO insert(MultipartFile file, byte updateType, int[] softChannel, String context, String extra, int aId);
+    ResultVO insert(String projectName, Byte updateType, Integer[] softChannel, String context, String extra, int aId);
 
     /**
      * 更新状态（发布&取消发布）
@@ -79,5 +79,6 @@ public interface IAppService {
      * @param extra       备注
      * @return
      */
-    ResultVO update(int appId, MultipartFile file, byte updateType, int[] softChannel, String context, String extra);
+    ResultVO update(int appId, String projectName, byte updateType, int[] softChannel, String context, String extra);
+
 }

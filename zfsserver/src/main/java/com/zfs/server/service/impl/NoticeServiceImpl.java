@@ -62,7 +62,6 @@ public class NoticeServiceImpl implements INoticeService {
      * */
     @Value("${notice.cacheTime}")
     private Integer cacheTime;
-
     @Override
     public ResultVO queryNotice(NoticeDTO dto) {
         //缓存前缀加的时间格式
@@ -230,7 +229,7 @@ public class NoticeServiceImpl implements INoticeService {
         //前端是必填项
         vo.setShowtime(DateUtilCard.date2Str(po.getShowTime(), DateUtilCard.HM));
         vo.setEndShowTime(DateUtilCard.date2Str(po.getEndShowTime(), DateUtilCard.HM));
-        vo.setStartTime(DateUtilCard.date2Str(po.getEndTime(), DateUtilCard.YMD));
+        vo.setStartTime(DateUtilCard.date2Str(po.getStartTime(), DateUtilCard.YMD));
         vo.setEndTime(DateUtilCard.date2Str(po.getEndTime(), DateUtilCard.YMD));
         vo.setUrl(po.getUrl());
         if (null != po.getPicurl()) {

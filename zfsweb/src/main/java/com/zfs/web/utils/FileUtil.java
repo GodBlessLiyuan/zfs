@@ -60,7 +60,7 @@ public class FileUtil {
             }
         }
 
-        return projectDir + dir + fileName;
+        return filePath;
     }
 
     /**
@@ -109,7 +109,30 @@ public class FileUtil {
 
         return apkInfo;
     }
+    /**
+     * filePath是绝对路径
+     * */
+    public static Map<String, Object> resolveApk(String filePath) {
+        Map<String, Object> apkInfo = new HashMap<>(8);
 
+        try {
+            // 上传apk文件
+            ApkFile apkFile = new ApkFile(FileUtil.rootPath+ filePath);
+            ApkMeta apkMeta = apkFile.getApkMeta();
+            apkInfo.put("pkgname", apkMeta.getPackageName());
+            apkInfo.put("versioncode", apkMeta.getVersionCode());
+            apkInfo.put("versionname", apkMeta.getVersionName());
+            apkFile.close();
+            apkInfo.put("url", filePath);
+            apkInfo.put("channel", getChannel(apkFile.getManifestXml()));
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return apkInfo;
+    }
 
     /**
      * 从manifest中获取UMENG_CHANNEL属性

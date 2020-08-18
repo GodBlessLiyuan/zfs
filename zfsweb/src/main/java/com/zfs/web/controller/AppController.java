@@ -2,14 +2,12 @@ package com.zfs.web.controller;
 
 import com.zfs.common.constant.Constant;
 import com.zfs.web.dto.AdminUserDTO;
+import com.zfs.web.dto.AppVersionDTO;
 import com.zfs.web.service.IAppService;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.vo.AppVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,27 +53,23 @@ public class AppController {
     }
 
     @PostMapping("insert")
-    public ResultVO insert(@RequestParam(value = "file") MultipartFile file,
-                           @RequestParam(value = "updateType") byte updateType,
-                           @RequestParam(value = "softChannel") int[] softChannel,
-                           @RequestParam(value = "context") String context,
-                           @RequestParam(value = "extra") String extra, HttpServletRequest req) {
+    public ResultVO insert(@RequestBody AppVersionDTO appVersionDTO, HttpServletRequest req) {
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
-        if (admin == null) {
-            return new ResultVO(1001);
-        }
-
-        return service.insert(file, updateType, softChannel, context, extra, admin.getaId());
+//        if (admin == null) {
+//            return new ResultVO(1001);
+//        }
+        return service.insert(appVersionDTO.getProjectName(),appVersionDTO.getUpdateType(),appVersionDTO.getSoftChannel(),appVersionDTO.getContext()
+                ,appVersionDTO.getExtra(), 1);
     }
 
     @PostMapping("update")
     public ResultVO update(@RequestParam(value = "appId") int appId,
-                      @RequestParam(value = "file", required = false) MultipartFile file,
+                      @RequestParam(value = "projectName", required = false) String projectName,
                       @RequestParam(value = "updateType") byte updateType,
                       @RequestParam(value = "softChannel") int[] softChannel,
                       @RequestParam(value = "context") String context,
                       @RequestParam(value = "extra") String extra) {
-        return service.update(appId, file, updateType, softChannel, context, extra);
+        return service.update(appId, projectName, updateType, softChannel, context, extra);
     }
 
     @PostMapping("updateStatus")
