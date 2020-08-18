@@ -301,15 +301,19 @@ public class AppServiceImpl implements IAppService {
         return new ResultVO(1000);
     }
 
-    private void setAppPObyFile(String file, AppPO appPO) {
-        Map<String, Object> apkInfo = FileUtil.resolveApk(file);
+    private void setAppPObyFile(String fileName, AppPO appPO) {
+        Map<String, Object> apkInfo = FileUtil.resolveApk(fileName);
         appPO.setUrl((String) apkInfo.get("url"));
         appPO.setVersionname((String) apkInfo.get("versionname"));
         appPO.setVersioncode(Math.toIntExact((Long) apkInfo.get("versioncode")));
-        File file1=new File(file);
-        appPO.setSize((int) file1.getTotalSpace()/1024);
+        File file=new File(FileUtil.rootPath+fileName);
+        appPO.setSize((int) file.length());
+        try{
+            appPO.setMd5(DigestUtils.md5DigestAsHex(com.zfs.common.utils.FileUtil.readFile(FileUtil.rootPath+fileName)));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        appPO.setMd5(DigestUtils.md5DigestAsHex(file.getBytes()));
     }
 
     @Transactional(rollbackFor = {})
