@@ -54,7 +54,7 @@ public interface IPluginService {
      * @param aId
      * @return
      */
-    ResultVO insert(MultipartFile file, int appId, int[] softChannel, String context, String extra, int aId);
+    ResultVO insert(String file, int appId, int[] softChannel, String context, String extra, int aId);
 
     /**
      * 状态更新
@@ -84,5 +84,5 @@ public interface IPluginService {
      * @param extra       备注
      * @return
      */
-    int update(int pluginId, MultipartFile file, int appId, int[] softChannel, String context, String extra);
+    int update(int pluginId, String file, int appId, int[] softChannel, String context, String extra);
 }

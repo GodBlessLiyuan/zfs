@@ -36,7 +36,8 @@ public class FileUploadServiceImpl implements IFileUploadService {
     private String appDir;
     @Value("${file.videoDir}")
     private String videoDir;
-
+    @Value("${file.pluginDir}")
+    private String pluginDir;
     @Override
     public ResultVO appDirUpload(MultipartFile file) throws IOException {
         // 这是相对路径
@@ -57,5 +58,11 @@ public class FileUploadServiceImpl implements IFileUploadService {
     public ResultVO videoUpload(MultipartFile file) {
         String functionvideo = FileUtil.uploadFile(file, videoDir, "functionvideo");
         return new ResultVO(1000,  publicPath + functionvideo);
+    }
+
+    @Override
+    public ResultVO pluginUpload(MultipartFile file) {
+        String tmp=FileUtil.uploadFile(file, pluginDir, "plugin");
+        return new ResultVO(1000,tmp);
     }
 }

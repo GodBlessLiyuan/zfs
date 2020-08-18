@@ -54,7 +54,7 @@ public class PluginController {
     }
 
     @PostMapping("/plugin/insert")
-    public ResultVO insert(@RequestParam(value = "file") MultipartFile file,
+    public ResultVO insert(@RequestParam(value = "file") String file,
                            @RequestParam(value = "appId") int appId,
                            @RequestParam(value = "softChannel") int[] softChannel,
                            @RequestParam(value = "context") String context,
@@ -71,7 +71,7 @@ public class PluginController {
 
     @PostMapping("/plugin/update")
     public int update(@RequestParam(value = "pluginId") int pluginId,
-                      @RequestParam(value = "file", required = false) MultipartFile file,
+                      @RequestParam(value = "file", required = false) String file,
                       @RequestParam(value = "appId") int appId,
                       @RequestParam(value = "softChannel") int[] softChannel,
                       @RequestParam(value = "context") String context,

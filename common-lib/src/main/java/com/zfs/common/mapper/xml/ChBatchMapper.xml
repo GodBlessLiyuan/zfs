@@ -197,7 +197,7 @@
     select
     cb.batch_id as batchId, c.chan_nickname as chanNickname, c.chan_name as chanName, cb.create_time as createTime,
     cb.a_id as aId, cb.com_type_name as comTypeName, cb.num, cb.extra, cb.status, cb.update_time as updateTime,
-    cb.update_a_id as updateAId
+    cb.update_a_id as updateAId,cb.days
     from t_ch_batch cb
     left join t_channel c on cb.chan_id = c.chan_id
     left join t_admin_user au on cb.update_a_id = au.a_id
