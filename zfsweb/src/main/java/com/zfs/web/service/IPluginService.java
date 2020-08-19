@@ -86,7 +86,7 @@ public interface IPluginService {
      * @param extra       备注
      * @return
      */
-    int update(int pluginId, String file, int appId, int[] softChannel, String context, String extra);
+    int update(Integer pluginId, String file, Integer[] appId, Integer[] softChannel, String context, String extra,Byte type);
 
     List<AppPO> queryAppVersion();
 }

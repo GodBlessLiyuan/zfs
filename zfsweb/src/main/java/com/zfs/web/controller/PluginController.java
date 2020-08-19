@@ -72,23 +72,19 @@ public class PluginController {
     }
 
     @PostMapping("/plugin/update")
-    public int update(@RequestParam(value = "pluginId") int pluginId,
-                      @RequestParam(value = "file", required = false) String file,
-                      @RequestParam(value = "appId") int appId,
-                      @RequestParam(value = "softChannel") int[] softChannel,
-                      @RequestParam(value = "context") String context,
-                      @RequestParam(value = "extra") String extra) {
-        return service.update(pluginId, file, appId, softChannel, context, extra);
+    public ResultVO update(@RequestBody PluginDTO dto) {
+        service.update(dto.getPluginId(),dto.getFile(),dto.getAppIdS(),dto.getSoftChannelS(),dto.getContext(),dto.getExtra(),dto.getType());
+        return new ResultVO(1000);
     }
 
     @RequestMapping("/plugin/updateStatus")
-    public int updateStatus(@RequestParam(value = "pluginId") int pluginId,
+    public ResultVO updateStatus(@RequestParam(value = "pluginId") int pluginId,
                             @RequestParam(value = "status") byte status) {
-        return service.updateStatus(pluginId, status);
+        return new ResultVO(1000,service.updateStatus(pluginId, status));
     }
 
     @RequestMapping("/plugin/delete")
-    public int delete(@RequestParam(value = "pluginId") int pluginId) {
-        return service.delete(pluginId);
+    public ResultVO delete(@RequestParam(value = "pluginId") int pluginId) {
+        return new ResultVO(1000,service.delete(pluginId));
     }
 }
