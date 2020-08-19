@@ -17,4 +17,5 @@ public class PluginDTO implements Serializable {
     private Integer[] softChannelS;//更新渠道
     private String context;//更新内容
     private String extra;//备注
+    private Integer pluginId;//主键
 }

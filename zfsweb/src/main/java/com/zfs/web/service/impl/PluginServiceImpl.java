@@ -127,7 +127,7 @@ public class PluginServiceImpl implements IPluginService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int update(int pluginId, String file, int appId, int[] softChannel, String context, String extra) {
+    public int update(Integer pluginId, String file, Integer[] appId, Integer[] softChannel, String context, String extra,Byte type) {
         PluginPO pluginPO = pluginMapper.selectByPrimaryKey(pluginId);
         if (file != null && !"".equals(file)) {
             this.setPluginPObyFile(file, pluginPO);
@@ -135,11 +135,22 @@ public class PluginServiceImpl implements IPluginService {
         pluginPO.setContext(context);
         pluginPO.setExtra(extra);
         pluginPO.setUpdateTime(new Date());
+        pluginPO.setType(type);
         int frist = pluginMapper.updateByPrimaryKey(pluginPO);
         if (frist == 0) {
             LogUtil.log(logger, "update", "更新pluginPO失败", pluginPO);
         }
-
+        //原来业务代码其实是用新增替代更新
+        for(int appI:appId){
+            this.appPlusAddsAndDelS(pluginId,appI,softChannel,pluginPO);
+        }
+        this.deleteRedis();
+        return frist;
+    }
+    /**
+     * 无语的代码，写的真好
+     * */
+    private void appPlusAddsAndDelS(Integer pluginId, int appId,Integer[] softChannel,PluginPO pluginPO) {
         List<AppPluChPO> appPluChPOs = appPluChMapper.queryByIds(pluginId, appId);
         Map<Integer, AppPluChPO> map = new HashMap<>(appPluChPOs.size());
         for (AppPluChPO po : appPluChPOs) {
@@ -148,6 +159,7 @@ public class PluginServiceImpl implements IPluginService {
         List<AppPluChPO> insApcPOs = new ArrayList<>();
         for (int scId : softChannel) {
             if (map.containsKey(scId)) {
+                //为什么要删除数据呢，删除带有渠道的数据
                 map.remove(scId);
             } else {
                 AppPluChPO po = new AppPluChPO();
@@ -179,9 +191,6 @@ public class PluginServiceImpl implements IPluginService {
                 LogUtil.log(logger, "update", "删除delApcIds失败", delApcIds);
             }
         }
-
-        this.deleteRedis();
-        return frist + secend + third;
     }
 
     @Transactional(rollbackFor = {})
