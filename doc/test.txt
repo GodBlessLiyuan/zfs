@@ -8,3 +8,20 @@
 }
 12：http://192.168.10.23:8003/v1.0/notice
 {"id":45,"ud":58,"udd":178}
+通知的删除
+hdel "NOTICE_HASH_KEY" "smartzfs_notice_2020-08-18 18:52_ALL_NOTICES"
+hdel "NOTICE_HASH_KEY" "smartzfs_notice_2020-08-18 18:52_ALL_USER"
+hdel "NOTICE_HASH_KEY" "smartzfs_notice_2020-08-18 18:52_NOT_MEMBER"
+hdel "NOTICE_HASH_KEY" "smartzfs_notice_2020-08-18 18:52_MEMBER"
+hdel "NOTICE_HASH_KEY" "smartzfs_notice_2020-08-18 18:52_HALF_YEAR_REGISTER"
+hdel "NOTICE_HASH_KEY" "smartzfs_notice_2020-08-18 18:52_ONE_MONTH_REGISTER"
+
+
+web测试
+7 app
+http://dev.zfs.vbooster.cn/zfsserver/v1.0/check
+{"id":116,"softv":1,"channel":"vbooster","verify":"984386c00bc3404fb20280eaf78e4beb"}
+
+tail -f zfsserver.log -n 200 查看文件日志
+上传的文件在：/data/ftp/zfsftp
+项目路径在：/data/smarthelper/zfsbin/

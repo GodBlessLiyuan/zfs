@@ -1,5 +1,6 @@
 package com.zfs.web.service;
 
+import com.zfs.common.pojo.AppPO;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,7 +55,8 @@ public interface IPluginService {
      * @param aId
      * @return
      */
-    ResultVO insert(String file, int appId, int[] softChannel, String context, String extra, int aId);
+
+    ResultVO insert(String file,Byte type, Integer[] appId, Integer[] softChannel, String context, String extra, int aId);
 
     /**
      * 状态更新
@@ -85,4 +87,6 @@ public interface IPluginService {
      * @return
      */
     int update(int pluginId, String file, int appId, int[] softChannel, String context, String extra);
+
+    List<AppPO> queryAppVersion();
 }

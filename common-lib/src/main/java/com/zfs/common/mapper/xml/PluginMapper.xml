@@ -14,10 +14,13 @@
     <result column="md5" jdbcType="CHAR" property="md5" />
     <result column="dr" jdbcType="TINYINT" property="dr" />
     <result column="url" jdbcType="CHAR" property="url" />
+    <result column="pluginv" jdbcType="BIGINT" property="pluginv"/>
+    <result column="pluginpkg" jdbcType="CHAR" property="pluginpkg"/>
+    <result column="type" jdbcType="TINYINT" property="type"/>
   </resultMap>
   <sql id="Base_Column_List">
     plugin_id, `status`, context, extra, a_id, create_time, update_time, publish_time, 
-    `size`, md5, dr, url
+    `size`, md5, dr, url,pluginv,pluginpkg,`type`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -33,11 +36,12 @@
     insert into t_plugin (plugin_id, `status`, context, 
       extra, a_id, create_time, 
       update_time, publish_time, `size`, 
-      md5, dr, url)
+      md5, dr, url,pluginv,pluginpkg,`type`)
     values (#{pluginId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{context,jdbcType=CHAR}, 
       #{extra,jdbcType=CHAR}, #{aId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, #{size,jdbcType=INTEGER}, 
-      #{md5,jdbcType=CHAR}, #{dr,jdbcType=TINYINT}, #{url,jdbcType=CHAR})
+      #{md5,jdbcType=CHAR}, #{dr,jdbcType=TINYINT}, #{url,jdbcType=CHAR},
+      #{pluginv,jdbcType=BIGINT},#{pluginpkg,jdbcType=CHAR},#{type,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.zfs.common.pojo.PluginPO">
     insert into t_plugin
@@ -78,6 +82,15 @@
       <if test="url != null">
         url,
       </if>
+      <if test="pluginv!=null">
+        pluginv,
+      </if>
+      <if test="pluginpkg!=null">
+        pluginpkg,
+      </if>
+      <if test="type!=null">
+        `type`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="pluginId != null">
@@ -115,6 +128,15 @@
       </if>
       <if test="url != null">
         #{url,jdbcType=CHAR},
+      </if>
+      <if test="pluginv!=null">
+        #{pluginv,jdbcType=BIGINT},
+      </if>
+      <if test="pluginpkg!=null">
+        #{pluginpkg,jdbcType=CHAR},
+      </if>
+      <if test="type!=null">
+        #{type,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -154,6 +176,15 @@
       <if test="url != null">
         url = #{url,jdbcType=CHAR},
       </if>
+      <if test="pluginv!=null">
+        pluginv=#{pluginv,jdbcType=BIGINT},
+      </if>
+      <if test="pluginpkg!=null">
+        pluginpkg=#{pluginpkg,jdbcType=CHAR},
+      </if>
+      <if test="type!=null">
+        `type`= #{type,jdbcType=TINYINT},
+      </if>
     </set>
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
@@ -169,13 +200,16 @@
       `size` = #{size,jdbcType=INTEGER},
       md5 = #{md5,jdbcType=CHAR},
       dr = #{dr,jdbcType=TINYINT},
-      url = #{url,jdbcType=CHAR}
+      url = #{url,jdbcType=CHAR},
+      pluginv=#{pluginv,jdbcType=BIGINT},
+	  pluginpkg=#{pluginpkg,jdbcType=CHAR},
+	  `type`= #{type,jdbcType=TINYINT}
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
 
   <select id="query" resultType="com.zfs.common.bo.PluginBO">
     select p.plugin_id as pluginId, p.publish_time as publishTime, au.username, p.size, p.context, sc.name,
-    a.versionname as versionName, p.status, p.extra
+    a.versionname as versionName, p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`
     from t_plugin p
     left join t_app_plu_ch apc on p.plugin_id = apc.plugin_id
     left join t_soft_channel sc on apc.soft_channel_id = sc.soft_channel_id
@@ -185,17 +219,17 @@
   </select>
   <select id="queryById" parameterType="java.lang.Integer" resultType="com.zfs.common.bo.PluginBO">
     select p.plugin_id as pluginId, apc.app_id as appId, apc.soft_channel_id as softChannelId, p.publish_time as
-    publishTime, p.size, p.context, sc.name, a.versionname as versionName, p.status, p.extra
+    publishTime, p.size, p.context, sc.name, a.versionname as versionName, p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`
     from t_plugin p
     left join t_app_plu_ch apc on p.plugin_id = apc.plugin_id
     left join t_soft_channel sc on apc.soft_channel_id = sc.soft_channel_id
     left join t_app a on apc.app_id = a.app_id
     where p.plugin_id = #{pluginId} and p.dr = 1
   </select>
-  <select id="queryMaxByPluId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="queryMaxByPluId"  resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from t_plugin
-    where dr = 1 and pluginv = #{pluginv,jdbcType=TINYINT}
+    where dr = 1 and pluginv = #{pluginv,jdbcType=INTEGER}
     and pluginpkg=#{pluginpkg,jdbcType=CHAR} and status=2
     order by plugin_id desc
     limit 1

@@ -2,15 +2,12 @@ package com.zfs.web.controller;
 
 import com.zfs.common.constant.Constant;
 import com.zfs.web.dto.AdminUserDTO;
+import com.zfs.web.dto.PluginDTO;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.web.service.IPluginService;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -46,29 +43,32 @@ public class PluginController {
         List<PluginVO> dtos = service.queryById(pluginId);
         return new ResultVO<>(1000,dtos.get(0));
     }
-
+    @Deprecated
     @PostMapping("/plugin/querySoftChannelByIds")
     public ResultVO querySoftChannelByIds(@RequestParam(value = "pluginId") int pluginId, @RequestParam(value =
             "appId") int appId) {
         return new ResultVO(1000,service.querySoftChannelByIds(pluginId, appId));
     }
     /***
+     * 版本信息
+     * */
+    @RequestMapping("/plugin/queryAppVersion")
+    public ResultVO queryAppVersion(){
+        return new ResultVO(1000,service.queryAppVersion());
+    }
+    /***
      * 这段的数据库应该以为智能助手的为准。
      * */
     @PostMapping("/plugin/insert")
-    public ResultVO insert(@RequestParam(value = "file") String file,
-                           @RequestParam(value = "appId") int appId,
-                           @RequestParam(value = "softChannel") int[] softChannel,
-                           @RequestParam(value = "context") String context,
-                           @RequestParam(value = "extra") String extra,
-                           HttpServletRequest req) {
+    public ResultVO insert(@RequestBody PluginDTO pluginDTO,HttpServletRequest req) {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {
             return new ResultVO(1001);
         }
 
-        return service.insert(file, appId, softChannel, context, extra, admin.getaId());
+        return service.insert(pluginDTO.getFile(), pluginDTO.getType(),pluginDTO.getAppIdS(),pluginDTO.getSoftChannelS(),
+                pluginDTO.getContext(),pluginDTO.getExtra(), admin.getaId());
     }
 
     @PostMapping("/plugin/update")

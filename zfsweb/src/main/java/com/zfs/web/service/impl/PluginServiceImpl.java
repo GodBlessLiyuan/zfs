@@ -2,8 +2,10 @@ package com.zfs.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.zfs.common.bo.PluginBO;
+import com.zfs.common.mapper.AppMapper;
 import com.zfs.common.mapper.AppPluChMapper;
 import com.zfs.common.mapper.PluginMapper;
+import com.zfs.common.pojo.AppPO;
 import com.zfs.common.pojo.AppPluChPO;
 import com.zfs.common.pojo.PluginPO;
 import com.zfs.common.utils.LogUtil;
@@ -14,6 +16,8 @@ import com.zfs.web.utils.FileUtil;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.web.service.IPluginService;
 import com.zfs.common.vo.ResultVO;
+import net.dongliu.apk.parser.ApkFile;
+import net.dongliu.apk.parser.bean.ApkMeta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +52,8 @@ public class PluginServiceImpl implements IPluginService {
     private AppPluChMapper appPluChMapper;
     @Autowired
     private StringRedisTemplate template;
-
-
-
+    @Autowired
+    private AppMapper appMapper;
     @Override
     public ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<Object> page = PageHelper.startPage(pageNum, pageSize);
@@ -78,7 +81,7 @@ public class PluginServiceImpl implements IPluginService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public ResultVO insert(String file, int appId, int[] softChannel, String context, String extra, int aId) {
+    public ResultVO insert(String file,Byte type, Integer[] appIdS, Integer[] softChannelS, String context, String extra, int aId) {
         PluginPO pluginPO = new PluginPO();
         this.setPluginPObyFile(file, pluginPO);
 
@@ -88,23 +91,23 @@ public class PluginServiceImpl implements IPluginService {
         pluginPO.setaId(aId);
         pluginPO.setCreateTime(new Date());
         pluginPO.setDr((byte) 1);
-
+        pluginPO.setType(type);
         int result1 = pluginMapper.insert(pluginPO);
         if (result1 == 0) {
             LogUtil.log(logger, "insert", "插入pluginPO失败", pluginPO);
         }
 
         List<AppPluChPO> appPluChPOs = new ArrayList<>();
-        for (int chanId : softChannel) {
-            AppPluChPO appPluChPO = new AppPluChPO();
-
-            appPluChPO.setAppId(appId);//支持版本
-            appPluChPO.setSoftChannelId(chanId);//支持渠道
-            appPluChPO.setPluginId(pluginPO.getPluginId());//插件
-            appPluChPO.setCreateTime(new Date());
-            appPluChPO.setStatus((byte) 1);
-
-            appPluChPOs.add(appPluChPO);
+        for (int chanId : softChannelS) {
+            for(int appId:appIdS){
+                AppPluChPO appPluChPO = new AppPluChPO();
+                appPluChPO.setAppId(appId);//支持版本
+                appPluChPO.setSoftChannelId(chanId);//支持渠道
+                appPluChPO.setPluginId(pluginPO.getPluginId());//插件
+                appPluChPO.setCreateTime(new Date());
+                appPluChPO.setStatus((byte) 1);
+                appPluChPOs.add(appPluChPO);
+            }
         }
 
         int result2 = appPluChMapper.batchInsert(appPluChPOs);
@@ -114,6 +117,12 @@ public class PluginServiceImpl implements IPluginService {
 
         this.deleteRedis();
         return new ResultVO(1000);
+    }
+
+    @Override
+    public List<AppPO> queryAppVersion() {
+        List<AppPO> appPOS = appMapper.queryVersionname();
+        return appPOS;
     }
 
     @Transactional(rollbackFor = {})
@@ -224,6 +233,10 @@ public class PluginServiceImpl implements IPluginService {
         File file=new File(FileUtil.rootPath+tmp);
         pluginPO.setSize((int) file.length());
         try {
+            ApkFile apkFile = new ApkFile(FileUtil.rootPath+tmp);
+            ApkMeta apkMeta = apkFile.getApkMeta();
+            pluginPO.setPluginpkg(apkMeta.getPackageName());
+            pluginPO.setPluginv(apkMeta.getVersionCode());//版本号
             String s = DigestUtils.md5DigestAsHex(com.zfs.common.utils.FileUtil.readFile(FileUtil.rootPath + tmp));
             pluginPO.setMd5(s);
         } catch (IOException e) {
