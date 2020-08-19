@@ -264,9 +264,7 @@ public class LoginServiceImpl implements ILoginService {
                     dto.getUd());
             return ResultVO.serverInnerError();
         }
-        // 登出当前设备所有在线用户
         userDeviceMapper.signOutByDevId(dto.getId());//登出状态：将状态置为2
-        userMapper.updateByPrimaryKey(userPO);
         //删除缓存
         String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userPO.getUserId());
         redisMapUtil.hdel(key);
