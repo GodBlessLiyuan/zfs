@@ -229,7 +229,7 @@
   <select id="queryMaxByPluId"  resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from t_plugin
-    where dr = 1 and pluginv = #{pluginv,jdbcType=INTEGER}
+    where dr = 1 and pluginv >= #{pluginv,jdbcType=INTEGER}
     and pluginpkg=#{pluginpkg,jdbcType=CHAR} and status=2
     order by plugin_id desc
     limit 1

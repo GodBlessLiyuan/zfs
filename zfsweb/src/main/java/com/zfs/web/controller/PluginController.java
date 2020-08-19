@@ -62,13 +62,13 @@ public class PluginController {
     @PostMapping("/plugin/insert")
     public ResultVO insert(@RequestBody PluginDTO pluginDTO,HttpServletRequest req) {
         // 从Session里获取管理员Id
-        AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
-        if (admin == null) {
-            return new ResultVO(1001);
-        }
+//        AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
+//        if (admin == null) {
+//            return new ResultVO(1001);
+//        }
 
         return service.insert(pluginDTO.getFile(), pluginDTO.getType(),pluginDTO.getAppIdS(),pluginDTO.getSoftChannelS(),
-                pluginDTO.getContext(),pluginDTO.getExtra(), admin.getaId());
+                pluginDTO.getContext(),pluginDTO.getExtra(), 1);
     }
 
     @PostMapping("/plugin/update")
