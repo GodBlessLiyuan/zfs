@@ -215,7 +215,7 @@
     left join t_soft_channel sc on apc.soft_channel_id = sc.soft_channel_id
     left join t_app a on apc.app_id = a.app_id
     left join t_admin_user au on p.a_id = au.a_id where p.dr = 1
-    <if test="username != null and username != ''"> and au.username like '%' #{username} '%'</if>
+    <if test="type != null and type != ''"> and p.type like '%' #{type} '%'</if>
   </select>
   <select id="queryById" parameterType="java.lang.Integer" resultType="com.zfs.common.bo.PluginBO">
     select p.plugin_id as pluginId, apc.app_id as appId, apc.soft_channel_id as softChannelId, p.publish_time as

@@ -31,10 +31,10 @@ public class PluginController {
     public ResultVO query(
           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-          @RequestParam(value = "username",required = false) String username) {
+          @RequestParam(value = "type",required = false) Byte type) {
 
         Map<String, Object> reqData = new HashMap<>(1);
-        reqData.put("username", username);
+        reqData.put("type", type);
         return service.query(pageNum, pageSize, reqData);
     }
 
