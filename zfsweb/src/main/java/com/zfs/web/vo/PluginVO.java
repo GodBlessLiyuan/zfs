@@ -47,7 +47,9 @@ public class PluginVO implements Serializable {
         vo.setIds(bo.getAppId() + "|" + bo.getSoftChannelId());
         vo.setStatus(bo.getStatus());
         vo.setExtra(bo.getExtra());
-
+        vo.setPluginpkg(bo.getPluginpkg());//包名
+        vo.setPluginv(bo.getPluginv());//版本号
+        vo.setType(bo.getType());//类型
         return vo;
     }
 
@@ -65,8 +67,8 @@ public class PluginVO implements Serializable {
             int pluginId = po.getPluginId();
             if (map.containsKey(pluginId)) {
                 PluginVO dto = map.get(pluginId);
-                dto.setName(dto.getName() + "," + po.getVersionName() + "|" + po.getName());
-                dto.setIds(dto.getIds() + "," + po.getAppId() + "|" + po.getSoftChannelId());
+                dto.setName(dto.getName() + "," + po.getVersionName() + "|" + po.getName());//版本+渠道名
+                dto.setIds(dto.getIds() + "," + po.getAppId() + "|" + po.getSoftChannelId());//版本id和渠道id组合
             } else {
                 map.put(pluginId, PluginVO.convert(po));
             }

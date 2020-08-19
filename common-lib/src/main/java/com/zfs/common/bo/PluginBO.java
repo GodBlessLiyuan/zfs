@@ -14,6 +14,6 @@ public class PluginBO extends PluginPO {
     private int softChannelId;
     private int appId;
     private String username;
-    private String name;
+    private String name;//渠道名
     private String versionName;
 }

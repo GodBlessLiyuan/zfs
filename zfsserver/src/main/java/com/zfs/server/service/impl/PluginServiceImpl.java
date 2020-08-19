@@ -28,8 +28,8 @@ public class PluginServiceImpl implements IPluginService {
     private PluginMapper pluginMapper;
     @Resource
     private RedisCacheUtil cache;
-    @Value("${file.uploadFolder}")
-    private String publicPath;
+    @Value("${file.publicPath}")
+    private String filePublicPath;
     @Override
     public ResultVO check(PluginDTO dto) {
         String redisKey = RedisKeyUtil.genPluginRedisKey(dto.getPluginv(),dto.getPluginpkg());
@@ -50,7 +50,7 @@ public class PluginServiceImpl implements IPluginService {
 
         PluginVO vo = new PluginVO();
         vo.setPluginv(pluginPO.getPluginId());
-        vo.setUrl(publicPath+pluginPO.getUrl());
+        vo.setUrl(filePublicPath+pluginPO.getUrl());
         vo.setMd5(pluginPO.getMd5());
 
 //        cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
