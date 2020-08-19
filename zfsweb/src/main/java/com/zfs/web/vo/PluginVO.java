@@ -17,16 +17,18 @@ public class PluginVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer pluginId;
-    private Date publishTime;
-    private String username;
-    private Integer size;
-    private String context;
+    private Date publishTime;//发布时间
+    private String username;//
+    private Integer size;//插件大小
+    private String context;//插件内容
     // 应用Id和渠道Id组合
     private String ids;
     private String name;
-    private Byte status;
-    private String extra;
-
+    private Byte status;//发布状态，1 未发布 2 发布
+    private String extra;//备注
+    private Byte type;//插件类型
+    private Long pluginv;//插件版本
+    private String pluginpkg;//插件包名
     /**
      * po 转 dto
      *

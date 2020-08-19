@@ -251,7 +251,7 @@ public class LoginServiceImpl implements ILoginService {
         if(userDevicePO==null){
             LogUtil.log(logger,"regettoken","没查询出用户设备，用户:{}，设备:{}",
                     userPO.getUserId(),dto.getId());
-            return ResultVO.serverInnerError();
+            return ResultVO.logOut();//登出
         }
         return this.buildResultVO(userDevicePO, gift, days);
     }
@@ -264,10 +264,7 @@ public class LoginServiceImpl implements ILoginService {
                     dto.getUd());
             return ResultVO.serverInnerError();
         }
-        // 登出当前设备所有在线用户
-        userDeviceMapper.signOutByDevId(dto.getId());
-        userPO.setRandomStr("");//
-        userMapper.updateByPrimaryKey(userPO);
+        userDeviceMapper.signOutByDevId(dto.getId());//登出状态：将状态置为2
         //删除缓存
         String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userPO.getUserId());
         redisMapUtil.hdel(key);
