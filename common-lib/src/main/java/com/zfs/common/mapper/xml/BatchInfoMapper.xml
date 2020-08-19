@@ -131,7 +131,7 @@
 
   <select id="queryByBatchid"  resultType="com.zfs.common.bo.BatchInfoBO">
     select
-    vipkey, status, bi.update_time as updateTime, phone
+    vipkey, status, bi.update_time as updateTime, u.phone
     from t_batch_info bi
     left join t_user u on bi.user_id = u.user_id
     where batch_id = #{batchId}

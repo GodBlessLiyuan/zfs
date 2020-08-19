@@ -52,7 +52,6 @@ public class ChBatchController {
      * 查询所有产品类型
      * @return
      */
-    @Deprecated
     @GetMapping("queryComTypes")
     public ResultVO queryComTypes() {
         return this.chBatchService.queryComTypes();
@@ -63,7 +62,6 @@ public class ChBatchController {
      * 查询所有渠道标识
      * @return
      */
-    @Deprecated
     @GetMapping("queryChanNicknames")
     public ResultVO queryChanNicknames() {
         return this.chBatchService.queryChanNicknames();

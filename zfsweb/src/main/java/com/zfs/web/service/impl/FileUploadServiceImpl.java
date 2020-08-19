@@ -49,7 +49,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         String newFile =FileUtil.projectDir + appDir + apkMeta.getPackageName() + "_" + apkMeta.getVersionCode() +
                 "_" + System.currentTimeMillis() + ".apk";
         apkFile.close();
-        new File(filePath).renameTo(new File(FileUtil.rootPath+  newFile));
+        new File(FileUtil.rootPath+ filePath).renameTo(new File(FileUtil.rootPath+  newFile));
         //返回相对路径
         return new ResultVO(1000, newFile);
     }

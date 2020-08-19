@@ -151,7 +151,7 @@
         AND chan_name = #{chanName}
       </if>
       <if test="proName != null and proName != ''">
-        AND c.pro_name = #{proName}
+        AND p.pro_name = #{proName}
       </if>
     </where>
   </select>
