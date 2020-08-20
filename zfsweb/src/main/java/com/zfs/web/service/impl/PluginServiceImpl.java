@@ -5,14 +5,17 @@ import com.zfs.common.bo.PluginBO;
 import com.zfs.common.mapper.AppMapper;
 import com.zfs.common.mapper.AppPluChMapper;
 import com.zfs.common.mapper.PluginMapper;
+import com.zfs.common.mapper.SoftChannelMapper;
 import com.zfs.common.pojo.AppPO;
 import com.zfs.common.pojo.AppPluChPO;
 import com.zfs.common.pojo.PluginPO;
+import com.zfs.common.pojo.SoftChannelPO;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.utils.FileUtil;
+import com.zfs.web.vo.Plugin2VO;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.web.service.IPluginService;
 import com.zfs.common.vo.ResultVO;
@@ -54,17 +57,58 @@ public class PluginServiceImpl implements IPluginService {
     private StringRedisTemplate template;
     @Autowired
     private AppMapper appMapper;
+    @Autowired
+    private SoftChannelMapper softChannelMapper;
     @Override
     public ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<Object> page = PageHelper.startPage(pageNum, pageSize);
-        List<PluginBO> pos = pluginMapper.query(reqData);
-        List<PluginVO> dtos = PluginVO.convert(pos);
+        List<PluginBO> bos = pluginMapper.querySigle(reqData);
+        List<Plugin2VO> dtos = this.pos2vos(bos);
         return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), dtos));
     }
 
+    private List<Plugin2VO> pos2vos(List<PluginBO> bos) {
+        if(bos==null||bos.size()==0){
+            return null;
+        }
+        List<Plugin2VO> vos=new ArrayList<>(bos.size());
+        for(PluginBO bo:bos){
+            Plugin2VO pluginVO=new Plugin2VO();
+            this.po2vo(pluginVO,bo);
+            vos.add(pluginVO);
+        }
+        return vos;
+    }
+
+    private void po2vo(Plugin2VO plugin2VO, PluginBO bo) {
+        plugin2VO.setPluginId(bo.getPluginId());
+        plugin2VO.setType(bo.getType());//类型
+        plugin2VO.setPublishTime(bo.getPublishTime());//发布时间
+        plugin2VO.setPluginv(bo.getPluginv());//版本号
+        plugin2VO.setPluginpkg(bo.getPluginpkg());//包名
+        plugin2VO.setSize(bo.getSize());//文件大小
+        plugin2VO.setStatus(bo.getStatus());//状态
+        plugin2VO.setExtra(bo.getExtra());//备注
+        plugin2VO.setUsername(bo.getUsername());//用户名
+        plugin2VO.setContext(bo.getContext());//更新内容
+        // appID,versionname
+        List<Integer> softChannelIDS=softChannelMapper.queryIDSByIDS(bo.getPluginId());
+        List<String> softChannelNames=softChannelMapper.queryNamesSByIDS(bo.getPluginId());
+        //appID,versionname
+        List<Integer> appIDS=appMapper.queryIDSByIDS(bo.getPluginId());
+        List<String> appNameS=appMapper.queryNamesByIDS(bo.getPluginId());
+        plugin2VO.setAppIDS(appIDS);
+        plugin2VO.setAppNameS(appNameS);
+        plugin2VO.setSoftIDS(softChannelIDS);
+        plugin2VO.setSoftNames(softChannelNames);
+    }
+
     @Override
-    public List<PluginVO> queryById(int pluginId) {
-        return PluginVO.convert(pluginMapper.queryById(pluginId));
+    public List<Plugin2VO> queryById(int pluginId) {
+        Map<String,Object> map=new HashMap<>(1);
+        map.put("pluginId",pluginId);
+        List<PluginBO> pluginBOS = pluginMapper.querySigle(map);
+        return this.pos2vos(pluginBOS);
     }
 
     @Override
@@ -147,9 +191,7 @@ public class PluginServiceImpl implements IPluginService {
         this.deleteRedis();
         return frist;
     }
-    /**
-     * 无语的代码，写的真好
-     * */
+
     private void appPlusAddsAndDelS(Integer pluginId, int appId,Integer[] softChannel,PluginPO pluginPO) {
         List<AppPluChPO> appPluChPOs = appPluChMapper.queryByIds(pluginId, appId);
         Map<Integer, AppPluChPO> map = new HashMap<>(appPluChPOs.size());
@@ -159,9 +201,10 @@ public class PluginServiceImpl implements IPluginService {
         List<AppPluChPO> insApcPOs = new ArrayList<>();
         for (int scId : softChannel) {
             if (map.containsKey(scId)) {
-                //为什么要删除数据呢，删除带有渠道的数据
+                // 移除数据之后剩下的都是旧数据执行删除操作，没有被移除的，则保留数据
                 map.remove(scId);
             } else {
+                //都是新增的数据，上面的map的目的是避免了删除和新增数据的重复操作；
                 AppPluChPO po = new AppPluChPO();
                 po.setAppId(appId);
                 po.setSoftChannelId(scId);

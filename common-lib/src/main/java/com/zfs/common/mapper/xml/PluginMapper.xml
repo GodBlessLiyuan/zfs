@@ -206,7 +206,16 @@
 	  `type`= #{type,jdbcType=TINYINT}
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
-
+  <select id="querySigle" resultType="com.zfs.common.bo.PluginBO">
+    select p.plugin_id as pluginId, p.publish_time as publishTime, au.username, p.size, p.context,
+    p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`
+    from t_plugin p left join t_admin_user au on p.a_id = au.a_id
+    <where>
+      <if test="type != null and type != ''">  p.type=#{type} </if>
+      <if test="pluginId!=null">p.plugin_id=#{pluginId}</if>
+      and p.dr=1
+    </where>
+  </select>
   <select id="query" resultType="com.zfs.common.bo.PluginBO">
     select p.plugin_id as pluginId, p.publish_time as publishTime, au.username, p.size, p.context, sc.name,
     a.versionname as versionName, p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`

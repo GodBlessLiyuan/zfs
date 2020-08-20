@@ -55,7 +55,7 @@ public class PluginVO implements Serializable {
 
     /**
      * pos 转 dtos
-     *
+     *  数据库去重不用map，用数据结构则超级麻烦
      * @param pos
      * @return
      */

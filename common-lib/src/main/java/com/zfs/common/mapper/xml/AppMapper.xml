@@ -22,6 +22,18 @@
     app_id, versionname, versioncode, create_time, update_time, url, a_id, `status`, 
     update_type, `size`, extra, context, publish_time, dr, md5
   </sql>
+  <select id="queryPOSByIds" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+    select app_id as appID,versionname from t_app where app_id in
+    (select app_id from t_app_plu_ch where plugin_id=#{pluginId,jdbcType=INTEGER})
+  </select>
+  <select id="queryIDSByIDS" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select app_id as appID  from t_app where app_id in
+    (select app_id from t_app_plu_ch where plugin_id=#{pluginId,jdbcType=INTEGER})
+  </select>
+  <select id="queryNamesByIDS" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select versionname from t_app where app_id in
+    (select app_id from t_app_plu_ch where plugin_id=#{pluginId,jdbcType=INTEGER})
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

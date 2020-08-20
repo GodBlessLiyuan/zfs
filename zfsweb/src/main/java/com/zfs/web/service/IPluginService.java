@@ -1,6 +1,7 @@
 package com.zfs.web.service;
 
 import com.zfs.common.pojo.AppPO;
+import com.zfs.web.vo.Plugin2VO;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,7 @@ public interface IPluginService {
      * @param pluginId 插件Id
      * @return
      */
-    List<PluginVO> queryById(int pluginId);
+    List<Plugin2VO> queryById(int pluginId);
 
     /**
      * 根据PluginId 和 AppId 查询渠道Ids
