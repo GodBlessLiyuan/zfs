@@ -81,9 +81,9 @@ public class OrderServiceImpl implements IOrderService {
             content[i][7] = bo.getComName();
             content[i][8] = String.valueOf(bo.getDays());
             //出库除以100
-            content[i][9] = String.valueOf(bo.getPrice()/ 100);
+            content[i][9] = String.valueOf(bo.getPrice());
             content[i][10] = bo.getShowDiscount();
-            content[i][11] = String.valueOf(bo.getDiscount());
+            content[i][11] = String.valueOf(bo.getDiscount()/ 100);
 
         }
 

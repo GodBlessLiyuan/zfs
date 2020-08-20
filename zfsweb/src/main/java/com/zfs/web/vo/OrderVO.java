@@ -50,9 +50,9 @@ public class OrderVO implements Serializable {
         vo.setPayTime(bo.getPayTime());
         vo.setComName(bo.getComName());
         vo.setDays(bo.getDays());
-        vo.setPrice(bo.getPrice());
-        vo.setShowDiscount(bo.getShowDiscount());
-        vo.setDiscount(bo.getDiscount() / 100);
+        vo.setPrice(bo.getPrice());//原件
+        vo.setShowDiscount(bo.getShowDiscount());//折扣
+        vo.setDiscount(bo.getDiscount() / 100);//售价
         if(bo.getCommAttr()==null||bo.getCommAttr()==1){
             vo.setCommAttr("独立商品");
         }

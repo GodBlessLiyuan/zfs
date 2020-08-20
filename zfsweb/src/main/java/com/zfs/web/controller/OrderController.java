@@ -86,6 +86,7 @@ public class OrderController {
                            HttpServletResponse response) throws ParseException {
         Map<String, Object> reqData = new HashMap<>(8);
         reqData.put("startDate", startDate);
+        //重新将结束时间加上一天
         if (!StringUtils.isEmpty(endDate)) {
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
