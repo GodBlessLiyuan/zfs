@@ -7,6 +7,7 @@ import com.zfs.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -71,12 +72,11 @@ public class ChBatchController {
     /**
      * 插入
      * @param chBatchDTO
-     * @param httpSession
      * @return
      */
     @PostMapping("insert")
-    public ResultVO insert(ChBatchDTO chBatchDTO, HttpSession httpSession) {
-        return this.chBatchService.insert(chBatchDTO, httpSession);
+    public ResultVO insert(ChBatchDTO chBatchDTO, HttpServletRequest request) {
+        return this.chBatchService.insert(chBatchDTO, request.getSession());
     }
 
     @PostMapping("insertSync")

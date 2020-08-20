@@ -15,5 +15,5 @@ public class PluginBO extends PluginPO {
     private int appId;
     private String username;
     private String name;//渠道名
-    private String versionName;
+    private String versionName;//版本名
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * PluginMapper继承基类
@@ -27,4 +28,8 @@ public interface PluginMapper extends BaseMapper<PluginPO, Integer> {
      * @return
      */
     PluginPO queryMaxByPluId(@Param("pluginv") Integer pluginv,@Param("pluginpkg")String pluginpkg);
+    /**
+     * 根据插件去关联第三张表构造数据
+     * */
+    List<PluginBO> querySigle(Map<String, Object> reqData);
 }

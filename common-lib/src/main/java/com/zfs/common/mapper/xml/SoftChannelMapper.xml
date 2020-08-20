@@ -19,6 +19,24 @@
         from t_soft_channel
         where soft_channel_id = #{softChannelId,jdbcType=INTEGER}
     </select>
+    <select id="queryPOSByIDS" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select soft_channel_id as softChannelID, `name` as softChannelName from t_soft_channel
+        where soft_channel_id in (
+            select soft_channel_id from t_app_plu_ch where plugin_id=#{pluginId,jdbcType=INTEGER}
+        )
+    </select>
+    <select id="queryIDSByIDS" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select soft_channel_id as softChannelI from t_soft_channel
+        where soft_channel_id in (
+            select soft_channel_id from t_app_plu_ch where plugin_id=#{pluginId,jdbcType=INTEGER}
+        )
+    </select>
+    <select id="queryNamesSByIDS" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select `name` as softChannelName from t_soft_channel
+        where soft_channel_id in (
+            select soft_channel_id from t_app_plu_ch where plugin_id=#{pluginId,jdbcType=INTEGER}
+        )
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_soft_channel
     where soft_channel_id = #{softChannelId,jdbcType=INTEGER}

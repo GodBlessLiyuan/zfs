@@ -5,6 +5,7 @@ import com.zfs.common.pojo.AppPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,4 +63,10 @@ public interface AppMapper extends BaseMapper<AppPO, Integer> {
     String queryVersionameByVersioncode(int versioncode);
 
     List<AppPO> queryCodesAndNames();
+    //插件-插件渠道表-t_app表
+    List<HashMap<String, Object>> queryPOSByIds(Integer pluginId);
+
+    List<Integer> queryIDSByIDS(Integer pluginId);
+
+    List<String> queryNamesByIDS(Integer pluginId);
 }

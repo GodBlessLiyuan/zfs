@@ -3,6 +3,7 @@ package com.zfs.web.controller;
 import com.zfs.common.constant.Constant;
 import com.zfs.web.dto.AdminUserDTO;
 import com.zfs.web.dto.PluginDTO;
+import com.zfs.web.vo.Plugin2VO;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.web.service.IPluginService;
 import com.zfs.common.vo.ResultVO;
@@ -40,7 +41,7 @@ public class PluginController {
 
     @PostMapping("/plugin/queryById")
     public ResultVO queryById(@RequestParam(value = "pluginId") int pluginId) {
-        List<PluginVO> dtos = service.queryById(pluginId);
+        List<Plugin2VO> dtos = service.queryById(pluginId);
         return new ResultVO<>(1000,dtos.get(0));
     }
     @Deprecated
