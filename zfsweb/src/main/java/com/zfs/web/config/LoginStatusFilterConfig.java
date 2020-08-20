@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LoginStatusFilterConfig {
 
-//    @Bean
+    @Bean
     public FilterRegistrationBean someFilterRegistration1() {
         //新建过滤器注册类
         FilterRegistrationBean registration = new FilterRegistrationBean();
