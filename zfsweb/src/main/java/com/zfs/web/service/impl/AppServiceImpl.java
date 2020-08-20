@@ -356,7 +356,7 @@ public class AppServiceImpl implements IAppService {
 
         this.deleteRedis();
 
-        return ResultVO.serverInnerError();
+        return new ResultVO(1000);
     }
 
     /**

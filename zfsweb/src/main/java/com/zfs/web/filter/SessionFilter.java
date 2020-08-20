@@ -18,7 +18,7 @@ import java.util.List;
  * @version: 1.0.0
  * @description:
  */
-//@Component
+@Component
 public class SessionFilter implements Filter {
 
     private static String CONTEXT_PATH ;
@@ -38,6 +38,7 @@ public class SessionFilter implements Filter {
         excludeList.add("/js/");
         excludeList.add("/plugins/");
         excludeList.add("/actuator/");
+        excludeList.add("/login/get/checkcode");
     }
 
     @Override
@@ -79,9 +80,6 @@ public class SessionFilter implements Filter {
      * @param uri
      */
     public boolean isNeedFilter(String uri) {
-        if(uri.equals("/dkfsmanager/v1.0/keySycActivate")) return false;
-        if(uri.equals("/dkfsmanager/v1.0/keyactivate")) return false;
-        if(uri.equals("/dkfsmanager/v1.0/buy_zj_douOrder")) return false;
         for (String exclude : excludeList) {
             exclude = CONTEXT_PATH + exclude;
             if (uri.startsWith(exclude)) {
