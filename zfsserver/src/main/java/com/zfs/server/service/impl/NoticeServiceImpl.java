@@ -64,7 +64,7 @@ public class NoticeServiceImpl implements INoticeService {
     @Override
     public ResultVO queryNotice(NoticeDTO dto) {
         //缓存前缀加的时间格式
-        String current_time = DateUtilCard.date2Str(new Date(), DateUtilCard.YMD_HM);
+        String current_time = DateUtilCard.date2Str(new Date(), DateUtilCard.YMD);
         String NOTICE_HASH_KEY=RedisKeyUtil.genNoticeRedisKey(current_time);
         //原po，vo为1，2,3,4,5的key
         String allNotices_key = RedisKeyUtil.genNoticeRedisKey(current_time, "ALL_NOTICES");
