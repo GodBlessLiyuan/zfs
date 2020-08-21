@@ -11,4 +11,6 @@ import java.util.List;
 @Mapper
 public interface ServiceNumberMapper extends BaseMapper<ServiceNumberPO, Long> {
     List<String> queryNumbers();
+
+    void upStatus(Long nID);
 }

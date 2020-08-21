@@ -238,8 +238,11 @@
     <include refid="Blob_Column_List" />
     from t_notice
     <where>
-      <if test="(startTime != null and startTime != '') and (endTime != null and endTime != '')">
-        AND start_time &gt;= #{startTime} AND end_time &lt;= #{endTime}
+      <if test="startTime != null and startTime != '' ">
+        AND start_time &gt;= #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND end_time &lt;= #{endTime}
       </if>
       <if test="status!=null and status != 0">
         AND status =  #{status}

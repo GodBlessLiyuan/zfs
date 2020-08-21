@@ -23,7 +23,7 @@ public interface NoticeService {
     ResultVO updateStatus(Integer noticeId, Integer status, HttpSession httpSession);
 
     ResultVO insert(Byte type, String text, String picurl, String title, String url,
-                    String endShowTime,String showTime, String startTime, String endTime,
+                    String showTime ,String endShowTime, String startTime, String endTime,
                     String menbers,HttpSession httpSession);
 
     ResultVO queryById(Integer noticeId);
