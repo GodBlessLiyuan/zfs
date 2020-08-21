@@ -50,7 +50,7 @@ public class CustomerController {
         Map<String, Object> map = new HashMap<>(4);
         map.put("startDate", startDate);
         map.put("endDate", endDate);
-        if(StringUtils.isEmpty(operator)){
+        if(!StringUtils.isEmpty(operator)){
             map.put("operator", operator);
         }
         if(!StringUtils.isEmpty(number)){
