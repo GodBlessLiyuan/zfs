@@ -10,7 +10,6 @@ import com.zfs.common.pojo.UserVipPO;
 import com.zfs.common.utils.DateUtilCard;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.ResultVO;
-import com.zfs.server.constant.NoticeTypeConstant;
 import com.zfs.common.constant.UserVipConstant;
 import com.zfs.server.dto.NoticeDTO;
 import com.zfs.server.service.INoticeService;
@@ -65,7 +64,8 @@ public class NoticeServiceImpl implements INoticeService {
     @Override
     public ResultVO queryNotice(NoticeDTO dto) {
         //缓存前缀加的时间格式
-        String current_time = DateUtilCard.date2Str(new Date(), DateUtilCard.YMD_HM);
+        String current_time = DateUtilCard.date2Str(new Date(), DateUtilCard.YMD);
+        String NOTICE_HASH_KEY=RedisKeyUtil.genNoticeRedisKey(current_time);
         //原po，vo为1，2,3,4,5的key
         String allNotices_key = RedisKeyUtil.genNoticeRedisKey(current_time, "ALL_NOTICES");
         String All = RedisKeyUtil.genNoticeRedisKey(current_time, "ALL_USER");
@@ -82,11 +82,11 @@ public class NoticeServiceImpl implements INoticeService {
         List<NoticePO> noticePOS = null;
 
 
-        noticePOS = cache.hgetList(NoticeTypeConstant.NOTICE_HASH_KEY, allNotices_key);
+        noticePOS = cache.hgetList(NOTICE_HASH_KEY, allNotices_key);
         if (noticePOS == null) {
             noticePOS = noticeMapper.queryAll();
             //如果没有数据，则相当于存了一个有key没值的数据
-            cache.hset(NoticeTypeConstant.NOTICE_HASH_KEY, allNotices_key, noticePOS, cacheTime, TimeUnit.HOURS);
+            cache.hset(NOTICE_HASH_KEY, allNotices_key, noticePOS, cacheTime, TimeUnit.HOURS);
         }
         if (noticePOS == null || noticePOS.size() == 0) {
             //没有全部数据
@@ -94,7 +94,7 @@ public class NoticeServiceImpl implements INoticeService {
         }
 
         //2 非会员用户,3 会员用户 ,4 近半年注册用户,5 近一月注册用户
-        allVOS = cache.hgetList(NoticeTypeConstant.NOTICE_HASH_KEY, All);
+        allVOS = cache.hgetList(NOTICE_HASH_KEY, All);
         if (allVOS == null) {
             allVOS = new ArrayList<>(1);
             for (NoticePO noticePO : noticePOS) {
@@ -103,10 +103,10 @@ public class NoticeServiceImpl implements INoticeService {
                 }
             }
             //size==0一样存起来
-            cache.hset(NoticeTypeConstant.NOTICE_HASH_KEY, All, allVOS, cacheTime, TimeUnit.HOURS);
+            cache.hset(NOTICE_HASH_KEY, All, allVOS, cacheTime, TimeUnit.HOURS);
         }
 
-        notMembers = cache.hgetList(NoticeTypeConstant.NOTICE_HASH_KEY, NOT_MEMBER);
+        notMembers = cache.hgetList(NOTICE_HASH_KEY, NOT_MEMBER);
         if (notMembers == null)  {
             notMembers = new ArrayList<>(1);
             for (NoticePO noticePO : noticePOS) {
@@ -114,10 +114,10 @@ public class NoticeServiceImpl implements INoticeService {
                     notMembers.add(po2vo(noticePO));
                 }
             }
-            cache.hset(NoticeTypeConstant.NOTICE_HASH_KEY, NOT_MEMBER, notMembers, cacheTime, TimeUnit.HOURS);
+            cache.hset(NOTICE_HASH_KEY, NOT_MEMBER, notMembers, cacheTime, TimeUnit.HOURS);
         }
 
-        members = cache.hgetList(NoticeTypeConstant.NOTICE_HASH_KEY, MEMBER);
+        members = cache.hgetList(NOTICE_HASH_KEY, MEMBER);
         if (members == null) {
             members = new ArrayList<>(1);
             for (NoticePO noticePO : noticePOS) {
@@ -125,10 +125,10 @@ public class NoticeServiceImpl implements INoticeService {
                     members.add(po2vo(noticePO));
                 }
             }
-            cache.hset(NoticeTypeConstant.NOTICE_HASH_KEY, MEMBER, members, cacheTime, TimeUnit.HOURS);
+            cache.hset(NOTICE_HASH_KEY, MEMBER, members, cacheTime, TimeUnit.HOURS);
         }
 
-        halfYearRegS = cache.hgetList(NoticeTypeConstant.NOTICE_HASH_KEY, HALF_YEAR_REGISTER);
+        halfYearRegS = cache.hgetList(NOTICE_HASH_KEY, HALF_YEAR_REGISTER);
         if (halfYearRegS == null) {
             halfYearRegS = new ArrayList<>(1);
             for (NoticePO noticePO : noticePOS) {
@@ -136,10 +136,10 @@ public class NoticeServiceImpl implements INoticeService {
                     halfYearRegS.add(po2vo(noticePO));
                 }
             }
-            cache.hset(NoticeTypeConstant.NOTICE_HASH_KEY, HALF_YEAR_REGISTER, halfYearRegS, cacheTime, TimeUnit.HOURS);
+            cache.hset(NOTICE_HASH_KEY, HALF_YEAR_REGISTER, halfYearRegS, cacheTime, TimeUnit.HOURS);
         }
 
-        oneMonthRegS = cache.hgetList(NoticeTypeConstant.NOTICE_HASH_KEY, ONE_MONTH_REGISTER);
+        oneMonthRegS = cache.hgetList(NOTICE_HASH_KEY, ONE_MONTH_REGISTER);
         if (oneMonthRegS == null) {
             oneMonthRegS = new ArrayList<>(1);
             for (NoticePO noticePO : noticePOS) {
@@ -147,7 +147,7 @@ public class NoticeServiceImpl implements INoticeService {
                     oneMonthRegS.add(po2vo(noticePO));
                 }
             }
-            cache.hset(NoticeTypeConstant.NOTICE_HASH_KEY, ONE_MONTH_REGISTER, oneMonthRegS, cacheTime, TimeUnit.HOURS);
+            cache.hset(NOTICE_HASH_KEY, ONE_MONTH_REGISTER, oneMonthRegS, cacheTime, TimeUnit.HOURS);
         }
 
         /**

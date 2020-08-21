@@ -1,6 +1,5 @@
 package com.zfs.server.constant;
 
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @Description:

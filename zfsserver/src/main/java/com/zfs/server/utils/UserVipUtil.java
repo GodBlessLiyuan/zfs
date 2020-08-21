@@ -34,8 +34,8 @@ public class UserVipUtil {
             UserVipPO po = new UserVipPO();
             po.setUserId(userId);
             po.setViptypeId(vipType);
-            po.setStartTime(curDate);
-            po.setEndTime(endDate);
+            po.setStartTime(curDate);//当前时间
+            po.setEndTime(endDate);//结束时间
             po.setStatus((byte) 1);
             po.setCreateTime(curDate);
             if (UserVipConstant.YEAR_VIP == vipType) {
@@ -60,23 +60,25 @@ public class UserVipUtil {
             userVipPO.setStartTime(curDate);
             userVipPO.setEndTime(endDate);
         } else {
-            calendar.setTime(userVipPO.getEndTime());
+            calendar.setTime(userVipPO.getEndTime());//开始时间是结束时间
             calendar.add(Calendar.DATE, days);
-            userVipPO.setEndTime(calendar.getTime());
+            userVipPO.setEndTime(calendar.getTime());//结束时间加上天数
         }
 
         if (UserVipConstant.YEAR_VIP == vipType) {
             userVipPO.setViptypeId(UserVipConstant.YEAR_VIP);
             if (null == userVipPO.getVendTime() || curDate.compareTo(userVipPO.getVendTime()) > 0) {
                 // 年费会员过期
-                userVipPO.setVcreateTime(curDate);
+                userVipPO.setVcreateTime(curDate);//年费时间的开始时间是当前时间
                 userVipPO.setVendTime(endDate);
             } else {
                 calendar.setTime(userVipPO.getVendTime());
                 calendar.add(Calendar.DATE, days);
                 userVipPO.setVendTime(calendar.getTime());
             }
-        } else {
+        }
+        //不是年会会员下，当前时间大于年会结束时间则职位一般会员？
+        else {
             if (null != userVipPO.getVendTime() && curDate.compareTo(userVipPO.getVendTime()) > 0) {
                 userVipPO.setViptypeId(UserVipConstant.COMM_VIP);
             }
