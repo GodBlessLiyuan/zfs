@@ -27,7 +27,7 @@ public class BatchInfoController {
     /**
      * 原来激活多开分身业务代码
      * */
-    @PostMapping("keyactivateOld")
+    @PostMapping("keyactivate")
     public ResultVO keyActivate(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
             return new ResultVO(2000);
