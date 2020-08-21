@@ -13,20 +13,15 @@ import com.zfs.web.vo.NoticeVO;
 import com.zfs.common.mapper.AdminUserMapper;
 import com.zfs.common.pojo.NoticePO;
 import com.zfs.web.service.NoticeService;
-import com.zfs.web.utils.FileUtil;
 import com.zfs.common.vo.ResultVO;
 import io.micrometer.core.instrument.util.StringUtils;
-import org.aspectj.weaver.ast.Not;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -84,36 +79,44 @@ public class NoticeServiceImpl implements NoticeService {
 
         // 按照条件查询数据
         List<NoticePO> pos = noticeMapper.query(map);
-
         // 将查询到的 PO 数据转换为 VO
         List<NoticeVO> vos = new ArrayList<>();
-        for (NoticePO po : pos) {
-            NoticeVO vo = new NoticeVO();
-            vo.setNoticeId(po.getNoticeId());
-            vo.setType(po.getType());
-            vo.setTitle(po.getTitle());
-            vo.setCreateTime(po.getCreateTime());
-            vo.setShowTime(DateUtilCard.date2Str(po.getShowTime(),DateUtilCard.HM));
-            vo.setEndShowTime(DateUtilCard.date2Str(po.getEndShowTime(),DateUtilCard.HM));
-            //通知时间段
-            vo.setNoticeShowTime(vo.getShowTime()+"-"+vo.getEndShowTime());
-            vo.setStartTime(po.getStartTime());
-            vo.setEndTime(po.getEndTime());
-            vo.setUrl(po.getUrl());
-            vo.setText(po.getText());
-            if (null == po.getPicurl()) {
-                vo.setPicurl(po.getPicurl());
-            } else {
-                vo.setPicurl(publicPath + po.getPicurl());
-            }
-            vo.setStatus(po.getStatus());
-            vo.setOperator(queryUsernameByAid(po.getaId()));
-
-            vos.add(vo);
-        }
-
+        this.pos2vos(pos,vos);
         //根据分页查询的结果，封装最终的返回结果
         return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), vos));
+    }
+
+    private void pos2vos(List<NoticePO> pos, List<NoticeVO> vos) {
+        if(pos==null||pos.size()==0){
+            return;
+        }
+        for (NoticePO po : pos) {
+            NoticeVO vo = new NoticeVO();
+            this.po2vo(po,vo);
+            vos.add(vo);
+        }
+    }
+
+    private void po2vo(NoticePO po, NoticeVO vo) {
+        vo.setNoticeId(po.getNoticeId());
+        vo.setType(po.getType());
+        vo.setTitle(po.getTitle());
+        vo.setCreateTime(po.getCreateTime());
+        vo.setShowTime(DateUtilCard.date2Str(po.getShowTime(),DateUtilCard.HM));
+        vo.setEndShowTime(DateUtilCard.date2Str(po.getEndShowTime(),DateUtilCard.HM));
+        //通知时间段
+        vo.setNoticeShowTime(vo.getShowTime()+"-"+vo.getEndShowTime());
+        vo.setStartTime(DateUtilCard.date2Str(po.getStartTime(),DateUtilCard.YMD));
+        vo.setEndTime(DateUtilCard.date2Str(po.getEndTime(),DateUtilCard.YMD));
+        vo.setUrl(po.getUrl());
+        vo.setText(po.getText());
+        if (null == po.getPicurl()) {
+            vo.setPicurl(po.getPicurl());
+        } else {
+            vo.setPicurl(publicPath + po.getPicurl());
+        }
+        vo.setStatus(po.getStatus());
+        vo.setOperator(queryUsernameByAid(po.getaId()));
     }
 
     /**
@@ -131,8 +134,8 @@ public class NoticeServiceImpl implements NoticeService {
      * @return
      */
     @Override
-    public ResultVO insert(Byte type, String text, String picurl, String title, String url, String showTime,
-                     String endShowTime, String startTime, String endTime,String menbers, HttpSession httpSession) {
+    public ResultVO insert(Byte type, String text, String picurl, String title, String url,
+                           String showTime ,String endShowTime, String startTime, String endTime,String menbers, HttpSession httpSession) {
 
         NoticePO po = new NoticePO();
         po.setType(type);
@@ -213,28 +216,10 @@ public class NoticeServiceImpl implements NoticeService {
             return new ResultVO(3010);
         }
         NoticeVO vo = new NoticeVO();
-        vo.setNoticeId(po.getNoticeId());
-        vo.setType(po.getType());
-        vo.setTitle(po.getTitle());
-        vo.setCreateTime(po.getCreateTime());
-        vo.setShowTime(DateUtilCard.date2Str(po.getShowTime(),DateUtilCard.HM));
-        vo.setEndShowTime(DateUtilCard.date2Str(po.getEndShowTime(),DateUtilCard.HM));
-        //通知时间段
-        vo.setNoticeShowTime(vo.getShowTime()+"-"+vo.getEndShowTime());
-        vo.setStartTime(po.getStartTime());
-        vo.setEndTime(po.getEndTime());
-        vo.setUrl(po.getUrl());
-        vo.setText(po.getText());
+        this.po2vo(po,vo);
         if(!StringUtils.isEmpty(po.getMenbers())){
             vo.setMenbers(po.getMenbers().split(","));
         }
-        if (null == po.getPicurl()) {
-            vo.setPicurl(po.getPicurl());
-        } else {
-            vo.setPicurl(publicPath + po.getPicurl());
-        }
-        vo.setStatus(po.getStatus());
-        vo.setOperator(queryUsernameByAid(po.getaId()));
         return new ResultVO(1000,vo);
     }
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * t_service_number
+ * t_service_number：联系我们-在线客服
  * @author 
  */
 public class ServiceNumberPO implements Serializable {
@@ -24,6 +24,15 @@ public class ServiceNumberPO implements Serializable {
      * 1����ɾ����2��ɾ��
      */
     private Byte dr;
+    private Byte type;
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
 
     private static final long serialVersionUID = 1L;
 

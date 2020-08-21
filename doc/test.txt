@@ -32,3 +32,10 @@ http://192.168.10.23:8003/v1.0/checkplugin
     "pluginv":14,
     "pluginpkg":"com.vbooster.memorandum"
 }
+
+插件测试
+http://192.168.10.23:8002/mgrapi/chbatch/queryChanNicknames
+查询渠道有，[1,2,3]
+app版本有 [33]
+上传插件
+

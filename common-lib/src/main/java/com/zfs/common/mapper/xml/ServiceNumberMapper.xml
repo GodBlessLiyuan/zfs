@@ -9,15 +9,34 @@
     <result column="a_id" jdbcType="BIGINT" property="aId" />
     <result column="username" jdbcType="CHAR" property="username" />
     <result column="dr" jdbcType="TINYINT" property="dr" />
+    <result column="type" jdbcType="TINYINT" property="type" />
   </resultMap>
   <sql id="Base_Column_List">
-    svnm_id, kf, create_time, update_time, a_id, username, dr
+    svnm_id, kf, create_time, update_time, a_id, username, dr,`type`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from t_service_number
     where svnm_id = #{svnmId,jdbcType=BIGINT}
+  </select>
+  <select id="query" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_service_number
+    <where>
+      <if test="startDate!=null and startDate!=''">
+        create_time>=#{create_time}
+      </if>
+      <if test="endDate!=null and endDate!=''">
+        and #{endDate}>=create_time
+      </if>
+      <if test="operator!=null and operator!=''">
+        and username like #{username} '%'
+      </if>
+      <if test="number!=null and number!=''">
+        and kf like #{number} '%'
+      </if>
+    </where>
   </select>
   <select id="queryNumbers" resultType="java.lang.String">
     select kf from t_service_number where dr=1 order by svnm_id desc
@@ -29,10 +48,10 @@
   <insert id="insert" parameterType="com.zfs.common.pojo.ServiceNumberPO">
     insert into t_service_number (svnm_id, kf, create_time, 
       update_time, a_id, username, 
-      dr)
+      dr,`type`)
     values (#{svnmId,jdbcType=BIGINT}, #{kf,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{aId,jdbcType=BIGINT}, #{username,jdbcType=CHAR}, 
-      #{dr,jdbcType=TINYINT})
+      #{dr,jdbcType=TINYINT},#{type,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.zfs.common.pojo.ServiceNumberPO">
     insert into t_service_number
@@ -58,6 +77,9 @@
       <if test="dr != null">
         dr,
       </if>
+      <if test="type != null">
+        `type`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="svnmId != null">
@@ -81,8 +103,15 @@
       <if test="dr != null">
         #{dr,jdbcType=TINYINT},
       </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
     </trim>
   </insert>
+  <update id="upStatus" parameterType="java.lang.Long">
+    update t_service_number set dr=2
+    where svnm_id=#{nID}
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.zfs.common.pojo.ServiceNumberPO">
     update t_service_number
     <set>
@@ -104,6 +133,9 @@
       <if test="dr != null">
         dr = #{dr,jdbcType=TINYINT},
       </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=TINYINT},
+      </if>
     </set>
     where svnm_id = #{svnmId,jdbcType=BIGINT}
   </update>
@@ -114,7 +146,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       a_id = #{aId,jdbcType=BIGINT},
       username = #{username,jdbcType=CHAR},
-      dr = #{dr,jdbcType=TINYINT}
+      dr = #{dr,jdbcType=TINYINT},
+      `type` = #{type,jdbcType=TINYINT}
     where svnm_id = #{svnmId,jdbcType=BIGINT}
   </update>
 </mapper>
