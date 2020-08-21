@@ -242,6 +242,7 @@ public class NoticeServiceImpl implements NoticeService {
         String current_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         //Redis中的key
         String key = RedisKeyUtil.genNoticeRedisKey(current_date);
+        //这是hash结构的key
         if (template.hasKey(key)) {
             template.delete(key);
         }

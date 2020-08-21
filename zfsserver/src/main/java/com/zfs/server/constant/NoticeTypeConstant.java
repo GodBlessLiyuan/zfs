@@ -1,6 +1,10 @@
 package com.zfs.server.constant;
 
+import com.zfs.common.utils.DateUtilCard;
+import com.zfs.common.utils.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Value;
+
+import java.util.Date;
 
 /**
  * @Description:
@@ -16,5 +20,6 @@ public class NoticeTypeConstant {
     public static final String MEMBER="MEMBER";
     public static final String HALF_YEAR_REGISTER="HALF_YEAR_REGISTER";
     public static final String ONE_MONTH_REGISTER="ONE_MONTH_REGISTER";
-    public static final String NOTICE_HASH_KEY="NOTICE_HASH_KEY";
+    //通知为了跟后台的key一致
+    public static final String NOTICE_HASH_KEY= RedisKeyUtil.genNoticeRedisKey(DateUtilCard.date2Str(new Date(), DateUtilCard.YMD));
 }

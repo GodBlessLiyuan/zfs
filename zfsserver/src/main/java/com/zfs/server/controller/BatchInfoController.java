@@ -30,7 +30,7 @@ public class BatchInfoController {
     @PostMapping("keyactivate")
     public ResultVO keyActivate(@RequestBody BatchInfoDTO dto, HttpServletRequest req) {
         if (!VerifyUtil.checkToken(dto, req)) {
-            return new ResultVO(2000);
+            return ResultVO.tokenInvalid();
         }
 
         return service.activate(dto);
