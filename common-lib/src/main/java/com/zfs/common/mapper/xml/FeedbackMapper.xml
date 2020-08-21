@@ -212,7 +212,7 @@
     select
     tf.feedback_id as feedbackId, tf.user_id as userId, tf.user_device_id as userDeviceId,
     tf.context as context, tf.contact as contact, tf.create_time as createTime,
-    tf.url1 as url1, tf.url2 as url2, tf.url3 as url3, tf.manufacturer as manufacturer, tf.androidmodel = androidmodel,
+    tf.url1 as url1, tf.url2 as url2, tf.url3 as url3, tf.manufacturer as manufacturer, tf.androidmodel as androidmodel,
     tf.buildversion as buildversion, tf.versioncode as versioncode,
     tf.buildrelease as buildrelease, tu.phone as phone
     from t_feedback tf
