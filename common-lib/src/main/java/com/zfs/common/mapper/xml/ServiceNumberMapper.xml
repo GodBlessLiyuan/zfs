@@ -20,12 +20,13 @@
     from t_service_number
     where svnm_id = #{svnmId,jdbcType=BIGINT}
   </select>
+  <!--查询的条件时间在数据库的时间的之间-->
   <select id="query" parameterType="java.util.Map" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from t_service_number
     <where>
       <if test="startDate!=null and startDate!=''">
-        create_time>=#{create_time}
+        create_time>=#{startDate}
       </if>
       <if test="endDate!=null and endDate!=''">
         and #{endDate}>=create_time

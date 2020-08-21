@@ -20,6 +20,7 @@ public class CustomerVO {
     private String startDate;//
     private String endDate;//更新时间
     private Long svnmID;
+    private Byte type;
     public static List<CustomerVO> convert(List<ServiceNumberPO> pos) {
         List<CustomerVO> list=new ArrayList<>();
         for(ServiceNumberPO po:pos){
@@ -28,6 +29,7 @@ public class CustomerVO {
             dto.setNumber(po.getKf());//客服账号
             dto.setStartDate(DateUtilCard.date2Str(po.getCreateTime(),DateUtilCard.YMD_HMS));
             dto.setSvnmID(po.getSvnmId());
+            dto.setType(po.getType());
             list.add(dto);
         }
         return list;
