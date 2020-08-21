@@ -27,7 +27,7 @@ public class DeviceVO implements Serializable {
     private Byte buildVersion;
     private String manufacturer;
     private String androidModel;
-
+    private String buildRelease;
     /**
      * PO 转 DTO
      *
@@ -41,11 +41,11 @@ public class DeviceVO implements Serializable {
         dto.setChanName(po.getChanName());
         dto.setSoftChannelId(po.getSoftChannelId());
         dto.setUpdateTime(po.getUpdateTime());
-        dto.setAndroidModel(po.getAndroidmodel());
-        dto.setBuildVersion(po.getBuildversion());
-        dto.setVersionName(po.getVersionname());
-        dto.setManufacturer(po.getManufacturer());
-
+        dto.setAndroidModel(po.getAndroidmodel());//手机型号
+        dto.setBuildVersion(po.getBuildversion());//安卓版本号
+        dto.setVersionName(po.getVersionname());//应用版本
+        dto.setManufacturer(po.getManufacturer());//厂商
+        dto.setBuildRelease(po.getBuildrelease());
         return dto;
     }
 
