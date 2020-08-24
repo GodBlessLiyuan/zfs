@@ -1,14 +1,17 @@
 package com.zfs.server.service.impl;
 
+import com.zfs.common.constant.UserVipConstant;
 import com.zfs.common.mapper.BatchInfoMapper;
 import com.zfs.common.mapper.UserVipMapper;
 import com.zfs.common.pojo.BatchInfoPO;
 import com.zfs.common.pojo.UserVipPO;
 import com.zfs.common.utils.LogUtil;
+import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.constant.BatchInfoConstant;
 import com.zfs.server.dto.BatchInfoDTO;
 import com.zfs.server.service.IBatchInfoService;
+import com.zfs.server.utils.RedisMapUtil;
 import com.zfs.server.utils.UserVipUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +38,8 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
     private BatchInfoMapper batchInfoMapper;
     @Resource
     private UserVipMapper userVipMapper;
-
+    @Resource
+    private RedisMapUtil redisMapUtil;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -73,6 +77,9 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         if (result2 == 0) {
             LogUtil.log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
         }
+        //删除缓存
+        String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userVipPO.getUserId());
+        redisMapUtil.hdel(key);
         return new ResultVO(1000);
     }
 
