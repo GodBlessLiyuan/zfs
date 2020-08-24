@@ -23,6 +23,8 @@ public class Plugin2VO implements Serializable {
     private List<String> appNameS;
     private List<Integer> softIDS;
     private List<String> softNames;
+    private String appName;
+    private String softName;
     private Byte status;//发布状态，1 未发布 2 发布
     private String extra;//备注
     private Byte type;//插件类型

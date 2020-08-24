@@ -1,5 +1,6 @@
 package com.zfs.web.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.zfs.common.bo.PluginBO;
 import com.zfs.common.mapper.AppMapper;
@@ -15,6 +16,7 @@ import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.utils.FileUtil;
+import com.zfs.web.utils.List2Str;
 import com.zfs.web.vo.Plugin2VO;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.web.service.IPluginService;
@@ -97,6 +99,8 @@ public class PluginServiceImpl implements IPluginService {
         //appID,versionname
         List<Integer> appIDS=appMapper.queryIDSByIDS(bo.getPluginId());
         List<String> appNameS=appMapper.queryNamesByIDS(bo.getPluginId());
+        plugin2VO.setAppName(List2Str.StrJoinSep(appNameS));
+        plugin2VO.setSoftName(List2Str.StrJoinSep(softChannelNames));
         plugin2VO.setAppIDS(appIDS);
         plugin2VO.setAppNameS(appNameS);
         plugin2VO.setSoftIDS(softChannelIDS);

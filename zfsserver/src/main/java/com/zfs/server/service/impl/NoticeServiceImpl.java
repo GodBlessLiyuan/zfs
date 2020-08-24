@@ -238,7 +238,7 @@ public class NoticeServiceImpl implements INoticeService {
         vo.setEndTime(DateUtilCard.date2Str(po.getEndTime(), DateUtilCard.YMD));
         vo.setUrl(po.getUrl());
         if (null != po.getPicurl()) {
-            vo.setPicurl(filePublicPath + "/"+ po.getPicurl());
+            vo.setPicurl(filePublicPath + po.getPicurl());
         }
         return vo;
     }
