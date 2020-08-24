@@ -23,6 +23,9 @@ public class ExceptionController {
 
     @PostMapping("exception")
     public ResultVO exception(@RequestBody ExceptionDTO dto) {
+        if(dto==null||dto.getId()==null){
+            return ResultVO.paramsError();
+        }
         return service.insert(dto);
     }
 }
