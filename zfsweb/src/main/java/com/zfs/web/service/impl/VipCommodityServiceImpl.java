@@ -88,7 +88,7 @@ public class VipCommodityServiceImpl implements IVipCommodityService {
         // 查询产品信息数据
         ComTypePO comTypePO = comTypeMapper.selectByPrimaryKey(comTypeId);
         /**
-         * 产品天数大于年会员规定天数则设置未年会员，否则设置未普通会员
+         * 产品天数大于年会员规定天数则设置为年会员，否则设置为普通会员
          */
         int vipTypeId = comTypePO.getDays() >= VipCommodityConstant.YEAR_MEMBER_DAY ?
                 VipCommodityConstant.YEAR_MEMBER_KEY : VipCommodityConstant.COMM_MEMBER_KEY;

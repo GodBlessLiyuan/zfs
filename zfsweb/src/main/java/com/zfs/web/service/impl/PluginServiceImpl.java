@@ -93,6 +93,7 @@ public class PluginServiceImpl implements IPluginService {
         plugin2VO.setExtra(bo.getExtra());//备注
         plugin2VO.setUsername(bo.getUsername());//用户名
         plugin2VO.setContext(bo.getContext());//更新内容
+        plugin2VO.setFile(bo.getUrl());
         // appID,versionname
         List<Integer> softChannelIDS=softChannelMapper.queryIDSByIDS(bo.getPluginId());
         List<String> softChannelNames=softChannelMapper.queryNamesSByIDS(bo.getPluginId());
