@@ -106,65 +106,7 @@ public class AppServiceImpl implements IAppService {
         AppPO appPO = appMapper.queryByVersionCode(apkInfo.get("versioncode"));
         if (appPO != null) {
             // 更新
-            buildAppVO(projectName, updateType, context, extra, aId, apkInfo, appPO);
-            appMapper.updateByPrimaryKey(appPO);
-            // 根据appId查询应用渠道数据
-            List<AppChPO> appChPOs = appChMapper.queryByAppId(appPO.getAppId());
-
-            Map<Integer, AppChPO> map = new HashMap<>(appChPOs.size());
-            for (AppChPO appChPO : appChPOs) {
-                map.put(appChPO.getSoftChannelId(), appChPO);
-            }
-            // 待新增的AppChPO，也就是不再上面的map集合中的
-            List<AppChPO> insAppChPOs = new ArrayList<>();
-            for (int scId : softChannel) {
-                if (!map.containsKey(scId)) {
-                    AppChPO appChPO = new AppChPO();
-                    appChPO.setStatus(appPO.getStatus().byteValue());
-                    appChPO.setAppId(appPO.getAppId());
-                    appChPO.setSoftChannelId(scId);
-                    insAppChPOs.add(appChPO);
-                }
-            }
-
-            if (insAppChPOs.size() != 0) {
-                // 新增应用渠道数据
-                int result = appChMapper.batchInsert(insAppChPOs);
-                if (result == 0) {
-                    LogUtil.log(logger, "insert", "新增应用渠道失败", insAppChPOs);
-                    return ResultVO.serverInnerError();
-                }
-            }
-            /***
-             * 更新t_ad_channel广告渠道
-             * 有数据则更新type和update_time字段
-             * 没有数据则将广告id和渠道id组合之后和app_id关联
-             * */
-            List<AdChannelPO> adChannelPOS = adChannelMapper.queryByAppId(appPO.getAppId());
-            if (adChannelPOS != null && adChannelPOS.size() > 0) {
-                adChannelMapper.batchUpdate(adChannelPOS);
-            } else {
-                int appID = appPO.getAppId();
-                List<Integer> adIDS = adconfigMapper.queryIDS();
-                List<Integer> softIDS = softChannelMapper.queryIDS();
-                boolean b1 = adIDS != null && adIDS.size() > 0;
-                boolean b2 = softIDS != null && softIDS.size() > 0;
-                if (b1 && b2) {
-                    List<AdChannelPO> insertAdChannelPOS = new ArrayList<>();
-                    for (Integer adID : adIDS) {
-                        for (Integer softID : softIDS) {
-                            AdChannelPO po = new AdChannelPO();
-                            buildAdChannelPO(po, adID, softID, appID);
-                            insertAdChannelPOS.add(po);
-                        }
-                    }
-                    adChannelMapper.batchInsert(insertAdChannelPOS);
-                } else {
-                    logger.info("t_adconfig和t_soft_channel不存在数据");
-                }
-            }
-            this.deleteRedis();
-            return new ResultVO(1000);
+            return new ResultVO(3009,"当前产品已存在");
         }
 
         // 新增
