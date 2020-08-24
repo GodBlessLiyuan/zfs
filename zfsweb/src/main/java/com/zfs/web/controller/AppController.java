@@ -8,7 +8,6 @@ import com.zfs.common.vo.ResultVO;
 import com.zfs.web.vo.AppVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
