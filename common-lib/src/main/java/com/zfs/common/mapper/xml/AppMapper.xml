@@ -17,10 +17,11 @@
     <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
     <result column="dr" jdbcType="TINYINT" property="dr" />
     <result column="md5" jdbcType="CHAR" property="md5" />
+    <result column="orig_name" jdbcType="CHAR" property="origName"/>
   </resultMap>
   <sql id="Base_Column_List">
     app_id, versionname, versioncode, create_time, update_time, url, a_id, `status`, 
-    update_type, `size`, extra, context, publish_time, dr, md5
+    update_type, `size`, extra, context, publish_time, dr, md5,orig_name
   </sql>
   <select id="queryPOSByIds" parameterType="java.lang.Integer" resultType="java.util.HashMap">
     select app_id as appID,versionname from t_app where app_id in
@@ -49,12 +50,12 @@
       create_time, update_time, url, 
       a_id, `status`, update_type, 
       `size`, extra, context, publish_time, 
-      dr, md5)
+      dr, md5,orig_name)
     values (#{appId,jdbcType=INTEGER}, #{versionname,jdbcType=CHAR}, #{versioncode,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, 
       #{aId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{updateType,jdbcType=TINYINT}, 
       #{size,jdbcType=INTEGER}, #{extra,jdbcType=CHAR}, #{context,jdbcType=CHAR}, #{publishTime,jdbcType=TIMESTAMP}, 
-      #{dr,jdbcType=TINYINT}, #{md5,jdbcType=CHAR})
+      #{dr,jdbcType=TINYINT}, #{md5,jdbcType=CHAR},#{origName,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zfs.common.pojo.AppPO">
     insert into t_app
@@ -104,6 +105,9 @@
       <if test="md5 != null">
         md5,
       </if>
+      <if test="origName!=null">
+        orig_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="appId != null">
@@ -150,6 +154,9 @@
       </if>
       <if test="md5 != null">
         #{md5,jdbcType=CHAR},
+      </if>
+      <if test="origName!=null">
+        #{origName,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -198,6 +205,9 @@
       <if test="md5 != null">
         md5 = #{md5,jdbcType=CHAR},
       </if>
+      <if test="origName!=null">
+        #{orig_name,jdbcType=CHAR},
+      </if>
     </set>
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
@@ -216,7 +226,8 @@
       context = #{context,jdbcType=CHAR},
       publish_time = #{publishTime,jdbcType=TIMESTAMP},
       dr = #{dr,jdbcType=TINYINT},
-      md5 = #{md5,jdbcType=CHAR}
+      md5 = #{md5,jdbcType=CHAR},
+      orig_name=#{origName,jdbcType=CHAR}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
 
@@ -240,7 +251,7 @@
   <select id="queryById" parameterType="java.lang.Integer" resultType="com.zfs.common.bo.AppBO">
     select a.app_id as appId, a.publish_time as publishTime, a.versionname as versionName, a.size,
     a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra,
-    a.url from t_app a
+    a.url,a.orig_name as origName from t_app a
     left join t_app_ch ac on a.app_id = ac.app_id
     left join t_soft_channel s on ac.soft_channel_id = s.soft_channel_id
     where a.app_id = #{appId} and a.dr = 1
@@ -264,7 +275,7 @@
     <if test="updateType != null and updateType != 0">
       and update_type = #{updateType}
     </if>
-    order by app_id
+    order by app_id desc
   </select>
   <select id="queryMaxByVerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select a.url, a.md5, a.update_type, a.context, a.versioncode, a.versionname

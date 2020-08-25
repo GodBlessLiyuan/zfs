@@ -13,7 +13,8 @@ import java.io.Serializable;
 public class AppVersionDTO implements Serializable {
     //主键
     private Integer appId;
-    private String projectName;
+    private String[] projectName;
+    private String origName;
     private Byte updateType;
     private Integer[] softChannel;
     private String context;

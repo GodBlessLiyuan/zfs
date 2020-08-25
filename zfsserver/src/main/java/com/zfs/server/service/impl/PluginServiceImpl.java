@@ -44,7 +44,7 @@ public class PluginServiceImpl implements IPluginService {
 
         PluginPO pluginPO = pluginMapper.queryMaxByPluId(dto.getPluginv(),dto.getPluginpkg());
         if(pluginPO == null) {
-//            cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
+            cache.setCache(redisKey, null, 1, TimeUnit.DAYS);
             return new ResultVO(1008);
         }
 
@@ -53,7 +53,7 @@ public class PluginServiceImpl implements IPluginService {
         vo.setUrl(filePublicPath+pluginPO.getUrl());
         vo.setMd5(pluginPO.getMd5());
 
-//        cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
+        cache.setCache(redisKey, vo, 1, TimeUnit.DAYS);
         return new ResultVO<>(1009, vo);
     }
 }

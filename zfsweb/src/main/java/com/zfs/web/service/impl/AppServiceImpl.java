@@ -93,10 +93,10 @@ public class AppServiceImpl implements IAppService {
      * */
     @Transactional(rollbackFor = {})
     @Override
-    public ResultVO insert(String projectName, Byte updateType, Integer[] softChannel, String context, String extra,
+    public ResultVO insert(String[] projectName, Byte updateType, Integer[] softChannel, String context, String extra,
                            int aId) {
         // 解析Apk
-        Map<String, Object> apkInfo = FileUtil.resolveApk(projectName);
+        Map<String, Object> apkInfo = FileUtil.resolveApk(projectName[0]);
         if (apkInfo.get("channel") == null || !"vbooster".equals(apkInfo.get("channel"))) {
             // 上传应用非官方渠道！
             return new ResultVO(1103);
@@ -177,11 +177,11 @@ public class AppServiceImpl implements IAppService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public ResultVO update(Integer appId, String file, Byte updateType, Integer[] softChannel, String context, String extra) {
+    public ResultVO update(Integer appId, String[] file, Byte updateType, Integer[] softChannel, String context, String extra) {
         AppPO appPO = appMapper.selectByPrimaryKey(appId);
         if (file != null && !"".equals(file)) {
             // 根据url对应的apk获取版本名称、版本号、文件大小
-            this.setAppPObyFile(file, appPO);
+            this.setAppPObyFile(file[0], appPO);
         }
         appPO.setUpdateType(updateType);
         appPO.setContext(context);
@@ -311,15 +311,16 @@ public class AppServiceImpl implements IAppService {
      * @param apkInfo
      * @param appPO
      */
-    private void buildAppVO(String projectName, byte updateType, String context, String extra, int aId, Map<String, Object> apkInfo, AppPO appPO){
+    private void buildAppVO(String[] projectName, byte updateType, String context, String extra, int aId, Map<String, Object> apkInfo, AppPO appPO){
         appPO.setUrl((String) apkInfo.get("url"));
+        appPO.setOrigName(projectName[1]);
         appPO.setVersionname((String) apkInfo.get("versionname"));
         appPO.setVersioncode(Math.toIntExact((Long) apkInfo.get("versioncode")));
-        File file=new File(FileUtil.rootPath+projectName);
+        File file=new File(FileUtil.rootPath+projectName[0]);
 
         appPO.setSize((int) file.length());
         try{
-            appPO.setMd5(DigestUtils.md5DigestAsHex(com.zfs.common.utils.FileUtil.readFile(FileUtil.rootPath+projectName)));
+            appPO.setMd5(DigestUtils.md5DigestAsHex(com.zfs.common.utils.FileUtil.readFile(FileUtil.rootPath+projectName[0])));
         }catch (Exception e){
             e.printStackTrace();
         }

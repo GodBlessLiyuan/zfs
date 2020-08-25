@@ -215,6 +215,7 @@
         AND au.username like '%' #{operator} '%'
       </if>
     </where>
+    order by cb.status desc ,cb.batch_id desc
   </select>
 
   <select id="queryUsernameByAid" parameterType="java.lang.Integer" resultMap="BaseResultMap">

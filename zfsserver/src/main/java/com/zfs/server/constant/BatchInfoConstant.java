@@ -23,4 +23,11 @@ public class BatchInfoConstant {
      * 已失效
      */
     public static final byte EXPIRED = 4;
+    //结束
+    public static final byte END = 5;
+    //过期失效
+    public static final byte OVER_EXPIRED = 6;
+    //冻结失效
+    public static final byte OVER_FROZEN = 7;
+
 }

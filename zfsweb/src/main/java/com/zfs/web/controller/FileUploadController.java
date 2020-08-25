@@ -31,8 +31,9 @@ public class FileUploadController {
 
     @PostMapping("appDirUpload")
     public ResultVO upload(@RequestParam(value = "file") MultipartFile file) throws IOException {
-        return fileUploadService.appDirUpload(file);
+        return fileUploadService.appDirUploadGetNames(file);
     }
+
     @RequestMapping("videoUpload")
     public ResultVO videoUpload(@RequestParam(value = "file") MultipartFile file){
         return fileUploadService.videoUpload(file);

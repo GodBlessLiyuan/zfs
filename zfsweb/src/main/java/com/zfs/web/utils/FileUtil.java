@@ -10,7 +10,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +29,13 @@ public class FileUtil {
     public static String rootPath;
     public static String projectDir;
 
+    public static List<String> uploadFileGetNames(MultipartFile file, String dir, String moduleName){
+        String renamefile = FileUtil.uploadFile(file, dir, moduleName);
+        List<String> list=new ArrayList<>();
+        list.add(renamefile);
+        list.add(file.getOriginalFilename());
+        return list;
+    }
     /**
      * 文件上传处理
      *

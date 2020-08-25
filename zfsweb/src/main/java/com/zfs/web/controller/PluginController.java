@@ -41,8 +41,7 @@ public class PluginController {
 
     @PostMapping("/plugin/queryById")
     public ResultVO queryById(@RequestParam(value = "pluginId") int pluginId) {
-        List<Plugin2VO> dtos = service.queryById(pluginId);
-        return new ResultVO<>(1000,dtos.get(0));
+        return new ResultVO<>(1000,service.queryById(pluginId));
     }
     @Deprecated
     @PostMapping("/plugin/querySoftChannelByIds")

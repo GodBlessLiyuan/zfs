@@ -7,15 +7,20 @@ import com.zfs.common.mapper.UserMapper;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.web.service.HomepageService;
 import com.zfs.common.vo.ResultVO;
+import com.zfs.web.utils.MultiUtil;
+import com.zfs.web.utils.RedisOrigMapUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: dangyi
@@ -40,7 +45,8 @@ public class HomepageServiceImpl implements HomepageService {
 
     @Resource
     private StringRedisTemplate template;
-
+    @Resource
+    private RedisOrigMapUtil redisOrigMapUtil;
     /**
      * 主页查询：先去Redis中查询，无果，再去数据库查询
      * @return
@@ -57,6 +63,7 @@ public class HomepageServiceImpl implements HomepageService {
         newRegister = (String) this.template.opsForHash().get(key_user, "newRegister");
         if (null == newRegister) {
             newRegister = String.valueOf(this.userMapper.queryTodayNewRegister());
+//            this.redisOrigMapUtil.hset(key_user,"newRegister",newRegister,1, TimeUnit.HOURS);
         }
 
         //新用户数
@@ -64,8 +71,14 @@ public class HomepageServiceImpl implements HomepageService {
         newUser = (String) this.template.opsForHash().get(key_user, "newUser");
         if (null == newUser) {
             newUser = String.valueOf(this.deviceMapper.queryTodayNewUser());
+//            this.redisOrigMapUtil.hset(key_user,"newUser",newUser,1, TimeUnit.HOURS);
         }
-
+        String regisConvert;
+        regisConvert=(String) this.template.opsForHash().get(key_user, "regisConvert");
+        if(null==regisConvert){
+            regisConvert = MultiUtil.strBystr(newRegister, newUser);
+//            this.redisOrigMapUtil.hset(key_user,"regisConvert",regisConvert,1, TimeUnit.HOURS);
+        }
 
         String key_active = RedisKeyUtil.genHomepageRedisKey("deviceStatistics", current_date);
         //日活跃用户数
@@ -73,6 +86,7 @@ public class HomepageServiceImpl implements HomepageService {
         dayActiveUser = (String) this.template.opsForHash().get(key_active, "dayActiveUser");
         if (null == dayActiveUser) {
             dayActiveUser = String.valueOf(this.deviceStatisticsMapper.queryDayActiveUser());
+//            this.redisOrigMapUtil.hset(key_active, "dayActiveUser",dayActiveUser,1,TimeUnit.HOURS);
         }
 
         //月活跃用户数
@@ -80,6 +94,7 @@ public class HomepageServiceImpl implements HomepageService {
         monthActiveUser = (String)this.template.opsForHash().get(key_active, "monthActiveUser");
         if (null == monthActiveUser) {
             monthActiveUser = String.valueOf(this.deviceStatisticsMapper.queryMonthActiveUser());
+//            this.redisOrigMapUtil.hset(key_active, "monthActiveUser",monthActiveUser,1,TimeUnit.HOURS);
         }
 
 
@@ -89,6 +104,7 @@ public class HomepageServiceImpl implements HomepageService {
         dayRevenue = (String) this.template.opsForHash().get(key_revenue, "dayRevenue");
         if (null == dayRevenue) {
             dayRevenue = String.valueOf(decimal(this.orderMapper.queryDayRevenue()*0.01));
+//            this.redisOrigMapUtil.hset(key_active, "dayRevenue",dayRevenue,1,TimeUnit.HOURS);
         }
 
         //支付次数
@@ -96,6 +112,7 @@ public class HomepageServiceImpl implements HomepageService {
         payCount = (String)this.template.opsForHash().get(key_revenue, "payCount");
         if (null == payCount) {
             payCount = String.valueOf(this.orderMapper.queryPayCount());
+//            this.redisOrigMapUtil.hset(key_active, "payCount",payCount,1,TimeUnit.HOURS);
         }
 
         //当月收入
@@ -103,6 +120,7 @@ public class HomepageServiceImpl implements HomepageService {
         monthRevenue = (String) this.template.opsForHash().get(key_revenue, "monthRevenue");
         if (null == monthRevenue) {
             monthRevenue = String.valueOf(decimal(this.orderMapper.queryMonthRevenue()*0.01));
+//            this.redisOrigMapUtil.hset(key_active, "monthRevenue",monthRevenue,1,TimeUnit.HOURS);
         }
 
         // 创建一个map，存放返回给前端的结果
@@ -114,7 +132,7 @@ public class HomepageServiceImpl implements HomepageService {
         result.put("dayRevenue", dayRevenue);
         result.put("payCount", payCount);
         result.put("monthRevenue", monthRevenue);
-
+        result.put("regisConvert",regisConvert);
         return new ResultVO(1000, result);
     }
 

@@ -106,14 +106,20 @@ public class PluginServiceImpl implements IPluginService {
         plugin2VO.setAppNameS(appNameS);
         plugin2VO.setSoftIDS(softChannelIDS);
         plugin2VO.setSoftNames(softChannelNames);
+        plugin2VO.setOrigName(bo.getOrigName());
     }
 
     @Override
-    public List<Plugin2VO> queryById(int pluginId) {
+    public Plugin2VO queryById(int pluginId) {
         Map<String,Object> map=new HashMap<>(1);
         map.put("pluginId",pluginId);
         List<PluginBO> pluginBOS = pluginMapper.querySigle(map);
-        return this.pos2vos(pluginBOS);
+        if(pluginBOS==null||pluginBOS.size()==0){
+            return null;
+        }
+        Plugin2VO plugin2VO=new Plugin2VO();
+        this.po2vo(plugin2VO,pluginBOS.get(0));
+        return plugin2VO;
     }
 
     @Override
@@ -130,10 +136,10 @@ public class PluginServiceImpl implements IPluginService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public ResultVO insert(String file,Byte type, Integer[] appIdS, Integer[] softChannelS, String context, String extra, int aId) {
+    public ResultVO insert(String[] file,Byte type, Integer[] appIdS, Integer[] softChannelS, String context, String extra, int aId) {
         PluginPO pluginPO = new PluginPO();
-        this.setPluginPObyFile(file, pluginPO);
-
+        this.setPluginPObyFile(file[0], pluginPO);
+        pluginPO.setOrigName(file[1]);
         pluginPO.setStatus((byte) 1);
         pluginPO.setContext(context);
         pluginPO.setExtra(extra);
@@ -176,15 +182,16 @@ public class PluginServiceImpl implements IPluginService {
 
     @Transactional(rollbackFor = {})
     @Override
-    public int update(Integer pluginId, String file, Integer[] appId, Integer[] softChannel, String context, String extra,Byte type) {
+    public int update(Integer pluginId, String[] file, Integer[] appId, Integer[] softChannel, String context, String extra,Byte type) {
         PluginPO pluginPO = pluginMapper.selectByPrimaryKey(pluginId);
         if (file != null && !"".equals(file)) {
-            this.setPluginPObyFile(file, pluginPO);
+            this.setPluginPObyFile(file[0], pluginPO);
         }
         pluginPO.setContext(context);
         pluginPO.setExtra(extra);
         pluginPO.setUpdateTime(new Date());
         pluginPO.setType(type);
+        pluginPO.setOrigName(file[1]);
         int frist = pluginMapper.updateByPrimaryKey(pluginPO);
         if (frist == 0) {
             LogUtil.log(logger, "update", "更新pluginPO失败", pluginPO);

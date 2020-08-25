@@ -10,7 +10,7 @@ public interface IFileUploadService {
     ResultVO upload(HttpServletRequest request, MultipartFile file,String moduleName);
 
     ResultVO appDirUpload(MultipartFile file) throws IOException;
-
+    ResultVO appDirUploadGetNames(MultipartFile file) throws IOException;
     ResultVO videoUpload(MultipartFile file);
 
     ResultVO pluginUpload(MultipartFile file);

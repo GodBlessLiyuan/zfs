@@ -39,6 +39,15 @@ public class ChBatchDTO implements Serializable {
     private Date updateTime;
 
     private String operator;
+    private Integer days;
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
+    }
 
     private static final long serialVersionUID = 1L;
 

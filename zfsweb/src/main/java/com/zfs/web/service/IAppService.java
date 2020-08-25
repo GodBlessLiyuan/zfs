@@ -34,7 +34,7 @@ public interface IAppService {
      * @param aId         管理员
      * @return
      */
-    ResultVO insert(String projectName, Byte updateType, Integer[] softChannel, String context, String extra, int aId);
+    ResultVO insert(String[] projectName, Byte updateType, Integer[] softChannel, String context, String extra, int aId);
 
     /**
      * 更新状态（发布&取消发布）
@@ -78,6 +78,6 @@ public interface IAppService {
      * @param extra       备注
      * @return
      */
-    ResultVO update(Integer appId, String projectName, Byte updateType, Integer[] softChannel, String context, String extra);
+    ResultVO update(Integer appId, String[] projectName, Byte updateType, Integer[] softChannel, String context, String extra);
 
 }
