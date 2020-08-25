@@ -17,10 +17,11 @@
     <result column="pluginv" jdbcType="BIGINT" property="pluginv"/>
     <result column="pluginpkg" jdbcType="CHAR" property="pluginpkg"/>
     <result column="type" jdbcType="TINYINT" property="type"/>
+    <result column="orig_name" jdbcType="CHAR" property="origName"/>
   </resultMap>
   <sql id="Base_Column_List">
     plugin_id, `status`, context, extra, a_id, create_time, update_time, publish_time, 
-    `size`, md5, dr, url,pluginv,pluginpkg,`type`
+    `size`, md5, dr, url,pluginv,pluginpkg,`type`,orig_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -36,12 +37,13 @@
     insert into t_plugin (plugin_id, `status`, context, 
       extra, a_id, create_time, 
       update_time, publish_time, `size`, 
-      md5, dr, url,pluginv,pluginpkg,`type`)
+      md5, dr, url,pluginv,pluginpkg,`type`,orig_name)
     values (#{pluginId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{context,jdbcType=CHAR}, 
       #{extra,jdbcType=CHAR}, #{aId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, #{size,jdbcType=INTEGER}, 
       #{md5,jdbcType=CHAR}, #{dr,jdbcType=TINYINT}, #{url,jdbcType=CHAR},
-      #{pluginv,jdbcType=BIGINT},#{pluginpkg,jdbcType=CHAR},#{type,jdbcType=TINYINT})
+      #{pluginv,jdbcType=BIGINT},#{pluginpkg,jdbcType=CHAR},#{type,jdbcType=TINYINT},
+      #{origName,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zfs.common.pojo.PluginPO">
     insert into t_plugin
@@ -91,6 +93,9 @@
       <if test="type!=null">
         `type`,
       </if>
+      <if test="origName!=null">
+        orig_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="pluginId != null">
@@ -137,6 +142,9 @@
       </if>
       <if test="type!=null">
         #{type,jdbcType=TINYINT},
+      </if>
+      <if test="origName!=null">
+        #{origName,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -185,6 +193,9 @@
       <if test="type!=null">
         `type`= #{type,jdbcType=TINYINT},
       </if>
+      <if test="origName!=null">
+        orig_name=#{origName,jdbcType=CHAR},
+      </if>
     </set>
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
@@ -203,22 +214,24 @@
       url = #{url,jdbcType=CHAR},
       pluginv=#{pluginv,jdbcType=BIGINT},
 	  pluginpkg=#{pluginpkg,jdbcType=CHAR},
-	  `type`= #{type,jdbcType=TINYINT}
+	  `type`= #{type,jdbcType=TINYINT},
+	  orig_name=#{origName,jdbcType=CHAR}
     where plugin_id = #{pluginId,jdbcType=INTEGER}
   </update>
   <select id="querySigle" resultType="com.zfs.common.bo.PluginBO">
     select p.plugin_id as pluginId, p.publish_time as publishTime, au.username, p.size, p.context,
-    p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`,p.url
+    p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`,p.url,p.orig_name as origName
     from t_plugin p left join t_admin_user au on p.a_id = au.a_id
     <where>
       <if test="type != null and type != ''">  p.type=#{type} </if>
       <if test="pluginId!=null">p.plugin_id=#{pluginId}</if>
       and p.dr=1
     </where>
+    order by p.plugin_id desc
   </select>
   <select id="query" resultType="com.zfs.common.bo.PluginBO">
     select p.plugin_id as pluginId, p.publish_time as publishTime, au.username, p.size, p.context, sc.name,
-    a.versionname as versionName, p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`
+    a.versionname as versionName, p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`,p.orig_name as origName
     from t_plugin p
     left join t_app_plu_ch apc on p.plugin_id = apc.plugin_id
     left join t_soft_channel sc on apc.soft_channel_id = sc.soft_channel_id
@@ -228,7 +241,8 @@
   </select>
   <select id="queryById" parameterType="java.lang.Integer" resultType="com.zfs.common.bo.PluginBO">
     select p.plugin_id as pluginId, apc.app_id as appId, apc.soft_channel_id as softChannelId, p.publish_time as
-    publishTime, p.size, p.context, sc.name, a.versionname as versionName, p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`
+    publishTime, p.size, p.context, sc.name, a.versionname as versionName, p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`,
+    p.orig_name as origName
     from t_plugin p
     left join t_app_plu_ch apc on p.plugin_id = apc.plugin_id
     left join t_soft_channel sc on apc.soft_channel_id = sc.soft_channel_id

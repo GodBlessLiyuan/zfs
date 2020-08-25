@@ -46,6 +46,15 @@ public class AppPO implements Serializable {
     private Byte dr;
 
     private String md5;
+    private String origName;
+
+    public String getOrigName() {
+        return origName;
+    }
+
+    public void setOrigName(String origName) {
+        this.origName = origName;
+    }
 
     private static final long serialVersionUID = 1L;
 

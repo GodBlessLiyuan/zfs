@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description:
@@ -38,6 +40,18 @@ public class FileUploadServiceImpl implements IFileUploadService {
     private String videoDir;
     @Value("${file.pluginDir}")
     private String pluginDir;
+
+    @Override
+    public ResultVO appDirUploadGetNames(MultipartFile file) throws IOException {
+        ResultVO resultVO = this.appDirUpload(file);
+        String rename = (String) resultVO.getData();
+        List<String> names=new ArrayList<>();
+        names.add(rename);
+        names.add(file.getOriginalFilename());
+        resultVO.setData(names);
+        return resultVO;
+    }
+
     @Override
     public ResultVO appDirUpload(MultipartFile file) throws IOException {
         // 这是相对路径
@@ -62,7 +76,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
 
     @Override
     public ResultVO pluginUpload(MultipartFile file) {
-        String tmp=FileUtil.uploadFile(file, pluginDir, "plugin");
-        return new ResultVO(1000,tmp);
+        List<String> list = FileUtil.uploadFileGetNames(file, pluginDir, "plugin");
+        return new ResultVO(1000,list);
     }
 }

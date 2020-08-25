@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 @Data
 public class PluginDTO implements Serializable {
-    private String file;//文件名
+    private String[] file;//文件名
     private Byte type;//插件类型
     private Integer[] appIdS;//支持版本
     private Integer[] softChannelS;//更新渠道

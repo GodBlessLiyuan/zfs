@@ -254,6 +254,7 @@
         AND title like '%' #{title} '%'
       </if>
     </where>
+    order by status desc ,notice_id desc
   </select>
   <select id="queryAll" resultMap="ResultMapWithBLOBs">
     select

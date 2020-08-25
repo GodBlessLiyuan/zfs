@@ -43,6 +43,15 @@ public class PluginPO implements Serializable {
     private String pluginpkg;
     //插件类型
     private Byte type;
+    private String origName;
+
+    public String getOrigName() {
+        return origName;
+    }
+
+    public void setOrigName(String origName) {
+        this.origName = origName;
+    }
 
     public Long getPluginv() {
         return pluginv;

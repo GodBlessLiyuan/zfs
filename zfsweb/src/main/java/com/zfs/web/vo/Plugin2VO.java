@@ -31,4 +31,5 @@ public class Plugin2VO implements Serializable {
     private Long pluginv;//插件版本
     private String pluginpkg;//插件包名
     private String file;
+    private String origName;
 }

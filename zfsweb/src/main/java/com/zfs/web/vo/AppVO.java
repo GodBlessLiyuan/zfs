@@ -29,6 +29,7 @@ public class AppVO implements Serializable {
     private Integer status;
     private String extra;
     private String projectName;
+    private String origName;
     public static AppVO convert(AppBO bo) {
         AppVO dto = new AppVO();
 
@@ -44,6 +45,7 @@ public class AppVO implements Serializable {
         dto.setUsername(bo.getUsername());
         dto.setVersionName(bo.getVersionname());
         dto.setProjectName(bo.getUrl());
+        dto.setOrigName(bo.getOrigName());
         return dto;
     }
 

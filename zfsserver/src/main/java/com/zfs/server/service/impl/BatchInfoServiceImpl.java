@@ -48,15 +48,21 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
         if (null == po) {
             return new ResultVO(1016);
         }
-
+        //冻结，3
         if (BatchInfoConstant.FROZEN == po.getStatus()) {
             return new ResultVO(1017);
         } else if (BatchInfoConstant.ACTIVATED == po.getStatus()) {
             return new ResultVO(1020);
-        } else if (BatchInfoConstant.EXPIRED == po.getStatus()) {
+        }
+        //失效 4,6,7，
+        else if (BatchInfoConstant.EXPIRED == po.getStatus()||BatchInfoConstant.OVER_EXPIRED==po.getStatus()||
+            BatchInfoConstant.OVER_FROZEN==po.getStatus()) {
             return new ResultVO(1021);
         }
-
+        //结束，5，状态码：1026
+        else if(BatchInfoConstant.END==po.getStatus()){
+            return new ResultVO(1026);
+        }
         po.setUserId(dto.getUd());
         po.setStatus((byte) 2);
         po.setUpdateTime(new Date());

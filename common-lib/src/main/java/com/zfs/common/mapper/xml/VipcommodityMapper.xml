@@ -266,6 +266,7 @@
       <if test="comTypeId != null and comTypeId != 0"> and v.com_type_id = #{comTypeId} </if>
       <if test="channelId != null and channelId != 0"> and v.soft_channel_id = #{channelId} </if>
     </where>
+    order by v.status desc ,v.days desc
   </select>
   <select id="queryByChanIdAndComTypeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />

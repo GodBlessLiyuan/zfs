@@ -33,7 +33,7 @@ public interface IPluginService {
      * @param pluginId 插件Id
      * @return
      */
-    List<Plugin2VO> queryById(int pluginId);
+    Plugin2VO queryById(int pluginId);
 
     /**
      * 根据PluginId 和 AppId 查询渠道Ids
@@ -57,7 +57,7 @@ public interface IPluginService {
      * @return
      */
 
-    ResultVO insert(String file,Byte type, Integer[] appId, Integer[] softChannel, String context, String extra, int aId);
+    ResultVO insert(String[] file,Byte type, Integer[] appId, Integer[] softChannel, String context, String extra, int aId);
 
     /**
      * 状态更新
@@ -87,7 +87,7 @@ public interface IPluginService {
      * @param extra       备注
      * @return
      */
-    int update(Integer pluginId, String file, Integer[] appId, Integer[] softChannel, String context, String extra,Byte type);
+    int update(Integer pluginId, String[] file, Integer[] appId, Integer[] softChannel, String context, String extra,Byte type);
 
     List<AppPO> queryAppVersion();
 }
