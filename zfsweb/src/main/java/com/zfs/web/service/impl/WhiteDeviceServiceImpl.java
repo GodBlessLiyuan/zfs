@@ -57,6 +57,9 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
     @Override
     public ResultVO insert(String phone, String extra, int aId) {
         UserPO userPO = userMapper.queryByPhone(phone);
+        if(userPO==null){
+            return ResultVO.phoneNoExist();
+        }
         List<UserDevicePO> userDevicePOS=userDeviceMapper.queryPOByUser(userPO.getUserId());
         if(userDevicePOS==null||userDevicePOS.size()==0){
             return new ResultVO(1101);// 未找到对应的deviceId

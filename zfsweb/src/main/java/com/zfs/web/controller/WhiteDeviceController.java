@@ -31,8 +31,8 @@ public class WhiteDeviceController {
 
     @RequestMapping("query")
     public ResultVO query(
-           @RequestParam(value = "start", defaultValue = "1") int pageNum,
-           @RequestParam(value = "length", defaultValue = "10") int pageSize,
+           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
            @RequestParam(value = "phone",required = false) String phone) {
         Map<String, Object> reqData = new HashMap<>(1);
         if(!StringUtils.isEmpty(phone)){
@@ -43,7 +43,7 @@ public class WhiteDeviceController {
 
     @RequestMapping("insert")
     public ResultVO insert(@RequestParam(value = "phone") String phone,
-                           @RequestParam(value = "extra") String extra, HttpServletRequest req) {
+                           @RequestParam(value = "extra",defaultValue = "") String extra, HttpServletRequest req) {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {
@@ -53,7 +53,7 @@ public class WhiteDeviceController {
     }
 
     @RequestMapping("delete")
-    public int delete(@RequestParam(value = "deviceId") int deviceId) {
-        return service.deleteByDeviceId(deviceId);
+    public ResultVO delete(@RequestParam(value = "deviceId") int deviceId) {
+        return new ResultVO(1000,service.deleteByDeviceId(deviceId));
     }
 }
