@@ -47,10 +47,10 @@ public class WhiteDeviceController {
                            @RequestParam(value = "extra",defaultValue = "") String extra, HttpServletRequest req) {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
-//        if (admin == null) {
-//            return new ResultVO(1001);
-//        }
-        return service.insert(phone, extra, 1);
+        if (admin == null) {
+            return new ResultVO(1001);
+        }
+        return service.insert(phone, extra, admin.getaId());
     }
 
     @RequestMapping("delete")
