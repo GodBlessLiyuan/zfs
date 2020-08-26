@@ -49,3 +49,16 @@ http://192.168.10.23:8001/mgrapi/plugin/insert
 }
 
 白名单测试
+新增
+http://192.168.10.23:8001/mgrapi/whiltedevice/insert?phone=17816110072
+缓存
+http://192.168.10.23:8001/mgrapi/whiltedevice/cache
+server端口测试
+http://localhost:8003/v1.0/check
+即使未发布和已发布的状态，则都能查询到
+{
+    "id":40,
+    "ud":85,
+    "softv":0,
+    "channel":"vbooster"
+}
