@@ -46,7 +46,7 @@ public class AppServiceImpl implements IAppService {
 
         int status = this.gray || cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
         String redisKey = RedisKeyUtil.genAppRedisKey(dto.getSoftv(), dto.getChannel(), status);
-        //更新统计
+        //更新统计,统计了deviceStatisticsMapper
         mqForDeviceInfo(dto, req);
 
         String redisValue = cache.getCacheByKey(redisKey);
@@ -58,8 +58,9 @@ public class AppServiceImpl implements IAppService {
             return new ResultVO<>(1009, vo);
         }
 
-        // 从Redis中取出设备白名单
+        // 从Redis中取出设备白名单，渠道名获取渠道id
         int chanId = cache.getSoftChannelId(dto.getChannel());
+        //softv是versioncode
         AppPO appPO = appMapper.queryMaxByVerId(dto.getSoftv(), chanId, status);
         if (null == appPO) {
             cache.setCache(redisKey, null, 1, TimeUnit.DAYS);

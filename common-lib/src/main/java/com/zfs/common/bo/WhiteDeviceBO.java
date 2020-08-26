@@ -11,5 +11,6 @@ import lombok.Data;
  */
 @Data
 public class WhiteDeviceBO extends WhiteDevicePO {
-    private String imei;
+    private String phone;
+    private String username;
 }

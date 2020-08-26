@@ -2,12 +2,15 @@ package com.zfs.web.service.impl;
 
 import com.github.pagehelper.Page;
 import com.zfs.common.bo.WhiteDeviceBO;
-import com.zfs.common.mapper.DeviceImeiMapper;
+import com.zfs.common.mapper.UserDeviceMapper;
+import com.zfs.common.mapper.UserMapper;
 import com.zfs.common.mapper.WhiteDeviceMapper;
-import com.zfs.common.pojo.DeviceImeiPO;
+import com.zfs.common.pojo.UserDevicePO;
+import com.zfs.common.pojo.UserPO;
 import com.zfs.common.pojo.WhiteDevicePO;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
+import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.vo.WhiteDeviceVO;
 import com.zfs.web.service.IWhiteDeviceService;
@@ -38,48 +41,44 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
 
     @Resource
     private WhiteDeviceMapper whiteDeviceMapper;
-    @Resource
-    private DeviceImeiMapper deviceImeiMapper;
     @Autowired
     private StringRedisTemplate template;
-
+    @Autowired
+    private UserDeviceMapper userDeviceMapper;
+    @Autowired
+    private UserMapper userMapper;
     @Override
-    public DTPageInfo<WhiteDeviceVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData) {
+    public ResultVO query( int pageNum, int pageSize, Map<String, Object> reqData) {
         Page<WhiteDeviceBO> page = PageHelper.offsetPage(pageNum, pageSize);
         List<WhiteDeviceBO> pos = whiteDeviceMapper.query(reqData);
-        return new DTPageInfo<>(draw, page.getTotal(), WhiteDeviceVO.convert(pos));
+        return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), WhiteDeviceVO.convert(pos)));
     }
 
     @Override
-    public ResultVO insert(String imei, String extra, int aId) {
-        List<DeviceImeiPO> deviceImeiPOs = deviceImeiMapper.queryByImei(imei);
-        if (deviceImeiPOs == null || deviceImeiPOs.size() == 0) {
-            // 未找到对应的deviceId
-            return new ResultVO(1101);
+    public ResultVO insert(String phone, String extra, int aId) {
+        UserPO userPO = userMapper.queryByPhone(phone);
+        List<UserDevicePO> userDevicePOS=userDeviceMapper.queryPOByUser(userPO.getUserId());
+        if(userDevicePOS==null||userDevicePOS.size()==0){
+            return new ResultVO(1101);// 未找到对应的deviceId
         }
-
-        // deviced 与 imei 是1-n关系,故这里deviceId有且仅有一个
-        long deviceId = deviceImeiPOs.get(0).getDeviceId();
-        List<WhiteDevicePO> whiteDevicePOs = whiteDeviceMapper.queryByDeviceId(deviceId);
-        if (whiteDevicePOs != null && whiteDevicePOs.size() > 0) {
-            // 已存在在白名单里
-            return new ResultVO(1102);
-        }
-
-        WhiteDevicePO po = new WhiteDevicePO();
-
-        po.setDeviceId(deviceId);
-        po.setExtra(extra);
-        po.setCreateTime(new Date());
-        po.setaId(aId);
-
-        int result = whiteDeviceMapper.insert(po);
-        if (result == 0) {
-            LogUtil.log(logger, "insert", "插入失败", po);
-        }
-
+        //用户存在多个设备
+       for(UserDevicePO userDevicePO:userDevicePOS){
+           //其实只有一条记录
+           List<WhiteDevicePO> whiteDevicePOS = whiteDeviceMapper.queryByDeviceId(userDevicePO.getDeviceId());
+           if (whiteDevicePOS == null && whiteDevicePOS.size() > 0) {
+               // 不存在在白名单里
+               WhiteDevicePO po = new WhiteDevicePO();
+               po.setDeviceId(userDevicePO.getDeviceId());
+               po.setExtra(extra);
+               po.setCreateTime(new Date());
+               po.setaId(aId);
+               int result = whiteDeviceMapper.insert(po);
+               if (result == 0) {
+                   LogUtil.log(logger, "insert", "插入失败", po);
+               }
+           }
+       }
         this.deleteRedis();
-
         return new ResultVO(1000);
     }
 

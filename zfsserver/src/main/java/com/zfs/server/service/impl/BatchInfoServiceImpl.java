@@ -59,9 +59,9 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             BatchInfoConstant.OVER_FROZEN==po.getStatus()) {
             return new ResultVO(1021);
         }
-        //结束，5，状态码：1026
+        //结束的提示语：状态码：1021:卡密已过期，无法使用
         else if(BatchInfoConstant.END==po.getStatus()){
-            return new ResultVO(1026);
+            return new ResultVO(1021);
         }
         po.setUserId(dto.getUd());
         po.setStatus((byte) 2);
