@@ -82,7 +82,7 @@ public class HomepageServiceImpl implements HomepageService {
         String dayActiveUser = (String) this.template.opsForHash().get(key_active, "dayActiveUser");
         if (null == dayActiveUser) {
             dayActiveUser = String.valueOf(this.deviceStatisticsMapper.queryDayActiveUser());
-            this.redisOrigMapUtil.hset(key_active, "dayActiveUser",dayActiveUser,1,TimeUnit.MINUTES);
+            this.redisOrigMapUtil.hset(key_active, "dayActiveUser",dayActiveUser,10,TimeUnit.MINUTES);
         }
 
         //月活跃用户数

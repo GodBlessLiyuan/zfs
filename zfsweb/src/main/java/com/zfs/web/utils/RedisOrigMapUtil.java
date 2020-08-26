@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class RedisOrigMapUtil {
-    //好像RedisTemplate不行
+    //StringRedisTemplate 获取值和存值应该对应，且能全部搞定
     @Autowired
     private StringRedisTemplate redisTemplate;
     public void hset(String key, String field, String value, long timeout, TimeUnit timeUnit) {
