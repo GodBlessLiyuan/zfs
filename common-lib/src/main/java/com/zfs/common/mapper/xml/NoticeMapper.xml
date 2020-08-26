@@ -231,7 +231,7 @@
       menbers=#{menbers,jdbcType=CHAR}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
-
+  <!--搜索时间永远在数据库时间之间-->
   <select id="query" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List" />,
@@ -242,7 +242,7 @@
         AND start_time >= #{startTime}
       </if>
       <if test="endTime != null and endTime != ''">
-        AND  #{endTime} >=end_time
+        AND  #{endTime} >=start_time
       </if>
       <if test="status!=null and status != 0">
         AND status =  #{status}
