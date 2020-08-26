@@ -65,7 +65,7 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
        for(UserDevicePO userDevicePO:userDevicePOS){
            //其实只有一条记录
            List<WhiteDevicePO> whiteDevicePOS = whiteDeviceMapper.queryByDeviceId(userDevicePO.getDeviceId());
-           if (whiteDevicePOS == null && whiteDevicePOS.size() > 0) {
+           if (whiteDevicePOS == null || whiteDevicePOS.size() == 0) {
                // 不存在在白名单里
                WhiteDevicePO po = new WhiteDevicePO();
                po.setDeviceId(userDevicePO.getDeviceId());
