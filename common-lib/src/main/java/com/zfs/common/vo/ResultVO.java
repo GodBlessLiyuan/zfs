@@ -89,4 +89,8 @@ public class ResultVO<T> implements Serializable {
     public static ResultVO PasswordError(){
         return new ResultVO(2005);
     }
+
+    public static ResultVO phoneNoExist() {
+        return new ResultVO(1200);
+    }
 }
