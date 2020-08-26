@@ -17,23 +17,22 @@ public interface IWhiteDeviceService {
     /**
      * 分页查询
      *
-     * @param draw
      * @param pageNum
      * @param pageSize
      * @param reqData
      * @return
      */
-    DTPageInfo<WhiteDeviceVO> query(int draw, int pageNum, int pageSize, Map<String, Object> reqData);
+    ResultVO query(int pageNum, int pageSize, Map<String, Object> reqData);
 
     /**
      * 插入
      *
-     * @param imei  imei
+     * @param phone  phone
      * @param extra 备注
      * @param aId
      * @return
      */
-    ResultVO insert(String imei, String extra, int aId);
+    ResultVO insert(String phone, String extra, int aId);
 
     /**
      * 删除

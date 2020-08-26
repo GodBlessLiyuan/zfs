@@ -21,9 +21,9 @@ public class WhiteDeviceVO implements Serializable {
 
     private Long deviceId;
     private Date createTime;
-    private String imei;
+    private String phone;
     private String extra;
-
+//    private Byte status;
     /**
      * do 转 dtos
      *
@@ -35,9 +35,9 @@ public class WhiteDeviceVO implements Serializable {
 
         vo.setDeviceId(bo.getDeviceId());
         vo.setExtra(bo.getExtra());
-        vo.setImei(bo.getImei());
+        vo.setPhone(bo.getPhone());
         vo.setCreateTime(bo.getCreateTime());
-
+//        vo.setStatus(bo.getStatus());//真删，不用状态了
         return vo;
     }
 

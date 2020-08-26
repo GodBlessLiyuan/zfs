@@ -90,6 +90,7 @@ public class RedisCacheUtil {
      */
     public boolean checkWhiteDeviceByDevId(long devId) {
         String redisKey = RedisKeyUtil.genWhiteDeviceRedisKey(devId);
+        //获取集合
         Set<String> cacheDevIds = template.opsForSet().members(redisKey);
         if (cacheDevIds == null || cacheDevIds.size() == 0) {
             Set<String> devIds = whiteDeviceMapper.queryAllDevId();

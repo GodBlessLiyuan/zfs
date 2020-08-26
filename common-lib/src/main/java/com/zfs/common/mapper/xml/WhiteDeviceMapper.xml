@@ -62,12 +62,13 @@
   </insert>
 
   <select id="query" resultType="com.zfs.common.bo.WhiteDeviceBO">
-    select w.device_id as deviceId, w.extra, w.status, w.a_id as aId, w.create_time as createTime, d.imei
+    select w.device_id as deviceId, w.extra, w.status, w.a_id as aId, w.create_time as createTime,u.phone,u.username
     from t_white_device w
-    left join t_device_imei d on w.device_id = d.device_id
+    left join t_user_device ud on w.device_id = ud.device_id
+    left join t_user u on ud.user_id=u.user_id
     <where>
-      <if test="imei != null and imei != ''">
-        and d.imei like '%' #{imei} '%'
+      <if test="phone != null and phone != ''">
+        and u.phone like  #{phone} '%'
       </if>
     </where>
   </select>

@@ -4,6 +4,8 @@ import com.zfs.common.pojo.UserDevicePO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * UserDeviceMapper继承基类
  */
@@ -32,4 +34,5 @@ public interface UserDeviceMapper extends BaseMapper<UserDevicePO, Integer> {
      */
     UserDevicePO queryByDevIdAndUserId(@Param("deviceId") Long deviceId,@Param("userId") Long userId);
 
+    List<UserDevicePO> queryPOByUser(Long userId);
 }

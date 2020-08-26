@@ -6,6 +6,7 @@ import com.zfs.web.vo.WhiteDeviceVO;
 import com.zfs.web.service.IWhiteDeviceService;
 import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,25 +30,26 @@ public class WhiteDeviceController {
     private IWhiteDeviceService service;
 
     @RequestMapping("query")
-    public DTPageInfo<WhiteDeviceVO> query(@RequestParam(value = "draw", defaultValue = "1") int draw,
-                                           @RequestParam(value = "start", defaultValue = "1") int pageNum,
-                                           @RequestParam(value = "length", defaultValue = "10") int pageSize,
-                                           @RequestParam(value = "imei") String imei) {
+    public ResultVO query(
+           @RequestParam(value = "start", defaultValue = "1") int pageNum,
+           @RequestParam(value = "length", defaultValue = "10") int pageSize,
+           @RequestParam(value = "phone",required = false) String phone) {
         Map<String, Object> reqData = new HashMap<>(1);
-        reqData.put("imei", imei);
-
-        return service.query(draw, pageNum, pageSize, reqData);
+        if(!StringUtils.isEmpty(phone)){
+            reqData.put("phone", phone.replace(" ",""));
+        }
+        return service.query(pageNum, pageSize, reqData);
     }
 
     @RequestMapping("insert")
-    public ResultVO insert(@RequestParam(value = "imei") String imei,
+    public ResultVO insert(@RequestParam(value = "phone") String phone,
                            @RequestParam(value = "extra") String extra, HttpServletRequest req) {
         // 从Session里获取管理员Id
         AdminUserDTO admin = (AdminUserDTO) req.getSession().getAttribute(Constant.ADMIN_USER);
         if (admin == null) {
             return new ResultVO(1001);
         }
-        return service.insert(imei, extra, admin.getaId());
+        return service.insert(phone, extra, admin.getaId());
     }
 
     @RequestMapping("delete")
