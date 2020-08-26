@@ -88,7 +88,7 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
 
     @Override
     public int deleteByDeviceId(int deviceId) {
-        int first = 1;//whiteDeviceMapper.deleteByDeviceId(deviceId);
+        int first = whiteDeviceMapper.deleteByDeviceId(deviceId);
         if (first == 0) {
             LogUtil.log(logger, "insert", "删除失败", deviceId);
         }
