@@ -41,4 +41,6 @@ public interface IWhiteDeviceService {
      * @return
      */
     int deleteByDeviceId(int deviceId);
+
+    ResultVO cache();
 }

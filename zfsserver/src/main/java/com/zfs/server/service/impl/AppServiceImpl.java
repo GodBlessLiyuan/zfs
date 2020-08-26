@@ -43,8 +43,17 @@ public class AppServiceImpl implements IAppService {
 
     @Override
     public ResultVO check(AppDTO dto, HttpServletRequest req) {
-
-        int status = this.gray || cache.checkWhiteDeviceByDevId(dto.getId()) ? 0 : 2;
+        /**
+         *  gray配置为true，则缓存不起作用，则取发布版本
+         *  gray配置为false；false || true取状态1，取未发布版本t_app；false|| false取状态2，取发布版本的t_app;
+         *  其实也可以删除gray
+         * */
+        int status ;
+        if(gray){
+            status=2;
+        }else {
+            status= cache.checkWhiteDeviceByDevId(dto.getId()) ? 1 : 2;
+        }
         String redisKey = RedisKeyUtil.genAppRedisKey(dto.getSoftv(), dto.getChannel(), status);
         //更新统计,统计了deviceStatisticsMapper
         mqForDeviceInfo(dto, req);
@@ -60,7 +69,7 @@ public class AppServiceImpl implements IAppService {
 
         // 从Redis中取出设备白名单，渠道名获取渠道id
         int chanId = cache.getSoftChannelId(dto.getChannel());
-        //softv是versioncode
+        //softv是versioncode 状态 1 未发布 2 发布
         AppPO appPO = appMapper.queryMaxByVerId(dto.getSoftv(), chanId, status);
         if (null == appPO) {
             cache.setCache(redisKey, null, 1, TimeUnit.DAYS);

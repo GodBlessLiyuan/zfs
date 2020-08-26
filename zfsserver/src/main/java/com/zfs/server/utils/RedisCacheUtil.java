@@ -89,19 +89,12 @@ public class RedisCacheUtil {
      * @return
      */
     public boolean checkWhiteDeviceByDevId(long devId) {
-        String redisKey = RedisKeyUtil.genWhiteDeviceRedisKey(devId);
+        String redisKey = RedisKeyUtil.genWhiteDeviceRedisKey();
         //获取集合
         Set<String> cacheDevIds = template.opsForSet().members(redisKey);
         if (cacheDevIds == null || cacheDevIds.size() == 0) {
-            Set<String> devIds = whiteDeviceMapper.queryAllDevId();
-            if (devIds == null || devIds.size() == 0) {
-                return false;
-            }
-            template.opsForSet().add(redisKey, devIds.toArray(new String[0]));
-            template.expire(redisKey, 1, TimeUnit.DAYS);
-            return devIds.contains(String.valueOf(devId));
+            return false;
         }
-
         return cacheDevIds.contains(String.valueOf(devId));
     }
 

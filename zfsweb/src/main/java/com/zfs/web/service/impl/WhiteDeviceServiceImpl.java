@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: xiahui
@@ -49,7 +50,7 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
     private UserMapper userMapper;
     @Override
     public ResultVO query( int pageNum, int pageSize, Map<String, Object> reqData) {
-        Page<WhiteDeviceBO> page = PageHelper.offsetPage(pageNum, pageSize);
+        Page<WhiteDeviceBO> page =  PageHelper.startPage(pageNum, pageSize);
         List<WhiteDeviceBO> pos = whiteDeviceMapper.query(reqData);
         return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), WhiteDeviceVO.convert(pos)));
     }
@@ -87,7 +88,7 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
 
     @Override
     public int deleteByDeviceId(int deviceId) {
-        int first = whiteDeviceMapper.deleteByDeviceId(deviceId);
+        int first = 1;//whiteDeviceMapper.deleteByDeviceId(deviceId);
         if (first == 0) {
             LogUtil.log(logger, "insert", "删除失败", deviceId);
         }
@@ -95,12 +96,25 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
         return first;
     }
 
+    @Override
+    public ResultVO cache() {
+        Set<String> devIds = whiteDeviceMapper.queryAllDevId();
+        if (devIds == null || devIds.size() == 0) {
+            return ResultVO.noDeviceID();
+        }
+        String redisKey = RedisKeyUtil.genWhiteDeviceRedisKey();
+        String[] strings = devIds.toArray(new String[0]);
+        template.opsForSet().add(redisKey, strings);
+        template.expire(redisKey, 1, TimeUnit.DAYS);
+        return new ResultVO(1000,devIds.size());
+    }
 
     /**
-     * 删除对应的Redis
+     * 删除对应的Redis，删除全部了，删除之后必须再次缓存一遍；
      */
     private void deleteRedis() {
-        Set<String> redisKeys = template.keys(RedisKeyUtil.genWhiteDeviceRedisKey("*"));
+        //*是所有匹配
+        Set<String> redisKeys = template.keys(RedisKeyUtil.genWhiteDeviceRedisKey());
         if (!CollectionUtils.isEmpty(redisKeys)) {
             template.delete(redisKeys);
         }
