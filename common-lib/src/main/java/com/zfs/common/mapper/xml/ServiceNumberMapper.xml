@@ -37,6 +37,7 @@
       <if test="number!=null and number!=''">
         and kf like #{number} '%'
       </if>
+       and dr=1
     </where>
   </select>
   <select id="queryNumbers" resultType="java.lang.String">

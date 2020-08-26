@@ -28,8 +28,9 @@ public class AppVO implements Serializable {
     private String chanName;
     private Integer status;
     private String extra;
-    private String projectName;
+    private String projectNameSigle;
     private String origName;
+    private List<String> projectName;
     public static AppVO convert(AppBO bo) {
         AppVO dto = new AppVO();
 
@@ -44,8 +45,12 @@ public class AppVO implements Serializable {
         dto.setUpdateType(bo.getUpdateType());
         dto.setUsername(bo.getUsername());
         dto.setVersionName(bo.getVersionname());
-        dto.setProjectName(bo.getUrl());
-        dto.setOrigName(bo.getOrigName());
+//        dto.setProjectNameSigle(bo.getUrl());
+        List<String> projectName=new ArrayList<>(2);
+        projectName.add(bo.getUrl());
+        projectName.add(bo.getOrigName());
+        dto.setProjectName(projectName);
+//        dto.setOrigName(bo.getOrigName());
         return dto;
     }
 

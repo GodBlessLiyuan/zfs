@@ -59,7 +59,7 @@ public class CustomerController {
         return service.query(pageNum, pageSize, map);
     }
     @PostMapping("delete")
-    public ResultVO delete(@RequestParam("nID") Long nID){
-        return service.delete(nID);
+    public ResultVO delete(@RequestParam("svnmID") Long svnmID){
+        return service.delete(svnmID);
     }
 }
