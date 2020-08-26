@@ -7,6 +7,7 @@ import com.zfs.web.service.IWhiteDeviceService;
 import com.zfs.web.utils.DTPageInfo;
 import com.zfs.common.vo.ResultVO;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +55,10 @@ public class WhiteDeviceController {
 
     @RequestMapping("delete")
     public ResultVO delete(@RequestParam(value = "deviceId") int deviceId) {
-        return new ResultVO(1000,service.deleteByDeviceId(deviceId));
+        return service.deleteByDeviceId(deviceId);
+    }
+    @PostMapping("cache")
+    public ResultVO cache(){
+        return service.cache();
     }
 }

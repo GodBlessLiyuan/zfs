@@ -40,5 +40,7 @@ public interface IWhiteDeviceService {
      * @param deviceId 设备Id
      * @return
      */
-    int deleteByDeviceId(int deviceId);
+    ResultVO deleteByDeviceId(int deviceId);
+
+    ResultVO cache();
 }

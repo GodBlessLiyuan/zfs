@@ -93,4 +93,8 @@ public class ResultVO<T> implements Serializable {
     public static ResultVO phoneNoExist() {
         return new ResultVO(1200);
     }
+
+    public static ResultVO noDeviceID() {
+        return new ResultVO(1100);
+    }
 }
