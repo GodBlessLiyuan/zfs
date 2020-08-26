@@ -55,7 +55,7 @@ public class WhiteDeviceController {
 
     @RequestMapping("delete")
     public ResultVO delete(@RequestParam(value = "deviceId") int deviceId) {
-        return new ResultVO(1000,service.deleteByDeviceId(deviceId));
+        return service.deleteByDeviceId(deviceId);
     }
     @PostMapping("cache")
     public ResultVO cache(){
