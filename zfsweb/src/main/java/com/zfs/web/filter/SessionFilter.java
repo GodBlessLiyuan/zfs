@@ -18,7 +18,7 @@ import java.util.List;
  * @version: 1.0.0
  * @description:
  */
-//@Component
+@Component
 public class SessionFilter implements Filter {
 
     private static String CONTEXT_PATH ;
