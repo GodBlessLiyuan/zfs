@@ -75,7 +75,7 @@ public class OrderController {
     }
 
     @RequestMapping("export")
-    public ResultVO export(@RequestParam(value = "startDate", required = false) String startDate,
+    public void export(@RequestParam(value = "startDate", required = false) String startDate,
                            @RequestParam(value = "endDate", required = false) String endDate,
                            @RequestParam(value = "comTypeId", required = false) Integer comTypeId,
                            @RequestParam(value = "type", required = false) Integer type,
@@ -102,6 +102,6 @@ public class OrderController {
         reqData.put("phone", phone);
         reqData.put("number", number);
 
-        return service.export(reqData,response);
+        service.export(reqData,response);
     }
 }

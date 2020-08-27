@@ -62,10 +62,9 @@ public class BatchInfoController {
      * @param response
      */
     @GetMapping("export")
-    public ResultVO export(@RequestParam(value = "batchId") Integer batchId,
+    public void export(@RequestParam(value = "batchId") Integer batchId,
                        @RequestParam(value = "status",required = false) Byte status,
                        HttpServletResponse response) {
         this.batchInfoService.export(batchId, status, response);
-        return new ResultVO(1000);
     }
 }

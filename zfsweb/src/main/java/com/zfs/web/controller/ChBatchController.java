@@ -107,12 +107,11 @@ public class ChBatchController {
      * @return
      */
     @RequestMapping("export")
-    public ResultVO export(@RequestParam(value = "chanNickname", required = false) String chanNickname,
+    public void export(@RequestParam(value = "chanNickname", required = false) String chanNickname,
                        @RequestParam(value = "comTypeId", required = false) Integer comTypeId,
                        @RequestParam(value = "status", required = false) Byte status,
                        @RequestParam(value = "operator", required = false) String operator,
                        HttpServletResponse response) {
         this.chBatchService.export(chanNickname, comTypeId, status, operator, response);
-        return new ResultVO<>(1000);
     }
 }
