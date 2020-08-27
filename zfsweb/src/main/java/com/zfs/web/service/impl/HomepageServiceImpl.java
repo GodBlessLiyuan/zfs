@@ -95,24 +95,24 @@ public class HomepageServiceImpl implements HomepageService {
 
         String key_revenue = RedisKeyUtil.genHomepageRedisKey( "revenue", current_date);
         //当日收入
-        String dayRevenue = (String) this.template.opsForHash().get(key_active, "dayRevenue");
+        String dayRevenue = (String) this.template.opsForHash().get(key_revenue, "dayRevenue");
         if (null == dayRevenue) {
             dayRevenue = String.valueOf(decimal(this.orderMapper.queryDayRevenue()*0.01));
-            this.redisOrigMapUtil.hset(key_active, "dayRevenue",dayRevenue,10,TimeUnit.MINUTES);
+            this.redisOrigMapUtil.hset(key_revenue, "dayRevenue",dayRevenue,10,TimeUnit.MINUTES);
         }
 
         //支付次数
-        String payCount= (String)this.template.opsForHash().get(key_active, "payCount");
+        String payCount= (String)this.template.opsForHash().get(key_revenue, "payCount");
         if (null == payCount) {
             payCount = String.valueOf(this.orderMapper.queryPayCount());
-            this.redisOrigMapUtil.hset(key_active, "payCount",payCount,10,TimeUnit.MINUTES);
+            this.redisOrigMapUtil.hset(key_revenue, "payCount",payCount,10,TimeUnit.MINUTES);
         }
 
         //当月收入
-        String monthRevenue= (String) this.template.opsForHash().get(key_active, "monthRevenue");
+        String monthRevenue= (String) this.template.opsForHash().get(key_revenue, "monthRevenue");
         if (null == monthRevenue) {
             monthRevenue = String.valueOf(decimal(this.orderMapper.queryMonthRevenue()*0.01));
-            this.redisOrigMapUtil.hset(key_active, "monthRevenue",monthRevenue,10,TimeUnit.MINUTES);
+            this.redisOrigMapUtil.hset(key_revenue, "monthRevenue",monthRevenue,10,TimeUnit.MINUTES);
         }
 
         // 创建一个map，存放返回给前端的结果

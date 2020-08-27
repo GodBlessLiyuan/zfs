@@ -94,7 +94,8 @@ public class AppServiceImpl implements IAppService {
     /**
      * @author: dangyi
      * @date: Created in 2019/11/14 15:35
-     * @description: 将用户设备访问信息转发给RabbitMQ
+     * @description: 将用户设备访问信息转发给RabbitMQ；
+     * 用于日活跃和月活跃用户的统计
      */
     private void mqForDeviceInfo(AppDTO dto, HttpServletRequest req) {
         // 创建map集合，封装用户设备访问信息
