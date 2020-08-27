@@ -187,6 +187,7 @@ public class AppServiceImpl implements IAppService {
         appPO.setContext(context);
         appPO.setExtra(extra);
         appPO.setUpdateTime(new Date());
+        appPO.setOrigName(file[1]);
         int frist = appMapper.updateByPrimaryKey(appPO);
         if (frist == 0) {
             LogUtil.log(logger, "update", "更新appChPOs失败", appPO);
