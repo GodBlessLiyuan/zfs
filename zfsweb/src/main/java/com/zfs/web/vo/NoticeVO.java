@@ -43,5 +43,5 @@ public class NoticeVO implements Serializable {
 
     private String operator;
     private String[] menbers;
-
+    private String noticeMenbers;
 }
