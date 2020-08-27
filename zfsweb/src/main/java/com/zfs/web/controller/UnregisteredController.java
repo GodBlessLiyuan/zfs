@@ -37,7 +37,7 @@ public class UnregisteredController {
     }
 
     @RequestMapping("export")
-    protected void export(HttpServletResponse response){
+    public void export(HttpServletResponse response){
         service.export(response);
     }
 }
