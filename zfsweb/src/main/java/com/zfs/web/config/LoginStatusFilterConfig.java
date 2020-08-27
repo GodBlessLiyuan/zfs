@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @version: 1.0.0
  * @description:
  */
-@Configuration
+//@Configuration
 public class LoginStatusFilterConfig {
 
     @Bean

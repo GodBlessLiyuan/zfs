@@ -21,6 +21,15 @@ public class FunctionvideoPO implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+    private String origName;
+
+    public String getOrigName() {
+        return origName;
+    }
+
+    public void setOrigName(String origName) {
+        this.origName = origName;
+    }
 
     private static final long serialVersionUID = 1L;
 
