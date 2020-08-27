@@ -48,14 +48,14 @@ public class FeedbackController {
 
     }
     @RequestMapping("export")
-    public ResultVO export(HttpServletResponse response,
+    public void export(HttpServletResponse response,
           @RequestParam(value = "startTime", required = false) String startTime,
           @RequestParam(value = "endTime", required = false) String endTime,
           @RequestParam(value = "phone", required = false) String phone,
           @RequestParam(value = "contact", required = false) String contact
     ) {
         // 调用业务层，返回页面结果
-        return feedbackService.export(response,startTime, endTime, phone, contact);
+        feedbackService.export(response,startTime, endTime, phone, contact);
     }
 
 }

@@ -45,7 +45,7 @@ public class UserVipController {
     }
 
     @RequestMapping("export")
-    public ResultVO export(HttpServletResponse response) {
-        return service.export(response);
+    public void export(HttpServletResponse response) {
+         service.export(response);
     }
 }
