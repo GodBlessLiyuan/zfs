@@ -117,6 +117,28 @@ public class NoticeServiceImpl implements NoticeService {
         }
         vo.setStatus(po.getStatus());
         vo.setOperator(queryUsernameByAid(po.getaId()));
+        StringBuilder stringBuilder =new StringBuilder();
+        if(!StringUtils.isEmpty(po.getMenbers())){
+            vo.setMenbers(po.getMenbers().split(","));
+            String menbers = po.getMenbers();
+            if(menbers.contains("1")){
+                stringBuilder.append("全体用户,");
+            }
+            if(menbers.contains("2")){
+                stringBuilder.append("非会员用户,");
+            }
+            if(menbers.contains("3")){
+                stringBuilder.append("会员用户,");
+            }
+            if(menbers.contains("4")){
+                stringBuilder.append("近半年注册用户,");
+            }
+            if(menbers.contains("5")){
+                stringBuilder.append("近一月注册用户,");
+            }
+            vo.setNoticeMenbers(stringBuilder.toString().substring(0,stringBuilder.toString().length()-1));
+        }
+
     }
 
     /**
