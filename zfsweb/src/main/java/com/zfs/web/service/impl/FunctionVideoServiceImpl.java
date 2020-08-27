@@ -88,17 +88,17 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         vo.setFunName(po.getFunName());
         List<String> urls=new ArrayList<>();
         if (StringUtils.isEmpty(po.getUrl())) {
-            vo.setUrl("");
+//            vo.setUrl("");
             urls.add("");
         } else {
-            vo.setUrl(publicPath + po.getUrl());
+//            vo.setUrl(publicPath + po.getUrl());
             urls.add(publicPath + po.getUrl());
         }
         if(StringUtils.isEmpty(po.getOrigName())){
-            vo.setOrigName("");
+//            vo.setOrigName("");
             urls.add("");
         }else{
-            vo.setOrigName(po.getOrigName());
+//            vo.setOrigName(po.getOrigName());
             urls.add(po.getOrigName());
         }
         vo.setExtra(po.getExtra());
