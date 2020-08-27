@@ -1,5 +1,6 @@
 package com.zfs.web.controller;
 
+import com.zfs.web.dto.FunctionVideoDTO;
 import com.zfs.web.service.FunctionVideoService;
 import com.zfs.common.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -46,6 +48,7 @@ public class FunctionVideoController {
      * @param functionId
      * @return
      */
+    @Deprecated
     @PostMapping("queryById")
     public ResultVO queryById(@RequestParam(value = "functionId") Integer functionId) {
         return this.functionVideoService.queryById(functionId);
@@ -54,36 +57,24 @@ public class FunctionVideoController {
 
     /**
      * 插入
-     * @param httpSession
-     * @param funName
-     * @param url
-     * @param extra
      * @return
      */
     @PostMapping("insert")
-    public ResultVO insert(HttpSession httpSession,
-                           @RequestParam(value = "funName") String funName,
-                           @RequestParam(value = "url") String url,
-                           @RequestParam(value = "extra", required = false) String extra) {
-        return this.functionVideoService.insert(httpSession, funName, url, extra);
+    public ResultVO insert(HttpServletRequest request,
+                           @RequestBody FunctionVideoDTO videoDTO) {
+        return this.functionVideoService.insert(request.getSession(), videoDTO.getFunName(), videoDTO.getUrls(),videoDTO.getExtra());
     }
 
 
     /**
      * 修改
-     * @param httpSession
-     * @param funName
-     * @param url
-     * @param extra
      * @return
      */
     @PostMapping("update")
-    public ResultVO update(HttpSession httpSession,
-                           @RequestParam(value = "functionId") Integer functionId,
-                           @RequestParam(value = "funName", required = false) String funName,
-                           @RequestParam(value = "url", required = false) String url,
-                           @RequestParam(value = "extra", required = false) String extra) {
-        return this.functionVideoService.update(httpSession, functionId, funName, url, extra);
+    public ResultVO update(HttpServletRequest request,
+                           @RequestBody FunctionVideoDTO videoDTO) {
+        return this.functionVideoService.update(request.getSession(), videoDTO.getFunctionId(),
+                videoDTO.getFunName(),videoDTO.getUrls(),videoDTO.getExtra());
     }
 
     /**

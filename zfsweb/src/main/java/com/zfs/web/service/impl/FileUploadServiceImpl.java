@@ -71,7 +71,10 @@ public class FileUploadServiceImpl implements IFileUploadService {
     @Override
     public ResultVO videoUpload(MultipartFile file) {
         String functionvideo = FileUtil.uploadFile(file, videoDir, "functionvideo");
-        return new ResultVO(1000,  publicPath + functionvideo);
+        List<String> list=new ArrayList<>(2);
+        list.add(publicPath + functionvideo);
+        list.add(file.getOriginalFilename());
+        return new ResultVO(1000,list);
     }
 
     @Override

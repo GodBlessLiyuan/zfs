@@ -5,6 +5,7 @@ import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
+import com.zfs.web.dto.FunctionVideoDTO;
 import com.zfs.web.vo.FunctionVideoVO;
 import com.zfs.common.mapper.AdminUserMapper;
 import com.zfs.common.mapper.FunctionvideoMapper;
@@ -74,21 +75,35 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         List<FunctionVideoVO> vos = new ArrayList<>();
         for(FunctionvideoPO po: pos) {
             FunctionVideoVO vo = new FunctionVideoVO();
-            vo.setFunctionId(po.getFunctionId());
-            vo.setFunName(po.getFunName());
-            if (null == po.getUrl()) {
-                vo.setUrl(po.getUrl());
-            } else {
-                vo.setUrl(publicPath + po.getUrl());
-            }
-            vo.setExtra(po.getExtra());
-            vo.setOperator(queryUsernameByAid(po.getaId()));
-
+            this.po2vo(po,vo);
             vos.add(vo);
         }
 
         //根据分页查询的结果，封装最终的返回结果
         return new ResultVO(1000,new PageInfoVO<>(page.getTotal(), vos));
+    }
+
+    private void po2vo(FunctionvideoPO po, FunctionVideoVO vo) {
+        vo.setFunctionId(po.getFunctionId());
+        vo.setFunName(po.getFunName());
+        List<String> urls=new ArrayList<>();
+        if (StringUtils.isEmpty(po.getUrl())) {
+//            vo.setUrl("");
+            urls.add("");
+        } else {
+//            vo.setUrl(publicPath + po.getUrl());
+            urls.add(publicPath + po.getUrl());
+        }
+        if(StringUtils.isEmpty(po.getOrigName())){
+//            vo.setOrigName("");
+            urls.add("");
+        }else{
+//            vo.setOrigName(po.getOrigName());
+            urls.add(po.getOrigName());
+        }
+        vo.setExtra(po.getExtra());
+        vo.setOperator(queryUsernameByAid(po.getaId()));
+        vo.setUrls(urls);
     }
 
 
@@ -106,9 +121,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         }
 
         FunctionVideoVO vo = new FunctionVideoVO();
-        vo.setFunName(po.getFunName());
-        vo.setExtra(po.getExtra());
-
+        this.po2vo(po,vo);
         return new ResultVO<>(1000, vo);
     }
 
@@ -122,7 +135,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
      * @return
      */
     @Override
-    public ResultVO insert(HttpSession httpSession, String funName, String url, String extra) {
+    public ResultVO insert(HttpSession httpSession, String funName, String[] url, String extra) {
 
         FunctionvideoPO po = new FunctionvideoPO();
 
@@ -134,11 +147,12 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
             return new ResultVO(1003);
         }
 
-        if (StringUtils.isEmpty(url)) {
+        if (StringUtils.isEmpty(url[0])) {
             po.setUrl("");
         } else {
-            po.setUrl(url.split(publicPath)[1]);
+            po.setUrl(url[0].split(publicPath)[1]);
         }
+        po.setOrigName(url[1]);
         po.setExtra(extra);
         po.setUpdateTime(new Date());
         po.setCreateTime(new Date());
@@ -162,7 +176,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
      * @return
      */
     @Override
-    public ResultVO update(HttpSession httpSession, Integer functionId, String funName, String url, String extra) {
+    public ResultVO update(HttpSession httpSession, Integer functionId, String funName, String[] url, String extra) {
 
         // 从数据库中查询出要修改的数据
         FunctionvideoPO po = this.functionVideoMapper.selectByPrimaryKey(functionId);
@@ -172,9 +186,10 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         }
 
         po.setFunName(funName);
-        if (!StringUtils.isEmpty(url)) {
-            po.setUrl(url.split(publicPath)[1]);
+        if (!StringUtils.isEmpty(url[0])) {
+            po.setUrl(url[0].split(publicPath)[1]);
         }
+        po.setOrigName(url[1]);
         po.setExtra(extra);
         po.setUpdateTime(new Date());
         po.setaId(OperatorUtil.getOperatorId(httpSession));
@@ -236,7 +251,7 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
      */
     private void deleteRedis(String funname) {
         //Redis中的key
-        String key = RedisKeyUtil.genFunctionvideoRedisKey() + funname;
+        String key = RedisKeyUtil.genFunctionvideoRedisKey(funname);
         if (template.hasKey(key)) {
             template.delete(key);
         }

@@ -19,7 +19,7 @@ public interface FunctionVideoService {
 
     ResultVO delete(Integer functionId);
 
-    ResultVO insert(HttpSession httpSession, String funName, String url, String extra);
+    ResultVO insert(HttpSession httpSession, String funName, String[] urls, String extra);
 
-    ResultVO update(HttpSession httpSession, Integer functionId, String funName, String url, String extra);
+    ResultVO update(HttpSession httpSession, Integer functionId, String funName, String[] urls, String extra);
 }

@@ -9,9 +9,10 @@
     <result column="a_id" jdbcType="INTEGER" property="aId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="orig_name" jdbcType="CHAR" property="origName"/>
   </resultMap>
   <sql id="Base_Column_List">
-    function_id, fun_name, url, extra, a_id, create_time, update_time
+    function_id, fun_name, url, extra, a_id, create_time, update_time,orig_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,10 +27,10 @@
   <insert id="insert" parameterType="com.zfs.common.pojo.FunctionvideoPO">
     insert into t_functionvideo (function_id, fun_name, url, 
       extra, a_id, create_time, 
-      update_time)
+      update_time,orig_name)
     values (#{functionId,jdbcType=INTEGER}, #{funName,jdbcType=CHAR}, #{url,jdbcType=CHAR}, 
       #{extra,jdbcType=CHAR}, #{aId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{updateTime,jdbcType=TIMESTAMP},#{origName,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zfs.common.pojo.FunctionvideoPO">
     insert into t_functionvideo
@@ -55,6 +56,9 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="origName!=null">
+        orig_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="functionId != null">
@@ -77,6 +81,9 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="origName!=null">
+        #{origName,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -101,6 +108,9 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="origName!=null">
+        orig_name= #{origName,jdbcType=CHAR},
+      </if>
     </set>
     where function_id = #{functionId,jdbcType=INTEGER}
   </update>
@@ -111,7 +121,8 @@
       extra = #{extra,jdbcType=CHAR},
       a_id = #{aId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      orig_name=#{origName,jdbcType=CHAR}
     where function_id = #{functionId,jdbcType=INTEGER}
   </update>
 
