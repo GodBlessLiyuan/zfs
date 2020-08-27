@@ -176,6 +176,7 @@ public class NoticeServiceImpl implements NoticeService {
         po.setStatus(1);
         //会员类别数组
         po.setMenbers(menbers);
+        po.setCreateTime(new Date());
         int result = this.noticeMapper.insert(po);
         if (result == 0) {
             LogUtil.log(logger, "insert", "插入失败", po);
