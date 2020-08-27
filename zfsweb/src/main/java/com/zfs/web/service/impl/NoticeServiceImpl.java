@@ -136,6 +136,7 @@ public class NoticeServiceImpl implements NoticeService {
             if(menbers.contains("5")){
                 stringBuilder.append("近一月注册用户,");
             }
+//            stringBuilder.deleteCharAt(stringBuilder.length()-1);//性能好一些
             vo.setNoticeMenbers(stringBuilder.toString().substring(0,stringBuilder.toString().length()-1));
         }
 

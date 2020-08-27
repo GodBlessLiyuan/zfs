@@ -108,7 +108,11 @@ public class FunctionVideoServiceImpl implements FunctionVideoService {
         FunctionVideoVO vo = new FunctionVideoVO();
         vo.setFunName(po.getFunName());
         vo.setExtra(po.getExtra());
-
+        if (null == po.getUrl()) {
+            vo.setUrl(po.getUrl());
+        } else {
+            vo.setUrl(publicPath + po.getUrl());
+        }
         return new ResultVO<>(1000, vo);
     }
 
