@@ -15,7 +15,7 @@ hdel "NOTICE_HASH_KEY" "smartzfs_notice_2020-08-18 18:52_NOT_MEMBER"
 hdel "NOTICE_HASH_KEY" "smartzfs_notice_2020-08-18 18:52_MEMBER"
 hdel "NOTICE_HASH_KEY" "smartzfs_notice_2020-08-18 18:52_HALF_YEAR_REGISTER"
 hdel "NOTICE_HASH_KEY" "smartzfs_notice_2020-08-18 18:52_ONE_MONTH_REGISTER"
-
+后台地址：后台地址：http://dev.zfs.vbooster.cn/webmgr/#/login
 
 web测试
 7 app
