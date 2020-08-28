@@ -17,6 +17,7 @@ import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
 import com.zfs.web.utils.FileUtil;
 import com.zfs.web.utils.List2Str;
+import com.zfs.web.utils.MultiUtil;
 import com.zfs.web.vo.Plugin2VO;
 import com.zfs.web.vo.PluginVO;
 import com.zfs.web.service.IPluginService;
@@ -88,7 +89,7 @@ public class PluginServiceImpl implements IPluginService {
         plugin2VO.setPublishTime(bo.getPublishTime());//发布时间
         plugin2VO.setPluginv(bo.getPluginv());//版本号
         plugin2VO.setPluginpkg(bo.getPluginpkg());//包名
-        plugin2VO.setSize(bo.getSize());//文件大小
+        plugin2VO.setSize(MultiUtil.get2WeiFileSize(bo.getSize(),6)+"M");//文件大小
         plugin2VO.setStatus(bo.getStatus());//状态
         plugin2VO.setExtra(bo.getExtra());//备注
         plugin2VO.setUsername(bo.getUsername());//用户名

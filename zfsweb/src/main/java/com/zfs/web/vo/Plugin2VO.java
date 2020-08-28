@@ -16,7 +16,7 @@ public class Plugin2VO implements Serializable {
     private Integer pluginId;
     private Date publishTime;//发布时间
     private String username;//
-    private Integer size;//插件大小
+    private String size;//插件大小
     private String context;//插件内容
     // 应用Id和渠道Id组合
     private List<Integer> appIDS;
