@@ -135,7 +135,7 @@
         and pro_name like '%' #{proName} '%'
       </if>
       <if test="phone != null and phone != ''">
-        and phone = #{phone}
+        and phone like '%' #{phone} '%'
       </if>
     </where>
   </select>
