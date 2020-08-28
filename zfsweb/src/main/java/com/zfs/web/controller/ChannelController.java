@@ -32,14 +32,14 @@ public class ChannelController {
     public ResultVO query(
            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-           @RequestParam(value = "chanName", required = false) String chanName,
+           @RequestParam(value = "chanNickname", required = false) String chanNickname,
            @RequestParam(value = "proName", required = false) String proName
     ){
         // 调用业务层，返回页面结果
         if(!StringUtils.isEmpty(proName)){
             proName=proName.replace(" ","");
         }
-        return channelService.query(pageNum, pageSize, chanName, proName);
+        return channelService.query(pageNum, pageSize, chanNickname, proName);
     }
 
 

@@ -153,7 +153,7 @@
     left join t_promoter p on c.pro_id = p.pro_id
     <where>
       <if test="chanName != null and chanName != ''">
-        AND chan_name = #{chanName}
+        AND chan_nickname = #{chanNickname}
       </if>
       <if test="proName != null and proName != ''">
         AND p.pro_name = #{proName}
