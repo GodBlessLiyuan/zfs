@@ -441,8 +441,8 @@ public class ChBatchServiceImpl implements ChBatchService {
             }
             content[i][3] = vo.getCreater();
             content[i][4] = vo.getComTypeName();
-            content[i][5] = vo.getNum().toString();
-            content[i][6] = vo.getActivity().toString();
+            content[i][5] = vo.getNum()==null?"":vo.getNum().toString();
+            content[i][6] = vo.getActivity()==null?"":vo.getNum().toString();
             //由未激活数量getNonActivity().toString();改为有效期至
             content[i][7] = vo.getValidityTime();
             content[i][8] = vo.getExtra();

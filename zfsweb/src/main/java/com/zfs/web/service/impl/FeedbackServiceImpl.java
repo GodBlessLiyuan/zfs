@@ -162,7 +162,8 @@ public class FeedbackServiceImpl implements FeedbackService {
             content[i][2] = vo.getManufacturer();
             content[i][3] = vo.getAndroidmodel();
             content[i][4] = vo.getBuildrelease();
-            content[i][5] = vo.getVersioncode().toString();
+            //vo.getVersioncode()==null?"":vo.getVersioncode().toString() Integer为null，toString会报错
+            content[i][5] = vo.getVersionname();
             content[i][6] = DateUtilCard.date2Str(vo.getCreateTime(),DateUtilCard.YMD_HMS);
             content[i][7] = vo.getContact();
             content[i][8]=vo.getContext();

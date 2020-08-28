@@ -60,7 +60,7 @@ public class NewUserRecordServiceImpl implements INewUserRecordService {
             content[i][1] = vo.getPhone();
             content[i][2] = DateUtilCard.date2Str(vo.getCreateTime(),DateUtilCard.YMD_HMS);
             content[i][3] = vo.getComTypeName();
-            content[i][4] = vo.getDays().toString();
+            content[i][4] = vo.getDays()==null?"0":vo.getDays().toString();
         }
 
         //创建HSSFWorkbook
