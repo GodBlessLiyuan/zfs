@@ -133,9 +133,12 @@ public class ChannelServceiImpl implements ChannelService {
      */
     @Override
     public ResultVO insert(ChannelDTO dto, HttpSession httpSession) {
-
+        ChannelPO po=channelMapper.queryNickName(dto.getChanNickname());
+        if(po!=null){
+            return new ResultVO(3005);
+        }
         // 把 dto 转换为 po
-        ChannelPO po = new ChannelPO();
+        po = new ChannelPO();
         po.setChanNickname(dto.getChanNickname());
         po.setChanName(dto.getChanName());
         po.setProId(dto.getProId());
