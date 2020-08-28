@@ -203,7 +203,7 @@
     left join t_admin_user au on cb.update_a_id = au.a_id
     <where>
       <if test="chanNickname != null and chanNickname != ''">
-        AND c.chan_nickname = #{chanNickname}
+        AND c.chan_nickname like '%' #{chanNickname} '%'
       </if>
       <if test="comTypeId != 0 and comTypeId != null">
         AND cb.com_type_id = #{comTypeId}
