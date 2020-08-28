@@ -152,11 +152,11 @@
     from t_channel c
     left join t_promoter p on c.pro_id = p.pro_id
     <where>
-      <if test="chanName != null and chanName != ''">
-        AND chan_nickname = #{chanNickname}
+      <if test="chanNickname != null and chanNickname != ''">
+        AND chan_nickname like '%' #{chanNickname} '%'
       </if>
       <if test="proName != null and proName != ''">
-        AND p.pro_name = #{proName}
+        AND p.pro_name '%' #{proName} '%'
       </if>
     </where>
   </select>

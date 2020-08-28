@@ -39,20 +39,20 @@ public class BatchInfoController {
 
     /**
      * 查询
-     * @param start
-     * @param length
+     * @param pageNum
+     * @param pageSize
      * @param batchId
      * @return
      */
     @PostMapping("queryByBatchid")
     public ResultVO queryByBatchid(
-           @RequestParam(value = "start", defaultValue = "1") int start,
-           @RequestParam(value = "length", defaultValue = "10") int length,
+           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
            @RequestParam(value = "batchId") Integer batchId,
            @RequestParam(value = "status",required = false) Byte status
     ){
         // 调用业务层，返回页面结果
-        return batchInfoService.queryByBatchid(start, length, batchId, status);
+        return batchInfoService.queryByBatchid(pageNum, pageSize, batchId, status);
     }
 
     /**

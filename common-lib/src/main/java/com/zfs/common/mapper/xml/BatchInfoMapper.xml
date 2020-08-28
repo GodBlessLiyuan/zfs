@@ -124,7 +124,7 @@
     left join t_channel c on cb.chan_id = c.chan_id
     <where>
       <if test="vipkey != null and vipkey != ''">
-        AND vipkey = #{vipkey}
+        AND vipkey like '%' #{vipkey} '%'
       </if>
     </where>
   </select>
