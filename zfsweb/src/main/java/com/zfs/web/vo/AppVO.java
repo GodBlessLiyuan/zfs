@@ -1,6 +1,7 @@
 package com.zfs.web.vo;
 
 import com.zfs.common.bo.AppBO;
+import com.zfs.web.utils.MultiUtil;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,7 +22,7 @@ public class AppVO implements Serializable {
     private Date publishTime;
     private String username;
     private String versionName;
-    private Integer size;
+    private String size;
     private Byte updateType;
     private String context;
     private String chanId;
@@ -40,7 +41,7 @@ public class AppVO implements Serializable {
         dto.setContext(bo.getContext());
         dto.setExtra(bo.getExtra());
         dto.setPublishTime(bo.getPublishTime());
-        dto.setSize(bo.getSize());
+        dto.setSize(MultiUtil.get2WeiFileSize(bo.getSize(),6)+"M");
         dto.setStatus(bo.getStatus());
         dto.setUpdateType(bo.getUpdateType());
         dto.setUsername(bo.getUsername());

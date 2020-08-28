@@ -25,7 +25,10 @@ public class MultiUtil {
      *  除法太费计算，则使用字符串移位的形式实现
      *  整个代码替换计算： (2238249f/1000/1000)
      * */
-    public static String get2WeiFileSize(int size,int len){
+    public static String get2WeiFileSize(Integer size,int len){
+        if(size==null||size==0){
+            return "0.00";
+        }
         String tmp=String.valueOf(size);
         StringBuilder stringBuilder=new StringBuilder();
         String result;
