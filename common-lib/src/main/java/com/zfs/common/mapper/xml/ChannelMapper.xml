@@ -22,6 +22,11 @@
     from t_channel
     where chan_id = #{chanId,jdbcType=INTEGER}
   </select>
+  <select id="queryNickName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select  chan_id, chan_nickname
+    from t_channel
+    where  chan_nickname=#{chanNickname} limit 1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_channel
     where chan_id = #{chanId,jdbcType=INTEGER}

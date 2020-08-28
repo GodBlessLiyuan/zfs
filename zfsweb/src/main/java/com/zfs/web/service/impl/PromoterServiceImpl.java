@@ -85,7 +85,10 @@ public class PromoterServiceImpl implements PromoterService {
      */
     @Override
     public ResultVO insert(PromoterDTO dto, HttpSession httpSession) {
-
+        List<PromoterPO> promoterPOS = promoterMapper.queryProName(dto.getProName());
+        if(promoterPOS!=null&&promoterPOS.size()>0){
+            return new ResultVO(3004);
+        }
         // 把 dto 转换为 po
         PromoterPO po = new PromoterPO();
         po.setProName(dto.getProName());

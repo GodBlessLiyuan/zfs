@@ -17,4 +17,6 @@ public interface ChannelMapper extends BaseMapper<ChannelPO, Integer> {
     List<ChannelBO> queryProNames();
 
     List<ChannelPO> queryChanNicknames();
+
+    ChannelPO queryNickName(String chanNickname);
 }

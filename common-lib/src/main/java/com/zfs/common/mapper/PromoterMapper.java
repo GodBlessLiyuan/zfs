@@ -11,4 +11,6 @@ import java.util.List;
 @Mapper
 public interface PromoterMapper extends BaseMapper<PromoterPO, Integer> {
     List<PromoterPO> queryAllProNames();
+
+    List<PromoterPO> queryProName(String proName);
 }

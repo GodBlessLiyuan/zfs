@@ -144,4 +144,9 @@
     select pro_id, pro_name
     from t_promoter
   </select>
+  <select id="queryProName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select pro_id, pro_name
+    from t_promoter
+    where pro_name=#{proName}
+  </select>
 </mapper>
