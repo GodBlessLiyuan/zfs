@@ -195,11 +195,12 @@
     left join t_role r on au.role_id = r.role_id
     <where>
       <if test="phone != null and phone != ''">
-        AND phone = #{phone}
+        AND phone like '%' #{phone} '%'
       </if>
       <if test="extra != null and extra != ''">
         AND extra like '%' #{extra} '%'
       </if>
+      and (au.dr==1)
     </where>
   </select>
 

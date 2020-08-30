@@ -14,7 +14,8 @@ import java.util.List;
 @Data
 public class Plugin2VO implements Serializable {
     private Integer pluginId;
-    private Date publishTime;//发布时间
+    private String publishTime;//发布时间
+    private String createTime;
     private String username;//
     private String size;//插件大小
     private String context;//插件内容

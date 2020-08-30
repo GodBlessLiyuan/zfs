@@ -174,11 +174,13 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     public ResultVO delete(Integer aId) {
-        int result = this.adminUserMapper.deleteByPrimaryKey(aId);
-        if (result == 0) {
+        AdminUserPO adminUserPO = this.adminUserMapper.selectByPrimaryKey(aId);
+        if (adminUserPO ==null) {
             LogUtil.log(logger, "delete", "删除失败", aId);
-            return ResultVO.adminUserDupliName();
+            return new ResultVO(2000);
         }
+        adminUserPO.setDr((byte) 2);
+        adminUserMapper.updateByPrimaryKey(adminUserPO);
         return new ResultVO(1000);
     }
 
@@ -250,7 +252,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         if (null != dto.getExtra()) {
             po.setExtra(dto.getExtra());
         }
-
+        po.setDr((byte) 1);
         po.setRelationAId(OperatorUtil.getOperatorId(httpSession));
     }
 }

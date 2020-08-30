@@ -230,7 +230,7 @@
     order by p.plugin_id desc
   </select>
   <select id="query" resultType="com.zfs.common.bo.PluginBO">
-    select p.plugin_id as pluginId, p.publish_time as publishTime, au.username, p.size, p.context, sc.name,
+    select p.plugin_id as pluginId,p.create_time as createTime, p.publish_time as publishTime, au.username, p.size, p.context, sc.name,
     a.versionname as versionName, p.status, p.extra,p.pluginv,p.pluginpkg,p.`type`,p.orig_name as origName
     from t_plugin p
     left join t_app_plu_ch apc on p.plugin_id = apc.plugin_id
