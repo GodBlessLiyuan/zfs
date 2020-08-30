@@ -200,7 +200,7 @@
       <if test="extra != null and extra != ''">
         AND extra like '%' #{extra} '%'
       </if>
-      and (au.dr==1)
+      and (au.dr = 1 )
     </where>
   </select>
 
@@ -236,7 +236,7 @@
     select
     <include refid="Base_Column_List" />
     from t_admin_user
-    where username = #{username} limit 1
+    where username = #{username} and dr=1 limit 1
   </select>
 
 
