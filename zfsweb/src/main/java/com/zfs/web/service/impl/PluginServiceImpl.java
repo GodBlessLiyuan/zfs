@@ -11,10 +11,12 @@ import com.zfs.common.pojo.AppPO;
 import com.zfs.common.pojo.AppPluChPO;
 import com.zfs.common.pojo.PluginPO;
 import com.zfs.common.pojo.SoftChannelPO;
+import com.zfs.common.utils.DateUtilCard;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.PageInfoVO;
 import com.zfs.web.common.PageHelper;
+import com.zfs.web.utils.DateUtil;
 import com.zfs.web.utils.FileUtil;
 import com.zfs.web.utils.List2Str;
 import com.zfs.web.utils.MultiUtil;
@@ -86,7 +88,8 @@ public class PluginServiceImpl implements IPluginService {
     private void po2vo(Plugin2VO plugin2VO, PluginBO bo) {
         plugin2VO.setPluginId(bo.getPluginId());
         plugin2VO.setType(bo.getType());//类型
-        plugin2VO.setPublishTime(bo.getPublishTime());//发布时间
+        plugin2VO.setPublishTime(DateUtilCard.date2Str(bo.getPublishTime(),DateUtilCard.YMD_HMS));//发布时间
+        plugin2VO.setCreateTime(DateUtilCard.date2Str(bo.getCreateTime(), DateUtilCard.YMD_HMS));
         plugin2VO.setPluginv(bo.getPluginv());//版本号
         plugin2VO.setPluginpkg(bo.getPluginpkg());//包名
         plugin2VO.setSize(MultiUtil.get2WeiFileSize(bo.getSize(),6)+"M");//文件大小

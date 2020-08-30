@@ -232,7 +232,7 @@
   </update>
 
   <select id="queryByIds" resultType="com.zfs.common.bo.AppBO">
-    select a.app_id as appId, a.publish_time as publishTime, au.username, a.versionname as versionName, a.size,
+    select a.app_id as appId, a.create_time as createTime, a.publish_time as publishTime, au.username, a.versionname as versionName, a.size,
     a.update_type as updateType, a.context, s.soft_channel_id as chanId, s.name as chanName, a.status, a.extra
     from t_app a
     left join t_app_ch ac on a.app_id = ac.app_id

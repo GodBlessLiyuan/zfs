@@ -205,10 +205,10 @@
       <if test="chanNickname != null and chanNickname != ''">
         AND c.chan_nickname like '%' #{chanNickname} '%'
       </if>
-      <if test="comTypeId != 0 and comTypeId != null">
+      <if test="comTypeId != null and comTypeId != 0">
         AND cb.com_type_id = #{comTypeId}
       </if>
-      <if test="status != null and status != ''">
+      <if test="status != null and status != 0 ">
         AND cb.status = #{status}
       </if>
       <if test="operator != null and operator != ''">
