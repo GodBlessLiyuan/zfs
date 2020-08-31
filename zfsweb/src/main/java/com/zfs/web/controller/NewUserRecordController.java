@@ -35,8 +35,9 @@ public class NewUserRecordController {
         return service.query(pageNum, pageSize, reqData);
     }
     @RequestMapping("export")
-    public void export(HttpServletResponse response){
+    public void export(@RequestParam(value = "phone", required = false) String phone,HttpServletResponse response){
         Map<String, Object> reqData = new HashMap<>(1);
+        reqData.put("phone", phone);
         service.export(reqData,response);
     }
 }
