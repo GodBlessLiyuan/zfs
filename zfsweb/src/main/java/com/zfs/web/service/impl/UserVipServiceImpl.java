@@ -155,7 +155,7 @@ public class UserVipServiceImpl implements IUserVipService {
                     content[i][4] = "否";
                     break;
             }
-            content[i][5] = vo.getVendTime() == null ? null : DateUtil.date2str(vo.getEndTime());
+            content[i][5] = vo.getEndTime() == null ? null : DateUtil.date2str(vo.getEndTime());
             content[i][6] = vo.getLastTime() == null ? null : DateUtil.date2str(vo.getLastTime());
         }
         //创建HSSFWorkbook
