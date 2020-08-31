@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,8 +51,12 @@ public class FileUtil {
         String filePath = rootPath + projectDir + dir + fileName;
         BufferedOutputStream stream = null;
         try {
+            InputStream inputStream = file.getInputStream();
             stream = new BufferedOutputStream(new FileOutputStream(filePath));
-            stream.write(file.getBytes());
+            byte[] buff = new byte[1024];
+            while (inputStream.read(buff) != -1) {
+                stream.write(buff);
+            }
             stream.flush();
         } catch (IOException e) {
             e.printStackTrace();

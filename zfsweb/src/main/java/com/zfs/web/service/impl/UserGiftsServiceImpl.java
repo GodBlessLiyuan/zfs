@@ -75,7 +75,11 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
             // 不能同时开启多个
             List<UserGiftsPO> pos = userGiftsMapper.queryByStatus((byte) 2);
             if (pos != null && pos.size() > 0) {
-                return new ResultVO(4002, "不能同时开启多个！");
+//                return new ResultVO(4002, "不能同时开启多个！");
+                for(UserGiftsPO po:pos){
+                    po.setStatus((byte) 1);//关闭状态
+                    userGiftsMapper.updateByPrimaryKey(po);//其实只有一个对象
+                }
             }
         }
 
