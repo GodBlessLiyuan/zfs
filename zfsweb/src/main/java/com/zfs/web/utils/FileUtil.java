@@ -54,8 +54,9 @@ public class FileUtil {
             InputStream inputStream = file.getInputStream();
             stream = new BufferedOutputStream(new FileOutputStream(filePath));
             byte[] buff = new byte[1024];
-            while (inputStream.read(buff) != -1) {
-                stream.write(buff);
+            int len=0;
+            while ((len=inputStream.read(buff)) != -1) {
+                stream.write(buff,0,len);
             }
             stream.flush();
         } catch (IOException e) {
