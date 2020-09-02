@@ -26,10 +26,14 @@ import java.util.Map;
 public class ComTypeServiceImpl implements IComTypeService {
 
     @Resource
-    private ComTypeMapper mapper;
+    private ComTypeMapper comTypeMapper;
 
     @Override
     public ResultVO insert(String name, int days, String extra, int aId) {
+        Integer s = comTypeMapper.exist(name,days);
+        if(s!=null&&s>0){
+            return new ResultVO(3006);
+        }
         ComTypePO po = new ComTypePO();
         po.setName(name);
         po.setDays(days);
@@ -37,7 +41,7 @@ public class ComTypeServiceImpl implements IComTypeService {
         po.setaId(aId);
         po.setCreateTime(new Date());
 
-        mapper.insert(po);
+        comTypeMapper.insert(po);
 
         return new ResultVO(1000);
     }
@@ -46,13 +50,13 @@ public class ComTypeServiceImpl implements IComTypeService {
     public ResultVO query(Integer pageNum, Integer pageSize, Map<String, Object> reqData) {
 
         Page<ComTypeBO> page = PageHelper.startPage(pageNum, pageSize);
-        List<ComTypeBO> data = mapper.query(reqData);
+        List<ComTypeBO> data = comTypeMapper.query(reqData);
         return new ResultVO(1000, new PageInfoVO<>(page.getTotal(), ComTypeVO.convert(data)));
     }
 
     @Override
     public ResultVO queryAll() {
-        List<ComTypeBO> bos = mapper.queryAll();
+        List<ComTypeBO> bos = comTypeMapper.queryAll();
         return new ResultVO(1000, ComTypeVO.convert(bos));
     }
 }
