@@ -43,38 +43,38 @@ public class ConfigServiceImpl implements IConfigService {
         if (null != po) {
             vo.setIndex(po.getValue());
         }
-        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.TRAIN);
-        if (null != po) {
-            vo.setTrain(po.getValue());
-        }
-        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.QQ);
-        if (null != po) {
-            vo.setQq(po.getValue());
-        }
-        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.WX);
-        if (null != po) {
-            vo.setWx(po.getValue());
-        }
-        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.SHARE_URL);
-        if (null != po) {
-            vo.setShareurl(po.getValue());
-        }
+//        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.TRAIN);
+//        if (null != po) {
+//            vo.setTrain(po.getValue());
+//        }
+//        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.QQ);
+//        if (null != po) {
+//            vo.setQq(po.getValue());
+//        }
+//        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.WX);
+//        if (null != po) {
+//            vo.setWx(po.getValue());
+//        }
+//        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.SHARE_URL);
+//        if (null != po) {
+//            vo.setShareurl(po.getValue());
+//        }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.PROBLEM_URL);
         if (null != po) {
             vo.setProblemurl(po.getValue());
         }
-        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.FREE_VIP);
-        if (null != po) {
-            vo.setFreevip(po.getValue());
-        }
+//        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.FREE_VIP);
+//        if (null != po) {
+//            vo.setFreevip(po.getValue());
+//        }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.PROTOCOL);
         if (null != po) {
             vo.setProtocol(po.getValue());
         }
-        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.JOIN_QQ_CODE);
-        if (null != po) {
-            vo.setJoinqqcode(po.getValue());
-        }
+//        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.JOIN_QQ_CODE);
+//        if (null != po) {
+//            vo.setJoinqqcode(po.getValue());
+//        }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.VIP_PROTOCOL);
         if (null != po) {
             vo.setVipprotocol(po.getValue());
@@ -83,10 +83,10 @@ public class ConfigServiceImpl implements IConfigService {
         if (null != po) {
             vo.setMemberrights(po.getValue());
         }
-        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.CLEAR_FANS);
-        if (null != po) {
-            vo.setClearfans(po.getValue());
-        }
+//        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.CLEAR_FANS);
+//        if (null != po) {
+//            vo.setClearfans(po.getValue());
+//        }
         /***
          * Z分身新增的 21，
          * */
