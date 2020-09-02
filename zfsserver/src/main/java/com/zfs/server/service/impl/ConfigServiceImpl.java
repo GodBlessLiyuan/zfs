@@ -75,10 +75,10 @@ public class ConfigServiceImpl implements IConfigService {
 //        if (null != po) {
 //            vo.setJoinqqcode(po.getValue());
 //        }
-        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.VIP_PROTOCOL);
-        if (null != po) {
-            vo.setVipprotocol(po.getValue());
-        }
+//        po = keyValueMapper.selectByPrimaryKey(ConfigConstant.VIP_PROTOCOL);
+//        if (null != po) {
+//            vo.setVipprotocol(po.getValue());
+//        }
         po = keyValueMapper.selectByPrimaryKey(ConfigConstant.MEMBER_RIGHTS);
         if (null != po) {
             vo.setMemberrights(po.getValue());
