@@ -239,10 +239,10 @@
     from t_notice
     <where>
       <if test="startTime != null and startTime != '' ">
-        AND start_time >= #{startTime}
+        AND create_time >= #{startTime}
       </if>
       <if test="endTime != null and endTime != ''">
-        AND  #{endTime} >=start_time
+        AND  #{endTime} >=create_time
       </if>
       <if test="status!=null and status != 0">
         AND status =  #{status}
