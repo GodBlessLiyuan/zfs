@@ -17,7 +17,7 @@ public class PluginVO implements Serializable {
     /**
      * 插件的版本id
      */
-    private Integer pluginv;
+    private long pluginv;
     /**
      * 更新应用下载链接地址
      */
