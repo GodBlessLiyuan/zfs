@@ -19,6 +19,10 @@
     from t_com_type
     where com_type_id = #{comTypeId,jdbcType=INTEGER}
   </select>
+  <select id="exist" resultType="java.lang.Integer">
+    select count(com_type_id) from t_com_type
+    where `name` in (#{name,jdbcType=CHAR}) or days in (#{days,jdbcType=INTEGER})
+  </select>
   <select id="queryNameDays" parameterType="java.lang.Integer" resultType="java.lang.String">
     select name from t_com_type where days=#{days}
   </select>

@@ -30,6 +30,10 @@ public class ComTypeServiceImpl implements IComTypeService {
 
     @Override
     public ResultVO insert(String name, int days, String extra, int aId) {
+        Integer s = mapper.exist(name,days);
+        if(s==null){
+            return new ResultVO(3006);
+        }
         ComTypePO po = new ComTypePO();
         po.setName(name);
         po.setDays(days);

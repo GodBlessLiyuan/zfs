@@ -209,10 +209,10 @@
     where order_id = #{orderId,jdbcType=INTEGER}
       and order_number = #{orderNumber,jdbcType=CHAR}
   </update>
-
+<!--存在修改产品名字，商品找不到的情况，如果订单左连接商品左连接产品，则查询才能正常-->
   <select id="query" resultType="com.zfs.common.bo.OrderBO">
     select o.order_number as orderNumber, u.chan_name as userChanName, v.name as saleChanName, o.type, u.phone,
-    o.create_time as createTime, o.pay_time as payTime, v.com_name as comName, v.days, v.price, v.show_discount as
+    o.create_time as createTime, o.pay_time as payTime, v.com_type_name as comName, v.days, v.price, v.show_discount as
     showDiscount, v.discount,v.comm_attr as commAttr
     from t_order o
     left join t_vipcommodity v on o.cmdy_id = v.cmdy_id

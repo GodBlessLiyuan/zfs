@@ -50,7 +50,9 @@ public class ComTypeController {
         if (admin == null) {
             return new ResultVO(1001);
         }
-
+        if(days==null||name==null){
+            return new ResultVO(3009);
+        }
         return service.insert(name, days, extra, admin.getaId());
     }
 }
