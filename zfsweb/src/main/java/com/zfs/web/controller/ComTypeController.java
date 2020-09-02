@@ -51,7 +51,7 @@ public class ComTypeController {
             return new ResultVO(1001);
         }
         if(days==null||name==null){
-            return new ResultVO(3009);
+            return new ResultVO(3006);
         }
         return service.insert(name, days, extra, admin.getaId());
     }

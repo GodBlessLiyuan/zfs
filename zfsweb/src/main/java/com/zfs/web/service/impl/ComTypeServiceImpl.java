@@ -31,7 +31,7 @@ public class ComTypeServiceImpl implements IComTypeService {
     @Override
     public ResultVO insert(String name, int days, String extra, int aId) {
         Integer s = mapper.exist(name,days);
-        if(s==null){
+        if(s!=null&&s>0){
             return new ResultVO(3006);
         }
         ComTypePO po = new ComTypePO();
