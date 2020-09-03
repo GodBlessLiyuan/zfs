@@ -2,8 +2,10 @@ package com.zfs.server.service.impl;
 
 import com.zfs.common.mapper.DeviceImeiMapper;
 import com.zfs.common.mapper.DeviceMapper;
+import com.zfs.common.mapper.UserGiftsMapper;
 import com.zfs.common.pojo.DeviceImeiPO;
 import com.zfs.common.pojo.DevicePO;
+import com.zfs.common.pojo.UserGiftsPO;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.dto.DeviceDTO;
@@ -38,7 +40,8 @@ public class DeviceServiceImpl implements IDeviceService {
     private DeviceImeiMapper deviceImeiMapper;
     @Resource
     private RedisCacheUtil cache;
-
+    @Resource
+    private UserGiftsMapper userGiftsMapper;
     @Value("${verify.config.salt}")
     private String salt;
 
@@ -155,6 +158,16 @@ public class DeviceServiceImpl implements IDeviceService {
         DeviceVO vo = new DeviceVO();
         vo.setId(deviceId);
         vo.setVerify(DigestUtils.md5DigestAsHex((salt + deviceId).getBytes()));
+        // 新用户是否送会员
+        List<UserGiftsPO> userGiftsPOs = userGiftsMapper.queryOpenGift();
+        if (null != userGiftsPOs && userGiftsPOs.size() == 1) {
+            // 新用户送会员
+            UserGiftsPO userGiftsPO = userGiftsPOs.get(0);
+            Integer days = userGiftsPO.getDays();
+            vo.setDays(days==null?0:days);
+        }else{
+            vo.setDays(0);
+        }
         return new ResultVO<>(1000, vo);
     }
 }
