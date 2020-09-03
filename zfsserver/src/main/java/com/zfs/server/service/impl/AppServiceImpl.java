@@ -45,7 +45,7 @@ public class AppServiceImpl implements IAppService {
     public ResultVO check(AppDTO dto, HttpServletRequest req) {
         /**
          *  gray配置为true，则缓存不起作用，则取发布版本
-         *  gray配置为false；false || true取状态1，取未发布版本t_app；false|| false取状态2，取发布版本的t_app;
+         *  gray配置为false；false || true取状态1，取未发布版本和发布版本 t_app；false|| false取状态2，取发布版本的t_app;
          *  其实也可以删除gray
          * */
         int status ;
