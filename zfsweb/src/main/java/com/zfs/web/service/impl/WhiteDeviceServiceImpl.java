@@ -92,7 +92,8 @@ public class WhiteDeviceServiceImpl implements IWhiteDeviceService {
         if (first == 0) {
             LogUtil.log(logger, "insert", "删除失败", deviceId);
         }
-        return this.cache();
+        this.deleteRedis();
+        return new ResultVO(1000);
     }
 
     @Override

@@ -57,7 +57,7 @@ public class ConfigConstant {
     /**
      * 会员中心-会员权益
      */
-//    public static final int VIP_PROTOCOL = 18;
+    public static final int VIP_PROTOCOL = 18;
     /**
      * 会员中心-用户服务协议
      */
