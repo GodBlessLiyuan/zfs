@@ -29,7 +29,10 @@ public class KafkaService {
 
     public ResultVO sendMsg(Object data, HttpServletRequest req) {
 
-
+        Map<String, Object> msg = new HashMap<>(2);
+        msg.put("ip", RequestUtil.getIpAddr(req));
+        msg.put("data", data);
+        this.kafkaTemplate.send(topic, JSON.toJSONString(msg));
         return new ResultVO(1000);
     }
 }
