@@ -37,7 +37,7 @@ public class WxPayUtil {
     public static String createReqParam(OrderPO orderPO, WxPayConfig wxPayConfig, HttpServletRequest req) {
         SortedMap<String, Object> wxPayParam = new TreeMap<>();
         wxPayParam.put(WxPayConstant.APPID, wxPayConfig.getAppid());
-        wxPayParam.put(WxPayConstant.BODY, "砖助智能助手-商品充值");
+        wxPayParam.put(WxPayConstant.BODY, "Z分身-商品充值");
         wxPayParam.put(WxPayConstant.MCH_ID, wxPayConfig.getMch_id());
         wxPayParam.put(WxPayConstant.NONCE_STR, UUID.randomUUID().toString().replace("-", ""));
         wxPayParam.put(WxPayConstant.NOTIFY_URL, wxPayConfig.getNotify_url());
