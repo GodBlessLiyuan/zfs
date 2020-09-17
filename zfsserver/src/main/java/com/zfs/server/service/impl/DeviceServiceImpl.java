@@ -5,6 +5,7 @@ import com.zfs.common.mapper.DeviceMapper;
 import com.zfs.common.mapper.UserGiftsMapper;
 import com.zfs.common.pojo.DeviceImeiPO;
 import com.zfs.common.pojo.DevicePO;
+import com.zfs.common.pojo.UserGiftsPO;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.ResultVO;
@@ -53,8 +54,8 @@ public class DeviceServiceImpl implements IDeviceService {
     public ResultVO queryDevice(DeviceDTO dto) {
         List<String> imeis = dto.getImei();
         if (null == imeis || imeis.size() == 0) {
-            DevicePO devicePO=deviceMapper.queryByUtdID(dto.getUtdid());
-            if(devicePO!=null){
+            DevicePO devicePO = deviceMapper.queryByUtdID(dto.getUtdid());
+            if (devicePO != null) {
                 return this.buildResultVO(devicePO.getDeviceId());
             }
             // 新增设备信息
@@ -67,11 +68,11 @@ public class DeviceServiceImpl implements IDeviceService {
 
             return this.buildResultVO(po.getDeviceId());
         }
-        List<String> resultImei=new ArrayList<>(imeis.size());
+        List<String> resultImei = new ArrayList<>(imeis.size());
         // 过滤imei号长度<13
         for (String imei : imeis) {
             if (imei.length() < 13) {
-            }else{
+            } else {
                 resultImei.add(imei);
             }
         }
@@ -81,8 +82,8 @@ public class DeviceServiceImpl implements IDeviceService {
         if (null == deviceIds || deviceIds.size() == 0) {
             logger.warn("DeviceIds size: " + (null == deviceIds ? null : deviceIds.size()));
             // 没有查询到相关设备信息
-            DevicePO devicePO=deviceMapper.queryByUtdID(dto.getUtdid());
-            if(devicePO!=null){
+            DevicePO devicePO = deviceMapper.queryByUtdID(dto.getUtdid());
+            if (devicePO != null) {
                 return this.buildResultVO(devicePO.getDeviceId());
             }
             // 新增设备信息
@@ -161,21 +162,25 @@ public class DeviceServiceImpl implements IDeviceService {
         DeviceVO vo = new DeviceVO();
         vo.setId(deviceId);
         vo.setVerify(DigestUtils.md5DigestAsHex((salt + deviceId).getBytes()));
-        String deviceDay= RedisKeyUtil.genRedisKey("device","days");
+        String deviceDay = RedisKeyUtil.genRedisKey("device", "days");
         String cacheDays = cache.getCacheByKey(deviceDay);
-        Integer days = cacheDays==null?0:Integer.parseInt(cacheDays);
-        if(days==0){
-            if(userGiftsMapper.queryOpenGift()==null||userGiftsMapper.queryOpenGift().size()==0){
-                days=0;
-            }else{
-                days = userGiftsMapper.queryOpenGift().get(0).getDays();
-                if(days==null) {
-                    days=0;
+        if (cacheDays == null) {
+            List<UserGiftsPO> userGiftsPOS = userGiftsMapper.queryOpenGift();
+            Integer days;
+            if (userGiftsPOS == null || userGiftsPOS.size() == 0) {
+                days = 0;
+            } else {
+                days = userGiftsPOS.get(0).getDays();
+                if (days == null) {
+                    days = 0;
                 }
             }
-            cache.setCacheWithDate(deviceDay,days,1, TimeUnit.DAYS);
+            cache.setCacheWithDate(deviceDay, days, 1, TimeUnit.DAYS);
+            vo.setDays(days);
+        } else {
+            vo.setDays(Integer.parseInt(cacheDays));
         }
-        vo.setDays(days);
+
         return new ResultVO<>(1000, vo);
     }
 }
