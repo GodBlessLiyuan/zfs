@@ -5,6 +5,7 @@ import com.zfs.common.mapper.DeviceMapper;
 import com.zfs.common.mapper.UserGiftsMapper;
 import com.zfs.common.pojo.DeviceImeiPO;
 import com.zfs.common.pojo.DevicePO;
+import com.zfs.common.pojo.UserGiftsPO;
 import com.zfs.common.utils.LogUtil;
 import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.ResultVO;
@@ -165,10 +166,11 @@ public class DeviceServiceImpl implements IDeviceService {
         String cacheDays = cache.getCacheByKey(deviceDay);
         Integer days = cacheDays==null?0:Integer.parseInt(cacheDays);
         if(days==0){
-            if(userGiftsMapper.queryOpenGift()==null||userGiftsMapper.queryOpenGift().size()==0){
+            List<UserGiftsPO> userGiftsPOS = userGiftsMapper.queryOpenGift();
+            if(userGiftsPOS==null||userGiftsPOS.size()==0){
                 days=0;
             }else{
-                days = userGiftsMapper.queryOpenGift().get(0).getDays();
+                days = userGiftsPOS.get(0).getDays();
                 if(days==null) {
                     days=0;
                 }
