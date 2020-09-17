@@ -7,6 +7,7 @@ import com.zfs.common.mapper.UserGiftsMapper;
 import com.zfs.common.pojo.ComTypePO;
 import com.zfs.common.pojo.UserGiftsPO;
 import com.zfs.common.utils.LogUtil;
+import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.PageInfoVO;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.web.common.PageHelper;
@@ -14,6 +15,7 @@ import com.zfs.web.service.IUserGiftsSercive;
 import com.zfs.web.vo.UserGiftsVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,6 +38,8 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
 
     @Resource
     private ComTypeMapper comTypeMapper;
+    @Resource
+    private StringRedisTemplate redisTemplate;
 
     @Override
     public ResultVO query(Integer pageNum, Integer pageSize, Map<String, Object> reqData) {
@@ -64,8 +68,13 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
             LogUtil.log(logger, "insert", "插入失败", userGiftsPO);
             return ResultVO.serverInnerError();
         }
-
+        this.redisdelete();
         return new ResultVO(1000);
+    }
+
+    private void redisdelete() {
+        String deviceDay = RedisKeyUtil.genRedisKey("device", "days");
+        redisTemplate.delete(deviceDay);
     }
 
     @Override
@@ -86,7 +95,7 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
             LogUtil.log(logger, "insert", "修改失败", po);
             return ResultVO.serverInnerError();
         }
-
+        this.redisdelete();
         return new ResultVO(1000);
     }
 
@@ -97,6 +106,7 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
             LogUtil.log(logger, "delete", "删除失败", nugId);
             return ResultVO.serverInnerError();
         }
+        this.redisdelete();
         return new ResultVO(1000);
     }
 }
