@@ -164,9 +164,9 @@ public class DeviceServiceImpl implements IDeviceService {
         vo.setVerify(DigestUtils.md5DigestAsHex((salt + deviceId).getBytes()));
         String deviceDay = RedisKeyUtil.genRedisKey("device", "days");
         String cacheDays = cache.getCacheByKey(deviceDay);
-        Integer days = cacheDays == null ? 0 : Integer.parseInt(cacheDays);
-        if (days == 0) {
+        if (cacheDays == null) {
             List<UserGiftsPO> userGiftsPOS = userGiftsMapper.queryOpenGift();
+            Integer days;
             if (userGiftsPOS == null || userGiftsPOS.size() == 0) {
                 days = 0;
             } else {
@@ -176,8 +176,11 @@ public class DeviceServiceImpl implements IDeviceService {
                 }
             }
             cache.setCacheWithDate(deviceDay, days, 1, TimeUnit.DAYS);
+            vo.setDays(days);
+        } else {
+            vo.setDays(Integer.parseInt(cacheDays));
         }
-        vo.setDays(days);
+
         return new ResultVO<>(1000, vo);
     }
 }
