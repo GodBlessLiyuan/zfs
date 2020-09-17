@@ -63,7 +63,7 @@ public class LoginController {
         //参数一：长
         //参数二：宽
         //参数三：颜色
-        int width = 80;
+        int width = 120;
         int height = 30;
         BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
 
