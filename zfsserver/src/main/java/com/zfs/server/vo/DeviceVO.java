@@ -22,4 +22,5 @@ public class DeviceVO implements Serializable {
      * 设备唯一标识的md5值
      */
     private String verify;
+    private Integer days;
 }
