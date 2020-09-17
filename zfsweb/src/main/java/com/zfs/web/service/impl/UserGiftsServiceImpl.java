@@ -15,6 +15,8 @@ import com.zfs.web.service.IUserGiftsSercive;
 import com.zfs.web.vo.UserGiftsVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,8 @@ public class UserGiftsServiceImpl implements IUserGiftsSercive {
 
     @Resource
     private ComTypeMapper comTypeMapper;
-    @Resource
+    //使用@Resource注解报错
+    @Autowired
     private StringRedisTemplate redisTemplate;
 
     @Override
