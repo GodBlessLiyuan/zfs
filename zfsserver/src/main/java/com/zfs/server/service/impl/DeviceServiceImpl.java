@@ -2,9 +2,11 @@ package com.zfs.server.service.impl;
 
 import com.zfs.common.mapper.DeviceImeiMapper;
 import com.zfs.common.mapper.DeviceMapper;
+import com.zfs.common.mapper.UserGiftsMapper;
 import com.zfs.common.pojo.DeviceImeiPO;
 import com.zfs.common.pojo.DevicePO;
 import com.zfs.common.utils.LogUtil;
+import com.zfs.common.utils.RedisKeyUtil;
 import com.zfs.common.vo.ResultVO;
 import com.zfs.server.dto.DeviceDTO;
 import com.zfs.server.service.IDeviceService;
@@ -17,9 +19,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: xiahui
@@ -41,6 +45,8 @@ public class DeviceServiceImpl implements IDeviceService {
 
     @Value("${verify.config.salt}")
     private String salt;
+    @Resource
+    private UserGiftsMapper userGiftsMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -155,6 +161,21 @@ public class DeviceServiceImpl implements IDeviceService {
         DeviceVO vo = new DeviceVO();
         vo.setId(deviceId);
         vo.setVerify(DigestUtils.md5DigestAsHex((salt + deviceId).getBytes()));
+        String deviceDay= RedisKeyUtil.genRedisKey("device","days");
+        String cacheDays = cache.getCacheByKey(deviceDay);
+        Integer days = cacheDays==null?0:Integer.parseInt(cacheDays);
+        if(days==0){
+            if(userGiftsMapper.queryOpenGift()==null||userGiftsMapper.queryOpenGift().size()==0){
+                days=0;
+            }else{
+                days = userGiftsMapper.queryOpenGift().get(0).getDays();
+                if(days==null) {
+                    days=0;
+                }
+            }
+            cache.setCacheWithDate(deviceDay,days,1, TimeUnit.DAYS);
+        }
+        vo.setDays(days);
         return new ResultVO<>(1000, vo);
     }
 }
