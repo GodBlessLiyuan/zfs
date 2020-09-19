@@ -79,7 +79,8 @@ public class RedisCacheUtil {
         if (!sms.equals(cacheSms)) {
             return 1014;
         }
-
+        //手机号验证码之后，清理缓存，防止第二台设备登录
+        template.delete(LoginConstant.VERIFY_CODE_PREFIX + phone);
         return 1000;
     }
 
