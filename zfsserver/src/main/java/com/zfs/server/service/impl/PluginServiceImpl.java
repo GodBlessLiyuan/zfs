@@ -49,7 +49,7 @@ public class PluginServiceImpl implements IPluginService {
         }
 
         PluginVO vo = new PluginVO();
-        vo.setPluginv(pluginPO.getPluginId());
+        vo.setPluginv(pluginPO.getPluginv());
         vo.setUrl(filePublicPath+pluginPO.getUrl());
         vo.setMd5(pluginPO.getMd5());
 
