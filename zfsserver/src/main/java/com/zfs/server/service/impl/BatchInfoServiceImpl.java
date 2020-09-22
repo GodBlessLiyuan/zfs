@@ -55,12 +55,12 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             return new ResultVO(1020);
         }
         //失效 4,6,7，
-        else if (BatchInfoConstant.EXPIRED == po.getStatus()||BatchInfoConstant.OVER_EXPIRED==po.getStatus()||
-            BatchInfoConstant.OVER_FROZEN==po.getStatus()) {
+        else if (BatchInfoConstant.EXPIRED == po.getStatus() || BatchInfoConstant.OVER_EXPIRED == po.getStatus() ||
+                BatchInfoConstant.OVER_FROZEN == po.getStatus()) {
             return new ResultVO(1021);
         }
         //结束的提示语：状态码：1021:卡密已过期，无法使用
-        else if(BatchInfoConstant.END==po.getStatus()){
+        else if (BatchInfoConstant.END == po.getStatus()) {
             return new ResultVO(1021);
         }
         po.setUserId(dto.getUd());
@@ -84,7 +84,7 @@ public class BatchInfoServiceImpl implements IBatchInfoService {
             LogUtil.log(logger, "activate", "更新用户会员数据失败", newUserVipPO);
         }
         //删除缓存
-        String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID,userVipPO.getUserId());
+        String key = RedisKeyUtil.genRedisKey(UserVipConstant.UserID, dto.getUd());
         redisMapUtil.hdel(key);
         return new ResultVO(1000);
     }
