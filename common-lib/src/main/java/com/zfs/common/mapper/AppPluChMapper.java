@@ -53,4 +53,11 @@ public interface AppPluChMapper extends BaseMapper<AppPluChPO, Integer> {
      * @return
      */
     int batchDelete(List<Integer> apcIds);
+
+    /****
+     * 删除传入参数版本的之外的支持版本；
+     * @param pluginId
+     * @param appId
+     */
+    void batchDeleteExtraAppid(@Param("pluginId") Integer pluginId,@Param("appIdS") Integer[] appIdS);
 }

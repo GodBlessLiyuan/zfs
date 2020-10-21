@@ -142,4 +142,12 @@
     </foreach>
     )
   </delete>
+  
+  <delete id="batchDeleteExtraAppid">
+    delete FROM t_app_plu_ch WHERE plugin_id =#{pluginId} and app_id NOT in
+    (<foreach collection="appIdS" item="appID" separator=",">
+        #{appID}
+    </foreach>)
+  </delete>
+
 </mapper>
