@@ -208,6 +208,8 @@ public class PluginServiceImpl implements IPluginService {
         for(int appI:appId){
             this.appPlusAddsAndDelS(pluginId,appI,softChannel,pluginPO);
         }
+        //删除传入参数版本的之外的支持版本；
+        appPluChMapper.batchDeleteExtraAppid(pluginId,appId);
         this.deleteRedis();
         return frist;
     }
